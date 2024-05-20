@@ -1,0 +1,37 @@
+spring:
+  application:
+    name: api
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/study?serverTimezone=Asia/Seoul&useSSL=false&allowPublicKeyRetrieval=true
+    username: root
+    password: tiger
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: create
+
+    properties:
+      hibernate:
+        auto_quote_keyword: true
+        globally_quoted_identifiers: true
+        default_batch_fetch_size: 100
+    open-in-view: false
+
+# Spring openapi
+springdoc:
+  packages-to-scan: com.tobe.healthy
+  default-consumes-media-type: application/json;charset=UTF-8
+  default-produces-media-type: application/json;charset=UTF-8
+
+  swagger-ui:
+    disable-swagger-default-url: true
+    display-request-duration: true
+    tags-sorter: alpha
+    operations-sorter: alpha
+
+decorator:
+  datasource:
+    p6spy:
+      enable-logging: true
