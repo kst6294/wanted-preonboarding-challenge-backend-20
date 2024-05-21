@@ -8,6 +8,7 @@ import org.springframework.boot.context.properties.bind.DefaultValue
 import wanted.market.api.common.BaseTimeEntity
 import wanted.market.api.member.domain.entity.Member
 import wanted.market.api.order.domain.entity.OrderStatus.NONE
+import wanted.market.api.order.domain.entity.OrderStatus.SALEAPPROVAL
 
 @Entity
 class Order(
@@ -25,13 +26,17 @@ class Order(
 
     @Enumerated(STRING)
     @DefaultValue("NONE")
-    val orderStatus: OrderStatus = NONE,
+    var orderStatus: OrderStatus = NONE,
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
     @Column(name = "order_id")
     val id: Long? = null
 ) : BaseTimeEntity<Order, Long>() {
+
+    fun approveOrder() {
+        this.orderStatus = SALEAPPROVAL
+    }
 
     companion object {
         fun create(buyer: Member, seller: Member): Order {
