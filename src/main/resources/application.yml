@@ -2,6 +2,9 @@ spring:
   application:
     name: api
 
+  main:
+    allow-bean-definition-overriding: true
+
   datasource:
     url: jdbc:mysql://localhost:3306/study?serverTimezone=Asia/Seoul&useSSL=false&allowPublicKeyRetrieval=true
     username: root
@@ -10,7 +13,7 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
 
     properties:
       hibernate:
@@ -18,6 +21,11 @@ spring:
         globally_quoted_identifiers: true
         default_batch_fetch_size: 100
     open-in-view: false
+
+jwt:
+  secret: c2Vvbndvb19qdW5nDQo=c2Vvbndvb19qdW5nDQo=c2Vvbndvb19qdW5nDQo=
+  access-token-valid-seconds: 7200
+  refresh-token-valid-seconds: 604800
 
 ## Spring openapi
 #springdoc:

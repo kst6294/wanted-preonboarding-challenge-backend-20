@@ -35,7 +35,10 @@ dependencies {
 	implementation("io.github.microutils:kotlin-logging-jvm:4.0.0-beta-2")
 	implementation("com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.9.1")
 	implementation("org.springframework.boot:spring-boot-starter-security")
+	implementation("io.jsonwebtoken:jjwt-api:0.12.5")
+	implementation("io.jsonwebtoken:jjwt-impl:0.12.5")
 
+	runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.12.5")
 	runtimeOnly("com.mysql:mysql-connector-j")
 
 	kapt("jakarta.annotation:jakarta.annotation-api")

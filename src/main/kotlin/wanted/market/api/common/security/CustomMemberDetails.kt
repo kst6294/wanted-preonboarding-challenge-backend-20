@@ -11,7 +11,7 @@ class CustomMemberDetails(
 
     override fun getAuthorities(): MutableCollection<out GrantedAuthority> {
         val roles = mutableListOf<GrantedAuthority>()
-        roles.add(SimpleGrantedAuthority("ROLE_USER"))
+        roles.add(SimpleGrantedAuthority("ROLE_MEMBER"))
         return roles
     }
 
@@ -23,23 +23,23 @@ class CustomMemberDetails(
         return member.userId
     }
 
-    fun getMemberId(): Long {
-        return member.id!!
-    }
-
     override fun isAccountNonExpired(): Boolean {
-        TODO("Not yet implemented")
+        return true
     }
 
     override fun isAccountNonLocked(): Boolean {
-        TODO("Not yet implemented")
+        return true
     }
 
     override fun isCredentialsNonExpired(): Boolean {
-        TODO("Not yet implemented")
+        return true
     }
 
     override fun isEnabled(): Boolean {
-        TODO("Not yet implemented")
+        return true
+    }
+
+    fun getMemberId(): Long {
+        return member.id!!
     }
 }

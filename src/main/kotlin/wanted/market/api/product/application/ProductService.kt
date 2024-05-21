@@ -9,15 +9,15 @@ import wanted.market.api.product.repository.ProductRepository
 @Service
 @Transactional(readOnly = true)
 class ProductService(
-    private val productsRepository: ProductRepository
+    private val productRepository: ProductRepository
 ) {
     fun findAllProducts(): List<RetrieveProductResult> {
-        val products = productsRepository.findAll()
+        val products = productRepository.findAll()
         return products.map { RetrieveProductResult.from(it) }
     }
 
     fun findOneProduct(productId: Long): RetrieveProductResult {
-        val product = productsRepository.findByIdOrNull(productId)
+        val product = productRepository.findByIdOrNull(productId)
             ?: throw IllegalArgumentException("제품을 찾을 수 없습니다.")
         return RetrieveProductResult.from(product)
     }

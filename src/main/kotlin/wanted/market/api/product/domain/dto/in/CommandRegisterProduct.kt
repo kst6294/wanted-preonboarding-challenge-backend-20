@@ -5,6 +5,6 @@ import wanted.market.api.product.domain.entity.ProductStatus
 data class CommandRegisterProduct(
     val name: String,
     val price: Long,
-    val stockQuantity: Int,
+    val quantity: Int,
     val status: ProductStatus
 )
