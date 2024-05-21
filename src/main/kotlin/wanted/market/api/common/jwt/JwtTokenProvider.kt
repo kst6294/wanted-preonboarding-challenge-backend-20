@@ -23,7 +23,7 @@ class JwtTokenProvider(
         secretKey = Base64.getEncoder().encodeToString(secretKey!!.toByteArray())
     }
 
-    fun resolveToken(request: HttpServletRequest): String {
+    fun resolveToken(request: HttpServletRequest): String? {
         return request.getHeader("Authorization")
     }
 
@@ -36,8 +36,8 @@ class JwtTokenProvider(
     }
 
     // Jwt 토큰으로 인증 정보를 조회
-    fun getAuthentication(token: String): Authentication {
-        val claims = decode(token.substring("Bearer ".length))
+    fun getAuthentication(token: String?): Authentication {
+        val claims = decode(token?.substring("Bearer ".length))
         val userDetails = customMemberDetailService.loadUserByUsername(claims["memberId"].toString())
         return UsernamePasswordAuthenticationToken(userDetails, "", userDetails.authorities)
     }
@@ -47,7 +47,7 @@ class JwtTokenProvider(
         val claims = Jwts.parser()
             .setSigningKey(secretKey)
             .build()
-            .parseSignedClaims(jwtToken!!.substring("Bearer ".length))
+            .parseSignedClaims(jwtToken?.substring("Bearer ".length))
         return !claims.getBody().expiration.before(Date()) // 만료시간이 현재시간보다 전인지 확인
     }
 }

@@ -32,24 +32,10 @@ class SecurityConfig(
                 exceptionHandling.authenticationEntryPoint(authenticationEntryPoint)
                 exceptionHandling.accessDeniedHandler(accessDeniedHandler)
             }
-            .authorizeHttpRequests { authorize ->
-                authorize.requestMatchers(
-                    "/auth/**",
-                    "/favicon.ico",
-                    "/file/**",
-                    "/v3/**",
-                    "/swagger-ui/**",
-                    "/fcm",
-                    "/firebase-messaging-sw.js",
-                    "/*.js",
-                    "/actuator/**"
-                ).permitAll()
+            .authorizeHttpRequests { it.requestMatchers("/auth/**", "/favicon.ico", "/v3/**", "/swagger-ui/**").permitAll()
                     .anyRequest().authenticated()
             }
-            .addFilterBefore(
-                JwtFilter(jwtTokenProvider),
-                UsernamePasswordAuthenticationFilter::class.java
-            )
+            .addFilterBefore(JwtFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter::class.java)
             .build()
     }
 
