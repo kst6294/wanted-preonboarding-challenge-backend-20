@@ -3,7 +3,6 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
 	id("org.springframework.boot") version "3.2.5"
 	id("io.spring.dependency-management") version "1.1.4"
-	id("org.asciidoctor.jvm.convert") version "3.3.2"
 	kotlin("jvm") version "1.9.23"
 	kotlin("plugin.spring") version "1.9.23"
 	kotlin("plugin.jpa") version "1.9.23"
@@ -23,8 +22,6 @@ repositories {
 	mavenCentral()
 }
 
-extra["snippetsDir"] = file("build/generated-snippets")
-
 dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	implementation("org.springframework.boot:spring-boot-starter-web")
@@ -37,12 +34,12 @@ dependencies {
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	implementation("io.github.microutils:kotlin-logging-jvm:4.0.0-beta-2")
 	implementation("com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.9.1")
+	implementation("org.springframework.boot:spring-boot-starter-security")
 
 	runtimeOnly("com.mysql:mysql-connector-j")
 
 	kapt("jakarta.annotation:jakarta.annotation-api")
 	kapt("jakarta.persistence:jakarta.persistence-api")
-	kapt("org.projectlombok:lombok")
 	kapt("com.querydsl:querydsl-apt:5.1.0:jakarta")
 	kapt("org.springframework.boot:spring-boot-configuration-processor")
 
@@ -71,13 +68,4 @@ tasks.withType<KotlinCompile> {
 
 tasks.withType<Test> {
 	useJUnitPlatform()
-}
-
-tasks.test {
-	outputs.dir(project.extra["snippetsDir"]!!)
-}
-
-tasks.asciidoctor {
-	inputs.dir(project.extra["snippetsDir"]!!)
-	dependsOn(tasks.test)
 }
