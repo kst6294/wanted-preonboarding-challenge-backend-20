@@ -4,12 +4,14 @@ import jakarta.persistence.*
 import jakarta.persistence.EnumType.STRING
 import jakarta.persistence.FetchType.LAZY
 import jakarta.persistence.GenerationType.IDENTITY
+import org.hibernate.annotations.DynamicUpdate
 import org.springframework.boot.context.properties.bind.DefaultValue
 import wanted.market.api.common.BaseTimeEntity
 import wanted.market.api.member.domain.entity.Member
 import wanted.market.api.order.domain.entity.OrderStatus.*
 
 @Entity
+@DynamicUpdate
 class Order(
 
     @OneToMany(mappedBy = "orders")

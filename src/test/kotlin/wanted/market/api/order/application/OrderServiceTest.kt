@@ -1,22 +1,28 @@
-package wanted.market.api.product.application
+package wanted.market.api.order.application
 
-import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
+import jakarta.persistence.EntityManager
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.transaction.annotation.Transactional
 import wanted.market.api.member.application.MemberAuthService
 import wanted.market.api.member.domain.dto.`in`.CommandRegisterMember
 import wanted.market.api.member.domain.dto.out.CommandRegisterMemberResult
+import wanted.market.api.order.domain.entity.OrderStatus.SALEAPPROVAL
+import wanted.market.api.product.application.ProductCommandService
 import wanted.market.api.product.domain.dto.`in`.CommandPurchaseProduct
 import wanted.market.api.product.domain.dto.`in`.CommandRegisterProduct
 import wanted.market.api.product.domain.dto.out.CommandRegisterProductResult
+import wanted.market.api.product.repository.ProductRepository
 
 @SpringBootTest
 @Transactional
-class ProductCommandServiceTest(
+class OrderServiceTest(
+    private val orderService: OrderService,
+    private val memberAuthService: MemberAuthService,
     private val productCommandService: ProductCommandService,
-    private val memberAuthService: MemberAuthService
+    private val em: EntityManager,
+    private val productRepository: ProductRepository
 ) : StringSpec({
 
     fun registerMember(): CommandRegisterMemberResult {
@@ -40,27 +46,7 @@ class ProductCommandServiceTest(
         return productCommandService.registerProduct(productRequest, memberInfo.id)
     }
 
-    "상품을 등록한다" {
-        // given
-        val memberInfo = registerMember()
-
-        val productRequest = CommandRegisterProduct(
-            name = "상품명",
-            price = 1_000_000,
-            quantity = 2
-        )
-
-        // when
-        val response = productCommandService.registerProduct(productRequest, memberInfo.id)
-
-        // then
-        response.name shouldBe productRequest.name
-        response.price shouldBe productRequest.price
-        response.quantity shouldBe productRequest.quantity
-    }
-
-    "상품을 구매한다" {
-        // given
+    "판매자가 제품 판매 승인을 한다" {
         val product = registerProduct()
 
         val purchaseRequest = CommandPurchaseProduct(
@@ -71,26 +57,28 @@ class ProductCommandServiceTest(
         // when
         val purchaseResponse = productCommandService.purchaseProduct(purchaseRequest, product.sellerId)
 
-        // then
-        purchaseResponse.id shouldBe purchaseRequest.productId
-        purchaseResponse.quantity shouldBe purchaseRequest.quantity
+        val order = orderService.approveOrder(purchaseResponse.id, product.sellerId)
+
+        order.orderStatus shouldBe SALEAPPROVAL
+        em.flush()
     }
 
-    "등록된 상품보다 많은 수량을 구매하려고 할 때 예외가 발생한다" {
-        // given
+    "구매자가 구매 확정을 한다" {
         val product = registerProduct()
 
         val purchaseRequest = CommandPurchaseProduct(
             productId = product.id,
-            quantity = 3
+            quantity = 2
         )
 
         // when
-        val exception = shouldThrow<IllegalArgumentException> {
-            productCommandService.purchaseProduct(purchaseRequest, product.sellerId)
-        }
+        val purchaseResponse = productCommandService.purchaseProduct(purchaseRequest, product.sellerId)
 
-        // then
-        exception.message shouldBe "상품의 재고가 부족합니다."
+        val order = orderService.approveOrder(purchaseResponse.id, product.sellerId)
+
+        em.flush()
+
+        orderService.confirmOrder(order.orderId, product.sellerId)
+        em.flush()
     }
 })

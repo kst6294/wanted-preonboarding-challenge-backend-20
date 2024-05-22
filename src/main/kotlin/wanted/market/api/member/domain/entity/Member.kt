@@ -19,7 +19,9 @@ class Member(
     @Column(name = "member_id")
     val id: Long? = null
 ) : BaseTimeEntity<Member, Long>() {
+
     companion object {
+
         fun register(userId: String, password: String): Member {
             return Member(userId, password)
         }

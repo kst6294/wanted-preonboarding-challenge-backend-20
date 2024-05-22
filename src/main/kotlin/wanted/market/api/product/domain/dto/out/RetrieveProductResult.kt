@@ -6,6 +6,7 @@ import wanted.market.api.product.domain.entity.Product
 import wanted.market.api.product.domain.entity.ProductStatus
 
 data class RetrieveProductResult(
+    val sellerId: Long,
     val id: Long,
     val name: String,
     val price: Long,
@@ -17,6 +18,7 @@ data class RetrieveProductResult(
     companion object {
         fun from(products: Product): RetrieveProductResult {
             return RetrieveProductResult(
+                sellerId = products.seller.id!!,
                 id = products.id!!,
                 name = products.name,
                 price = products.price,
@@ -26,6 +28,7 @@ data class RetrieveProductResult(
         }
         fun from(products: Product, purchaseHistoryResult: List<RetrievePurchaseHistoryResult>, sellHistoryResult: List<RetrieveReservationHistoryResult>): RetrieveProductResult {
             return RetrieveProductResult(
+                sellerId = products.seller.id!!,
                 id = products.id!!,
                 name = products.name,
                 price = products.price,

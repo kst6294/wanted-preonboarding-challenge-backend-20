@@ -3,10 +3,12 @@ package wanted.market.api.order.domain.entity
 import jakarta.persistence.*
 import jakarta.persistence.FetchType.LAZY
 import jakarta.persistence.GenerationType.IDENTITY
+import org.hibernate.annotations.DynamicUpdate
 import wanted.market.api.common.BaseTimeEntity
 import wanted.market.api.product.domain.entity.Product
 
 @Entity
+@DynamicUpdate
 class OrderItem(
 
     val productName: String,
