@@ -3,6 +3,7 @@ package wanted.market.api.product.presentation
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.responses.ApiResponse
 import io.swagger.v3.oas.annotations.tags.Tag
+import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -29,6 +30,7 @@ class ProductCommandController(
             ApiResponse(responseCode = "200", description = "상품 등록 성공")
         ]
     )
+    @PreAuthorize("hasAuthority('ROLE_MEMBER')")
     @PostMapping
     fun registerProduct(@RequestBody request: CommandRegisterProduct,
                         @AuthenticationPrincipal member: CustomMemberDetails): ApiResultResponse<CommandRegisterProductResult> {
@@ -45,6 +47,7 @@ class ProductCommandController(
             ApiResponse(responseCode = "200", description = "상품 구매 성공")
         ]
     )
+    @PreAuthorize("hasAuthority('ROLE_MEMBER')")
     @PostMapping("/purchase")
     fun purchaseProduct(@RequestBody request: CommandPurchaseProduct,
                         @AuthenticationPrincipal member: CustomMemberDetails): ApiResultResponse<CommandPurchaseProductResult> {

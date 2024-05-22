@@ -15,7 +15,7 @@ import wanted.market.api.product.domain.dto.out.CommandApproveOrderResult
 
 @RestController
 @RequestMapping("/order")
-@Tag(name = "05. 주문 API")
+@Tag(name = "05. 주문 API", description = "인증 또는 권한 부여 후에 접근할 수 있는 주문 API")
 class OrderController(
     private val orderService: OrderService
 ) {
