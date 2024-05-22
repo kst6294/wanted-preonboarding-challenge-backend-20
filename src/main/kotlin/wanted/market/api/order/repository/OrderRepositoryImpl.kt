@@ -1,5 +1,6 @@
 package wanted.market.api.order.repository
 
+import com.querydsl.core.types.dsl.BooleanExpression
 import com.querydsl.jpa.impl.JPAQueryFactory
 import org.springframework.stereotype.Repository
 import wanted.market.api.order.domain.dto.out.RetrievePurchaseHistoryResult
@@ -14,22 +15,35 @@ class OrderRepositoryImpl(
     private val queryFactory: JPAQueryFactory
 ) : OrderRepositoryCustom {
 
-    override fun findAllPurchaseHistory(productId: Long, memberId: Long) : List<RetrievePurchaseHistoryResult> {
+    override fun findAllPurchaseHistory(
+        productId: Long,
+        memberId: Long
+    ): List<RetrievePurchaseHistoryResult> {
         val results = queryFactory
             .select(order)
             .from(order)
             .leftJoin(order.orderItems, orderItem).fetchJoin()
-            .where(order.buyer.id.eq(memberId), orderItem.product.id.eq(productId))
+            .where(
+                buyerIdEq(memberId),
+                productIdEq(productId)
+            )
             .fetch()
         return results.map { RetrievePurchaseHistoryResult.from(it) }
     }
 
-    override fun findAllReservationHistory(productId: Long, memberId: Long): List<RetrieveReservationHistoryResult> {
+    override fun findAllReservationHistory(
+        productId: Long,
+        memberId: Long
+    ): List<RetrieveReservationHistoryResult> {
         val results = queryFactory
             .select(order)
             .from(order)
             .leftJoin(order.orderItems, orderItem).fetchJoin()
-            .where(order.seller.id.`in`(memberId), order.buyer.id.`in`(memberId), orderItem.product.id.eq(productId))
+            .where(
+                sellerIdIn(memberId),
+                buyerIdIn(memberId),
+                productIdEq(productId)
+            )
             .fetch()
         return results.map { RetrieveReservationHistoryResult.from(it) }
     }
@@ -39,7 +53,35 @@ class OrderRepositoryImpl(
             .selectDistinct(order)
             .from(order)
             .leftJoin(order.orderItems).fetchJoin()
-            .where(order.orderItems.any().product.id.eq(orderId), order.buyer.id.eq(memberId))
+            .where(
+                orderIdEq(orderId),
+                buyerIdEq(memberId),
+                orderStatusEq(orderStatus)
+            )
             .fetchOne()
+    }
+
+    private fun buyerIdIn(memberId: Long): BooleanExpression? {
+        return order.buyer.id.`in`(memberId)
+    }
+
+    private fun sellerIdIn(memberId: Long): BooleanExpression? {
+        return order.seller.id.`in`(memberId)
+    }
+
+    private fun productIdEq(productId: Long): BooleanExpression? {
+        return orderItem.product.id.eq(productId)
+    }
+
+    private fun orderStatusEq(orderStatus: OrderStatus): BooleanExpression? {
+        return order.orderStatus.eq(orderStatus)
+    }
+
+    private fun orderIdEq(orderId: Long): BooleanExpression? {
+        return order.id.eq(orderId)
+    }
+
+    private fun buyerIdEq(memberId: Long): BooleanExpression? {
+        return order.buyer.id.eq(memberId)
     }
 }

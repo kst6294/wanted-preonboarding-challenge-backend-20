@@ -1,0 +1,35 @@
+spring:
+
+  main:
+    allow-bean-definition-overriding: true
+
+  datasource:
+    url: jdbc:h2:mem:testdb
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+
+  sql:
+    init:
+      mode: always
+
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        auto_quote_keyword: true
+        globally_quoted_identifiers: true
+        default_batch_fetch_size: 100
+    open-in-view: false
+    defer-datasource-initialization: true
+
+jwt:
+  secret: ${JWT_SECRET_TOKEN}
+  access-token-valid-seconds: ${JWT_ACCESS_TOKEN_VALID_SECONDS}
+  refresh-token-valid-seconds: ${JWT_REFRESH_TOKEN_VALID_SECONDS}
+
+decorator:
+  datasource:
+    p6spy:
+      enable-logging: true

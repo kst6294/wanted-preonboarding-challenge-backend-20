@@ -5,14 +5,14 @@ import wanted.market.api.order.domain.entity.OrderItem
 import wanted.market.api.order.domain.entity.OrderStatus
 
 data class RetrievePurchaseHistoryResult(
-    val id: Long,
+    val orderId: Long,
     val orderStatus: OrderStatus,
     val orderItems: MutableList<RetrievePurchaseOrderItemsResult> = mutableListOf()
 ) {
     companion object {
         fun from(order: Order) : RetrievePurchaseHistoryResult {
             return RetrievePurchaseHistoryResult(
-                id = order.id!!,
+                orderId = order.id!!,
                 orderStatus = order.orderStatus,
                 orderItems = order.orderItems.map { RetrievePurchaseOrderItemsResult.from(it) }.toMutableList()
             )

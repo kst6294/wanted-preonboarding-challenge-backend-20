@@ -1,5 +1,6 @@
 package wanted.market.api.member.application
 
+import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
@@ -40,6 +41,22 @@ class MemberAuthServiceTest(
         request.password shouldBe response.password
     }
 
+    "회원가입시 중복된 아이디면 예외를 발생시킨다" {
+        // given
+        val request = CommandRegisterMember(
+            userId = "seonwoo_jung1",
+            password = "12345678a"
+        )
+
+        // when
+        val exception = shouldThrow<IllegalArgumentException> {
+            memberAuthService.registerMember(request)
+        }
+
+        // then
+        exception.message shouldBe "이미 존재하는 아이디입니다."
+    }
+
     "로그인을 한다" {
         // given
         val memberInfo = registerMember()
@@ -56,4 +73,18 @@ class MemberAuthServiceTest(
         token.accessToken shouldNotBe null
     }
 
+    "로그인시 일치하는 사용자가 없으면 예외를 발생시킨다" {
+        // given
+        val loginRequest = CommandLoginMember(
+            userId = "exception1",
+            password = "exception1"
+        )
+
+        // when
+        val exception = shouldThrow<IllegalArgumentException> {
+            memberAuthService.loginMember(loginRequest)
+        }
+
+        exception.message shouldBe "회원이 존재하지 않습니다."
+    }
 })

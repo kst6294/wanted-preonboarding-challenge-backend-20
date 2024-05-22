@@ -2,83 +2,45 @@ package wanted.market.api.order.application
 
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
-import jakarta.persistence.EntityManager
 import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.data.repository.findByIdOrNull
 import org.springframework.transaction.annotation.Transactional
-import wanted.market.api.member.application.MemberAuthService
-import wanted.market.api.member.domain.dto.`in`.CommandRegisterMember
-import wanted.market.api.member.domain.dto.out.CommandRegisterMemberResult
+import wanted.market.api.member.domain.entity.Member
+import wanted.market.api.member.repository.MemberRepository
+import wanted.market.api.order.domain.entity.Order
 import wanted.market.api.order.domain.entity.OrderStatus.SALEAPPROVAL
-import wanted.market.api.product.application.ProductCommandService
-import wanted.market.api.product.domain.dto.`in`.CommandPurchaseProduct
-import wanted.market.api.product.domain.dto.`in`.CommandRegisterProduct
-import wanted.market.api.product.domain.dto.out.CommandRegisterProductResult
+import wanted.market.api.order.repository.OrderRepository
+import wanted.market.api.product.domain.entity.Product
 import wanted.market.api.product.repository.ProductRepository
 
 @SpringBootTest
 @Transactional
 class OrderServiceTest(
     private val orderService: OrderService,
-    private val memberAuthService: MemberAuthService,
-    private val productCommandService: ProductCommandService,
-    private val em: EntityManager,
-    private val productRepository: ProductRepository
+    private val memberRepository: MemberRepository,
+    private val productRepository: ProductRepository,
+    private val orderRepository: OrderRepository,
 ) : StringSpec({
 
-    fun registerMember(): CommandRegisterMemberResult {
-        val request = CommandRegisterMember(
-            userId = "seonwoo_jung",
-            password = "12345678a"
-        )
+    lateinit var member: Member
+    lateinit var product: Product
+    lateinit var order: Order
 
-        // when
-        return memberAuthService.registerMember(request)
-    }
-
-    fun registerProduct() : CommandRegisterProductResult {
-        val memberInfo = registerMember()
-
-        val productRequest = CommandRegisterProduct(
-            name = "상품명",
-            price = 1_000_000,
-            quantity = 2
-        )
-        return productCommandService.registerProduct(productRequest, memberInfo.id)
+    beforeTest {
+        member = memberRepository.findByIdOrNull(1L) ?: throw IllegalArgumentException("회원을 찾을 수 없습니다.")
+        product = productRepository.findByIdOrNull(1L) ?: throw IllegalArgumentException("제품을 찾을 수 없습니다.")
+        order = orderRepository.findByIdOrNull(1L) ?: throw IllegalArgumentException("주문을 찾을 수 없습니다.")
     }
 
     "판매자가 제품 판매 승인을 한다" {
-        val product = registerProduct()
-
-        val purchaseRequest = CommandPurchaseProduct(
-            productId = product.id,
-            quantity = 2
-        )
-
-        // when
-        val purchaseResponse = productCommandService.purchaseProduct(purchaseRequest, product.sellerId)
-
-        val order = orderService.approveOrder(purchaseResponse.id, product.sellerId)
-
+        val order = orderService.approveOrder(order.id!!, member.id!!)
         order.orderStatus shouldBe SALEAPPROVAL
-        em.flush()
     }
 
     "구매자가 구매 확정을 한다" {
-        val product = registerProduct()
+        val approveOrder = orderService.approveOrder(order.id!!, member.id!!)
+        val responseOrder = orderService.confirmOrder(approveOrder.orderId, member.id!!)
 
-        val purchaseRequest = CommandPurchaseProduct(
-            productId = product.id,
-            quantity = 2
-        )
-
-        // when
-        val purchaseResponse = productCommandService.purchaseProduct(purchaseRequest, product.sellerId)
-
-        val order = orderService.approveOrder(purchaseResponse.id, product.sellerId)
-
-        em.flush()
-
-        orderService.confirmOrder(order.orderId, product.sellerId)
-        em.flush()
+        responseOrder shouldBe order.id!!
     }
 })
