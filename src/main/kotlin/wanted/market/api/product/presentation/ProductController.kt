@@ -3,11 +3,13 @@ package wanted.market.api.product.presentation
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.responses.ApiResponse
 import io.swagger.v3.oas.annotations.tags.Tag
+import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import wanted.market.api.common.ApiResultResponse
+import wanted.market.api.common.security.CustomMemberDetails
 import wanted.market.api.product.application.ProductService
 import wanted.market.api.product.domain.dto.out.RetrieveProductResult
 
@@ -37,9 +39,10 @@ class ProductController(
         ]
     )
     @GetMapping("/{productId}")
-    fun findOneProduct(@PathVariable productId: Long) : ApiResultResponse<RetrieveProductResult> {
+    fun findOneProduct(@PathVariable productId: Long,
+                       @AuthenticationPrincipal member: CustomMemberDetails) : ApiResultResponse<RetrieveProductResult> {
         return ApiResultResponse(
-            data = productService.findOneProduct(productId)
+            data = productService.findOneProduct(productId, member.getMemberId())
         )
     }
 }

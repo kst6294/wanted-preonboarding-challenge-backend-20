@@ -1,7 +1,6 @@
 package wanted.market.api.product.domain.dto.`in`
 
 import io.swagger.v3.oas.annotations.media.Schema
-import wanted.market.api.product.domain.entity.ProductStatus
 
 @Schema(title = "상품 등록")
 data class CommandRegisterProduct(
@@ -12,8 +11,5 @@ data class CommandRegisterProduct(
     val price: Long,
 
     @Schema(description = "수량", example = "1")
-    val quantity: Int,
-
-    @Schema(description = "상태", example = "SALE")
-    val status: ProductStatus
+    val quantity: Int
 )

@@ -2,6 +2,7 @@ package wanted.market.api.order.application
 
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import wanted.market.api.order.domain.entity.OrderStatus.SALEAPPROVAL
 import wanted.market.api.order.repository.OrderRepository
 import wanted.market.api.product.domain.dto.out.CommandApproveOrderResult
 
@@ -15,5 +16,12 @@ class OrderService(
             ?: throw IllegalArgumentException("주문을 찾을 수 없습니다.")
         order.approveOrder()
         return CommandApproveOrderResult.from(order)
+    }
+
+    fun confirmOrder(orderId: Long, memberId: Long): Long {
+        val order = orderRepository.findByIdAndBuyerIdAndOrderStatus(orderId, memberId, SALEAPPROVAL)
+            ?: throw IllegalArgumentException("주문을 찾을 수 없습니다.")
+        order.confirmOrder()
+        return order.id!!
     }
 }

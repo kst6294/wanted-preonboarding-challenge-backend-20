@@ -21,9 +21,9 @@ class OrderController(
 ) {
 
     @Operation(
-        summary = "주문 승인", responses = [
+        summary = "판매 승인", responses = [
             ApiResponse(responseCode = "400", description = "주문을 찾을 수 없음"),
-            ApiResponse(responseCode = "200", description = "주문 승인 성공")
+            ApiResponse(responseCode = "200", description = "판매 승인 성공")
         ]
     )
     @PostMapping("/{orderId}")
@@ -31,6 +31,20 @@ class OrderController(
                      @AuthenticationPrincipal member: CustomMemberDetails) : ApiResultResponse<CommandApproveOrderResult> {
         return ApiResultResponse(
             data = orderService.approveOrder(orderId, member.getMemberId())
+        )
+    }
+
+    @Operation(
+        summary = "구매 확정", responses = [
+            ApiResponse(responseCode = "400", description = "주문을 찾을 수 없음"),
+            ApiResponse(responseCode = "200", description = "구매 확정 성공")
+        ]
+    )
+    @PostMapping("/confirm/{orderId}")
+    fun confirmOrder(@PathVariable orderId: Long,
+                     @AuthenticationPrincipal member: CustomMemberDetails) : ApiResultResponse<Long> {
+        return ApiResultResponse(
+            data = orderService.confirmOrder(orderId, member.getMemberId())
         )
     }
 }

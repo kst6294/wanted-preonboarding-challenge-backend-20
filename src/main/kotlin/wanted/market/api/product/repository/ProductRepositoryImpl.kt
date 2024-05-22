@@ -11,8 +11,8 @@ class ProductRepositoryImpl(
     override fun isPurchasable(productId: Long, buyerId: Long): Long {
         return queryFactory
             .select(order.count())
-            .from(order).innerJoin(order.orderProducts)
-            .where(order.buyer.id.eq(buyerId), order.orderProducts.any().id.eq(productId))
+            .from(order).innerJoin(order.orderItems)
+            .where(order.buyer.id.eq(buyerId), order.orderItems.any().id.eq(productId))
             .fetchOne() ?: 0
     }
 }

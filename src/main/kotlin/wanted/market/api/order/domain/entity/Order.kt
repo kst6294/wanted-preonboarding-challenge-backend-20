@@ -7,14 +7,13 @@ import jakarta.persistence.GenerationType.IDENTITY
 import org.springframework.boot.context.properties.bind.DefaultValue
 import wanted.market.api.common.BaseTimeEntity
 import wanted.market.api.member.domain.entity.Member
-import wanted.market.api.order.domain.entity.OrderStatus.NONE
-import wanted.market.api.order.domain.entity.OrderStatus.SALEAPPROVAL
+import wanted.market.api.order.domain.entity.OrderStatus.*
 
 @Entity
 class Order(
 
     @OneToMany(mappedBy = "orders")
-    val orderProducts: MutableList<OrderItem> = mutableListOf(),
+    val orderItems: MutableList<OrderItem> = mutableListOf(),
 
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "buyer_id")
@@ -36,6 +35,10 @@ class Order(
 
     fun approveOrder() {
         this.orderStatus = SALEAPPROVAL
+    }
+
+    fun confirmOrder() {
+        this.orderStatus = PURCHASECONFIRM
     }
 
     companion object {

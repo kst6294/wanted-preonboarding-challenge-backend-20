@@ -7,6 +7,7 @@ import org.hibernate.annotations.DynamicUpdate
 import wanted.market.api.common.BaseTimeEntity
 import wanted.market.api.member.domain.entity.Member
 import wanted.market.api.product.domain.dto.`in`.CommandRegisterProduct
+import wanted.market.api.product.domain.entity.ProductStatus.SALE
 
 @Entity
 @DynamicUpdate
@@ -32,15 +33,15 @@ class Product(
 ) : BaseTimeEntity<Product, Long>() {
 
     fun purchase(quantity: Int) {
-        if (this.status != ProductStatus.SALE) {
+        if (this.status != SALE) {
             throw IllegalArgumentException("판매중인 상품만 구매할 수 있습니다.")
         }
 
         this.quantity -= quantity
 
         when {
-            quantity == 0 -> this.status = ProductStatus.RESERVATION
-            quantity < 0 -> throw IllegalArgumentException("상품의 재고가 부족합니다.")
+            this.quantity == 0 -> this.status = ProductStatus.RESERVATION
+            this.quantity < 0 -> throw IllegalArgumentException("상품의 재고가 부족합니다.")
         }
     }
 
@@ -49,7 +50,7 @@ class Product(
             return Product(
                 name = request.name,
                 price = request.price,
-                status = request.status,
+                status = SALE,
                 quantity = request.quantity,
                 seller = member
             )
