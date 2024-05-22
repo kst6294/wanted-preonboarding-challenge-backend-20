@@ -6,10 +6,14 @@ import jakarta.persistence.*
 @Table(name = "users")
 class Member(
         @Id
-        @GeneratedValue(strategy = GenerationType.AUTO)
-        var id: Long = -1,
-
+        @GeneratedValue(strategy = GenerationType.IDENTITY)
+        val id: Long? = -1, //TODO
         var name: String,
 
         @Column(unique = true)
-        var email: String)
+        var email: String
+) {
+
+}
+
+

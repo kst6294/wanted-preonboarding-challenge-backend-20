@@ -13,7 +13,7 @@ class MemberService(
     fun save(saveMemberRequest: SaveMemberRequest): Long {
         checkDuplication(saveMemberRequest.email)
         val member = joinMember(saveMemberRequest)
-        return member.id
+        return 0
     }
 
     private fun joinMember(saveMemberRequest: SaveMemberRequest): Member {
