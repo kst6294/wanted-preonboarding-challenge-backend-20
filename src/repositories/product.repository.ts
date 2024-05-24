@@ -13,6 +13,7 @@ export default class ProductRepository {
         p.seller_id AS sellerID,
         p.name,
         p.price,
+        p.amount,
         p.status AS productStatus
       FROM
         products AS p
@@ -70,6 +71,7 @@ export default class ProductRepository {
         t.buyer_id AS buyerID,
         p.name,
         p.price,
+        p.amount,
         p.status AS productStatus,
         t.status AS transactionStatus
       FROM
@@ -95,6 +97,7 @@ export default class ProductRepository {
         seller_id AS sellerID,
         name,
         price,
+        amount,
         status AS productStatus
       FROM
         products

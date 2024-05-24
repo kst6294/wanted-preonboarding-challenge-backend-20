@@ -1,9 +1,27 @@
 import { PoolConnection, ResultSetHeader, RowDataPacket } from "mysql2/promise";
+import { ProductStatus } from "../interfaces/IProduct.dto";
 import ITransaction from "../interfaces/ITransaction.dto";
 import database from "../database";
 
 export default class TransactionRepository {
   database = database;
+
+  async selectTransactionCount(dao: ITransaction) {
+    const pool = this.database.pool;
+    const query = `
+      SELECT
+        COUNT(*) AS count
+      FROM
+        transactions
+      WHERE
+        product_id = ?
+        AND status = ?;
+    `;
+
+    const values = [dao.productID, dao.status];
+    const [result] = await pool.query<RowDataPacket[]>(query, values);
+    return result;
+  }
 
   async selectTransaction(dao: ITransaction) {
     const pool = this.database.pool;
@@ -22,8 +40,7 @@ export default class TransactionRepository {
     return result;
   }
 
-  async insertTransaction(dao: ITransaction) {
-    const pool = this.database.pool;
+  async insertTransaction(conn: PoolConnection, dao: ITransaction) {
     const query = `
       INSERT INTO
         transactions
@@ -37,13 +54,10 @@ export default class TransactionRepository {
     `;
 
     const values = [dao.productID, dao.userID, dao.status];
-    await pool.query<ResultSetHeader>(query, values);
+    await conn.query<ResultSetHeader>(query, values);
   }
 
-  async updateTransaction(
-    conn: PoolConnection,
-    dao: ITransaction & { buyerID: number }
-  ) {
+  async updateTransactionStatus(conn: PoolConnection, dao: ITransaction) {
     const query = `
       UPDATE
         transactions
@@ -54,15 +68,34 @@ export default class TransactionRepository {
         AND buyer_id = ?;
     `;
 
-    const values = [dao.status, dao.productID, dao.buyerID];
+    const values = [dao.status, dao.productID, dao.userID];
     const [result] = await conn.query<ResultSetHeader>(query, values);
     return result;
   }
 
-  async selectProduct(conn: PoolConnection, dao: ITransaction) {
+  async selectProduct(dao: ITransaction) {
+    const pool = this.database.pool;
+    const query = `
+      SELECT        
+        price,
+        amount,
+        status
+      FROM
+        products
+      WHERE
+        id = ?;
+    `;
+
+    const values = [dao.productID];
+    const [result] = await pool.query<RowDataPacket[]>(query, values);
+    return result;
+  }
+
+  async selectProductBySellerID(dao: ITransaction) {
+    const pool = this.database.pool;
     const query = `
       SELECT
-        status AS productStatus
+        status
       FROM
         products
       WHERE
@@ -71,22 +104,24 @@ export default class TransactionRepository {
     `;
 
     const values = [dao.productID, dao.userID];
-    const [result] = await conn.query<RowDataPacket[]>(query, values);
+    const [result] = await pool.query<RowDataPacket[]>(query, values);
     return result;
   }
 
-  async updateProudct(conn: PoolConnection, dao: ITransaction) {
+  async updateProductStatus(
+    conn: PoolConnection,
+    dao: ITransaction & { productStatus: ProductStatus }
+  ) {
     const query = `
       UPDATE
         products
       SET
-        status = "완료"
+        status = ?
       WHERE
-        id = ?
-        AND seller_id = ?;
+        id = ?;
     `;
 
-    const values = [dao.productID, dao.userID];
+    const values = [dao.productStatus, dao.productID];
     const [result] = await conn.query<ResultSetHeader>(query, values);
     return result;
   }

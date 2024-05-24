@@ -1,10 +1,11 @@
-export enum Status {
-  진행중 = "진행중",
-  완료 = "완료",
+export enum TransactionStatus {
+  구매요청 = "구매요청",
+  판매승인 = "판매승인",
+  구매확정 = "구매확정",
 }
 
 export default interface ITransaction {
   productID: number;
   userID: number;
-  status: Status;
+  status: TransactionStatus;
 }

@@ -1,6 +1,6 @@
 import { ResultSetHeader } from "mysql2";
 import { faker } from "@faker-js/faker";
-import { Status } from "../../src/interfaces/IProduct.dto";
+import { ProductStatus } from "../../src/interfaces/IProduct.dto";
 import database from "../../src/database";
 import InsertUsers from "../insert-users";
 import { getRandomStatus, makeIDIterator, makeIDs } from "../utils";
@@ -18,7 +18,8 @@ export default class InsertProducts {
       getUserID(),
       faker.commerce.product(),
       faker.commerce.price({ dec: 0, min: 1_000, max: 10_000 }),
-      getRandomStatus(Status),
+      faker.helpers.rangeToNumber({ min: 10, max: 100 }),
+      getRandomStatus(ProductStatus),
     ]);
   }
 
@@ -32,6 +33,7 @@ export default class InsertProducts {
           seller_id,
           name,
           price,
+          amount,
           status
         )
       VALUES

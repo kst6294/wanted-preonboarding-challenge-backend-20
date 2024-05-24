@@ -1,5 +1,6 @@
 import { ResultSetHeader } from "mysql2";
-import { Status } from "../../src/interfaces/ITransaction.dto";
+import { faker } from "@faker-js/faker";
+import { TransactionStatus } from "../../src/interfaces/ITransaction.dto";
 import database from "../../src/database";
 import InsertProducts from "../insert-products";
 import InsertUsers from "../insert-users";
@@ -28,7 +29,13 @@ export default class InsertTransactions {
 
       while (sellerID === buyerID) buyerID = getBuyerID();
 
-      return [transactionID, getProductID(), buyerID, getRandomStatus(Status)];
+      return [
+        transactionID,
+        getProductID(),
+        buyerID,
+        faker.commerce.price({ dec: 0, min: 1_000, max: 10_000 }),
+        getRandomStatus(TransactionStatus),
+      ];
     });
   }
 
@@ -41,6 +48,7 @@ export default class InsertTransactions {
           id,
           product_id,
           buyer_id,
+          price,
           status
         )
       VALUES

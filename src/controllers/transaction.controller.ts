@@ -1,5 +1,6 @@
 import { Router, Request, Response, NextFunction } from "express";
 import IController from "../interfaces/IController";
+import { TransactionStatus } from "../interfaces/ITransaction.dto";
 import TransactionService from "../services/transaction.service";
 
 class TransactionController implements IController {
@@ -12,22 +13,29 @@ class TransactionController implements IController {
   }
 
   initRoutes() {
-    this.router.post(this.path + "/:productID", this.postTransaction);
-    this.router.put(this.path + "/:productID", this.putTransaction);
+    this.router.post(
+      this.path + "/:productID/request",
+      this.requestTransaction
+    );
+    this.router.put(this.path + "/:productID/approve", this.approveTransaction);
+    this.router.put(this.path + "/:productID/confirm", this.confirmTransaction);
   }
 
-  postTransaction = async (req: Request, res: Response, next: NextFunction) => {
+  requestTransaction = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
     try {
       const { userID } = req.cookies;
       const { productID } = req.params;
-      const { status } = req.body;
 
       const dto = {
         productID: Number(productID),
         userID: Number(userID),
-        status,
+        status: TransactionStatus.구매요청,
       };
-      await this.service.postTransaction(dto);
+      await this.service.requestTransaction(dto);
 
       res.status(201).end();
     } catch (error) {
@@ -35,19 +43,45 @@ class TransactionController implements IController {
     }
   };
 
-  putTransaction = async (req: Request, res: Response, next: NextFunction) => {
+  approveTransaction = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
     try {
       const { userID } = req.cookies;
       const { productID } = req.params;
-      const { buyerID, status } = req.body;
+      const { buyerID } = req.body;
 
       const dto = {
         productID: Number(productID),
         userID: Number(userID),
         buyerID,
-        status,
+        status: TransactionStatus.판매승인,
       };
-      await this.service.putTransaction(dto);
+      await this.service.approveTransaction(dto);
+
+      res.end();
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  confirmTransaction = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
+    try {
+      const { userID } = req.cookies;
+      const { productID } = req.params;
+
+      const dto = {
+        productID: Number(productID),
+        userID: Number(userID),
+        status: TransactionStatus.구매확정,
+      };
+      await this.service.confirmTransaction(dto);
 
       res.end();
     } catch (error) {

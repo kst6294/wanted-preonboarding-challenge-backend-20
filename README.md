@@ -8,6 +8,8 @@
 
 ## [ERD (링크)](https://dbdocs.io/kimdev0206/pre-task?view=relationships)
 
-자세한 정보는 링크를 확인해주세요.
+링크를 확인해주세요.
 
-![](./assets/pre-task.png)
+## 거래 시나리오
+
+![](./assets//image.drawio.png)

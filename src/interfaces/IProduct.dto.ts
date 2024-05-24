@@ -1,4 +1,4 @@
-export enum Status {
+export enum ProductStatus {
   판매중 = "판매중",
   예약중 = "예약중",
   완료 = "완료",
