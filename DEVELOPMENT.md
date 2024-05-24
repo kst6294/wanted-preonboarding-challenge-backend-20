@@ -42,7 +42,7 @@
 ### 개발 단계
 
 1. **회원 관리 시스템**
-  - 브랜치: `feature/member-product-registration`
+  - 브랜치: `feature/member-authorization`
   - 기능: 인증/인가
 
 2. **제품 등록 기능**
