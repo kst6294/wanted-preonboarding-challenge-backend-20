@@ -29,10 +29,12 @@ class TransactionController implements IController {
     try {
       const { userID } = req.cookies;
       const { productID } = req.params;
+      const { price } = req.body;
 
       const dto = {
         productID: Number(productID),
-        userID: Number(userID),
+        buyerID: Number(userID),
+        price,
         status: TransactionStatus.구매요청,
       };
       await this.service.requestTransaction(dto);
@@ -55,7 +57,7 @@ class TransactionController implements IController {
 
       const dto = {
         productID: Number(productID),
-        userID: Number(userID),
+        sellerID: Number(userID),
         buyerID,
         status: TransactionStatus.판매승인,
       };
@@ -78,7 +80,7 @@ class TransactionController implements IController {
 
       const dto = {
         productID: Number(productID),
-        userID: Number(userID),
+        buyerID: Number(userID),
         status: TransactionStatus.구매확정,
       };
       await this.service.confirmTransaction(dto);

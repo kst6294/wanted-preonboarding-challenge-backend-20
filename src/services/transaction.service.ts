@@ -16,33 +16,39 @@ export default class TransactionService {
       this.repository.selectProduct(dto),
     ]);
 
+    if (!product.amount) {
+      const message = "상품 수량이 없습니다.";
+      throw new HttpError(500, message);
+    }
+
+    let status = product.status;
+
+    if (dto.status === TransactionStatus.구매요청) {
+      if (transaction.count < product.amount) {
+        status = ProductStatus.판매중;
+      }
+
+      if (transaction.count >= product.amount) {
+        status = ProductStatus.예약중;
+      }
+    }
+
     if (
-      dto.status === TransactionStatus.구매요청 &&
-      transaction.count > 0 &&
-      transaction.count < product.amount
-    ) {
-      var status = ProductStatus.판매중;
-    } else if (transaction.count >= product.amount) {
-      var status = ProductStatus.예약중;
-    } else if (
       dto.status === TransactionStatus.구매확정 &&
       transaction.count === product.amount
     ) {
-      var status = ProductStatus.완료;
-    } else {
-      const message = "상품 상태를 변경할 수 없습니다.";
-      throw new HttpError(500, message);
+      status = ProductStatus.완료;
     }
 
     const dao = { ...dto, productStatus: status };
     await this.repository.updateProductStatus(conn, dao);
   }
 
-  async requestTransaction(dto: ITransaction) {
+  async requestTransaction(dto: ITransaction & { price: number }) {
     const pool = database.pool;
 
     const [[transaction], conn] = await Promise.all([
-      this.repository.selectTransaction(dto),
+      this.repository.selectTransactionStatus(dto),
       pool.getConnection(),
     ]);
 
@@ -67,20 +73,20 @@ export default class TransactionService {
     }
   }
 
-  async approveTransaction(dto: ITransaction & { buyerID: number }) {
+  async approveTransaction(dto: ITransaction) {
     const pool = database.pool;
 
-    const [[product], conn] = await Promise.all([
-      this.repository.selectProductBySellerID(dto),
+    const [[transaction], conn] = await Promise.all([
+      this.repository.selectTransactionStatus(dto),
       pool.getConnection(),
     ]);
 
-    if (!product) {
+    if (!transaction) {
       const message = `요청하신 상품 ID (${dto.productID}) 의 판매자가 아닙니다.`;
       throw new HttpError(403, message);
     }
 
-    if (product.status === dto.status) {
+    if (transaction.status === dto.status) {
       const message = `이미 ${TransactionStatus.판매승인} 처리되었습니다.`;
       throw new HttpError(409, message);
     }
@@ -89,7 +95,6 @@ export default class TransactionService {
       await conn.beginTransaction();
 
       await this.repository.updateTransactionStatus(conn, dto);
-      await this.updateProductStatus(conn, dto);
 
       await conn.commit();
     } catch (error) {
@@ -104,12 +109,17 @@ export default class TransactionService {
   async confirmTransaction(dto: ITransaction) {
     const pool = database.pool;
 
-    const [[product], conn] = await Promise.all([
-      this.repository.selectProductBySellerID(dto),
+    const [[transaction], conn] = await Promise.all([
+      this.repository.selectTransactionStatus(dto),
       pool.getConnection(),
     ]);
 
-    if (product.status === dto.status) {
+    if (transaction.status === TransactionStatus.구매요청) {
+      const message = `아직 ${TransactionStatus.판매승인} 처리되지 않았습니다.`;
+      throw new HttpError(403, message);
+    }
+
+    if (transaction.status === dto.status) {
       const message = `이미 ${TransactionStatus.구매확정} 처리되었습니다.`;
       throw new HttpError(409, message);
     }

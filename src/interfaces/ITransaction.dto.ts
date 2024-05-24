@@ -6,6 +6,7 @@ export enum TransactionStatus {
 
 export default interface ITransaction {
   productID: number;
-  userID: number;
+  sellerID?: number;
+  buyerID: number;
   status: TransactionStatus;
 }

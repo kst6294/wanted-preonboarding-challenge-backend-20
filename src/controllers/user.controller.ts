@@ -21,9 +21,7 @@ class UserController implements IController {
       const dto = req.body;
       await this.service.signUp(dto);
 
-      res.json({
-        message: "회원가입 되었습니다.",
-      });
+      res.status(201).end();
     } catch (error) {
       next(error);
     }
@@ -35,9 +33,7 @@ class UserController implements IController {
       const userID = await this.service.logIn(dto);
 
       res.cookie("userID", userID);
-      res.json({
-        message: "로그인 되었습니다.",
-      });
+      res.status(201).end();
     } catch (error) {
       next(error);
     }

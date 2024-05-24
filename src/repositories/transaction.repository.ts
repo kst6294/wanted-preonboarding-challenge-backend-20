@@ -23,37 +23,58 @@ export default class TransactionRepository {
     return result;
   }
 
-  async selectTransaction(dao: ITransaction) {
+  async selectTransactionStatus(dao: ITransaction) {
     const pool = this.database.pool;
-    const query = `
+    let query = `
       SELECT
-        *
+        t.status
       FROM
-        transactions
-      WHERE
-        product_id = ?
-        AND buyer_id = ?;
+        transactions AS t
     `;
 
-    const values = [dao.productID, dao.userID];
+    let values = [dao.productID];
+
+    if (dao.sellerID) {
+      query += `
+        INNER JOIN
+          products AS p
+          ON t.product_id = p.id
+        WHERE
+          t.product_id = ?
+          AND seller_id = ?;
+      `;
+      values.push(dao.sellerID);
+    } else {
+      query += `
+        WHERE
+          t.product_id = ?
+          AND t.buyer_id = ?;
+      `;
+      values.push(dao.buyerID);
+    }
+
     const [result] = await pool.query<RowDataPacket[]>(query, values);
     return result;
   }
 
-  async insertTransaction(conn: PoolConnection, dao: ITransaction) {
+  async insertTransaction(
+    conn: PoolConnection,
+    dao: ITransaction & { price: number }
+  ) {
     const query = `
       INSERT INTO
         transactions
         (
           product_id,
           buyer_id,
+          price,
           status
         )
       VALUES
-        (?, ?, ?);
+        (?, ?, ?, ?);
     `;
 
-    const values = [dao.productID, dao.userID, dao.status];
+    const values = [dao.productID, dao.buyerID, dao.price, dao.status];
     await conn.query<ResultSetHeader>(query, values);
   }
 
@@ -68,7 +89,7 @@ export default class TransactionRepository {
         AND buyer_id = ?;
     `;
 
-    const values = [dao.status, dao.productID, dao.userID];
+    const values = [dao.status, dao.productID, dao.buyerID];
     const [result] = await conn.query<ResultSetHeader>(query, values);
     return result;
   }
@@ -87,23 +108,6 @@ export default class TransactionRepository {
     `;
 
     const values = [dao.productID];
-    const [result] = await pool.query<RowDataPacket[]>(query, values);
-    return result;
-  }
-
-  async selectProductBySellerID(dao: ITransaction) {
-    const pool = this.database.pool;
-    const query = `
-      SELECT
-        status
-      FROM
-        products
-      WHERE
-        id = ?
-        AND seller_id = ?;
-    `;
-
-    const values = [dao.productID, dao.userID];
     const [result] = await pool.query<RowDataPacket[]>(query, values);
     return result;
   }
