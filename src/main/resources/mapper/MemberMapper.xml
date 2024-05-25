@@ -3,14 +3,14 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="wanted.preonboard.market.mapper.MemberMapper">
     <insert id="insertMember">
-        INSERT INTO "Member" ("username", "email", "password")
+        INSERT INTO member (username, email, password)
         VALUES (#{username}, #{email}, #{password})
     </insert>
 
     <select id="selectMemberByEmail" resultType="Member">
         SELECT *
-        FROM "Member"
-        WHERE "email" = #{email}
+        FROM member
+        WHERE email = #{email}
         LIMIT 1
     </select>
 </mapper>

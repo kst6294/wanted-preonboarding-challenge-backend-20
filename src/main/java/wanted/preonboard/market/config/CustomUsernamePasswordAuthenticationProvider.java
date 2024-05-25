@@ -9,20 +9,18 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
-import wanted.preonboard.market.domain.entity.Member;
-import wanted.preonboard.market.message.MemberExceptionMessage;
-import wanted.preonboard.market.service.Member.MemberService;
+import wanted.preonboard.market.message.MemberMessage;
 
 import java.util.Collections;
 
 @Component
 public class CustomUsernamePasswordAuthenticationProvider implements AuthenticationProvider {
-    private final MemberService memberService;
+    private final CustomUserDetailsService customUserDetailsService;
     private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public CustomUsernamePasswordAuthenticationProvider(MemberService memberService, PasswordEncoder passwordEncoder) {
-        this.memberService = memberService;
+    public CustomUsernamePasswordAuthenticationProvider(CustomUserDetailsService customUserDetailsService, PasswordEncoder passwordEncoder) {
+        this.customUserDetailsService = customUserDetailsService;
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -30,17 +28,17 @@ public class CustomUsernamePasswordAuthenticationProvider implements Authenticat
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         String username = authentication.getName();
         String password = authentication.getCredentials().toString();
-        Member member = memberService.getMemberByEmail(username);
-        if (member != null) {
-            if (passwordEncoder.matches(password, member.getPassword())) {
-                return new UsernamePasswordAuthenticationToken(username, password, Collections.singletonList(
-                        new SimpleGrantedAuthority("USER")
+        CustomUser user = (CustomUser) customUserDetailsService.loadUserByUsername(username);
+        if (user != null) {
+            if (passwordEncoder.matches(password, user.getPassword())) {
+                return new UsernamePasswordAuthenticationToken(user, password, Collections.singletonList(
+                    new SimpleGrantedAuthority("USER")
                 ));
             } else {
-                throw new BadCredentialsException(MemberExceptionMessage.WRONG_PASSWORD.getMessage());
+                throw new BadCredentialsException(MemberMessage.WRONG_PASSWORD.getMessage());
             }
         } else {
-            throw new BadCredentialsException(MemberExceptionMessage.USER_NOT_FOUND.getMessage());
+            throw new BadCredentialsException(MemberMessage.USER_NOT_FOUND.getMessage());
         }
     }
 

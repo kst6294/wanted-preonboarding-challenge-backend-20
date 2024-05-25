@@ -10,7 +10,7 @@ import wanted.preonboard.market.domain.dto.MemberDto;
 import wanted.preonboard.market.domain.dto.ResponseBad;
 import wanted.preonboard.market.domain.dto.ResponseOk;
 import wanted.preonboard.market.domain.entity.Member;
-import wanted.preonboard.market.message.MemberExceptionMessage;
+import wanted.preonboard.market.message.MemberMessage;
 import wanted.preonboard.market.service.Member.MemberService;
 
 import java.util.Map;
@@ -33,12 +33,12 @@ public class MemberController {
             String hashPwd = passwordEncoder.encode(memberDto.getPassword());
             memberDto.setPassword(hashPwd);
             if (memberService.insertMember(memberDto)) {
-                response = new ResponseOk(MemberExceptionMessage.REGISTERED_SUCCESSFULLY.getMessage()).toResponse();
+                response = new ResponseOk(MemberMessage.REGISTERED_SUCCESSFULLY.getMessage()).toResponse();
             } else {
-                response = new ResponseBad(MemberExceptionMessage.ERROR.getMessage()).toResponse();
+                response = new ResponseBad(MemberMessage.ERROR.getMessage()).toResponse();
             }
         } catch (DataIntegrityViolationException e) {
-            response = new ResponseBad(MemberExceptionMessage.USER_ALREADY_EXISTS.getMessage()).toResponse();
+            response = new ResponseBad(MemberMessage.USER_ALREADY_EXISTS.getMessage()).toResponse();
         }
         return response;
     }
