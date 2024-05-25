@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="wanted.preonboard.market.mapper.ProductMapper">
+
+    <insert id="insertProduct" parameterType="Product">
+        INSERT INTO product (name, price, seller_id)
+        VALUES (#{name}, #{price}, #{sellerId})
+    </insert>
+    <select id="getProducts" resultType="Product">
+        SELECT *
+        FROM product
+    </select>
+    <select id="getProductById" resultType="Product">
+        SELECT *
+        FROM product
+        WHERE id = #{id}
+    </select>
+    <update id="updateProductById" parameterType="Product">
+        UPDATE product
+        SET name  = #{name},
+            price = #{price},
+            state = #{state}
+        WHERE id = #{id}
+    </update>
+</mapper>
