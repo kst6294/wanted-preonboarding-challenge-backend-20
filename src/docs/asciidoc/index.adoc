@@ -1,0 +1,13 @@
+= Wanted Market API 문서
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 2
+:sectlinks:
+:docinfo: shared-head
+:stylesheet: /styles.css
+:linkcss:
+
+include::AUTH-API.adoc[]
+include::ENUMS.adoc[]

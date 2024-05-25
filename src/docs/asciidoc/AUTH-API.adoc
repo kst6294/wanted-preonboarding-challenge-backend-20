@@ -1,0 +1,25 @@
+= AUTH API Documentation
+
+== Get Access Token
+
+=== Request
+
+==== CURL Request
+include::../../../build/generated-snippets/auth-controller-test/get-access-token/curl-request.adoc[]
+
+==== HTTP Request
+include::../../../build/generated-snippets/auth-controller-test/get-access-token/http-request.adoc[]
+
+==== HTTPie Request
+include::../../../build/generated-snippets/auth-controller-test/get-access-token/httpie-request.adoc[]
+
+==== Request Body
+include::../../../build/generated-snippets/auth-controller-test/get-access-token/request-body.adoc[]
+
+=== Response
+
+==== HTTP Response
+include::../../../build/generated-snippets/auth-controller-test/get-access-token/http-response.adoc[]
+
+==== Response Body
+include::../../../build/generated-snippets/auth-controller-test/get-access-token/response-body.adoc[]

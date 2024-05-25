@@ -1,0 +1,105 @@
+.container {
+    flex: 1;
+    display: flex;
+}
+
+.content-wrapper {
+    flex: 3;
+    padding: 20px;
+}
+
+
+/* 목차에 대한 스타일 */
+#toc {
+    position: fixed;  /* 고정 위치 */
+    left: 0;  /* 화면의 왼쪽 끝에 위치 */
+    top: 0;  /* 화면의 상단에 위치 */
+    bottom: 0;  /* 화면의 하단에 위치 */
+    width: 250px;  /* 너비를 설정. 필요에 따라 조정 가능 */
+    overflow-y: auto;  /* 스크롤이 필요할 경우 자동으로 표시 */
+    padding: 20px;
+    border-right: 1px solid #ddd;  /* 오른쪽 경계선 */
+}
+
+#toc ul.sectlevel1 > li:before,
+#toc ul.sectlevel2 > li:before,
+#toc ul.sectlevel3 > li:before {
+    content: none;
+}
+
+
+body > div {
+    margin-left: 270px;  /* 목차의 너비 + 목차와 본문 사이의 간격 */
+    padding: 20px;
+}
+
+
+h1, h2, h3, h4, h5, h6 {
+    margin-top: 20px; /* 헤더 상단 여백 조정 */
+    font-weight: 600; /* 헤더 폰트 두께 조정 */
+}
+
+a {
+    color: #000000; /* 링크 기본 색상 */
+    transition: color 0.3s; /* 색상 변경 애니메이션 */
+}
+
+a:hover {
+    color: #AAB7B8; /* 마우스 오버 시 색상 */
+}
+
+.main-content {
+    float: right;
+    width: 76%; /* 본문의 너비를 조절하려면 이 값을 변경하세요. */
+}
+
+
+#toc li {
+    margin-bottom: 5px; /* 목차 항목 간 여백 조정 */
+}
+
+/* ENUMS 섹션 스타일 */
+.enum-section {
+    margin-top: 30px;
+    margin-bottom: 30px;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 20px;
+}
+
+.enum-title {
+    font-size: 2.6em;
+    color: #2c3e50;
+    margin-bottom: 10px;
+}
+
+
+.grid-item {
+    border: 1px solid rgba(0, 0, 0, 1.0);  /* 희미한 테두리 추가 */
+}
+
+
+.grid-container {
+    display: grid;
+    gap: 2px;  /* 갭 크기 */
+    background-color: rgba(0, 0, 0, 0.1);  /* 갭의 배경색. 셀 사이의 희미한 선처럼 보이게 한다. */
+}
+
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px 12px;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
