@@ -1,0 +1,8 @@
+redisKey
+|===
+|코드|코드명
+|`+REFRESH_TOKEN+`
+|REDIS KEY refresh_token, REDIS TTL 1
+|`+USERS+`
+|REDIS KEY users, REDIS TTL 1
+|===

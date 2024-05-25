@@ -1,0 +1,10 @@
+[source,json,options="nowrap"]
+----
+{
+  "data" : null,
+  "response" : {
+    "status" : 200,
+    "message" : "Access token issued successfully"
+  }
+}
+----

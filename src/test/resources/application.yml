@@ -1,0 +1,47 @@
+server:
+  port: 8088
+  error:
+    include-exception: false
+    include-message: always
+    include-stacktrace: ON_PARAM
+    whitelabel:
+      enabled: true
+
+spring:
+  datasource:
+    url: jdbc:h2:mem:testdb;MODE=MySQL;
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+    hikari:
+      pool-name: jpa-hikari-pool
+      maximum-pool-size: 10
+  jpa:
+    generate-ddl: false
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        default_batch_fetch_size: 100
+    show-sql: true
+    open-in-view: false
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+  data:
+    redis:
+      port: 6379
+      host: 127.0.0.1
+
+logging:
+  level:
+    com.zaxxer.hikari: DEBUG
+    com.wanted.preonboarding: DEBUG
+
+token:
+  secret: "36bddb74-043c-4fcd-a17d-d7089bf65b90"
+  expiration: 1800000
+  refresh_expiration: 86400000000
+
+
+

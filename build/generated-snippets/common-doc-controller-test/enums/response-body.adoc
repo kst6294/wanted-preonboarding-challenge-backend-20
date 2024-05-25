@@ -1,0 +1,26 @@
+[source,json,options="nowrap"]
+----
+{
+  "data" : {
+    "redisKey" : {
+      "REFRESH_TOKEN" : "REDIS KEY refresh_token, REDIS TTL 1",
+      "USERS" : "REDIS KEY users, REDIS TTL 1"
+    },
+    "yn" : {
+      "Y" : "Y means YES, N meas NO",
+      "N" : "Y means YES, N meas NO"
+    },
+    "memberShip" : {
+      "GUEST" : "USER MEMBERSHIP",
+      "NORMAL" : "USER MEMBERSHIP"
+    },
+    "jwtErrorEnum" : {
+      "UNSUPPORTED_TOKEN" : "JWT ERROR NAME UNSUPPORTED_TOKEN, ERROR MSG Unsupported JWT token.",
+      "MALFORMED_TOKEN" : "JWT ERROR NAME MALFORMED_TOKEN, ERROR MSG Invalid JWT token.",
+      "ILLEGAL_ARGUMENT" : "JWT ERROR NAME ILLEGAL_ARGUMENT, ERROR MSG JWT token compact of handler are invalid.",
+      "INVALID_SIGNATURE" : "JWT ERROR NAME INVALID_SIGNATURE, ERROR MSG Invalid JWT signature.",
+      "EXPIRED_TOKEN" : "JWT ERROR NAME EXPIRED_TOKEN, ERROR MSG Expired JWT token."
+    }
+  }
+}
+----

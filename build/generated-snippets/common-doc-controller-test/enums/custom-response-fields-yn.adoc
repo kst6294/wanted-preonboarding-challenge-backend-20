@@ -1,0 +1,8 @@
+yn
+|===
+|코드|코드명
+|`+Y+`
+|Y means YES, N meas NO
+|`+N+`
+|Y means YES, N meas NO
+|===

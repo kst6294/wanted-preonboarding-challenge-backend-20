@@ -1,0 +1,15 @@
+[source,http,options="nowrap"]
+----
+HTTP/1.1 200 OK
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJDU0RjTGFAd2FudGVkLmNvbSIsInJvbGUiOiJOT1JNQUwiLCJpYXQiOjE3MTY2Mzc3MzIsImV4cCI6MTcxNjY0MTMzMn0.qiEaa0U1uc1qARRuOBccaE9s7rWL0nCXiHQ5bvc2lAg
+Content-Type: application/json;charset=UTF-8
+Content-Length: 112
+
+{
+  "data" : null,
+  "response" : {
+    "status" : 200,
+    "message" : "Access token issued successfully"
+  }
+}
+----

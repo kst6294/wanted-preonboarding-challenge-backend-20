@@ -1,0 +1,4 @@
+[source,json,options="nowrap"]
+----
+{"email":"nbAUuDC@wanted.com","password":"yriowfmgba"}
+----
