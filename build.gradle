@@ -36,6 +36,9 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 
+	//HIBERNATE
+	implementation 'org.hibernate:hibernate-core:5.4.32.Final'
+
 	// QueryDSL
 	implementation "com.querydsl:querydsl-sql:${queryDslVersion}"
 	implementation "com.querydsl:querydsl-jpa:${queryDslVersion}:jakarta"

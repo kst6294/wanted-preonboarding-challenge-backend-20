@@ -17,12 +17,11 @@ import java.util.Collections;
 @Builder
 @AllArgsConstructor
 public class UserPrincipal implements UserDetails {
+
     private String email;
     private String phoneNumber;
     private String passwordHash;
     private final Collection<GrantedAuthority> authorities;
-
-
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

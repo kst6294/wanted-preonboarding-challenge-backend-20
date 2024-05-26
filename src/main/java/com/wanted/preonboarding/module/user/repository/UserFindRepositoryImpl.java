@@ -5,6 +5,7 @@ import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.wanted.preonboarding.module.user.core.BaseUserInfo;
 import com.wanted.preonboarding.module.user.core.QBaseUserInfo;
+import com.wanted.preonboarding.module.user.entity.Users;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -30,6 +31,16 @@ public class UserFindRepositoryImpl implements UserFindRepository{
                             )
                         )
                         .from(users)
+                        .where(emailEq(email))
+                        .fetchOne()
+        );
+    }
+
+    @Override
+    public Optional<Users> fetchUserEntity(String email) {
+        return Optional.ofNullable(
+                queryFactory
+                        .selectFrom(users)
                         .where(emailEq(email))
                         .fetchOne()
         );

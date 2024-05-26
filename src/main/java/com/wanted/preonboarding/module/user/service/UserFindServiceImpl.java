@@ -3,6 +3,7 @@ package com.wanted.preonboarding.module.user.service;
 
 import com.wanted.preonboarding.module.exception.user.NotFoundUserException;
 import com.wanted.preonboarding.module.user.core.BaseUserInfo;
+import com.wanted.preonboarding.module.user.entity.Users;
 import com.wanted.preonboarding.module.user.repository.UserFindRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -23,6 +24,11 @@ public class UserFindServiceImpl implements UserFindService{
     public BaseUserInfo fetchUserInfo(String email) {
         Optional<BaseUserInfo> baseUserInfo = userRedisFindService.fetchUser(email);
         return baseUserInfo.orElseGet(() -> fetchUserInfoInDb(email));
+    }
+
+    @Override
+    public Users fetchUserEntity(String email) {
+        return userFindRepository.fetchUserEntity(email).orElseThrow(() -> new NotFoundUserException(email));
     }
 
     private BaseUserInfo fetchUserInfoInDb(String email) {
