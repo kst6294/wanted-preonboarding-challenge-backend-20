@@ -42,4 +42,10 @@ describe("GET /products", () => {
 
         expect(response.status).toBe(200);
     });
+
+    it("제품 구매", async () => {
+        const response = await request(app).post("/products/1/purchase").set("Authorization", token);
+
+        expect(response.status).toBe(200);
+    });
 });
