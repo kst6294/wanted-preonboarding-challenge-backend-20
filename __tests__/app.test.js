@@ -15,6 +15,7 @@ describe("GET /products", () => {
         });
 
         expect(response.status).toBe(200);
+        expect(response.body.code).toBe(200);
         expect(response.body).toHaveProperty("token");
 
         token = response.body.token;

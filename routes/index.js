@@ -1,7 +1,28 @@
 import { Router } from "express";
 import dbClient from "../db/dbClient.js";
+import jwt from "jsonwebtoken";
+import verifyToken from "../middlewares/auth.js";
 
 var router = Router();
+
+router.post("/token", async (req, res) => {
+    const user = req.body;
+    const record = await dbClient("Users").where(user).first();
+
+    if (record) {
+        const token = jwt.sign({ username: record.username }, process.env.JWT_SECRET, {
+            expiresIn: "1h",
+        });
+
+        res.json({
+            code: 200,
+            message: "토큰 발급",
+            token,
+        });
+    } else {
+        res.status(401).json({ message: "계정 인증 실패" });
+    }
+});
 
 router.get("/products", async function (req, res, next) {
     const table = "products";
@@ -28,13 +49,14 @@ router.get("/products/:product_id", async function (req, res, next) {
         res.setHeader("Content-Type", "application/json");
         res.json(item);
     } catch (_) {
-        const error = new Error("No exist.");z
+        const error = new Error("No exist.");
+
         error.status = 404;
         return next(error);
     }
 });
 
-router.post("/products", async function (req, res, next) {
+router.post("/products", verifyToken, async function (req, res, next) {
     const table = "products";
     const post_dat = req.body;
 
