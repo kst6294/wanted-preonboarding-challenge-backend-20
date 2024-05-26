@@ -48,4 +48,10 @@ describe("GET /products", () => {
 
         expect(response.status).toBe(200);
     });
+
+    it("판매 승인", async () => {
+        const response = await request(app).post("/products/1/sales_approval").set("Authorization", token);
+
+        expect(response.status).toBe(200);
+    });
 });
