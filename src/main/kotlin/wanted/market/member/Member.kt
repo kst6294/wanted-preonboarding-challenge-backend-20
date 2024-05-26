@@ -10,7 +10,7 @@ class Member(
         val id: Long? = -1, //TODO
         var name: String,
 
-        @Column(unique = true)
+        @Column(nullable = false, unique = true)
         var email: String
 ) {
 

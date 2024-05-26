@@ -10,10 +10,9 @@ import wanted.market.ErrorCode
 class MemberService(
     @Autowired private val memberRepository: MemberRepository
 ) {
-    fun save(saveMemberRequest: SaveMemberRequest): Long {
+    fun save(saveMemberRequest: SaveMemberRequest) {
         checkDuplication(saveMemberRequest.email)
-        val member = joinMember(saveMemberRequest)
-        return 0
+        joinMember(saveMemberRequest)
     }
 
     private fun joinMember(saveMemberRequest: SaveMemberRequest): Member {
@@ -31,4 +30,12 @@ class MemberService(
             throw MemberException(ErrorCode.DUPLICATE_EMAIL)
         }
     }
+
+    fun findMember(memberId: Long): Member {
+        val member = memberRepository.findById(memberId)
+            .orElseThrow{MemberException(ErrorCode.MEMBER_NOT_FOUND)}
+        return member
+    }
+
+
 }
