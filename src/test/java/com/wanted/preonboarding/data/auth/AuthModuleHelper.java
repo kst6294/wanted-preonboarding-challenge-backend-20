@@ -3,10 +3,9 @@ package com.wanted.preonboarding.data.auth;
 import com.wanted.preonboarding.auth.core.JwtAuthToken;
 import com.wanted.preonboarding.auth.dto.CreateAuthToken;
 import com.wanted.preonboarding.data.EasyRandomUtils;
-import com.wanted.preonboarding.infra.config.jwt.JwtConfig;
 import com.wanted.preonboarding.module.user.core.BaseUserInfo;
+import com.wanted.preonboarding.module.user.entity.Users;
 import com.wanted.preonboarding.module.user.enums.MemberShip;
-import com.wanted.preonboarding.module.utils.DateGeneratorUtil;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import org.jeasy.random.EasyRandom;
@@ -40,7 +39,7 @@ public class AuthModuleHelper {
 
 
     public static JwtAuthToken toJwtAuthToken_another_constructor(){
-        Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
+        Key key = Keys.hmacShaKeyFor("36bddb74-043c-4fcd-a17d-d7089bf65b90".getBytes());
         String email = generateEmail();
 
         Date issue = new Date();
@@ -51,7 +50,7 @@ public class AuthModuleHelper {
     }
 
     public static JwtAuthToken toExpireJwtAuthToken_another_constructor(){
-        Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
+        Key key = Keys.hmacShaKeyFor("36bddb74-043c-4fcd-a17d-d7089bf65b90".getBytes());
         String email = generateEmail();
 
         Date issue = new Date();
@@ -65,6 +64,18 @@ public class AuthModuleHelper {
     public static BaseUserInfo toBaseUserInfo(){
         Map<String, Object> stringObjectMap = new HashMap<>();
         stringObjectMap.put("email", generateEmail());
+        EasyRandom instance = EasyRandomUtils.getInstance(stringObjectMap);
+        return instance.nextObject(BaseUserInfo.class);
+    }
+
+
+    public static BaseUserInfo toBaseUserInfo(Users users){
+        Map<String, Object> stringObjectMap = new HashMap<>();
+        stringObjectMap.put("phoneNumber", users.getPhoneNumber());
+        stringObjectMap.put("email", users.getEmail());
+        stringObjectMap.put("passwordHash", users.getPasswordHash());
+        stringObjectMap.put("memberShip", users.getMemberShip());
+
         EasyRandom instance = EasyRandomUtils.getInstance(stringObjectMap);
         return instance.nextObject(BaseUserInfo.class);
     }

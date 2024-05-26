@@ -7,6 +7,7 @@ import com.querydsl.core.types.dsl.*;
 import com.querydsl.core.types.PathMetadata;
 import javax.annotation.processing.Generated;
 import com.querydsl.core.types.Path;
+import com.querydsl.core.types.dsl.PathInits;
 
 
 /**
@@ -39,6 +40,8 @@ public class QUsers extends EntityPathBase<Users> {
     public final StringPath passwordHash = createString("passwordHash");
 
     public final StringPath phoneNumber = createString("phoneNumber");
+
+    public final SetPath<com.wanted.preonboarding.module.product.entity.Product, com.wanted.preonboarding.module.product.entity.QProduct> products = this.<com.wanted.preonboarding.module.product.entity.Product, com.wanted.preonboarding.module.product.entity.QProduct>createSet("products", com.wanted.preonboarding.module.product.entity.Product.class, com.wanted.preonboarding.module.product.entity.QProduct.class, PathInits.DIRECT2);
 
     //inherited
     public final DateTimePath<java.time.LocalDateTime> updateDate = _super.updateDate;

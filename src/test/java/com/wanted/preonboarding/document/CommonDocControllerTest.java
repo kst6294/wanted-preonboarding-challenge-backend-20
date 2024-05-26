@@ -1,8 +1,10 @@
 package com.wanted.preonboarding.document;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.wanted.preonboarding.data.auth.AuthModuleHelper;
 import com.wanted.preonboarding.document.utils.CustomResponseFieldsSnippet;
 import com.wanted.preonboarding.document.utils.RestDocsTestSupport;
+import com.wanted.preonboarding.module.user.core.BaseUserInfo;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.http.MediaType;
@@ -18,6 +20,8 @@ import java.util.Arrays;
 import java.util.Map;
 
 
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.when;
 import static org.springframework.restdocs.payload.PayloadDocumentation.beneathPath;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.snippet.Attributes.attributes;
@@ -31,7 +35,7 @@ public class CommonDocControllerTest extends RestDocsTestSupport {
 
     @Test
     public void enums() throws Exception {
-        // 요청
+
         ResultActions result = this.mockMvc.perform(
                 MockMvcRequestBuilders.get("/test/enums")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -62,6 +66,10 @@ public class CommonDocControllerTest extends RestDocsTestSupport {
                         customResponseFields("custom-response", beneathPath("data.jwtErrorEnum").withSubsectionId("jwtErrorEnum"),
                                 attributes(key("title").value("jwtErrorEnum")),
                                 enumConvertFieldDescriptor((enumDocs.getJwtErrorEnum()))
+                        ),
+                        customResponseFields("custom-response", beneathPath("data.productStatus").withSubsectionId("productStatus"),
+                                attributes(key("title").value("productStatus")),
+                                enumConvertFieldDescriptor((enumDocs.getProductStatus()))
                         )
                 ));
     }

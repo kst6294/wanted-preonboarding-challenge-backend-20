@@ -1,0 +1,106 @@
+= Product API
+:toc:
+:toclevels: 3
+
+== 상품 등록
+
+=== 상품 등록 요청
+
+[options="header"]
+|===
+| 메서드 | 경로 | 설명
+| POST | /api/v1/product | 상품을 등록합니다.
+
+|===
+.Request Fields
+[cols="2,5", options="header"]
+|===
+| 필드명 | 설명
+| productName | 상품 명 (최대 100자)
+| price | 상품 가격 (최소 0원, 최대 100,000,000원)
+|===
+
+.Example Request
+[source, json]
+----
+{
+  "productName": "Example Product",
+  "price": 10000
+}
+----
+
+=== 상품 등록 응답
+
+.Response Fields
+[cols="2,5", options="header"]
+|===
+| 필드명 | 설명
+| id | 상품 ID (PK)
+| productName | 상품 명
+| price | 상품 가격
+| productStatus | 상품 상태 (ON_STOCK, SOLD_OUT 등)
+| seller | 상품 등록자 이메일
+|===
+
+.Example Response
+[source, json]
+----
+{
+  "data": {
+    "id": 1,
+    "productName": "Example Product",
+    "price": 10000,
+    "productStatus": "ON_STOCK",
+    "seller": "user@example.com"
+  },
+  "response": {
+    "status": 200,
+    "message": "success"
+  }
+}
+----
+
+=== 상품 등록 실패 - 비회원
+
+[options="header"]
+|===
+| 메서드 | 경로 | 설명
+| POST | /api/v1/product | 비회원이 상품을 등록하려고 시도할 때
+
+|===
+.Request Fields
+[cols="2,5", options="header"]
+|===
+| 필드명 | 설명
+| productName | 상품 명 (최대 100자)
+| price | 상품 가격 (최소 0원, 최대 100,000,000원)
+|===
+
+.Example Request
+[source, json]
+----
+{
+  "productName": "Example Product",
+  "price": 10000
+}
+----
+
+.Response Fields
+[cols="2,5", options="header"]
+|===
+| 필드명 | 설명
+| status | 응답 상태 코드
+| message | 응답 메시지
+|===
+
+.Example Response
+[source, json]
+----
+{
+  "response": {
+    "status": 401,
+    "message": "로그인이 필요합니다."
+  }
+}
+----
+

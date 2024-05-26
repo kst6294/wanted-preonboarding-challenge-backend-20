@@ -10,4 +10,5 @@
 :linkcss:
 
 include::AUTH-API.adoc[]
+include::PRODUCT-API.adoc[]
 include::ENUMS.adoc[]

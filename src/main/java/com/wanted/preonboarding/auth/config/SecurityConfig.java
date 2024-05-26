@@ -5,8 +5,6 @@ import com.wanted.preonboarding.auth.AuthTokenProvider;
 import com.wanted.preonboarding.auth.filter.JwtAuthenticationFilter;
 import com.wanted.preonboarding.auth.handler.JwtAccessDeniedHandler;
 import com.wanted.preonboarding.auth.handler.JwtAuthorizationDeniedHandler;
-import com.wanted.preonboarding.infra.config.jwt.JwtConfig;
-import com.wanted.preonboarding.module.user.service.UserFindService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -25,8 +23,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @RequiredArgsConstructor
 public class SecurityConfig {
 
-    private final JwtConfig jwtConfig;
-    private final UserFindService userFindService;
+
     private final AuthTokenProvider authTokenProvider;
     private final JwtAuthorizationDeniedHandler jwtAuthorizationDeniedHandler;
     private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
@@ -38,6 +35,7 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests(authz -> authz
                         .requestMatchers("/api/v1/**").permitAll()
+                        .requestMatchers("/test/**").permitAll()
                 )
                 .formLogin(AbstractHttpConfigurer::disable)
                 .cors(Customizer.withDefaults())

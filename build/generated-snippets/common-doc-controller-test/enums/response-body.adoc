@@ -20,6 +20,11 @@
       "ILLEGAL_ARGUMENT" : "JWT ERROR NAME ILLEGAL_ARGUMENT, ERROR MSG JWT token compact of handler are invalid.",
       "INVALID_SIGNATURE" : "JWT ERROR NAME INVALID_SIGNATURE, ERROR MSG Invalid JWT signature.",
       "EXPIRED_TOKEN" : "JWT ERROR NAME EXPIRED_TOKEN, ERROR MSG Expired JWT token."
+    },
+    "productStatus" : {
+      "OUT_STOCK" : "제품의 판매 상태 완료",
+      "ON_STOCK" : "제품의 판매 상태 판매중",
+      "BOOKING" : "제품의 판매 상태 예약중"
     }
   }
 }

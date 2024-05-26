@@ -3,42 +3,23 @@ package com.wanted.preonboarding.auth.service;
 import com.wanted.preonboarding.auth.core.AuthToken;
 import com.wanted.preonboarding.auth.core.JwtAuthToken;
 import com.wanted.preonboarding.data.auth.AuthModuleHelper;
+import com.wanted.preonboarding.document.utils.RedisServiceTest;
 import com.wanted.preonboarding.module.common.enums.RedisKey;
 import com.wanted.preonboarding.module.utils.JsonUtils;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.data.redis.core.ValueOperations;
 
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 
-@ExtendWith(MockitoExtension.class)
-class TokenFetchRedisServiceTest {
+class TokenFetchRedisServiceTest extends RedisServiceTest {
 
 
     @InjectMocks
     private TokenFetchRedisService tokenFetchRedisService;
-
-    @Mock
-    private StringRedisTemplate redisTemplate;
-
-    @Mock
-    private ValueOperations<String, String> valueOperations;
-
-    @BeforeEach
-    void setUp() {
-        when(redisTemplate.opsForValue()).thenReturn(valueOperations);
-    }
-
 
     @Test
     @DisplayName("토큰 조회 테스트 - 존재하는 경우")

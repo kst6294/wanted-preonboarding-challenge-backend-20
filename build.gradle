@@ -37,7 +37,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 
 	//HIBERNATE
-	implementation 'org.hibernate:hibernate-core:5.4.32.Final'
+	implementation 'org.hibernate:hibernate-core:6.2.7.Final'
 
 	// QueryDSL
 	implementation "com.querydsl:querydsl-sql:${queryDslVersion}"

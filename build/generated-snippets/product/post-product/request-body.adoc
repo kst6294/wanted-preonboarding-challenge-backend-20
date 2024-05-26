@@ -1,0 +1,4 @@
+[source,json,options="nowrap"]
+----
+{"productName":"xuksqmngit","price":79236868}
+----

@@ -4,6 +4,7 @@ import com.wanted.preonboarding.auth.enums.JwtErrorEnum;
 import com.wanted.preonboarding.module.common.enums.EnumType;
 import com.wanted.preonboarding.module.common.enums.RedisKey;
 import com.wanted.preonboarding.module.common.enums.Yn;
+import com.wanted.preonboarding.module.product.enums.ProductStatus;
 import com.wanted.preonboarding.module.user.enums.MemberShip;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,6 +26,7 @@ public class CommonDocController {
         Map<String, String> yn = getDocs(Yn.values());
         Map<String, String> memberShip = getDocs(MemberShip.values());
         Map<String, String> jwtErrorEnum = getDocs(JwtErrorEnum.values());
+        Map<String, String> productStatus = getDocs(ProductStatus.values());
 
 
         EnumDocs build = EnumDocs.builder()
@@ -32,6 +34,7 @@ public class CommonDocController {
                 .yn(yn)
                 .memberShip(memberShip)
                 .jwtErrorEnum(jwtErrorEnum)
+                .productStatus(productStatus)
                 .build();
 
         return ApiResponseDto.of(build);

@@ -2,6 +2,7 @@ package com.wanted.preonboarding.module.product.controller;
 
 
 import com.wanted.preonboarding.module.common.payload.ApiResponse;
+import com.wanted.preonboarding.module.product.core.Sku;
 import com.wanted.preonboarding.module.product.dto.CreateProduct;
 import com.wanted.preonboarding.module.product.service.ProductQueryService;
 import lombok.RequiredArgsConstructor;
@@ -23,9 +24,8 @@ public class ProductController {
 
     @PreAuthorize("hasAnyAuthority('NORMAL')")
     @PostMapping("/product")
-    public ResponseEntity<ApiResponse<Void>> createProduct(@RequestBody @Validated CreateProduct createProduct) {
-
-        return null;
+    public ResponseEntity<ApiResponse<Sku>> createProduct(@RequestBody @Validated CreateProduct createProduct) {
+        return ResponseEntity.ok(ApiResponse.success(productQueryService.createProduct(createProduct)));
     }
 
 

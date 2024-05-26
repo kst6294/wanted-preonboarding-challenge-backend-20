@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.10">
+<title>Wanted Market API 문서</title>
+<link rel="stylesheet" href="/styles.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script>
+    function ready(callbackFunc) {
+        if (document.readyState !== 'loading') {
+            // Document is already ready, call the callback directly
+            callbackFunc();
+        } else if (document.addEventListener) {
+            // All modern browsers to register DOMContentLoaded
+            document.addEventListener('DOMContentLoaded', callbackFunc);
+        } else {
+            // Old IE browsers
+            document.attachEvent('onreadystatechange', function () {
+                if (document.readyState === 'complete') {
+                    callbackFunc();
+                }
+            });
+        }
+    }
+
+    function openPopup(event) {
+
+        const target = event.target;
+        if (target.className !== "popup") {
+            return;
+        }
+
+        event.preventDefault();
+        const screenX = event.screenX;
+        const screenY = event.screenY;
+        window.open(target.href, target.text, `left=${screenX}, top=${screenY}, width=500, height=600, status=no, menubar=no, toolbar=no, resizable=no`);
+    }
+
+    ready(function () {
+        const el = document.getElementById("content");
+        el.addEventListener("click", event => openPopup(event), false);
+    });
+</script>
+</head>
+<body class="book toc2 toc-left">
+<div id="header">
+<h1>Wanted Market API 문서</h1>
+<div class="details">
+<span id="revnumber">version 0.0.1-SNAPSHOT</span>
+</div>
+<div id="toc" class="toc2">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel0">
+<li><a href="#_auth_api_documentation">AUTH API Documentation</a>
+<ul class="sectlevel1">
+<li><a href="#_get_access_token">Get Access Token</a>
+<ul class="sectlevel2">
+<li><a href="#_request">Request</a></li>
+<li><a href="#_response">Response</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#_enums_documentation">Enums Documentation</a>
+<ul class="sectlevel1">
+<li><a href="#_jwt_error_enum">JWT Error Enum</a>
+<ul class="sectlevel3">
+<li><a href="#_curl_request_2">CURL Request</a></li>
+<li><a href="#_custom_response_fields_jwt_error_enum">Custom Response Fields: JWT Error Enum</a></li>
+</ul>
+</li>
+<li><a href="#_membership">Membership</a>
+<ul class="sectlevel3">
+<li><a href="#_custom_response_fields_membership">Custom Response Fields: Membership</a></li>
+</ul>
+</li>
+<li><a href="#_redis_key">Redis Key</a>
+<ul class="sectlevel3">
+<li><a href="#_custom_response_fields_redis_key">Custom Response Fields: Redis Key</a></li>
+</ul>
+</li>
+<li><a href="#_yn">YN</a>
+<ul class="sectlevel3">
+<li><a href="#_custom_response_fields_yn">Custom Response Fields: YN</a></li>
+<li><a href="#_http_request_2">HTTP Request</a></li>
+<li><a href="#_http_response_2">HTTP Response</a></li>
+<li><a href="#_httpie_request_2">HTTPie Request</a></li>
+<li><a href="#_request_body_2">Request Body</a></li>
+<li><a href="#_response_body_2">Response Body</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="content">
+<h1 id="_auth_api_documentation" class="sect0"><a class="link" href="#_auth_api_documentation">AUTH API Documentation</a></h1>
+<div class="sect1">
+<h2 id="_get_access_token"><a class="link" href="#_get_access_token">Get Access Token</a></h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_request"><a class="link" href="#_request">Request</a></h3>
+<div class="sect3">
+<h4 id="_curl_request"><a class="link" href="#_curl_request">CURL Request</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ curl 'http://localhost:8080/api/v1/auth/authentication' -i -X POST \
+    -H 'Content-Type: application/json;charset=UTF-8' \
+    -d '{
+  "email" : "jpxfnmDL@wanted.com",
+  "password" : "fpnwlspcdy"
+}'</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_http_request"><a class="link" href="#_http_request">HTTP Request</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /api/v1/auth/authentication HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Content-Length: 66
+Host: localhost:8080
+
+{
+  "email" : "jpxfnmDL@wanted.com",
+  "password" : "fpnwlspcdy"
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_httpie_request"><a class="link" href="#_httpie_request">HTTPie Request</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ echo '{
+  "email" : "jpxfnmDL@wanted.com",
+  "password" : "fpnwlspcdy"
+}' | http POST 'http://localhost:8080/api/v1/auth/authentication' \
+    'Content-Type:application/json;charset=UTF-8'</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_request_body"><a class="link" href="#_request_body">Request Body</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="json" class="language-json hljs">{
+  "email" : "jpxfnmDL@wanted.com",
+  "password" : "fpnwlspcdy"
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_response"><a class="link" href="#_response">Response</a></h3>
+<div class="sect3">
+<h4 id="_http_response"><a class="link" href="#_http_response">HTTP Response</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJobGNAd2FudGVkLmNvbSIsInJvbGUiOiJOT1JNQUwiLCJpYXQiOjE3MTY3MzUyNTQsImV4cCI6MTcxNjczODg1NH0.7peCT9ITYYNEm5VEytAY7PFia06tc9srLXRZaU7UYcs
+Content-Type: application/json;charset=UTF-8
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 0
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY
+Content-Length: 112
+
+{
+  "data" : null,
+  "response" : {
+    "status" : 200,
+    "message" : "Access token issued successfully"
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_response_body"><a class="link" href="#_response_body">Response Body</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="json" class="language-json hljs">{
+  "data" : null,
+  "response" : {
+    "status" : 200,
+    "message" : "Access token issued successfully"
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<h1 id="_enums_documentation" class="sect0"><a class="link" href="#_enums_documentation">Enums Documentation</a></h1>
+<div class="sect1">
+<h2 id="_jwt_error_enum"><a class="link" href="#_jwt_error_enum">JWT Error Enum</a></h2>
+<div class="sectionbody">
+<div class="sect3">
+<h4 id="_curl_request_2"><a class="link" href="#_curl_request_2">CURL Request</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ curl 'http://localhost:8080/test/enums' -i -X GET \
+    -H 'Content-Type: application/json;charset=UTF-8'</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_custom_response_fields_jwt_error_enum"><a class="link" href="#_custom_response_fields_jwt_error_enum">Custom Response Fields: JWT Error Enum</a></h4>
+<div class="paragraph">
+<p>jwtErrorEnum</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">코드</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">코드명</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>UNSUPPORTED_TOKEN</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">JWT ERROR NAME UNSUPPORTED_TOKEN, ERROR MSG Unsupported JWT token.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>MALFORMED_TOKEN</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">JWT ERROR NAME MALFORMED_TOKEN, ERROR MSG Invalid JWT token.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>ILLEGAL_ARGUMENT</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">JWT ERROR NAME ILLEGAL_ARGUMENT, ERROR MSG JWT token compact of handler are invalid.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>INVALID_SIGNATURE</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">JWT ERROR NAME INVALID_SIGNATURE, ERROR MSG Invalid JWT signature.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>EXPIRED_TOKEN</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">JWT ERROR NAME EXPIRED_TOKEN, ERROR MSG Expired JWT token.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_membership"><a class="link" href="#_membership">Membership</a></h2>
+<div class="sectionbody">
+<div class="sect3">
+<h4 id="_custom_response_fields_membership"><a class="link" href="#_custom_response_fields_membership">Custom Response Fields: Membership</a></h4>
+<div class="paragraph">
+<p>memberShip</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">코드</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">코드명</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>GUEST</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">USER MEMBERSHIP</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>NORMAL</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">USER MEMBERSHIP</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_redis_key"><a class="link" href="#_redis_key">Redis Key</a></h2>
+<div class="sectionbody">
+<div class="sect3">
+<h4 id="_custom_response_fields_redis_key"><a class="link" href="#_custom_response_fields_redis_key">Custom Response Fields: Redis Key</a></h4>
+<div class="paragraph">
+<p>redisKey</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">코드</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">코드명</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>REFRESH_TOKEN</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">REDIS KEY refresh_token, REDIS TTL 1</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>USERS</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">REDIS KEY users, REDIS TTL 1</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_yn"><a class="link" href="#_yn">YN</a></h2>
+<div class="sectionbody">
+<div class="sect3">
+<h4 id="_custom_response_fields_yn"><a class="link" href="#_custom_response_fields_yn">Custom Response Fields: YN</a></h4>
+<div class="paragraph">
+<p>yn</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">코드</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">코드명</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Y</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Y means YES, N meas NO</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>N</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Y means YES, N meas NO</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="_http_request_2"><a class="link" href="#_http_request_2">HTTP Request</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /test/enums HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Host: localhost:8080</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_http_response_2"><a class="link" href="#_http_response_2">HTTP Response</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+Content-Type: application/json;charset=UTF-8
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 0
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY
+Content-Length: 1060
+
+{
+  "data" : {
+    "redisKey" : {
+      "REFRESH_TOKEN" : "REDIS KEY refresh_token, REDIS TTL 1",
+      "USERS" : "REDIS KEY users, REDIS TTL 1"
+    },
+    "yn" : {
+      "Y" : "Y means YES, N meas NO",
+      "N" : "Y means YES, N meas NO"
+    },
+    "memberShip" : {
+      "GUEST" : "USER MEMBERSHIP",
+      "NORMAL" : "USER MEMBERSHIP"
+    },
+    "jwtErrorEnum" : {
+      "UNSUPPORTED_TOKEN" : "JWT ERROR NAME UNSUPPORTED_TOKEN, ERROR MSG Unsupported JWT token.",
+      "MALFORMED_TOKEN" : "JWT ERROR NAME MALFORMED_TOKEN, ERROR MSG Invalid JWT token.",
+      "ILLEGAL_ARGUMENT" : "JWT ERROR NAME ILLEGAL_ARGUMENT, ERROR MSG JWT token compact of handler are invalid.",
+      "INVALID_SIGNATURE" : "JWT ERROR NAME INVALID_SIGNATURE, ERROR MSG Invalid JWT signature.",
+      "EXPIRED_TOKEN" : "JWT ERROR NAME EXPIRED_TOKEN, ERROR MSG Expired JWT token."
+    },
+    "productStatus" : {
+      "OUT_STOCK" : "제품의 판매 상태 완료",
+      "ON_STOCK" : "제품의 판매 상태 판매중",
+      "BOOKING" : "제품의 판매 상태 예약중"
+    }
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_httpie_request_2"><a class="link" href="#_httpie_request_2">HTTPie Request</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ http GET 'http://localhost:8080/test/enums' \
+    'Content-Type:application/json;charset=UTF-8'</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_request_body_2"><a class="link" href="#_request_body_2">Request Body</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="json" class="language-json hljs"></code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_response_body_2"><a class="link" href="#_response_body_2">Response Body</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="json" class="language-json hljs">{
+  "data" : {
+    "redisKey" : {
+      "REFRESH_TOKEN" : "REDIS KEY refresh_token, REDIS TTL 1",
+      "USERS" : "REDIS KEY users, REDIS TTL 1"
+    },
+    "yn" : {
+      "Y" : "Y means YES, N meas NO",
+      "N" : "Y means YES, N meas NO"
+    },
+    "memberShip" : {
+      "GUEST" : "USER MEMBERSHIP",
+      "NORMAL" : "USER MEMBERSHIP"
+    },
+    "jwtErrorEnum" : {
+      "UNSUPPORTED_TOKEN" : "JWT ERROR NAME UNSUPPORTED_TOKEN, ERROR MSG Unsupported JWT token.",
+      "MALFORMED_TOKEN" : "JWT ERROR NAME MALFORMED_TOKEN, ERROR MSG Invalid JWT token.",
+      "ILLEGAL_ARGUMENT" : "JWT ERROR NAME ILLEGAL_ARGUMENT, ERROR MSG JWT token compact of handler are invalid.",
+      "INVALID_SIGNATURE" : "JWT ERROR NAME INVALID_SIGNATURE, ERROR MSG Invalid JWT signature.",
+      "EXPIRED_TOKEN" : "JWT ERROR NAME EXPIRED_TOKEN, ERROR MSG Expired JWT token."
+    },
+    "productStatus" : {
+      "OUT_STOCK" : "제품의 판매 상태 완료",
+      "ON_STOCK" : "제품의 판매 상태 판매중",
+      "BOOKING" : "제품의 판매 상태 예약중"
+    }
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Version 0.0.1-SNAPSHOT<br>
+Last updated 2024-05-26 23:52:58 +0900
+</div>
+</div>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js"></script>
+<script>hljs.initHighlighting()</script>
+</body>
+</html>

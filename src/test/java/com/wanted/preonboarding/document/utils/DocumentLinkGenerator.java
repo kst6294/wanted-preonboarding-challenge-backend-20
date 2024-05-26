@@ -20,6 +20,7 @@ public interface DocumentLinkGenerator {
         REDIS_KEY("redisKey", "레디스 키"),
         JWT_ENUM_ERROR("jwtErrorEnum", "JWT 에러 메세지"),
         MEMBERSHIP("membership", "회원 유형"),
+        PRODUCT_STATUS("productStatus", "상품 상태"),
 
 
 

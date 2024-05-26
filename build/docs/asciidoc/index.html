@@ -54,12 +54,23 @@
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel0">
-<li><a href="#_auth_api_documentation">AUTH API Documentation</a>
+<li><a href="#_auth_api">Auth API</a>
 <ul class="sectlevel1">
-<li><a href="#_get_access_token">Get Access Token</a>
+<li><a href="#_access_token_발급">Access Token 발급</a>
 <ul class="sectlevel2">
-<li><a href="#_request">Request</a></li>
-<li><a href="#_response">Response</a></li>
+<li><a href="#_access_token_발급_요청">Access Token 발급 요청</a></li>
+<li><a href="#_access_token_발급_응답">Access Token 발급 응답</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#_product_api">Product API</a>
+<ul class="sectlevel1">
+<li><a href="#_상품_등록">상품 등록</a>
+<ul class="sectlevel2">
+<li><a href="#_상품_등록_요청">상품 등록 요청</a></li>
+<li><a href="#_상품_등록_응답">상품 등록 응답</a></li>
+<li><a href="#_상품_등록_실패_비회원">상품 등록 실패 - 비회원</a></li>
 </ul>
 </li>
 </ul>
@@ -68,7 +79,7 @@
 <ul class="sectlevel1">
 <li><a href="#_jwt_error_enum">JWT Error Enum</a>
 <ul class="sectlevel3">
-<li><a href="#_curl_request_2">CURL Request</a></li>
+<li><a href="#_curl_request">CURL Request</a></li>
 <li><a href="#_custom_response_fields_jwt_error_enum">Custom Response Fields: JWT Error Enum</a></li>
 </ul>
 </li>
@@ -85,11 +96,11 @@
 <li><a href="#_yn">YN</a>
 <ul class="sectlevel3">
 <li><a href="#_custom_response_fields_yn">Custom Response Fields: YN</a></li>
-<li><a href="#_http_request_2">HTTP Request</a></li>
-<li><a href="#_http_response_2">HTTP Response</a></li>
-<li><a href="#_httpie_request_2">HTTPie Request</a></li>
-<li><a href="#_request_body_2">Request Body</a></li>
-<li><a href="#_response_body_2">Response Body</a></li>
+<li><a href="#_http_request">HTTP Request</a></li>
+<li><a href="#_http_response">HTTP Response</a></li>
+<li><a href="#_httpie_request">HTTPie Request</a></li>
+<li><a href="#_request_body">Request Body</a></li>
+<li><a href="#_response_body">Response Body</a></li>
 </ul>
 </li>
 </ul>
@@ -98,98 +109,333 @@
 </div>
 </div>
 <div id="content">
-<h1 id="_auth_api_documentation" class="sect0"><a class="link" href="#_auth_api_documentation">AUTH API Documentation</a></h1>
+<h1 id="_auth_api" class="sect0"><a class="link" href="#_auth_api">Auth API</a></h1>
 <div class="sect1">
-<h2 id="_get_access_token"><a class="link" href="#_get_access_token">Get Access Token</a></h2>
+<h2 id="_access_token_발급"><a class="link" href="#_access_token_발급">Access Token 발급</a></h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_request"><a class="link" href="#_request">Request</a></h3>
-<div class="sect3">
-<h4 id="_curl_request"><a class="link" href="#_curl_request">CURL Request</a></h4>
+<h3 id="_access_token_발급_요청"><a class="link" href="#_access_token_발급_요청">Access Token 발급 요청</a></h3>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">메서드</th>
+<th class="tableblock halign-left valign-top">경로</th>
+<th class="tableblock halign-left valign-top">설명</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">POST</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">/api/v1/auth/authentication</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Access Token을 발급합니다.</p></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 1. Request Fields</caption>
+<colgroup>
+<col style="width: 28.5714%;">
+<col style="width: 71.4286%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">필드명</th>
+<th class="tableblock halign-left valign-top">설명</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">email</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">이메일 주소 (이메일 형식 xxx@xxx)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">password</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">비밀번호 (최대 20자)</p></td>
+</tr>
+</tbody>
+</table>
 <div class="listingblock">
+<div class="title">Example Request</div>
 <div class="content">
-<pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ curl 'http://localhost:8080/api/v1/auth/authentication' -i -X POST \
-    -H 'Content-Type: application/json;charset=UTF-8' \
-    -d '{
-  "email" : "VSN@wanted.com",
-  "password" : "vnwurtgczt"
-}'</code></pre>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_http_request"><a class="link" href="#_http_request">HTTP Request</a></h4>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /api/v1/auth/authentication HTTP/1.1
-Content-Type: application/json;charset=UTF-8
-Content-Length: 61
-Host: localhost:8080
-
-{
-  "email" : "VSN@wanted.com",
-  "password" : "vnwurtgczt"
+<pre class="highlightjs highlight"><code data-lang="json" class="language-json hljs">{
+  "email": "user@example.com",
+  "password": "password123"
 }</code></pre>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_httpie_request"><a class="link" href="#_httpie_request">HTTPie Request</a></h4>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ echo '{
-  "email" : "VSN@wanted.com",
-  "password" : "vnwurtgczt"
-}' | http POST 'http://localhost:8080/api/v1/auth/authentication' \
-    'Content-Type:application/json;charset=UTF-8'</code></pre>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_request_body"><a class="link" href="#_request_body">Request Body</a></h4>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="json" class="language-json hljs">{
-  "email" : "VSN@wanted.com",
-  "password" : "vnwurtgczt"
-}</code></pre>
-</div>
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_response"><a class="link" href="#_response">Response</a></h3>
-<div class="sect3">
-<h4 id="_http_response"><a class="link" href="#_http_response">HTTP Response</a></h4>
+<h3 id="_access_token_발급_응답"><a class="link" href="#_access_token_발급_응답">Access Token 발급 응답</a></h3>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 2. Response Fields</caption>
+<colgroup>
+<col style="width: 28.5714%;">
+<col style="width: 71.4286%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">필드명</th>
+<th class="tableblock halign-left valign-top">설명</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">status</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">응답 상태 코드</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">message</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">응답 메시지</p></td>
+</tr>
+</tbody>
+</table>
 <div class="listingblock">
+<div class="title">Example Response</div>
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJUaGJlRlZ0dVJAd2FudGVkLmNvbSIsInJvbGUiOiJOT1JNQUwiLCJpYXQiOjE3MTY3MTMyMDAsImV4cCI6MTcxNjcxNjgwMH0.W9BKI8XJlLnPe_qSPDoeYjtRDLojjR2Y2M20GDLRlH0
-Content-Type: application/json;charset=UTF-8
-Content-Length: 112
-
-{
-  "data" : null,
-  "response" : {
-    "status" : 200,
-    "message" : "Access token issued successfully"
+<pre class="highlightjs highlight"><code data-lang="json" class="language-json hljs">{
+  "response": {
+    "status": 200,
+    "message": "success"
+  }
+}</code></pre>
+</div>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 3. Response Headers</caption>
+<colgroup>
+<col style="width: 28.5714%;">
+<col style="width: 71.4286%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">헤더명</th>
+<th class="tableblock halign-left valign-top">설명</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Authorization</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Bearer 토큰 (발급된 Access Token)</p></td>
+</tr>
+</tbody>
+</table>
+<div class="listingblock">
+<div class="title">Example Response Header</div>
+<div class="content">
+<pre>Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyQGV4YW1wbGUuY29tIn0.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<h1 id="_product_api" class="sect0"><a class="link" href="#_product_api">Product API</a></h1>
+<div class="sect1">
+<h2 id="_상품_등록"><a class="link" href="#_상품_등록">상품 등록</a></h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_상품_등록_요청"><a class="link" href="#_상품_등록_요청">상품 등록 요청</a></h3>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">메서드</th>
+<th class="tableblock halign-left valign-top">경로</th>
+<th class="tableblock halign-left valign-top">설명</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">POST</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">/api/v1/product</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">상품을 등록합니다.</p></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 4. Request Fields</caption>
+<colgroup>
+<col style="width: 28.5714%;">
+<col style="width: 71.4286%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">필드명</th>
+<th class="tableblock halign-left valign-top">설명</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">productName</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">상품 명 (최대 100자)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">price</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">상품 가격 (최소 0원, 최대 100,000,000원)</p></td>
+</tr>
+</tbody>
+</table>
+<div class="listingblock">
+<div class="title">Example Request</div>
+<div class="content">
+<pre class="highlightjs highlight"><code data-lang="json" class="language-json hljs">{
+  "productName": "Example Product",
+  "price": 10000
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_상품_등록_응답"><a class="link" href="#_상품_등록_응답">상품 등록 응답</a></h3>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 5. Response Fields</caption>
+<colgroup>
+<col style="width: 28.5714%;">
+<col style="width: 71.4286%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">필드명</th>
+<th class="tableblock halign-left valign-top">설명</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">id</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">상품 ID (PK)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">productName</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">상품 명</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">price</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">상품 가격</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">productStatus</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">상품 상태 (ON_STOCK, SOLD_OUT 등)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">seller</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">상품 등록자 이메일</p></td>
+</tr>
+</tbody>
+</table>
+<div class="listingblock">
+<div class="title">Example Response</div>
+<div class="content">
+<pre class="highlightjs highlight"><code data-lang="json" class="language-json hljs">{
+  "data": {
+    "id": 1,
+    "productName": "Example Product",
+    "price": 10000,
+    "productStatus": "ON_STOCK",
+    "seller": "user@example.com"
+  },
+  "response": {
+    "status": 200,
+    "message": "success"
   }
 }</code></pre>
 </div>
 </div>
 </div>
-<div class="sect3">
-<h4 id="_response_body"><a class="link" href="#_response_body">Response Body</a></h4>
+<div class="sect2">
+<h3 id="_상품_등록_실패_비회원"><a class="link" href="#_상품_등록_실패_비회원">상품 등록 실패 - 비회원</a></h3>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">메서드</th>
+<th class="tableblock halign-left valign-top">경로</th>
+<th class="tableblock halign-left valign-top">설명</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">POST</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">/api/v1/product</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">비회원이 상품을 등록하려고 시도할 때</p></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 6. Request Fields</caption>
+<colgroup>
+<col style="width: 28.5714%;">
+<col style="width: 71.4286%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">필드명</th>
+<th class="tableblock halign-left valign-top">설명</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">productName</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">상품 명 (최대 100자)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">price</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">상품 가격 (최소 0원, 최대 100,000,000원)</p></td>
+</tr>
+</tbody>
+</table>
 <div class="listingblock">
+<div class="title">Example Request</div>
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="json" class="language-json hljs">{
-  "data" : null,
-  "response" : {
-    "status" : 200,
-    "message" : "Access token issued successfully"
-  }
+<pre class="highlightjs highlight"><code data-lang="json" class="language-json hljs">{
+  "productName": "Example Product",
+  "price": 10000
 }</code></pre>
 </div>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 7. Response Fields</caption>
+<colgroup>
+<col style="width: 28.5714%;">
+<col style="width: 71.4286%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">필드명</th>
+<th class="tableblock halign-left valign-top">설명</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">status</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">응답 상태 코드</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">message</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">응답 메시지</p></td>
+</tr>
+</tbody>
+</table>
+<div class="listingblock">
+<div class="title">Example Response</div>
+<div class="content">
+<pre class="highlightjs highlight"><code data-lang="json" class="language-json hljs">{
+  "response": {
+    "status": 401,
+    "message": "로그인이 필요합니다."
+  }
+}</code></pre>
 </div>
 </div>
 </div>
@@ -200,7 +446,7 @@ Content-Length: 112
 <h2 id="_jwt_error_enum"><a class="link" href="#_jwt_error_enum">JWT Error Enum</a></h2>
 <div class="sectionbody">
 <div class="sect3">
-<h4 id="_curl_request_2"><a class="link" href="#_curl_request_2">CURL Request</a></h4>
+<h4 id="_curl_request"><a class="link" href="#_curl_request">CURL Request</a></h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ curl 'http://localhost:8080/test/enums' -i -X GET \
@@ -340,7 +586,7 @@ Content-Length: 112
 </table>
 </div>
 <div class="sect3">
-<h4 id="_http_request_2"><a class="link" href="#_http_request_2">HTTP Request</a></h4>
+<h4 id="_http_request"><a class="link" href="#_http_request">HTTP Request</a></h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /test/enums HTTP/1.1
@@ -350,12 +596,21 @@ Host: localhost:8080</code></pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_http_response_2"><a class="link" href="#_http_response_2">HTTP Response</a></h4>
+<h4 id="_http_response"><a class="link" href="#_http_response">HTTP Response</a></h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 865
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 0
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY
+Content-Length: 1060
 
 {
   "data" : {
@@ -377,6 +632,11 @@ Content-Length: 865
       "ILLEGAL_ARGUMENT" : "JWT ERROR NAME ILLEGAL_ARGUMENT, ERROR MSG JWT token compact of handler are invalid.",
       "INVALID_SIGNATURE" : "JWT ERROR NAME INVALID_SIGNATURE, ERROR MSG Invalid JWT signature.",
       "EXPIRED_TOKEN" : "JWT ERROR NAME EXPIRED_TOKEN, ERROR MSG Expired JWT token."
+    },
+    "productStatus" : {
+      "OUT_STOCK" : "제품의 판매 상태 완료",
+      "ON_STOCK" : "제품의 판매 상태 판매중",
+      "BOOKING" : "제품의 판매 상태 예약중"
     }
   }
 }</code></pre>
@@ -384,7 +644,7 @@ Content-Length: 865
 </div>
 </div>
 <div class="sect3">
-<h4 id="_httpie_request_2"><a class="link" href="#_httpie_request_2">HTTPie Request</a></h4>
+<h4 id="_httpie_request"><a class="link" href="#_httpie_request">HTTPie Request</a></h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ http GET 'http://localhost:8080/test/enums' \
@@ -393,7 +653,7 @@ Content-Length: 865
 </div>
 </div>
 <div class="sect3">
-<h4 id="_request_body_2"><a class="link" href="#_request_body_2">Request Body</a></h4>
+<h4 id="_request_body"><a class="link" href="#_request_body">Request Body</a></h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="json" class="language-json hljs"></code></pre>
@@ -401,7 +661,7 @@ Content-Length: 865
 </div>
 </div>
 <div class="sect3">
-<h4 id="_response_body_2"><a class="link" href="#_response_body_2">Response Body</a></h4>
+<h4 id="_response_body"><a class="link" href="#_response_body">Response Body</a></h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="json" class="language-json hljs">{
@@ -424,6 +684,11 @@ Content-Length: 865
       "ILLEGAL_ARGUMENT" : "JWT ERROR NAME ILLEGAL_ARGUMENT, ERROR MSG JWT token compact of handler are invalid.",
       "INVALID_SIGNATURE" : "JWT ERROR NAME INVALID_SIGNATURE, ERROR MSG Invalid JWT signature.",
       "EXPIRED_TOKEN" : "JWT ERROR NAME EXPIRED_TOKEN, ERROR MSG Expired JWT token."
+    },
+    "productStatus" : {
+      "OUT_STOCK" : "제품의 판매 상태 완료",
+      "ON_STOCK" : "제품의 판매 상태 판매중",
+      "BOOKING" : "제품의 판매 상태 예약중"
     }
   }
 }</code></pre>
@@ -436,7 +701,7 @@ Content-Length: 865
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1-SNAPSHOT<br>
-Last updated 2024-05-25 21:34:17 +0900
+Last updated 2024-05-26 23:52:58 +0900
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">

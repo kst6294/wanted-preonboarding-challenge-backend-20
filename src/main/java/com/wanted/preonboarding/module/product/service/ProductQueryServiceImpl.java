@@ -1,10 +1,11 @@
 package com.wanted.preonboarding.module.product.service;
 
 
+import com.wanted.preonboarding.module.product.core.Sku;
 import com.wanted.preonboarding.module.product.dto.CreateProduct;
-import com.wanted.preonboarding.module.user.core.BaseUserInfo;
-import com.wanted.preonboarding.module.user.service.UserFindService;
-import com.wanted.preonboarding.module.utils.SecurityUtils;
+import com.wanted.preonboarding.module.product.entity.Product;
+import com.wanted.preonboarding.module.product.mapper.ProductMapper;
+import com.wanted.preonboarding.module.product.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,14 +15,14 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class ProductQueryServiceImpl implements ProductQueryService{
 
-    private final UserFindService userFindService;
+    private final ProductMapper productMapper;
+    private final ProductRepository productRepository;
 
     @Override
-    public void createProduct(CreateProduct createProduct) {
-        String email = SecurityUtils.currentUserEmail();
-        BaseUserInfo baseUserInfo = userFindService.fetchUserInfo(email);
-
-
-
+    public Sku createProduct(CreateProduct createProduct) {
+        Product product = productMapper.toProduct(createProduct);
+        Product savedProduct = productRepository.save(product);
+        return productMapper.toSku(savedProduct);
     }
+
 }

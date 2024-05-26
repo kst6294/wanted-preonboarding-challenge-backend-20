@@ -1,8 +1,17 @@
 [source,http,options="nowrap"]
 ----
 HTTP/1.1 200 OK
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJUaGJlRlZ0dVJAd2FudGVkLmNvbSIsInJvbGUiOiJOT1JNQUwiLCJpYXQiOjE3MTY3MTMyMDAsImV4cCI6MTcxNjcxNjgwMH0.W9BKI8XJlLnPe_qSPDoeYjtRDLojjR2Y2M20GDLRlH0
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJWdktIWVZDYW5Ad2FudGVkLmNvbSIsInJvbGUiOiJOT1JNQUwiLCJpYXQiOjE3MTY3MzU0NjIsImV4cCI6MTcxNjczOTA2Mn0.J5Mg3eDqwCpd-t_9i_zEjEqGeIGp0bWrrh12FjdjTJk
 Content-Type: application/json;charset=UTF-8
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 0
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY
 Content-Length: 112
 
 {

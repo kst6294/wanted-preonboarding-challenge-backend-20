@@ -1,0 +1,6 @@
+[source,bash]
+----
+$ echo '{"productName":"xuksqmngit","price":79236868}' | http POST 'http://localhost:8080/api/v1/product' \
+    'Content-Type:application/json;charset=UTF-8' \
+    'Authorization:Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJaYUB3YW50ZWQuY29tIiwicm9sZSI6Ik5PUk1BTCIsImlhdCI6MTcxNjczNTQ2NSwiZXhwIjoxNzE2NzM5MDY1fQ.IqtpUcpPcfS5puV2G9XJUSC9VP507q1qdm5YJ-QTLe4'
+----

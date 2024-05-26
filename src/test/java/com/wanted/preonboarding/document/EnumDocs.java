@@ -15,4 +15,6 @@ public class EnumDocs {
     Map<String, String> yn;
     Map<String, String> memberShip;
     Map<String, String> jwtErrorEnum;
+    Map<String, String> productStatus;
+
 }

@@ -25,7 +25,6 @@ public class EasyRandomUtils {
 
     public static EasyRandom getInstance(Map<String, Object> values) {
         EasyRandomParameters parameters = new EasyRandomParameters()
-                .excludeField(named("id"))
                 .randomize(Long.class, new LongRangeRandomizer(1, 100000000))
                 .randomize(String.class, new StringRandomizer(10));
 
