@@ -10,7 +10,7 @@ router.post("/token", async (req, res) => {
     const record = await dbClient("Users").where(user).first();
 
     if (record) {
-        const token = jwt.sign({ username: record.username }, process.env.JWT_SECRET, {
+        const token = jwt.sign({ username: record.Username }, process.env.JWT_SECRET, {
             expiresIn: "1h",
         });
 
@@ -67,6 +67,33 @@ router.post("/products", verifyToken, async function (req, res, next) {
         });
         res.end("successful");
     } catch (_) {
+        error.status = 404;
+        return next(error);
+    }
+});
+
+router.post("/products/:product_id/purchase", verifyToken, async function (req, res, next) {
+    const table = "products";
+    const { product_id } = req.params;
+    const buyer = req.decoded.username;
+
+    try {
+        const item = await dbClient(table).where("ID", product_id).first();
+
+        if (item.ReservationState == "Available") {
+            await dbClient(table).where("ID", product_id).update({
+                Buyer: buyer,
+                ReservationState: "Reserved",
+            });
+
+            res.end("successful");
+        } else {
+            const error = new Error("판매 중이지 않습니다.");
+            error.status = 404;
+            return next(error);
+        }
+    } catch (_) {
+        const error = new Error("No exist.");
         error.status = 404;
         return next(error);
     }
