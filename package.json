@@ -14,5 +14,16 @@
     "morgan": "~1.9.1",
     "sqlite3": "^5.1.7"
   },
-  "type": "module"
+  "type": "module",
+  "devDependencies": {
+    "esbuild-jest": "^0.5.0",
+    "jest": "^29.7.0",
+    "supertest": "^7.0.0"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "transform": {
+      "^.+\\.js$": "esbuild-jest"
+    }
+  }
 }
