@@ -6,7 +6,6 @@
 :toclevels: 2
 :sectlinks:
 :docinfo: shared-head
-:stylesheet: /styles.css
 :linkcss:
 
 include::AUTH-API.adoc[]

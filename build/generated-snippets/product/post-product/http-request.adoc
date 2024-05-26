@@ -2,9 +2,9 @@
 ----
 POST /api/v1/product HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJaYUB3YW50ZWQuY29tIiwicm9sZSI6Ik5PUk1BTCIsImlhdCI6MTcxNjczNTQ2NSwiZXhwIjoxNzE2NzM5MDY1fQ.IqtpUcpPcfS5puV2G9XJUSC9VP507q1qdm5YJ-QTLe4
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJZcEdkVkB3YW50ZWQuY29tIiwicm9sZSI6Ik5PUk1BTCIsImlhdCI6MTcxNjczNTgyOCwiZXhwIjoxNzE2NzM5NDI4fQ.PdZ0RCsGX5JtfZ36Kf25jeS45R59NW7G0imLw2PinNg
 Content-Length: 45
 Host: localhost:8080
 
-{"productName":"xuksqmngit","price":79236868}
+{"productName":"stfcpxkoqu","price":23276030}
 ----

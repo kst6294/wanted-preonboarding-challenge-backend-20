@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.wanted.preonboarding.document.CommonDocControllerTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2024-05-26T14:57:44" hostname="lyusang-won-ui-MacBookPro.local" time="0.044">
+<testsuite name="com.wanted.preonboarding.document.CommonDocControllerTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2024-05-26T15:03:47" hostname="lyusang-won-ui-MacBookPro.local" time="0.034">
   <properties/>
-  <testcase name="enums()" classname="com.wanted.preonboarding.document.CommonDocControllerTest" time="0.044"/>
-  <system-out><![CDATA[2024-05-26T23:57:44.382+09:00  INFO 45347 --- [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.wanted.preonboarding.document.CommonDocControllerTest]: CommonDocControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-2024-05-26T23:57:44.406+09:00  INFO 45347 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.wanted.preonboarding.PreonboardingApplication for test class com.wanted.preonboarding.document.CommonDocControllerTest
+  <testcase name="enums()" classname="com.wanted.preonboarding.document.CommonDocControllerTest" time="0.034"/>
+  <system-out><![CDATA[2024-05-27T00:03:47.538+09:00  INFO 46642 --- [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.wanted.preonboarding.document.CommonDocControllerTest]: CommonDocControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2024-05-27T00:03:47.559+09:00  INFO 46642 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.wanted.preonboarding.PreonboardingApplication for test class com.wanted.preonboarding.document.CommonDocControllerTest
   .   ____          _            __ _ _
  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
 ( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
@@ -13,24 +13,24 @@
 
  :: Spring Boot ::                (v3.3.0)
 
-2024-05-26T23:57:44.426+09:00  INFO 45347 --- [    Test worker] c.w.p.document.CommonDocControllerTest   : Starting CommonDocControllerTest using Java 21.0.3 with PID 45347 (started by sangwon-ryu in /Users/sangwon-ryu/wanted-preonboarding-challenge-backend-20)
-2024-05-26T23:57:44.426+09:00 DEBUG 45347 --- [    Test worker] c.w.p.document.CommonDocControllerTest   : Running with Spring Boot v3.3.0, Spring v6.1.8
-2024-05-26T23:57:44.426+09:00  INFO 45347 --- [    Test worker] c.w.p.document.CommonDocControllerTest   : No active profile set, falling back to 1 default profile: "default"
-2024-05-26T23:57:44.583+09:00  WARN 45347 --- [    Test worker] .s.s.UserDetailsServiceAutoConfiguration : 
+2024-05-27T00:03:47.578+09:00  INFO 46642 --- [    Test worker] c.w.p.document.CommonDocControllerTest   : Starting CommonDocControllerTest using Java 21.0.3 with PID 46642 (started by sangwon-ryu in /Users/sangwon-ryu/wanted-preonboarding-challenge-backend-20)
+2024-05-27T00:03:47.578+09:00 DEBUG 46642 --- [    Test worker] c.w.p.document.CommonDocControllerTest   : Running with Spring Boot v3.3.0, Spring v6.1.8
+2024-05-27T00:03:47.578+09:00  INFO 46642 --- [    Test worker] c.w.p.document.CommonDocControllerTest   : No active profile set, falling back to 1 default profile: "default"
+2024-05-27T00:03:47.740+09:00  WARN 46642 --- [    Test worker] .s.s.UserDetailsServiceAutoConfiguration : 
 
-Using generated security password: 3f8e1ee2-9dd7-4302-9acd-1be25ed10ab5
+Using generated security password: 7a4ae52d-aa45-4215-b98b-c3917285b2c3
 
 This generated password is for development use only. Your security configuration must be updated before running your application in production.
 
-2024-05-26T23:57:44.584+09:00  INFO 45347 --- [    Test worker] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
-2024-05-26T23:57:44.668+09:00  INFO 45347 --- [    Test worker] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@367fd31a, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@43f88cba, org.springframework.security.web.context.SecurityContextHolderFilter@4e80eb4c, org.springframework.security.web.header.HeaderWriterFilter@4421decd, org.springframework.web.filter.CorsFilter@59c68ed3, org.springframework.security.web.authentication.logout.LogoutFilter@31a89b54, com.wanted.preonboarding.auth.filter.JwtAuthenticationFilter@3cf6f3aa, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@51ce22e3, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@1b5359a1, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@7459002d, org.springframework.security.web.session.SessionManagementFilter@deddccb, org.springframework.security.web.access.ExceptionTranslationFilter@6cde71fe, org.springframework.security.web.access.intercept.AuthorizationFilter@104ea372]
-2024-05-26T23:57:44.738+09:00  INFO 45347 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
-2024-05-26T23:57:44.738+09:00  INFO 45347 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
-2024-05-26T23:57:44.738+09:00  INFO 45347 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
-2024-05-26T23:57:44.748+09:00  INFO 45347 --- [    Test worker] c.w.p.document.CommonDocControllerTest   : Started CommonDocControllerTest in 0.338 seconds (process running for 6.228)
-2024-05-26T23:57:44.753+09:00  INFO 45347 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
-2024-05-26T23:57:44.753+09:00  INFO 45347 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
-2024-05-26T23:57:44.753+09:00  INFO 45347 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+2024-05-27T00:03:47.740+09:00  INFO 46642 --- [    Test worker] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
+2024-05-27T00:03:47.810+09:00  INFO 46642 --- [    Test worker] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@379bc95e, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@69919fed, org.springframework.security.web.context.SecurityContextHolderFilter@6ec8fa57, org.springframework.security.web.header.HeaderWriterFilter@6630c950, org.springframework.web.filter.CorsFilter@17574caa, org.springframework.security.web.authentication.logout.LogoutFilter@6bf6b454, com.wanted.preonboarding.auth.filter.JwtAuthenticationFilter@555b43ba, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@56101f06, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@368a26dd, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@3ce3b176, org.springframework.security.web.session.SessionManagementFilter@51c4bfea, org.springframework.security.web.access.ExceptionTranslationFilter@38a01810, org.springframework.security.web.access.intercept.AuthorizationFilter@5a931ba9]
+2024-05-27T00:03:47.864+09:00  INFO 46642 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2024-05-27T00:03:47.865+09:00  INFO 46642 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2024-05-27T00:03:47.865+09:00  INFO 46642 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+2024-05-27T00:03:47.872+09:00  INFO 46642 --- [    Test worker] c.w.p.document.CommonDocControllerTest   : Started CommonDocControllerTest in 0.31 seconds (process running for 6.336)
+2024-05-27T00:03:47.878+09:00  INFO 46642 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2024-05-27T00:03:47.878+09:00  INFO 46642 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2024-05-27T00:03:47.878+09:00  INFO 46642 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
 
 MockHttpServletRequest:
       HTTP Method = GET

@@ -41,7 +41,7 @@
 </td>
 <td>
 <div class="infoBox" id="duration">
-<div class="counter">0.141s</div>
+<div class="counter">0.122s</div>
 <p>duration</p>
 </div>
 </td>
@@ -81,13 +81,13 @@
 <tr>
 <td class="success">Product 삭제</td>
 <td class="success">deleteProduct()</td>
-<td class="success">0.031s</td>
+<td class="success">0.027s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">Product 저장 및 조회</td>
 <td class="success">saveAndFindProduct()</td>
-<td class="success">0.110s</td>
+<td class="success">0.095s</td>
 <td class="success">passed</td>
 </tr>
 </table>
@@ -95,8 +95,8 @@
 <div id="tab1" class="tab">
 <h2>Standard output</h2>
 <span class="code">
-<pre>2024-05-26T23:57:45.639+09:00  INFO 45347 --- [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.wanted.preonboarding.module.product.repository.ProductRepositoryTest]: ProductRepositoryTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-2024-05-26T23:57:45.651+09:00  INFO 45347 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.wanted.preonboarding.PreonboardingApplication for test class com.wanted.preonboarding.module.product.repository.ProductRepositoryTest
+<pre>2024-05-27T00:03:48.747+09:00  INFO 46642 --- [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.wanted.preonboarding.module.product.repository.ProductRepositoryTest]: ProductRepositoryTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2024-05-27T00:03:48.761+09:00  INFO 46642 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.wanted.preonboarding.PreonboardingApplication for test class com.wanted.preonboarding.module.product.repository.ProductRepositoryTest
   .   ____          _            __ _ _
  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
 ( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
@@ -106,25 +106,25 @@
 
  :: Spring Boot ::                (v3.3.0)
 
-2024-05-26T23:57:45.664+09:00  INFO 45347 --- [    Test worker] c.w.p.m.p.r.ProductRepositoryTest        : Starting ProductRepositoryTest using Java 21.0.3 with PID 45347 (started by sangwon-ryu in /Users/sangwon-ryu/wanted-preonboarding-challenge-backend-20)
-2024-05-26T23:57:45.664+09:00 DEBUG 45347 --- [    Test worker] c.w.p.m.p.r.ProductRepositoryTest        : Running with Spring Boot v3.3.0, Spring v6.1.8
-2024-05-26T23:57:45.664+09:00  INFO 45347 --- [    Test worker] c.w.p.m.p.r.ProductRepositoryTest        : No active profile set, falling back to 1 default profile: &quot;default&quot;
-2024-05-26T23:57:45.705+09:00  INFO 45347 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
-2024-05-26T23:57:45.705+09:00  INFO 45347 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2024-05-26T23:57:45.718+09:00  INFO 45347 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 13 ms. Found 1 JPA repository interface.
-2024-05-26T23:57:45.725+09:00  INFO 45347 --- [    Test worker] beddedDataSourceBeanFactoryPostProcessor : Replacing 'dataSource' DataSource bean with embedded version
-2024-05-26T23:57:45.740+09:00  INFO 45347 --- [    Test worker] o.s.j.d.e.EmbeddedDatabaseFactory        : Starting embedded database: url='jdbc:h2:mem:2eed00cc-7a58-4c65-8eb3-e49ae3654381;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=false', username='sa'
-2024-05-26T23:57:45.753+09:00  INFO 45347 --- [    Test worker] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
-2024-05-26T23:57:45.755+09:00  INFO 45347 --- [    Test worker] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
-2024-05-26T23:57:45.759+09:00  INFO 45347 --- [    Test worker] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
-2024-05-26T23:57:45.798+09:00  INFO 45347 --- [    Test worker] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-05-27T00:03:48.773+09:00  INFO 46642 --- [    Test worker] c.w.p.m.p.r.ProductRepositoryTest        : Starting ProductRepositoryTest using Java 21.0.3 with PID 46642 (started by sangwon-ryu in /Users/sangwon-ryu/wanted-preonboarding-challenge-backend-20)
+2024-05-27T00:03:48.774+09:00 DEBUG 46642 --- [    Test worker] c.w.p.m.p.r.ProductRepositoryTest        : Running with Spring Boot v3.3.0, Spring v6.1.8
+2024-05-27T00:03:48.774+09:00  INFO 46642 --- [    Test worker] c.w.p.m.p.r.ProductRepositoryTest        : No active profile set, falling back to 1 default profile: &quot;default&quot;
+2024-05-27T00:03:48.813+09:00  INFO 46642 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2024-05-27T00:03:48.813+09:00  INFO 46642 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-05-27T00:03:48.829+09:00  INFO 46642 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 15 ms. Found 1 JPA repository interface.
+2024-05-27T00:03:48.838+09:00  INFO 46642 --- [    Test worker] beddedDataSourceBeanFactoryPostProcessor : Replacing 'dataSource' DataSource bean with embedded version
+2024-05-27T00:03:48.852+09:00  INFO 46642 --- [    Test worker] o.s.j.d.e.EmbeddedDatabaseFactory        : Starting embedded database: url='jdbc:h2:mem:5f83a28e-a128-4467-9ebf-755c0bd8bd46;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=false', username='sa'
+2024-05-27T00:03:48.864+09:00  INFO 46642 --- [    Test worker] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-05-27T00:03:48.866+09:00  INFO 46642 --- [    Test worker] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2024-05-27T00:03:48.870+09:00  INFO 46642 --- [    Test worker] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-05-27T00:03:48.908+09:00  INFO 46642 --- [    Test worker] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
 Hibernate: drop table if exists product cascade 
 Hibernate: drop table if exists users cascade 
 Hibernate: create table product (insert_date timestamp(6) not null, price bigint not null, product_id bigint generated by default as identity, update_date timestamp(6) not null, user_id bigint not null, insert_operator varchar(255) not null, product_name varchar(255) not null, update_operator varchar(255) not null, delete_yn enum ('N','Y') not null, product_status enum ('BOOKING','ON_STOCK','OUT_STOCK'), primary key (product_id))
 Hibernate: create table users (insert_date timestamp(6) not null, update_date timestamp(6) not null, user_id bigint generated by default as identity, email varchar(255) not null unique, insert_operator varchar(255) not null, password_hash varchar(255) not null, phone_number varchar(255) not null unique, update_operator varchar(255) not null, delete_yn enum ('N','Y') not null, membership enum ('GUEST','NORMAL') not null, primary key (user_id))
 Hibernate: alter table if exists product add constraint FK47nyv78b35eaufr6aa96vep6n foreign key (user_id) references users
-2024-05-26T23:57:45.802+09:00  INFO 45347 --- [    Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
-2024-05-26T23:57:45.832+09:00  INFO 45347 --- [    Test worker] c.w.p.m.p.r.ProductRepositoryTest        : Started ProductRepositoryTest in 0.18 seconds (process running for 7.313)
+2024-05-27T00:03:48.911+09:00  INFO 46642 --- [    Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-05-27T00:03:48.938+09:00  INFO 46642 --- [    Test worker] c.w.p.m.p.r.ProductRepositoryTest        : Started ProductRepositoryTest in 0.176 seconds (process running for 7.401)
 Hibernate: insert into users (delete_yn,email,insert_date,insert_operator,membership,password_hash,phone_number,update_date,update_operator,user_id) values (?,?,?,?,?,?,?,?,?,default)
 Hibernate: select p1_0.product_id,p1_0.delete_yn,p1_0.insert_date,p1_0.insert_operator,p1_0.price,p1_0.product_name,p1_0.product_status,p1_0.user_id,p1_0.update_date,p1_0.update_operator from product p1_0 where p1_0.product_id=?
 Hibernate: insert into product (delete_yn,insert_date,insert_operator,price,product_name,product_status,user_id,update_date,update_operator,product_id) values (?,?,?,?,?,?,?,?,?,default)
@@ -142,7 +142,7 @@ Hibernate: insert into product (delete_yn,insert_date,insert_operator,price,prod
 <input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
 </label>
 </div>Generated by 
-<a href="http://www.gradle.org">Gradle 8.7</a> at 2024. 5. 26. 오후 11:57:46</p>
+<a href="http://www.gradle.org">Gradle 8.7</a> at 2024. 5. 27. 오전 12:03:49</p>
 </div>
 </div>
 </body>

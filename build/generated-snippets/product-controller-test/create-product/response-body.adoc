@@ -2,11 +2,11 @@
 ----
 {
   "data" : {
-    "id" : 4465,
-    "productName" : "xuksqmngit",
-    "price" : 79236868,
+    "id" : 4058,
+    "productName" : "stfcpxkoqu",
+    "price" : 23276030,
     "productStatus" : "ON_STOCK",
-    "seller" : "O@wanted.com"
+    "seller" : "X@wanted.com"
   },
   "response" : {
     "status" : 200,

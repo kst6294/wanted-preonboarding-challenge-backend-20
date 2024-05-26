@@ -2,5 +2,5 @@
 ----
 $ curl 'http://localhost:8080/api/v1/product' -i -X POST \
     -H 'Content-Type: application/json;charset=UTF-8' \
-    -d '{"productName":"qzqpkzzkif","price":29930317}'
+    -d '{"productName":"nbvmsardum","price":32560906}'
 ----

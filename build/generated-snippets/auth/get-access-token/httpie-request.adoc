@@ -1,5 +1,5 @@
 [source,bash]
 ----
-$ echo '{"email":"o@wanted.com","password":"pflxrvewgx"}' | http POST 'http://localhost:8080/api/v1/auth/authentication' \
+$ echo '{"email":"CWK@wanted.com","password":"zojyfiocqm"}' | http POST 'http://localhost:8080/api/v1/auth/authentication' \
     'Content-Type:application/json;charset=UTF-8'
 ----
