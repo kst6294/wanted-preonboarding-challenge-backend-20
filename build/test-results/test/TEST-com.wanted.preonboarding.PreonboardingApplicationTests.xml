@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.wanted.preonboarding.PreonboardingApplicationTests" tests="1" skipped="0" failures="0" errors="0" timestamp="2024-05-25T11:48:51" hostname="lyusang-won-ui-MacBookPro.local" time="0.298">
+<testsuite name="com.wanted.preonboarding.PreonboardingApplicationTests" tests="1" skipped="0" failures="0" errors="0" timestamp="2024-05-26T08:46:39" hostname="lyusang-won-ui-MacBookPro.local" time="0.326">
   <properties/>
-  <testcase name="contextLoads()" classname="com.wanted.preonboarding.PreonboardingApplicationTests" time="0.298"/>
-  <system-out><![CDATA[20:48:49.653 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.wanted.preonboarding.PreonboardingApplicationTests]: PreonboardingApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-20:48:49.705 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.wanted.preonboarding.PreonboardingApplication for test class com.wanted.preonboarding.PreonboardingApplicationTests
+  <testcase name="contextLoads()" classname="com.wanted.preonboarding.PreonboardingApplicationTests" time="0.326"/>
+  <system-out><![CDATA[17:46:37.112 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.wanted.preonboarding.PreonboardingApplicationTests]: PreonboardingApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+17:46:37.172 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.wanted.preonboarding.PreonboardingApplication for test class com.wanted.preonboarding.PreonboardingApplicationTests
   .   ____          _            __ _ _
  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
 ( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
@@ -13,91 +13,91 @@
 
  :: Spring Boot ::                (v3.3.0)
 
-2024-05-25T20:48:49.877+09:00  INFO 33277 --- [    Test worker] c.w.p.PreonboardingApplicationTests      : Starting PreonboardingApplicationTests using Java 21.0.3 with PID 33277 (started by sangwon-ryu in /Users/sangwon-ryu/wanted-preonboarding-challenge-backend-20)
-2024-05-25T20:48:49.877+09:00 DEBUG 33277 --- [    Test worker] c.w.p.PreonboardingApplicationTests      : Running with Spring Boot v3.3.0, Spring v6.1.8
-2024-05-25T20:48:49.878+09:00  INFO 33277 --- [    Test worker] c.w.p.PreonboardingApplicationTests      : No active profile set, falling back to 1 default profile: "default"
-2024-05-25T20:48:50.215+09:00  INFO 33277 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
-2024-05-25T20:48:50.215+09:00  INFO 33277 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2024-05-25T20:48:50.235+09:00  INFO 33277 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 17 ms. Found 0 JPA repository interfaces.
-2024-05-25T20:48:50.242+09:00  INFO 33277 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
-2024-05-25T20:48:50.243+09:00  INFO 33277 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
-2024-05-25T20:48:50.252+09:00  INFO 33277 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 4 ms. Found 0 Redis repository interfaces.
-2024-05-25T20:48:50.544+09:00 DEBUG 33277 --- [    Test worker] com.zaxxer.hikari.HikariConfig           : Driver class org.h2.Driver found in Thread context class loader jdk.internal.loader.ClassLoaders$AppClassLoader@1cf4f579
-2024-05-25T20:48:50.604+09:00  INFO 33277 --- [    Test worker] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
-2024-05-25T20:48:50.627+09:00  INFO 33277 --- [    Test worker] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.2.Final
-2024-05-25T20:48:50.641+09:00  INFO 33277 --- [    Test worker] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
-2024-05-25T20:48:50.776+09:00  INFO 33277 --- [    Test worker] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
-2024-05-25T20:48:50.788+09:00 DEBUG 33277 --- [    Test worker] com.zaxxer.hikari.HikariConfig           : jpa-hikari-pool - configuration:
-2024-05-25T20:48:50.790+09:00 DEBUG 33277 --- [    Test worker] com.zaxxer.hikari.HikariConfig           : allowPoolSuspension.............false
-2024-05-25T20:48:50.790+09:00 DEBUG 33277 --- [    Test worker] com.zaxxer.hikari.HikariConfig           : autoCommit......................true
-2024-05-25T20:48:50.790+09:00 DEBUG 33277 --- [    Test worker] com.zaxxer.hikari.HikariConfig           : catalog.........................none
-2024-05-25T20:48:50.790+09:00 DEBUG 33277 --- [    Test worker] com.zaxxer.hikari.HikariConfig           : connectionInitSql...............none
-2024-05-25T20:48:50.790+09:00 DEBUG 33277 --- [    Test worker] com.zaxxer.hikari.HikariConfig           : connectionTestQuery.............none
-2024-05-25T20:48:50.791+09:00 DEBUG 33277 --- [    Test worker] com.zaxxer.hikari.HikariConfig           : connectionTimeout...............30000
-2024-05-25T20:48:50.791+09:00 DEBUG 33277 --- [    Test worker] com.zaxxer.hikari.HikariConfig           : dataSource......................none
-2024-05-25T20:48:50.791+09:00 DEBUG 33277 --- [    Test worker] com.zaxxer.hikari.HikariConfig           : dataSourceClassName.............none
-2024-05-25T20:48:50.791+09:00 DEBUG 33277 --- [    Test worker] com.zaxxer.hikari.HikariConfig           : dataSourceJNDI..................none
-2024-05-25T20:48:50.791+09:00 DEBUG 33277 --- [    Test worker] com.zaxxer.hikari.HikariConfig           : dataSourceProperties............{password=<masked>}
-2024-05-25T20:48:50.791+09:00 DEBUG 33277 --- [    Test worker] com.zaxxer.hikari.HikariConfig           : driverClassName................."org.h2.Driver"
-2024-05-25T20:48:50.791+09:00 DEBUG 33277 --- [    Test worker] com.zaxxer.hikari.HikariConfig           : exceptionOverrideClassName......none
-2024-05-25T20:48:50.792+09:00 DEBUG 33277 --- [    Test worker] com.zaxxer.hikari.HikariConfig           : healthCheckProperties...........{}
-2024-05-25T20:48:50.792+09:00 DEBUG 33277 --- [    Test worker] com.zaxxer.hikari.HikariConfig           : healthCheckRegistry.............none
-2024-05-25T20:48:50.792+09:00 DEBUG 33277 --- [    Test worker] com.zaxxer.hikari.HikariConfig           : idleTimeout.....................600000
-2024-05-25T20:48:50.792+09:00 DEBUG 33277 --- [    Test worker] com.zaxxer.hikari.HikariConfig           : initializationFailTimeout.......1
-2024-05-25T20:48:50.792+09:00 DEBUG 33277 --- [    Test worker] com.zaxxer.hikari.HikariConfig           : isolateInternalQueries..........false
-2024-05-25T20:48:50.792+09:00 DEBUG 33277 --- [    Test worker] com.zaxxer.hikari.HikariConfig           : jdbcUrl.........................jdbc:h2:mem:testdb;MODE=MySQL;
-2024-05-25T20:48:50.792+09:00 DEBUG 33277 --- [    Test worker] com.zaxxer.hikari.HikariConfig           : keepaliveTime...................0
-2024-05-25T20:48:50.792+09:00 DEBUG 33277 --- [    Test worker] com.zaxxer.hikari.HikariConfig           : leakDetectionThreshold..........0
-2024-05-25T20:48:50.793+09:00 DEBUG 33277 --- [    Test worker] com.zaxxer.hikari.HikariConfig           : maxLifetime.....................1800000
-2024-05-25T20:48:50.793+09:00 DEBUG 33277 --- [    Test worker] com.zaxxer.hikari.HikariConfig           : maximumPoolSize.................10
-2024-05-25T20:48:50.793+09:00 DEBUG 33277 --- [    Test worker] com.zaxxer.hikari.HikariConfig           : metricRegistry..................none
-2024-05-25T20:48:50.793+09:00 DEBUG 33277 --- [    Test worker] com.zaxxer.hikari.HikariConfig           : metricsTrackerFactory...........none
-2024-05-25T20:48:50.793+09:00 DEBUG 33277 --- [    Test worker] com.zaxxer.hikari.HikariConfig           : minimumIdle.....................10
-2024-05-25T20:48:50.793+09:00 DEBUG 33277 --- [    Test worker] com.zaxxer.hikari.HikariConfig           : password........................<masked>
-2024-05-25T20:48:50.793+09:00 DEBUG 33277 --- [    Test worker] com.zaxxer.hikari.HikariConfig           : poolName........................"jpa-hikari-pool"
-2024-05-25T20:48:50.793+09:00 DEBUG 33277 --- [    Test worker] com.zaxxer.hikari.HikariConfig           : readOnly........................false
-2024-05-25T20:48:50.793+09:00 DEBUG 33277 --- [    Test worker] com.zaxxer.hikari.HikariConfig           : registerMbeans..................false
-2024-05-25T20:48:50.793+09:00 DEBUG 33277 --- [    Test worker] com.zaxxer.hikari.HikariConfig           : scheduledExecutor...............none
-2024-05-25T20:48:50.793+09:00 DEBUG 33277 --- [    Test worker] com.zaxxer.hikari.HikariConfig           : schema..........................none
-2024-05-25T20:48:50.793+09:00 DEBUG 33277 --- [    Test worker] com.zaxxer.hikari.HikariConfig           : threadFactory...................internal
-2024-05-25T20:48:50.793+09:00 DEBUG 33277 --- [    Test worker] com.zaxxer.hikari.HikariConfig           : transactionIsolation............default
-2024-05-25T20:48:50.793+09:00 DEBUG 33277 --- [    Test worker] com.zaxxer.hikari.HikariConfig           : username........................"sa"
-2024-05-25T20:48:50.794+09:00 DEBUG 33277 --- [    Test worker] com.zaxxer.hikari.HikariConfig           : validationTimeout...............5000
-2024-05-25T20:48:50.794+09:00  INFO 33277 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : jpa-hikari-pool - Starting...
-2024-05-25T20:48:50.890+09:00  INFO 33277 --- [    Test worker] com.zaxxer.hikari.pool.HikariPool        : jpa-hikari-pool - Added connection conn0: url=jdbc:h2:mem:testdb user=SA
-2024-05-25T20:48:50.891+09:00  INFO 33277 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : jpa-hikari-pool - Start completed.
-2024-05-25T20:48:50.991+09:00 DEBUG 33277 --- [ool housekeeper] com.zaxxer.hikari.pool.HikariPool        : jpa-hikari-pool - Pool stats (total=1, active=0, idle=1, waiting=0)
-2024-05-25T20:48:50.992+09:00 DEBUG 33277 --- [onnection adder] com.zaxxer.hikari.pool.HikariPool        : jpa-hikari-pool - Added connection conn1: url=jdbc:h2:mem:testdb user=SA
-2024-05-25T20:48:51.023+09:00 DEBUG 33277 --- [onnection adder] com.zaxxer.hikari.pool.HikariPool        : jpa-hikari-pool - After adding stats (total=2, active=0, idle=2, waiting=0)
-2024-05-25T20:48:51.023+09:00 DEBUG 33277 --- [onnection adder] com.zaxxer.hikari.pool.HikariPool        : jpa-hikari-pool - Added connection conn2: url=jdbc:h2:mem:testdb user=SA
-2024-05-25T20:48:51.059+09:00 DEBUG 33277 --- [onnection adder] com.zaxxer.hikari.pool.HikariPool        : jpa-hikari-pool - After adding stats (total=3, active=0, idle=3, waiting=0)
-2024-05-25T20:48:51.059+09:00 DEBUG 33277 --- [onnection adder] com.zaxxer.hikari.pool.HikariPool        : jpa-hikari-pool - Added connection conn3: url=jdbc:h2:mem:testdb user=SA
-2024-05-25T20:48:51.091+09:00 DEBUG 33277 --- [onnection adder] com.zaxxer.hikari.pool.HikariPool        : jpa-hikari-pool - After adding stats (total=4, active=0, idle=4, waiting=0)
-2024-05-25T20:48:51.092+09:00 DEBUG 33277 --- [onnection adder] com.zaxxer.hikari.pool.HikariPool        : jpa-hikari-pool - Added connection conn4: url=jdbc:h2:mem:testdb user=SA
-2024-05-25T20:48:51.126+09:00 DEBUG 33277 --- [onnection adder] com.zaxxer.hikari.pool.HikariPool        : jpa-hikari-pool - After adding stats (total=5, active=0, idle=5, waiting=0)
-2024-05-25T20:48:51.127+09:00 DEBUG 33277 --- [onnection adder] com.zaxxer.hikari.pool.HikariPool        : jpa-hikari-pool - Added connection conn5: url=jdbc:h2:mem:testdb user=SA
-2024-05-25T20:48:51.162+09:00 DEBUG 33277 --- [onnection adder] com.zaxxer.hikari.pool.HikariPool        : jpa-hikari-pool - After adding stats (total=6, active=0, idle=6, waiting=0)
-2024-05-25T20:48:51.163+09:00 DEBUG 33277 --- [onnection adder] com.zaxxer.hikari.pool.HikariPool        : jpa-hikari-pool - Added connection conn6: url=jdbc:h2:mem:testdb user=SA
-2024-05-25T20:48:51.195+09:00 DEBUG 33277 --- [onnection adder] com.zaxxer.hikari.pool.HikariPool        : jpa-hikari-pool - After adding stats (total=7, active=0, idle=7, waiting=0)
-2024-05-25T20:48:51.196+09:00 DEBUG 33277 --- [onnection adder] com.zaxxer.hikari.pool.HikariPool        : jpa-hikari-pool - Added connection conn7: url=jdbc:h2:mem:testdb user=SA
-2024-05-25T20:48:51.231+09:00 DEBUG 33277 --- [onnection adder] com.zaxxer.hikari.pool.HikariPool        : jpa-hikari-pool - After adding stats (total=8, active=0, idle=8, waiting=0)
-2024-05-25T20:48:51.232+09:00 DEBUG 33277 --- [onnection adder] com.zaxxer.hikari.pool.HikariPool        : jpa-hikari-pool - Added connection conn8: url=jdbc:h2:mem:testdb user=SA
-2024-05-25T20:48:51.263+09:00 DEBUG 33277 --- [onnection adder] com.zaxxer.hikari.pool.HikariPool        : jpa-hikari-pool - After adding stats (total=9, active=0, idle=9, waiting=0)
-2024-05-25T20:48:51.264+09:00 DEBUG 33277 --- [onnection adder] com.zaxxer.hikari.pool.HikariPool        : jpa-hikari-pool - Added connection conn9: url=jdbc:h2:mem:testdb user=SA
-2024-05-25T20:48:51.295+09:00 DEBUG 33277 --- [onnection adder] com.zaxxer.hikari.pool.HikariPool        : jpa-hikari-pool - After adding stats (total=10, active=0, idle=10, waiting=0)
-2024-05-25T20:48:51.319+09:00  INFO 33277 --- [    Test worker] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-05-26T17:46:37.370+09:00  INFO 35942 --- [    Test worker] c.w.p.PreonboardingApplicationTests      : Starting PreonboardingApplicationTests using Java 21.0.3 with PID 35942 (started by sangwon-ryu in /Users/sangwon-ryu/wanted-preonboarding-challenge-backend-20)
+2024-05-26T17:46:37.370+09:00 DEBUG 35942 --- [    Test worker] c.w.p.PreonboardingApplicationTests      : Running with Spring Boot v3.3.0, Spring v6.1.8
+2024-05-26T17:46:37.370+09:00  INFO 35942 --- [    Test worker] c.w.p.PreonboardingApplicationTests      : No active profile set, falling back to 1 default profile: "default"
+2024-05-26T17:46:37.766+09:00  INFO 35942 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2024-05-26T17:46:37.767+09:00  INFO 35942 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-05-26T17:46:37.790+09:00  INFO 35942 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 18 ms. Found 0 JPA repository interfaces.
+2024-05-26T17:46:37.799+09:00  INFO 35942 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2024-05-26T17:46:37.800+09:00  INFO 35942 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2024-05-26T17:46:37.810+09:00  INFO 35942 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 4 ms. Found 0 Redis repository interfaces.
+2024-05-26T17:46:38.135+09:00 DEBUG 35942 --- [    Test worker] com.zaxxer.hikari.HikariConfig           : Driver class org.h2.Driver found in Thread context class loader jdk.internal.loader.ClassLoaders$AppClassLoader@1cf4f579
+2024-05-26T17:46:38.198+09:00  INFO 35942 --- [    Test worker] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-05-26T17:46:38.233+09:00  INFO 35942 --- [    Test worker] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.2.Final
+2024-05-26T17:46:38.254+09:00  INFO 35942 --- [    Test worker] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2024-05-26T17:46:38.415+09:00  INFO 35942 --- [    Test worker] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-05-26T17:46:38.430+09:00 DEBUG 35942 --- [    Test worker] com.zaxxer.hikari.HikariConfig           : jpa-hikari-pool - configuration:
+2024-05-26T17:46:38.432+09:00 DEBUG 35942 --- [    Test worker] com.zaxxer.hikari.HikariConfig           : allowPoolSuspension.............false
+2024-05-26T17:46:38.432+09:00 DEBUG 35942 --- [    Test worker] com.zaxxer.hikari.HikariConfig           : autoCommit......................true
+2024-05-26T17:46:38.432+09:00 DEBUG 35942 --- [    Test worker] com.zaxxer.hikari.HikariConfig           : catalog.........................none
+2024-05-26T17:46:38.432+09:00 DEBUG 35942 --- [    Test worker] com.zaxxer.hikari.HikariConfig           : connectionInitSql...............none
+2024-05-26T17:46:38.433+09:00 DEBUG 35942 --- [    Test worker] com.zaxxer.hikari.HikariConfig           : connectionTestQuery.............none
+2024-05-26T17:46:38.433+09:00 DEBUG 35942 --- [    Test worker] com.zaxxer.hikari.HikariConfig           : connectionTimeout...............30000
+2024-05-26T17:46:38.433+09:00 DEBUG 35942 --- [    Test worker] com.zaxxer.hikari.HikariConfig           : dataSource......................none
+2024-05-26T17:46:38.434+09:00 DEBUG 35942 --- [    Test worker] com.zaxxer.hikari.HikariConfig           : dataSourceClassName.............none
+2024-05-26T17:46:38.434+09:00 DEBUG 35942 --- [    Test worker] com.zaxxer.hikari.HikariConfig           : dataSourceJNDI..................none
+2024-05-26T17:46:38.434+09:00 DEBUG 35942 --- [    Test worker] com.zaxxer.hikari.HikariConfig           : dataSourceProperties............{password=<masked>}
+2024-05-26T17:46:38.434+09:00 DEBUG 35942 --- [    Test worker] com.zaxxer.hikari.HikariConfig           : driverClassName................."org.h2.Driver"
+2024-05-26T17:46:38.434+09:00 DEBUG 35942 --- [    Test worker] com.zaxxer.hikari.HikariConfig           : exceptionOverrideClassName......none
+2024-05-26T17:46:38.434+09:00 DEBUG 35942 --- [    Test worker] com.zaxxer.hikari.HikariConfig           : healthCheckProperties...........{}
+2024-05-26T17:46:38.434+09:00 DEBUG 35942 --- [    Test worker] com.zaxxer.hikari.HikariConfig           : healthCheckRegistry.............none
+2024-05-26T17:46:38.435+09:00 DEBUG 35942 --- [    Test worker] com.zaxxer.hikari.HikariConfig           : idleTimeout.....................600000
+2024-05-26T17:46:38.435+09:00 DEBUG 35942 --- [    Test worker] com.zaxxer.hikari.HikariConfig           : initializationFailTimeout.......1
+2024-05-26T17:46:38.435+09:00 DEBUG 35942 --- [    Test worker] com.zaxxer.hikari.HikariConfig           : isolateInternalQueries..........false
+2024-05-26T17:46:38.435+09:00 DEBUG 35942 --- [    Test worker] com.zaxxer.hikari.HikariConfig           : jdbcUrl.........................jdbc:h2:mem:testdb;MODE=MySQL;
+2024-05-26T17:46:38.435+09:00 DEBUG 35942 --- [    Test worker] com.zaxxer.hikari.HikariConfig           : keepaliveTime...................0
+2024-05-26T17:46:38.435+09:00 DEBUG 35942 --- [    Test worker] com.zaxxer.hikari.HikariConfig           : leakDetectionThreshold..........0
+2024-05-26T17:46:38.435+09:00 DEBUG 35942 --- [    Test worker] com.zaxxer.hikari.HikariConfig           : maxLifetime.....................1800000
+2024-05-26T17:46:38.435+09:00 DEBUG 35942 --- [    Test worker] com.zaxxer.hikari.HikariConfig           : maximumPoolSize.................10
+2024-05-26T17:46:38.435+09:00 DEBUG 35942 --- [    Test worker] com.zaxxer.hikari.HikariConfig           : metricRegistry..................none
+2024-05-26T17:46:38.435+09:00 DEBUG 35942 --- [    Test worker] com.zaxxer.hikari.HikariConfig           : metricsTrackerFactory...........none
+2024-05-26T17:46:38.435+09:00 DEBUG 35942 --- [    Test worker] com.zaxxer.hikari.HikariConfig           : minimumIdle.....................10
+2024-05-26T17:46:38.436+09:00 DEBUG 35942 --- [    Test worker] com.zaxxer.hikari.HikariConfig           : password........................<masked>
+2024-05-26T17:46:38.436+09:00 DEBUG 35942 --- [    Test worker] com.zaxxer.hikari.HikariConfig           : poolName........................"jpa-hikari-pool"
+2024-05-26T17:46:38.436+09:00 DEBUG 35942 --- [    Test worker] com.zaxxer.hikari.HikariConfig           : readOnly........................false
+2024-05-26T17:46:38.436+09:00 DEBUG 35942 --- [    Test worker] com.zaxxer.hikari.HikariConfig           : registerMbeans..................false
+2024-05-26T17:46:38.436+09:00 DEBUG 35942 --- [    Test worker] com.zaxxer.hikari.HikariConfig           : scheduledExecutor...............none
+2024-05-26T17:46:38.436+09:00 DEBUG 35942 --- [    Test worker] com.zaxxer.hikari.HikariConfig           : schema..........................none
+2024-05-26T17:46:38.436+09:00 DEBUG 35942 --- [    Test worker] com.zaxxer.hikari.HikariConfig           : threadFactory...................internal
+2024-05-26T17:46:38.436+09:00 DEBUG 35942 --- [    Test worker] com.zaxxer.hikari.HikariConfig           : transactionIsolation............default
+2024-05-26T17:46:38.436+09:00 DEBUG 35942 --- [    Test worker] com.zaxxer.hikari.HikariConfig           : username........................"sa"
+2024-05-26T17:46:38.436+09:00 DEBUG 35942 --- [    Test worker] com.zaxxer.hikari.HikariConfig           : validationTimeout...............5000
+2024-05-26T17:46:38.436+09:00  INFO 35942 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : jpa-hikari-pool - Starting...
+2024-05-26T17:46:38.533+09:00  INFO 35942 --- [    Test worker] com.zaxxer.hikari.pool.HikariPool        : jpa-hikari-pool - Added connection conn0: url=jdbc:h2:mem:testdb user=SA
+2024-05-26T17:46:38.534+09:00  INFO 35942 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : jpa-hikari-pool - Start completed.
+2024-05-26T17:46:38.638+09:00 DEBUG 35942 --- [ool housekeeper] com.zaxxer.hikari.pool.HikariPool        : jpa-hikari-pool - Pool stats (total=1, active=0, idle=1, waiting=0)
+2024-05-26T17:46:38.639+09:00 DEBUG 35942 --- [onnection adder] com.zaxxer.hikari.pool.HikariPool        : jpa-hikari-pool - Added connection conn1: url=jdbc:h2:mem:testdb user=SA
+2024-05-26T17:46:38.674+09:00 DEBUG 35942 --- [onnection adder] com.zaxxer.hikari.pool.HikariPool        : jpa-hikari-pool - After adding stats (total=2, active=0, idle=2, waiting=0)
+2024-05-26T17:46:38.675+09:00 DEBUG 35942 --- [onnection adder] com.zaxxer.hikari.pool.HikariPool        : jpa-hikari-pool - Added connection conn2: url=jdbc:h2:mem:testdb user=SA
+2024-05-26T17:46:38.710+09:00 DEBUG 35942 --- [onnection adder] com.zaxxer.hikari.pool.HikariPool        : jpa-hikari-pool - After adding stats (total=3, active=0, idle=3, waiting=0)
+2024-05-26T17:46:38.711+09:00 DEBUG 35942 --- [onnection adder] com.zaxxer.hikari.pool.HikariPool        : jpa-hikari-pool - Added connection conn3: url=jdbc:h2:mem:testdb user=SA
+2024-05-26T17:46:38.745+09:00 DEBUG 35942 --- [onnection adder] com.zaxxer.hikari.pool.HikariPool        : jpa-hikari-pool - After adding stats (total=4, active=0, idle=4, waiting=0)
+2024-05-26T17:46:38.745+09:00 DEBUG 35942 --- [onnection adder] com.zaxxer.hikari.pool.HikariPool        : jpa-hikari-pool - Added connection conn4: url=jdbc:h2:mem:testdb user=SA
+2024-05-26T17:46:38.776+09:00 DEBUG 35942 --- [onnection adder] com.zaxxer.hikari.pool.HikariPool        : jpa-hikari-pool - After adding stats (total=5, active=0, idle=5, waiting=0)
+2024-05-26T17:46:38.777+09:00 DEBUG 35942 --- [onnection adder] com.zaxxer.hikari.pool.HikariPool        : jpa-hikari-pool - Added connection conn5: url=jdbc:h2:mem:testdb user=SA
+2024-05-26T17:46:38.808+09:00 DEBUG 35942 --- [onnection adder] com.zaxxer.hikari.pool.HikariPool        : jpa-hikari-pool - After adding stats (total=6, active=0, idle=6, waiting=0)
+2024-05-26T17:46:38.809+09:00 DEBUG 35942 --- [onnection adder] com.zaxxer.hikari.pool.HikariPool        : jpa-hikari-pool - Added connection conn6: url=jdbc:h2:mem:testdb user=SA
+2024-05-26T17:46:38.844+09:00 DEBUG 35942 --- [onnection adder] com.zaxxer.hikari.pool.HikariPool        : jpa-hikari-pool - After adding stats (total=7, active=0, idle=7, waiting=0)
+2024-05-26T17:46:38.845+09:00 DEBUG 35942 --- [onnection adder] com.zaxxer.hikari.pool.HikariPool        : jpa-hikari-pool - Added connection conn7: url=jdbc:h2:mem:testdb user=SA
+2024-05-26T17:46:38.880+09:00 DEBUG 35942 --- [onnection adder] com.zaxxer.hikari.pool.HikariPool        : jpa-hikari-pool - After adding stats (total=8, active=0, idle=8, waiting=0)
+2024-05-26T17:46:38.880+09:00 DEBUG 35942 --- [onnection adder] com.zaxxer.hikari.pool.HikariPool        : jpa-hikari-pool - Added connection conn8: url=jdbc:h2:mem:testdb user=SA
+2024-05-26T17:46:38.916+09:00 DEBUG 35942 --- [onnection adder] com.zaxxer.hikari.pool.HikariPool        : jpa-hikari-pool - After adding stats (total=9, active=0, idle=9, waiting=0)
+2024-05-26T17:46:38.916+09:00 DEBUG 35942 --- [onnection adder] com.zaxxer.hikari.pool.HikariPool        : jpa-hikari-pool - Added connection conn9: url=jdbc:h2:mem:testdb user=SA
+2024-05-26T17:46:38.951+09:00 DEBUG 35942 --- [onnection adder] com.zaxxer.hikari.pool.HikariPool        : jpa-hikari-pool - After adding stats (total=10, active=0, idle=10, waiting=0)
+2024-05-26T17:46:39.008+09:00  INFO 35942 --- [    Test worker] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
 Hibernate: drop table if exists users cascade 
 Hibernate: create table users (insert_date timestamp(6) not null, update_date timestamp(6) not null, user_id bigint generated by default as identity, email varchar(255) not null unique, insert_operator varchar(255) not null, password_hash varchar(255) not null, phone_number varchar(255) not null unique, update_operator varchar(255) not null, delete_yn enum ('N','Y') not null, membership enum ('GUEST','NORMAL') not null, primary key (user_id))
-2024-05-25T20:48:51.338+09:00  INFO 33277 --- [    Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
-2024-05-25T20:48:51.572+09:00  WARN 33277 --- [    Test worker] .s.s.UserDetailsServiceAutoConfiguration : 
+2024-05-26T17:46:39.027+09:00  INFO 35942 --- [    Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-05-26T17:46:39.270+09:00  WARN 35942 --- [    Test worker] .s.s.UserDetailsServiceAutoConfiguration : 
 
-Using generated security password: 7acc8357-3b9e-42a0-8246-ae90ec83b2b9
+Using generated security password: 46f2ea52-8959-4912-9169-b22fab0e1fdd
 
 This generated password is for development use only. Your security configuration must be updated before running your application in production.
 
-2024-05-25T20:48:51.575+09:00  INFO 33277 --- [    Test worker] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
-2024-05-25T20:48:51.735+09:00  INFO 33277 --- [    Test worker] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@3533b614, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@1caa1866, org.springframework.security.web.context.SecurityContextHolderFilter@2591477f, org.springframework.security.web.header.HeaderWriterFilter@1150b923, org.springframework.web.filter.CorsFilter@4fec93d0, org.springframework.security.web.authentication.logout.LogoutFilter@2acbbee4, com.wanted.preonboarding.auth.filter.JwtAuthenticationFilter@2cea41ab, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@172f2717, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@24df4805, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@4c1c134, org.springframework.security.web.session.SessionManagementFilter@3d9dc84d, org.springframework.security.web.access.ExceptionTranslationFilter@21f9764, org.springframework.security.web.access.intercept.AuthorizationFilter@3ef2f84c]
-2024-05-25T20:48:51.971+09:00  INFO 33277 --- [    Test worker] c.w.p.PreonboardingApplicationTests      : Started PreonboardingApplicationTests in 2.205 seconds (process running for 2.754)
+2024-05-26T17:46:39.274+09:00  INFO 35942 --- [    Test worker] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
+2024-05-26T17:46:39.431+09:00  INFO 35942 --- [    Test worker] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@43851574, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@344eaf7e, org.springframework.security.web.context.SecurityContextHolderFilter@21f9764, org.springframework.security.web.header.HeaderWriterFilter@524945e2, org.springframework.web.filter.CorsFilter@35d31e1c, org.springframework.security.web.authentication.logout.LogoutFilter@24032706, com.wanted.preonboarding.auth.filter.JwtAuthenticationFilter@f8b6743, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@5295779, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@200cbb63, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@644eed73, org.springframework.security.web.session.SessionManagementFilter@2292e793, org.springframework.security.web.access.ExceptionTranslationFilter@21d30ba5, org.springframework.security.web.access.intercept.AuthorizationFilter@2acbbee4]
+2024-05-26T17:46:39.669+09:00  INFO 35942 --- [    Test worker] c.w.p.PreonboardingApplicationTests      : Started PreonboardingApplicationTests in 2.428 seconds (process running for 3.075)
 ]]></system-out>
   <system-err><![CDATA[WARNING: A Java agent has been loaded dynamically (/Users/sangwon-ryu/.gradle/caches/modules-2/files-2.1/net.bytebuddy/byte-buddy-agent/1.14.16/4a451ee6484abac3a498df0f3b33ed00a6fced4d/byte-buddy-agent-1.14.16.jar)
 WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning

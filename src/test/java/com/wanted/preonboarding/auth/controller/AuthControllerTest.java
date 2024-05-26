@@ -1,20 +1,13 @@
 package com.wanted.preonboarding.auth.controller;
 
-import com.wanted.preonboarding.auth.AuthTokenProvider;
 import com.wanted.preonboarding.auth.config.AuthConstants;
 import com.wanted.preonboarding.auth.core.AuthToken;
 import com.wanted.preonboarding.auth.dto.CreateAuthToken;
-import com.wanted.preonboarding.auth.service.AuthTokenGenerateService;
-import com.wanted.preonboarding.auth.service.TokenFetchService;
-import com.wanted.preonboarding.auth.service.TokenQueryService;
-import com.wanted.preonboarding.auth.validator.PasswordCheckService;
 import com.wanted.preonboarding.data.auth.AuthModuleHelper;
 import com.wanted.preonboarding.document.utils.RestDocsTestSupport;
 import com.wanted.preonboarding.module.user.core.BaseUserInfo;
-import com.wanted.preonboarding.module.user.service.UserFindService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.payload.JsonFieldType;
 

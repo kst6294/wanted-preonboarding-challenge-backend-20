@@ -12,7 +12,7 @@ import lombok.RequiredArgsConstructor;
 public class PasswordValidator implements ConstraintValidator<ValidPassword, CreateAuthToken> {
 
     protected static final String INCORRECT_PASSWORD_MESSAGE = "유효하지 않은 비밀번호 입니다.";
-    private final PasswordCheckService passwordCheckService;
+    private final PasswordChecker passwordChecker;
     private final UserFindService userFindService;
 
     @Override
@@ -24,7 +24,7 @@ public class PasswordValidator implements ConstraintValidator<ValidPassword, Cre
         try {
             BaseUserInfo baseUserInfo = userFindService.fetchUserInfo(createAuthToken.getEmail());
             String passwordHash = baseUserInfo.getPasswordHash();
-            if (passwordCheckService.checkPassword(createAuthToken.getPassword(), passwordHash)) {
+            if (passwordChecker.checkPassword(createAuthToken.getPassword(), passwordHash)) {
                 context.disableDefaultConstraintViolation();
                 context.buildConstraintViolationWithTemplate(INCORRECT_PASSWORD_MESSAGE)
                         .addPropertyNode("password")

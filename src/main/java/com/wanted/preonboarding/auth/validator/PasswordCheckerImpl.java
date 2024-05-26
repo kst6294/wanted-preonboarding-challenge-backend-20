@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class PasswordCheckServiceImpl implements PasswordCheckService{
+public class PasswordCheckerImpl implements PasswordChecker {
 
     private final BCryptPasswordEncoder passwordEncoder;
 

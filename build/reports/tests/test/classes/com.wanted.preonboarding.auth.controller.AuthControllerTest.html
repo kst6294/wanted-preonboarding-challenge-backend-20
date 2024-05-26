@@ -41,7 +41,7 @@
 </td>
 <td>
 <div class="infoBox" id="duration">
-<div class="counter">0.312s</div>
+<div class="counter">0.308s</div>
 <p>duration</p>
 </div>
 </td>
@@ -81,7 +81,7 @@
 <tr>
 <td class="success">Access Token 발급</td>
 <td class="success">getAccessToken()</td>
-<td class="success">0.312s</td>
+<td class="success">0.308s</td>
 <td class="success">passed</td>
 </tr>
 </table>
@@ -89,8 +89,8 @@
 <div id="tab1" class="tab">
 <h2>Standard output</h2>
 <span class="code">
-<pre>2024-05-25T20:48:52.280+09:00  INFO 33277 --- [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.wanted.preonboarding.auth.controller.AuthControllerTest]: AuthControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-2024-05-25T20:48:52.294+09:00  INFO 33277 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.wanted.preonboarding.PreonboardingApplication for test class com.wanted.preonboarding.auth.controller.AuthControllerTest
+<pre>2024-05-26T17:46:40.008+09:00  INFO 35942 --- [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.wanted.preonboarding.auth.controller.AuthControllerTest]: AuthControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2024-05-26T17:46:40.021+09:00  INFO 35942 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.wanted.preonboarding.PreonboardingApplication for test class com.wanted.preonboarding.auth.controller.AuthControllerTest
   .   ____          _            __ _ _
  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
 ( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
@@ -100,31 +100,31 @@
 
  :: Spring Boot ::                (v3.3.0)
 
-2024-05-25T20:48:52.308+09:00  INFO 33277 --- [    Test worker] c.w.p.a.controller.AuthControllerTest    : Starting AuthControllerTest using Java 21.0.3 with PID 33277 (started by sangwon-ryu in /Users/sangwon-ryu/wanted-preonboarding-challenge-backend-20)
-2024-05-25T20:48:52.308+09:00 DEBUG 33277 --- [    Test worker] c.w.p.a.controller.AuthControllerTest    : Running with Spring Boot v3.3.0, Spring v6.1.8
-2024-05-25T20:48:52.308+09:00  INFO 33277 --- [    Test worker] c.w.p.a.controller.AuthControllerTest    : No active profile set, falling back to 1 default profile: &quot;default&quot;
-2024-05-25T20:48:52.639+09:00  WARN 33277 --- [    Test worker] .s.s.UserDetailsServiceAutoConfiguration : 
+2024-05-26T17:46:40.035+09:00  INFO 35942 --- [    Test worker] c.w.p.a.controller.AuthControllerTest    : Starting AuthControllerTest using Java 21.0.3 with PID 35942 (started by sangwon-ryu in /Users/sangwon-ryu/wanted-preonboarding-challenge-backend-20)
+2024-05-26T17:46:40.035+09:00 DEBUG 35942 --- [    Test worker] c.w.p.a.controller.AuthControllerTest    : Running with Spring Boot v3.3.0, Spring v6.1.8
+2024-05-26T17:46:40.035+09:00  INFO 35942 --- [    Test worker] c.w.p.a.controller.AuthControllerTest    : No active profile set, falling back to 1 default profile: &quot;default&quot;
+2024-05-26T17:46:40.365+09:00  WARN 35942 --- [    Test worker] .s.s.UserDetailsServiceAutoConfiguration : 
 
-Using generated security password: 887c538c-48a0-4fc7-af0f-3b9bfcdc3f66
+Using generated security password: 4a44a4ae-5d69-496b-a917-8ecdc66c8017
 
 This generated password is for development use only. Your security configuration must be updated before running your application in production.
 
-2024-05-25T20:48:52.656+09:00  INFO 33277 --- [    Test worker] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
-2024-05-25T20:48:52.667+09:00  INFO 33277 --- [    Test worker] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@474f69d, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@6a17ab87, org.springframework.security.web.context.SecurityContextHolderFilter@79c48ad5, org.springframework.security.web.header.HeaderWriterFilter@2e78213c, org.springframework.web.filter.CorsFilter@5f0bcadb, org.springframework.security.web.csrf.CsrfFilter@17caf362, org.springframework.security.web.authentication.logout.LogoutFilter@573f95b2, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@61d87509, org.springframework.security.web.authentication.ui.DefaultLoginPageGeneratingFilter@4fc41cba, org.springframework.security.web.authentication.ui.DefaultLogoutPageGeneratingFilter@e182453, org.springframework.security.web.authentication.www.BasicAuthenticationFilter@17f8c75e, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@39d5376c, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@20dab85c, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@2d7bfb13, org.springframework.security.web.access.ExceptionTranslationFilter@2c66be14, org.springframework.security.web.access.intercept.AuthorizationFilter@484f7fad]
-2024-05-25T20:48:52.693+09:00  INFO 33277 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
-2024-05-25T20:48:52.693+09:00  INFO 33277 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
-2024-05-25T20:48:52.694+09:00  INFO 33277 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
-2024-05-25T20:48:52.702+09:00  INFO 33277 --- [    Test worker] c.w.p.a.controller.AuthControllerTest    : Started AuthControllerTest in 0.406 seconds (process running for 3.485)
-2024-05-25T20:48:52.721+09:00  INFO 33277 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
-2024-05-25T20:48:52.721+09:00  INFO 33277 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
-2024-05-25T20:48:52.722+09:00  INFO 33277 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+2024-05-26T17:46:40.383+09:00  INFO 35942 --- [    Test worker] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
+2024-05-26T17:46:40.394+09:00  INFO 35942 --- [    Test worker] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@484f7fad, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@61d87509, org.springframework.security.web.context.SecurityContextHolderFilter@42908ad5, org.springframework.security.web.header.HeaderWriterFilter@2ca6937, org.springframework.web.filter.CorsFilter@4ae1ee85, org.springframework.security.web.csrf.CsrfFilter@76527a00, org.springframework.security.web.authentication.logout.LogoutFilter@75044df3, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@2e78213c, org.springframework.security.web.authentication.ui.DefaultLoginPageGeneratingFilter@7335aae5, org.springframework.security.web.authentication.ui.DefaultLogoutPageGeneratingFilter@20ca2c3f, org.springframework.security.web.authentication.www.BasicAuthenticationFilter@79927a7c, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@27777afd, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@22e7ec5f, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@134b9d9c, org.springframework.security.web.access.ExceptionTranslationFilter@5bebdfcb, org.springframework.security.web.access.intercept.AuthorizationFilter@2c66be14]
+2024-05-26T17:46:40.420+09:00  INFO 35942 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2024-05-26T17:46:40.420+09:00  INFO 35942 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2024-05-26T17:46:40.421+09:00  INFO 35942 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+2024-05-26T17:46:40.429+09:00  INFO 35942 --- [    Test worker] c.w.p.a.controller.AuthControllerTest    : Started AuthControllerTest in 0.405 seconds (process running for 3.835)
+2024-05-26T17:46:40.448+09:00  INFO 35942 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2024-05-26T17:46:40.449+09:00  INFO 35942 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2024-05-26T17:46:40.449+09:00  INFO 35942 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
 
 MockHttpServletRequest:
       HTTP Method = POST
       Request URI = /api/v1/auth/authentication
        Parameters = {}
-          Headers = [Content-Type:&quot;application/json;charset=UTF-8&quot;, Content-Length:&quot;54&quot;]
-             Body = {&quot;email&quot;:&quot;nbAUuDC@wanted.com&quot;,&quot;password&quot;:&quot;yriowfmgba&quot;}
+          Headers = [Content-Type:&quot;application/json;charset=UTF-8&quot;, Content-Length:&quot;50&quot;]
+             Body = {&quot;email&quot;:&quot;VSN@wanted.com&quot;,&quot;password&quot;:&quot;vnwurtgczt&quot;}
     Session Attrs = {}
 
 Handler:
@@ -149,7 +149,7 @@ FlashMap:
 MockHttpServletResponse:
            Status = 200
     Error message = null
-          Headers = [Authorization:&quot;Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJDU0RjTGFAd2FudGVkLmNvbSIsInJvbGUiOiJOT1JNQUwiLCJpYXQiOjE3MTY2Mzc3MzIsImV4cCI6MTcxNjY0MTMzMn0.qiEaa0U1uc1qARRuOBccaE9s7rWL0nCXiHQ5bvc2lAg&quot;, Content-Type:&quot;application/json;charset=UTF-8&quot;]
+          Headers = [Authorization:&quot;Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJUaGJlRlZ0dVJAd2FudGVkLmNvbSIsInJvbGUiOiJOT1JNQUwiLCJpYXQiOjE3MTY3MTMyMDAsImV4cCI6MTcxNjcxNjgwMH0.W9BKI8XJlLnPe_qSPDoeYjtRDLojjR2Y2M20GDLRlH0&quot;, Content-Type:&quot;application/json;charset=UTF-8&quot;]
      Content type = application/json;charset=UTF-8
              Body = {&quot;data&quot;:null,&quot;response&quot;:{&quot;status&quot;:200,&quot;message&quot;:&quot;Access token issued successfully&quot;}}
     Forwarded URL = null
@@ -166,7 +166,7 @@ MockHttpServletResponse:
 <input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
 </label>
 </div>Generated by 
-<a href="http://www.gradle.org">Gradle 8.7</a> at 2024. 5. 25. 오후 8:48:54</p>
+<a href="http://www.gradle.org">Gradle 8.7</a> at 2024. 5. 26. 오후 5:46:42</p>
 </div>
 </div>
 </body>

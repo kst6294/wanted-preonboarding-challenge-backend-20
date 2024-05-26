@@ -26,7 +26,7 @@ class PasswordValidatorTest {
     private PasswordValidator passwordValidator;
 
     @Mock
-    private PasswordCheckService passwordCheckService;
+    private PasswordChecker passwordChecker;
 
     @Mock
     private UserFindService userFindService;
@@ -54,7 +54,7 @@ class PasswordValidatorTest {
         BaseUserInfo baseUserInfo = AuthModuleHelper.toBaseUserInfo();
 
         when(userFindService.fetchUserInfo(createAuthToken.getEmail())).thenReturn(baseUserInfo);
-        when(passwordCheckService.checkPassword(anyString(), anyString())).thenReturn(false);
+        when(passwordChecker.checkPassword(anyString(), anyString())).thenReturn(false);
 
         assertTrue(passwordValidator.isValid(createAuthToken, constraintValidatorContext));
     }
@@ -66,7 +66,7 @@ class PasswordValidatorTest {
         BaseUserInfo baseUserInfo = AuthModuleHelper.toBaseUserInfo();
 
         when(userFindService.fetchUserInfo(createAuthToken.getEmail())).thenReturn(baseUserInfo);
-        when(passwordCheckService.checkPassword(anyString(), anyString())).thenReturn(true);
+        when(passwordChecker.checkPassword(anyString(), anyString())).thenReturn(true);
 
         when(constraintValidatorContext.buildConstraintViolationWithTemplate(anyString()))
                 .thenReturn(constraintViolationBuilder);

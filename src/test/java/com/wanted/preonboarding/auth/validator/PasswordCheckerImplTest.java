@@ -14,10 +14,10 @@ import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 @ExtendWith(MockitoExtension.class)
-class PasswordCheckServiceImplTest {
+class PasswordCheckerImplTest {
 
     @InjectMocks
-    private PasswordCheckServiceImpl passwordCheckService;
+    private PasswordCheckerImpl passwordCheckService;
 
     @Mock
     private BCryptPasswordEncoder passwordEncoder;
