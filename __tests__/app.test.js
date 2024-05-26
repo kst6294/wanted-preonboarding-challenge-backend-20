@@ -8,6 +8,18 @@ describe("GET /products", () => {
         await dbClient.destroy();
     });
 
+    it("토큰 발급", async () => {
+        const response = await request(app).post("/token").send({
+            username: "tester",
+            password: "pswd",
+        });
+
+        expect(response.status).toBe(200);
+        expect(response.body).toHaveProperty("token");
+
+        token = response.body.token;
+    });
+
     it("목록 조회", async () => {
         const response = await request(app).get("/products");
 
@@ -21,7 +33,7 @@ describe("GET /products", () => {
     });
 
     it("제품 등록", async () => {
-        const response = await request(app).post("/products").send({
+        const response = await request(app).post("/products").set("Authorization", token).send({
             Name: "Test_Product",
             Price: "15.99",
             Seller: "Test_Seller",
