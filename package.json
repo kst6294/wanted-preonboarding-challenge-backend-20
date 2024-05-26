@@ -3,7 +3,9 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "node ./bin/www",
+    "setup-dev-db": "sqlite3 ./db/dev.sqlite3 < ./db/query.sql",
+    "setup-test-db": "sqlite3 ./db/test.sqlite3 < ./db/query.sql"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
