@@ -20,7 +20,31 @@
 
 ## 🏗️ ERD
 
-![ERD](https://github.com/NarciSource/wanted-preonboarding-challenge-backend-20/assets/26417221/0d52f786-7fa6-4640-99bd-78383d346a12)
+![ERD](https://github.com/NarciSource/wanted-preonboarding-challenge-backend-20/assets/26417221/eabf257d-23b5-48eb-95ed-498d218bafc8)
+
+## 🚀 실행 방법
+
+1. 요구 패키지 설치  
+   `npm install`
+
+2. 환경변수 .env
+
+    ```sh
+    PORT=5002
+    NODE_ENV=development
+    JWT_SECRET= #openssl rand -hex 64
+    ```
+
+3. db 생성
+
+    - 로컬용 `npm setup-dev-db`
+    - 테스트용 `npm setup-test-db`
+
+4. 서버 실행  
+   `npm run start`
+
+5. 테스트 실행  
+   `npm run test`
 
 <br>
 <br>
