@@ -27,7 +27,7 @@ router.get("/:product_id", async function (req, res, next) {
     const { product_id } = req.params;
 
     try {
-        const item = await dbClient(table).where("ID", product_id).first();
+        const item = await dbClient(table).where("id", product_id).first();
 
         res.status(200).json(item);
     } catch (_) {
@@ -41,14 +41,14 @@ router.get("/:product_id", async function (req, res, next) {
 // 회원만 가능
 router.post("/", verifyToken, async function (req, res, next) {
     const table = "products";
-    const seller = req.decoded.username;
-    const post_dat = req.body;
+    const seller_id = req.decoded.id;
+    const post_data = req.body;
 
     try {
         const [id] = await dbClient(table).insert({
-            ReservationState: "Available",
-            Seller: seller,
-            ...post_dat,
+            status: "Available",
+            seller_id,
+            ...post_data,
         });
 
         res.status(201).json({ id });
@@ -64,17 +64,16 @@ router.post("/", verifyToken, async function (req, res, next) {
 router.post("/:product_id/purchase", verifyToken, async function (req, res, next) {
     const table = "products";
     const { product_id } = req.params;
-    const buyer = req.decoded.username;
+    const buyer_id = req.decoded.id;
 
     try {
-        const item = await dbClient(table).where("ID", product_id).first();
+        const item = await dbClient(table).where("id", product_id).first();
 
-        if (item.ReservationState == "Available") {
-            await dbClient(table).where("ID", product_id).update({
-                Buyer: buyer,
-                ReservationState: "Reserved",
+        if (item.status == "Available") {
+            await dbClient(table).where("id", product_id).update({
+                status: "Reserved",
             });
-            const updatedRecord = await dbClient(table).where("ID", product_id).first();
+            const updatedRecord = await dbClient(table).where("id", product_id).first();
 
             res.status(201).json(updatedRecord);
         } else {
@@ -95,20 +94,20 @@ router.post("/:product_id/purchase", verifyToken, async function (req, res, next
 router.post("/:product_id/sales_approval", verifyToken, async function (req, res, next) {
     const table = "products";
     const { product_id } = req.params;
-    const seller = req.decoded.username;
+    const seller_id = req.decoded.id;
 
     try {
-        const item = await dbClient(table).where({ ID: product_id, Seller: seller }).first();
+        const item = await dbClient(table).where({ id: product_id, seller_id }).first();
 
-        if (item.ReservationState == "Reserved") {
-            await dbClient(table).where("ID", product_id).update({
-                ReservationState: "SoldOut",
+        if (item.status == "Reserved") {
+            await dbClient(table).where("id", product_id).update({
+                status: "SoldOut",
             });
-            const updatedRecord = await dbClient(table).where("ID", product_id).first();
+            const updatedRecord = await dbClient(table).where("id", product_id).first();
 
             res.status(201).json(updatedRecord);
         } else {
-            const error = new Error("거래 체결 불이행 " + item.ReservationState);
+            const error = new Error("거래 체결 불이행 " + item.status);
             error.status = 409;
             return next(error);
         }

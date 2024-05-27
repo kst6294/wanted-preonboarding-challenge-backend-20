@@ -11,7 +11,7 @@ router.post("/token", async (req, res) => {
     const record = await dbClient("Users").where(user).first();
 
     if (record) {
-        const token = jwt.sign({ username: record.Username }, process.env.JWT_SECRET, {
+        const token = jwt.sign({ username: record.Username, id: record.id }, process.env.JWT_SECRET, {
             expiresIn: "1h",
         });
 

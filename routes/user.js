@@ -8,12 +8,12 @@ var router = Router();
 // 구매자로서
 router.get("/purchased_list", verifyToken, async (req, res, next) => {
     const table = "products";
-    const user = req.decoded.username;
+    const buyer_id = req.decoded.id;
 
     try {
         const item = await dbClient(table).where({
-            ReservationState: "SoldOut",
-            Buyer: user,
+            status: "SoldOut",
+            //buyer_id,
         });
 
         res.status(200).json(item);
@@ -28,13 +28,15 @@ router.get("/purchased_list", verifyToken, async (req, res, next) => {
 // 구매자/판매자로서
 router.get("/reserved_list", verifyToken, async (req, res, next) => {
     const table = "products";
-    const user = req.decoded.username;
+    const buyer_id = req.decoded.id;
+    const seller_id = req.decoded.id;
 
     try {
         const item = await dbClient(table)
-            .where("ReservationState", "Reserved")
+            .where("status", "Reserved")
             .andWhere(function () {
-                this.where("Buyer", user).orWhere("Seller", user);
+                this.where({ seller_id })
+                //.orWhere({ buyer_id });
             });
 
         res.status(200).json(item);
