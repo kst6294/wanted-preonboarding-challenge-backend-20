@@ -2,39 +2,46 @@ package com.wanted.market.product.repository;
 
 import com.wanted.market.product.domain.Product;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 public class ProductRepositoryImpl implements ProductRepository {
+    private long autoIncrementId = 1L;
+    private final Map<Long, Product> store = new HashMap<>();
 
     @Override
     public Product save(Product product) {
-        return null;
+        store.put(autoIncrementId++, product);
+        return product;
     }
 
     @Override
     public Optional<Product> findById(Long productId) {
-        return Optional.empty();
+        return Optional.ofNullable(store.get(productId));
     }
 
     @Override
     public List<Product> findAll() {
-        return null;
+        return store.entrySet().stream().map(entry -> store.get(entry.getKey())).toList();
     }
 
     @Override
     public List<Product> findPurchasedProductsByMemberId() {
+        // To-Do : Product로부터 상태를 가져올 방법 구상하라.
         return null;
     }
 
     @Override
     public List<Product> findReservedProductsByMemberId() {
+        // To-Do : Product로부터 상태를 가져올 방법 구상하라.
         return null;
     }
 
     @Override
-    public void deleteById(Long ProductId) {
-
+    public void deleteById(Long productId) {
+        store.remove(productId);
     }
 }
 
