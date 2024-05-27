@@ -16,10 +16,8 @@ router.get("/purchased_list", verifyToken, async (req, res, next) => {
         });
 
         res.status(200).json(items);
-    } catch (_) {
-        const error = new Error("질의 오류");
-        error.status = 400;
-        return next(error);
+    } catch (err) {
+        next(err)
     }
 });
 
@@ -41,10 +39,8 @@ router.get("/reserved_list", verifyToken, async (req, res, next) => {
             });
 
         res.status(200).json(items);
-    } catch (_) {
-        const error = new Error("질의 오류");
-        error.status = 400;
-        return next(error);
+    } catch (err) {
+        next(err)
     }
 });
 
