@@ -17,7 +17,7 @@ router.get("/purchased_list", verifyToken, async (req, res, next) => {
 
         res.status(200).json(items);
     } catch (err) {
-        next(err)
+        next(err);
     }
 });
 
@@ -28,19 +28,21 @@ router.get("/reserved_list", verifyToken, async (req, res, next) => {
     const seller_id = req.decoded.id;
 
     try {
-        // 판매자로서 상품 모음
-        const sellers_item_ids = (await dbClient("Products").where({ seller_id })).map((each) => each.product_id);
+        await dbClient.transaction(async (transaction) => {
+            // 판매자로서 상품 모음
+            const sellers_item_ids = (await transaction("Products").where({ seller_id })).map((each) => each.product_id);
 
-        const items = await dbClient("Orders")
-            .where({ status: "Reserved" })
-            .andWhere(function () {
-                this.where({ buyer_id }) // 구매자이거나
-                    .orWhereIn("product_id", sellers_item_ids); // 판매 상품이거나
-            });
+            const items = await transaction("Orders")
+                .where({ status: "Reserved" })
+                .andWhere(function () {
+                    this.where({ buyer_id }) // 구매자이거나
+                        .orWhereIn("product_id", sellers_item_ids); // 판매 상품이거나
+                });
 
-        res.status(200).json(items);
+            res.status(200).json(items);
+        });
     } catch (err) {
-        next(err)
+        next(err);
     }
 });
 
