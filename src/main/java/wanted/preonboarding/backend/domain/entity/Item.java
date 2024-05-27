@@ -18,13 +18,16 @@ public class Item extends BaseTimeEntity {
     private Long id;
     private String name;
     private int price;
+    @Column(columnDefinition = "integer check (stock >= 0)")
+    private int stock;
+    @Enumerated(EnumType.STRING)
     private ItemStatus status;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
 
-    public static Item from(ItemSaveRequest itemSaveRequest, Member member) {
+    public static Item from(final ItemSaveRequest itemSaveRequest, final Member member) {
         return Item.builder()
                 .name(itemSaveRequest.getName())
                 .price(itemSaveRequest.getPrice())
@@ -36,6 +39,13 @@ public class Item extends BaseTimeEntity {
     //현재 판매중 상태인지 검증
     public boolean validateForSale() {
         return ItemStatus.FOR_SALE.equals(this.status);
+    }
+
+    public void decreaseStock() {
+        if (this.stock > 0) {
+            this.stock--;
+            this.status = ItemStatus.RESERVED;
+        }
     }
 
     public enum ItemStatus {

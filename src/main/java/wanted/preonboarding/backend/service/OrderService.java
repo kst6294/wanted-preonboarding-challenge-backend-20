@@ -34,12 +34,23 @@ public class OrderService {
         Member foundMember = findMember(memberId);
         Item foundItem = findItem(orderSaveRequest.getItemId());
 
+        //제품 상태 검증 - FOR_SALE 상태가 아니면 예외
         if (!foundItem.validateForSale()) {
-            throw new ConcurrentModificationException("구매할 수 없는 상태입니다.");
+            throw new ConcurrentModificationException("제품이 매진되어 구매할 수 없는 상태입니다.");
         }
 
+        //이미 구매한 제품인지 검증
+        Optional<Orders> orderHistory = orderRepository.findOrderHistory(memberId, orderSaveRequest.getItemId());
+        if (orderHistory.isPresent()) {
+            throw new IllegalArgumentException("이미 구매한 제품입니다.");
+        }
+
+        //주문 저장
         Orders order = Orders.from(orderSaveRequest, foundMember, foundItem);
         orderRepository.save(order);
+
+        //제품 재고 감소
+        foundItem.decreaseStock();
     }
 
     /**
@@ -131,14 +142,14 @@ public class OrderService {
     }
 
     //제품 단건 조회
-    private Item findItem(Long itemId) {
+    private Item findItem(final Long itemId) {
         return itemRepository.findById(itemId).orElseThrow(() -> {
             throw new IllegalArgumentException("제품 정보가 존재하지 않습니다.");
         });
     }
 
     //회원 단건 조회
-    private Member findMember(Long memberId) {
+    private Member findMember(final Long memberId) {
         return memberRepository.findById(memberId).orElseThrow(() -> {
             throw new IllegalArgumentException("회원 정보가 존재하지 않습니다.");
         });

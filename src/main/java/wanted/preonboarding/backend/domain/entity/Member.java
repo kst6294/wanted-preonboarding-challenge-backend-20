@@ -21,7 +21,7 @@ public class Member extends BaseTimeEntity {
     private String name;
     private String nickname;
 
-    public static Member from(MemberSaveRequest memberSaveRequest) {
+    public static Member from(final MemberSaveRequest memberSaveRequest) {
         return Member.builder()
                 .email(memberSaveRequest.getEmail())
                 .password(memberSaveRequest.getPassword())

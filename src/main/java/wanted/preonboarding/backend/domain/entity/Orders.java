@@ -17,6 +17,7 @@ public class Orders extends BaseTimeEntity {
     @Column(name = "orders_id")
     private Long id;
     private int price;
+    @Enumerated(EnumType.STRING)
     private OrderStatus status;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -27,7 +28,7 @@ public class Orders extends BaseTimeEntity {
     @JoinColumn(name = "item_id", nullable = false)
     private Item item;
 
-    public static Orders from(OrderSaveRequest orderSaveRequest, Member member, Item item) {
+    public static Orders from(final OrderSaveRequest orderSaveRequest, final Member member, final Item item) {
         return Orders.builder()
                 .price(orderSaveRequest.getPrice())
                 .status(OrderStatus.RESERVED)
@@ -37,7 +38,7 @@ public class Orders extends BaseTimeEntity {
     }
 
     //주문 상태를 예약 상태에서 완료 상태로 변경 - 구매 확정 후
-    public void changeStatus(OrderStatus status) {
+    public void changeStatus(final OrderStatus status) {
         this.status = status;
     }
 
