@@ -30,7 +30,7 @@ public class ItemController {
     @PostMapping("/api/v1/item/buy")
     public ResponseEntity<?> itemBuy(Authentication authentication, @RequestBody ItemBuy itemBuy){
 
-        if(itemService.itemBuy(itemBuy)){
+        if(itemService.itemBuy(authentication, itemBuy)){
             return ResponseEntity.ok().build();
         }
         return ResponseEntity.badRequest().build();
@@ -45,5 +45,7 @@ public class ItemController {
     public ResponseEntity<?> itemAll(Pageable pageable){
         return ResponseEntity.ok(itemService.findAll(pageable));
     }
+
+    //당사자간의 거래내역
 
 }

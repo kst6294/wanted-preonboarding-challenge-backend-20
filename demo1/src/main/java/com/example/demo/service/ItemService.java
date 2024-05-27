@@ -3,8 +3,10 @@ package com.example.demo.service;
 import com.example.demo.dto.request.ItemBuy;
 import com.example.demo.dto.request.ItemSave;
 import com.example.demo.dto.response.ItemResponse;
+import com.example.demo.entity.Buy;
 import com.example.demo.entity.Item;
 import com.example.demo.entity.Member;
+import com.example.demo.repository.BuyRespository;
 import com.example.demo.repository.ItemRepository;
 import com.example.demo.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +26,7 @@ public class ItemService {
 
     private final ItemRepository itemRepository;
     private final MemberRepository memberRepository;
+    private final BuyRespository buyRespository;
 
     /*
      * 아이템 등록
@@ -38,15 +41,17 @@ public class ItemService {
     }
 
     /*
-     * 아이템 구매 및 예약시 상태값 수정
+     * 아이템 구매 및 예약시 Buy 테이블 등록
      */
-    public boolean itemBuy(ItemBuy itemBuy) {
-        Item item = itemRepository.findById(itemBuy.id())
-                .orElseThrow();
+    public boolean itemBuy(Authentication authentication, ItemBuy itemBuy) {
+        //Member의 id value
+        Member member = memberRepository.findByEmail(authentication.getName())
+                .orElseThrow(() -> new UsernameNotFoundException("등록되지 않은 이메일입니다."));
 
-        item.changeItemState(itemBuy.itemState());
 
-        return item.getItemState().equals(itemBuy.itemState());
+        Buy buy = new Buy(itemBuy.member().getId(), member.getId(), itemBuy.itemState());
+
+        return buyRespository.save(buy).getSellId().equals(buy.getSellId());
     }
 
     @Transactional(readOnly = true)
