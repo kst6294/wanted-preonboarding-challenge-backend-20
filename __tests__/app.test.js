@@ -12,7 +12,6 @@ describe("API TEST", () => {
         it("목록 조회", async () => {
             const response = await request(app).get("/products");
 
-            console.log(response.body);
             expect(response.status).toBe(200);
             expect(Array.isArray(response.body)).toBe(true);
         });
@@ -21,7 +20,7 @@ describe("API TEST", () => {
             const response = await request(app).get("/products/1");
 
             expect(response.status).toBe(200);
-            expect(response.headers["content-type"]).toEqual(expect.stringContaining("application/json")); // 응답의 Content-Type이 application/json인지 확인
+            expect(response.headers["content-type"]).toEqual(expect.stringContaining("application/json"));
             expect(response.body).toBeInstanceOf(Object);
         });
     });
@@ -42,10 +41,11 @@ describe("API TEST", () => {
         describe("/products", () => {
             it("제품 등록", async () => {
                 const response = await request(app).post("/products").set("Authorization", token).send({
-                    Name: "Test_Product",
-                    Price: "15.99",
+                    name: "Test_Product",
+                    price: "15.99",
+                    amount: 10,
                 });
-                product_id = response.body.id;
+                product_id = response.body.product_id;
 
                 expect(response.status).toBe(201);
             });
@@ -57,7 +57,9 @@ describe("API TEST", () => {
             });
 
             it("판매 승인", async () => {
-                const response = await request(app).post(`/products/${product_id}/sales_approval`).set("Authorization", token);
+                const response = await request(app).post(`/products/${product_id}/sales_approval`).set("Authorization", token).send({
+                    buyer_id: 2,
+                });
 
                 expect(response.status).toBe(201);
             });
