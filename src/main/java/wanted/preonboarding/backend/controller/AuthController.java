@@ -18,7 +18,8 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping("/login")
-    public void signIn(@RequestBody final LoginRequest request, HttpSession session) {
+    public void signIn(@RequestBody final LoginRequest request,
+                       final HttpSession session) {
         Long memberId = authService.signIn(request);
         session.setAttribute(Session.MEMBER, memberId);
     }

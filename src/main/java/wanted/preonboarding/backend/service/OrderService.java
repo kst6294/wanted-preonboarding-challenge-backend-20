@@ -45,7 +45,7 @@ public class OrderService {
     /**
      * 판매 승인 - 주문의 상태를 APPROVED로 변경
      */
-    public void approveOrder(Long sellerId, OrderStatusUpdateRequest orderStatusUpdateRequest) {
+    public void approveOrder(final Long sellerId, final OrderStatusUpdateRequest orderStatusUpdateRequest) {
         Member foundMember = findMember(sellerId);
         Item foundItem = findItem(orderStatusUpdateRequest.getItemId());
 
@@ -63,7 +63,7 @@ public class OrderService {
     /**
      * 구매 승인 - 주문의 상태를 COMPLETE로 변경
      */
-    public void completeOrder(Long memberId, OrderStatusUpdateRequest orderStatusUpdateRequest) {
+    public void completeOrder(final Long memberId, final OrderStatusUpdateRequest orderStatusUpdateRequest) {
         Orders foundOrder = orderRepository.findByOrdersId(orderStatusUpdateRequest.getOrderId()).orElseThrow(() -> {
             throw new IllegalArgumentException("주문 정보가 존재하지 않습니다.");
         });

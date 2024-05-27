@@ -15,7 +15,7 @@ public class AuthService {
     /**
      * 로그인 검증
      */
-    public Long signIn(LoginRequest loginRequest) {
+    public Long signIn(final LoginRequest loginRequest) {
         Member foundMember = memberRepository.findByEmail(loginRequest.getEmail()).orElseThrow(() -> {
             throw new IllegalArgumentException("회원 정보가 존재하지 않습니다.");
         });

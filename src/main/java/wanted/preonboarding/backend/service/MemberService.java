@@ -19,7 +19,7 @@ public class MemberService {
     /**
      * 회원 가입
      */
-    public void signUp(MemberSaveRequest memberSaveRequest) {
+    public void signUp(final MemberSaveRequest memberSaveRequest) {
         Optional<Member> foundMember = memberRepository.findByEmail(memberSaveRequest.getEmail());
         if (foundMember.isPresent()) {
             throw new IllegalArgumentException("이미 존재하는 회원입니다.");
