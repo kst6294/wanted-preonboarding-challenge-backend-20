@@ -29,7 +29,7 @@ public class OrderQueryController {
     }
 
     /**
-     * 사용자가 구매한 제품 조회
+     * 사용자가 구매한 제품 목록 조회
      */
     @GetMapping("/completion")
     public OrderListResponse getCompleteOrders(final HttpSession session) {
@@ -38,7 +38,16 @@ public class OrderQueryController {
     }
 
     /**
-     * 사용자가 예약 중인 제품 조회
+     * 사용자가 구매 요청한 제품 중 판매 승인된 제품 목록 조회
+     */
+    @GetMapping("/approval")
+    public OrderListResponse getApprovedOrders(final HttpSession session) {
+        Long memberId = (Long) session.getAttribute(Session.MEMBER);
+        return orderService.getApprovedOrders(memberId);
+    }
+
+    /**
+     * 사용자가 예약 중인 제품 목록 조회
      */
     @GetMapping("/reservation")
     public OrderListResponse getReservedOrders(final HttpSession session) {
@@ -48,7 +57,7 @@ public class OrderQueryController {
 
 
     /**
-     * 사용자가 예약 요청 받은 제품 조회
+     * 사용자가 예약 요청 받은 제품 목록 조회
      */
     @GetMapping("/seller/reservation")
     public OrderListResponse getRequestedReservedOrders(final HttpSession session) {

@@ -15,9 +15,10 @@ public class OrderResponse {
 
     private String itemName;
     private int totalPrice;
+    private Orders.OrderStatus orderStatus;
     private LocalDateTime createdAt;
 
     public static OrderResponse from(Orders orders) {
-        return new OrderResponse(orders.getItem().getName(), orders.getPrice(), orders.getCreatedAt());
+        return new OrderResponse(orders.getItem().getName(), orders.getPrice(), orders.getStatus(), orders.getCreatedAt());
     }
 }
