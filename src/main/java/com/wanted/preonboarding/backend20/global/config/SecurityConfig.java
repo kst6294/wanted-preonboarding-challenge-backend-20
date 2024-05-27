@@ -1,5 +1,7 @@
 package com.wanted.preonboarding.backend20.global.config;
 
+import com.wanted.preonboarding.backend20.global.auth.CustomAccessDeniedHandler;
+import com.wanted.preonboarding.backend20.global.auth.CustomAuthenticationEntryPoint;
 import com.wanted.preonboarding.backend20.global.auth.JwtAuthenticationFilter;
 import com.wanted.preonboarding.backend20.global.auth.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
@@ -42,6 +44,10 @@ public class SecurityConfig {
                         ).permitAll()
                         .anyRequest().authenticated()
                 )
+                .exceptionHandling(e -> {
+                    e.authenticationEntryPoint(new CustomAuthenticationEntryPoint());
+                    e.accessDeniedHandler(new CustomAccessDeniedHandler());
+                })
                 .build();
     }
 
