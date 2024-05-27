@@ -1,12 +1,11 @@
-package com.wanted.market.product.texture;
+package com.wanted.market.product.repository;
 
 import com.wanted.market.product.domain.Product;
-import com.wanted.market.product.repository.ProductRepository;
 
 import java.util.List;
 import java.util.Optional;
 
-public class FakeProductRepository implements ProductRepository {
+public class ProductRepositoryImpl implements ProductRepository {
 
     @Override
     public Product save(Product product) {
