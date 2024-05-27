@@ -6,6 +6,7 @@ public enum OrderStatus implements EnumType {
 
     ORDERED,
     COMPLETED,
+    SETTLEMENT
     ;
 
     @Override
@@ -16,5 +17,13 @@ public enum OrderStatus implements EnumType {
     @Override
     public String getDescription() {
         return String.format("Order status: %s", name());
+    }
+
+    public boolean isCompleted(){
+        return this.equals(COMPLETED);
+    }
+
+    public boolean isSettlement(){
+        return this.equals(SETTLEMENT);
     }
 }

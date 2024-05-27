@@ -2,11 +2,11 @@
 ----
 {
   "data" : {
-    "id" : 8271,
-    "productName" : "ryulvbweya",
-    "price" : 53026322,
+    "id" : 8305,
+    "productName" : "xulpuaoble",
+    "price" : 29465982,
     "productStatus" : "ON_STOCK",
-    "seller" : "mpkLa@wanted.com"
+    "seller" : "rZrvCy@wanted.com"
   },
   "response" : {
     "status" : 200,

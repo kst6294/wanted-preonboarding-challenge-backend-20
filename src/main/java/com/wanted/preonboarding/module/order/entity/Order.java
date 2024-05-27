@@ -9,6 +9,9 @@ import com.wanted.preonboarding.module.user.entity.Users;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
@@ -40,6 +43,15 @@ public class Order extends BaseEntity {
     @Column(name = "ORDER_STATUS", nullable = false)
     private OrderStatus orderStatus;
 
+    @Builder.Default
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<OrderHistory> orderHistories = new HashSet<>();
+
+
+    @OneToOne(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
+    private OrderProductSnapShot productSnapShot;
+
+
     public void setBuyer(Users buyer) {
         if (this.seller.equals(buyer)) {
             throw new InvalidOrderException();
@@ -47,5 +59,23 @@ public class Order extends BaseEntity {
         this.buyer = buyer;
     }
 
+    public void changeOrderStatus(OrderStatus newStatus) {
+        if (this.orderStatus != newStatus) {
+            this.orderStatus = newStatus;
+            addOrderHistory(newStatus);
+        }
+    }
+
+    private void addOrderHistory(OrderStatus orderStatus) {
+        OrderHistory orderHistory = OrderHistory.builder()
+                .order(this)
+                .orderStatus(orderStatus)
+                .build();
+        this.orderHistories.add(orderHistory);
+    }
+
+    public void createProductSnapShot() {
+        this.productSnapShot = OrderProductSnapShot.fromProduct(this.product, this);
+    }
 
 }

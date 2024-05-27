@@ -1,0 +1,9 @@
+[source,bash]
+----
+$ echo '{
+  "orderId" : 82761848,
+  "orderStatus" : "COMPLETED"
+}' | http PATCH 'http://localhost:8080/api/v1/order' \
+    'Content-Type:application/json;charset=UTF-8' \
+    'Authorization:Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJIR0FjU2Jsb2ZAd2FudGVkLmNvbSIsInJvbGUiOiJOT1JNQUwiLCJpYXQiOjE3MTY3OTk5NTYsImV4cCI6MTcxNjgwMzU1Nn0.nvP3FBQiRdwAPIJJaCBCzspel_Zzj25b1Vho59BLM0s'
+----

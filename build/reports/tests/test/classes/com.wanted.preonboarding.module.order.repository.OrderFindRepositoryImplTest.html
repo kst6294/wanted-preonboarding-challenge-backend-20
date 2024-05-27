@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="x-ua-compatible" content="IE=edge"/>
+<title>Test results - OrderFindRepositoryImplTest</title>
+<link href="../css/base-style.css" rel="stylesheet" type="text/css"/>
+<link href="../css/style.css" rel="stylesheet" type="text/css"/>
+<script src="../js/report.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="content">
+<h1>OrderFindRepositoryImplTest</h1>
+<div class="breadcrumbs">
+<a href="../index.html">all</a> &gt; 
+<a href="../packages/com.wanted.preonboarding.module.order.repository.html">com.wanted.preonboarding.module.order.repository</a> &gt; OrderFindRepositoryImplTest</div>
+<div id="summary">
+<table>
+<tr>
+<td>
+<div class="summaryGroup">
+<table>
+<tr>
+<td>
+<div class="infoBox" id="tests">
+<div class="counter">1</div>
+<p>tests</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="failures">
+<div class="counter">0</div>
+<p>failures</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="ignored">
+<div class="counter">0</div>
+<p>ignored</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="duration">
+<div class="counter">0.323s</div>
+<p>duration</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td>
+<div class="infoBox success" id="successRate">
+<div class="percent">100%</div>
+<p>successful</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div id="tabs">
+<ul class="tabLinks">
+<li>
+<a href="#tab0">Tests</a>
+</li>
+<li>
+<a href="#tab1">Standard output</a>
+</li>
+</ul>
+<div id="tab0" class="tab">
+<h2>Tests</h2>
+<table>
+<thead>
+<tr>
+<th>Test</th>
+<th>Method name</th>
+<th>Duration</th>
+<th>Result</th>
+</tr>
+</thead>
+<tr>
+<td class="success">Order Entity 조회</td>
+<td class="success">fetchOrderEntity()</td>
+<td class="success">0.323s</td>
+<td class="success">passed</td>
+</tr>
+</table>
+</div>
+<div id="tab1" class="tab">
+<h2>Standard output</h2>
+<span class="code">
+<pre>2024-05-27T17:52:38.324+09:00  INFO 62512 --- [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.wanted.preonboarding.module.order.repository.OrderFindRepositoryImplTest]: OrderFindRepositoryImplTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2024-05-27T17:52:38.340+09:00  INFO 62512 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.wanted.preonboarding.PreonboardingApplication for test class com.wanted.preonboarding.module.order.repository.OrderFindRepositoryImplTest
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v3.3.0)
+
+2024-05-27T17:52:38.353+09:00  INFO 62512 --- [    Test worker] c.w.p.m.o.r.OrderFindRepositoryImplTest  : Starting OrderFindRepositoryImplTest using Java 21.0.3 with PID 62512 (started by sangwon-ryu in /Users/sangwon-ryu/wanted-preonboarding-challenge-backend-20)
+2024-05-27T17:52:38.353+09:00 DEBUG 62512 --- [    Test worker] c.w.p.m.o.r.OrderFindRepositoryImplTest  : Running with Spring Boot v3.3.0, Spring v6.1.8
+2024-05-27T17:52:38.353+09:00  INFO 62512 --- [    Test worker] c.w.p.m.o.r.OrderFindRepositoryImplTest  : No active profile set, falling back to 1 default profile: &quot;default&quot;
+2024-05-27T17:52:38.396+09:00  INFO 62512 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2024-05-27T17:52:38.396+09:00  INFO 62512 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-05-27T17:52:38.412+09:00  INFO 62512 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 15 ms. Found 2 JPA repository interfaces.
+2024-05-27T17:52:38.418+09:00  INFO 62512 --- [    Test worker] beddedDataSourceBeanFactoryPostProcessor : Replacing 'dataSource' DataSource bean with embedded version
+2024-05-27T17:52:38.432+09:00  INFO 62512 --- [    Test worker] o.s.j.d.e.EmbeddedDatabaseFactory        : Starting embedded database: url='jdbc:h2:mem:0955c827-2ecc-465b-9c26-b037108d0f1a;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=false', username='sa'
+2024-05-27T17:52:38.445+09:00  INFO 62512 --- [    Test worker] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-05-27T17:52:38.447+09:00  INFO 62512 --- [    Test worker] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2024-05-27T17:52:38.451+09:00  INFO 62512 --- [    Test worker] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-05-27T17:52:38.513+09:00  INFO 62512 --- [    Test worker] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+Hibernate: drop table if exists orders cascade 
+Hibernate: drop table if exists orders_history cascade 
+Hibernate: drop table if exists orders_product_snapshot cascade 
+Hibernate: drop table if exists product cascade 
+Hibernate: drop table if exists users cascade 
+Hibernate: create table orders (buyer_id bigint not null unique, insert_date timestamp(6) not null, order_id bigint generated by default as identity, product_id bigint not null unique, seller_id bigint not null unique, update_date timestamp(6) not null, insert_operator varchar(255) not null, update_operator varchar(255) not null, delete_yn enum ('N','Y') not null, order_status enum ('COMPLETED','ORDERED','SETTLEMENT') not null, primary key (order_id))
+Hibernate: create table orders_history (insert_date timestamp(6) not null, order_history_id bigint generated by default as identity, order_id bigint not null, update_date timestamp(6) not null, insert_operator varchar(255) not null, update_operator varchar(255) not null, delete_yn enum ('N','Y') not null, order_status enum ('COMPLETED','ORDERED','SETTLEMENT') not null, primary key (order_history_id))
+Hibernate: create table orders_product_snapshot (order_id bigint generated by default as identity, price bigint not null, product_id bigint not null, product_name varchar(255) not null, primary key (order_id))
+Hibernate: create table product (insert_date timestamp(6) not null, price bigint not null, product_id bigint generated by default as identity, update_date timestamp(6) not null, user_id bigint not null, insert_operator varchar(255) not null, product_name varchar(255) not null, update_operator varchar(255) not null, delete_yn enum ('N','Y') not null, product_status enum ('BOOKING','ON_STOCK','OUT_STOCK'), primary key (product_id))
+Hibernate: create table users (insert_date timestamp(6) not null, update_date timestamp(6) not null, user_id bigint generated by default as identity, email varchar(255) not null unique, insert_operator varchar(255) not null, password_hash varchar(255) not null, phone_number varchar(255) not null unique, update_operator varchar(255) not null, delete_yn enum ('N','Y') not null, membership enum ('GUEST','NORMAL') not null, primary key (user_id))
+Hibernate: alter table if exists orders add constraint FKhtx3insd5ge6w486omk4fnk54 foreign key (buyer_id) references users
+Hibernate: alter table if exists orders add constraint FK787ibr3guwp6xobrpbofnv7le foreign key (product_id) references product
+Hibernate: alter table if exists orders add constraint FKsb9w6305d2be0rwbtifi7wymp foreign key (seller_id) references users
+Hibernate: alter table if exists orders_history add constraint FK6j8fy7l6bc3bskbgu028ng191 foreign key (order_id) references orders
+Hibernate: alter table if exists product add constraint FK47nyv78b35eaufr6aa96vep6n foreign key (user_id) references users
+2024-05-27T17:52:38.521+09:00  INFO 62512 --- [    Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-05-27T17:52:38.547+09:00  INFO 62512 --- [    Test worker] c.w.p.m.o.r.OrderFindRepositoryImplTest  : Started OrderFindRepositoryImplTest in 0.205 seconds (process running for 8.025)
+Hibernate: insert into users (delete_yn,email,insert_date,insert_operator,membership,password_hash,phone_number,update_date,update_operator,user_id) values (?,?,?,?,?,?,?,?,?,default)
+Hibernate: insert into users (delete_yn,email,insert_date,insert_operator,membership,password_hash,phone_number,update_date,update_operator,user_id) values (?,?,?,?,?,?,?,?,?,default)
+Hibernate: insert into product (delete_yn,insert_date,insert_operator,price,product_name,product_status,user_id,update_date,update_operator,product_id) values (?,?,?,?,?,?,?,?,?,default)
+Hibernate: insert into orders (buyer_id,delete_yn,insert_date,insert_operator,order_status,product_id,seller_id,update_date,update_operator,order_id) values (?,?,?,?,?,?,?,?,?,default)
+Hibernate: insert into orders_history (delete_yn,insert_date,insert_operator,order_id,order_status,update_date,update_operator,order_history_id) values (?,?,?,?,?,?,?,default)
+Hibernate: insert into orders_product_snapshot (price,product_id,product_name,order_id) values (?,?,?,default)
+Hibernate: select o1_0.order_id,o1_0.buyer_id,b1_0.user_id,b1_0.delete_yn,b1_0.email,b1_0.insert_date,b1_0.insert_operator,b1_0.membership,b1_0.password_hash,b1_0.phone_number,b1_0.update_date,b1_0.update_operator,o1_0.delete_yn,o1_0.insert_date,o1_0.insert_operator,o1_0.order_status,o1_0.product_id,o1_0.seller_id,s1_0.user_id,s1_0.delete_yn,s1_0.email,s1_0.insert_date,s1_0.insert_operator,s1_0.membership,s1_0.password_hash,s1_0.phone_number,s1_0.update_date,s1_0.update_operator,o1_0.update_date,o1_0.update_operator from orders o1_0 join users s1_0 on s1_0.user_id=o1_0.seller_id join users b1_0 on b1_0.user_id=o1_0.buyer_id where o1_0.order_id=?
+Hibernate: select opss1_0.order_id,opss1_0.price,opss1_0.product_id,opss1_0.product_name from orders_product_snapshot opss1_0 where opss1_0.order_id=?
+</pre>
+</span>
+</div>
+</div>
+<div id="footer">
+<p>
+<div>
+<label class="hidden" id="label-for-line-wrapping-toggle" for="line-wrapping-toggle">Wrap lines
+<input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
+</label>
+</div>Generated by 
+<a href="http://www.gradle.org">Gradle 8.7</a> at 2024. 5. 27. 오후 5:52:41</p>
+</div>
+</div>
+</body>
+</html>

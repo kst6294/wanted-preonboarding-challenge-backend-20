@@ -10,8 +10,8 @@
 |===
 | 메서드 | 경로 | 설명
 | POST | /api/v1/order | 주문을 생성합니다.
-
 |===
+
 .Request Fields
 [cols="2,5", options="header"]
 |===
@@ -64,8 +64,8 @@
 |===
 | 메서드 | 경로 | 설명
 | POST | /api/v1/order | 비회원이 주문을 생성하려고 시도할 때
-
 |===
+
 .Request Fields
 [cols="2,5", options="header"]
 |===
@@ -106,8 +106,8 @@
 |===
 | 메서드 | 경로 | 설명
 | POST | /api/v1/order | 존재하지 않는 제품에 대한 주문을 생성하려고 시도할 때
-
 |===
+
 .Request Fields
 [cols="2,5", options="header"]
 |===
@@ -148,8 +148,8 @@
 |===
 | 메서드 | 경로 | 설명
 | POST | /api/v1/order | 이미 예약 중 또는 판매 완료된 제품에 대한 주문을 생성하려고 시도할 때
-
 |===
+
 .Request Fields
 [cols="2,5", options="header"]
 |===
@@ -181,5 +181,151 @@
   "message": "이미 예약중 또는 판매완료 된 상품 입니다. 상품 ID: 12345",
   "timestamp": "2024-05-27 13:25:22",
   "error": "ProductStatusException"
+}
+----
+
+== 주문 수정
+
+=== 주문 수정 요청
+
+[options="header"]
+|===
+| 메서드 | 경로 | 설명
+| PATCH | /api/v1/order | 주문을 수정합니다.
+|===
+
+.Request Fields
+[cols="2,5", options="header"]
+|===
+| 필드명 | 설명
+| orderId | 주문 ID
+| orderStatus | 주문 상태 (ORDERED, COMPLETED, SETTLEMENT)
+|===
+
+.Example Request
+[source, json]
+----
+{
+  "orderId": 1,
+  "orderStatus": "COMPLETED"
+}
+----
+
+=== 주문 수정 응답
+
+.Response Fields
+[cols="2,5", options="header"]
+|===
+| 필드명 | 설명
+| orderId | 주문 ID (PK)
+| productId | 제품 ID
+| seller | 판매자 EMAIL
+| buyer | 구매자 EMAIL
+| orderStatus | 주문 상태 (ORDERED, COMPLETED, SETTLEMENT 등)
+|===
+
+.Example Response
+[source, json]
+----
+{
+  "data": {
+    "orderId": 1,
+    "productId": 12345,
+    "seller": "seller@example.com",
+    "buyer": "buyer@example.com",
+    "orderStatus": "COMPLETED"
+  },
+  "response": {
+    "status": 200,
+    "message": "success"
+  }
+}
+----
+
+=== 유효하지 않은 주문 수정 - 잘못된 상태로 변경 시도
+
+[options="header"]
+|===
+| 메서드 | 경로 | 설명
+| PATCH | /api/v1/order | ORDERED 상태에서 SETTLEMENT 상태로 변경 시도할 때
+|===
+
+.Request Fields
+[cols="2,5", options="header"]
+|===
+| 필드명 | 설명
+| orderId | 주문 ID
+| orderStatus | 주문 상태 (SETTLEMENT)
+|===
+
+.Example Request
+[source, json]
+----
+{
+  "orderId": 1,
+  "orderStatus": "SETTLEMENT"
+}
+----
+
+.Response Fields
+[cols="2,5", options="header"]
+|===
+| 필드명 | 설명
+| status | 응답 상태 코드
+| message | 응답 메시지
+|===
+
+.Example Response
+[source, json]
+----
+{
+  "status": 400,
+  "message": "해당 주문의 주문 상태 변경을 지원 하지 않습니다. 주문 번호 ::: 1 현재 주문 상태 ::: ORDERED 변경 불가 상태 ::: SETTLEMENT",
+  "timestamp": "2024-05-27 13:25:22",
+  "error": "InvalidUpdateOrderStatusException"
+}
+----
+
+=== 유효하지 않은 주문 수정 - 동일한 상태로 변경 시도
+
+[options="header"]
+|===
+| 메서드 | 경로 | 설명
+| PATCH | /api/v1/order | COMPLETED 상태에서 다시 COMPLETED 상태로 변경 시도할 때
+|===
+
+.Request Fields
+[cols="2,5", options="header"]
+|===
+| 필드명 | 설명
+| orderId | 주문 ID
+| orderStatus | 주문 상태 (COMPLETED)
+|===
+
+.Example Request
+[source, json]
+----
+{
+  "orderId": 1,
+  "orderStatus": "COMPLETED"
+}
+----
+
+.Response Fields
+[cols="2,5", options="header"]
+|===
+| 필드명 | 설명
+| status | 응답 상태 코드
+| message | 응답 메시지
+|===
+
+.Example Response
+[source, json]
+----
+{
+  "status": 400,
+  "message": "해당 주문의 주문 상태 변경을 지원 하지 않습니다. 주문 번호 ::: 1 현재 주문 상태 ::: COMPLETED 변경 불가 상태 ::: COMPLETED",
+  "timestamp": "2024-05-27 13:25:22",
+  "error": "InvalidUpdateOrderStatusException"
 }
 ----

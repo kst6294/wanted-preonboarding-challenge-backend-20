@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.wanted.preonboarding.module.order.validator.OrderValidatorTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2024-05-27T05:15:09" hostname="lyusang-won-ui-MacBookPro.local" time="0.002">
+<testsuite name="com.wanted.preonboarding.module.order.validator.OrderValidatorTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2024-05-27T08:52:39" hostname="lyusang-won-ui-MacBookPro.local" time="0.001">
   <properties/>
-  <testcase name="최초 주문인 경우" classname="com.wanted.preonboarding.module.order.validator.OrderValidatorTest" time="0.001"/>
+  <testcase name="최초 주문인 경우" classname="com.wanted.preonboarding.module.order.validator.OrderValidatorTest" time="0.0"/>
   <testcase name="주문 중인 상태를 주문하려는 경우" classname="com.wanted.preonboarding.module.order.validator.OrderValidatorTest" time="0.001"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>

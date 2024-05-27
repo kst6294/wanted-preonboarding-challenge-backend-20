@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class ProductQueryServiceImpl implements ProductQueryService{
 
+    private final ProductFindService productFindService;
     private final ProductMapper productMapper;
     private final ProductRepository productRepository;
 
@@ -23,6 +24,13 @@ public class ProductQueryServiceImpl implements ProductQueryService{
         Product product = productMapper.toProduct(createProduct);
         Product savedProduct = productRepository.save(product);
         return productMapper.toSku(savedProduct);
+    }
+
+    @Override
+    public Product doBooking(long productId) {
+        Product product = productFindService.fetchProductEntity(productId);
+        product.doBooking();
+        return product;
     }
 
 }

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.wanted.preonboarding.module.order.service.OrderFindServiceImplTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2024-05-27T08:52:38" hostname="lyusang-won-ui-MacBookPro.local" time="0.045">
+  <properties/>
+  <testcase name="주문 단일 조회 - 성공" classname="com.wanted.preonboarding.module.order.service.OrderFindServiceImplTest" time="0.045"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

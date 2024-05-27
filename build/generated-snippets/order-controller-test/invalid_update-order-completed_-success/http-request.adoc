@@ -1,0 +1,13 @@
+[source,http,options="nowrap"]
+----
+PATCH /api/v1/order HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJEUmlVQHdhbnRlZC5jb20iLCJyb2xlIjoiTk9STUFMIiwiaWF0IjoxNzE2Nzk5OTU3LCJleHAiOjE3MTY4MDM1NTd9.8oZxxR_FXQPPYpBbwfVJ4VXmXyXSC9-BQVQviWPtJ48
+Content-Length: 58
+Host: localhost:8080
+
+{
+  "orderId" : 24110827,
+  "orderStatus" : "SETTLEMENT"
+}
+----

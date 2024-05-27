@@ -1,6 +1,7 @@
 package com.wanted.preonboarding.document.utils;
 
 import com.wanted.preonboarding.infra.config.querydsl.TestQueryDslConfig;
+import com.wanted.preonboarding.module.order.repository.OrderFindRepositoryImpl;
 import com.wanted.preonboarding.module.product.repository.ProductFindRepositoryImpl;
 import com.wanted.preonboarding.module.user.repository.UserFindRepositoryImpl;
 import jakarta.persistence.EntityManager;
@@ -13,6 +14,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Import({TestQueryDslConfig.class,
         UserFindRepositoryImpl.class,
         ProductFindRepositoryImpl.class,
+        OrderFindRepositoryImpl.class,
+
 
 
 })

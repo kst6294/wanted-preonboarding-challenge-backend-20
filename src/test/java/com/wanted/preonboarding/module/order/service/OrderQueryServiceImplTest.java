@@ -17,6 +17,7 @@ import com.wanted.preonboarding.module.product.dto.CreateProduct;
 import com.wanted.preonboarding.module.product.entity.Product;
 import com.wanted.preonboarding.module.product.enums.ProductStatus;
 import com.wanted.preonboarding.module.product.service.ProductFindService;
+import com.wanted.preonboarding.module.product.service.ProductQueryService;
 import com.wanted.preonboarding.module.user.entity.Users;
 import com.wanted.preonboarding.module.user.service.UserFindService;
 import org.junit.jupiter.api.BeforeEach;
@@ -43,7 +44,7 @@ class OrderQueryServiceImplTest extends SecuritySupportTest {
     private OrderRepository orderRepository;
 
     @Mock
-    private ProductFindService productFindService;
+    private ProductQueryService productQueryService;
 
     @Mock
     private UserFindService userFindService;
@@ -67,12 +68,12 @@ class OrderQueryServiceImplTest extends SecuritySupportTest {
         CreateOrder createOrder = OrderModuleHelper.toCreateOrder();
         CreateProduct createProductWithUsers = ProductModuleHelper.toCreateProductWithUsers();
         Product product = ProductFactory.generateProduct(createProductWithUsers);
+        product.doBooking();
         Order order = OrderModuleHelper.toOrder(product, buyer);
         Order savedOrder = OrderModuleHelper.toOrderWithId(product, buyer);
         BaseOrderContext baseOrderContext = OrderModuleHelper.toBaseOrderContext(savedOrder, buyer.getEmail());
 
-
-        when(productFindService.fetchProductEntity(anyLong())).thenReturn(product);
+        when(productQueryService.doBooking(anyLong())).thenReturn(product);
         when(userFindService.fetchUserEntity(anyString())).thenReturn(buyer);
         when(orderMapper.toOrder(any(Product.class), any(Users.class))).thenReturn(order);
         when(orderRepository.save(any(Order.class))).thenReturn(savedOrder);
@@ -86,6 +87,8 @@ class OrderQueryServiceImplTest extends SecuritySupportTest {
         assertThat(orderContext.getSeller()).isEqualTo(product.getSeller().getEmail());
         assertThat(orderContext.getBuyer()).isEqualTo(buyer.getEmail());
         assertThat(product.getProductStatus()).isEqualTo(ProductStatus.BOOKING);
+        assertThat(savedOrder.getProductSnapShot()).isNotNull();
+        assertThat(savedOrder.getOrderHistories()).isNotNull();
 
 
     }

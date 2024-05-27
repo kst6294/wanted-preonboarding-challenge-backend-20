@@ -11,15 +11,15 @@ Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
 X-Frame-Options: DENY
-Content-Length: 227
+Content-Length: 230
 
 {
   "data" : {
-    "id" : 7329,
-    "productName" : "hytablikmy",
-    "price" : 5450929,
+    "id" : 9969,
+    "productName" : "wagwbqzege",
+    "price" : 23464931,
     "productStatus" : "ON_STOCK",
-    "seller" : "pq@wanted.com"
+    "seller" : "leIM@wanted.com"
   },
   "response" : {
     "status" : 200,

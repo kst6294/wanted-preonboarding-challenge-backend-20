@@ -16,7 +16,7 @@ Content-Length: 187
 {
   "status" : 400,
   "message" : "productId 이미 예약중 또는 판매완료 된 상품 입니다. ",
-  "timestamp" : "2024-05-27 14:15:08",
+  "timestamp" : "2024-05-27 17:52:37",
   "error" : "BeanPropertyBindingResult"
 }
 ----

@@ -6,7 +6,7 @@ Content-Length: 56
 Host: localhost:8080
 
 {
-  "productName" : "dbwijsmsfs",
-  "price" : 40188482
+  "productName" : "parzvrzhaa",
+  "price" : 93130681
 }
 ----

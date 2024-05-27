@@ -2,11 +2,11 @@
 ----
 {
   "data" : {
-    "id" : 7329,
-    "productName" : "hytablikmy",
-    "price" : 5450929,
+    "id" : 9969,
+    "productName" : "wagwbqzege",
+    "price" : 23464931,
     "productStatus" : "ON_STOCK",
-    "seller" : "pq@wanted.com"
+    "seller" : "leIM@wanted.com"
   },
   "response" : {
     "status" : 200,

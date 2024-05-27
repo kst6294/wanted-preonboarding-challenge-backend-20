@@ -5,5 +5,5 @@ Content-Type: application/json;charset=UTF-8
 Content-Length: 18
 Host: localhost:8080
 
-{"productId":2172}
+{"productId":8600}
 ----

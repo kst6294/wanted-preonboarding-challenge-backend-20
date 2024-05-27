@@ -35,7 +35,8 @@
     },
     "orderStatus" : {
       "COMPLETED" : "Order status: COMPLETED",
-      "ORDERED" : "Order status: ORDERED"
+      "ORDERED" : "Order status: ORDERED",
+      "SETTLEMENT" : "Order status: SETTLEMENT"
     }
   }
 }

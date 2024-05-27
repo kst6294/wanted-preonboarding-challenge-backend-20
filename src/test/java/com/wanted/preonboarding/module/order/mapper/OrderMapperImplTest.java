@@ -44,6 +44,8 @@ class OrderMapperImplTest {
         assertThat(order.getBuyer()).isEqualTo(buyer);
         assertThat(order.getSeller()).isEqualTo(product.getSeller());
         assertThat(order.getOrderStatus()).isEqualTo(OrderStatus.ORDERED);
+        assertThat(order.getOrderHistories()).isNotNull();
+
     }
 
     @Test

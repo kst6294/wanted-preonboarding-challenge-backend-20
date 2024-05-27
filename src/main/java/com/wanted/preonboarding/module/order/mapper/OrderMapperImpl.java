@@ -14,11 +14,12 @@ public class OrderMapperImpl implements OrderMapper{
     @Override
     public Order toOrder(Product product, Users buyer) {
         Order order = Order.builder()
-                .orderStatus(OrderStatus.ORDERED)
                 .product(product)
                 .seller(product.getSeller())
                 .build();
+
         order.setBuyer(buyer);
+        order.changeOrderStatus(OrderStatus.ORDERED);
         return order;
     }
 

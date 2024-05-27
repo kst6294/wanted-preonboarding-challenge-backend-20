@@ -1,0 +1,16 @@
+[source,json,options="nowrap"]
+----
+{
+  "data" : {
+    "orderId" : 44166588,
+    "productId" : 9633,
+    "buyer" : "LM@wanted.com",
+    "seller" : "l@wanted.com",
+    "orderStatus" : "COMPLETED"
+  },
+  "response" : {
+    "status" : 200,
+    "message" : "success"
+  }
+}
+----

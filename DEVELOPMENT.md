@@ -32,14 +32,15 @@
   - 브랜치: `feature/product-purchase`
   - 기능: "판매중", "예약중", "완료" 상태 관리
 
-5. **거래 내역 조회 기능**
+5. **주문 업데이트 기능**
+- 브랜치: `feature/sale-approval`
+- 기능: 판매 승인, 상태 변경 "예약중" -> "완료" 및 주문 스냅샷 저장
+
+6. **거래 내역 조회 기능**
   - 브랜치: `feature/transaction-history`
   - 기능: 거래 내역 조회
 
-6. **내 구매/예약 목록 조회 기능**
+7. **내 구매/예약 목록 조회 기능**
   - 브랜치: `feature/purchase-reservation-list`
   - 기능: 구매 및 예약 목록 조회
 
-7. **판매 승인 기능**
-  - 브랜치: `feature/sale-approval`
-  - 기능: 판매 승인, 상태 변경 "예약중" -> "완료"

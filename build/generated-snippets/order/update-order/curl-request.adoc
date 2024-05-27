@@ -1,0 +1,7 @@
+[source,bash]
+----
+$ curl 'http://localhost:8080/api/v1/order' -i -X PATCH \
+    -H 'Content-Type: application/json;charset=UTF-8' \
+    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJGRkFubG1IQHdhbnRlZC5jb20iLCJyb2xlIjoiTk9STUFMIiwiaWF0IjoxNzE2Nzk4ODQxLCJleHAiOjE3MTY4MDI0NDF9.5uLgZQoAwEWxAfP9iaJgCgMvLEBfUYDHENiKzcP-mh4' \
+    -d '{"orderId":63684020,"orderStatus":"SETTLEMENT"}'
+----

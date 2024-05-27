@@ -1,0 +1,13 @@
+|===
+|필드명|타입|필수여부|제약조건|설명
+|`+orderId+`
+|`+Number+`
+|true
+|
+|주문 ID
+|`+orderStatus+`
+|`+String+`
+|true
+|
+|주문 상태
+|===

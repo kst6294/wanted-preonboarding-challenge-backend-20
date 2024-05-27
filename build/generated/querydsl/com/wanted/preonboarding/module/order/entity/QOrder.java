@@ -37,9 +37,13 @@ public class QOrder extends EntityPathBase<Order> {
     //inherited
     public final StringPath insertOperator = _super.insertOperator;
 
+    public final SetPath<OrderHistory, QOrderHistory> orderHistories = this.<OrderHistory, QOrderHistory>createSet("orderHistories", OrderHistory.class, QOrderHistory.class, PathInits.DIRECT2);
+
     public final EnumPath<com.wanted.preonboarding.module.order.enums.OrderStatus> orderStatus = createEnum("orderStatus", com.wanted.preonboarding.module.order.enums.OrderStatus.class);
 
     public final com.wanted.preonboarding.module.product.entity.QProduct product;
+
+    public final QOrderProductSnapShot productSnapShot;
 
     public final com.wanted.preonboarding.module.user.entity.QUsers seller;
 
@@ -69,6 +73,7 @@ public class QOrder extends EntityPathBase<Order> {
         super(type, metadata, inits);
         this.buyer = inits.isInitialized("buyer") ? new com.wanted.preonboarding.module.user.entity.QUsers(forProperty("buyer")) : null;
         this.product = inits.isInitialized("product") ? new com.wanted.preonboarding.module.product.entity.QProduct(forProperty("product"), inits.get("product")) : null;
+        this.productSnapShot = inits.isInitialized("productSnapShot") ? new QOrderProductSnapShot(forProperty("productSnapShot"), inits.get("productSnapShot")) : null;
         this.seller = inits.isInitialized("seller") ? new com.wanted.preonboarding.module.user.entity.QUsers(forProperty("seller")) : null;
     }
 

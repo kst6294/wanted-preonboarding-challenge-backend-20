@@ -1,4 +1,4 @@
 [source,json,options="nowrap"]
 ----
-{"productId":2172}
+{"productId":8600}
 ----
