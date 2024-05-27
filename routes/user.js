@@ -11,7 +11,7 @@ router.get("/purchased_list", verifyToken, async (req, res, next) => {
 
     try {
         const items = await dbClient("Orders").where({
-            status: "SoldOut",
+            status: "Confirm",
             buyer_id,
         });
 

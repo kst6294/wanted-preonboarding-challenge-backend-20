@@ -12,9 +12,11 @@ CREATE TABLE Users (
 );
 -- 유저 삽입
 INSERT INTO Users (Username, Password)
-VALUES ('user', 'pswd');
+VALUES ('sellerA', 'pswd');
 INSERT INTO Users (Username, Password)
-VALUES ('tester', 'pswd');
+VALUES ('buyerA', 'pswd');
+INSERT INTO Users (Username, Password)
+VALUES ('buyerB', 'pswd');
 -- 제품 테이블
 CREATE TABLE Products (
     product_id INTEGER PRIMARY KEY AUTOINCREMENT,
