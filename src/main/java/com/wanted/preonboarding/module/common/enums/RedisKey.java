@@ -9,12 +9,15 @@ import java.time.Duration;
 @Getter
 @AllArgsConstructor
 public enum RedisKey implements EnumType {
-    USERS("users", 1),
-    REFRESH_TOKEN("refresh_token", 1),;
+    USERS("users", 60),
+    REFRESH_TOKEN("refresh_token", 60),
+    ORDER_LOCK("order_lock", 1),
+
+    ;
 
 
     private final String key;
-    private final int hour;
+    private final int minute;
     private static final String TERM = "::";
 
     public String generateKey(String key){
@@ -27,7 +30,7 @@ public enum RedisKey implements EnumType {
     }
 
     public Duration getHourDuration(){
-        return Duration.ofHours(this.hour);
+        return Duration.ofMinutes(this.minute);
     }
 
     @Override
@@ -37,6 +40,6 @@ public enum RedisKey implements EnumType {
 
     @Override
     public String getDescription() {
-        return String.format("REDIS KEY %s, REDIS TTL %s", key, hour);
+        return String.format("REDIS KEY %s, REDIS TTL %s", key, minute);
     }
 }

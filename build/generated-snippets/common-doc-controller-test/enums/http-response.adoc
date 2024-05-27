@@ -11,13 +11,14 @@ Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
 X-Frame-Options: DENY
-Content-Length: 1207
+Content-Length: 1385
 
 {
   "data" : {
     "redisKey" : {
-      "REFRESH_TOKEN" : "REDIS KEY refresh_token, REDIS TTL 1",
-      "USERS" : "REDIS KEY users, REDIS TTL 1"
+      "ORDER_LOCK" : "REDIS KEY order_lock, REDIS TTL 1",
+      "REFRESH_TOKEN" : "REDIS KEY refresh_token, REDIS TTL 60",
+      "USERS" : "REDIS KEY users, REDIS TTL 60"
     },
     "yn" : {
       "Y" : "Y means YES, N meas NO",
@@ -44,6 +45,10 @@ Content-Length: 1207
       "PAST" : "id ASC",
       "LOW_PRICE" : "price ASC",
       "LATEST" : "id DESC"
+    },
+    "orderStatus" : {
+      "COMPLETED" : "Order status: COMPLETED",
+      "ORDERED" : "Order status: ORDERED"
     }
   }
 }

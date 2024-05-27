@@ -15,16 +15,14 @@ import org.springframework.stereotype.Service;
 
 import java.time.Duration;
 import java.util.List;
-import java.util.Optional;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public abstract class AbstractRedisService implements RedisFetchService, RedisKeyGenerator, RedisQueryService{
+public abstract class AbstractRedisService implements RedisFindService, RedisKeyGenerator, RedisQueryService{
 
     private final static String redisConnectionFailMessage = "Redis connection failure";
     private final static String errorAccessRedisMessage = "Error accessing Redis data";
-    private final static String errorJsonMessage = "Failed to parse JSON: {}";
     private final StringRedisTemplate redisTemplate;
 
     private ValueOperations<String, String> opsValue() {
@@ -72,6 +70,18 @@ public abstract class AbstractRedisService implements RedisFetchService, RedisKe
     public void delete(String key){
         redisTemplate.delete(key);
     }
+
+    @Override
+    public boolean keyExists(String key) {
+        try {
+            return Boolean.TRUE.equals(redisTemplate.hasKey(key));
+        } catch (RedisConnectionFailureException e) {
+            throw new ServiceException(redisConnectionFailMessage, e);
+        } catch (DataAccessException e) {
+            throw new ServiceException(errorAccessRedisMessage, e);
+        }
+    }
+
 
 
     protected <T> T parseJson(String value, Class<T> clazz) {

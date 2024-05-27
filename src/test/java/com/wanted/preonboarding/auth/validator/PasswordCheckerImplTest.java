@@ -13,7 +13,6 @@ import static org.mockito.Mockito.when;
 
 
 @ExtendWith(MockitoExtension.class)
-@ExtendWith(MockitoExtension.class)
 class PasswordCheckerImplTest {
 
     @InjectMocks

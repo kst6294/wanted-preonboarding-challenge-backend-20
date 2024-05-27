@@ -72,6 +72,10 @@ public class CommonDocControllerTest extends RestDocsTestSupport {
                         customResponseFields("custom-response", beneathPath("data.orderType").withSubsectionId("orderType"),
                                 attributes(key("title").value("orderType")),
                                 enumConvertFieldDescriptor((enumDocs.getOrderType()))
+                        ),
+                        customResponseFields("custom-response", beneathPath("data.orderStatus").withSubsectionId("orderStatus"),
+                                attributes(key("title").value("orderStatus")),
+                                enumConvertFieldDescriptor((enumDocs.getOrderStatus()))
                         )
                 ));
     }

@@ -1,8 +1,8 @@
 [source,bash]
 ----
 $ echo '{
-  "email" : "sMlbwbE@wanted.com",
-  "password" : "taltdhwodc"
+  "email" : "GHYToTv@wanted.com",
+  "password" : "dfvnaqoifw"
 }' | http POST 'http://localhost:8080/api/v1/auth/authentication' \
     'Content-Type:application/json;charset=UTF-8'
 ----

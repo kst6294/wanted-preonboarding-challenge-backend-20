@@ -34,17 +34,11 @@ class PasswordValidatorTest {
     @Mock
     private ConstraintValidatorContext constraintValidatorContext;
 
-
     @Mock
     private ConstraintValidatorContext.ConstraintViolationBuilder constraintViolationBuilder;
 
     @Mock
     private ConstraintValidatorContext.ConstraintViolationBuilder.NodeBuilderCustomizableContext nodeBuilderCustomizableContext;
-
-    @BeforeEach
-    void setUp() {
-
-    }
 
 
     @Test

@@ -1,22 +1,13 @@
 package com.wanted.preonboarding.module.user.service;
 
-import com.wanted.preonboarding.auth.core.AuthToken;
-import com.wanted.preonboarding.auth.core.JwtAuthToken;
-import com.wanted.preonboarding.auth.service.TokenFetchRedisService;
 import com.wanted.preonboarding.data.auth.AuthModuleHelper;
 import com.wanted.preonboarding.document.utils.RedisServiceTest;
 import com.wanted.preonboarding.module.common.enums.RedisKey;
 import com.wanted.preonboarding.module.user.core.BaseUserInfo;
 import com.wanted.preonboarding.module.utils.JsonUtils;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.data.redis.core.ValueOperations;
 
 import java.util.Optional;
 

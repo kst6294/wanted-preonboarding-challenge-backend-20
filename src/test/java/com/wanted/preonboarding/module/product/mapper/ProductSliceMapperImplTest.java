@@ -18,6 +18,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -39,7 +41,7 @@ class ProductSliceMapperImplTest {
 
         assertThat(customSlice).isNotNull();
         assertThat(customSlice.getContent()).hasSize(5);
-        assertThat(customSlice.isLast()).isFalse();
+        assertFalse(customSlice.isLast());
         assertThat(customSlice.getLastDomainId()).isEqualTo(data.get(5).getId());
     }
 
@@ -54,7 +56,7 @@ class ProductSliceMapperImplTest {
 
         assertThat(customSlice).isNotNull();
         assertThat(customSlice.getContent()).isEmpty();
-        assertThat(customSlice.isLast()).isTrue();
+        assertTrue(customSlice.isLast());
         assertThat(customSlice.getLastDomainId()).isNull();
         assertThat(customSlice.getCursorValue()).isNull();
     }

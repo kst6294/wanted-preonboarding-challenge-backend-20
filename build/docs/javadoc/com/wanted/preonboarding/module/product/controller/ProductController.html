@@ -123,6 +123,13 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>org.springframework.http.ResponseEntity<wbr>&lt;<a href="../../common/payload/ApiResponse.html" title="class in com.wanted.preonboarding.module.common.payload">ApiResponse</a>&lt;<a href="../core/Sku.html" title="interface in com.wanted.preonboarding.module.product.core">Sku</a>&gt;&gt;</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#createProduct(com.wanted.preonboarding.module.product.dto.CreateProduct)" class="member-name-link">createProduct</a><wbr>(<a href="../dto/CreateProduct.html" title="class in com.wanted.preonboarding.module.product.dto">CreateProduct</a>&nbsp;createProduct)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>org.springframework.http.ResponseEntity<wbr>&lt;<a href="../../common/payload/ApiResponse.html" title="class in com.wanted.preonboarding.module.common.payload">ApiResponse</a>&lt;<a href="../../common/dto/CustomSlice.html" title="class in com.wanted.preonboarding.module.common.dto">CustomSlice</a>&lt;<a href="../core/Sku.html" title="interface in com.wanted.preonboarding.module.product.core">Sku</a>&gt;&gt;&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#fetchProduct(com.wanted.preonboarding.module.product.filter.ItemFilter,org.springframework.data.domain.Pageable)" class="member-name-link">fetchProduct</a><wbr>(<a href="../filter/ItemFilter.html" title="interface in com.wanted.preonboarding.module.product.filter">ItemFilter</a>&nbsp;filter,
+ org.springframework.data.domain.Pageable&nbsp;pageable)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>org.springframework.http.ResponseEntity<wbr>&lt;<a href="../../common/payload/ApiResponse.html" title="class in com.wanted.preonboarding.module.common.payload">ApiResponse</a>&lt;<a href="../core/Sku.html" title="interface in com.wanted.preonboarding.module.product.core">Sku</a>&gt;&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#fetchProduct(java.lang.Long)" class="member-name-link">fetchProduct</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a>&nbsp;productId)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 </div>
 </div>
 </div>
@@ -161,6 +168,23 @@ loadScripts(document, 'script');</script>
 @PostMapping("/product")
 </span><span class="modifiers">public</span>&nbsp;<span class="return-type">org.springframework.http.ResponseEntity&lt;<a href="../../common/payload/ApiResponse.html" title="class in com.wanted.preonboarding.module.common.payload">ApiResponse</a>&lt;<a href="../core/Sku.html" title="interface in com.wanted.preonboarding.module.product.core">Sku</a>&gt;&gt;</span>&nbsp;<span class="element-name">createProduct</span><wbr><span class="parameters">(@RequestBody @Validated
  <a href="../dto/CreateProduct.html" title="class in com.wanted.preonboarding.module.product.dto">CreateProduct</a>&nbsp;createProduct)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="fetchProduct(java.lang.Long)">
+<h3>fetchProduct</h3>
+<div class="member-signature"><span class="annotations">@GetMapping("/product/{productId}")
+</span><span class="modifiers">public</span>&nbsp;<span class="return-type">org.springframework.http.ResponseEntity&lt;<a href="../../common/payload/ApiResponse.html" title="class in com.wanted.preonboarding.module.common.payload">ApiResponse</a>&lt;<a href="../core/Sku.html" title="interface in com.wanted.preonboarding.module.product.core">Sku</a>&gt;&gt;</span>&nbsp;<span class="element-name">fetchProduct</span><wbr><span class="parameters">(@PathVariable("productId")
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a>&nbsp;productId)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="fetchProduct(com.wanted.preonboarding.module.product.filter.ItemFilter,org.springframework.data.domain.Pageable)">
+<h3>fetchProduct</h3>
+<div class="member-signature"><span class="annotations">@GetMapping("/products")
+</span><span class="modifiers">public</span>&nbsp;<span class="return-type">org.springframework.http.ResponseEntity&lt;<a href="../../common/payload/ApiResponse.html" title="class in com.wanted.preonboarding.module.common.payload">ApiResponse</a>&lt;<a href="../../common/dto/CustomSlice.html" title="class in com.wanted.preonboarding.module.common.dto">CustomSlice</a>&lt;<a href="../core/Sku.html" title="interface in com.wanted.preonboarding.module.product.core">Sku</a>&gt;&gt;&gt;</span>&nbsp;<span class="element-name">fetchProduct</span><wbr><span class="parameters">(@ModelAttribute
+ <a href="../filter/ItemFilter.html" title="interface in com.wanted.preonboarding.module.product.filter">ItemFilter</a>&nbsp;filter,
+ org.springframework.data.domain.Pageable&nbsp;pageable)</span></div>
 </section>
 </li>
 </ul>

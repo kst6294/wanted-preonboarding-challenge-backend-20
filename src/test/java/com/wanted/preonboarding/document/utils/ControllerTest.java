@@ -3,21 +3,25 @@ package com.wanted.preonboarding.document.utils;
 
 import com.wanted.preonboarding.auth.controller.AuthController;
 import com.wanted.preonboarding.auth.service.AuthTokenGenerateService;
-import com.wanted.preonboarding.auth.service.TokenFetchService;
+import com.wanted.preonboarding.auth.service.TokenFindService;
 import com.wanted.preonboarding.auth.validator.PasswordChecker;
+import com.wanted.preonboarding.module.order.controller.OrderController;
+import com.wanted.preonboarding.module.order.service.OrderQueryService;
+import com.wanted.preonboarding.module.order.validator.OrderLockChecker;
 import com.wanted.preonboarding.module.product.controller.ProductController;
-import com.wanted.preonboarding.module.product.service.ProductFetchService;
+import com.wanted.preonboarding.module.product.service.ProductFindService;
 import com.wanted.preonboarding.module.product.service.ProductQueryService;
-import com.wanted.preonboarding.module.product.service.ProductQueryServiceImpl;
 import com.wanted.preonboarding.module.user.service.UserFindService;
 import org.junit.jupiter.api.Disabled;
+import org.mockito.Mock;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 @Disabled
 @WebMvcTest(controllers = {
         AuthController.class,
-        ProductController.class
+        ProductController.class,
+        OrderController.class,
 })
 public abstract class ControllerTest extends SecuritySupportTest {
 
@@ -28,7 +32,7 @@ public abstract class ControllerTest extends SecuritySupportTest {
     protected UserFindService userFindService;
 
     @MockBean
-    protected TokenFetchService tokenFetchService;
+    protected TokenFindService tokenFindService;
 
     @MockBean
     protected PasswordChecker passwordChecker;
@@ -37,7 +41,15 @@ public abstract class ControllerTest extends SecuritySupportTest {
     protected ProductQueryService productQueryService;
 
     @MockBean
-    protected ProductFetchService productFetchService;
+    protected ProductFindService productFindService;
+
+    @MockBean
+    protected OrderQueryService orderQueryService;
+
+    @MockBean
+    protected OrderLockChecker orderLockChecker;
+
+
 
 
 }

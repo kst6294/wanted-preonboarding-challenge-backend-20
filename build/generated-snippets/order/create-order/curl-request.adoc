@@ -1,0 +1,7 @@
+[source,bash]
+----
+$ curl 'http://localhost:8080/api/v1/order' -i -X POST \
+    -H 'Content-Type: application/json;charset=UTF-8' \
+    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzd2VFU2pAd2FudGVkLmNvbSIsInJvbGUiOiJOT1JNQUwiLCJpYXQiOjE3MTY3ODY5MDksImV4cCI6MTcxNjc5MDUwOX0.hzJBaFJ7wSXQ0UBkzXQNWW-0A4TvIg2P37SVh9XfrCg' \
+    -d '{"productId":4452}'
+----

@@ -90,17 +90,17 @@ loadScripts(document, 'script');</script>
 <section class="class-description" id="class-description">
 <dl class="notes">
 <dt>All Implemented Interfaces:</dt>
-<dd><code><a href="RedisFetchService.html" title="interface in com.wanted.preonboarding.module.common.service">RedisFetchService</a></code>, <code><a href="RedisKeyGenerator.html" title="interface in com.wanted.preonboarding.module.common.service">RedisKeyGenerator</a></code>, <code><a href="RedisQueryService.html" title="interface in com.wanted.preonboarding.module.common.service">RedisQueryService</a></code></dd>
+<dd><code><a href="RedisFindService.html" title="interface in com.wanted.preonboarding.module.common.service">RedisFindService</a></code>, <code><a href="RedisKeyGenerator.html" title="interface in com.wanted.preonboarding.module.common.service">RedisKeyGenerator</a></code>, <code><a href="RedisQueryService.html" title="interface in com.wanted.preonboarding.module.common.service">RedisQueryService</a></code></dd>
 </dl>
 <dl class="notes">
 <dt>Direct Known Subclasses:</dt>
-<dd><code><a href="../../../auth/service/TokenFetchRedisService.html" title="class in com.wanted.preonboarding.auth.service">TokenFetchRedisService</a></code>, <code><a href="../../../auth/service/TokenQueryRedisService.html" title="class in com.wanted.preonboarding.auth.service">TokenQueryRedisService</a></code>, <code><a href="../../user/service/UserRedisFindServiceImpl.html" title="class in com.wanted.preonboarding.module.user.service">UserRedisFindServiceImpl</a></code>, <code><a href="../../user/service/UserRedisQueryServiceImpl.html" title="class in com.wanted.preonboarding.module.user.service">UserRedisQueryServiceImpl</a></code></dd>
+<dd><code><a href="../../order/validator/OrderLockRedisChecker.html" title="class in com.wanted.preonboarding.module.order.validator">OrderLockRedisChecker</a></code>, <code><a href="../../../auth/service/TokenFindRedisService.html" title="class in com.wanted.preonboarding.auth.service">TokenFindRedisService</a></code>, <code><a href="../../../auth/service/TokenQueryRedisService.html" title="class in com.wanted.preonboarding.auth.service">TokenQueryRedisService</a></code>, <code><a href="../../user/service/UserRedisFindServiceImpl.html" title="class in com.wanted.preonboarding.module.user.service">UserRedisFindServiceImpl</a></code>, <code><a href="../../user/service/UserRedisQueryServiceImpl.html" title="class in com.wanted.preonboarding.module.user.service">UserRedisQueryServiceImpl</a></code></dd>
 </dl>
 <hr>
 <div class="type-signature"><span class="annotations">@Service
 </span><span class="modifiers">public abstract class </span><span class="element-name type-name-label">AbstractRedisService</span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>
-implements <a href="RedisFetchService.html" title="interface in com.wanted.preonboarding.module.common.service">RedisFetchService</a>, <a href="RedisKeyGenerator.html" title="interface in com.wanted.preonboarding.module.common.service">RedisKeyGenerator</a>, <a href="RedisQueryService.html" title="interface in com.wanted.preonboarding.module.common.service">RedisQueryService</a></span></div>
+implements <a href="RedisFindService.html" title="interface in com.wanted.preonboarding.module.common.service">RedisFindService</a>, <a href="RedisKeyGenerator.html" title="interface in com.wanted.preonboarding.module.common.service">RedisKeyGenerator</a>, <a href="RedisQueryService.html" title="interface in com.wanted.preonboarding.module.common.service">RedisQueryService</a></span></div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -141,19 +141,22 @@ implements <a href="RedisFetchService.html" title="interface in com.wanted.preon
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a><wbr>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getValues(java.util.List)" class="member-name-link">getValues</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;keys)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected &lt;T&gt;&nbsp;T</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#parseJson(java.lang.String,java.lang.Class)" class="member-name-link">parseJson</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;value,
- <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Class.html" title="class or interface in java.lang" class="external-link">Class</a>&lt;T&gt;&nbsp;clazz)</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#keyExists(java.lang.String)" class="member-name-link">keyExists</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;key)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#save(java.lang.String,java.lang.String)" class="member-name-link">save</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;key,
- <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;value)</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected &lt;T&gt;&nbsp;T</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#parseJson(java.lang.String,java.lang.Class)" class="member-name-link">parseJson</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;value,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Class.html" title="class or interface in java.lang" class="external-link">Class</a>&lt;T&gt;&nbsp;clazz)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#save(java.lang.String,java.lang.String,java.time.Duration)" class="member-name-link">save</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;key,
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#save(java.lang.String,java.lang.String)" class="member-name-link">save</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;key,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;value)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#save(java.lang.String,java.lang.String,java.time.Duration)" class="member-name-link">save</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;key,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;value,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/Duration.html" title="class or interface in java.time" class="external-link">Duration</a>&nbsp;ttl)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 </div>
 </div>
 </div>
@@ -202,7 +205,7 @@ implements <a href="RedisFetchService.html" title="interface in com.wanted.preon
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getValue</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;key)</span></div>
 <dl class="notes">
 <dt>Specified by:</dt>
-<dd><code><a href="RedisFetchService.html#getValue(java.lang.String)">getValue</a></code>&nbsp;in interface&nbsp;<code><a href="RedisFetchService.html" title="interface in com.wanted.preonboarding.module.common.service">RedisFetchService</a></code></dd>
+<dd><code><a href="RedisFindService.html#getValue(java.lang.String)">getValue</a></code>&nbsp;in interface&nbsp;<code><a href="RedisFindService.html" title="interface in com.wanted.preonboarding.module.common.service">RedisFindService</a></code></dd>
 </dl>
 </section>
 </li>
@@ -212,7 +215,7 @@ implements <a href="RedisFetchService.html" title="interface in com.wanted.preon
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</span>&nbsp;<span class="element-name">getValues</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;keys)</span></div>
 <dl class="notes">
 <dt>Specified by:</dt>
-<dd><code><a href="RedisFetchService.html#getValues(java.util.List)">getValues</a></code>&nbsp;in interface&nbsp;<code><a href="RedisFetchService.html" title="interface in com.wanted.preonboarding.module.common.service">RedisFetchService</a></code></dd>
+<dd><code><a href="RedisFindService.html#getValues(java.util.List)">getValues</a></code>&nbsp;in interface&nbsp;<code><a href="RedisFindService.html" title="interface in com.wanted.preonboarding.module.common.service">RedisFindService</a></code></dd>
 </dl>
 </section>
 </li>
@@ -246,6 +249,16 @@ implements <a href="RedisFetchService.html" title="interface in com.wanted.preon
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="RedisQueryService.html#delete(java.lang.String)">delete</a></code>&nbsp;in interface&nbsp;<code><a href="RedisQueryService.html" title="interface in com.wanted.preonboarding.module.common.service">RedisQueryService</a></code></dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="keyExists(java.lang.String)">
+<h3>keyExists</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">keyExists</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;key)</span></div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="RedisFindService.html#keyExists(java.lang.String)">keyExists</a></code>&nbsp;in interface&nbsp;<code><a href="RedisFindService.html" title="interface in com.wanted.preonboarding.module.common.service">RedisFindService</a></code></dd>
 </dl>
 </section>
 </li>

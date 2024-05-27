@@ -7,6 +7,7 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.wanted.preonboarding.module.common.repository.AbstractCommonRepository;
 import com.wanted.preonboarding.module.product.core.BaseSku;
 import com.wanted.preonboarding.module.product.core.QBaseSku;
+import com.wanted.preonboarding.module.product.entity.Product;
 import com.wanted.preonboarding.module.product.filter.ItemFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -39,6 +40,18 @@ public class ProductFindRepositoryImpl extends AbstractCommonRepository implemen
                         ))
                         .from(product)
                         .innerJoin(product.seller, users)
+                        .where(productIdEq(productId))
+                        .fetchOne()
+        );
+    }
+
+    @Override
+    public Optional<Product> fetchProductEntity(long productId) {
+        return Optional.ofNullable(
+                queryFactory
+                        .selectFrom(product)
+                        .innerJoin(product.seller, users)
+                        .fetchJoin()
                         .where(productIdEq(productId))
                         .fetchOne()
         );

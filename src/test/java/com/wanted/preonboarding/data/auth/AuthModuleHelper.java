@@ -38,6 +38,15 @@ public class AuthModuleHelper {
     }
 
 
+    public static JwtAuthToken toJwtAuthToken_another_constructor(String email){
+        Key key = Keys.hmacShaKeyFor("36bddb74-043c-4fcd-a17d-d7089bf65b90".getBytes());
+        Date issue = new Date();
+        long expirationTime =3600000L;
+        Date expiry = new Date(issue.getTime() + expirationTime);
+        return new JwtAuthToken(email, MemberShip.NORMAL.name(), issue, expiry, key);
+    }
+
+
     public static JwtAuthToken toJwtAuthToken_another_constructor(){
         Key key = Keys.hmacShaKeyFor("36bddb74-043c-4fcd-a17d-d7089bf65b90".getBytes());
         String email = generateEmail();

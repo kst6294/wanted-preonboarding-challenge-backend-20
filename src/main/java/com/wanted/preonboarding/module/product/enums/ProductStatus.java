@@ -24,4 +24,9 @@ public enum ProductStatus implements EnumType {
     public String getDescription() {
         return String.format("제품의 판매 상태 %s", displayName);
     }
+
+
+    public boolean isOnStock() {
+        return this == ON_STOCK;
+    }
 }

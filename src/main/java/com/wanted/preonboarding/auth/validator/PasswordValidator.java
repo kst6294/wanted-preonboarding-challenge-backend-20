@@ -11,6 +11,9 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class PasswordValidator implements ConstraintValidator<ValidPassword, CreateAuthToken> {
 
+    protected static final String EMAIL_FILED = "email";
+    protected static final String PASSWORD_FILED = "password";
+
     protected static final String INCORRECT_PASSWORD_MESSAGE = "유효하지 않은 비밀번호 입니다.";
     private final PasswordChecker passwordChecker;
     private final UserFindService userFindService;
@@ -27,7 +30,7 @@ public class PasswordValidator implements ConstraintValidator<ValidPassword, Cre
             if (passwordChecker.checkPassword(createAuthToken.getPassword(), passwordHash)) {
                 context.disableDefaultConstraintViolation();
                 context.buildConstraintViolationWithTemplate(INCORRECT_PASSWORD_MESSAGE)
-                        .addPropertyNode("password")
+                        .addPropertyNode(PASSWORD_FILED)
                         .addConstraintViolation();
                 return false;
             }
@@ -35,7 +38,7 @@ public class PasswordValidator implements ConstraintValidator<ValidPassword, Cre
         } catch (NotFoundUserException e) {
             context.disableDefaultConstraintViolation();
             context.buildConstraintViolationWithTemplate(e.getMessage())
-                    .addPropertyNode("email")
+                    .addPropertyNode(EMAIL_FILED)
                     .addConstraintViolation();
             return false;
         }

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.wanted.preonboarding.auth.core.JwtAuthTokenTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2024-05-27T00:55:45" hostname="lyusang-won-ui-MacBookPro.local" time="0.072">
+<testsuite name="com.wanted.preonboarding.auth.core.JwtAuthTokenTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2024-05-27T05:15:06" hostname="lyusang-won-ui-MacBookPro.local" time="0.073">
   <properties/>
-  <testcase name="토큰 파싱 테스트 - 잘못된 서명 토큰" classname="com.wanted.preonboarding.auth.core.JwtAuthTokenTest" time="0.043"/>
-  <testcase name="토큰 생성 테스트" classname="com.wanted.preonboarding.auth.core.JwtAuthTokenTest" time="0.015"/>
-  <testcase name="만료된 토큰 파싱 테스트" classname="com.wanted.preonboarding.auth.core.JwtAuthTokenTest" time="0.013"/>
+  <testcase name="토큰 파싱 테스트 - 잘못된 서명 토큰" classname="com.wanted.preonboarding.auth.core.JwtAuthTokenTest" time="0.048"/>
+  <testcase name="토큰 생성 테스트" classname="com.wanted.preonboarding.auth.core.JwtAuthTokenTest" time="0.013"/>
+  <testcase name="만료된 토큰 파싱 테스트" classname="com.wanted.preonboarding.auth.core.JwtAuthTokenTest" time="0.012"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

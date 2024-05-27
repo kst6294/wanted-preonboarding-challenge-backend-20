@@ -16,7 +16,6 @@ import java.util.stream.Collectors;
 public class ArgumentNotValidExceptionHandler {
 
     private static final String SPACE = " ";
-    private static final String ENTER = " \n ";
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ErrorResponse> handleMethodArgumentNotValidException(MethodArgumentNotValidException ex) {
@@ -39,7 +38,7 @@ public class ArgumentNotValidExceptionHandler {
                         return error.getObjectName() + SPACE + error.getDefaultMessage();
                     }
                 })
-                .collect(Collectors.joining(ENTER));
+                .collect(Collectors.joining(SPACE));
 
         ErrorResponse response = ErrorResponse.of(HttpStatus.BAD_REQUEST, exceptionClassName, errorMsg);
 

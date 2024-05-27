@@ -90,7 +90,7 @@ loadScripts(document, 'script');</script>
 <section class="class-description" id="class-description">
 <dl class="notes">
 <dt>All Implemented Interfaces:</dt>
-<dd><code><a href="Sku.html" title="interface in com.wanted.preonboarding.module.product.core">Sku</a></code></dd>
+<dd><code><a href="../../common/mapper/CursorValueProvider.html" title="interface in com.wanted.preonboarding.module.common.mapper">CursorValueProvider</a></code>, <code><a href="../../common/mapper/LastDomainIdProvider.html" title="interface in com.wanted.preonboarding.module.common.mapper">LastDomainIdProvider</a></code>, <code><a href="Sku.html" title="interface in com.wanted.preonboarding.module.product.core">Sku</a></code></dd>
 </dl>
 <hr>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">BaseSku</span>
@@ -107,7 +107,11 @@ implements <a href="Sku.html" title="interface in com.wanted.preonboarding.modul
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
-<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E()" class="member-name-link">BaseSku</a>()</code></div>
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(java.lang.Long,java.lang.String,long,com.wanted.preonboarding.module.product.enums.ProductStatus,java.lang.String)" class="member-name-link">BaseSku</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a>&nbsp;id,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;productName,
+ long&nbsp;price,
+ <a href="../enums/ProductStatus.html" title="enum class in com.wanted.preonboarding.module.product.enums">ProductStatus</a>&nbsp;productStatus,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;seller)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 </div>
 </section>
@@ -134,9 +138,14 @@ implements <a href="Sku.html" title="interface in com.wanted.preonboarding.modul
 <h2>Constructor Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="&lt;init&gt;()">
+<section class="detail" id="&lt;init&gt;(java.lang.Long,java.lang.String,long,com.wanted.preonboarding.module.product.enums.ProductStatus,java.lang.String)">
 <h3>BaseSku</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">BaseSku</span>()</div>
+<div class="member-signature"><span class="annotations">@QueryProjection
+</span><span class="modifiers">public</span>&nbsp;<span class="element-name">BaseSku</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a>&nbsp;id,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;productName,
+ long&nbsp;price,
+ <a href="../enums/ProductStatus.html" title="enum class in com.wanted.preonboarding.module.product.enums">ProductStatus</a>&nbsp;productStatus,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;seller)</span></div>
 </section>
 </li>
 </ul>

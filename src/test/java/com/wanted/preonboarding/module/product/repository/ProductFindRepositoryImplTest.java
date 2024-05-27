@@ -90,10 +90,28 @@ class ProductFindRepositoryImplTest extends BaseFetchRepositoryTest {
         List<BaseSku> baseSkus = productFindRepository.fetchBaseSkus(filter, pageable);
 
         assertEquals(1, baseSkus.size());
+        assertThat(baseSkus.get(0).getProductName()).isNotNull();
         assertThat(baseSkus.get(0).getProductName()).isNotBlank();
+        assertThat(baseSkus.get(0).getPrice()).isNotNull();
         assertThat(baseSkus.get(0).getSeller()).isNotBlank();
         assertThat(baseSkus.get(0).getSeller()).isEqualTo(product.getSeller().getEmail());
     }
+
+
+    @Test
+    @DisplayName("Product Entity 조회 - Seller fetch Join")
+    void fetchProduct_with_fetch_seller() {
+        // Product 저장
+        saveProduct();
+
+        Optional<Product> productOpt = productFindRepository.fetchProductEntity(product.getId());
+
+        assertThat(productOpt).isPresent();
+        assertThat(productOpt.get().getProductName()).isNotBlank();
+        assertThat(productOpt.get().getSeller()).isNotNull();
+        assertThat(productOpt.get().getSeller().getEmail()).isEqualTo(product.getSeller().getEmail());
+    }
+
 
 
 

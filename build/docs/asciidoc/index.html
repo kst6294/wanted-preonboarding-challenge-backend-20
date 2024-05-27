@@ -76,6 +76,19 @@
 </li>
 </ul>
 </li>
+<li><a href="#_order_api">Order API</a>
+<ul class="sectlevel1">
+<li><a href="#_주문_생성">주문 생성</a>
+<ul class="sectlevel2">
+<li><a href="#_주문_생성_요청">주문 생성 요청</a></li>
+<li><a href="#_주문_생성_응답">주문 생성 응답</a></li>
+<li><a href="#_주문_실패_비회원">주문 실패 - 비회원</a></li>
+<li><a href="#_유효하지_않은_주문_상품_없음">유효하지 않은 주문 - 상품 없음</a></li>
+<li><a href="#_유효하지_않은_주문_이미_예약_중_또는_판매_완료된_제품">유효하지 않은 주문 - 이미 예약 중 또는 판매 완료된 제품</a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li><a href="#_enums_documentation">Enums Documentation</a>
 <ul class="sectlevel1">
 <li><a href="#_jwt_error_enum">JWT Error Enum</a>
@@ -442,6 +455,374 @@
 </div>
 </div>
 </div>
+<h1 id="_order_api" class="sect0"><a class="link" href="#_order_api">Order API</a></h1>
+<div class="sect1">
+<h2 id="_주문_생성"><a class="link" href="#_주문_생성">주문 생성</a></h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_주문_생성_요청"><a class="link" href="#_주문_생성_요청">주문 생성 요청</a></h3>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">메서드</th>
+<th class="tableblock halign-left valign-top">경로</th>
+<th class="tableblock halign-left valign-top">설명</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">POST</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">/api/v1/order</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">주문을 생성합니다.</p></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 8. Request Fields</caption>
+<colgroup>
+<col style="width: 28.5714%;">
+<col style="width: 71.4286%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">필드명</th>
+<th class="tableblock halign-left valign-top">설명</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">productId</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">제품 ID</p></td>
+</tr>
+</tbody>
+</table>
+<div class="listingblock">
+<div class="title">Example Request</div>
+<div class="content">
+<pre class="highlightjs highlight"><code data-lang="json" class="language-json hljs">{
+  "productId": 12345
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_주문_생성_응답"><a class="link" href="#_주문_생성_응답">주문 생성 응답</a></h3>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 9. Response Fields</caption>
+<colgroup>
+<col style="width: 28.5714%;">
+<col style="width: 71.4286%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">필드명</th>
+<th class="tableblock halign-left valign-top">설명</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">orderId</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">주문 ID (PK)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">productId</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">제품 ID</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">seller</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">판매자 EMAIL</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">buyer</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">구매자 EMAIL</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">orderStatus</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">주문 상태 (ORDERED, SHIPPED 등)</p></td>
+</tr>
+</tbody>
+</table>
+<div class="listingblock">
+<div class="title">Example Response</div>
+<div class="content">
+<pre class="highlightjs highlight"><code data-lang="json" class="language-json hljs">{
+  "data": {
+    "orderId": 1,
+    "productId": 12345,
+    "seller": "seller@example.com",
+    "buyer": "buyer@example.com",
+    "orderStatus": "ORDERED"
+  },
+  "response": {
+    "status": 200,
+    "message": "success"
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_주문_실패_비회원"><a class="link" href="#_주문_실패_비회원">주문 실패 - 비회원</a></h3>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">메서드</th>
+<th class="tableblock halign-left valign-top">경로</th>
+<th class="tableblock halign-left valign-top">설명</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">POST</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">/api/v1/order</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">비회원이 주문을 생성하려고 시도할 때</p></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 10. Request Fields</caption>
+<colgroup>
+<col style="width: 28.5714%;">
+<col style="width: 71.4286%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">필드명</th>
+<th class="tableblock halign-left valign-top">설명</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">productId</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">제품 ID</p></td>
+</tr>
+</tbody>
+</table>
+<div class="listingblock">
+<div class="title">Example Request</div>
+<div class="content">
+<pre class="highlightjs highlight"><code data-lang="json" class="language-json hljs">{
+  "productId": 12345
+}</code></pre>
+</div>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 11. Response Fields</caption>
+<colgroup>
+<col style="width: 28.5714%;">
+<col style="width: 71.4286%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">필드명</th>
+<th class="tableblock halign-left valign-top">설명</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">status</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">응답 상태 코드</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">message</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">응답 메시지</p></td>
+</tr>
+</tbody>
+</table>
+<div class="listingblock">
+<div class="title">Example Response</div>
+<div class="content">
+<pre class="highlightjs highlight"><code data-lang="json" class="language-json hljs">{
+  "response": {
+    "status": 401,
+    "message": "로그인이 필요합니다."
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_유효하지_않은_주문_상품_없음"><a class="link" href="#_유효하지_않은_주문_상품_없음">유효하지 않은 주문 - 상품 없음</a></h3>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">메서드</th>
+<th class="tableblock halign-left valign-top">경로</th>
+<th class="tableblock halign-left valign-top">설명</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">POST</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">/api/v1/order</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">존재하지 않는 제품에 대한 주문을 생성하려고 시도할 때</p></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 12. Request Fields</caption>
+<colgroup>
+<col style="width: 28.5714%;">
+<col style="width: 71.4286%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">필드명</th>
+<th class="tableblock halign-left valign-top">설명</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">productId</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">제품 ID</p></td>
+</tr>
+</tbody>
+</table>
+<div class="listingblock">
+<div class="title">Example Request</div>
+<div class="content">
+<pre class="highlightjs highlight"><code data-lang="json" class="language-json hljs">{
+  "productId": 99999
+}</code></pre>
+</div>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 13. Response Fields</caption>
+<colgroup>
+<col style="width: 28.5714%;">
+<col style="width: 71.4286%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">필드명</th>
+<th class="tableblock halign-left valign-top">설명</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">status</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">응답 상태 코드</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">message</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">응답 메시지</p></td>
+</tr>
+</tbody>
+</table>
+<div class="listingblock">
+<div class="title">Example Response</div>
+<div class="content">
+<pre class="highlightjs highlight"><code data-lang="json" class="language-json hljs">{
+  "status": 400,
+  "message": "해당 상품을 찾을 수 없습니다. 상품 ID: 99999",
+  "timestamp": "2024-05-27 13:25:22",
+  "error": "NotFoundProductException"
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_유효하지_않은_주문_이미_예약_중_또는_판매_완료된_제품"><a class="link" href="#_유효하지_않은_주문_이미_예약_중_또는_판매_완료된_제품">유효하지 않은 주문 - 이미 예약 중 또는 판매 완료된 제품</a></h3>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">메서드</th>
+<th class="tableblock halign-left valign-top">경로</th>
+<th class="tableblock halign-left valign-top">설명</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">POST</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">/api/v1/order</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">이미 예약 중 또는 판매 완료된 제품에 대한 주문을 생성하려고 시도할 때</p></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 14. Request Fields</caption>
+<colgroup>
+<col style="width: 28.5714%;">
+<col style="width: 71.4286%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">필드명</th>
+<th class="tableblock halign-left valign-top">설명</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">productId</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">제품 ID</p></td>
+</tr>
+</tbody>
+</table>
+<div class="listingblock">
+<div class="title">Example Request</div>
+<div class="content">
+<pre class="highlightjs highlight"><code data-lang="json" class="language-json hljs">{
+  "productId": 12345
+}</code></pre>
+</div>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 15. Response Fields</caption>
+<colgroup>
+<col style="width: 28.5714%;">
+<col style="width: 71.4286%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">필드명</th>
+<th class="tableblock halign-left valign-top">설명</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">status</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">응답 상태 코드</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">message</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">응답 메시지</p></td>
+</tr>
+</tbody>
+</table>
+<div class="listingblock">
+<div class="title">Example Response</div>
+<div class="content">
+<pre class="highlightjs highlight"><code data-lang="json" class="language-json hljs">{
+  "status": 400,
+  "message": "이미 예약중 또는 판매완료 된 상품 입니다. 상품 ID: 12345",
+  "timestamp": "2024-05-27 13:25:22",
+  "error": "ProductStatusException"
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
 <h1 id="_enums_documentation" class="sect0"><a class="link" href="#_enums_documentation">Enums Documentation</a></h1>
 <div class="sect1">
 <h2 id="_jwt_error_enum"><a class="link" href="#_jwt_error_enum">JWT Error Enum</a></h2>
@@ -545,12 +926,16 @@
 <td class="tableblock halign-left valign-top"><p class="tableblock">코드명</p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>ORDER_LOCK</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">REDIS KEY order_lock, REDIS TTL 1</p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>REFRESH_TOKEN</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">REDIS KEY refresh_token, REDIS TTL 1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">REDIS KEY refresh_token, REDIS TTL 60</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>USERS</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">REDIS KEY users, REDIS TTL 1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">REDIS KEY users, REDIS TTL 60</p></td>
 </tr>
 </tbody>
 </table>
@@ -611,13 +996,14 @@ Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
 X-Frame-Options: DENY
-Content-Length: 1207
+Content-Length: 1385
 
 {
   "data" : {
     "redisKey" : {
-      "REFRESH_TOKEN" : "REDIS KEY refresh_token, REDIS TTL 1",
-      "USERS" : "REDIS KEY users, REDIS TTL 1"
+      "ORDER_LOCK" : "REDIS KEY order_lock, REDIS TTL 1",
+      "REFRESH_TOKEN" : "REDIS KEY refresh_token, REDIS TTL 60",
+      "USERS" : "REDIS KEY users, REDIS TTL 60"
     },
     "yn" : {
       "Y" : "Y means YES, N meas NO",
@@ -644,6 +1030,10 @@ Content-Length: 1207
       "PAST" : "id ASC",
       "LOW_PRICE" : "price ASC",
       "LATEST" : "id DESC"
+    },
+    "orderStatus" : {
+      "COMPLETED" : "Order status: COMPLETED",
+      "ORDERED" : "Order status: ORDERED"
     }
   }
 }</code></pre>
@@ -674,8 +1064,9 @@ Content-Length: 1207
 <pre class="highlightjs highlight nowrap"><code data-lang="json" class="language-json hljs">{
   "data" : {
     "redisKey" : {
-      "REFRESH_TOKEN" : "REDIS KEY refresh_token, REDIS TTL 1",
-      "USERS" : "REDIS KEY users, REDIS TTL 1"
+      "ORDER_LOCK" : "REDIS KEY order_lock, REDIS TTL 1",
+      "REFRESH_TOKEN" : "REDIS KEY refresh_token, REDIS TTL 60",
+      "USERS" : "REDIS KEY users, REDIS TTL 60"
     },
     "yn" : {
       "Y" : "Y means YES, N meas NO",
@@ -702,6 +1093,10 @@ Content-Length: 1207
       "PAST" : "id ASC",
       "LOW_PRICE" : "price ASC",
       "LATEST" : "id DESC"
+    },
+    "orderStatus" : {
+      "COMPLETED" : "Order status: COMPLETED",
+      "ORDERED" : "Order status: ORDERED"
     }
   }
 }</code></pre>
@@ -714,7 +1109,7 @@ Content-Length: 1207
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1-SNAPSHOT<br>
-Last updated 2024-05-27 00:10:24 +0900
+Last updated 2024-05-27 14:14:11 +0900
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">

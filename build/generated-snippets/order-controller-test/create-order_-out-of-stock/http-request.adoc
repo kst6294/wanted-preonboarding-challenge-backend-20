@@ -1,0 +1,12 @@
+[source,http,options="nowrap"]
+----
+POST /api/v1/order HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJaQWFqTlhaeEB3YW50ZWQuY29tIiwicm9sZSI6Ik5PUk1BTCIsImlhdCI6MTcxNjc4NjkwOCwiZXhwIjoxNzE2NzkwNTA4fQ.29wY2enkDIk8eu9GskfZ0PIzNfoczIiLiPk56aCz3C4
+Content-Length: 24
+Host: localhost:8080
+
+{
+  "productId" : 3954
+}
+----

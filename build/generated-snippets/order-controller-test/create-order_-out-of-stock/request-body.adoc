@@ -1,0 +1,6 @@
+[source,json,options="nowrap"]
+----
+{
+  "productId" : 3954
+}
+----

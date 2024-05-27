@@ -13,7 +13,7 @@ public class NotFoundProductException extends ProductException{
 
 
     private static String buildMessage(long productId){
-        return String.format(MESSAGE +"%d", productId);
+        return String.format("%s 상품 ID: %d", MESSAGE, productId);
     }
 
 }

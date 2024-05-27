@@ -1,8 +1,10 @@
 redisKey
 |===
 |코드|코드명
+|`+ORDER_LOCK+`
+|REDIS KEY order_lock, REDIS TTL 1
 |`+REFRESH_TOKEN+`
-|REDIS KEY refresh_token, REDIS TTL 1
+|REDIS KEY refresh_token, REDIS TTL 60
 |`+USERS+`
-|REDIS KEY users, REDIS TTL 1
+|REDIS KEY users, REDIS TTL 60
 |===

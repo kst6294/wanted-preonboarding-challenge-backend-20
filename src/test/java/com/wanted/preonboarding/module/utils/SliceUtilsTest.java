@@ -23,7 +23,7 @@ class SliceUtilsTest {
         Slice<String> slice = SliceUtils.toSlice(contents, pageable);
 
         // then
-        assertThat(slice.hasNext()).isFalse();
+        assertFalse(slice.hasNext());
         assertThat(slice.getContent()).isEqualTo(contents);
     }
 
@@ -37,7 +37,7 @@ class SliceUtilsTest {
         Slice<String> slice = SliceUtils.toSlice(contents, pageable);
 
         // then
-        assertThat(slice.hasNext()).isFalse();
+        assertFalse(slice.hasNext());
         assertThat(slice.getContent()).isEqualTo(contents);
     }
 
@@ -51,7 +51,7 @@ class SliceUtilsTest {
         Slice<String> slice = SliceUtils.toSlice(contents, pageable);
 
         // then
-        assertThat(slice.hasNext()).isTrue();
+        assertTrue(slice.hasNext());
         assertThat(slice.getContent()).isEqualTo(contents.subList(0, 3));
     }
 
@@ -64,7 +64,7 @@ class SliceUtilsTest {
         Slice<String> slice = SliceUtils.emptySlice(pageable);
 
         // then
-        assertThat(slice.hasNext()).isFalse();
+        assertFalse(slice.hasNext());
         assertThat(slice.getContent()).isEmpty();
     }
 

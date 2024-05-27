@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.wanted.preonboarding.module.order.controller.OrderControllerTest" tests="4" skipped="0" failures="0" errors="0" timestamp="2024-05-27T05:15:08" hostname="lyusang-won-ui-MacBookPro.local" time="1.099">
+  <properties/>
+  <testcase name="유효하지 않은 주문 - 이미 예약 중 또는 판매 완료된 제품" classname="com.wanted.preonboarding.module.order.controller.OrderControllerTest" time="0.558"/>
+  <testcase name="주문 실패 - 비회원" classname="com.wanted.preonboarding.module.order.controller.OrderControllerTest" time="0.313"/>
+  <testcase name="유효하지 않은 주문 - 상품 없음" classname="com.wanted.preonboarding.module.order.controller.OrderControllerTest" time="0.105"/>
+  <testcase name="주문 생성" classname="com.wanted.preonboarding.module.order.controller.OrderControllerTest" time="0.119"/>
+  <system-out><![CDATA[2024-05-27T14:15:08.027+09:00  INFO 57210 --- [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.wanted.preonboarding.module.order.controller.OrderControllerTest]: OrderControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2024-05-27T14:15:08.040+09:00  INFO 57210 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.wanted.preonboarding.PreonboardingApplication for test class com.wanted.preonboarding.module.order.controller.OrderControllerTest
+2024-05-27T14:15:08.046+09:00  INFO 57210 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2024-05-27T14:15:08.046+09:00  INFO 57210 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2024-05-27T14:15:08.046+09:00  INFO 57210 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+
+MockHttpServletRequest:
+      HTTP Method = POST
+      Request URI = /api/v1/order
+       Parameters = {}
+          Headers = [Content-Type:"application/json;charset=UTF-8", Authorization:"Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJaQWFqTlhaeEB3YW50ZWQuY29tIiwicm9sZSI6Ik5PUk1BTCIsImlhdCI6MTcxNjc4NjkwOCwiZXhwIjoxNzE2NzkwNTA4fQ.29wY2enkDIk8eu9GskfZ0PIzNfoczIiLiPk56aCz3C4", Content-Length:"18"]
+             Body = {"productId":3954}
+    Session Attrs = {}
+
+Handler:
+             Type = com.wanted.preonboarding.module.order.controller.OrderController
+           Method = com.wanted.preonboarding.module.order.controller.OrderController#createOrder(CreateOrder)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = org.springframework.web.bind.MethodArgumentNotValidException
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 400
+    Error message = null
+          Headers = [Vary:"Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers", Content-Type:"application/json;charset=UTF-8", X-Content-Type-Options:"nosniff", X-XSS-Protection:"0", Cache-Control:"no-cache, no-store, max-age=0, must-revalidate", Pragma:"no-cache", Expires:"0", X-Frame-Options:"DENY"]
+     Content type = application/json;charset=UTF-8
+             Body = {"status":400,"message":"productId 이미 예약중 또는 판매완료 된 상품 입니다. ","timestamp":"2024-05-27 14:15:08","error":"BeanPropertyBindingResult"}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+2024-05-27T14:15:08.604+09:00  INFO 57210 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2024-05-27T14:15:08.604+09:00  INFO 57210 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2024-05-27T14:15:08.604+09:00  INFO 57210 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+
+MockHttpServletRequest:
+      HTTP Method = POST
+      Request URI = /api/v1/order
+       Parameters = {}
+          Headers = [Content-Type:"application/json;charset=UTF-8", Content-Length:"18"]
+             Body = {"productId":2172}
+    Session Attrs = {}
+
+Handler:
+             Type = com.wanted.preonboarding.module.order.controller.OrderController
+           Method = com.wanted.preonboarding.module.order.controller.OrderController#createOrder(CreateOrder)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 401
+    Error message = 로그인이 필요합니다.
+          Headers = [Vary:"Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers", X-Content-Type-Options:"nosniff", X-XSS-Protection:"0", Cache-Control:"no-cache, no-store, max-age=0, must-revalidate", Pragma:"no-cache", Expires:"0", X-Frame-Options:"DENY"]
+     Content type = null
+             Body = 
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+2024-05-27T14:15:08.920+09:00  INFO 57210 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2024-05-27T14:15:08.920+09:00  INFO 57210 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2024-05-27T14:15:08.921+09:00  INFO 57210 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+
+MockHttpServletRequest:
+      HTTP Method = POST
+      Request URI = /api/v1/order
+       Parameters = {}
+          Headers = [Content-Type:"application/json;charset=UTF-8", Authorization:"Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJNdXpwbGJAd2FudGVkLmNvbSIsInJvbGUiOiJOT1JNQUwiLCJpYXQiOjE3MTY3ODY5MDksImV4cCI6MTcxNjc5MDUwOX0.qBYNmq932hcTAawGdi1MvPgnIHjIJaIV1ML7jUjAZV8", Content-Length:"22"]
+             Body = {"productId":48676983}
+    Session Attrs = {}
+
+Handler:
+             Type = com.wanted.preonboarding.module.order.controller.OrderController
+           Method = com.wanted.preonboarding.module.order.controller.OrderController#createOrder(CreateOrder)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = org.springframework.web.bind.MethodArgumentNotValidException
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 400
+    Error message = null
+          Headers = [Vary:"Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers", Content-Type:"application/json;charset=UTF-8", X-Content-Type-Options:"nosniff", X-XSS-Protection:"0", Cache-Control:"no-cache, no-store, max-age=0, must-revalidate", Pragma:"no-cache", Expires:"0", X-Frame-Options:"DENY"]
+     Content type = application/json;charset=UTF-8
+             Body = {"status":400,"message":"createOrder  productId 해당 상품을 찾을 수 없습니다. 상품 ID: 48676983","timestamp":"2024-05-27 14:15:09","error":"BeanPropertyBindingResult"}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+2024-05-27T14:15:09.024+09:00  INFO 57210 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2024-05-27T14:15:09.025+09:00  INFO 57210 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2024-05-27T14:15:09.025+09:00  INFO 57210 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+
+MockHttpServletRequest:
+      HTTP Method = POST
+      Request URI = /api/v1/order
+       Parameters = {}
+          Headers = [Content-Type:"application/json;charset=UTF-8", Authorization:"Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzd2VFU2pAd2FudGVkLmNvbSIsInJvbGUiOiJOT1JNQUwiLCJpYXQiOjE3MTY3ODY5MDksImV4cCI6MTcxNjc5MDUwOX0.hzJBaFJ7wSXQ0UBkzXQNWW-0A4TvIg2P37SVh9XfrCg", Content-Length:"18"]
+             Body = {"productId":4452}
+    Session Attrs = {}
+
+Handler:
+             Type = com.wanted.preonboarding.module.order.controller.OrderController
+           Method = com.wanted.preonboarding.module.order.controller.OrderController#createOrder(CreateOrder)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 200
+    Error message = null
+          Headers = [Vary:"Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers", Content-Type:"application/json;charset=UTF-8", X-Content-Type-Options:"nosniff", X-XSS-Protection:"0", Cache-Control:"no-cache, no-store, max-age=0, must-revalidate", Pragma:"no-cache", Expires:"0", X-Frame-Options:"DENY"]
+     Content type = application/json;charset=UTF-8
+             Body = {"data":{"orderId":89162565,"productId":4452,"buyer":"sweESj@wanted.com","seller":"Vz@wanted.com","orderStatus":"ORDERED"},"response":{"status":200,"message":"success"}}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

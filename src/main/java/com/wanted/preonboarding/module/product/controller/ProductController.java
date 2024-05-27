@@ -6,9 +6,8 @@ import com.wanted.preonboarding.module.common.payload.ApiResponse;
 import com.wanted.preonboarding.module.product.core.Sku;
 import com.wanted.preonboarding.module.product.dto.CreateProduct;
 import com.wanted.preonboarding.module.product.filter.ItemFilter;
-import com.wanted.preonboarding.module.product.service.ProductFetchService;
+import com.wanted.preonboarding.module.product.service.ProductFindService;
 import com.wanted.preonboarding.module.product.service.ProductQueryService;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +22,7 @@ import org.springframework.web.bind.annotation.*;
 public class ProductController {
 
     private final ProductQueryService productQueryService;
-    private final ProductFetchService productFetchService;
+    private final ProductFindService productFindService;
 
     @PreAuthorize("hasAnyAuthority('NORMAL')")
     @PostMapping("/product")
@@ -33,12 +32,12 @@ public class ProductController {
 
     @GetMapping("/product/{productId}")
     public ResponseEntity<ApiResponse<Sku>> fetchProduct(@PathVariable("productId") Long productId) {
-        return ResponseEntity.ok(ApiResponse.success(productFetchService.fetchProduct(productId)));
+        return ResponseEntity.ok(ApiResponse.success(productFindService.fetchProduct(productId)));
     }
 
     @GetMapping("/products")
     public ResponseEntity<ApiResponse<CustomSlice<Sku>>> fetchProduct(@ModelAttribute ItemFilter filter, Pageable pageable) {
-        return ResponseEntity.ok(ApiResponse.success(productFetchService.fetchProducts(filter, pageable)));
+        return ResponseEntity.ok(ApiResponse.success(productFindService.fetchProducts(filter, pageable)));
     }
 
 

@@ -28,22 +28,18 @@
   - 브랜치: `feature/guest-product-view`
   - 기능: 비회원 제품 목록 및 상세 조회
 
-4. **제품 상태 관리**
+4. **제품 상태 관리/ 구매 기능**
   - 브랜치: `feature/product-status`
   - 기능: "판매중", "예약중", "완료" 상태 관리
 
-5. **구매 기능**
-  - 브랜치: `feature/product-purchase`
-  - 기능: 제품 구매, 상태 변경 "판매중" -> "예약중"
-
-6. **거래 내역 조회 기능**
+5. **거래 내역 조회 기능**
   - 브랜치: `feature/transaction-history`
   - 기능: 거래 내역 조회
 
-7. **내 구매/예약 목록 조회 기능**
+6. **내 구매/예약 목록 조회 기능**
   - 브랜치: `feature/purchase-reservation-list`
   - 기능: 구매 및 예약 목록 조회
 
-8. **판매 승인 기능**
+7. **판매 승인 기능**
   - 브랜치: `feature/sale-approval`
   - 기능: 판매 승인, 상태 변경 "예약중" -> "완료"

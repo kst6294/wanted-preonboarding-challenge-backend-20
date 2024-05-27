@@ -11,15 +11,15 @@ Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
 X-Frame-Options: DENY
-Content-Length: 230
+Content-Length: 227
 
 {
   "data" : {
-    "id" : 3499,
-    "productName" : "gbjoldtgvf",
-    "price" : 19990078,
+    "id" : 7329,
+    "productName" : "hytablikmy",
+    "price" : 5450929,
     "productStatus" : "ON_STOCK",
-    "seller" : "mtBS@wanted.com"
+    "seller" : "pq@wanted.com"
   },
   "response" : {
     "status" : 200,

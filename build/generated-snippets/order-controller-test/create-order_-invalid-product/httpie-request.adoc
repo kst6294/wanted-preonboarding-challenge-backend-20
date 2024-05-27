@@ -1,0 +1,8 @@
+[source,bash]
+----
+$ echo '{
+  "productId" : 48676983
+}' | http POST 'http://localhost:8080/api/v1/order' \
+    'Content-Type:application/json;charset=UTF-8' \
+    'Authorization:Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJNdXpwbGJAd2FudGVkLmNvbSIsInJvbGUiOiJOT1JNQUwiLCJpYXQiOjE3MTY3ODY5MDksImV4cCI6MTcxNjc5MDUwOX0.qBYNmq932hcTAawGdi1MvPgnIHjIJaIV1ML7jUjAZV8'
+----

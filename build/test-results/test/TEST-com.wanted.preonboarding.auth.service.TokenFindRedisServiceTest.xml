@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.wanted.preonboarding.auth.service.TokenFindRedisServiceTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2024-05-27T05:15:06" hostname="lyusang-won-ui-MacBookPro.local" time="0.318">
+  <properties/>
+  <testcase name="토큰 조회 테스트 - 존재하는 경우" classname="com.wanted.preonboarding.auth.service.TokenFindRedisServiceTest" time="0.25"/>
+  <testcase name="토큰 조회 테스트 - 존재하지 않는 경우" classname="com.wanted.preonboarding.auth.service.TokenFindRedisServiceTest" time="0.068"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

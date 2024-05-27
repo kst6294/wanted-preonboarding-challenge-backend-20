@@ -1,0 +1,22 @@
+[source,http,options="nowrap"]
+----
+HTTP/1.1 400 Bad Request
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+Content-Type: application/json;charset=UTF-8
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 0
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY
+Content-Length: 202
+
+{
+  "status" : 400,
+  "message" : "createOrder  productId 해당 상품을 찾을 수 없습니다. 상품 ID: 48676983",
+  "timestamp" : "2024-05-27 14:15:09",
+  "error" : "BeanPropertyBindingResult"
+}
+----

@@ -1,0 +1,8 @@
+orderStatus
+|===
+|코드|코드명
+|`+COMPLETED+`
+|Order status: COMPLETED
+|`+ORDERED+`
+|Order status: ORDERED
+|===

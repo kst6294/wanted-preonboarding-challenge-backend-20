@@ -115,7 +115,7 @@ class ProductControllerTest extends RestDocsTestSupport {
         // given
         Sku sku = ProductFactory.generateSku();
 
-        when(productFetchService.fetchProduct(sku.getId())).thenReturn(sku);
+        when(productFindService.fetchProduct(sku.getId())).thenReturn(sku);
 
         // when & then
         mockMvc.perform(get("/api/v1/product/{productId}", sku.getId())
@@ -150,7 +150,7 @@ class ProductControllerTest extends RestDocsTestSupport {
 
         CustomSlice<Sku> customSlice = productSliceMapper.toSlice(skus, PageRequest.of(0, 5), filter);
 
-        when(productFetchService.fetchProducts(any(ItemFilter.class), any(Pageable.class))).thenReturn(customSlice);
+        when(productFindService.fetchProducts(any(ItemFilter.class), any(Pageable.class))).thenReturn(customSlice);
 
         // when & then
         mockMvc.perform(get("/api/v1/products")

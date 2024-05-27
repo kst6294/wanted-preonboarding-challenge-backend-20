@@ -26,6 +26,9 @@ public class SecuritySupportTest {
         UserPrincipal userPrincipal = UserPrincipal.toUserPrincipal(userInfo);
         UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(userPrincipal, userPrincipal.getPassword(), userPrincipal.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
+
+        AuthToken authToken = AuthModuleHelper.toJwtAuthToken_another_constructor(userInfo.getEmail());
+        token = authToken.getToken();
     }
 
 
