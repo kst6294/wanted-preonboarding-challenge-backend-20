@@ -1,6 +1,9 @@
 ## 원티드 프리온보딩 챌린지 백엔드 20 사전과제
 
 ### ERD
+![PreOnBoardingERD](https://github.com/BeefCutlet/wanted-preonboarding-challenge-backend-20/assets/77325024/01ef358f-99ea-498b-aeae-38cb25c2138b)
+
+
 
 ### API
 
