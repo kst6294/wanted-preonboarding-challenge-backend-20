@@ -1,6 +1,42 @@
-package com.wanted.market.texture;
+package com.wanted.market.product.texture;
 
-public class ProductRepository {
+import com.wanted.market.product.domain.Product;
+import com.wanted.market.product.repository.ProductRepository;
+
+import java.util.List;
+import java.util.Optional;
+
+public class FakeProductRepository implements ProductRepository {
+
+    @Override
+    public Product save(Product product) {
+        return null;
+    }
+
+    @Override
+    public Optional<Product> findById(Long productId) {
+        return Optional.empty();
+    }
+
+    @Override
+    public List<Product> findAll() {
+        return null;
+    }
+
+    @Override
+    public List<Product> findPurchasedProductsByMemberId() {
+        return null;
+    }
+
+    @Override
+    public List<Product> findReservedProductsByMemberId() {
+        return null;
+    }
+
+    @Override
+    public void deleteById(Long ProductId) {
+
+    }
 }
 
 /*

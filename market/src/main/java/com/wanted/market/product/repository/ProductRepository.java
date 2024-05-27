@@ -9,6 +9,7 @@ public interface ProductRepository {
     Product save(Product product);
     Optional<Product> findById(Long productId);
     List<Product> findAll();
-    List<Product> findByMemberId();
+    List<Product> findPurchasedProductsByMemberId();
+    List<Product> findReservedProductsByMemberId();
     void deleteById(Long ProductId);
 }
