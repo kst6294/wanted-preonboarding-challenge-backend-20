@@ -77,6 +77,7 @@ public class OrderServiceTest {
         Item otherItem = Item.builder()
                 .name("ItemName")
                 .price(1000)
+                .stock(1)
                 .status(Item.ItemStatus.RESERVED)
                 .member(seller)
                 .build();
@@ -96,6 +97,7 @@ public class OrderServiceTest {
         Item otherItem = Item.builder()
                 .name("ItemName")
                 .price(1000)
+                .stock(1)
                 .status(Item.ItemStatus.COMPLETE)
                 .member(seller)
                 .build();
@@ -105,6 +107,19 @@ public class OrderServiceTest {
 
         assertThatThrownBy(() -> orderService.addOrder(consumer.getId(), orderSaveRequest))
                 .isInstanceOf(ConcurrentModificationException.class);
+    }
+
+    @Test
+    @DisplayName("실패 - 이미 구매한 제품이면 구매 실패")
+    void buyingItemFailedWhenAlreadyOrdered() {
+        OrderSaveRequest orderSaveRequest = new OrderSaveRequest(item.getId(), item.getPrice());
+
+        when(memberRepository.findById(consumer.getId())).thenReturn(Optional.ofNullable(consumer));
+        when(itemRepository.findById(item.getId())).thenReturn(Optional.ofNullable(item));
+        when(orderRepository.findOrderHistory(consumer.getId(), item.getId())).thenReturn(Optional.of(order));
+
+        assertThatThrownBy(() -> orderService.addOrder(consumer.getId(), orderSaveRequest))
+                .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
@@ -173,6 +188,7 @@ public class OrderServiceTest {
         return Item.builder()
                 .name("ItemName")
                 .price(1000)
+                .stock(1)
                 .status(Item.ItemStatus.FOR_SALE)
                 .member(member)
                 .build();
