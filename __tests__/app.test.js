@@ -54,6 +54,7 @@ describe("API TEST", () => {
                 const response = await request(app).post(`/products/${product_id}/purchase`).set("Authorization", token);
 
                 expect(response.status).toBe(201);
+                expect(response.body.status).toBe("Reserved");
             });
 
             it("판매 승인", async () => {
@@ -62,6 +63,14 @@ describe("API TEST", () => {
                 });
 
                 expect(response.status).toBe(201);
+                expect(response.body.status).toBe("Approval");
+            });
+
+            it("구매 확정", async () => {
+                const response = await request(app).post(`/products/${product_id}/purchase_confirm`).set("Authorization", token);
+
+                expect(response.status).toBe(201);
+                expect(response.body.status).toBe("Confirm");
             });
         });
 

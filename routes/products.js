@@ -130,4 +130,34 @@ router.post("/:product_id/sales_approval", verifyToken, async function (req, res
     }
 });
 
+// 구매 확정
+// 본인 주문서만 가능
+// 판매자 승인 받은 상품만 가능
+router.post("/:product_id/purchase_confirm", verifyToken, async function (req, res, next) {
+    const { product_id } = req.params;
+    const buyer_id = req.decoded.id;
+
+    try {
+        const item = await dbClient("Orders").where({ product_id, buyer_id, status: "Approval" });
+
+        if (item) {
+            await dbClient("Orders").where({ product_id, buyer_id }).update({
+                status: "Confirm",
+            });
+
+            const updated_record = await dbClient("Orders").where({ product_id, buyer_id }).first();
+
+            res.status(201).json(updated_record);
+        } else {
+            const error = new Error("판매 승인 상품 아님");
+            error.status = 409;
+            return next(error);
+        }
+    } catch (_) {
+        const error = new Error("제품 없음");
+        error.status = 404;
+        return next(error);
+    }
+});
+
 export default router;
