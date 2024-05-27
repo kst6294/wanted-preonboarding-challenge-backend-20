@@ -18,6 +18,10 @@
 
 [![Jest Reporter](https://img.shields.io/badge/Jest_Reporter-C21325?style=flat&logo=jest&logoColor=white)](https://narcisource.github.io/wanted-preonboarding-challenge-backend-20/)
 
+## 🏗️ ERD
+
+![ERD](https://github.com/NarciSource/wanted-preonboarding-challenge-backend-20/assets/26417221/0d52f786-7fa6-4640-99bd-78383d346a12)
+
 <br>
 <br>
 <br>
