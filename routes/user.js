@@ -17,8 +17,8 @@ router.get("/purchased_list", verifyToken, async (req, res, next) => {
 
         res.status(200).json(items);
     } catch (_) {
-        const error = new Error("데이터베이스 오류");
-        error.status = 500;
+        const error = new Error("질의 오류");
+        error.status = 400;
         return next(error);
     }
 });
@@ -42,8 +42,8 @@ router.get("/reserved_list", verifyToken, async (req, res, next) => {
 
         res.status(200).json(items);
     } catch (_) {
-        const error = new Error("데이터베이스 오류");
-        error.status = 500;
+        const error = new Error("질의 오류");
+        error.status = 400;
         return next(error);
     }
 });

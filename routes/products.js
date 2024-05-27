@@ -8,12 +8,12 @@ var router = Router();
 // 비회원 가능
 router.get("/", async function (req, res, next) {
     try {
-        const item = await dbClient("Products");
+        const items = await dbClient("Products");
 
-        res.status(200).json(item);
+        res.status(200).json(items);
     } catch (_) {
-        const error = new Error("데이터베이스 오류");
-        error.status = 500;
+        const error = new Error("질의 오류");
+        error.status = 400;
         return next(error);
     }
 });
@@ -28,8 +28,8 @@ router.get("/:product_id", async function (req, res, next) {
 
         res.status(200).json(item);
     } catch (_) {
-        const error = new Error("제품 없음");
-        error.status = 404;
+        const error = new Error("질의 오류");
+        error.status = 400;
         return next(error);
     }
 });
@@ -50,7 +50,7 @@ router.post("/", verifyToken, async function (req, res, next) {
         res.status(201).json({ product_id });
     } catch (_) {
         const error = new Error("추가 실패");
-        error.status = 500;
+        error.status = 400;
         return next(error);
     }
 });
@@ -62,9 +62,9 @@ router.post("/:product_id/purchase", verifyToken, async function (req, res, next
     const buyer_id = req.decoded.id;
 
     try {
-        const item = await dbClient("Products").where({ product_id }).first();
+        const item = await dbClient("Products").where({ product_id, status: "Available" }).first();
 
-        if (item.status == "Available") {
+        if (item) {
             // 주문서 작성
             await dbClient("Orders").insert({
                 buyer_id,
@@ -85,8 +85,8 @@ router.post("/:product_id/purchase", verifyToken, async function (req, res, next
             return next(error);
         }
     } catch (_) {
-        const error = new Error("제품 없음");
-        error.status = 404;
+        const error = new Error("질의 오류");
+        error.status = 400;
         return next(error);
     }
 });
@@ -103,9 +103,9 @@ router.post("/:product_id/sales_approval", verifyToken, async function (req, res
         const is_sellers_proudct = await dbClient("Products").where({ product_id, seller_id }).first();
 
         if (is_sellers_proudct) {
-            const item = await dbClient("Orders").where({ product_id, buyer_id }).first();
+            const item = await dbClient("Orders").where({ product_id, buyer_id, status: "Reserved" }).first();
 
-            if (item.status == "Reserved") {
+            if (item) {
                 await dbClient("Orders").where({ product_id, buyer_id }).update({
                     status: "Approval",
                 });
@@ -114,7 +114,7 @@ router.post("/:product_id/sales_approval", verifyToken, async function (req, res
 
                 res.status(201).json(updated_record);
             } else {
-                const error = new Error("거래 체결 불이행 " + item.status);
+                const error = new Error("예약 상품 아님");
                 error.status = 409;
                 return next(error);
             }
@@ -124,8 +124,8 @@ router.post("/:product_id/sales_approval", verifyToken, async function (req, res
             return next(error);
         }
     } catch (_) {
-        const error = new Error("제품 없음");
-        error.status = 404;
+        const error = new Error("질의 오류");
+        error.status = 400;
         return next(error);
     }
 });
@@ -154,8 +154,8 @@ router.post("/:product_id/purchase_confirm", verifyToken, async function (req, r
             return next(error);
         }
     } catch (_) {
-        const error = new Error("제품 없음");
-        error.status = 404;
+        const error = new Error("질의 오류");
+        error.status = 400;
         return next(error);
     }
 });
