@@ -26,3 +26,7 @@ spring:
     database-platform: org.hibernate.dialect.H2Dialect
     hibernate:
       ddl-auto: create
+  jwt:
+    secret: 2d612ed32d12fa216ad56b8f511f7db4e5353abf64ea1bbd2b57fa525733a891aa42b810c1f65d4341abda5f6f6c5eb4787c18d723a580233dce8fe7e84426ea
+    access-token-validity: 3600000
+    refresh-token-validity: 1209600000

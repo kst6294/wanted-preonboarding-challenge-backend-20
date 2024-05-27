@@ -1,5 +1,6 @@
 package com.example.wantedmarketapi.domain;
 
+import com.example.wantedmarketapi.domain.member.Member;
 import com.example.wantedmarketapi.domain.common.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;

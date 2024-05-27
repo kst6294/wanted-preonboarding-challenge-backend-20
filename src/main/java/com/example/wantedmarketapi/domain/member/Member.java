@@ -1,6 +1,8 @@
-package com.example.wantedmarketapi.domain;
+package com.example.wantedmarketapi.domain.member;
 
 
+import com.example.wantedmarketapi.domain.Product;
+import com.example.wantedmarketapi.domain.Trade;
 import com.example.wantedmarketapi.domain.common.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
@@ -23,7 +25,8 @@ public class Member extends BaseEntity {
     private String email;
 
     @Column(nullable = false)
-    private String password;
+    @Embedded
+    private Password password;
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     private List<Product> productList = new ArrayList<>();
