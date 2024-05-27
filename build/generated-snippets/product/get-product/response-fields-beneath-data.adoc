@@ -1,0 +1,23 @@
+|===
+|필드명|타입|필수여부|설명
+|`+id+`
+|`+Number+`
+|true
+|상품 ID (PK)
+|`+productName+`
+|`+String+`
+|true
+|상품 명
+|`+price+`
+|`+Number+`
+|true
+|상품 가격
+|`+productStatus+`
+|`+String+`
+|true
+|link:common/productStatus.html[상품 상태 코드,role="popup"]
+|`+seller+`
+|`+String+`
+|true
+|상품 등록자 이메일
+|===

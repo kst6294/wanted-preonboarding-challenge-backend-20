@@ -1,7 +1,7 @@
 [source,json,options="nowrap"]
 ----
 {
-  "email" : "CWK@wanted.com",
-  "password" : "zojyfiocqm"
+  "email" : "sMlbwbE@wanted.com",
+  "password" : "taltdhwodc"
 }
 ----

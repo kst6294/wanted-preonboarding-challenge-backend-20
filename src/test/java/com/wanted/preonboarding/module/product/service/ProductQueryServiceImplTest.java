@@ -9,8 +9,6 @@ import com.wanted.preonboarding.module.product.dto.CreateProduct;
 import com.wanted.preonboarding.module.product.entity.Product;
 import com.wanted.preonboarding.module.product.mapper.ProductMapper;
 import com.wanted.preonboarding.module.product.repository.ProductRepository;
-import com.wanted.preonboarding.module.user.entity.Users;
-import com.wanted.preonboarding.module.user.service.UserFindService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

@@ -1,10 +1,11 @@
 package com.wanted.preonboarding.module.product.core;
 
+import com.wanted.preonboarding.module.common.mapper.CursorValueProvider;
 import com.wanted.preonboarding.module.product.enums.ProductStatus;
 
-public interface Sku {
+public interface Sku extends CursorValueProvider {
 
-    long getId();
+    Long getId();
     String getProductName();
     long getPrice();
     ProductStatus getProductStatus();

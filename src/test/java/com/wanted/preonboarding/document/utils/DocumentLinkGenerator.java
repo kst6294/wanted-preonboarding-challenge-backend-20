@@ -21,6 +21,7 @@ public interface DocumentLinkGenerator {
         JWT_ENUM_ERROR("jwtErrorEnum", "JWT 에러 메세지"),
         MEMBERSHIP("membership", "회원 유형"),
         PRODUCT_STATUS("productStatus", "상품 상태"),
+        ORDER_TYPE("orderType", "상품 정렬 유형"),
 
 
 

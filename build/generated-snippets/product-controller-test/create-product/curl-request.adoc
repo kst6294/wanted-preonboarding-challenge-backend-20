@@ -2,9 +2,9 @@
 ----
 $ curl 'http://localhost:8080/api/v1/product' -i -X POST \
     -H 'Content-Type: application/json;charset=UTF-8' \
-    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJZcEdkVkB3YW50ZWQuY29tIiwicm9sZSI6Ik5PUk1BTCIsImlhdCI6MTcxNjczNTgyOCwiZXhwIjoxNzE2NzM5NDI4fQ.PdZ0RCsGX5JtfZ36Kf25jeS45R59NW7G0imLw2PinNg' \
+    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ4eW1FQHdhbnRlZC5jb20iLCJyb2xlIjoiTk9STUFMIiwiaWF0IjoxNzE2NzcxMzQ4LCJleHAiOjE3MTY3NzQ5NDh9.roukt3faDlNKbFwohhiJw_ujC-5BrT-SVVV6udbvuGQ' \
     -d '{
-  "productName" : "stfcpxkoqu",
-  "price" : 23276030
+  "productName" : "gbjoldtgvf",
+  "price" : 19990078
 }'
 ----

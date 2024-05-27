@@ -31,7 +31,7 @@ class ProductMapperImplTest {
     void setUp() {
         createProduct = ProductModuleHelper.toCreateProductWithUsers();
         mockUser = UsersModuleHelper.toUsers();
-        product = ProductModuleHelper.toProduct();
+        product = ProductModuleHelper.toProductWithId(createProduct);
     }
 
 

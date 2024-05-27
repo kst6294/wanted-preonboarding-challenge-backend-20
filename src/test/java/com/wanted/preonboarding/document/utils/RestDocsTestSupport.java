@@ -25,6 +25,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.filter.CharacterEncodingFilter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
@@ -80,6 +81,25 @@ public abstract class RestDocsTestSupport extends ControllerTest {
                 fieldWithPath("error").type(JsonFieldType.STRING).description("에러 코드")
         );
     }
+
+    protected List<FieldDescriptor> sliceDescription() {
+        List<FieldDescriptor> fieldDescriptors = new ArrayList<>();
+        fieldDescriptors.add(fieldWithPath("last").type(JsonFieldType.BOOLEAN).description("마지막 페이지인지의 여부"));
+        fieldDescriptors.add(fieldWithPath("first").type(JsonFieldType.BOOLEAN).description("첫 페이지인지의 여부"));
+        fieldDescriptors.add(fieldWithPath("number").type(JsonFieldType.NUMBER).description("페이지"));
+        fieldDescriptors.add(fieldWithPath("sort").type(JsonFieldType.OBJECT).description("sort"));
+        fieldDescriptors.add(fieldWithPath("sort.empty").type(JsonFieldType.BOOLEAN).description("정렬 조건이 아무것도 없는지의 여부"));
+        fieldDescriptors.add(fieldWithPath("sort.sorted").type(JsonFieldType.BOOLEAN).description("정렬 여부"));
+        fieldDescriptors.add(fieldWithPath("sort.unsorted").type(JsonFieldType.BOOLEAN).description("정렬 안하는지 여부"));
+        fieldDescriptors.add(fieldWithPath("size").type(JsonFieldType.NUMBER).description("한 페이지의 크기"));
+        fieldDescriptors.add(fieldWithPath("numberOfElements").type(JsonFieldType.NUMBER).description("이 페이지에서 검색된 크기(size와 다른 개념)"));
+        fieldDescriptors.add(fieldWithPath("empty").type(JsonFieldType.BOOLEAN).description("조회가 아무것도 되지 않았는지 여부"));
+        fieldDescriptors.add(fieldWithPath("lastDomainId").optional().type(JsonFieldType.NUMBER).description("커서 기반을 위한 기준 아이디"));
+        fieldDescriptors.add(fieldWithPath("cursorValue").optional().type(JsonFieldType.STRING).description("커서 기반을 위한 기준 값"));
+
+        return fieldDescriptors;
+    }
+
 
     @BeforeEach
     void setUp(final WebApplicationContext context, final RestDocumentationContextProvider provider) {

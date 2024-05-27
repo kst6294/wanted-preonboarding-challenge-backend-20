@@ -32,9 +32,7 @@ public class ProductModuleHelper {
 
 
     public static Product toProduct(){
-        Map<String, Object> stringObjectMap = new HashMap<>();
-        stringObjectMap.put("productStatus", ProductStatus.ON_STOCK);
-        EasyRandom instance = EasyRandomUtils.getInstance(stringObjectMap);
+        EasyRandom instance = EasyRandomUtils.getInstance();
         return instance.nextObject(Product.class);
     }
 

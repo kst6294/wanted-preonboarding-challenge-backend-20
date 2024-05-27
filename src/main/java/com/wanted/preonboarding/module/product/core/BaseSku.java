@@ -1,18 +1,29 @@
 package com.wanted.preonboarding.module.product.core;
 
+import com.querydsl.core.annotations.QueryProjection;
 import com.wanted.preonboarding.module.product.enums.ProductStatus;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Builder
-@AllArgsConstructor
-public class BaseSku implements Sku{
+public class BaseSku implements Sku {
 
-    private long id;
+    private Long id;
     private String productName;
     private long price;
     private ProductStatus productStatus;
     private String seller;
 
+    @QueryProjection
+    public BaseSku(Long id, String productName, long price, ProductStatus productStatus, String seller) {
+        this.id = id;
+        this.productName = productName;
+        this.price = price;
+        this.productStatus = productStatus;
+        this.seller = seller;
+    }
 }

@@ -2,11 +2,11 @@
 ----
 {
   "data" : {
-    "id" : 4058,
-    "productName" : "stfcpxkoqu",
-    "price" : 23276030,
+    "id" : 3499,
+    "productName" : "gbjoldtgvf",
+    "price" : 19990078,
     "productStatus" : "ON_STOCK",
-    "seller" : "X@wanted.com"
+    "seller" : "mtBS@wanted.com"
   },
   "response" : {
     "status" : 200,

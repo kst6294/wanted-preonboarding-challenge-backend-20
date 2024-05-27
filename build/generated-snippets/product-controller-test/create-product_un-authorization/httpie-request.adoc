@@ -1,8 +1,8 @@
 [source,bash]
 ----
 $ echo '{
-  "productName" : "nbvmsardum",
-  "price" : 32560906
+  "productName" : "odfuhdfqqs",
+  "price" : 14842715
 }' | http POST 'http://localhost:8080/api/v1/product' \
     'Content-Type:application/json;charset=UTF-8'
 ----

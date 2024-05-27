@@ -1,0 +1,85 @@
+[source,json,options="nowrap"]
+----
+{
+  "data" : {
+    "content" : [ {
+      "id" : 8803,
+      "productName" : "cvejzfcuag",
+      "price" : 37826093,
+      "productStatus" : "ON_STOCK",
+      "seller" : "v@wanted.com"
+    }, {
+      "id" : 3909,
+      "productName" : "spyspwsxzw",
+      "price" : 81429188,
+      "productStatus" : "ON_STOCK",
+      "seller" : "L@wanted.com"
+    }, {
+      "id" : 4778,
+      "productName" : "esmbcnkqwf",
+      "price" : 15393524,
+      "productStatus" : "ON_STOCK",
+      "seller" : "PDSZlr@wanted.com"
+    }, {
+      "id" : 7426,
+      "productName" : "zocmldkviw",
+      "price" : 67880532,
+      "productStatus" : "ON_STOCK",
+      "seller" : "wv@wanted.com"
+    }, {
+      "id" : 3327,
+      "productName" : "gowlsziagm",
+      "price" : 80651642,
+      "productStatus" : "ON_STOCK",
+      "seller" : "oeJn@wanted.com"
+    }, {
+      "id" : 8614,
+      "productName" : "hlpwsomfrk",
+      "price" : 61121486,
+      "productStatus" : "ON_STOCK",
+      "seller" : "hfNsX@wanted.com"
+    }, {
+      "id" : 9990,
+      "productName" : "qwbjfvmrbo",
+      "price" : 42950757,
+      "productStatus" : "ON_STOCK",
+      "seller" : "miHZXlSB@wanted.com"
+    }, {
+      "id" : 5153,
+      "productName" : "azqprmvhgb",
+      "price" : 65759425,
+      "productStatus" : "ON_STOCK",
+      "seller" : "EnpWvEq@wanted.com"
+    }, {
+      "id" : 5556,
+      "productName" : "qwgfwpclbd",
+      "price" : 78878392,
+      "productStatus" : "ON_STOCK",
+      "seller" : "snZlRL@wanted.com"
+    }, {
+      "id" : 7995,
+      "productName" : "qdudgotsau",
+      "price" : 55133564,
+      "productStatus" : "ON_STOCK",
+      "seller" : "jSK@wanted.com"
+    } ],
+    "last" : true,
+    "first" : true,
+    "number" : 0,
+    "sort" : {
+      "empty" : true,
+      "sorted" : false,
+      "unsorted" : true
+    },
+    "size" : 5,
+    "numberOfElements" : 10,
+    "empty" : false,
+    "lastDomainId" : 7995,
+    "cursorValue" : null
+  },
+  "response" : {
+    "status" : 200,
+    "message" : "success"
+  }
+}
+----

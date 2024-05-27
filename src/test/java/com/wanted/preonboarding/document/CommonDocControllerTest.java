@@ -20,8 +20,6 @@ import java.util.Arrays;
 import java.util.Map;
 
 
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.when;
 import static org.springframework.restdocs.payload.PayloadDocumentation.beneathPath;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.snippet.Attributes.attributes;
@@ -70,6 +68,10 @@ public class CommonDocControllerTest extends RestDocsTestSupport {
                         customResponseFields("custom-response", beneathPath("data.productStatus").withSubsectionId("productStatus"),
                                 attributes(key("title").value("productStatus")),
                                 enumConvertFieldDescriptor((enumDocs.getProductStatus()))
+                        ),
+                        customResponseFields("custom-response", beneathPath("data.orderType").withSubsectionId("orderType"),
+                                attributes(key("title").value("orderType")),
+                                enumConvertFieldDescriptor((enumDocs.getOrderType()))
                         )
                 ));
     }

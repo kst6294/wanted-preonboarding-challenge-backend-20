@@ -6,6 +6,7 @@ import com.wanted.preonboarding.auth.service.AuthTokenGenerateService;
 import com.wanted.preonboarding.auth.service.TokenFetchService;
 import com.wanted.preonboarding.auth.validator.PasswordChecker;
 import com.wanted.preonboarding.module.product.controller.ProductController;
+import com.wanted.preonboarding.module.product.service.ProductFetchService;
 import com.wanted.preonboarding.module.product.service.ProductQueryService;
 import com.wanted.preonboarding.module.product.service.ProductQueryServiceImpl;
 import com.wanted.preonboarding.module.user.service.UserFindService;
@@ -34,6 +35,9 @@ public abstract class ControllerTest extends SecuritySupportTest {
 
     @MockBean
     protected ProductQueryService productQueryService;
+
+    @MockBean
+    protected ProductFetchService productFetchService;
 
 
 }

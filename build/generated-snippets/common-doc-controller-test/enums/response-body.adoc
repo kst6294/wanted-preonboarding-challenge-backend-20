@@ -25,6 +25,12 @@
       "OUT_STOCK" : "제품의 판매 상태 완료",
       "ON_STOCK" : "제품의 판매 상태 판매중",
       "BOOKING" : "제품의 판매 상태 예약중"
+    },
+    "orderType" : {
+      "HIGH_PRICE" : "price DESC",
+      "PAST" : "id ASC",
+      "LOW_PRICE" : "price ASC",
+      "LATEST" : "id DESC"
     }
   }
 }

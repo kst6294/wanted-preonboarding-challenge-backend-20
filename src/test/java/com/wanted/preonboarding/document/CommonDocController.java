@@ -2,6 +2,7 @@ package com.wanted.preonboarding.document;
 
 import com.wanted.preonboarding.auth.enums.JwtErrorEnum;
 import com.wanted.preonboarding.module.common.enums.EnumType;
+import com.wanted.preonboarding.module.common.enums.OrderType;
 import com.wanted.preonboarding.module.common.enums.RedisKey;
 import com.wanted.preonboarding.module.common.enums.Yn;
 import com.wanted.preonboarding.module.product.enums.ProductStatus;
@@ -27,6 +28,7 @@ public class CommonDocController {
         Map<String, String> memberShip = getDocs(MemberShip.values());
         Map<String, String> jwtErrorEnum = getDocs(JwtErrorEnum.values());
         Map<String, String> productStatus = getDocs(ProductStatus.values());
+        Map<String, String> orderType = getDocs(OrderType.values());
 
 
         EnumDocs build = EnumDocs.builder()
@@ -35,6 +37,7 @@ public class CommonDocController {
                 .memberShip(memberShip)
                 .jwtErrorEnum(jwtErrorEnum)
                 .productStatus(productStatus)
+                .orderType(orderType)
                 .build();
 
         return ApiResponseDto.of(build);

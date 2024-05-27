@@ -1,0 +1,16 @@
+[source,json,options="nowrap"]
+----
+{
+  "data" : {
+    "id" : 8284,
+    "productName" : "qhsxerqxts",
+    "price" : 88713865,
+    "productStatus" : "ON_STOCK",
+    "seller" : "jlTIqA@wanted.com"
+  },
+  "response" : {
+    "status" : 200,
+    "message" : "success"
+  }
+}
+----

@@ -11,15 +11,15 @@ Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
 X-Frame-Options: DENY
-Content-Length: 227
+Content-Length: 230
 
 {
   "data" : {
-    "id" : 4058,
-    "productName" : "stfcpxkoqu",
-    "price" : 23276030,
+    "id" : 3499,
+    "productName" : "gbjoldtgvf",
+    "price" : 19990078,
     "productStatus" : "ON_STOCK",
-    "seller" : "X@wanted.com"
+    "seller" : "mtBS@wanted.com"
   },
   "response" : {
     "status" : 200,

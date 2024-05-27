@@ -1,0 +1,71 @@
+|===
+|필드명|타입|필수여부|설명
+|`+content[].id+`
+|`+Number+`
+|true
+|상품 ID (PK)
+|`+content[].productName+`
+|`+String+`
+|true
+|상품 명
+|`+content[].price+`
+|`+Number+`
+|true
+|상품 가격
+|`+content[].productStatus+`
+|`+String+`
+|true
+|link:common/productStatus.html[상품 상태 코드,role="popup"]
+|`+content[].seller+`
+|`+String+`
+|true
+|상품 등록자 이메일
+|`+last+`
+|`+Boolean+`
+|true
+|마지막 페이지인지의 여부
+|`+first+`
+|`+Boolean+`
+|true
+|첫 페이지인지의 여부
+|`+number+`
+|`+Number+`
+|true
+|페이지
+|`+sort+`
+|`+Object+`
+|true
+|sort
+|`+sort.empty+`
+|`+Boolean+`
+|true
+|정렬 조건이 아무것도 없는지의 여부
+|`+sort.sorted+`
+|`+Boolean+`
+|true
+|정렬 여부
+|`+sort.unsorted+`
+|`+Boolean+`
+|true
+|정렬 안하는지 여부
+|`+size+`
+|`+Number+`
+|true
+|한 페이지의 크기
+|`+numberOfElements+`
+|`+Number+`
+|true
+|이 페이지에서 검색된 크기(size와 다른 개념)
+|`+empty+`
+|`+Boolean+`
+|true
+|조회가 아무것도 되지 않았는지 여부
+|`+lastDomainId+`
+|`+Number+`
+|false
+|커서 기반을 위한 기준 아이디
+|`+cursorValue+`
+|`+String+`
+|false
+|커서 기반을 위한 기준 값
+|===
