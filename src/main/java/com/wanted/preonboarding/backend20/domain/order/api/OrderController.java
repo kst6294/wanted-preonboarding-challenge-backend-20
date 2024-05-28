@@ -33,14 +33,14 @@ public class OrderController {
     }
 
     @PutMapping("/seller/approve")
-    public ResponseEntity<String> approveSellersOrder(Long orderId, Member seller) {
+    public ResponseEntity<String> approveSellersOrder(@RequestParam Long orderId, @AuthMember Member seller) {
         if (seller == null) throw new CustomException(ErrorCode.AUTHENTICATION_ERROR);
         orderService.approveSellersOrder(orderId, seller);
         return ResponseEntity.ok().body("완료");
     }
 
     @PutMapping("/buyer/confirm")
-    public ResponseEntity<String> confirmBuyersOrder(Long orderId, Member buyer) {
+    public ResponseEntity<String> confirmBuyersOrder(@RequestParam Long orderId, @AuthMember Member buyer) {
         if (buyer == null) throw new CustomException(ErrorCode.AUTHENTICATION_ERROR);
         orderService.confirmBuyersOrder(orderId, buyer);
         return ResponseEntity.ok().body("완료");
