@@ -29,6 +29,10 @@ public class SecurityConfig {
             "/", "/sign-up", "/sign-in"
     };
 
+    private static final String[] PERMIT_GET_PATTERNS = new String[] {
+            "/product/**"
+    };
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity

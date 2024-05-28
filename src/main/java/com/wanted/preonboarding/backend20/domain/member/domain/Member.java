@@ -1,6 +1,7 @@
 package com.wanted.preonboarding.backend20.domain.member.domain;
 
 import com.wanted.preonboarding.backend20.domain.member.dto.SignUpDto;
+import com.wanted.preonboarding.backend20.global.domain.BaseTimeEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
@@ -16,7 +17,7 @@ import java.util.List;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Member {
+public class Member extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
