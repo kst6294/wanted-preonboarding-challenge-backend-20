@@ -1,4 +1,6 @@
-package wanted.market.product
+package wanted.market.product.dto
+
+import wanted.market.product.entity.Product
 
 data class ProductResponse(val name: String,
                            val price: Int,
@@ -6,7 +8,7 @@ data class ProductResponse(val name: String,
 ){
     companion object {
         fun from(product: Product): ProductResponse {
-            return ProductResponse(product.name, product.price, product.productStatus.value)
+            return ProductResponse(product.priceName, product.price, product.productStatus.value)
         }
     }
 }

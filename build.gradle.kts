@@ -8,16 +8,17 @@ plugins {
 	kotlin("plugin.jpa") version "1.9.23"
 
 	kotlin("plugin.allopen") version "1.9.23"
+	kotlin("plugin.noarg") version "1.9.23"
 }
 
 noArg {
-	annotation("javax.persistence.Entity")
+	annotation("jakarta.persistence.Entity")
 }
 
 allOpen {
-	annotation("javax.persistence.Entity")
-	annotation("javax.persistence.MappedSuperclass")
-	annotation("javax.persistence.Embeddable")
+	annotation("jakarta.persistence.Entity")
+	annotation("jakarta.persistence.MappedSuperclass")
+	annotation("jakarta.persistence.Embeddable")
 }
 
 group = "wanted"

@@ -1,6 +1,7 @@
-package wanted.market.member
+package wanted.market.member.entity
 
 import jakarta.persistence.*
+import wanted.market.common.BaseEntity
 
 @Entity
 @Table(name = "members")
@@ -14,5 +15,5 @@ class Member(
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         val id: Long? = -1
 
-)
+) : BaseEntity()
 

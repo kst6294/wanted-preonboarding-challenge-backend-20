@@ -1,4 +1,4 @@
-package wanted.market.product
+package wanted.market.product.controller
 
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.ResponseEntity
@@ -8,6 +8,9 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
+import wanted.market.product.dto.ProductResponse
+import wanted.market.product.service.ProductService
+import wanted.market.product.dto.SaveProductRequest
 
 @RestController
 @RequestMapping("/products")
