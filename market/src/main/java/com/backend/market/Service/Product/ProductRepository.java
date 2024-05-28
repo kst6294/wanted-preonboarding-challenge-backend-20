@@ -11,6 +11,6 @@ public interface ProductRepository extends JpaRepository<Product,Long> {
     @Query(value = "select * from product where status = 1 and member_user_id = ?1", nativeQuery = true)
     List<Product> findAllReservationById(Long id);
 
-    @Query(value = "select * from product where status = 3 and member_user_id = ?1", nativeQuery = true)
+    @Query(value = "select * from product where status = 0 and member_user_id = ?1", nativeQuery = true)
     List<Product> findAllCompleteById(Long id);
 }

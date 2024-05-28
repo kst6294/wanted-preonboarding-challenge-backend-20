@@ -1,11 +1,14 @@
 package com.backend.market.Service.purchaseList;
 
+import com.backend.market.DAO.Entity.Product;
 import com.backend.market.DAO.Entity.PurchaseList;
 import com.backend.market.Request.ProductReq;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -26,5 +29,17 @@ public class PurchaseListService {
         purchaseList.setCreaeDate(LocalDate.now());
 
         this.purchaseListRepository.save(purchaseList);
+    }
+
+    //제품관련 정보와 현재 조회한 회원의 고유번호
+    public List<PurchaseList> getTransHistory(ProductReq productReq,Long id)
+    {
+        //판매자인 경우
+        if(productReq.getMember().getUserId().equals(id))
+        {
+            return this.purchaseListRepository.findAllBySellerId(id);
+        }else{//구매자인 경우
+            return this.purchaseListRepository.findAllByBuyerId(id);
+        }
     }
 }

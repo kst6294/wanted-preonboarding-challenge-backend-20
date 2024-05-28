@@ -21,7 +21,6 @@ import java.util.Objects;
 public class ProductController {
 
     private ProductService productService;
-    private PurchaseListService purchaseListService;
 
     @GetMapping("/list")
     public ResponseEntity<?> list()
@@ -61,26 +60,11 @@ public class ProductController {
         return new ResponseEntity<String>("FAIL", HttpStatus.NO_CONTENT);
     }
 
-    @PostMapping("/add/{buy_id}")
-    public ResponseEntity<?> createPurchaseList(@PathVariable Long buy_id, @RequestBody ProductReq productReq){
-
-        if(Objects.equals(productReq.getMember().getUserId(), buy_id))
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"구입 권한이 없습니다.");
-
-        purchaseListService.addPurchasList(productReq,buy_id);
-
-        return new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
-
-
-    }
-
     @PostMapping("/create")
     public ResponseEntity<?> createProduct(@RequestBody ProductReq productReq){
 
         productService.addProduct(productReq);
 
         return new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
-
-
     }
 }

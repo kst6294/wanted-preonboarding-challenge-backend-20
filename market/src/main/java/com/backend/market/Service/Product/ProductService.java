@@ -44,6 +44,7 @@ public class ProductService {
         product.setPrice(productReq.getPrice());
         product.setQuantity(productReq.getQuantity());
         product.setMember(productReq.getMember());
+        product.setCreaeDate(LocalDate.now());
 
         return this.productRepository.save(product);
     }

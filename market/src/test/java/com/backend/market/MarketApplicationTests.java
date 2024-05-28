@@ -1,8 +1,12 @@
 package com.backend.market;
 
 import com.backend.market.DAO.Entity.Member;
+import com.backend.market.DAO.Entity.Product;
+import com.backend.market.DAO.Entity.Status;
+import com.backend.market.Request.ProductReq;
 import com.backend.market.Service.Member.MemberRepository;
 import com.backend.market.Service.Product.ProductRepository;
+import com.backend.market.Service.Product.ProductService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -25,6 +29,9 @@ class MarketApplicationTests {
 	@Autowired
 	private ProductRepository productRepository;
 
+	@Autowired
+	private ProductService productService;
+
 	//TODO: Product API테스트
 	@Test
 	void testJPA()
@@ -45,4 +52,9 @@ class MarketApplicationTests {
 		List<Member> all = this.memberRepository.findAll();
 		assertEquals(2,all.size());
 	}
+
+
+
+
+
 }
