@@ -60,7 +60,7 @@ public class OrderServiceTest {
     @Test
     @DisplayName("성공 - 제품 예약 성공")
     void addOrderSuccess() {
-        OrderSaveRequest orderSaveRequest = new OrderSaveRequest(item.getId(), item.getPrice());
+        OrderSaveRequest orderSaveRequest = new OrderSaveRequest(item.getId());
 
         when(memberRepository.findById(consumer.getId())).thenReturn(Optional.ofNullable(consumer));
         when(itemRepository.findById(item.getId())).thenReturn(Optional.ofNullable(item));
@@ -72,8 +72,6 @@ public class OrderServiceTest {
     @Test
     @DisplayName("실패 - 제품 구매 시 예약 상태면 실패")
     void addOrderFailedWhenItemStatusIsReserved() {
-        OrderSaveRequest orderSaveRequest = new OrderSaveRequest(item.getId(), item.getPrice());
-
         Item otherItem = Item.builder()
                 .name("ItemName")
                 .price(1000)
@@ -81,9 +79,10 @@ public class OrderServiceTest {
                 .status(Item.ItemStatus.RESERVED)
                 .member(seller)
                 .build();
+        OrderSaveRequest orderSaveRequest = new OrderSaveRequest(otherItem.getId());
 
         when(memberRepository.findById(consumer.getId())).thenReturn(Optional.ofNullable(consumer));
-        when(itemRepository.findById(item.getId())).thenReturn(Optional.ofNullable(otherItem));
+        when(itemRepository.findById(otherItem.getId())).thenReturn(Optional.of(otherItem));
 
         assertThatThrownBy(() -> orderService.addOrder(consumer.getId(), orderSaveRequest))
                 .isInstanceOf(ConcurrentModificationException.class);
@@ -92,8 +91,6 @@ public class OrderServiceTest {
     @Test
     @DisplayName("실패 - 제품 구매 시 완료 상태면 실패")
     void buyingItemFailedWhenItemStatusIsComplete() {
-        OrderSaveRequest orderSaveRequest = new OrderSaveRequest(item.getId(), item.getPrice());
-
         Item otherItem = Item.builder()
                 .name("ItemName")
                 .price(1000)
@@ -101,9 +98,10 @@ public class OrderServiceTest {
                 .status(Item.ItemStatus.COMPLETE)
                 .member(seller)
                 .build();
+        OrderSaveRequest orderSaveRequest = new OrderSaveRequest(otherItem.getId());
 
         when(memberRepository.findById(consumer.getId())).thenReturn(Optional.ofNullable(consumer));
-        when(itemRepository.findById(item.getId())).thenReturn(Optional.ofNullable(otherItem));
+        when(itemRepository.findById(otherItem.getId())).thenReturn(Optional.of(otherItem));
 
         assertThatThrownBy(() -> orderService.addOrder(consumer.getId(), orderSaveRequest))
                 .isInstanceOf(ConcurrentModificationException.class);
@@ -112,7 +110,7 @@ public class OrderServiceTest {
     @Test
     @DisplayName("실패 - 이미 구매한 제품이면 구매 실패")
     void buyingItemFailedWhenAlreadyOrdered() {
-        OrderSaveRequest orderSaveRequest = new OrderSaveRequest(item.getId(), item.getPrice());
+        OrderSaveRequest orderSaveRequest = new OrderSaveRequest(item.getId());
 
         when(memberRepository.findById(consumer.getId())).thenReturn(Optional.ofNullable(consumer));
         when(itemRepository.findById(item.getId())).thenReturn(Optional.ofNullable(item));
@@ -138,12 +136,12 @@ public class OrderServiceTest {
     @Test
     @DisplayName("실패 - 제품 등록자 ID와 사용자 ID가 불일치하면 실패")
     void changeOrderStatusToApprovedFailed() {
-        OrderStatusUpdateRequest orderStatusUpdateRequest = new OrderStatusUpdateRequest(item.getId(), order.getId());
-
         Member otherMember = createMember();
         ReflectionTestUtils.setField(otherMember, "id", 3L);
         Item otherItem = createItem(otherMember);
         ReflectionTestUtils.setField(otherItem, "id", 2L);
+
+        OrderStatusUpdateRequest orderStatusUpdateRequest = new OrderStatusUpdateRequest(item.getId(), order.getId());
 
         when(memberRepository.findById(any())).thenReturn(Optional.of(otherMember));
         when(itemRepository.findById(any())).thenReturn(Optional.of(item));
@@ -153,14 +151,39 @@ public class OrderServiceTest {
     }
 
     @Test
+    @DisplayName("실패 - 주문 상태가 구매 예약 상태가 아니면 주문 상태 변경 실패")
+    void changeOrderStatusToCompleteFailedWhenStatusIsNotReserved() {
+        Orders approvedOrder = Orders.builder()
+                .price(1000)
+                .status(Orders.OrderStatus.APPROVED)
+                .member(consumer)
+                .item(item)
+                .build();
+        OrderStatusUpdateRequest orderStatusUpdateRequest = new OrderStatusUpdateRequest(item.getId(), approvedOrder.getId());
+
+        when(memberRepository.findById(any())).thenReturn(Optional.of(seller));
+        when(itemRepository.findById(any())).thenReturn(Optional.of(item));
+        when(orderRepository.findById(any())).thenReturn(Optional.of(approvedOrder));
+
+        assertThatThrownBy(() -> orderService.approveOrder(consumer.getId(), orderStatusUpdateRequest))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
     @DisplayName("성공 - 주문 상태를 구매 확정 상태로 변경 성공")
     void changeOrderStatusToCompleteSuccess() {
-        OrderStatusUpdateRequest orderStatusUpdateRequest = new OrderStatusUpdateRequest(item.getId(), order.getId());
+        Orders approvedOrder = Orders.builder()
+                .price(1000)
+                .status(Orders.OrderStatus.APPROVED)
+                .member(consumer)
+                .item(item)
+                .build();
+        OrderStatusUpdateRequest orderStatusUpdateRequest = new OrderStatusUpdateRequest(item.getId(), approvedOrder.getId());
 
-        when(orderRepository.findByOrdersId(any())).thenReturn(Optional.of(order));
+        when(orderRepository.findByOrdersId(any())).thenReturn(Optional.of(approvedOrder));
         orderService.completeOrder(consumer.getId(), orderStatusUpdateRequest);
 
-        assertThat(order.getStatus()).isEqualTo(Orders.OrderStatus.COMPLETE);
+        assertThat(approvedOrder.getStatus()).isEqualTo(Orders.OrderStatus.COMPLETE);
     }
 
     @Test
@@ -176,9 +199,21 @@ public class OrderServiceTest {
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
+    @Test
+    @DisplayName("실패 - 주문 상태가 판매 승인 상태가 아니면 주문 상태 변경 실패")
+    void changeOrderStatusToCompleteFailedWhenStatusIsNotApproved() {
+        OrderStatusUpdateRequest orderStatusUpdateRequest = new OrderStatusUpdateRequest(item.getId(), order.getId());
+
+        when(orderRepository.findByOrdersId(any())).thenReturn(Optional.of(order));
+
+        assertThatThrownBy(() -> orderService.completeOrder(consumer.getId(), orderStatusUpdateRequest))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
     private Orders createOrder(Item item, Member member) {
         return Orders.builder()
                 .price(1000)
+                .status(Orders.OrderStatus.RESERVED)
                 .member(member)
                 .item(item)
                 .build();
