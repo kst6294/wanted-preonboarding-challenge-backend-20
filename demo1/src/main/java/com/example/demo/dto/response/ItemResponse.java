@@ -7,6 +7,7 @@ public record ItemResponse(
         Long id,
         String name,
         int price,
+        int quantity,
         ItemState itemState
 ) {
 
@@ -15,6 +16,7 @@ public record ItemResponse(
                 item.getId(),
                 item.getName(),
                 item.getPrice(),
+                item.getQuantity(),
                 item.getItemState()
         );
     }

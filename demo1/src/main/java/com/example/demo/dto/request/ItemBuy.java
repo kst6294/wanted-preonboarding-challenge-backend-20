@@ -5,7 +5,7 @@ import com.example.demo.entity.Member;
 
 public record ItemBuy(
         Long id,
-        Member member,
+
         ItemState itemState
 
 ) {

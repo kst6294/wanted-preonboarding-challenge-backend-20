@@ -26,6 +26,9 @@ public class SecurityConfig {
                         .requestMatchers("/api/v1/member/save").permitAll()
                         .requestMatchers("/api/v1/item/save").hasRole("USER")
                         .requestMatchers("/api/v1/item/buy").hasRole("USER")
+                        .requestMatchers("/api/v1/item/history").hasRole("USER")
+                        .requestMatchers("/api/v1/item/purchased").hasRole("USER")
+                        .requestMatchers("/api/v1/item/reserved").hasRole("USER")
                         .requestMatchers("/api/v1/item/{id}").permitAll() //상세조회 및 목록조회
                         .requestMatchers("/api/v1/item").permitAll()
                         .anyRequest().authenticated()

@@ -25,7 +25,7 @@ public class MemberController {
         if(memberService.memberJoin(memberJoin)){
             return ResponseEntity.ok().build();
         }
-        return ResponseEntity.badRequest().build();
+        return ResponseEntity.badRequest().body("실패");
     }
 
 

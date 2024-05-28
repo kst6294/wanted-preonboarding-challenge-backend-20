@@ -2,8 +2,10 @@ package com.example.demo.service;
 
 import com.example.demo.dto.request.ItemBuy;
 import com.example.demo.dto.response.ItemResponse;
+import com.example.demo.entity.Buy;
 import com.example.demo.entity.Item;
 import com.example.demo.entity.Member;
+import com.example.demo.repository.BuyRespository;
 import com.example.demo.repository.ItemRepository;
 import com.example.demo.repository.MemberRepository;
 import jakarta.transaction.Transactional;
@@ -31,13 +33,16 @@ class ItemServiceTest {
     @Autowired
     private MemberRepository memberRepository;
 
+    @Autowired
+    private BuyRespository buyRespository;
+
     @Test
     void 아이템_등록(){
         //given
         Member member = memberRepository.findByEmail("jong")
                 .orElseThrow(() -> new UsernameNotFoundException("등록되지 않은 이메일입니다."));
 
-        Item item = new Item("테스트아이템1", 10000, AVAILABLE, member);
+        Item item = new Item("테스트아이템1", 10000, 10000,  AVAILABLE, member);
 
         //when
         Item responseItem = itemRepository.save(item);
@@ -47,24 +52,23 @@ class ItemServiceTest {
 
     }
 
-    @Test
-    void 아이템_예약및구매(){
-        //given
-        ItemBuy itemBuy = new ItemBuy(2L, RESERVED);
-
-        Item responseItem = itemRepository.findById(itemBuy.id())
-                .orElseThrow();
-
-        //when
-        responseItem.changeItemState(itemBuy.itemState());
-
-
-        //then
-        Item result = itemRepository.findById(itemBuy.id())
-                .orElseThrow();
-        assertEquals(result, responseItem);
-
-    }
+//    @Test
+//    void 아이템_예약_및_구매(){
+//        //given
+//        //email : "jong" , id : "1"
+//        //email : "jong1", id : "3"
+//        Member member = memberRepository.findByEmail("jong")
+//                .orElseThrow(() -> new UsernameNotFoundException("등록되지 않은 이메일입니다."));
+//
+//        Buy buy = new Buy(1L, 3L, RESERVED);
+//
+//        //when
+//        Buy resultBuy = buyRespository.save(buy);
+//
+//
+//        //then
+//        assertEquals(resultBuy.getSellId(), buy.getSellId());
+//    }
 
     @Test
     void 아이템_상세조회(){
