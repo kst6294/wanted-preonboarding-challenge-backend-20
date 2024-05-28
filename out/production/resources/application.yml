@@ -1,0 +1,30 @@
+# default
+spring:
+  profiles:
+    active:
+      on-profile: prod # 기본 환경을 dev로
+
+  jwt:
+    secret-key: testtesttesttest
+    access-token-expire: 432000
+    refresh-token-expire: 120960000
+
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:~/mem-data
+    username: sa
+    password:
+
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: create
+
+  mvc:
+    cors:
+      allowed-origins: "*"
