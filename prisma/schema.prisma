@@ -1,0 +1,51 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model product_tb {
+  idx            Int              @id @default(autoincrement())
+  user_idx       Int
+  name           String           @db.VarChar
+  price          Int
+  status         String           @db.VarChar
+  created_at     DateTime         @default(now()) @db.Timestamptz(6)
+  updated_at     DateTime         @default(now()) @db.Timestamptz(6)
+  deleted_at     DateTime?        @db.Timestamptz(6)
+  user_tb        user_tb          @relation(fields: [user_idx], references: [idx], onDelete: NoAction, onUpdate: NoAction, map: "fk_user_tb_to_product_tb")
+  transaction_tb transaction_tb[]
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model transaction_tb {
+  idx         Int        @id @default(autoincrement())
+  user_idx    Int
+  product_idx Int
+  price       Int
+  status      String     @db.VarChar
+  created_at  DateTime   @default(now()) @db.Timestamptz(6)
+  updated_at  DateTime   @default(now()) @db.Timestamptz(6)
+  deleted_at  DateTime?  @db.Timestamptz(6)
+  product_tb  product_tb @relation(fields: [product_idx], references: [idx], onDelete: NoAction, onUpdate: NoAction, map: "fk_product_tb_to_transaction_tb")
+  user_tb     user_tb    @relation(fields: [user_idx], references: [idx], onDelete: NoAction, onUpdate: NoAction, map: "fk_user_tb_to_transaction_tb")
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model user_tb {
+  idx            Int              @id @default(autoincrement())
+  name           String           @db.VarChar
+  email          Int              @default(autoincrement())
+  password       String           @db.Char(60)
+  created_at     DateTime         @default(now()) @db.Timestamptz(6)
+  updated_at     DateTime         @default(now()) @db.Timestamptz(6)
+  deleted_at     DateTime?        @db.Timestamptz(6)
+  product_tb     product_tb[]
+  transaction_tb transaction_tb[]
+
+  @@unique([email, deleted_at], map: "email_deleted_at_unique")
+}
