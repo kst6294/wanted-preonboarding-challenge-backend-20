@@ -1,6 +1,6 @@
 import { Router } from "express";
-import dbClient from "../db/dbClient.js";
 import verifyToken from "../middlewares/auth.js";
+import { show_purchased_orders, show_reserved_orders } from "../services/userService.js";
 
 var router = Router();
 
@@ -10,12 +10,9 @@ router.get("/purchased_list", verifyToken, async (req, res, next) => {
     const buyer_id = req.decoded.id;
 
     try {
-        const items = await dbClient("Orders").where({
-            status: "Confirm",
-            buyer_id,
-        });
+        const orders = await show_purchased_orders(buyer_id);
 
-        res.status(200).json(items);
+        res.status(200).json(orders);
     } catch (err) {
         next(err);
     }
@@ -28,19 +25,9 @@ router.get("/reserved_list", verifyToken, async (req, res, next) => {
     const seller_id = req.decoded.id;
 
     try {
-        await dbClient.transaction(async (transaction) => {
-            // 판매자로서 상품 모음
-            const sellers_item_ids = (await transaction("Products").where({ seller_id })).map((each) => each.product_id);
+        const orders = await show_reserved_orders(buyer_id, seller_id);
 
-            const items = await transaction("Orders")
-                .where({ status: "Reserved" })
-                .andWhere(function () {
-                    this.where({ buyer_id }) // 구매자이거나
-                        .orWhereIn("product_id", sellers_item_ids); // 판매 상품이거나
-                });
-
-            res.status(200).json(items);
-        });
+        res.status(200).json(orders);
     } catch (err) {
         next(err);
     }

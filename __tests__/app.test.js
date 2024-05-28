@@ -23,8 +23,6 @@ describe("API TEST", () => {
         });
     });
 
-    let sellerA_token;
-
     describe("회원", () => {
         describe("토큰 발급", () => {
             it("판매자", async () => {

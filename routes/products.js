@@ -1,6 +1,6 @@
 import { Router } from "express";
-import dbClient from "../db/dbClient.js";
 import verifyToken from "../middlewares/auth.js";
+import { view_product_list, view_product_detail, register_product, purchase_product, approve_sale_product, confirm_purchase_product } from "../services/productService.js";
 
 var router = Router();
 
@@ -8,7 +8,7 @@ var router = Router();
 // 비회원 가능
 router.get("/", async function (req, res, next) {
     try {
-        const items = await dbClient("Products");
+        const items = await view_product_list();
 
         res.status(200).json(items);
     } catch (err) {
@@ -22,7 +22,7 @@ router.get("/:product_id", async function (req, res, next) {
     const { product_id } = req.params;
 
     try {
-        const item = await dbClient("Products").where({ product_id }).first();
+        const item = await view_product_detail(product_id);
 
         res.status(200).json(item);
     } catch (err) {
@@ -37,11 +37,7 @@ router.post("/", verifyToken, async function (req, res, next) {
     const post_data = req.body;
 
     try {
-        const [product_id] = await dbClient("Products").insert({
-            status: "Available",
-            seller_id,
-            ...post_data,
-        });
+        const product_id = await register_product(seller_id, post_data);
 
         res.status(201).json({ product_id });
     } catch (err) {
@@ -56,30 +52,9 @@ router.post("/:product_id/purchase", verifyToken, async function (req, res, next
     const buyer_id = req.decoded.id;
 
     try {
-        await dbClient.transaction(async (transaction) => {
-            const item = await transaction("Products").where({ product_id, status: "Available" }).first();
+        const order = await purchase_product(product_id, buyer_id);
 
-            if (item) {
-                // 주문서 작성
-                await transaction("Orders").insert({
-                    buyer_id,
-                    product_id,
-                    price: item.price,
-                    status: "Reserved",
-                });
-
-                await transaction("Products").where({ product_id }).decrement("amount", 1);
-
-                // 주문서 확인
-                const record = await transaction("Orders").where({ buyer_id, product_id }).first();
-
-                res.status(201).json(record);
-            } else {
-                const error = new Error("판매 중이지 않음");
-                error.status = 409;
-                return next(error);
-            }
-        });
+        res.status(201).json(order);
     } catch (err) {
         next(err);
     }
@@ -94,31 +69,9 @@ router.post("/:product_id/sales_approval", verifyToken, async function (req, res
     const seller_id = req.decoded.id;
 
     try {
-        await dbClient.transaction(async (transaction) => {
-            const is_sellers_proudct = await transaction("Products").where({ product_id, seller_id }).first();
+        const updated_order = await approve_sale_product(product_id, buyer_id, seller_id);
 
-            if (is_sellers_proudct) {
-                const item = await transaction("Orders").where({ product_id, buyer_id, status: "Reserved" }).first();
-
-                if (item) {
-                    await transaction("Orders").where({ product_id, buyer_id, status: "Reserved" }).update({
-                        status: "Approval",
-                    });
-
-                    const updated_record = await transaction("Orders").where({ product_id, buyer_id }).first();
-
-                    res.status(201).json(updated_record);
-                } else {
-                    const error = new Error("예약 상품 아님");
-                    error.status = 409;
-                    return next(error);
-                }
-            } else {
-                const error = new Error("판매자 상품이 아님");
-                error.status = 409;
-                return next(error);
-            }
-        });
+        res.status(201).json(updated_order);
     } catch (err) {
         next(err);
     }
@@ -132,23 +85,9 @@ router.post("/:product_id/purchase_confirm", verifyToken, async function (req, r
     const buyer_id = req.decoded.id;
 
     try {
-        await dbClient.transaction(async (transaction) => {
-            const item = await transaction("Orders").where({ product_id, buyer_id, status: "Approval" }).first();
+        const updated_order = await confirm_purchase_product(product_id, buyer_id);
 
-            if (item) {
-                await transaction("Orders").where({ product_id, buyer_id, status: "Approval" }).update({
-                    status: "Confirm",
-                });
-
-                const updated_record = await transaction("Orders").where({ product_id, buyer_id }).first();
-
-                res.status(201).json(updated_record);
-            } else {
-                const error = new Error("판매 승인 상품 아님");
-                error.status = 409;
-                return next(error);
-            }
-        });
+        res.status(201).json(updated_order);
     } catch (err) {
         next(err);
     }
