@@ -29,7 +29,7 @@ public class ProductRepositoryImpl implements ProductRepository {
     }
 
     @Override
-    public List<Product> findPurchasedProductsByMemberId(Long memberId) {
+    public List<Product> findPurchasedProductsByBuyerId(Long memberId) {
         return store.entrySet().stream().map(entry -> store.get(entry.getKey()))
                 .filter(product -> product.getBuyerId().equals(memberId))
                 .filter(product -> product.getStatus().equals(ProductStatus.SOLD))
@@ -41,6 +41,14 @@ public class ProductRepositoryImpl implements ProductRepository {
         return store.entrySet().stream().map(entry -> store.get(entry.getKey()))
                 .filter(product -> product.getSellerId().equals(memberId) || product.getBuyerId().equals(memberId))
                 .filter(product -> product.getStatus().equals(ProductStatus.RESERVED))
+                .toList();
+    }
+
+    @Override
+    public List<Product> findProductsBySellerIdAndBuyerId(Long sellerId, Long buyerId) {
+        return store.entrySet().stream().map(entry -> store.get(entry.getKey()))
+                .filter(product -> product.getSellerId().equals(sellerId))
+                .filter(product -> product.getBuyerId().equals(buyerId))
                 .toList();
     }
 
