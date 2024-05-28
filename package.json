@@ -32,7 +32,11 @@
     },
     "reporters": [
       "default",
-      "jest-html-reporters"
+      ["jest-html-reporters", {
+        "publicPath": "./gh-pages",
+        "filename": "index.html",
+        "expand": true
+      }]
     ]
   }
 }

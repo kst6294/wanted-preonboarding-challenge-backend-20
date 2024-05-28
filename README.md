@@ -14,6 +14,18 @@
 
 [![Postman](https://img.shields.io/badge/Postman-FF6C37?style=flat&logo=postman&logoColor=white)](https://documenter.getpostman.com/view/34090317/2sA3QqhYdL)
 
+| Category | Summary            | Method | URI                                     | Request Header       | Request Body                                    | Success Code |
+| -------- | ------------------ | ------ | --------------------------------------- | -------------------- | ----------------------------------------------- | ------------ |
+| 계정     | 토큰 발급          | POST   | /token/                                 |                      | username: string <br> password: string          | 200          |
+| 비회원   | 목록 조회          | GET    | /products/                              |                      |                                                 | 200          |
+|          | 상세 조회          | GET    | /products/{product_id}                  |                      |                                                 | 200          |
+| 회원     | 제품 등록          | POST   | /products/                              | Authorization: token | name: string <br> price: float <br> amount: int | 201          |
+|          | 제품 구매          | POST   | /products/{product_id}/purchase         | Authorization: token |                                                 | 201          |
+|          | 판매 승인          | POST   | /products/{product_id}/sales_approval   | Authorization: token |                                                 | 201          |
+|          | 구매 확정          | POST   | /products/{product_id}/purchase_confirm | Authorization: token |                                                 | 201          |
+|          | 구매한 용품 조회   | GET    | /user/purchased_list                    | Authorization: token |                                                 | 200          |
+|          | 예약중인 용품 조회 | GET    | /user/reserved_list                     | Authorization: token |                                                 | 200          |
+
 ## 📊 테스트 리포터
 
 [![Jest Reporter](https://img.shields.io/badge/Jest_Reporter-C21325?style=flat&logo=jest&logoColor=white)](https://narcisource.github.io/wanted-preonboarding-challenge-backend-20/)
@@ -21,6 +33,48 @@
 ## 🏗️ ERD
 
 ![ERD](https://github.com/NarciSource/wanted-preonboarding-challenge-backend-20/assets/26417221/eabf257d-23b5-48eb-95ed-498d218bafc8)
+
+## 📂 프로젝트 구조
+
+```
+wanted-preonboarding-challenge-backend-20
+├─ .git
+├─ .gitignore
+├─ app.js
+├─ bin
+│  └─ www
+├─ db
+│  ├─ dbClient.js
+│  ├─ knexfile.js
+│  ├─ query.sql
+│  └─ test.sqlite3
+├─ gh-pages
+│  ├─ index.html
+│  └─ jest-html-reporters-attach
+│     └─ index
+│        ├─ index.js
+│        └─ result.js
+├─ middlewares
+│  ├─ auth.js
+│  └─ dbErrorHandler.js
+├─ model
+│  ├─ basicDao.js
+│  ├─ orderDao.js
+│  ├─ productDao.js
+│  └─ userDao.js
+├─ package-lock.json
+├─ package.json
+├─ README.md
+├─ routes
+│  ├─ products.js
+│  ├─ token.js
+│  └─ user.js
+├─ services
+│  ├─ productService.js
+│  └─ userService.js
+└─ __tests__
+   └─ app.test.js
+```
 
 ## 🚀 실행 방법
 
