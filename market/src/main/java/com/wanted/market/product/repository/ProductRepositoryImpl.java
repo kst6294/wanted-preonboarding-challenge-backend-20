@@ -1,6 +1,7 @@
 package com.wanted.market.product.repository;
 
 import com.wanted.market.product.domain.Product;
+import com.wanted.market.product.domain.ProductStatus;
 
 import java.util.HashMap;
 import java.util.List;
@@ -29,8 +30,10 @@ public class ProductRepositoryImpl implements ProductRepository {
 
     @Override
     public List<Product> findPurchasedProductsByMemberId() {
-        // To-Do : Product로부터 상태를 가져올 방법 구상하라.
-        return null;
+        // To-Do : 일치하는 유저 ID를 먼저 조회하라.
+        return store.entrySet().stream().map(entry -> store.get(entry.getKey()))
+                .filter(product -> product.getStatus().equals(ProductStatus.SOLD))
+                .toList();
     }
 
     @Override
