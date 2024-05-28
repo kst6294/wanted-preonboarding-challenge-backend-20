@@ -1,0 +1,16 @@
+|===
+|Parameter|Description
+
+|`+lastDomainId+`
+|노 오프셋 용 기준 도메인 아이디
+
+|`+size+`
+|페이지 크기
+
+|`+orderType+`
+|정렬 기준
+
+|`+userRole+`
+|조회 기준 (판매자 / 구매자)
+
+|===

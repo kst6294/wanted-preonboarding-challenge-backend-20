@@ -4,7 +4,7 @@ import com.wanted.preonboarding.data.product.ProductFactory;
 import com.wanted.preonboarding.module.common.dto.CustomSlice;
 import com.wanted.preonboarding.module.common.enums.OrderType;
 import com.wanted.preonboarding.module.product.core.Sku;
-import com.wanted.preonboarding.module.product.filter.ItemFilter;
+import com.wanted.preonboarding.module.common.filter.ItemFilter;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -35,7 +35,6 @@ class ProductSliceMapperImplTest {
         List<Sku> data = ProductFactory.generateSkus(6);
         Pageable pageable = PageRequest.of(0, 5, Sort.by("id"));
         ItemFilter filter = mock(ItemFilter.class);
-        when(filter.getOrderType()).thenReturn(OrderType.LATEST);
 
         CustomSlice<Sku> customSlice = productSliceMapper.toSlice(data, pageable, filter);
 
@@ -58,7 +57,6 @@ class ProductSliceMapperImplTest {
         assertThat(customSlice.getContent()).isEmpty();
         assertTrue(customSlice.isLast());
         assertThat(customSlice.getLastDomainId()).isNull();
-        assertThat(customSlice.getCursorValue()).isNull();
     }
 
 }

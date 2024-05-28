@@ -1,0 +1,87 @@
+[source,http,options="nowrap"]
+----
+HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+Content-Type: application/json;charset=UTF-8
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 0
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY
+Content-Length: 1896
+
+{
+  "data" : {
+    "content" : [ {
+      "orderId" : 75277029,
+      "productId" : 5426,
+      "buyer" : "fcBNIoaCw@wanted.com",
+      "seller" : "anqcbcjoda",
+      "orderStatus" : "ORDERED",
+      "price" : 91544567,
+      "productName" : "vpmqjmnwvb",
+      "insertDate" : "2013-10-13 18:30:26",
+      "isCurrentUserSeller" : false
+    }, {
+      "orderId" : 84166097,
+      "productId" : 5209,
+      "buyer" : "fcBNIoaCw@wanted.com",
+      "seller" : "jdvrtkdpjn",
+      "orderStatus" : "ORDERED",
+      "price" : 6281881,
+      "productName" : "xsfuxlkals",
+      "insertDate" : "2013-10-13 18:30:26",
+      "isCurrentUserSeller" : false
+    }, {
+      "orderId" : 54006686,
+      "productId" : 4488,
+      "buyer" : "fcBNIoaCw@wanted.com",
+      "seller" : "bvckucwicj",
+      "orderStatus" : "ORDERED",
+      "price" : 79200196,
+      "productName" : "lvvbznbudp",
+      "insertDate" : "2013-10-13 18:30:26",
+      "isCurrentUserSeller" : false
+    }, {
+      "orderId" : 42638813,
+      "productId" : 3405,
+      "buyer" : "fcBNIoaCw@wanted.com",
+      "seller" : "egbqidosjp",
+      "orderStatus" : "ORDERED",
+      "price" : 41740481,
+      "productName" : "memoegixgh",
+      "insertDate" : "2013-10-13 18:30:26",
+      "isCurrentUserSeller" : false
+    }, {
+      "orderId" : 93014449,
+      "productId" : 1241,
+      "buyer" : "fcBNIoaCw@wanted.com",
+      "seller" : "wedgqslfyf",
+      "orderStatus" : "ORDERED",
+      "price" : 5865040,
+      "productName" : "dpuotqigbl",
+      "insertDate" : "2013-10-13 18:30:26",
+      "isCurrentUserSeller" : false
+    } ],
+    "last" : false,
+    "first" : true,
+    "number" : 0,
+    "sort" : {
+      "empty" : true,
+      "unsorted" : true,
+      "sorted" : false
+    },
+    "size" : 5,
+    "numberOfElements" : 5,
+    "empty" : false,
+    "lastDomainId" : 36811809
+  },
+  "response" : {
+    "status" : 200,
+    "message" : "success"
+  }
+}
+----

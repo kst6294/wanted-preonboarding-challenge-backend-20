@@ -2,11 +2,11 @@
 ----
 {
   "data" : {
-    "id" : 8305,
-    "productName" : "xulpuaoble",
-    "price" : 29465982,
+    "id" : 3821,
+    "productName" : "jwuygjrqll",
+    "price" : 6203008,
     "productStatus" : "ON_STOCK",
-    "seller" : "rZrvCy@wanted.com"
+    "seller" : "AqtWDntT@wanted.com"
   },
   "response" : {
     "status" : 200,

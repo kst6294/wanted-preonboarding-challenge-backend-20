@@ -28,15 +28,17 @@
       "BOOKING" : "제품의 판매 상태 예약중"
     },
     "orderType" : {
-      "HIGH_PRICE" : "price DESC",
       "PAST" : "id ASC",
-      "LOW_PRICE" : "price ASC",
       "LATEST" : "id DESC"
     },
     "orderStatus" : {
       "COMPLETED" : "Order status: COMPLETED",
       "ORDERED" : "Order status: ORDERED",
       "SETTLEMENT" : "Order status: SETTLEMENT"
+    },
+    "userRole" : {
+      "BUYER" : "판매자 / 구매자",
+      "SELLER" : "판매자 / 구매자"
     }
   }
 }

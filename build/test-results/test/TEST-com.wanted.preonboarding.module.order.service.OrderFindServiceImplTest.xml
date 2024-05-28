@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.wanted.preonboarding.module.order.service.OrderFindServiceImplTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2024-05-27T08:52:38" hostname="lyusang-won-ui-MacBookPro.local" time="0.045">
+<testsuite name="com.wanted.preonboarding.module.order.service.OrderFindServiceImplTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2024-05-28T07:23:08" hostname="lyusang-won-ui-MacBookPro.local" time="0.479">
   <properties/>
-  <testcase name="주문 단일 조회 - 성공" classname="com.wanted.preonboarding.module.order.service.OrderFindServiceImplTest" time="0.045"/>
+  <testcase name="거래 내역 조회 판매자 - 성공" classname="com.wanted.preonboarding.module.order.service.OrderFindServiceImplTest" time="0.183"/>
+  <testcase name="주문 단일 조회 - 성공" classname="com.wanted.preonboarding.module.order.service.OrderFindServiceImplTest" time="0.033"/>
+  <testcase name="거래 내역 조회 구매자 - 성공" classname="com.wanted.preonboarding.module.order.service.OrderFindServiceImplTest" time="0.111"/>
+  <testcase name="거래내역 조회 - 성공" classname="com.wanted.preonboarding.module.order.service.OrderFindServiceImplTest" time="0.113"/>
+  <testcase name="거래내역 조회 - 성공" classname="com.wanted.preonboarding.module.order.service.OrderFindServiceImplTest" time="0.035"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

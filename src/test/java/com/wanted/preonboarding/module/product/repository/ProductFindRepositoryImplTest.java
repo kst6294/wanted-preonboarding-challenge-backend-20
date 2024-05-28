@@ -4,7 +4,7 @@ import com.wanted.preonboarding.data.product.ProductModuleHelper;
 import com.wanted.preonboarding.data.users.UsersModuleHelper;
 import com.wanted.preonboarding.document.utils.BaseFetchRepositoryTest;
 import com.wanted.preonboarding.module.product.core.BaseSku;
-import com.wanted.preonboarding.module.product.dto.ProductFilter;
+import com.wanted.preonboarding.module.product.filter.ProductFilter;
 import com.wanted.preonboarding.module.product.entity.Product;
 import com.wanted.preonboarding.module.user.entity.Users;
 import org.junit.jupiter.api.DisplayName;
@@ -52,7 +52,7 @@ class ProductFindRepositoryImplTest extends BaseFetchRepositoryTest {
         saveProducts(10);
         Pageable pageable = PageRequest.of(0, 5);
 
-        ProductFilter filter = new ProductFilter(null, null, null, null, null, null);
+        ProductFilter filter = new ProductFilter(null, null);
         List<BaseSku> baseSkus = productFindRepository.fetchBaseSkus(filter, pageable);
 
         assertEquals(6, baseSkus.size());
@@ -70,7 +70,7 @@ class ProductFindRepositoryImplTest extends BaseFetchRepositoryTest {
 
         Product middleProduct = products.get(4);
 
-        ProductFilter filter = new ProductFilter(middleProduct.getId(), null, null, null, null, null);
+        ProductFilter filter = new ProductFilter(middleProduct.getId(), null);
         List<BaseSku> baseSkus = productFindRepository.fetchBaseSkus(filter, pageable);
 
         assertEquals(5, baseSkus.size());
@@ -79,23 +79,6 @@ class ProductFindRepositoryImplTest extends BaseFetchRepositoryTest {
     }
 
 
-    @Test
-    @DisplayName("BaseSku 리스트 조회 - email 필터")
-    void fetchBaseSkus_with_email() {
-        // Product 저장
-        saveProduct();
-        Pageable pageable = PageRequest.of(0, 5);
-
-        ProductFilter filter = new ProductFilter(null, null, null, null, null, product.getSeller().getEmail());
-        List<BaseSku> baseSkus = productFindRepository.fetchBaseSkus(filter, pageable);
-
-        assertEquals(1, baseSkus.size());
-        assertThat(baseSkus.get(0).getProductName()).isNotNull();
-        assertThat(baseSkus.get(0).getProductName()).isNotBlank();
-        assertThat(baseSkus.get(0).getPrice()).isNotNull();
-        assertThat(baseSkus.get(0).getSeller()).isNotBlank();
-        assertThat(baseSkus.get(0).getSeller()).isEqualTo(product.getSeller().getEmail());
-    }
 
 
     @Test

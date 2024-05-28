@@ -1,0 +1,6 @@
+[source,bash]
+----
+$ http GET 'http://localhost:8080/api/v1/orders?size=5' \
+    'Content-Type:application/json;charset=UTF-8' \
+    'Authorization:Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJmY0JOSW9hQ3dAd2FudGVkLmNvbSIsInJvbGUiOiJOT1JNQUwiLCJpYXQiOjE3MTY4ODA5ODYsImV4cCI6MTcxNjg4NDU4Nn0.qcU3ljYyyMvjePlx49xMeQq2I9FWK7_sp4m3n_E8SGc'
+----

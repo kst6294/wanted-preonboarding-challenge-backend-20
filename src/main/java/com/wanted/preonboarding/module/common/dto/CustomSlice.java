@@ -22,7 +22,5 @@ public class CustomSlice<T> {
     private final boolean empty;
     @Setter
     private Long lastDomainId;
-    @Setter
-    private String cursorValue;
 
 }

@@ -1,12 +1,8 @@
 orderType
 |===
 |코드|코드명
-|`+HIGH_PRICE+`
-|price DESC
 |`+PAST+`
 |id ASC
-|`+LOW_PRICE+`
-|price ASC
 |`+LATEST+`
 |id DESC
 |===

@@ -2,11 +2,11 @@
 ----
 {
   "data" : {
-    "id" : 9969,
-    "productName" : "wagwbqzege",
-    "price" : 23464931,
+    "id" : 6111,
+    "productName" : "lpdjxhyvxl",
+    "price" : 21075821,
     "productStatus" : "ON_STOCK",
-    "seller" : "leIM@wanted.com"
+    "seller" : "PcCSiRrJy@wanted.com"
   },
   "response" : {
     "status" : 200,

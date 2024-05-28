@@ -7,6 +7,7 @@ import com.wanted.preonboarding.module.product.core.BaseSku;
 import com.wanted.preonboarding.module.product.dto.CreateProduct;
 import com.wanted.preonboarding.module.product.entity.Product;
 import com.wanted.preonboarding.module.product.enums.ProductStatus;
+import com.wanted.preonboarding.module.user.entity.Users;
 import org.jeasy.random.EasyRandom;
 
 import java.util.HashMap;
@@ -17,6 +18,13 @@ public class ProductModuleHelper {
     public static CreateProduct toCreateProduct(){
         Map<String, Object> stringObjectMap = new HashMap<>();
         stringObjectMap.put("users", null);
+        EasyRandom instance = EasyRandomUtils.getInstance(stringObjectMap);
+        return instance.nextObject(CreateProduct.class);
+    }
+
+    public static CreateProduct toCreateProduct(Users seller){
+        Map<String, Object> stringObjectMap = new HashMap<>();
+        stringObjectMap.put("users", seller);
         EasyRandom instance = EasyRandomUtils.getInstance(stringObjectMap);
         return instance.nextObject(CreateProduct.class);
     }
@@ -43,6 +51,17 @@ public class ProductModuleHelper {
         stringObjectMap.put("productName", createProduct.getProductName());
         stringObjectMap.put("price", createProduct.getPrice());
         stringObjectMap.put("productStatus", ProductStatus.ON_STOCK);
+        EasyRandom instance = EasyRandomUtils.getInstance(stringObjectMap);
+        return instance.nextObject(Product.class);
+    }
+
+    public static Product toProductWithId(CreateProduct createProduct, Users seller){
+        Map<String, Object> stringObjectMap = new HashMap<>();
+        stringObjectMap.put("id", new FourDigitRandomizer().getRandomValue());
+        stringObjectMap.put("productName", createProduct.getProductName());
+        stringObjectMap.put("price", createProduct.getPrice());
+        stringObjectMap.put("productStatus", ProductStatus.ON_STOCK);
+        stringObjectMap.put("seller", seller);
         EasyRandom instance = EasyRandomUtils.getInstance(stringObjectMap);
         return instance.nextObject(Product.class);
     }

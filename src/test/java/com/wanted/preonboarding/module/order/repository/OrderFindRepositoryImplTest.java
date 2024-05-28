@@ -1,23 +1,34 @@
 package com.wanted.preonboarding.module.order.repository;
 
 import com.wanted.preonboarding.data.order.OrderModuleHelper;
-import com.wanted.preonboarding.data.product.ProductFactory;
 import com.wanted.preonboarding.data.product.ProductModuleHelper;
 import com.wanted.preonboarding.data.users.UsersModuleHelper;
 import com.wanted.preonboarding.document.utils.BaseFetchRepositoryTest;
+import com.wanted.preonboarding.module.common.enums.OrderType;
+import com.wanted.preonboarding.module.order.core.DetailedOrderContext;
 import com.wanted.preonboarding.module.order.entity.Order;
-import com.wanted.preonboarding.module.product.core.BaseSku;
-import com.wanted.preonboarding.module.product.dto.CreateProduct;
+import com.wanted.preonboarding.module.order.enums.OrderStatus;
+import com.wanted.preonboarding.module.order.filter.OrderFilter;
 import com.wanted.preonboarding.module.product.entity.Product;
 import com.wanted.preonboarding.module.user.entity.Users;
+import com.wanted.preonboarding.module.utils.SecurityUtils;
+import org.assertj.core.api.AssertionsForInterfaceTypes;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.MockedStatic;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
+import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mockStatic;
+import static org.mockito.Mockito.when;
 
 class OrderFindRepositoryImplTest extends BaseFetchRepositoryTest {
 
@@ -25,22 +36,129 @@ class OrderFindRepositoryImplTest extends BaseFetchRepositoryTest {
     OrderFindRepositoryImpl orderFindRepository;
 
     private Order order;
+    private MockedStatic<SecurityUtils> mockedSecurityUtils;
+
+    @BeforeEach
+    void setUp() {
+        if (mockedSecurityUtils != null) {
+            mockedSecurityUtils.close();
+        }
+        mockedSecurityUtils = Mockito.mockStatic(SecurityUtils.class);
+    }
+
+    @AfterEach
+    void tearDown() {
+        mockedSecurityUtils.close();
+    }
+
 
     @Test
     @DisplayName("Order Entity 조회")
     void fetchOrderEntity() {
-        // Product 저장
         saveOrder();
-
         assertThat(order.getId()).isNotNull();
-
-        // Product 조회
         Optional<Order> findOrder = orderFindRepository.fetchOrderEntity(order.getId());
         assertThat(findOrder).isPresent();
         assertThat(findOrder.get().getSeller()).isNotNull();
         assertThat(findOrder.get().getBuyer()).isNotNull();
 
     }
+
+
+
+    @Test
+    @DisplayName("DetailedOrderContext 조회 snapshot - 판매자가 조회")
+    void fetchDetailedOrderContexts_bySeller_snapshot() {
+        saveOrder();
+        addOrderHistory(order);
+        assertThat(order.getId()).isNotNull();
+        when(SecurityUtils.currentUserEmail()).thenReturn(order.getBuyer().getEmail());
+
+        List<DetailedOrderContext> detailedOrderContexts = orderFindRepository.fetchOrderDetail(order.getId(), order.getSeller().getEmail());
+        assertThat(detailedOrderContexts).isNotNull();
+        AssertionsForInterfaceTypes.assertThat(detailedOrderContexts).hasSize(3);
+        assertThat(detailedOrderContexts.get(0).getOrderStatus()).isEqualTo(OrderStatus.ORDERED);
+        assertThat(detailedOrderContexts.get(1).getOrderStatus()).isEqualTo(OrderStatus.COMPLETED);
+        assertThat(detailedOrderContexts.get(2).getOrderStatus()).isEqualTo(OrderStatus.SETTLEMENT);
+
+    }
+
+    @Test
+    @DisplayName("DetailedOrderContext snapshot 조회 - 구매자가 조회")
+    void fetchDetailedOrderContexts_byBuyer_snapshot() {
+        saveOrder();
+        addOrderHistory(order);
+        assertThat(order.getId()).isNotNull();
+
+        when(SecurityUtils.currentUserEmail()).thenReturn(order.getBuyer().getEmail());
+
+
+        List<DetailedOrderContext> detailedOrderContexts = orderFindRepository.fetchOrderDetail(order.getId(), order.getBuyer().getEmail());
+        assertThat(detailedOrderContexts).isNotNull();
+        AssertionsForInterfaceTypes.assertThat(detailedOrderContexts).hasSize(3);
+        assertThat(detailedOrderContexts.get(0).getOrderStatus()).isEqualTo(OrderStatus.ORDERED);
+        assertThat(detailedOrderContexts.get(1).getOrderStatus()).isEqualTo(OrderStatus.COMPLETED);
+        assertThat(detailedOrderContexts.get(2).getOrderStatus()).isEqualTo(OrderStatus.SETTLEMENT);
+
+    }
+
+    @Test
+    @DisplayName("DetailedOrderContext 조회 - 그냥 조회")
+    void fetchDetailedOrderContexts_byNoIssuer() {
+        Users buyer = UsersModuleHelper.toUsers();
+        getEntityManager().persist(buyer);
+
+        saveOrder(buyer);
+        Pageable pageable = PageRequest.of(0, 3);
+        OrderFilter orderFilter = new OrderFilter(null, null, OrderType.LATEST);
+
+        when(SecurityUtils.currentUserEmail()).thenReturn(order.getBuyer().getEmail());
+
+        assertThat(order.getId()).isNotNull();
+        List<DetailedOrderContext> detailedOrderContexts = orderFindRepository.fetchOrderDetails(orderFilter, order.getBuyer().getEmail(), pageable);
+        assertThat(detailedOrderContexts).isNotNull();
+        AssertionsForInterfaceTypes.assertThat(detailedOrderContexts).hasSize(1);
+
+    }
+
+
+    @Test
+    @DisplayName("DetailedOrderContext 조회 - 판매자가 조회")
+    void fetchDetailedOrderContexts_bySeller() {
+        Users buyer = UsersModuleHelper.toUsers();
+        getEntityManager().persist(buyer);
+
+        saveOrder(buyer);
+        Pageable pageable = PageRequest.of(0, 3);
+        OrderFilter orderFilter = new OrderFilter(null, null, OrderType.LATEST);
+
+        when(SecurityUtils.currentUserEmail()).thenReturn(order.getBuyer().getEmail());
+
+        assertThat(order.getId()).isNotNull();
+        List<DetailedOrderContext> detailedOrderContexts = orderFindRepository.fetchOrderDetails(orderFilter, order.getSeller().getEmail(), pageable);
+        assertThat(detailedOrderContexts).isNotNull();
+        AssertionsForInterfaceTypes.assertThat(detailedOrderContexts).hasSize(1);
+    }
+
+    @Test
+    @DisplayName("DetailedOrderContext 조회 - 구매자가 조회")
+    void fetchDetailedOrderContexts_byBuyer() {
+        Users buyer = UsersModuleHelper.toUsers();
+        getEntityManager().persist(buyer);
+
+        saveOrder(buyer);
+        Pageable pageable = PageRequest.of(0, 3);
+        OrderFilter orderFilter = new OrderFilter(null, null, OrderType.LATEST);
+
+        when(SecurityUtils.currentUserEmail()).thenReturn(order.getBuyer().getEmail());
+
+
+        assertThat(order.getId()).isNotNull();
+        List<DetailedOrderContext> detailedOrderContexts = orderFindRepository.fetchOrderDetails(orderFilter, buyer.getEmail(), pageable);
+        assertThat(detailedOrderContexts).isNotNull();
+        AssertionsForInterfaceTypes.assertThat(detailedOrderContexts).hasSize(1);
+    }
+
 
     private void saveOrder() {
         Users buyer = UsersModuleHelper.toUsers();
@@ -57,5 +175,30 @@ class OrderFindRepositoryImplTest extends BaseFetchRepositoryTest {
         getEntityManager().persist(order);
         flushAndClear();
     }
+
+
+    private void saveOrder(Users buyer) {
+        getEntityManager().persist(buyer);
+
+        Users seller = UsersModuleHelper.toUsers();
+        getEntityManager().persist(seller);
+
+        Product product = ProductModuleHelper.toProduct();
+        product.setSeller(seller);
+        getEntityManager().persist(product);
+
+        order = OrderModuleHelper.toOrder(product, buyer);
+        getEntityManager().persist(order);
+        flushAndClear();
+    }
+
+
+    private void addOrderHistory(Order order){
+        order.changeOrderStatus(OrderStatus.COMPLETED);
+        order.changeOrderStatus(OrderStatus.SETTLEMENT);
+        getEntityManager().merge(order);
+        flushAndClear();
+    }
+
 
 }

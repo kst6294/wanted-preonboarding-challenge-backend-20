@@ -5,7 +5,7 @@ import com.wanted.preonboarding.module.common.dto.CustomSlice;
 import com.wanted.preonboarding.module.common.payload.ApiResponse;
 import com.wanted.preonboarding.module.product.core.Sku;
 import com.wanted.preonboarding.module.product.dto.CreateProduct;
-import com.wanted.preonboarding.module.product.filter.ItemFilter;
+import com.wanted.preonboarding.module.common.filter.ItemFilter;
 import com.wanted.preonboarding.module.product.service.ProductFindService;
 import com.wanted.preonboarding.module.product.service.ProductQueryService;
 import lombok.RequiredArgsConstructor;

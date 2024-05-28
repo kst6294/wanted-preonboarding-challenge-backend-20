@@ -2,6 +2,7 @@ package com.wanted.preonboarding.data.order;
 
 import com.wanted.preonboarding.data.EasyRandomUtils;
 import com.wanted.preonboarding.module.order.core.BaseOrderContext;
+import com.wanted.preonboarding.module.order.core.DetailedOrderContext;
 import com.wanted.preonboarding.module.order.core.OrderContext;
 import com.wanted.preonboarding.module.order.dto.CreateOrder;
 import com.wanted.preonboarding.module.order.dto.UpdateOrder;
@@ -13,7 +14,9 @@ import com.wanted.preonboarding.module.user.entity.Users;
 import org.jeasy.random.EasyRandom;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class OrderModuleHelper {
 
@@ -52,6 +55,7 @@ public class OrderModuleHelper {
         return order;
     }
 
+
     public static Order toOrderWithId(Product product, Users buyer){
         Map<String, Object> stringObjectMap = new HashMap<>();
         stringObjectMap.put("product", product);
@@ -77,5 +81,33 @@ public class OrderModuleHelper {
         return instance.nextObject(BaseOrderContext.class);
     }
 
+    public static DetailedOrderContext toDetailedOrderContext(Order order){
+        return new DetailedOrderContext(
+                order.getId(),
+                order.getProduct().getId(),
+                order.getBuyer().getEmail(),
+                order.getSeller().getEmail(),
+                order.getOrderStatus(),
+                order.getProduct().getPrice(),
+                order.getProduct().getProductName(),
+                order.getUpdateDate());
+    }
+
+
+
+    public static List<DetailedOrderContext> toDetailedOrderContextsForSnapShot(Order order){
+        order.changeOrderStatus(OrderStatus.COMPLETED);
+        order.changeOrderStatus(OrderStatus.SETTLEMENT);
+
+        return order.getOrderHistories().stream().map(oh-> new DetailedOrderContext(
+                order.getId(),
+                order.getProduct().getId(),
+                order.getBuyer().getEmail(),
+                order.getSeller().getEmail(),
+                oh.getOrderStatus(),
+                order.getProduct().getPrice(),
+                order.getProduct().getProductName(),
+                order.getUpdateDate())).collect(Collectors.toList());
+    }
 
 }

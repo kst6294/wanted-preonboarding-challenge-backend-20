@@ -1,5 +1,6 @@
 package com.wanted.preonboarding.module.order.core;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.wanted.preonboarding.module.order.enums.OrderStatus;
 import lombok.*;
 
@@ -14,5 +15,12 @@ public class BaseOrderContext implements OrderContext{
     private String buyer;
     private String seller;
     private OrderStatus orderStatus;
+
+    @JsonIgnore
+    @Override
+    public Long getId() {
+        return orderId;
+    }
+
 
 }

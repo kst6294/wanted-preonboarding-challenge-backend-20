@@ -6,6 +6,7 @@ import com.wanted.preonboarding.module.common.enums.OrderType;
 import com.wanted.preonboarding.module.common.enums.RedisKey;
 import com.wanted.preonboarding.module.common.enums.Yn;
 import com.wanted.preonboarding.module.order.enums.OrderStatus;
+import com.wanted.preonboarding.module.order.enums.UserRole;
 import com.wanted.preonboarding.module.product.enums.ProductStatus;
 import com.wanted.preonboarding.module.user.enums.MemberShip;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,6 +32,7 @@ public class CommonDocController {
         Map<String, String> productStatus = getDocs(ProductStatus.values());
         Map<String, String> orderType = getDocs(OrderType.values());
         Map<String, String> orderStatus = getDocs(OrderStatus.values());
+        Map<String, String> userRole = getDocs(UserRole.values());
 
 
         EnumDocs build = EnumDocs.builder()
@@ -41,6 +43,7 @@ public class CommonDocController {
                 .productStatus(productStatus)
                 .orderType(orderType)
                 .orderStatus(orderStatus)
+                .userRole(userRole)
                 .build();
 
         return ApiResponseDto.of(build);

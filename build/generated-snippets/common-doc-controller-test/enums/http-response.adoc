@@ -11,7 +11,7 @@ Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
 X-Frame-Options: DENY
-Content-Length: 1434
+Content-Length: 1474
 
 {
   "data" : {
@@ -41,15 +41,17 @@ Content-Length: 1434
       "BOOKING" : "제품의 판매 상태 예약중"
     },
     "orderType" : {
-      "HIGH_PRICE" : "price DESC",
       "PAST" : "id ASC",
-      "LOW_PRICE" : "price ASC",
       "LATEST" : "id DESC"
     },
     "orderStatus" : {
       "COMPLETED" : "Order status: COMPLETED",
       "ORDERED" : "Order status: ORDERED",
       "SETTLEMENT" : "Order status: SETTLEMENT"
+    },
+    "userRole" : {
+      "BUYER" : "판매자 / 구매자",
+      "SELLER" : "판매자 / 구매자"
     }
   }
 }

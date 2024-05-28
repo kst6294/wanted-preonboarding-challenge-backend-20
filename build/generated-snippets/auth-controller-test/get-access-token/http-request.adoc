@@ -6,7 +6,7 @@ Content-Length: 62
 Host: localhost:8080
 
 {
-  "email" : "eslq@wanted.com",
-  "password" : "krvxaxwpth"
+  "email" : "XmdN@wanted.com",
+  "password" : "uqaouiufwq"
 }
 ----

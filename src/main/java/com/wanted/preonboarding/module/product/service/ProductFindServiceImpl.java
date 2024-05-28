@@ -6,7 +6,7 @@ import com.wanted.preonboarding.module.exception.product.NotFoundProductExceptio
 import com.wanted.preonboarding.module.product.core.BaseSku;
 import com.wanted.preonboarding.module.product.core.Sku;
 import com.wanted.preonboarding.module.product.entity.Product;
-import com.wanted.preonboarding.module.product.filter.ItemFilter;
+import com.wanted.preonboarding.module.common.filter.ItemFilter;
 import com.wanted.preonboarding.module.product.mapper.ProductSliceMapper;
 import com.wanted.preonboarding.module.product.repository.ProductFindRepository;
 import lombok.RequiredArgsConstructor;

@@ -4,15 +4,14 @@ package com.wanted.preonboarding.module.product.repository;
 import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import com.wanted.preonboarding.module.common.filter.ItemFilter;
 import com.wanted.preonboarding.module.common.repository.AbstractCommonRepository;
 import com.wanted.preonboarding.module.product.core.BaseSku;
 import com.wanted.preonboarding.module.product.core.QBaseSku;
 import com.wanted.preonboarding.module.product.entity.Product;
-import com.wanted.preonboarding.module.product.filter.ItemFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
-import org.springframework.util.StringUtils;
 
 import java.util.List;
 import java.util.Optional;
@@ -61,7 +60,7 @@ public class ProductFindRepositoryImpl extends AbstractCommonRepository implemen
     public List<BaseSku> fetchBaseSkus(ItemFilter filter, Pageable pageable) {
 
         List<OrderSpecifier<?>> orders = createOrderSpecifiersFromPageable(product, filter.getOrderType());
-        BooleanExpression dynamicWhere = createDynamicWhereCondition(filter, filter.getOrderType());
+        BooleanExpression dynamicWhere = createDynamicProductGroupIdCondition(filter, product.id);
 
         return queryFactory.select(
                         new QBaseSku(
@@ -74,8 +73,7 @@ public class ProductFindRepositoryImpl extends AbstractCommonRepository implemen
                 .from(product)
                 .innerJoin(product.seller, users)
                 .where(
-                        dynamicWhere,
-                        betweenPrice(filter)
+                        dynamicWhere
                     )
                 .orderBy(orders.toArray(OrderSpecifier[]::new))
                 .limit(pageable.getPageSize() + 1)
@@ -86,39 +84,5 @@ public class ProductFindRepositoryImpl extends AbstractCommonRepository implemen
     private BooleanExpression productIdEq(long productId){
         return product.id.eq(productId);
     }
-
-
-    private BooleanExpression betweenPrice(ItemFilter filter){
-        if(filter.getHighestPrice() != null || filter.getLowestPrice() != null){
-            Long highestPrice = filter.getHighestPrice();
-            Long lowestPrice = filter.getLowestPrice();
-
-            if(highestPrice != null && lowestPrice != null){
-                return product.price.between(lowestPrice, highestPrice);
-            }
-
-            else if(highestPrice != null){
-                return product.price.goe(highestPrice);
-            }
-            else if(lowestPrice != null){
-                return product.price.loe(lowestPrice);
-            }
-        }
-
-        return null;
-    }
-
-
-    private BooleanExpression emailEq(ItemFilter filter){
-        if(StringUtils.hasText(filter.getEmail())){
-            return users.email.eq(filter.getEmail());
-        }
-        return null;
-    }
-
-
-
-
-
 
 }

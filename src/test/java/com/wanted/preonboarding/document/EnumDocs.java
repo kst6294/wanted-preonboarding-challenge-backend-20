@@ -18,5 +18,6 @@ public class EnumDocs {
     Map<String, String> productStatus;
     Map<String, String> orderType;
     Map<String, String> orderStatus;
+    Map<String, String> userRole;
 
 }

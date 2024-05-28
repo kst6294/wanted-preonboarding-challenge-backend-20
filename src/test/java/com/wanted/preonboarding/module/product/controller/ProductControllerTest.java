@@ -11,7 +11,7 @@ import com.wanted.preonboarding.module.product.core.BaseSku;
 import com.wanted.preonboarding.module.product.core.Sku;
 import com.wanted.preonboarding.module.product.dto.CreateProduct;
 import com.wanted.preonboarding.module.product.entity.Product;
-import com.wanted.preonboarding.module.product.filter.ItemFilter;
+import com.wanted.preonboarding.module.common.filter.ItemFilter;
 import com.wanted.preonboarding.module.product.mapper.ProductSliceMapperImpl;
 import com.wanted.preonboarding.module.user.core.BaseUserInfo;
 import org.junit.jupiter.api.DisplayName;

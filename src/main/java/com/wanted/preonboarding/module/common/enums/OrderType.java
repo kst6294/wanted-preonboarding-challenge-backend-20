@@ -12,10 +12,7 @@ import static com.querydsl.core.types.Order.DESC;
 public enum OrderType implements EnumType{
 
     LATEST("id", DESC),
-    PAST("id", ASC),
-    LOW_PRICE("price", ASC),
-    HIGH_PRICE("price",DESC);
-
+    PAST("id", ASC);
 
     private final String field;
     private final Order direction;
@@ -29,7 +26,6 @@ public enum OrderType implements EnumType{
     public String getDescription() {
         return String.format("%s %s", field, direction.name());
     }
-
 
     public boolean isAscending(){
         return this.direction.equals(ASC);

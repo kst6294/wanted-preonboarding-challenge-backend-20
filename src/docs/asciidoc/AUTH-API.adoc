@@ -6,59 +6,13 @@
 
 === Access Token 발급 요청
 
-[options="header"]
-|===
-| 메서드 | 경로 | 설명
-| POST | /api/v1/auth/authentication | Access Token을 발급합니다.
-
-|===
-.Request Fields
-[cols="2,5", options="header"]
-|===
-| 필드명 | 설명
-| email | 이메일 주소 (이메일 형식 xxx@xxx)
-| password | 비밀번호 (최대 20자)
-|===
-
-.Example Request
-[source, json]
-----
-{
-  "email": "user@example.com",
-  "password": "password123"
-}
-----
+include::{snippets}/auth/get-access-token/http-request.adoc[]
+include::{snippets}/auth/get-access-token/request-fields.adoc[]
+include::{snippets}/auth/get-access-token/request-body.adoc[]
 
 === Access Token 발급 응답
 
-.Response Fields
-[cols="2,5", options="header"]
-|===
-| 필드명 | 설명
-| status | 응답 상태 코드
-| message | 응답 메시지
-|===
-
-.Example Response
-[source, json]
-----
-{
-  "response": {
-    "status": 200,
-    "message": "success"
-  }
-}
-----
-
-.Response Headers
-[cols="2,5", options="header"]
-|===
-| 헤더명 | 설명
-| Authorization | Bearer 토큰 (발급된 Access Token)
-|===
-
-.Example Response Header
-----
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyQGV4YW1wbGUuY29tIn0.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
-----
+include::{snippets}/auth/get-access-token/http-response.adoc[]
+include::{snippets}/auth/get-access-token/response-fields.adoc[]
+include::{snippets}/auth/get-access-token/response-body.adoc[]
 

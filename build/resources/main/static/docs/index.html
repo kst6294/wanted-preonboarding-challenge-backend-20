@@ -99,6 +99,14 @@
 <li><a href="#_유효하지_않은_주문_이미_예약_중_또는_판매_완료된_제품">유효하지 않은 주문 - 이미 예약 중 또는 판매 완료된 제품</a></li>
 </ul>
 </li>
+<li><a href="#_주문_수정">주문 수정</a>
+<ul class="sectlevel2">
+<li><a href="#_주문_수정_요청">주문 수정 요청</a></li>
+<li><a href="#_주문_수정_응답">주문 수정 응답</a></li>
+<li><a href="#_유효하지_않은_주문_수정_잘못된_상태로_변경_시도">유효하지 않은 주문 수정 - 잘못된 상태로 변경 시도</a></li>
+<li><a href="#_유효하지_않은_주문_수정_동일한_상태로_변경_시도">유효하지 않은 주문 수정 - 동일한 상태로 변경 시도</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li><a href="#_enums_documentation">Enums Documentation</a>
@@ -1079,6 +1087,303 @@ Content-Type: application/json</code></pre>
 </div>
 </div>
 </div>
+<div class="sect1">
+<h2 id="_주문_수정"><a class="link" href="#_주문_수정">주문 수정</a></h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_주문_수정_요청"><a class="link" href="#_주문_수정_요청">주문 수정 요청</a></h3>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">메서드</th>
+<th class="tableblock halign-left valign-top">경로</th>
+<th class="tableblock halign-left valign-top">설명</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">PATCH</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">/api/v1/order</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">주문을 수정합니다.</p></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 19. Request Fields</caption>
+<colgroup>
+<col style="width: 28.5714%;">
+<col style="width: 71.4286%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">필드명</th>
+<th class="tableblock halign-left valign-top">설명</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">orderId</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">주문 ID</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">orderStatus</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">주문 상태 (ORDERED, COMPLETED, SETTLEMENT)</p></td>
+</tr>
+</tbody>
+</table>
+<div class="listingblock">
+<div class="title">Example Request</div>
+<div class="content">
+<pre class="highlightjs highlight"><code data-lang="json" class="language-json hljs">{
+  "orderId": 1,
+  "orderStatus": "COMPLETED"
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_주문_수정_응답"><a class="link" href="#_주문_수정_응답">주문 수정 응답</a></h3>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 20. Response Fields</caption>
+<colgroup>
+<col style="width: 28.5714%;">
+<col style="width: 71.4286%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">필드명</th>
+<th class="tableblock halign-left valign-top">설명</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">orderId</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">주문 ID (PK)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">productId</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">제품 ID</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">seller</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">판매자 EMAIL</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">buyer</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">구매자 EMAIL</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">orderStatus</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">주문 상태 (ORDERED, COMPLETED, SETTLEMENT 등)</p></td>
+</tr>
+</tbody>
+</table>
+<div class="listingblock">
+<div class="title">Example Response</div>
+<div class="content">
+<pre class="highlightjs highlight"><code data-lang="json" class="language-json hljs">{
+  "data": {
+    "orderId": 1,
+    "productId": 12345,
+    "seller": "seller@example.com",
+    "buyer": "buyer@example.com",
+    "orderStatus": "COMPLETED"
+  },
+  "response": {
+    "status": 200,
+    "message": "success"
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_유효하지_않은_주문_수정_잘못된_상태로_변경_시도"><a class="link" href="#_유효하지_않은_주문_수정_잘못된_상태로_변경_시도">유효하지 않은 주문 수정 - 잘못된 상태로 변경 시도</a></h3>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">메서드</th>
+<th class="tableblock halign-left valign-top">경로</th>
+<th class="tableblock halign-left valign-top">설명</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">PATCH</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">/api/v1/order</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ORDERED 상태에서 SETTLEMENT 상태로 변경 시도할 때</p></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 21. Request Fields</caption>
+<colgroup>
+<col style="width: 28.5714%;">
+<col style="width: 71.4286%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">필드명</th>
+<th class="tableblock halign-left valign-top">설명</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">orderId</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">주문 ID</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">orderStatus</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">주문 상태 (SETTLEMENT)</p></td>
+</tr>
+</tbody>
+</table>
+<div class="listingblock">
+<div class="title">Example Request</div>
+<div class="content">
+<pre class="highlightjs highlight"><code data-lang="json" class="language-json hljs">{
+  "orderId": 1,
+  "orderStatus": "SETTLEMENT"
+}</code></pre>
+</div>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 22. Response Fields</caption>
+<colgroup>
+<col style="width: 28.5714%;">
+<col style="width: 71.4286%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">필드명</th>
+<th class="tableblock halign-left valign-top">설명</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">status</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">응답 상태 코드</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">message</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">응답 메시지</p></td>
+</tr>
+</tbody>
+</table>
+<div class="listingblock">
+<div class="title">Example Response</div>
+<div class="content">
+<pre class="highlightjs highlight"><code data-lang="json" class="language-json hljs">{
+  "status": 400,
+  "message": "해당 주문의 주문 상태 변경을 지원 하지 않습니다. 주문 번호 ::: 1 현재 주문 상태 ::: ORDERED 변경 불가 상태 ::: SETTLEMENT",
+  "timestamp": "2024-05-27 13:25:22",
+  "error": "InvalidUpdateOrderStatusException"
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_유효하지_않은_주문_수정_동일한_상태로_변경_시도"><a class="link" href="#_유효하지_않은_주문_수정_동일한_상태로_변경_시도">유효하지 않은 주문 수정 - 동일한 상태로 변경 시도</a></h3>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">메서드</th>
+<th class="tableblock halign-left valign-top">경로</th>
+<th class="tableblock halign-left valign-top">설명</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">PATCH</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">/api/v1/order</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">COMPLETED 상태에서 다시 COMPLETED 상태로 변경 시도할 때</p></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 23. Request Fields</caption>
+<colgroup>
+<col style="width: 28.5714%;">
+<col style="width: 71.4286%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">필드명</th>
+<th class="tableblock halign-left valign-top">설명</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">orderId</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">주문 ID</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">orderStatus</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">주문 상태 (COMPLETED)</p></td>
+</tr>
+</tbody>
+</table>
+<div class="listingblock">
+<div class="title">Example Request</div>
+<div class="content">
+<pre class="highlightjs highlight"><code data-lang="json" class="language-json hljs">{
+  "orderId": 1,
+  "orderStatus": "COMPLETED"
+}</code></pre>
+</div>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 24. Response Fields</caption>
+<colgroup>
+<col style="width: 28.5714%;">
+<col style="width: 71.4286%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">필드명</th>
+<th class="tableblock halign-left valign-top">설명</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">status</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">응답 상태 코드</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">message</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">응답 메시지</p></td>
+</tr>
+</tbody>
+</table>
+<div class="listingblock">
+<div class="title">Example Response</div>
+<div class="content">
+<pre class="highlightjs highlight"><code data-lang="json" class="language-json hljs">{
+  "status": 400,
+  "message": "해당 주문의 주문 상태 변경을 지원 하지 않습니다. 주문 번호 ::: 1 현재 주문 상태 ::: COMPLETED 변경 불가 상태 ::: COMPLETED",
+  "timestamp": "2024-05-27 13:25:22",
+  "error": "InvalidUpdateOrderStatusException"
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
 <h1 id="_enums_documentation" class="sect0"><a class="link" href="#_enums_documentation">Enums Documentation</a></h1>
 <div class="sect1">
 <h2 id="_jwt_error_enum"><a class="link" href="#_jwt_error_enum">JWT Error Enum</a></h2>
@@ -1252,7 +1557,7 @@ Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
 X-Frame-Options: DENY
-Content-Length: 1434
+Content-Length: 1474
 
 {
   "data" : {
@@ -1282,15 +1587,17 @@ Content-Length: 1434
       "BOOKING" : "제품의 판매 상태 예약중"
     },
     "orderType" : {
-      "HIGH_PRICE" : "price DESC",
       "PAST" : "id ASC",
-      "LOW_PRICE" : "price ASC",
       "LATEST" : "id DESC"
     },
     "orderStatus" : {
       "COMPLETED" : "Order status: COMPLETED",
       "ORDERED" : "Order status: ORDERED",
       "SETTLEMENT" : "Order status: SETTLEMENT"
+    },
+    "userRole" : {
+      "BUYER" : "판매자 / 구매자",
+      "SELLER" : "판매자 / 구매자"
     }
   }
 }</code></pre>
@@ -1346,15 +1653,17 @@ Content-Length: 1434
       "BOOKING" : "제품의 판매 상태 예약중"
     },
     "orderType" : {
-      "HIGH_PRICE" : "price DESC",
       "PAST" : "id ASC",
-      "LOW_PRICE" : "price ASC",
       "LATEST" : "id DESC"
     },
     "orderStatus" : {
       "COMPLETED" : "Order status: COMPLETED",
       "ORDERED" : "Order status: ORDERED",
       "SETTLEMENT" : "Order status: SETTLEMENT"
+    },
+    "userRole" : {
+      "BUYER" : "판매자 / 구매자",
+      "SELLER" : "판매자 / 구매자"
     }
   }
 }</code></pre>

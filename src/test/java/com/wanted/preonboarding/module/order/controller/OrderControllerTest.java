@@ -2,19 +2,24 @@ package com.wanted.preonboarding.module.order.controller;
 
 import com.wanted.preonboarding.auth.config.AuthConstants;
 import com.wanted.preonboarding.data.auth.AuthModuleHelper;
+import com.wanted.preonboarding.data.order.OrderFactory;
 import com.wanted.preonboarding.data.order.OrderModuleHelper;
 import com.wanted.preonboarding.data.product.ProductFactory;
 import com.wanted.preonboarding.data.product.ProductModuleHelper;
 import com.wanted.preonboarding.data.users.UsersModuleHelper;
 import com.wanted.preonboarding.document.utils.DocumentLinkGenerator;
 import com.wanted.preonboarding.document.utils.RestDocsTestSupport;
+import com.wanted.preonboarding.module.common.dto.CustomSlice;
 import com.wanted.preonboarding.module.exception.order.InvalidUpdateOrderStatusException;
 import com.wanted.preonboarding.module.exception.product.NotFoundProductException;
 import com.wanted.preonboarding.module.order.core.BaseOrderContext;
+import com.wanted.preonboarding.module.order.core.DetailedOrderContext;
 import com.wanted.preonboarding.module.order.dto.CreateOrder;
 import com.wanted.preonboarding.module.order.dto.UpdateOrder;
 import com.wanted.preonboarding.module.order.entity.Order;
 import com.wanted.preonboarding.module.order.enums.OrderStatus;
+import com.wanted.preonboarding.module.order.filter.OrderFilter;
+import com.wanted.preonboarding.module.order.mapper.OrderSliceMapperImpl;
 import com.wanted.preonboarding.module.order.service.OrderUpdateService;
 import com.wanted.preonboarding.module.product.dto.CreateProduct;
 import com.wanted.preonboarding.module.product.entity.Product;
@@ -22,22 +27,31 @@ import com.wanted.preonboarding.module.user.core.BaseUserInfo;
 import com.wanted.preonboarding.module.user.entity.Users;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.payload.JsonFieldType;
 
+import java.util.List;
+
 import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.patch;
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
+import static org.springframework.restdocs.request.RequestDocumentation.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 class OrderControllerTest extends RestDocsTestSupport {
 
     @MockBean
     private OrderUpdateService orderUpdateService;
+
+    @InjectMocks
+    private OrderSliceMapperImpl orderSliceMapper;
 
     @Test
     @DisplayName("주문 생성")
@@ -359,6 +373,104 @@ class OrderControllerTest extends RestDocsTestSupport {
                         ),
                         responseFields(
                                 errorStatusMsg()
+                        )
+                ));
+    }
+
+
+    @Test
+    @DisplayName("주문 상세 조회 - 성공")
+    void getOrder_Success() throws Exception {
+        // Given
+        Users buyer = UsersModuleHelper.toUsersWithId();
+        BaseUserInfo userInfo = AuthModuleHelper.toBaseUserInfo(buyer);
+        when(userFindService.fetchUserInfo(anyString())).thenReturn(userInfo);
+        securityUserMockSetting(buyer);
+
+        CreateProduct createProductWithUsers = ProductModuleHelper.toCreateProductWithUsers();
+        Product product = ProductModuleHelper.toProductWithId(createProductWithUsers);
+        Order order = OrderModuleHelper.toOrderWithId(product, buyer);
+        List<DetailedOrderContext> detailedOrderContexts = OrderModuleHelper.toDetailedOrderContextsForSnapShot(order);
+
+        when(orderFindService.fetchOrderDetail(anyLong())).thenReturn(detailedOrderContexts);
+
+        // When & Then
+        mockMvc.perform(get("/api/v1/order/{orderId}", order.getId())
+                        .header(AuthConstants.AUTHORIZATION_HEADER, AuthConstants.BEARER_PREFIX + token)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andDo(document("order/get-order",
+                        pathParameters(
+                                parameterWithName("orderId").description("주문 ID")
+                        ),
+                        responseFields(
+                                beneathPath("data"),
+                                fieldWithPath("orderId").type(JsonFieldType.NUMBER).description("주문 ID"),
+                                fieldWithPath("productId").type(JsonFieldType.NUMBER).description("제품 ID"),
+                                fieldWithPath("buyer").type(JsonFieldType.STRING).description("구매자 EMAIL"),
+                                fieldWithPath("seller").type(JsonFieldType.STRING).description("판매자 EMAIL"),
+                                fieldWithPath("orderStatus").type(JsonFieldType.STRING).description("주문 상태"),
+                                fieldWithPath("price").type(JsonFieldType.NUMBER).description("제품 가격"),
+                                fieldWithPath("productName").type(JsonFieldType.STRING).description("제품 이름"),
+                                fieldWithPath("insertDate").type(JsonFieldType.STRING).description("주문 상태 변경 일자"),
+                                fieldWithPath("isCurrentUserSeller").type(JsonFieldType.BOOLEAN).description("주문 조회 주최가 주문의 판매자인지 아닌지 여부")
+
+                        ),
+                        responseFields(
+                                beneathPath("response"),
+                                statusMsg()
+                        )
+                ));
+    }
+
+
+    @Test
+    @DisplayName("거래내역 조회 - 성공")
+    void fetchDetailedOrderContexts_success() throws Exception {
+        Users buyer = UsersModuleHelper.toUsersWithId();
+        BaseUserInfo userInfo = AuthModuleHelper.toBaseUserInfo(buyer);
+        when(userFindService.fetchUserInfo(anyString())).thenReturn(userInfo);
+        securityUserMockSetting(buyer);
+
+        // Given
+        OrderFilter filter = mock(OrderFilter.class);
+        List<DetailedOrderContext> detailedOrderContexts = OrderFactory.generateDetailedOrderContext(buyer,  6);
+
+        CustomSlice<DetailedOrderContext> customSlice = orderSliceMapper.toSlice(detailedOrderContexts, PageRequest.of(0, 5), filter);
+
+        when(orderFindService.fetchOrderDetails(any(OrderFilter.class), any(Pageable.class))).thenReturn(customSlice);
+
+        // When & Then
+        mockMvc.perform(get("/api/v1/orders")
+                        .header(AuthConstants.AUTHORIZATION_HEADER, AuthConstants.BEARER_PREFIX + token)
+                        .param("size", "5")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andDo(document("order/get-orders",
+                        queryParameters(
+                                parameterWithName("lastDomainId").optional().description("노 오프셋 용 기준 도메인 아이디"),
+                                parameterWithName("size").description("페이지 크기"),
+                                parameterWithName("orderType").optional().description("정렬 기준"),
+                                parameterWithName("userRole").optional().description("조회 기준 (판매자 / 구매자)")
+                        ),
+                        responseFields(
+                                beneathPath("data"),
+                                fieldWithPath("content[].orderId").type(JsonFieldType.NUMBER).description("주문 ID"),
+                                fieldWithPath("content[].productId").type(JsonFieldType.NUMBER).description("제품 ID"),
+                                fieldWithPath("content[].seller").type(JsonFieldType.STRING).description("판매자 이메일"),
+                                fieldWithPath("content[].buyer").type(JsonFieldType.STRING).description("구매자 이메일"),
+                                fieldWithPath("content[].orderStatus").type(JsonFieldType.STRING).description(DocumentLinkGenerator.generateLinkCode(DocumentLinkGenerator.DocUrl.ORDER_STATUS)),
+                                fieldWithPath("content[].productName").type(JsonFieldType.STRING).description("제품 이름"),
+                                fieldWithPath("content[].price").type(JsonFieldType.NUMBER).description("제품 가격"),
+                                fieldWithPath("content[].insertDate").type(JsonFieldType.STRING).description("주문 일자"),
+                                fieldWithPath("content[].isCurrentUserSeller").type(JsonFieldType.BOOLEAN).description("주문 조회 주최가 주문의 판매자인지 아닌지 여부")
+
+                        ).and(
+                                sliceDescription()
+                        ),
+                        responseFields(
+                                beneathPath("response"),
+                                statusMsg()
                         )
                 ));
     }

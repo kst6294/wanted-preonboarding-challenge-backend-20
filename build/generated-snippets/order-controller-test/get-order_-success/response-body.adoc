@@ -1,0 +1,40 @@
+[source,json,options="nowrap"]
+----
+{
+  "data" : [ {
+    "orderId" : 8807949,
+    "productId" : 4744,
+    "buyer" : "zqjLwPtSb@wanted.com",
+    "seller" : "wcccrjcxaf",
+    "orderStatus" : "ORDERED",
+    "price" : 93043111,
+    "productName" : "orbucvvlrg",
+    "insertDate" : "2013-10-13 18:30:26",
+    "isCurrentUserSeller" : false
+  }, {
+    "orderId" : 8807949,
+    "productId" : 4744,
+    "buyer" : "zqjLwPtSb@wanted.com",
+    "seller" : "wcccrjcxaf",
+    "orderStatus" : "COMPLETED",
+    "price" : 93043111,
+    "productName" : "orbucvvlrg",
+    "insertDate" : "2013-10-13 18:30:26",
+    "isCurrentUserSeller" : false
+  }, {
+    "orderId" : 8807949,
+    "productId" : 4744,
+    "buyer" : "zqjLwPtSb@wanted.com",
+    "seller" : "wcccrjcxaf",
+    "orderStatus" : "SETTLEMENT",
+    "price" : 93043111,
+    "productName" : "orbucvvlrg",
+    "insertDate" : "2013-10-13 18:30:26",
+    "isCurrentUserSeller" : false
+  } ],
+  "response" : {
+    "status" : 200,
+    "message" : "success"
+  }
+}
+----
