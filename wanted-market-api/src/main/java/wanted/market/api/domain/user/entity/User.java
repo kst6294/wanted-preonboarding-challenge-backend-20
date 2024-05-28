@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
+@Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class User {
     @Id
@@ -15,7 +16,6 @@ public class User {
     private Long id;
 
     @Column
-    @Getter
     private String nickname;
 
     @Builder
