@@ -1,14 +1,16 @@
-package wanted.market.api.global.response.dto;
+package wanted.market.api.global.response.dto.response;
 
 import lombok.Builder;
+import lombok.Getter;
 import wanted.market.api.global.response.enums.ResponseMessage;
-
+@Getter
 public class MessageResponseDto {
 
-    private ResponseMessage message;
+
+    private String message;
 
     @Builder
-    public MessageResponseDto(ResponseMessage message){
+    public MessageResponseDto(String message){
         this.message = message;
     }
 
