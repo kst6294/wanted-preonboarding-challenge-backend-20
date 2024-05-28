@@ -1,6 +1,8 @@
 package com.example.wantedmarketapi.util;
 
 import com.example.wantedmarketapi.domain.member.Member;
+import com.example.wantedmarketapi.domain.member.Password;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
@@ -21,7 +23,10 @@ public class TestUtil {
         try {
             Constructor<Member> constructor = Member.class.getDeclaredConstructor();
             constructor.setAccessible(true);
-            return constructor.newInstance();
+            Member member = constructor.newInstance();
+            BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+            setField(member, "password", Password.encrypt("Test1234!@#$", encoder));
+            return member;
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

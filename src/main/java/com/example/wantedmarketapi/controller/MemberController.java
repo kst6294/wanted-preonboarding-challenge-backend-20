@@ -33,4 +33,15 @@ public class MemberController {
                 GlobalErrorCode.CREATED,
                 MemberConverter.toSignUpMemberResponse(memberCommandService.signUpMember(request)));
     }
+
+    @Operation(summary = "로그인 API", description = "이메일, 비밀번호를 사용한 로그인을 진행합니다")
+    @ApiResponses({
+            @ApiResponse(responseCode = "201", description = "성공"),
+            @ApiResponse(responseCode = "401", description = "로그인 실패")
+    })
+    @PostMapping("/login")
+    @ResponseStatus(HttpStatus.CREATED)
+    public BaseResponse<TokenResponse> loginMember(@RequestBody LoginMemberRequest request) {
+        return BaseResponse.onSuccess(GlobalErrorCode.CREATED, memberCommandService.login(request));
+    }
 }

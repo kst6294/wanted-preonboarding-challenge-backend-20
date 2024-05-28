@@ -4,13 +4,14 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-import java.lang.reflect.Constructor;
 import java.util.Optional;
 
 import com.example.wantedmarketapi.domain.member.Member;
 import com.example.wantedmarketapi.dto.request.MemberRequestDto.*;
+import com.example.wantedmarketapi.dto.response.MemberResponseDto.*;
 import com.example.wantedmarketapi.exception.custom.MemberException;
 import com.example.wantedmarketapi.repository.MemberRepository;
+import com.example.wantedmarketapi.security.provider.JwtAuthProvider;
 import com.example.wantedmarketapi.service.impl.MemberCommandServiceImpl;
 import com.example.wantedmarketapi.util.TestUtil;
 import org.junit.jupiter.api.Test;
@@ -29,6 +30,12 @@ public class MemberCommandServiceImplTest {
 
     @Mock
     private MemberRepository memberRepository;
+
+    @Mock
+    private JwtAuthProvider jwtAuthProvider;
+
+    @Mock
+    private BCryptPasswordEncoder passwordEncoder;
 
     @Test
     public void signUpMember_NewMember_ShouldSucceed() {
@@ -56,17 +63,6 @@ public class MemberCommandServiceImplTest {
         verify(memberRepository, times(1)).save(any(Member.class));
     }
 
-
-    public static Member createMemberWithReflection() {
-        try {
-            Constructor<Member> constructor = Member.class.getDeclaredConstructor();
-            constructor.setAccessible(true);
-            return constructor.newInstance();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-
     @Test
     public void signUpMember_ExistingMember_ShouldThrowException() {
         // Given
@@ -85,4 +81,67 @@ public class MemberCommandServiceImplTest {
         verify(memberRepository, times(1)).findByEmail(email);
         verify(memberRepository, never()).save(any(Member.class));
     }
+
+    @Test
+    void login_ShouldReturnTokenResponse_WhenCredentialsAreValid() {
+        // Given
+        String email = "test@example.com";
+        String password = "Test1234!@#$";
+        Long memberId = 1L;
+
+        LoginMemberRequest request = new LoginMemberRequest();
+        TestUtil.setField(request, "email", email);
+        TestUtil.setField(request, "password", password);
+
+        Member member = TestUtil.createMemberWithReflection();
+        TestUtil.setField(member, "id", memberId);
+
+        when(memberRepository.findByEmail(anyString())).thenReturn(Optional.of(member));
+        when(passwordEncoder.matches(anyString(), anyString())).thenReturn(true); // 수정됨
+        when(jwtAuthProvider.generateAccessToken(memberId)).thenReturn("access-token");
+        when(jwtAuthProvider.generateRefreshToken(memberId)).thenReturn("refresh-token");
+
+        // When
+        TokenResponse response = memberCommandService.login(request);
+
+        // Then
+        assertEquals(memberId, response.getMemberId());
+        assertEquals("access-token", response.getAccessToken());
+        assertEquals("refresh-token", response.getRefreshToken());
+    }
+
+
+    @Test
+    void login_ShouldThrowException_WhenMemberNotFound() {
+        // Given
+        String email = "test@example.com";
+        String password = "Test1234!@#$";
+
+        LoginMemberRequest request = new LoginMemberRequest();
+        TestUtil.setField(request, "email", email);
+        TestUtil.setField(request, "password", password);
+
+        when(memberRepository.findByEmail(anyString())).thenReturn(Optional.empty());
+
+        // When & Then
+        assertThrows(MemberException.class, () -> memberCommandService.login(request));
+    }
+
+    @Test
+    void login_ShouldThrowException_WhenPasswordMismatch() {
+        // Given
+        String email = "test@example.com";
+        String password = "Test1234!@#$";
+
+        LoginMemberRequest request = new LoginMemberRequest();
+        TestUtil.setField(request, "email", email);
+        TestUtil.setField(request, "password", password);
+
+        when(memberRepository.findByEmail(anyString())).thenReturn(Optional.of(TestUtil.createMemberWithReflection()));
+        when(passwordEncoder.matches(anyString(), anyString())).thenReturn(false); // Use the Mocked passwordEncoder
+
+        // When & Then
+        assertThrows(MemberException.class, () -> memberCommandService.login(request));
+    }
+
 }

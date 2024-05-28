@@ -13,5 +13,16 @@ public class MemberResponseDto {
         Long memberId;
         String email;
     }
+
+    @Getter
+    @Builder
+    @NoArgsConstructor(access = AccessLevel.PROTECTED)
+    @AllArgsConstructor(access = AccessLevel.PROTECTED)
+    public static class TokenResponse {
+        Long memberId;
+        String accessToken;
+        String refreshToken;
+    }
+
 }
 
