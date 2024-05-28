@@ -1,6 +1,7 @@
 package com.wanted.preonboarding.backend20.domain.product.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.wanted.preonboarding.backend20.domain.member.dto.MemberInfoDto;
 import com.wanted.preonboarding.backend20.domain.product.domain.Product;
 import com.wanted.preonboarding.backend20.domain.product.enums.ProductStatus;
 import lombok.AccessLevel;
@@ -14,7 +15,10 @@ import java.time.LocalDateTime;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class ProductDetailDto {
     private Long id;
-    private String name;
+
+    private MemberInfoDto sellerInfo;
+
+    private String productName;
     private int price;
     private String description;
     private ProductStatus status;
@@ -25,7 +29,8 @@ public class ProductDetailDto {
     @Builder
     public ProductDetailDto(Product product) {
         this.id = product.getId();
-        this.name = product.getName();
+        this.sellerInfo = MemberInfoDto.toMemberDto(product.getSeller());
+        this.productName = product.getName();
         this.price = product.getPrice();
         this.description = product.getDescription();
         this.status = product.getStatus();

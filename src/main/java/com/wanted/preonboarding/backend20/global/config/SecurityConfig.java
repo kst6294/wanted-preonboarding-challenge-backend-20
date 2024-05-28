@@ -46,6 +46,7 @@ public class SecurityConfig {
                                         .map(AntPathRequestMatcher::antMatcher)
                                         .toArray(AntPathRequestMatcher[]::new)
                         ).permitAll()
+                        .requestMatchers(PERMIT_GET_PATTERNS).permitAll()
                         .anyRequest().authenticated()
                 )
                 .exceptionHandling(e -> {
