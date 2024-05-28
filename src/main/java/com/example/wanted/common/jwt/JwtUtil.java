@@ -2,31 +2,40 @@ package com.example.wanted.common.jwt;
 
 import com.example.wanted.domain.user.UserEntity;
 import io.jsonwebtoken.*;
+import io.jsonwebtoken.io.Decoders;
+import io.jsonwebtoken.security.Keys;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import java.security.Key;
 import java.util.Date;
 
 @Component
-@RequiredArgsConstructor
 @Slf4j
 public class JwtUtil {
 //    private final RedisUtil redisUtil;
 
-    @Value("${spring.jwt.secret-key}")
-    private String accessKey;
-    @Value("${spring.jwt.access-token-expire}")
+    private final Key key;
+//    private final String accessKey;
+
     private Long ACCESS_TOKEN_EXPIRE_LENGTH;
-    @Value("${spring.jwt.refresh-token-expire}")
-    private Long REFRESH_TOKEN_EXPIRE_LENGTH;
+
+    public JwtUtil(
+            @Value("${spring.jwt.secret-key}") String accessKey,
+            @Value("${spring.jwt.access-token-expire}") Long ACCESS_TOKEN_EXPIRE_LENGTH) {
+        byte[] keyBytes = Decoders.BASE64.decode(accessKey);
+        this.key = Keys.hmacShaKeyFor(keyBytes);
+//        this.accessKey = accessKey;
+        this.ACCESS_TOKEN_EXPIRE_LENGTH = ACCESS_TOKEN_EXPIRE_LENGTH;
+    }
 
     public String createAccessToken(UserEntity user) {
         Date now = new Date();
         Date validity = new Date(now.getTime() + ACCESS_TOKEN_EXPIRE_LENGTH);
         return Jwts.builder()
-                .signWith(SignatureAlgorithm.HS512, String.valueOf(accessKey))
+                .signWith(SignatureAlgorithm.HS256, key)
                 .claim("userId", user.getId())
                 .claim("role", user.getRole())
                 .claim("type", "ACCESS")
@@ -47,7 +56,7 @@ public class JwtUtil {
         try {
             Jwts
                     .parserBuilder()
-                    .setSigningKey(accessKey)
+                    .setSigningKey(key)
                     .build()
                     .parseClaimsJws(token);
             return true;
@@ -67,7 +76,7 @@ public class JwtUtil {
         try {
             return Jwts
                     .parserBuilder()
-                    .setSigningKey(accessKey)
+                    .setSigningKey(key)
                     .build()
                     .parseClaimsJws(accessToken)
                     .getBody();

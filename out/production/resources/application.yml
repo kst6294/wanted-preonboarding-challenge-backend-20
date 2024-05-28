@@ -5,7 +5,7 @@ spring:
       on-profile: prod # 기본 환경을 dev로
 
   jwt:
-    secret-key: testtesttesttest
+    secret-key: wantedTestdateasdfkjklawjerlkjdklsjflqiojejoahoifdfaasdfdasfeawrqwerasdfewqreafdsf
     access-token-expire: 432000
     refresh-token-expire: 120960000
 

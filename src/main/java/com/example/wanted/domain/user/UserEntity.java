@@ -4,10 +4,12 @@ import com.example.wanted.domain.user.ENUM.Role;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
 @Table(name = "USERS")
+@NoArgsConstructor
 public class UserEntity {
 
     @Id

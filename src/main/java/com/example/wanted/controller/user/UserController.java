@@ -48,7 +48,6 @@ public class UserController {
 
     @GetMapping("")
     public ResponseEntity<UserResponse> getMyInfo(
-            @RequestBody UserLoginRequest request,
             Principal principal
     ) {
         Long id = Long.parseLong(principal.getName());
