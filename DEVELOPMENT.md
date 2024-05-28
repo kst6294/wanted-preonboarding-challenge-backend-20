@@ -38,9 +38,9 @@
 
 6. **거래 내역 조회 기능**
   - 브랜치: `feature/transaction-history`
-  - 기능: 거래 내역 조회
+  - 기능: 거래 내역 조회/ 구매 및 예약 목록 조회
 
-7. **내 구매/예약 목록 조회 기능**
-  - 브랜치: `feature/purchase-reservation-list`
-  - 기능: 구매 및 예약 목록 조회
+7. **제품 수량 추가**
+  - 브랜치: `feature/product-quantity`
+  - 기능: 제품 수량 추가 및 제품 당 한개만 구매 가능
 
