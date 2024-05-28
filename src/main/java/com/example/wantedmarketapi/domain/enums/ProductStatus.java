@@ -1,6 +1,6 @@
 package com.example.wantedmarketapi.domain.enums;
 
-public enum Status {
+public enum ProductStatus {
 
     SALE, RESERVATION, DONE
 

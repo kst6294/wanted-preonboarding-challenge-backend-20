@@ -3,7 +3,7 @@ package com.example.wantedmarketapi.domain;
 
 import com.example.wantedmarketapi.domain.member.Member;
 import com.example.wantedmarketapi.domain.common.BaseEntity;
-import com.example.wantedmarketapi.domain.enums.Status;
+import com.example.wantedmarketapi.domain.enums.ProductStatus;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -27,7 +27,7 @@ public class Product extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private Status status;
+    private ProductStatus productStatus;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
