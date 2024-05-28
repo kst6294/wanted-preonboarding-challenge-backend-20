@@ -3,7 +3,7 @@ package wanted.market.product.service
 import jakarta.transaction.Transactional
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
-import wanted.market.common.ErrorCode
+import wanted.market.common.exception.ErrorCode
 import wanted.market.member.service.MemberService
 import wanted.market.product.exception.ProductException
 import wanted.market.product.dto.SaveProductRequest

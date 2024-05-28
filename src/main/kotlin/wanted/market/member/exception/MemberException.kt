@@ -1,6 +1,7 @@
 package wanted.market.member.exception
 
-import wanted.market.common.ErrorCode
+import wanted.market.common.exception.BaseException
+import wanted.market.common.exception.ErrorCode
 
-class MemberException(private val errorCode: ErrorCode) : RuntimeException(errorCode.message) {
+class MemberException(errorCode: ErrorCode) : BaseException(errorCode) {
 }

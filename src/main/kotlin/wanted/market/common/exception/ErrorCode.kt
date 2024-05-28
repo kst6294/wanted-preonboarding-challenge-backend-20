@@ -1,4 +1,4 @@
-package wanted.market.common
+package wanted.market.common.exception
 
 enum class ErrorCode(val httpStatus: Int, val message: String) {
 
@@ -12,4 +12,7 @@ enum class ErrorCode(val httpStatus: Int, val message: String) {
 
 
     ORDER_NOT_FOUND(404, "존재하지 않는 주문입니다."),
+
+    BAD_REQUEST(400, "클라리언트의 잘못된 요청입니다."),
+    INTERNAL_SERVER_ERROR(500, "서버 내부 에러입니다.")
 }
