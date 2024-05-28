@@ -2,21 +2,17 @@ package wanted.market.api.domain.product.dto.response;
 
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
-import wanted.market.api.domain.product.dto.internal.ProductDto;
-import wanted.market.api.global.response.dto.internal.PageInfoDto;
-
-import java.util.List;
+import wanted.market.api.domain.product.dto.internal.ProductInfoDto;
+import wanted.market.api.domain.user.dto.internal.UserInfoDto;
 
 @Getter
-@NoArgsConstructor
 public class ProductResponseDto {
-    PageInfoDto page;
-    List<ProductDto> products;
+    private final ProductInfoDto product;
+    private final UserInfoDto user;
 
     @Builder
-    public ProductResponseDto(PageInfoDto page, List<ProductDto> products) {
-        this.page = page;
-        this.products = products;
+    public ProductResponseDto(ProductInfoDto product, UserInfoDto user){
+        this.product = product;
+        this.user = user;
     }
 }

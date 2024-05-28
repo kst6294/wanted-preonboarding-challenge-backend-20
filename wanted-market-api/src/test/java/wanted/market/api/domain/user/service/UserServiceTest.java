@@ -8,7 +8,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import wanted.market.api.domain.user.entity.User;
 import wanted.market.api.domain.user.repository.UserRepository;
-import wanted.market.api.global.response.exception.CustomException;
+import wanted.market.api.global.response.exception.WantedException;
 
 import java.util.Optional;
 
@@ -46,6 +46,6 @@ class UserServiceTest {
         when(userRepository.findById(userId)).thenReturn(Optional.empty());
 
         // then
-        assertThrows(CustomException.class, ()->userService.getUser(userId));
+        assertThrows(WantedException.class, ()->userService.getUser(userId));
     }
 }

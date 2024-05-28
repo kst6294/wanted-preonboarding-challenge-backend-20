@@ -2,20 +2,20 @@ package wanted.market.api.global.response.exception;
 
 import wanted.market.api.global.response.enums.ExceptionMessage;
 
-public class CustomException extends RuntimeException{
+public class WantedException extends RuntimeException{
 
-    public CustomException(){
+    public WantedException(){
         super();
     }
-    public CustomException(ExceptionMessage message){
+    public WantedException(ExceptionMessage message){
         super(message.getName());
     }
 
-    public CustomException(ExceptionMessage message, Throwable cause){
+    public WantedException(ExceptionMessage message, Throwable cause){
         super(message.getName(), cause);
     }
 
-    public CustomException(Throwable cause){
+    public WantedException(Throwable cause){
         super(cause);
     }
 

@@ -8,8 +8,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import wanted.market.api.domain.product.dto.internal.ProductInfoDto;
 import wanted.market.api.domain.product.dto.request.RegisterProductRequestDto;
-import wanted.market.api.domain.product.dto.internal.ProductDto;
 import wanted.market.api.domain.product.dto.response.ProductResponseDto;
+import wanted.market.api.domain.product.dto.response.ProductPageResponseDto;
 import wanted.market.api.domain.product.dto.response.RegisterProductResponseDto;
 import wanted.market.api.domain.product.entity.Product;
 import wanted.market.api.domain.product.enums.Status;
@@ -19,7 +19,7 @@ import wanted.market.api.domain.user.entity.User;
 import wanted.market.api.domain.user.service.UserService;
 import wanted.market.api.global.response.dto.internal.PageInfoDto;
 import wanted.market.api.global.response.enums.ExceptionMessage;
-import wanted.market.api.global.response.exception.CustomException;
+import wanted.market.api.global.response.exception.WantedException;
 
 import java.util.List;
 
@@ -31,7 +31,7 @@ public class ProductService {
     private final ProductRepository productRepository;
 
 
-    public RegisterProductResponseDto registerProduct(RegisterProductRequestDto requestDto) throws CustomException {
+    public RegisterProductResponseDto registerProduct(RegisterProductRequestDto requestDto) throws WantedException {
         User user = userService.getUser(requestDto.getUserId());
         Product product = Product.builder()
                 .name(requestDto.getProductName())
@@ -43,31 +43,31 @@ public class ProductService {
         return RegisterProductResponseDto.builder().productId(product.getId()).build();
     }
 
-    public ProductDto getProduct(Long productId) {
-        Product product = productRepository.findById(productId).orElseThrow(() -> new CustomException(ExceptionMessage.ISNOTEXIST));
-        return ProductDto.builder()
+    public ProductResponseDto getProduct(Long productId) {
+        Product product = productRepository.findById(productId).orElseThrow(() -> new WantedException(ExceptionMessage.ISNOTEXIST));
+        return ProductResponseDto.builder()
                 .product(ProductInfoDto.fromProduct(product))
                 .user(UserInfoDto.fromProduct(product))
                 .build();
     }
 
-    public ProductResponseDto getAllProducts(int page) {
-        if(page<0) throw new CustomException(ExceptionMessage.PAGECANNOTNEGATIVE);
+    public ProductPageResponseDto getAllProducts(int page) {
+        if(page<0) throw new WantedException(ExceptionMessage.PAGECANNOTNEGATIVE);
         Pageable pageable = PageRequest.of(page, 10, Sort.by(Sort.Order.desc("registerTime")));
         Page<Product> products = productRepository.findAllByStatusNot(Status.COMPLETED, pageable);
 
         PageInfoDto pageInfoDto = PageInfoDto.fromPage(products);
-        List<ProductDto> productDtos = products.stream()
+        List<ProductResponseDto> productResponseDtos = products.stream()
                 .map(product ->
-                        ProductDto.builder()
+                        ProductResponseDto.builder()
                                 .product(ProductInfoDto.fromProduct(product))
                                 .user(UserInfoDto.fromProduct(product))
                                 .build()
                 ).toList();
 
-        return ProductResponseDto.builder()
+        return ProductPageResponseDto.builder()
                 .page(pageInfoDto)
-                .products(productDtos)
+                .products(productResponseDtos)
                 .build();
     }
 }
