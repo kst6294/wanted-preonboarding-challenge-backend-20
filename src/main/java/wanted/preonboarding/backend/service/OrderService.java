@@ -31,10 +31,12 @@ public class OrderService {
      * 주문 추가
      */
     public void addOrder(final Long memberId, final OrderSaveRequest orderSaveRequest) {
+        //구매자 정보 조회 - 존재하지 않으면 예외
         Member foundMember = findMember(memberId);
+        //주문할 제품 정보 조회 - 존재하지 않으면 예외
         Item foundItem = findItem(orderSaveRequest.getItemId());
 
-        //제품 상태 검증 - FOR_SALE 상태가 아니면 예외
+        //제품 상태 검증 - 판매 가능(FOR_SALE) 상태가 아니면 주문 불가능
         if (!foundItem.validateForSale()) {
             throw new ConcurrentModificationException("제품이 매진되어 구매할 수 없는 상태입니다.");
         }
@@ -46,7 +48,7 @@ public class OrderService {
         }
 
         //주문 저장
-        Orders order = Orders.from(orderSaveRequest, foundMember, foundItem);
+        Orders order = Orders.from(foundMember, foundItem);
         orderRepository.save(order);
 
         //제품 재고 감소
@@ -57,7 +59,9 @@ public class OrderService {
      * 판매 승인 - 주문의 상태를 APPROVED로 변경
      */
     public void approveOrder(final Long sellerId, final OrderStatusUpdateRequest orderStatusUpdateRequest) {
+        //판매자 정보 조회 - 존재하지 않으면 예외
         Member foundMember = findMember(sellerId);
+        //주문할 제품 정보 조회 - 존재하지 않으면 예외
         Item foundItem = findItem(orderStatusUpdateRequest.getItemId());
 
         //제품 등록자 ID와 사용자 ID가 일치하지 않으면 판매 승인 권한이 없는 것으로 간주
@@ -65,16 +69,24 @@ public class OrderService {
             throw new IllegalArgumentException("판매 승인 권한이 없습니다.");
         }
 
+        //주문 정보가 존재하는지 확인
         Orders foundOrder = orderRepository.findById(orderStatusUpdateRequest.getOrderId()).orElseThrow(() -> {
             throw new IllegalArgumentException("주문 정보가 존재하지 않습니다.");
         });
+
+        //주문 상태가 구매 예약 상태(RESERVED)가 아니면 판매 승인 불가능
+        if (!foundOrder.getStatus().equals(Orders.OrderStatus.RESERVED)) {
+            throw new IllegalArgumentException("이미 판매 승인된 제품입니다.");
+        }
+
         foundOrder.changeStatus(Orders.OrderStatus.APPROVED);
     }
 
     /**
-     * 구매 승인 - 주문의 상태를 COMPLETE로 변경
+     * 구매 확정 - 주문의 상태를 COMPLETE로 변경
      */
     public void completeOrder(final Long memberId, final OrderStatusUpdateRequest orderStatusUpdateRequest) {
+        //주문 정보 조회 - 주문 정보가 없으면 예외
         Orders foundOrder = orderRepository.findByOrdersId(orderStatusUpdateRequest.getOrderId()).orElseThrow(() -> {
             throw new IllegalArgumentException("주문 정보가 존재하지 않습니다.");
         });
@@ -82,6 +94,11 @@ public class OrderService {
         //주문 등록자가 아니면 구매 승인 권한이 아닌 것으로 간주
         if (!memberId.equals(foundOrder.getMember().getId())) {
             throw new IllegalArgumentException("구매 승인 권한이 없습니다.");
+        }
+
+        //주문 상태가 판매 승인 상태(APPROVED)가 아니면 구매 확정 불가능
+        if (!foundOrder.getStatus().equals(Orders.OrderStatus.APPROVED)) {
+            throw new IllegalArgumentException("구매 확정을 할 수 없는 상태입니다.");
         }
 
         foundOrder.changeStatus(Orders.OrderStatus.COMPLETE);

@@ -28,9 +28,9 @@ public class Orders extends BaseTimeEntity {
     @JoinColumn(name = "item_id", nullable = false)
     private Item item;
 
-    public static Orders from(final OrderSaveRequest orderSaveRequest, final Member member, final Item item) {
+    public static Orders from(final Member member, final Item item) {
         return Orders.builder()
-                .price(orderSaveRequest.getPrice())
+                .price(item.getPrice())
                 .status(OrderStatus.RESERVED)
                 .member(member)
                 .item(item)

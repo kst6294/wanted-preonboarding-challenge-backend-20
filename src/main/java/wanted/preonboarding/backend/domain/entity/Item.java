@@ -18,7 +18,7 @@ public class Item extends BaseTimeEntity {
     private Long id;
     private String name;
     private int price;
-    @Column(columnDefinition = "integer check (stock >= 0)")
+//    @Column(columnDefinition = "integer check (stock >= 0)")
     private int stock;
     @Enumerated(EnumType.STRING)
     private ItemStatus status;
@@ -44,7 +44,9 @@ public class Item extends BaseTimeEntity {
     public void decreaseStock() {
         if (this.stock > 0) {
             this.stock--;
-            this.status = ItemStatus.RESERVED;
+            if (this.stock == 0) {
+                this.status = ItemStatus.RESERVED;
+            }
         }
     }
 
