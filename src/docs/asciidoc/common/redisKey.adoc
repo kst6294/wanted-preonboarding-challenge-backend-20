@@ -1,0 +1,5 @@
+:doctype: book
+:icons: font
+
+[[redis-key]]
+include::{snippets}/common-doc-controller-test/enums/custom-response-fields-redisKey.adoc[]

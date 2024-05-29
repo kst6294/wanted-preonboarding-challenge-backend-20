@@ -1,0 +1,5 @@
+:doctype: book
+:icons: font
+
+[[order-staus]]
+include::{snippets}/common-doc-controller-test/enums/custom-response-fields-orderStatus.adoc[]
