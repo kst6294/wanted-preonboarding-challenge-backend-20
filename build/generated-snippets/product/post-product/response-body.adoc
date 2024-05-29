@@ -2,11 +2,12 @@
 ----
 {
   "data" : {
-    "id" : 6111,
-    "productName" : "lpdjxhyvxl",
-    "price" : 21075821,
+    "id" : 6780,
+    "productName" : "xjqfpohsxd",
+    "price" : 32723279,
     "productStatus" : "ON_STOCK",
-    "seller" : "PcCSiRrJy@wanted.com"
+    "seller" : "j@wanted.com",
+    "quantity" : 3935
   },
   "response" : {
     "status" : 200,

@@ -33,4 +33,10 @@ public class ProductQueryServiceImpl implements ProductQueryService{
         return product;
     }
 
+    @Override
+    public void outOfStock(long productId) {
+        Product product = productFindService.fetchProductEntity(productId);
+        product.outOfStock();
+    }
+
 }

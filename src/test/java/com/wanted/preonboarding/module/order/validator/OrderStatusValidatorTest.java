@@ -104,8 +104,6 @@ class OrderStatusValidatorTest extends SecuritySupportTest {
 
         when(constraintValidatorContext.buildConstraintViolationWithTemplate(anyString()))
                 .thenReturn(constraintViolationBuilder);
-        when(constraintViolationBuilder.addPropertyNode(anyString()))
-                .thenReturn(nodeBuilderCustomizableContext);
 
         boolean result = orderStatusValidator.isValid(updateOrder, constraintValidatorContext);
 
@@ -123,8 +121,6 @@ class OrderStatusValidatorTest extends SecuritySupportTest {
 
         when(constraintValidatorContext.buildConstraintViolationWithTemplate(anyString()))
                 .thenReturn(constraintViolationBuilder);
-        when(constraintViolationBuilder.addPropertyNode(anyString()))
-                .thenReturn(nodeBuilderCustomizableContext);
 
         boolean result = orderStatusValidator.isValid(updateOrder, constraintValidatorContext);
 
@@ -143,8 +139,6 @@ class OrderStatusValidatorTest extends SecuritySupportTest {
 
         when(constraintValidatorContext.buildConstraintViolationWithTemplate(anyString()))
                 .thenReturn(constraintViolationBuilder);
-        when(constraintViolationBuilder.addPropertyNode(anyString()))
-                .thenReturn(nodeBuilderCustomizableContext);
 
         boolean result = orderStatusValidator.isValid(updateOrder, constraintValidatorContext);
 

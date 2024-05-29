@@ -2,9 +2,10 @@
 ----
 $ curl 'http://localhost:8080/api/v1/product' -i -X POST \
     -H 'Content-Type: application/json;charset=UTF-8' \
-    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJQZ2FAd2FudGVkLmNvbSIsInJvbGUiOiJOT1JNQUwiLCJpYXQiOjE3MTY4ODA5ODksImV4cCI6MTcxNjg4NDU4OX0.zz8v-DEBH87wafPT4Q3S0jgmxkD9WmMDHN-dXEQTNn4' \
+    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0Q1NAd2FudGVkLmNvbSIsInJvbGUiOiJOT1JNQUwiLCJpYXQiOjE3MTY5NDk3MjAsImV4cCI6MTcxNjk1MzMyMH0.vNrH4WMZsi2m_5xpQ9oPW9qXA3h0ZJBawA4Dqezjt-E' \
     -d '{
-  "productName" : "lpdjxhyvxl",
-  "price" : 21075821
+  "productName" : "xjqfpohsxd",
+  "price" : 32723279,
+  "quantity" : 1665
 }'
 ----

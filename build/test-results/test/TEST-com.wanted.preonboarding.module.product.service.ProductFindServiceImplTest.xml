@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.wanted.preonboarding.module.product.service.ProductFindServiceImplTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2024-05-28T07:23:10" hostname="lyusang-won-ui-MacBookPro.local" time="0.264">
+<testsuite name="com.wanted.preonboarding.module.product.service.ProductFindServiceImplTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2024-05-29T02:28:41" hostname="lyusang-won-ui-MacBookPro.local" time="0.269">
   <properties/>
-  <testcase name="상품 엔티티 조회 - 실패" classname="com.wanted.preonboarding.module.product.service.ProductFindServiceImplTest" time="0.053"/>
-  <testcase name="상품 목록 조회" classname="com.wanted.preonboarding.module.product.service.ProductFindServiceImplTest" time="0.16"/>
-  <testcase name="상품 엔티티 조회 - 성공" classname="com.wanted.preonboarding.module.product.service.ProductFindServiceImplTest" time="0.023"/>
+  <testcase name="상품 엔티티 조회 - 실패" classname="com.wanted.preonboarding.module.product.service.ProductFindServiceImplTest" time="0.055"/>
+  <testcase name="상품 목록 조회" classname="com.wanted.preonboarding.module.product.service.ProductFindServiceImplTest" time="0.163"/>
+  <testcase name="상품 엔티티 조회 - 성공" classname="com.wanted.preonboarding.module.product.service.ProductFindServiceImplTest" time="0.022"/>
   <testcase name="상품 단일 조회 - 실패" classname="com.wanted.preonboarding.module.product.service.ProductFindServiceImplTest" time="0.001"/>
-  <testcase name="상품 단일 조회 - 성공" classname="com.wanted.preonboarding.module.product.service.ProductFindServiceImplTest" time="0.026"/>
+  <testcase name="상품 단일 조회 - 성공" classname="com.wanted.preonboarding.module.product.service.ProductFindServiceImplTest" time="0.028"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

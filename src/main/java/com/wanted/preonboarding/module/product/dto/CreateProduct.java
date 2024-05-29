@@ -24,6 +24,10 @@ public class CreateProduct implements UserContext {
     @Max(value = 100000000, message = "상품 가격은 최대 100,000,000원 이하입니다." )
     private long price;
 
+    @Min(value = 1, message = "재고는 최소 1개 이상입니다.")
+    @Max(value = 9000, message = "상품 재고는 최대 9000개 입니다." )
+    private int quantity;
+
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
     @Setter

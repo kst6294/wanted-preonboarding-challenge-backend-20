@@ -10,7 +10,8 @@ public enum ProductStatus implements EnumType {
 
     ON_STOCK("판매중"),
     BOOKING("예약중"),
-    OUT_STOCK("완료");
+    OUT_STOCK("완료"),
+    OUT_OF_STOCK("품절");
 
 
     private String displayName;

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.wanted.preonboarding.document.CommonDocControllerTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2024-05-28T07:23:04" hostname="lyusang-won-ui-MacBookPro.local" time="0.054">
+<testsuite name="com.wanted.preonboarding.document.CommonDocControllerTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2024-05-29T02:28:35" hostname="lyusang-won-ui-MacBookPro.local" time="0.041">
   <properties/>
-  <testcase name="enums()" classname="com.wanted.preonboarding.document.CommonDocControllerTest" time="0.054"/>
-  <system-out><![CDATA[2024-05-28T16:23:04.349+09:00  INFO 77007 --- [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.wanted.preonboarding.document.CommonDocControllerTest]: CommonDocControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-2024-05-28T16:23:04.375+09:00  INFO 77007 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.wanted.preonboarding.PreonboardingApplication for test class com.wanted.preonboarding.document.CommonDocControllerTest
+  <testcase name="enums()" classname="com.wanted.preonboarding.document.CommonDocControllerTest" time="0.041"/>
+  <system-out><![CDATA[2024-05-29T11:28:34.672+09:00  INFO 85295 --- [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.wanted.preonboarding.document.CommonDocControllerTest]: CommonDocControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2024-05-29T11:28:34.694+09:00  INFO 85295 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.wanted.preonboarding.PreonboardingApplication for test class com.wanted.preonboarding.document.CommonDocControllerTest
   .   ____          _            __ _ _
  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
 ( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
@@ -13,24 +13,24 @@
 
  :: Spring Boot ::                (v3.3.0)
 
-2024-05-28T16:23:04.394+09:00  INFO 77007 --- [    Test worker] c.w.p.document.CommonDocControllerTest   : Starting CommonDocControllerTest using Java 21.0.3 with PID 77007 (started by sangwon-ryu in /Users/sangwon-ryu/wanted-preonboarding-challenge-backend-20)
-2024-05-28T16:23:04.394+09:00 DEBUG 77007 --- [    Test worker] c.w.p.document.CommonDocControllerTest   : Running with Spring Boot v3.3.0, Spring v6.1.8
-2024-05-28T16:23:04.394+09:00  INFO 77007 --- [    Test worker] c.w.p.document.CommonDocControllerTest   : No active profile set, falling back to 1 default profile: "default"
-2024-05-28T16:23:04.563+09:00  WARN 77007 --- [    Test worker] .s.s.UserDetailsServiceAutoConfiguration : 
+2024-05-29T11:28:34.710+09:00  INFO 85295 --- [    Test worker] c.w.p.document.CommonDocControllerTest   : Starting CommonDocControllerTest using Java 21.0.3 with PID 85295 (started by sangwon-ryu in /Users/sangwon-ryu/wanted-preonboarding-challenge-backend-20)
+2024-05-29T11:28:34.710+09:00 DEBUG 85295 --- [    Test worker] c.w.p.document.CommonDocControllerTest   : Running with Spring Boot v3.3.0, Spring v6.1.8
+2024-05-29T11:28:34.710+09:00  INFO 85295 --- [    Test worker] c.w.p.document.CommonDocControllerTest   : No active profile set, falling back to 1 default profile: "default"
+2024-05-29T11:28:34.855+09:00  WARN 85295 --- [    Test worker] .s.s.UserDetailsServiceAutoConfiguration : 
 
-Using generated security password: 99dfc6d3-d988-4078-804e-69a05895b386
+Using generated security password: d11abbcc-c595-4dac-9cdf-4197d9a584d6
 
 This generated password is for development use only. Your security configuration must be updated before running your application in production.
 
-2024-05-28T16:23:04.563+09:00  INFO 77007 --- [    Test worker] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
-2024-05-28T16:23:04.619+09:00  INFO 77007 --- [    Test worker] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@52afe9f2, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@39d547e, org.springframework.security.web.context.SecurityContextHolderFilter@189283ae, org.springframework.security.web.header.HeaderWriterFilter@1dafe1d2, org.springframework.web.filter.CorsFilter@66efaca, org.springframework.security.web.authentication.logout.LogoutFilter@68073c8d, com.wanted.preonboarding.auth.filter.JwtAuthenticationFilter@6c8057d1, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@3249c81a, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@508a1ef0, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@414dc3ca, org.springframework.security.web.session.SessionManagementFilter@77e86a53, org.springframework.security.web.access.ExceptionTranslationFilter@40fd518f, org.springframework.security.web.access.intercept.AuthorizationFilter@140fc16f]
-2024-05-28T16:23:04.661+09:00  INFO 77007 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
-2024-05-28T16:23:04.661+09:00  INFO 77007 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
-2024-05-28T16:23:04.661+09:00  INFO 77007 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
-2024-05-28T16:23:04.666+09:00  INFO 77007 --- [    Test worker] c.w.p.document.CommonDocControllerTest   : Started CommonDocControllerTest in 0.288 seconds (process running for 8.16)
-2024-05-28T16:23:04.672+09:00  INFO 77007 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
-2024-05-28T16:23:04.672+09:00  INFO 77007 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
-2024-05-28T16:23:04.672+09:00  INFO 77007 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+2024-05-29T11:28:34.856+09:00  INFO 85295 --- [    Test worker] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
+2024-05-29T11:28:34.946+09:00  INFO 85295 --- [    Test worker] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@f6bcac8, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@7b00a3ea, org.springframework.security.web.context.SecurityContextHolderFilter@7f256398, org.springframework.security.web.header.HeaderWriterFilter@569d8002, org.springframework.web.filter.CorsFilter@cd90676, org.springframework.security.web.authentication.logout.LogoutFilter@41a6a728, com.wanted.preonboarding.auth.filter.JwtAuthenticationFilter@43582af1, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@7e944c68, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@44335e28, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@12b485d8, org.springframework.security.web.session.SessionManagementFilter@2e2ff0c4, org.springframework.security.web.access.ExceptionTranslationFilter@20b42094, org.springframework.security.web.access.intercept.AuthorizationFilter@43918bef]
+2024-05-29T11:28:35.005+09:00  INFO 85295 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2024-05-29T11:28:35.006+09:00  INFO 85295 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2024-05-29T11:28:35.006+09:00  INFO 85295 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+2024-05-29T11:28:35.013+09:00  INFO 85295 --- [    Test worker] c.w.p.document.CommonDocControllerTest   : Started CommonDocControllerTest in 0.317 seconds (process running for 6.137)
+2024-05-29T11:28:35.018+09:00  INFO 85295 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2024-05-29T11:28:35.018+09:00  INFO 85295 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2024-05-29T11:28:35.019+09:00  INFO 85295 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
 
 MockHttpServletRequest:
       HTTP Method = GET
@@ -64,7 +64,7 @@ MockHttpServletResponse:
     Error message = null
           Headers = [Vary:"Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers", Content-Type:"application/json;charset=UTF-8", X-Content-Type-Options:"nosniff", X-XSS-Protection:"0", Cache-Control:"no-cache, no-store, max-age=0, must-revalidate", Pragma:"no-cache", Expires:"0", X-Frame-Options:"DENY"]
      Content type = application/json;charset=UTF-8
-             Body = {"data":{"redisKey":{"ORDER_LOCK":"REDIS KEY order_lock, REDIS TTL 1","REFRESH_TOKEN":"REDIS KEY refresh_token, REDIS TTL 60","USERS":"REDIS KEY users, REDIS TTL 60"},"yn":{"Y":"Y means YES, N meas NO","N":"Y means YES, N meas NO"},"memberShip":{"GUEST":"USER MEMBERSHIP","NORMAL":"USER MEMBERSHIP"},"jwtErrorEnum":{"UNSUPPORTED_TOKEN":"JWT ERROR NAME UNSUPPORTED_TOKEN, ERROR MSG Unsupported JWT token.","MALFORMED_TOKEN":"JWT ERROR NAME MALFORMED_TOKEN, ERROR MSG Invalid JWT token.","ILLEGAL_ARGUMENT":"JWT ERROR NAME ILLEGAL_ARGUMENT, ERROR MSG JWT token compact of handler are invalid.","INVALID_SIGNATURE":"JWT ERROR NAME INVALID_SIGNATURE, ERROR MSG Invalid JWT signature.","EXPIRED_TOKEN":"JWT ERROR NAME EXPIRED_TOKEN, ERROR MSG Expired JWT token."},"productStatus":{"OUT_STOCK":"제품의 판매 상태 완료","ON_STOCK":"제품의 판매 상태 판매중","BOOKING":"제품의 판매 상태 예약중"},"orderType":{"PAST":"id ASC","LATEST":"id DESC"},"orderStatus":{"COMPLETED":"Order status: COMPLETED","ORDERED":"Order status: ORDERED","SETTLEMENT":"Order status: SETTLEMENT"},"userRole":{"BUYER":"판매자 / 구매자","SELLER":"판매자 / 구매자"}}}
+             Body = {"data":{"redisKey":{"ORDER_LOCK":"REDIS KEY order_lock, REDIS TTL 1","REFRESH_TOKEN":"REDIS KEY refresh_token, REDIS TTL 60","USERS":"REDIS KEY users, REDIS TTL 60"},"yn":{"Y":"Y means YES, N meas NO","N":"Y means YES, N meas NO"},"memberShip":{"GUEST":"USER MEMBERSHIP","NORMAL":"USER MEMBERSHIP"},"jwtErrorEnum":{"UNSUPPORTED_TOKEN":"JWT ERROR NAME UNSUPPORTED_TOKEN, ERROR MSG Unsupported JWT token.","MALFORMED_TOKEN":"JWT ERROR NAME MALFORMED_TOKEN, ERROR MSG Invalid JWT token.","ILLEGAL_ARGUMENT":"JWT ERROR NAME ILLEGAL_ARGUMENT, ERROR MSG JWT token compact of handler are invalid.","INVALID_SIGNATURE":"JWT ERROR NAME INVALID_SIGNATURE, ERROR MSG Invalid JWT signature.","EXPIRED_TOKEN":"JWT ERROR NAME EXPIRED_TOKEN, ERROR MSG Expired JWT token."},"productStatus":{"OUT_STOCK":"제품의 판매 상태 완료","OUT_OF_STOCK":"제품의 판매 상태 품절","ON_STOCK":"제품의 판매 상태 판매중","BOOKING":"제품의 판매 상태 예약중"},"orderType":{"PAST":"id ASC","LATEST":"id DESC"},"orderStatus":{"COMPLETED":"Order status: COMPLETED","ORDERED":"Order status: ORDERED","SETTLEMENT":"Order status: SETTLEMENT"},"userRole":{"BUYER":"판매자 / 구매자","SELLER":"판매자 / 구매자"}}}
     Forwarded URL = null
    Redirected URL = null
           Cookies = []

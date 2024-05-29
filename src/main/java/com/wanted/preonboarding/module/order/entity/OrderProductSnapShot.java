@@ -24,8 +24,9 @@ public class OrderProductSnapShot {
     @Column(name = "PRICE", nullable = false)
     private long price;
 
-    @Column(name = "PRODUCT_ID", nullable = false)
-    private long productId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "PRODUCT_ID", nullable = false)
+    private Product product;
 
     @Setter
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
@@ -37,7 +38,7 @@ public class OrderProductSnapShot {
         return OrderProductSnapShot.builder()
                 .productName(product.getProductName())
                 .price(product.getPrice())
-                .productId(product.getId())
+                .product(product)
                 .order(order)
                 .build();
     }

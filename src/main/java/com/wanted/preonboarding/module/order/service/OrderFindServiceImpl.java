@@ -4,6 +4,7 @@ package com.wanted.preonboarding.module.order.service;
 import com.wanted.preonboarding.module.common.dto.CustomSlice;
 import com.wanted.preonboarding.module.exception.order.NotFoundOrderException;
 import com.wanted.preonboarding.module.order.core.DetailedOrderContext;
+import com.wanted.preonboarding.module.order.dto.SettlementProductCount;
 import com.wanted.preonboarding.module.order.entity.Order;
 import com.wanted.preonboarding.module.order.filter.OrderFilter;
 import com.wanted.preonboarding.module.order.mapper.OrderSliceMapper;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
@@ -30,11 +32,20 @@ public class OrderFindServiceImpl implements OrderFindService{
         return orderFindRepository.fetchOrderDetail(orderId, email);
     }
 
-
-
     @Override
     public Order fetchOrderEntity(long orderId) {
         return orderFindRepository.fetchOrderEntity(orderId).orElseThrow(()-> new NotFoundOrderException(orderId));
+    }
+
+    @Override
+    public boolean hasPurchaseHistory(long productId) {
+        String email = SecurityUtils.currentUserEmail();
+        return orderFindRepository.hasPurchaseHistory(productId, email);
+    }
+
+    @Override
+    public Optional<SettlementProductCount> fetchSettlementProductCount(long productId) {
+        return orderFindRepository.fetchSettlementProductCount(productId);
     }
 
     @Override

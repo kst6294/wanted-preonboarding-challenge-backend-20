@@ -2,8 +2,8 @@
 ----
 {
   "status" : 400,
-  "message" : "productId 이미 예약중 또는 판매완료 된 상품 입니다. ",
-  "timestamp" : "2024-05-28 16:23:05",
+  "message" : "createOrder 이미 예약중 또는 판매완료 된 상품 입니다. ",
+  "timestamp" : "2024-05-29 11:28:36",
   "error" : "BeanPropertyBindingResult"
 }
 ----

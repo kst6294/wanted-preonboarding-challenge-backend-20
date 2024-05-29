@@ -1,7 +1,8 @@
 [source,json,options="nowrap"]
 ----
 {
-  "productName" : "dcptjvzkof",
-  "price" : 9805189
+  "productName" : "dgjtxxkzkh",
+  "price" : 66144658,
+  "quantity" : 303
 }
 ----

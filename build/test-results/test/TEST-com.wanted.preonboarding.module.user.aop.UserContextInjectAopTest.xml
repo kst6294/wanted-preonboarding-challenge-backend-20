@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.wanted.preonboarding.module.user.aop.UserContextInjectAopTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2024-05-28T07:23:10" hostname="lyusang-won-ui-MacBookPro.local" time="0.016">
+<testsuite name="com.wanted.preonboarding.module.user.aop.UserContextInjectAopTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2024-05-29T02:28:41" hostname="lyusang-won-ui-MacBookPro.local" time="0.015">
   <properties/>
-  <testcase name="UserContext가 설정된 상태에서 Product 생성" classname="com.wanted.preonboarding.module.user.aop.UserContextInjectAopTest" time="0.016"/>
+  <testcase name="UserContext가 설정된 상태에서 Product 생성" classname="com.wanted.preonboarding.module.user.aop.UserContextInjectAopTest" time="0.015"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

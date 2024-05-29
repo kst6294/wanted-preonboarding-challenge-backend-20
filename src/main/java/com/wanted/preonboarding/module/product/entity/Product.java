@@ -1,12 +1,19 @@
 package com.wanted.preonboarding.module.product.entity;
 
 import com.wanted.preonboarding.module.common.entity.BaseEntity;
+import com.wanted.preonboarding.module.exception.product.ProductOutOfStockException;
+import com.wanted.preonboarding.module.order.entity.OrderHistory;
+import com.wanted.preonboarding.module.order.entity.OrderProductSnapShot;
 import com.wanted.preonboarding.module.product.enums.ProductStatus;
 import com.wanted.preonboarding.module.user.entity.Users;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.Cache;
+
+import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 
 @Getter
@@ -33,9 +40,17 @@ public class Product extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private ProductStatus productStatus;
 
+    @Column(name = "QUANTITY", nullable = false)
+    private int quantity;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "USER_ID", nullable = false)
     private Users seller;
+
+    @Builder.Default
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<OrderProductSnapShot> orderProductSnapShots = new HashSet<>();
+
 
     public void setSeller(Users seller) {
         if (this.seller != null) {
@@ -47,9 +62,17 @@ public class Product extends BaseEntity {
         }
     }
 
-    public void doBooking(){
-        productStatus = ProductStatus.BOOKING;
+    public void doBooking() {
+        if (quantity > 0) {
+            quantity--;
+            if (quantity == 0) {
+                productStatus = ProductStatus.BOOKING;
+            }
+        }
     }
 
+    public void outOfStock(){
+        productStatus = ProductStatus.OUT_OF_STOCK;
+    }
 
 }

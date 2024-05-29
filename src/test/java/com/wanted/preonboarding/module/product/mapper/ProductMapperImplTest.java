@@ -15,6 +15,7 @@ import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @ExtendWith(MockitoExtension.class)
 class ProductMapperImplTest {
@@ -22,7 +23,6 @@ class ProductMapperImplTest {
     @InjectMocks
     private ProductMapperImpl productMapper;
 
-    private Users mockUser;
     private CreateProduct createProduct;
     private Product product;
 
@@ -30,7 +30,6 @@ class ProductMapperImplTest {
     @BeforeEach
     void setUp() {
         createProduct = ProductModuleHelper.toCreateProductWithUsers();
-        mockUser = UsersModuleHelper.toUsers();
         product = ProductModuleHelper.toProductWithId(createProduct);
     }
 
@@ -46,6 +45,8 @@ class ProductMapperImplTest {
         assertThat(mappedProduct.getPrice()).isEqualTo(createProduct.getPrice());
         assertThat(mappedProduct.getProductStatus()).isEqualTo(ProductStatus.ON_STOCK);
         assertThat(mappedProduct.getSeller().getEmail()).isEqualTo(createProduct.getUsers().getEmail());
+        assertTrue(mappedProduct.getQuantity() > 0);
+
     }
 
     @Test
@@ -57,6 +58,8 @@ class ProductMapperImplTest {
         assertThat(baseSku.getProductName()).isEqualTo(product.getProductName());
         assertThat(baseSku.getProductStatus()).isEqualTo(product.getProductStatus());
         assertThat(baseSku.getSeller()).isEqualTo(product.getSeller().getEmail());
+        assertTrue(baseSku.getQuantity() > 0);
+
     }
 
 }

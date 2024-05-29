@@ -27,7 +27,6 @@ public class ProductStatusValidator implements ConstraintValidator<ValidProductS
             if (!product.getProductStatus().isOnStock()) {
                 context.disableDefaultConstraintViolation();
                 context.buildConstraintViolationWithTemplate(OUT_OF_STOCK_ERR_MESSAGE)
-                        .addPropertyNode(PRODUCT_FILED)
                         .addConstraintViolation();
                 return false;
             }
@@ -35,7 +34,6 @@ public class ProductStatusValidator implements ConstraintValidator<ValidProductS
         } catch (NotFoundProductException e) {
             context.disableDefaultConstraintViolation();
             context.buildConstraintViolationWithTemplate(e.getMessage())
-                    .addPropertyNode(PRODUCT_FILED)
                     .addConstraintViolation();
             return false;
         }

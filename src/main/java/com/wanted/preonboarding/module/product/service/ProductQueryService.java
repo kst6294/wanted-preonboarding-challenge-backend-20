@@ -9,5 +9,6 @@ public interface ProductQueryService {
     Sku createProduct(CreateProduct createProduct);
 
     Product doBooking(long productId);
+    void outOfStock(long productId);
 
 }

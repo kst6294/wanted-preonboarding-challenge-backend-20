@@ -25,6 +25,7 @@ import com.wanted.preonboarding.module.product.dto.CreateProduct;
 import com.wanted.preonboarding.module.product.entity.Product;
 import com.wanted.preonboarding.module.user.core.BaseUserInfo;
 import com.wanted.preonboarding.module.user.entity.Users;
+import jakarta.validation.ConstraintValidatorContext;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -74,6 +75,9 @@ class OrderControllerTest extends RestDocsTestSupport {
         when(orderQueryService.doOrder(any(CreateOrder.class))).thenReturn(baseOrderContext);
         when(productFindService.fetchProductEntity(anyLong())).thenReturn(product);
         when(orderLockChecker.lock(anyLong())).thenReturn(true);
+
+        when(productStatusValidator.isValid(any(CreateOrder.class), any(ConstraintValidatorContext.class))).thenReturn(true);
+        when(limitPurchaseValidator.isValid(any(CreateOrder.class), any(ConstraintValidatorContext.class))).thenReturn(true);
 
 
 
@@ -169,13 +173,11 @@ class OrderControllerTest extends RestDocsTestSupport {
         //given
         CreateProduct createProduct = ProductModuleHelper.toCreateProductWithUsers();
         Product product = ProductFactory.generateProduct(createProduct);
-        product.doBooking();
+        product.outOfStock();
         CreateOrder createOrder = OrderModuleHelper.toCreateOrder(product);
-        Order order = OrderModuleHelper.toOrderWithId(product, buyer);
 
-        BaseOrderContext baseOrderContext = OrderModuleHelper.toBaseOrderContext(order, buyer.getEmail());
+        when(limitPurchaseValidator.isValid(any(CreateOrder.class), any(ConstraintValidatorContext.class))).thenReturn(false);
 
-        when(orderQueryService.doOrder(any(CreateOrder.class))).thenReturn(baseOrderContext);
         when(productFindService.fetchProductEntity(anyLong())).thenReturn(product);
         when(orderLockChecker.lock(anyLong())).thenReturn(true);
 
@@ -194,6 +196,40 @@ class OrderControllerTest extends RestDocsTestSupport {
                         )
                 ));
     }
+
+    @Test
+    @DisplayName("유효하지 않은 주문 - 이미 구매한 제품")
+    void createOrder_hasPurchaseHistory() throws Exception {
+
+        Users buyer = UsersModuleHelper.toUsersWithId();
+        BaseUserInfo userInfo = AuthModuleHelper.toBaseUserInfo(buyer);
+        when(userFindService.fetchUserInfo(anyString())).thenReturn(userInfo);
+        securityUserMockSetting(buyer);
+
+        //given
+        CreateProduct createProduct = ProductModuleHelper.toCreateProductWithUsers();
+        Product product = ProductFactory.generateProduct(createProduct);
+        CreateOrder createOrder = OrderModuleHelper.toCreateOrder(product);
+
+        when(orderFindService.hasPurchaseHistory(anyLong())).thenReturn(true);
+        when(productFindService.fetchProductEntity(anyLong())).thenReturn(product);
+        when(productStatusValidator.isValid(any(CreateOrder.class), any(ConstraintValidatorContext.class))).thenReturn(true);
+
+        mockMvc.perform(post("/api/v1/order")
+                        .header(AuthConstants.AUTHORIZATION_HEADER, AuthConstants.BEARER_PREFIX + token)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(createOrder)))
+                .andExpect(status().isBadRequest())
+                .andDo(document("order/create-order-has-purchase-history",
+                        requestFields(
+                                fieldWithPath("productId").type(JsonFieldType.NUMBER).description("제품 ID")
+                        ),
+                        responseFields(
+                                errorStatusMsg()
+                        )
+                ));
+    }
+
 
 
     @Test

@@ -69,13 +69,28 @@ class ProductQueryServiceImplTest extends SecuritySupportTest {
 
         CreateProduct createProductWithUsers = ProductModuleHelper.toCreateProductWithUsers();
         Product product = ProductFactory.generateProduct(createProductWithUsers);
-        product.doBooking();
 
         when(productFindService.fetchProductEntity(anyLong())).thenReturn(product);
 
         Product bookedProduct = productQueryService.doBooking(anyLong());
         assertThat(bookedProduct).isNotNull();
-        assertThat(bookedProduct.getProductStatus()).isEqualTo(ProductStatus.BOOKING);
+        assertThat(bookedProduct.getProductStatus()).isEqualTo(ProductStatus.ON_STOCK);
+    }
+
+
+    @Test
+    @DisplayName("Product 품절")
+    void productOutOfStock() {
+
+        CreateProduct createProductWithUsers = ProductModuleHelper.toCreateProductWithUsers();
+        Product product = ProductFactory.generateProduct(createProductWithUsers);
+
+        when(productFindService.fetchProductEntity(anyLong())).thenReturn(product);
+
+        productQueryService.outOfStock(anyLong());
+
+        assertThat(product).isNotNull();
+        assertThat(product.getProductStatus()).isEqualTo(ProductStatus.OUT_OF_STOCK);
     }
 
 }

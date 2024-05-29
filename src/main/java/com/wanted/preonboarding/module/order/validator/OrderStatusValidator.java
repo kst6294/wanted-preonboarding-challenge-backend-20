@@ -17,7 +17,6 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class OrderStatusValidator implements ConstraintValidator<ValidOrderStatus, UpdateOrder> {
 
-    private final static String ORDER_FIELD = "orderId";
     private final OrderFindService orderFindService;
     private final OrderStatusTransitionProvider orderStatusTransitionProvider;
 
@@ -42,7 +41,6 @@ public class OrderStatusValidator implements ConstraintValidator<ValidOrderStatu
         } catch (NotFoundOrderException | InvalidUpdateOrderStatusException | InvalidOrderUpdateIssueException | ProviderMappingException e) {
             context.disableDefaultConstraintViolation();
             context.buildConstraintViolationWithTemplate(e.getMessage())
-                    .addPropertyNode(ORDER_FIELD)
                     .addConstraintViolation();
             return false;
         }

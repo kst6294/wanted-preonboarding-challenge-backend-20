@@ -15,6 +15,7 @@ public class ProductMapperImpl implements ProductMapper{
                 .productName(createProduct.getProductName())
                 .productStatus(ProductStatus.ON_STOCK)
                 .price(createProduct.getPrice())
+                .quantity(createProduct.getQuantity())
                 .build();
 
         product.setSeller(createProduct.getUsers());
@@ -28,6 +29,7 @@ public class ProductMapperImpl implements ProductMapper{
                 .productName(product.getProductName())
                 .productStatus(product.getProductStatus())
                 .seller(product.getSeller().getEmail())
+                .quantity(product.getQuantity())
                 .build();
     }
 }

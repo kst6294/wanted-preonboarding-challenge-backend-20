@@ -86,7 +86,7 @@ class OrderQueryServiceImplTest extends SecuritySupportTest {
         assertThat(orderContext.getProductId()).isEqualTo(product.getId());
         assertThat(orderContext.getSeller()).isEqualTo(product.getSeller().getEmail());
         assertThat(orderContext.getBuyer()).isEqualTo(buyer.getEmail());
-        assertThat(product.getProductStatus()).isEqualTo(ProductStatus.BOOKING);
+        assertThat(product.getProductStatus()).isEqualTo(ProductStatus.ON_STOCK);
         assertThat(savedOrder.getProductSnapShot()).isNotNull();
         assertThat(savedOrder.getOrderHistories()).isNotNull();
 

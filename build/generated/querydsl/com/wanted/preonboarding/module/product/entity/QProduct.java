@@ -35,11 +35,15 @@ public class QProduct extends EntityPathBase<Product> {
     //inherited
     public final StringPath insertOperator = _super.insertOperator;
 
+    public final SetPath<com.wanted.preonboarding.module.order.entity.OrderProductSnapShot, com.wanted.preonboarding.module.order.entity.QOrderProductSnapShot> orderProductSnapShots = this.<com.wanted.preonboarding.module.order.entity.OrderProductSnapShot, com.wanted.preonboarding.module.order.entity.QOrderProductSnapShot>createSet("orderProductSnapShots", com.wanted.preonboarding.module.order.entity.OrderProductSnapShot.class, com.wanted.preonboarding.module.order.entity.QOrderProductSnapShot.class, PathInits.DIRECT2);
+
     public final NumberPath<Long> price = createNumber("price", Long.class);
 
     public final StringPath productName = createString("productName");
 
     public final EnumPath<com.wanted.preonboarding.module.product.enums.ProductStatus> productStatus = createEnum("productStatus", com.wanted.preonboarding.module.product.enums.ProductStatus.class);
+
+    public final NumberPath<Integer> quantity = createNumber("quantity", Integer.class);
 
     public final com.wanted.preonboarding.module.user.entity.QUsers seller;
 

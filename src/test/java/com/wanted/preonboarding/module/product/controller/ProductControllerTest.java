@@ -68,7 +68,9 @@ class ProductControllerTest extends RestDocsTestSupport {
                                 fieldWithPath("productName").type(JsonFieldType.STRING).description("상품 명")
                                         .attributes(field("constraints", "상품명은 100자를 넘어갈 수 없습니다.")),
                                 fieldWithPath("price").type(JsonFieldType.NUMBER).description("상품 가격")
-                                        .attributes(field("constraints", "상품 가격은 최소 0원  최대 100,000,000원 입니다."))
+                                        .attributes(field("constraints", "상품 가격은 최소 0원  최대 100,000,000원 입니다.")),
+                                fieldWithPath("quantity").type(JsonFieldType.NUMBER).description("상품 가격")
+                                        .attributes(field("constraints", "재고는 최소 1개   최대 9000개 이하 입니다."))
                         ),
                         responseFields(
                                 beneathPath("data"),
@@ -76,7 +78,9 @@ class ProductControllerTest extends RestDocsTestSupport {
                                 fieldWithPath("productName").type(JsonFieldType.STRING).description("상품 명"),
                                 fieldWithPath("price").type(JsonFieldType.NUMBER).description("상품 가격"),
                                 fieldWithPath("productStatus").type(JsonFieldType.STRING).description(DocumentLinkGenerator.generateLinkCode(DocumentLinkGenerator.DocUrl.PRODUCT_STATUS)),
-                                fieldWithPath("seller").type(JsonFieldType.STRING).description("상품 등록자 이메일")
+                                fieldWithPath("seller").type(JsonFieldType.STRING).description("상품 등록자 이메일"),
+                                fieldWithPath("quantity").type(JsonFieldType.NUMBER).description("상품 재고")
+
                         ),
                         responseFields(
                                 beneathPath("response"),
@@ -102,7 +106,9 @@ class ProductControllerTest extends RestDocsTestSupport {
                                 fieldWithPath("productName").type(JsonFieldType.STRING).description("상품 명")
                                         .attributes(field("constraints", "상품명은 100자를 넘어갈 수 없습니다.")),
                                 fieldWithPath("price").type(JsonFieldType.NUMBER).description("상품 가격")
-                                        .attributes(field("constraints", "상품 가격은 최소 0원  최대 100,000,000원 입니다."))
+                                        .attributes(field("constraints", "상품 가격은 최소 0원  최대 100,000,000원 입니다.")),
+                                fieldWithPath("quantity").type(JsonFieldType.NUMBER).description("상품 가격")
+                                        .attributes(field("constraints", "재고는 최소 1개   최대 9000개 이하 입니다."))
                         )
                 ));
     }
@@ -131,7 +137,9 @@ class ProductControllerTest extends RestDocsTestSupport {
                                 fieldWithPath("productName").type(JsonFieldType.STRING).description("상품 명"),
                                 fieldWithPath("price").type(JsonFieldType.NUMBER).description("상품 가격"),
                                 fieldWithPath("productStatus").type(JsonFieldType.STRING).description(DocumentLinkGenerator.generateLinkCode(DocumentLinkGenerator.DocUrl.PRODUCT_STATUS)),
-                                fieldWithPath("seller").type(JsonFieldType.STRING).description("상품 등록자 이메일")
+                                fieldWithPath("seller").type(JsonFieldType.STRING).description("상품 등록자 이메일"),
+                                fieldWithPath("quantity").type(JsonFieldType.NUMBER).description("상품 재고")
+
                         ),
                         responseFields(
                                 beneathPath("response"),
@@ -164,7 +172,9 @@ class ProductControllerTest extends RestDocsTestSupport {
                                 fieldWithPath("content[].productName").type(JsonFieldType.STRING).description("상품 명"),
                                 fieldWithPath("content[].price").type(JsonFieldType.NUMBER).description("상품 가격"),
                                 fieldWithPath("content[].productStatus").type(JsonFieldType.STRING).description(DocumentLinkGenerator.generateLinkCode(DocumentLinkGenerator.DocUrl.PRODUCT_STATUS)),
-                                fieldWithPath("content[].seller").type(JsonFieldType.STRING).description("상품 등록자 이메일")
+                                fieldWithPath("content[].seller").type(JsonFieldType.STRING).description("상품 등록자 이메일"),
+                                fieldWithPath("content[].quantity").type(JsonFieldType.NUMBER).description("상품 재고")
+
                         ).and(
                                 sliceDescription()
                         ),

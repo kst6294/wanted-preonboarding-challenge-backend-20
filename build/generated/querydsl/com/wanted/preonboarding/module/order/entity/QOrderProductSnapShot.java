@@ -28,7 +28,7 @@ public class QOrderProductSnapShot extends EntityPathBase<OrderProductSnapShot> 
 
     public final NumberPath<Long> price = createNumber("price", Long.class);
 
-    public final NumberPath<Long> productId = createNumber("productId", Long.class);
+    public final com.wanted.preonboarding.module.product.entity.QProduct product;
 
     public final StringPath productName = createString("productName");
 
@@ -51,6 +51,7 @@ public class QOrderProductSnapShot extends EntityPathBase<OrderProductSnapShot> 
     public QOrderProductSnapShot(Class<? extends OrderProductSnapShot> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
         this.order = inits.isInitialized("order") ? new QOrder(forProperty("order"), inits.get("order")) : null;
+        this.product = inits.isInitialized("product") ? new com.wanted.preonboarding.module.product.entity.QProduct(forProperty("product"), inits.get("product")) : null;
     }
 
 }

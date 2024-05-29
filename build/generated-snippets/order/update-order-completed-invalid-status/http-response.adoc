@@ -11,12 +11,12 @@ Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
 X-Frame-Options: DENY
-Content-Length: 290
+Content-Length: 294
 
 {
   "status" : 400,
-  "message" : "orderId 해당 주문의 주문 상태 변경을 지원 하지 않습니다. 주문 번호 ::: 54604321 현재 주문 상태 ::: ORDERED 변경 불가 상태 ::: SETTLEMENT",
-  "timestamp" : "2024-05-28 16:23:06",
+  "message" : "updateOrder 해당 주문의 주문 상태 변경을 지원 하지 않습니다. 주문 번호 ::: 82601894 현재 주문 상태 ::: ORDERED 변경 불가 상태 ::: SETTLEMENT",
+  "timestamp" : "2024-05-29 11:28:36",
   "error" : "BeanPropertyBindingResult"
 }
 ----

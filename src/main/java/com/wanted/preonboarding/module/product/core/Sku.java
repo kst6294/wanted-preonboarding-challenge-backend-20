@@ -10,5 +10,6 @@ public interface Sku extends LastDomainIdProvider {
     long getPrice();
     ProductStatus getProductStatus();
     String getSeller();
+    int getQuantity();
 
 }

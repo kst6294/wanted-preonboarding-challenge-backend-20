@@ -2,12 +2,13 @@
 ----
 POST /api/v1/product HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJQZ2FAd2FudGVkLmNvbSIsInJvbGUiOiJOT1JNQUwiLCJpYXQiOjE3MTY4ODA5ODksImV4cCI6MTcxNjg4NDU4OX0.zz8v-DEBH87wafPT4Q3S0jgmxkD9WmMDHN-dXEQTNn4
-Content-Length: 56
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0Q1NAd2FudGVkLmNvbSIsInJvbGUiOiJOT1JNQUwiLCJpYXQiOjE3MTY5NDk3MjAsImV4cCI6MTcxNjk1MzMyMH0.vNrH4WMZsi2m_5xpQ9oPW9qXA3h0ZJBawA4Dqezjt-E
+Content-Length: 77
 Host: localhost:8080
 
 {
-  "productName" : "lpdjxhyvxl",
-  "price" : 21075821
+  "productName" : "xjqfpohsxd",
+  "price" : 32723279,
+  "quantity" : 1665
 }
 ----

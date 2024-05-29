@@ -17,13 +17,15 @@ public class BaseSku implements Sku {
     private long price;
     private ProductStatus productStatus;
     private String seller;
+    private int quantity;
 
     @QueryProjection
-    public BaseSku(Long id, String productName, long price, ProductStatus productStatus, String seller) {
+    public BaseSku(Long id, String productName, long price, ProductStatus productStatus, String seller, int quantity) {
         this.id = id;
         this.productName = productName;
         this.price = price;
         this.productStatus = productStatus;
         this.seller = seller;
+        this.quantity = quantity;
     }
 }

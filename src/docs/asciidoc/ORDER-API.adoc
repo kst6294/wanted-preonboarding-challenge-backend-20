@@ -32,6 +32,12 @@ include::{snippets}/order/create-order-out-of-stock/http-request.adoc[]
 include::{snippets}/order/create-order-out-of-stock/request-fields.adoc[]
 include::{snippets}/order/create-order-out-of-stock/response-fields.adoc[]
 
+=== 유효하지 않은 주문 - 구매 이력이 존재하는 제품
+
+include::{snippets}/order/create-order-has-purchase-history/http-request.adoc[]
+include::{snippets}/order/create-order-has-purchase-history/request-fields.adoc[]
+include::{snippets}/order/create-order-has-purchase-history/response-fields.adoc[]
+
 == 주문 수정
 
 === 주문 수정 요청 - COMPLETED
@@ -49,7 +55,7 @@ include::{snippets}/order/update-order-completed/response-fields-beneath-data.ad
 
 include::{snippets}/order/update-order-completed-invalid-status/http-request.adoc[]
 include::{snippets}/order/update-order-completed-invalid-status/request-fields.adoc[]
-include::{snippets}/order/update-order-completed-invalid-status/response-fields.adoc[]
+include::{snippets}/order/update-order-completed-invalid-status/response-body.adoc[]
 
 === 주문 수정 요청 - SETTLEMENT
 
@@ -66,7 +72,7 @@ include::{snippets}/order/update-order-settlement/response-fields-beneath-data.a
 
 include::{snippets}/order/update-order-settlement-invalid-status/http-request.adoc[]
 include::{snippets}/order/update-order-settlement-invalid-status/request-fields.adoc[]
-include::{snippets}/order/update-order-settlement-invalid-status/response-fields.adoc[]
+include::{snippets}/order/update-order-settlement-invalid-status/response-body.adoc[]
 
 == 주문 조회
 

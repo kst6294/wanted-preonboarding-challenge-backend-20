@@ -1,5 +1,6 @@
 package com.wanted.preonboarding.module.order.dto;
 
+import com.wanted.preonboarding.module.order.validator.ValidLimitPurchase;
 import com.wanted.preonboarding.module.order.validator.ValidOrder;
 import com.wanted.preonboarding.module.order.validator.ValidProductStatus;
 import jakarta.validation.constraints.Min;
@@ -9,6 +10,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+@ValidLimitPurchase
 @ValidProductStatus
 @ValidOrder
 @Getter

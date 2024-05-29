@@ -20,4 +20,8 @@
 |`+String+`
 |true
 |상품 등록자 이메일
+|`+quantity+`
+|`+Number+`
+|true
+|상품 재고
 |===

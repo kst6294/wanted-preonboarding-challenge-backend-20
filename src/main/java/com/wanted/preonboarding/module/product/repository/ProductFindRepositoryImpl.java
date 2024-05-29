@@ -35,7 +35,8 @@ public class ProductFindRepositoryImpl extends AbstractCommonRepository implemen
                                 product.productName,
                                 product.price,
                                 product.productStatus,
-                                users.email
+                                users.email,
+                                product.quantity
                         ))
                         .from(product)
                         .innerJoin(product.seller, users)
@@ -68,7 +69,8 @@ public class ProductFindRepositoryImpl extends AbstractCommonRepository implemen
                                 product.productName,
                                 product.price,
                                 product.productStatus,
-                                users.email
+                                users.email,
+                                product.quantity
                         ))
                 .from(product)
                 .innerJoin(product.seller, users)

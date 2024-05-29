@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.wanted.preonboarding.module.product.service.ProductQueryServiceImplTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2024-05-28T07:23:10" hostname="lyusang-won-ui-MacBookPro.local" time="0.14">
+<testsuite name="com.wanted.preonboarding.module.product.service.ProductQueryServiceImplTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2024-05-29T02:28:41" hostname="lyusang-won-ui-MacBookPro.local" time="0.169">
   <properties/>
-  <testcase name="Product 예약" classname="com.wanted.preonboarding.module.product.service.ProductQueryServiceImplTest" time="0.111"/>
-  <testcase name="Product 생성" classname="com.wanted.preonboarding.module.product.service.ProductQueryServiceImplTest" time="0.028"/>
+  <testcase name="Product 품절" classname="com.wanted.preonboarding.module.product.service.ProductQueryServiceImplTest" time="0.112"/>
+  <testcase name="Product 예약" classname="com.wanted.preonboarding.module.product.service.ProductQueryServiceImplTest" time="0.025"/>
+  <testcase name="Product 생성" classname="com.wanted.preonboarding.module.product.service.ProductQueryServiceImplTest" time="0.03"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

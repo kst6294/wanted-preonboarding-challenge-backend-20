@@ -70,21 +70,12 @@ class ProductStatusValidatorTest {
         product.doBooking();
         when(productFindService.fetchProductEntity(anyLong())).thenReturn(product);
 
-        when(constraintValidatorContext.buildConstraintViolationWithTemplate(anyString()))
-                .thenReturn(constraintViolationBuilder);
-        when(constraintViolationBuilder.addPropertyNode(anyString()))
-                .thenReturn(nodeBuilderCustomizableContext);
-
         // when
         boolean result = productStatusValidator.isValid(createOrder, constraintValidatorContext);
 
         // then
-        assertFalse(result);
+        assertTrue(result);
         verify(productFindService).fetchProductEntity(createOrder.getProductId());
-        verify(constraintValidatorContext).disableDefaultConstraintViolation();
-        verify(constraintValidatorContext).buildConstraintViolationWithTemplate(anyString());
-        verify(constraintViolationBuilder).addPropertyNode(anyString());
-        verify(nodeBuilderCustomizableContext).addConstraintViolation();
     }
 
     @Test
@@ -96,8 +87,7 @@ class ProductStatusValidatorTest {
 
         when(constraintValidatorContext.buildConstraintViolationWithTemplate(anyString()))
                 .thenReturn(constraintViolationBuilder);
-        when(constraintViolationBuilder.addPropertyNode(anyString()))
-                .thenReturn(nodeBuilderCustomizableContext);
+
 
         // when
         boolean result = productStatusValidator.isValid(createOrder, constraintValidatorContext);
@@ -107,8 +97,7 @@ class ProductStatusValidatorTest {
         verify(productFindService).fetchProductEntity(createOrder.getProductId());
         verify(constraintValidatorContext).disableDefaultConstraintViolation();
         verify(constraintValidatorContext).buildConstraintViolationWithTemplate(anyString());
-        verify(constraintViolationBuilder).addPropertyNode(anyString());
-        verify(nodeBuilderCustomizableContext).addConstraintViolation();
+
     }
 
 

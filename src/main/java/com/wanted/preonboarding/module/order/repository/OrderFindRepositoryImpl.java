@@ -7,7 +7,10 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.wanted.preonboarding.module.common.repository.AbstractCommonRepository;
 import com.wanted.preonboarding.module.order.core.DetailedOrderContext;
 import com.wanted.preonboarding.module.order.core.QDetailedOrderContext;
+import com.wanted.preonboarding.module.order.dto.QSettlementProductCount;
+import com.wanted.preonboarding.module.order.dto.SettlementProductCount;
 import com.wanted.preonboarding.module.order.entity.Order;
+import com.wanted.preonboarding.module.order.enums.OrderStatus;
 import com.wanted.preonboarding.module.order.enums.UserRole;
 import com.wanted.preonboarding.module.order.filter.OrderFilter;
 import com.wanted.preonboarding.module.user.entity.QUsers;
@@ -21,6 +24,7 @@ import java.util.Optional;
 import static com.wanted.preonboarding.module.order.entity.QOrder.order;
 import static com.wanted.preonboarding.module.order.entity.QOrderHistory.orderHistory;
 import static com.wanted.preonboarding.module.order.entity.QOrderProductSnapShot.orderProductSnapShot;
+import static com.wanted.preonboarding.module.product.entity.QProduct.product;
 
 @Repository
 @RequiredArgsConstructor
@@ -32,12 +36,11 @@ public class OrderFindRepositoryImpl extends AbstractCommonRepository implements
     public List<DetailedOrderContext> fetchOrderDetail(long orderId, String email) {
         QUsers seller = new QUsers("seller");
         QUsers buyer = new QUsers("buyer");
-
         return queryFactory
                 .select(
                         new QDetailedOrderContext(
                                 order.id,
-                                orderProductSnapShot.productId,
+                                orderProductSnapShot.product.id,
                                 buyer.email,
                                 seller.email,
                                 orderHistory.orderStatus,
@@ -68,7 +71,7 @@ public class OrderFindRepositoryImpl extends AbstractCommonRepository implements
                 .select(
                         new QDetailedOrderContext(
                                 order.id,
-                                orderProductSnapShot.productId,
+                                orderProductSnapShot.product.id,
                                 buyer.email,
                                 seller.email,
                                 order.orderStatus,
@@ -102,9 +105,50 @@ public class OrderFindRepositoryImpl extends AbstractCommonRepository implements
         );
     }
 
+    @Override
+    public boolean hasPurchaseHistory(long productId, String email) {
+        Long l = queryFactory
+                .select(orderProductSnapShot.id)
+                .from(orderProductSnapShot)
+                .innerJoin(orderProductSnapShot.order, order)
+                .where(productIdEq(productId), buyerEmailEq(email))
+                .fetchOne();
+
+        return l != null;
+    }
+
+    @Override
+    public Optional<SettlementProductCount> fetchSettlementProductCount(long productId) {
+        return Optional.ofNullable(queryFactory
+                .select(
+                        new QSettlementProductCount(
+                                product.quantity,
+                                orderProductSnapShot.count()
+                        )
+                )
+                .from(orderProductSnapShot)
+                .innerJoin(orderProductSnapShot.order, order)
+                .innerJoin(orderProductSnapShot.product, product)
+                .where(productIdEq(productId), orderOrderedOrCompleted())
+                .groupBy(product.id, orderProductSnapShot.id)
+                .fetchOne());
+    }
+
 
     private BooleanExpression orderIdEq(long orderId) {
         return order.id.eq(orderId);
+    }
+
+    private BooleanExpression productIdEq(long productId){
+        return orderProductSnapShot.product.id.eq(productId);
+    }
+
+    private BooleanExpression orderOrderedOrCompleted() {
+        return order.orderStatus.eq(OrderStatus.ORDERED).or(order.orderStatus.eq(OrderStatus.COMPLETED));
+    }
+
+    protected BooleanExpression buyerEmailEq(String buyerEmail){
+        return order.buyer.email.eq(buyerEmail);
     }
 
     private BooleanExpression emailEq(String email) {
