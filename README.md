@@ -5,7 +5,7 @@ Java 17, Spring Boot, JPA, H2 DB, JUnit5
 
 
 ### ERD
-![PreOnBoardingERD](https://github.com/BeefCutlet/wanted-preonboarding-challenge-backend-20/assets/77325024/48af9be9-224e-4ad1-b8c3-75396e4b35f9)
+![PreOnBoardingERD](https://github.com/BeefCutlet/wanted-preonboarding-challenge-backend-20/assets/77325024/c528f552-ea56-4ae8-94ab-b9c965730942)
 
 
 
