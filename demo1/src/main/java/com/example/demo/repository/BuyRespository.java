@@ -29,6 +29,8 @@ public interface BuyRespository extends JpaRepository<Buy, Long> {
 
 
     List<Buy> findByIdAndSellId(Long id, Long sellId);
+    List<Buy> findByIdAndPurchaseId(Long id, Long purchaseId);
+
     List<Buy> findByItem(Item item);
 
 }

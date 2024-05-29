@@ -4,6 +4,7 @@ import com.example.demo.dto.request.ItemBuy;
 import com.example.demo.dto.request.ItemSave;
 import com.example.demo.entity.Item;
 import com.example.demo.entity.ItemState;
+import com.example.demo.exception.ItemBuyException;
 import com.example.demo.service.ItemService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -38,11 +39,12 @@ public class ItemController {
             return ResponseEntity.ok().build();
         }
 
-        return ResponseEntity.badRequest().body("실패");
+        return ResponseEntity.badRequest().build();
+
     }
 
     @GetMapping("/api/v1/item/{id}")
-    public ResponseEntity<?> item(@PathVariable Long id){
+    public ResponseEntity<?> item(@PathVariable("id") Long id){
         return ResponseEntity.ok(itemService.findOne(id));
     }
 

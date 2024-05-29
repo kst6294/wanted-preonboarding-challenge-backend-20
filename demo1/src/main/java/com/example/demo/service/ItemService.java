@@ -8,6 +8,7 @@ import com.example.demo.dto.response.ItemResponse;
 import com.example.demo.entity.Buy;
 import com.example.demo.entity.Item;
 import com.example.demo.entity.Member;
+import com.example.demo.exception.ItemBuyException;
 import com.example.demo.repository.BuyRespository;
 import com.example.demo.repository.ItemRepository;
 import com.example.demo.repository.MemberRepository;
@@ -62,39 +63,35 @@ public class ItemService {
         //Member의 id value
         Member member = findbyEmail(authentication);
 
-        Item item = itemRepository.findById(itemBuy.id())
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 상품입니다."));
+        Item item = itemRepository.findById(itemBuy.item_id())
+                .orElseThrow(() -> new ItemBuyException("존재하지 않는 상품입니다."));
 
-        //한 명이 구매할 수 있는 수량은 1개에 대한 검증 로직
-        //item_id와 purchase_id를 조회했을 때 값이 있으면 false
-        List<Buy> buyValue = buyRespository.findByPurchaseIdAndItem(member.getId(), item);
-        if(buyValue.size() != 0){
-            return false;
-        }
 
         //0개일때 거래 불가능
         if(item.getQuantity() == 0){
-            return false;
+            throw new ItemBuyException("아이템 잔여가 0개입니다.");
         }
 
         //===============================로직 시작 ==============================//
         //1. 사용자가 아이템 구매시 로직
         if(itemBuy.itemState().equals(RESERVED)){
+            //한 명이 구매할 수 있는 수량은 1개에 대한 검증 로직
+            //item_id와 purchase_id를 조회했을 때 값이 있으면 false
            return reservedItem(item, member, itemBuy);
         }
 
         //2. 사용자가 판매승인 하는 로직
         if(itemBuy.itemState().equals(SOLD)){
-            //판매승인 했을시 Item에서 현재 아이템 개수에서 -1
-            if(soldItem(member, itemBuy)){
-                return reduceItem(item);
-
-            }
+            return soldItem(member, itemBuy);
         }
 
         //3. 구매자가 구매확정 하는 로직
         if(itemBuy.itemState().equals(PURCHASE)){
-            return soldItem(member, itemBuy);
+            //판매승인 했을시 Item에서 현재 아이템 개수에서 -1
+            if(purchaseItem(member, itemBuy)){
+                return reduceItem(item);
+            }
+
         }
 
         return false;
@@ -103,7 +100,7 @@ public class ItemService {
     @Transactional(readOnly = true)
     public ItemResponse findOne(Long id) {
         Item item = itemRepository.findById(id)
-                .orElseThrow();
+                .orElseThrow(() -> new ItemBuyException("존재하지 않는 상품입니다."));
 
         ItemResponse itemResponse = new ItemResponse(item);
 
@@ -123,8 +120,8 @@ public class ItemService {
         //Member의 id value
         Member member = findbyEmail(authentication);
 
-        Item item = itemRepository.findById(itemBuy.id())
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 상품입니다."));
+        Item item = itemRepository.findById(itemBuy.item_id())
+                .orElseThrow(() -> new ItemBuyException("존재하지 않는 상품입니다."));
 
         List<Buy> buys = buyRespository.findHistory(member.getId(), item.getMember().getId());
 
@@ -153,25 +150,44 @@ public class ItemService {
     }
 
     private boolean reservedItem(Item item, Member member, ItemBuy itemBuy){
-        //판매자와 구매자가 동일한 사람일 시 예외
 
-        if(!item.getMember().getId().equals(member.getId())){
-            Buy buy = new Buy(item.getMember().getId(), member.getId(), item.getPrice(), itemBuy.itemState(), item);
-            return buyRespository.save(buy).getSellId().equals(buy.getSellId());
+        List<Buy> buyValue = buyRespository.findByPurchaseIdAndItem(member.getId(), item);
+
+        if(buyValue.size() != 0){
+            throw new ItemBuyException("한 명당 한개의 아이템만 구매할수 있습니다.");
         }
-        return false;
+
+        //판매자와 구매자가 동일한 사람일 시 예외
+        if(item.getMember().getId().equals(member.getId())){
+            throw new ItemBuyException("판매자와 구매자가 동일한 사람");
+        }
+
+        Buy buy = new Buy(item.getMember().getId(), member.getId(), item.getPrice(), itemBuy.itemState(), item);
+        return buyRespository.save(buy).getSellId().equals(buy.getSellId());
+
     }
 
     private boolean soldItem(Member member, ItemBuy itemBuy){
-        //아이템 id + 판매자 id가 동일할때 진행 가능 ..
+        //아이템 id + 판매자 id가 동일할때 진행 가능
         List<Buy> buy = buyRespository.findByIdAndSellId(itemBuy.id(), member.getId());
-        log.info("buy 값 = {}", buy);
 
-        if(buy.size() != 0){
-            buy.get(0).changeItemState(itemBuy.itemState());
-            return true;
+        if(buy.size() == 0){
+            throw new ItemBuyException("아이템과 판매자 아이디가 동일하지 않습니다.");
         }
-        return false;
+        buy.get(0).changeItemState(itemBuy.itemState());
+        return true;
+
+    }
+
+    private boolean purchaseItem(Member member, ItemBuy itemBuy){
+        //아이템 id + 구매자 id가 동일할때 진행 가능
+        List<Buy> buy = buyRespository.findByIdAndPurchaseId(itemBuy.id(), member.getId());
+
+        if(buy.size() == 0){
+            throw new ItemBuyException("아이템과 구매자 아이디가 동일하지 않습니다.");
+        }
+        buy.get(0).changeItemState(itemBuy.itemState());
+        return true;
 
     }
 
@@ -187,15 +203,19 @@ public class ItemService {
         List<Buy> buy = buyRespository.findByItem(item);
         int checkPurchase = 0;
         for(Buy resultBuy : buy){
+            //구매확정이 되었을 떄 checkPurchase 증가
             if(resultBuy.getItemState().equals(PURCHASE)){
                 checkPurchase += 1;
             }
         }
-        if(item.getQuantity()  == 0 && checkPurchase != 0){
+
+
+        //item의 개수가 0 이거나 구매확정 갯수가 한개라도 있으면 예약 완료
+        if(item.getQuantity()  == 0 && checkPurchase == 0){
             item.changeItemState(RESERVED);
         }
 
-        if(item.getQuantity()  == 0 && checkPurchase == 0){
+        if(item.getQuantity()  == 0 && checkPurchase != 0){
             item.changeItemState(SOLD);
         }
 
@@ -205,7 +225,7 @@ public class ItemService {
 
     private Member findbyEmail(Authentication authentication){
         Member member = memberRepository.findByEmail(authentication.getName())
-                .orElseThrow(() -> new UsernameNotFoundException("등록되지 않은 이메일입니다."));
+                .orElseThrow(() -> new ItemBuyException("등록되지않은 이메일입니다."));
 
         return member;
     }
