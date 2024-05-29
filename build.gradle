@@ -6,15 +6,22 @@ plugins {
 
 group = 'org.example'
 version = '0.0.1-SNAPSHOT'
+description = 'szs subject test'
 
-java {
-	sourceCompatibility = '17'
+def mapstructVersion = "1.5.3.Final"
+def jwtVersion = "0.11.5"
+
+
+tasks.withType(JavaCompile).configureEach {
+	sourceCompatibility = JavaVersion.VERSION_17
+	sourceCompatibility = JavaVersion.VERSION_17
 }
 
 configurations {
 	compileOnly {
 		extendsFrom annotationProcessor
 	}
+	testCompile.extendsFrom implementation
 }
 
 repositories {
@@ -22,15 +29,46 @@ repositories {
 }
 
 dependencies {
+	/* spring */
+	implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0'
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+	/* db */
+	runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
+
+	/* lombok */
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
+
+	/* mapstruct */
+	implementation "org.mapstruct:mapstruct:${mapstructVersion}"
+	annotationProcessor "org.mapstruct:mapstruct-processor:${mapstructVersion}"
+	annotationProcessor 'org.projectlombok:lombok-mapstruct-binding:0.2.0'
+
+	implementation 'com.google.code.gson:gson:2.7'
+
+	/* jwt */
+	implementation "io.jsonwebtoken:jjwt-api:${jwtVersion}"
+	runtimeOnly "io.jsonwebtoken:jjwt-impl:${jwtVersion}"
+	runtimeOnly "io.jsonwebtoken:jjwt-jackson:${jwtVersion}"
+
+	/* test */
+	testImplementation 'com.h2database:h2'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
-	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
-tasks.named('test') {
-	useJUnitPlatform()
+test {
+	systemProperty 'spring.datasource.url', 'jdbc:h2:mem:testdb'
+	systemProperty 'spring.datasource.driverClassName', 'org.h2.Driver'
+	systemProperty 'spring.datasource.username', 'sa'
+	systemProperty 'spring.datasource.password', 'root'
+	systemProperty 'spring.jpa.database-platform', 'org.hibernate.dialect.H2Dialect'
 }

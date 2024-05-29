@@ -1,0 +1,29 @@
+### signup
+POST {{host}}/auth/signup
+Content-Type: application/json
+
+{
+  "userId": "aaa",
+  "name":"testName",
+  "password":"bbb",
+  "regNo":"111111-222222"
+}
+
+### login
+POST {{host}}/api/login
+Content-Type: application/json
+
+{
+  "userId": "admin",
+  "password":"admin"
+}
+> {%
+    client.test("Validate", function() {
+        client.assert(response.status === 200, "Response status is not 200");
+        client.assert(response.contentType.mimeType === "application/json", "Expected 'application/json'");
+        client.assert(response.body.data.accessToken.trim().length > 0);
+    });
+
+    client.log(response.body.data.accessToken);
+    client.global.set("accessToken",response.body.data.accessToken)
+%}
