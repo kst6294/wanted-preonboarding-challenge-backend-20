@@ -1,0 +1,18 @@
+spring:
+  datasource:
+    url: ${DATABASE_URL}
+    username: ${DATABASE_USERNAME}
+    password: ${DATABASE_PASSWORD}
+  jpa:
+    open-in-view: false
+    defer-datasource-initialization: true
+    hibernate.ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate.format_sql: true
+      hibernate.default_batch_fetch_size: 100
+  sql.init.mode: always
+
+
+JwtSecretKey: "!@DAaagkdf%^"
+EncodingSecretKey : "@)32kfuejo!@hu@#$uiuha$@iujwnqh!"
