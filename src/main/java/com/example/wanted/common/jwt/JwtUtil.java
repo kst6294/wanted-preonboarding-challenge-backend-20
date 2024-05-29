@@ -1,10 +1,9 @@
 package com.example.wanted.common.jwt;
 
-import com.example.wanted.domain.user.UserEntity;
+import com.example.wanted.user.infrastucture.UserEntity;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;

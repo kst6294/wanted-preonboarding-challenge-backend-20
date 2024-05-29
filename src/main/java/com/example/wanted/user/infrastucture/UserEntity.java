@@ -1,6 +1,6 @@
-package com.example.wanted.domain.user;
+package com.example.wanted.user.infrastucture;
 
-import com.example.wanted.domain.user.ENUM.Role;
+import com.example.wanted.user.domain.Role;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -26,7 +26,7 @@ public class UserEntity {
     private String password;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "ROLE", nullable = false)
+    @Column(nullable = false)
     private Role role;
 
     @Builder

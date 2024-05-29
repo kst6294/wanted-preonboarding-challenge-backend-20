@@ -1,17 +1,14 @@
-package com.example.wanted.service.user;
+package com.example.wanted.user.service;
 
 import com.example.wanted.common.exception.LoginCheckFailException;
 import com.example.wanted.common.exception.ResourceNotFoundException;
 import com.example.wanted.common.jwt.JwtUtil;
-import com.example.wanted.controller.user.request.UserCreateRequest;
-import com.example.wanted.controller.user.request.UserLoginRequest;
-import com.example.wanted.domain.user.UserEntity;
-import com.example.wanted.domain.user.UserRepository;
+import com.example.wanted.user.controller.request.UserCreateRequest;
+import com.example.wanted.user.controller.request.UserLoginRequest;
+import com.example.wanted.user.infrastucture.UserEntity;
+import com.example.wanted.user.infrastucture.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
-
-import javax.naming.AuthenticationException;
 
 @Service
 @RequiredArgsConstructor

@@ -1,4 +1,4 @@
-package com.example.wanted.controller.user.response;
+package com.example.wanted.user.controller.response;
 
 import lombok.Builder;
 import lombok.Getter;

@@ -1,10 +1,10 @@
-package com.example.wanted.controller.user;
+package com.example.wanted.user.controller;
 
-import com.example.wanted.controller.user.request.UserCreateRequest;
-import com.example.wanted.controller.user.request.UserLoginRequest;
-import com.example.wanted.controller.user.response.TokenResponse;
-import com.example.wanted.controller.user.response.UserResponse;
-import com.example.wanted.service.user.UserService;
+import com.example.wanted.user.controller.request.UserCreateRequest;
+import com.example.wanted.user.controller.request.UserLoginRequest;
+import com.example.wanted.user.controller.response.TokenResponse;
+import com.example.wanted.user.controller.response.UserResponse;
+import com.example.wanted.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;

@@ -1,6 +1,6 @@
-package com.example.wanted.controller.user.response;
+package com.example.wanted.user.controller.response;
 
-import com.example.wanted.domain.user.UserEntity;
+import com.example.wanted.user.infrastucture.UserEntity;
 import lombok.Builder;
 import lombok.Getter;
 

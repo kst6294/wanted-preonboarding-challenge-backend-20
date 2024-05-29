@@ -1,7 +1,7 @@
-package com.example.wanted.controller.user.request;
+package com.example.wanted.user.controller.request;
 
-import com.example.wanted.domain.user.ENUM.Role;
-import com.example.wanted.domain.user.UserEntity;
+import com.example.wanted.user.domain.Role;
+import com.example.wanted.user.infrastucture.UserEntity;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 import lombok.Getter;
