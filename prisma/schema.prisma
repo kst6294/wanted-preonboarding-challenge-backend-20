@@ -8,44 +8,69 @@ datasource db {
 }
 
 /// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
-model product_tb {
-  idx            Int              @id @default(autoincrement())
-  user_idx       Int
-  name           String           @db.VarChar
-  price          Int
-  status         String           @db.VarChar
-  created_at     DateTime         @default(now()) @db.Timestamptz(6)
-  updated_at     DateTime         @default(now()) @db.Timestamptz(6)
-  deleted_at     DateTime?        @db.Timestamptz(6)
-  user_tb        user_tb          @relation(fields: [user_idx], references: [idx], onDelete: NoAction, onUpdate: NoAction, map: "fk_user_tb_to_product_tb")
-  transaction_tb transaction_tb[]
-}
-
-/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
-model transaction_tb {
-  idx         Int        @id @default(autoincrement())
-  user_idx    Int
-  product_idx Int
+model Product {
+  idx         Int           @id @default(autoincrement())
+  userIdx     Int           @map("user_idx")
+  name        String        @db.VarChar
   price       Int
-  status      String     @db.VarChar
-  created_at  DateTime   @default(now()) @db.Timestamptz(6)
-  updated_at  DateTime   @default(now()) @db.Timestamptz(6)
-  deleted_at  DateTime?  @db.Timestamptz(6)
-  product_tb  product_tb @relation(fields: [product_idx], references: [idx], onDelete: NoAction, onUpdate: NoAction, map: "fk_product_tb_to_transaction_tb")
-  user_tb     user_tb    @relation(fields: [user_idx], references: [idx], onDelete: NoAction, onUpdate: NoAction, map: "fk_user_tb_to_transaction_tb")
+  createdAt   DateTime      @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt   DateTime      @default(now()) @map("updated_at") @db.Timestamptz(6)
+  deletedAt   DateTime?     @map("deleted_at") @db.Timestamptz(6)
+  status      ProductStatus @default(AVAILABLE)
+  User        User          @relation(fields: [userIdx], references: [idx], onDelete: NoAction, onUpdate: NoAction, map: "fk_user_tb_to_product_tb")
+  Transaction Transaction[]
+
+  @@map("product_tb")
 }
 
 /// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
-model user_tb {
-  idx            Int              @id @default(autoincrement())
-  name           String           @db.VarChar
-  email          Int              @default(autoincrement())
-  password       String           @db.Char(60)
-  created_at     DateTime         @default(now()) @db.Timestamptz(6)
-  updated_at     DateTime         @default(now()) @db.Timestamptz(6)
-  deleted_at     DateTime?        @db.Timestamptz(6)
-  product_tb     product_tb[]
-  transaction_tb transaction_tb[]
+model Transaction {
+  idx        Int               @id @default(autoincrement())
+  userIdx    Int               @map("user_idx")
+  productIdx Int               @map("product_idx")
+  price      Int
+  createdAt  DateTime          @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt  DateTime          @default(now()) @map("updated_at") @db.Timestamptz(6)
+  deletedAt  DateTime?         @map("deleted_at") @db.Timestamptz(6)
+  status     TransactionStatus @default(RESERVED)
+  Product    Product           @relation(fields: [productIdx], references: [idx], onDelete: NoAction, onUpdate: NoAction, map: "fk_product_tb_to_transaction_tb")
+  User       User              @relation(fields: [userIdx], references: [idx], onDelete: NoAction, onUpdate: NoAction, map: "fk_user_tb_to_transaction_tb")
 
-  @@unique([email, deleted_at], map: "email_deleted_at_unique")
+  @@unique([userIdx, productIdx], map: "transaction_tb_pk")
+  @@map("transaction_tb")
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model User {
+  idx         Int           @id @default(autoincrement())
+  name        String        @db.VarChar
+  email       String        @db.VarChar
+  password    String        @db.Char(60)
+  createdAt   DateTime      @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt   DateTime      @default(now()) @map("updated_at") @db.Timestamptz(6)
+  deletedAt   DateTime?     @map("deleted_at") @db.Timestamptz(6)
+  Product     Product[]
+  Transaction Transaction[]
+
+  @@unique([email, deletedAt], map: "email_deleted_at_unique")
+  @@map("user_tb")
+}
+
+enum ProductStatus {
+  // 판매 중
+  AVAILABLE
+  
+  // 예약 중
+  RESERVED
+
+  // 판매 완료
+  SOLD
+}
+
+enum TransactionStatus {
+  // 예약 중
+  RESERVED
+
+  // 판매 승인
+  Confirm
 }

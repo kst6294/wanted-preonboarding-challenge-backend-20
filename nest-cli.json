@@ -9,7 +9,8 @@
         "name": "@nestjs/swagger",
         "options": {
           "classValidatorShim": false,
-          "introspectComments": true
+          "introspectComments": true,
+          "controllerKeyOfComment": "summary"
         }
       }
     ]
