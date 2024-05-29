@@ -11,3 +11,16 @@ include::{snippets}/common-doc-controller-test/enums/custom-response-fields-redi
 
 == YN
 include::{snippets}/common-doc-controller-test/enums/custom-response-fields-yn.adoc[]
+
+== OrderStatus
+include::{snippets}/common-doc-controller-test/enums/custom-response-fields-orderStatus.adoc[]
+
+== OrderType
+include::{snippets}/common-doc-controller-test/enums/custom-response-fields-orderType.adoc[]
+
+== ProductStatus
+include::{snippets}/common-doc-controller-test/enums/custom-response-fields-productStatus.adoc[]
+
+== UserRole
+include::{snippets}/common-doc-controller-test/enums/custom-response-fields-userRole.adoc[]
+
