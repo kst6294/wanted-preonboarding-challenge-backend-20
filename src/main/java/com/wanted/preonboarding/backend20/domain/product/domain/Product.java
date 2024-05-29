@@ -37,6 +37,9 @@ public class Product extends BaseTimeEntity {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     private Member seller;
 
+    @NotNull
+    private int totalQuantity;
+
     @Builder
     public Product(ProductRequestDto dto, Member seller) {
         this.name = dto.getName();
@@ -44,18 +47,24 @@ public class Product extends BaseTimeEntity {
         this.description = dto.getDescription();
         this.status = ProductStatus.SALE;
         this.seller = seller;
+        this.totalQuantity = dto.getTotalQuantity();
     }
 
     public void updateProduct(ProductRequestDto dto) {
         this.name = dto.getName();
         this.price = dto.getPrice();
+        this.totalQuantity = dto.getTotalQuantity();
     }
 
-    public void productReserved() {
+    public void productAllReserved() {
         this.status = ProductStatus.RESERVED;
     }
 
-    public void productSold() {
+    public void productSoldOut() {
         this.status = ProductStatus.SOLD;
+    }
+
+    public void reduceProductQuantity() {
+        this.totalQuantity -= 1;
     }
 }

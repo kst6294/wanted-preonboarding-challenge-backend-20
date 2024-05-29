@@ -21,6 +21,8 @@ public class ProductDetailDto {
     private String productName;
     private int price;
     private String description;
+
+    private int totalQuantity;
     private ProductStatus status;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
@@ -33,6 +35,7 @@ public class ProductDetailDto {
         this.productName = product.getName();
         this.price = product.getPrice();
         this.description = product.getDescription();
+        this.totalQuantity = product.getTotalQuantity();
         this.status = product.getStatus();
         this.salesStartDate = product.getCreatedDate();
     }

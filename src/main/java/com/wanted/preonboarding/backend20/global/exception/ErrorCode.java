@@ -15,7 +15,7 @@ public enum ErrorCode {
     NOT_FOUND(HttpStatus.NOT_FOUND, "해당 데이터를 찾을 수 없습니다."),
 
     ONLY_SALES_PRODUCT_CAN_DELETE(HttpStatus.BAD_REQUEST, "판매중인 제품만 삭제 가능합니다."),
-
+    OUT_OF_STOCK(HttpStatus.BAD_REQUEST, "제품의 재고가 부족합니다."),
     BAD_REQUEST(HttpStatus.BAD_REQUEST, "잘못된 요청입니다.");
 
     private final HttpStatus status;

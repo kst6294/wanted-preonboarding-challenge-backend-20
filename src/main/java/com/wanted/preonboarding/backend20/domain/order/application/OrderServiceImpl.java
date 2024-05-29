@@ -7,6 +7,7 @@ import com.wanted.preonboarding.backend20.domain.order.dto.OrderInfoDto;
 import com.wanted.preonboarding.backend20.domain.order.enums.OrderStatus;
 import com.wanted.preonboarding.backend20.domain.order.repository.OrderRepository;
 import com.wanted.preonboarding.backend20.domain.product.domain.Product;
+import com.wanted.preonboarding.backend20.domain.product.enums.ProductStatus;
 import com.wanted.preonboarding.backend20.domain.product.repository.ProductRepository;
 import com.wanted.preonboarding.backend20.global.exception.CustomException;
 import com.wanted.preonboarding.backend20.global.exception.ErrorCode;
@@ -28,13 +29,30 @@ public class OrderServiceImpl implements OrderService {
     @Transactional
     public void orderProduct(Long id, Member buyer) {
         Product product = findProduct(id);
-        product.productReserved();
+
+        validationTotalQuantity(product);
+        product.reduceProductQuantity();
+
         Order order = Order.builder()
                 .seller(product.getSeller())
                 .buyer(buyer)
                 .product(product)
                 .build();
         orderRepository.save(order);
+
+        checkAllReserved(product);
+    }
+
+    public void validationTotalQuantity(Product product) {
+        if (product.getTotalQuantity() < 1) {
+            throw new CustomException(ErrorCode.OUT_OF_STOCK);
+        }
+    }
+
+    public void checkAllReserved(Product product) {
+        if (product.getTotalQuantity() < 1) {
+            product.productAllReserved();
+        }
     }
 
     @Override
@@ -70,6 +88,23 @@ public class OrderServiceImpl implements OrderService {
 
         checkSellerOrderStatusIsApproval(order);
         order.buyerConfirmsOrder();
+        orderRepository.saveAndFlush(order);
+
+        checkAllOrdersCompleted(order.getProduct());
+    }
+
+    private void checkSellerOrderStatusIsApproval(Order order) {
+        if (!order.getSellerOrderStatus().equals(OrderStatus.SELLER_APPROVAL)) {
+            throw new CustomException(ErrorCode.BAD_REQUEST, "판매자가 판매승인한 제품만 구매확정 진행이 가능합니다.");
+        }
+    }
+
+    public void checkAllOrdersCompleted(Product product) {
+        if (product.getStatus().equals(ProductStatus.RESERVED)) {
+            if (!orderRepository.existsByProductIdAndBuyerOrderStatusEquals(product.getId(), OrderStatus.PRE)) {
+                product.productSoldOut();
+            }
+        }
     }
 
     private Product findProduct(Long id) {
@@ -80,9 +115,4 @@ public class OrderServiceImpl implements OrderService {
         return orderRepository.findById(id).orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND, "해당 주문을 찾을 수 없습니다."));
     }
 
-    private void checkSellerOrderStatusIsApproval(Order order) {
-        if (!order.getSellerOrderStatus().equals(OrderStatus.SELLER_APPROVAL)) {
-            throw new CustomException(ErrorCode.BAD_REQUEST, "판매자가 판매승인한 제품만 구매확정 진행이 가능합니다.");
-        }
-    }
 }

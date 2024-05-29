@@ -20,4 +20,8 @@ public class ProductRequestDto {
 
     @NotBlank
     private String description;
+
+    @NotBlank
+    @Min(1)
+    private int totalQuantity;
 }
