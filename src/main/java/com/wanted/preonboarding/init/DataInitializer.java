@@ -18,6 +18,11 @@ public class DataInitializer implements CommandLineRunner {
      *
      * 데이터 생성 수는 DataGeneratorRegister 에 size 수를 조정하세요.
      *
+     * User 객체 생성시 포스트맨으로 Test를 쉽게하기 위해
+     * 항상 master 계정이 맨처음 생성 됨
+     * UserDataInitializer 참고
+     *
+     *
      * @param args
      * @throws Exception
      */

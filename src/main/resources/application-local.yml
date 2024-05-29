@@ -19,7 +19,7 @@ spring:
   jpa:
     generate-ddl: false
     hibernate:
-      ddl-auto: none
+      ddl-auto: update
     properties:
       hibernate:
         default_batch_fetch_size: 100

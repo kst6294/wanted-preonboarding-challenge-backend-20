@@ -2,6 +2,7 @@ package com.wanted.preonboarding.module.user.entity;
 
 
 import com.wanted.preonboarding.module.common.entity.BaseEntity;
+import com.wanted.preonboarding.module.order.entity.Order;
 import com.wanted.preonboarding.module.product.entity.Product;
 import com.wanted.preonboarding.module.user.enums.MemberShip;
 import jakarta.persistence.*;
@@ -9,6 +10,7 @@ import lombok.*;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.Cache;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Getter
@@ -42,6 +44,5 @@ public class Users extends BaseEntity {
 
     @OneToMany(mappedBy = "seller", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     private Set<Product> products;
-
 
 }

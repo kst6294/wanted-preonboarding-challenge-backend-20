@@ -12,6 +12,9 @@ JAVA 21, SPRING BOOT 3.3, SPRING SECURITY, REDIS, JPA, QUERY DSL 5.0, JWT, EASY 
 
 다운받아서 실행하면 됩니다.
 
+해당 프로젝트는 서버를 실행시 생성되는 데이터를 조절하여 생성할 수 있습니다.
+src/init/DataInitializer 참고
+
 
 ### 기능 구현 리스트
 DEVELOPMENT.md에 서술
