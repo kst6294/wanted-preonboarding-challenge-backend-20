@@ -1,7 +1,7 @@
 package com.example.wanted.user.controller;
 
-import com.example.wanted.user.controller.request.UserCreateRequest;
-import com.example.wanted.user.controller.request.UserLoginRequest;
+import com.example.wanted.user.domain.UserCreate;
+import com.example.wanted.user.domain.UserLogin;
 import com.example.wanted.user.controller.response.TokenResponse;
 import com.example.wanted.user.controller.response.UserResponse;
 import com.example.wanted.user.service.UserService;
@@ -21,16 +21,9 @@ public class UserController {
 
     private final UserService userService;
 
-    @GetMapping("/{id}")
-    public ResponseEntity<String> getById(@PathVariable("id")  long id) {
-        return ResponseEntity
-                .ok()
-                .body("text");
-    }
-
     @PostMapping("/sing-up")
     public ResponseEntity<Long> create(
-            @RequestBody UserCreateRequest request
+            @RequestBody UserCreate request
     ) {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
@@ -38,8 +31,8 @@ public class UserController {
     }
 
     @PostMapping("/sing-in")
-    public ResponseEntity<TokenResponse> getById(
-            @RequestBody UserLoginRequest request
+    public ResponseEntity<TokenResponse> login(
+            @RequestBody UserLogin request
             ) {
         return ResponseEntity
                 .ok()

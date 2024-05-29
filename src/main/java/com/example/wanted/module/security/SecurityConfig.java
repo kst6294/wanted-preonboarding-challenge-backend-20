@@ -1,9 +1,9 @@
-package com.example.wanted.common.security;
+package com.example.wanted.module.security;
 
-import com.example.wanted.common.jwt.JwtAccessDeniedHandler;
-import com.example.wanted.common.jwt.JwtAuthenticationEntryPoint;
-import com.example.wanted.common.jwt.JwtTokenFilter;
-import com.example.wanted.common.jwt.JwtUtil;
+import com.example.wanted.module.jwt.JwtAccessDeniedHandler;
+import com.example.wanted.module.jwt.JwtAuthenticationEntryPoint;
+import com.example.wanted.module.jwt.JwtTokenFilter;
+import com.example.wanted.module.jwt.JwtUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;

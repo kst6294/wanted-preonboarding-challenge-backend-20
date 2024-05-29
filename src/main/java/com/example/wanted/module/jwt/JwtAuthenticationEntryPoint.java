@@ -1,4 +1,4 @@
-package com.example.wanted.common.jwt;
+package com.example.wanted.module.jwt;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

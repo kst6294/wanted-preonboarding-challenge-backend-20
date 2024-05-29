@@ -1,6 +1,7 @@
 package com.example.wanted.user.infrastucture;
 
 import com.example.wanted.user.domain.Role;
+import com.example.wanted.user.domain.User;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -35,5 +36,15 @@ public class UserEntity {
         this.account = account;
         this.password = password;
         this.role = role;
+    }
+
+    public static UserEntity fromModel(User user) {
+        UserEntity userEntity = new UserEntity();
+        userEntity.id = user.getId();
+        userEntity.name = user.getName();
+        userEntity.account = user.getAccount();
+        userEntity.password = user.getPassword();
+        userEntity.role = user.getRole();
+        return userEntity;
     }
 }

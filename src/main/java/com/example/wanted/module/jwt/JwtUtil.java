@@ -1,5 +1,6 @@
-package com.example.wanted.common.jwt;
+package com.example.wanted.module.jwt;
 
+import com.example.wanted.user.domain.User;
 import com.example.wanted.user.infrastucture.UserEntity;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
@@ -30,7 +31,7 @@ public class JwtUtil {
         this.ACCESS_TOKEN_EXPIRE_LENGTH = ACCESS_TOKEN_EXPIRE_LENGTH;
     }
 
-    public String createAccessToken(UserEntity user) {
+    public String createAccessToken(User user) {
         Date now = new Date();
         Date validity = new Date(now.getTime() + ACCESS_TOKEN_EXPIRE_LENGTH);
         return Jwts.builder()

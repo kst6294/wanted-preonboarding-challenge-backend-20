@@ -1,19 +1,18 @@
-package com.example.wanted.user.controller.request;
+package com.example.wanted.user.domain;
 
-import com.example.wanted.user.domain.Role;
 import com.example.wanted.user.infrastucture.UserEntity;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 import lombok.Getter;
 
 @Getter
-public class UserCreateRequest {
+public class UserCreate {
     private final String account;
     private final String password;
     private final String name;
 
     @Builder
-    public UserCreateRequest(
+    public UserCreate(
             @JsonProperty("account") String account,
             @JsonProperty("password") String password,
             @JsonProperty("name") String name) {

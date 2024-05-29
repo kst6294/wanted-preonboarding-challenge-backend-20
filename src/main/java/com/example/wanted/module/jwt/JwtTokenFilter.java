@@ -1,4 +1,4 @@
-package com.example.wanted.common.jwt;
+package com.example.wanted.module.jwt;
 
 import io.jsonwebtoken.JwtException;
 import jakarta.servlet.FilterChain;

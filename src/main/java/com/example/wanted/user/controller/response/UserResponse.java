@@ -1,5 +1,6 @@
 package com.example.wanted.user.controller.response;
 
+import com.example.wanted.user.domain.User;
 import com.example.wanted.user.infrastucture.UserEntity;
 import lombok.Builder;
 import lombok.Getter;
@@ -15,10 +16,10 @@ public class UserResponse {
         this.name = name;
     }
 
-    public static UserResponse from(UserEntity userEntity) {
+    public static UserResponse from(User user) {
         return UserResponse.builder()
-                .account(userEntity.getAccount())
-                .name(userEntity.getName())
+                .account(user.getAccount())
+                .name(user.getName())
                 .build();
     }
 }

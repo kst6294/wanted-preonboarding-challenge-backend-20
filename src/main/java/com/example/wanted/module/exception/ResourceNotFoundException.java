@@ -1,4 +1,4 @@
-package com.example.wanted.common.exception;
+package com.example.wanted.module.exception;
 
 public class ResourceNotFoundException extends RuntimeException{
     public ResourceNotFoundException(String datasource, Long id){
