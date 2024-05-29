@@ -47,4 +47,14 @@ public class UserEntity {
         userEntity.role = user.getRole();
         return userEntity;
     }
+
+    public User toModel() {
+        return User.builder()
+                .id(id)
+                .name(name)
+                .account(account)
+                .password(password)
+                .role(role)
+                .build();
+    }
 }
