@@ -64,8 +64,8 @@ describe("API TEST", () => {
         });
 
         describe("프로시저", () => {
-            it("판매자A/제품 등록", async () => {
-                const response = await request(app).post("/products").set("Authorization", sellerA_token).send({
+            it("판매자/제품 등록", async () => {
+                const response = await request(app).post("/products/register").set("Authorization", sellerA_token).send({
                     name: "Test_Product",
                     price: "15.99",
                     amount: 2,
@@ -76,7 +76,9 @@ describe("API TEST", () => {
             });
 
             it("구매자A/제품 구매", async () => {
-                const response = await request(app).post(`/products/${product_id}/purchase`).set("Authorization", buyerA_token);
+                const response = await request(app).post(`/products/purchase`).set("Authorization", buyerA_token).send({
+                    product_id,
+                });
 
                 expect(response.status).toBe(201);
                 expect(response.body.status).toBe("Reserved");
@@ -86,7 +88,9 @@ describe("API TEST", () => {
             });
 
             it("구매자B/제품 구매", async () => {
-                const response = await request(app).post(`/products/${product_id}/purchase`).set("Authorization", buyerB_token);
+                const response = await request(app).post(`/products/purchase`).set("Authorization", buyerB_token).send({
+                    product_id,
+                });
 
                 expect(response.status).toBe(201);
                 expect(response.body.status).toBe("Reserved");
@@ -96,31 +100,33 @@ describe("API TEST", () => {
             });
 
             it("구매자A/예약중인 용품 조회", async () => {
-                const response = await request(app).get("/user/reserved_list").set("Authorization", buyerA_token);
+                const response = await request(app).get("/users/reserved-list").set("Authorization", buyerA_token);
 
                 expect(response.status).toBe(200);
                 expect(Array.isArray(response.body)).toBe(true);
                 expect(response.body.length).toBe(1);
             });
 
-            it("판매자A/예약중인 용품 조회", async () => {
-                const response = await request(app).get("/user/reserved_list").set("Authorization", sellerA_token);
+            it("판매자/예약중인 용품 조회", async () => {
+                const response = await request(app).get("/users/reserved-list").set("Authorization", sellerA_token);
 
                 expect(response.status).toBe(200);
                 expect(Array.isArray(response.body)).toBe(true);
                 expect(response.body.length).toBe(2);
             });
 
-            it("판매자A/판매 승인", async () => {
-                let response = await request(app).post(`/products/${product_id}/sales_approval`).set("Authorization", sellerA_token).send({
+            it("판매자/판매 승인", async () => {
+                let response = await request(app).post(`/orders/sales-approval`).set("Authorization", sellerA_token).send({
                     buyer_id: buyerA_id,
+                    product_id,
                 });
 
                 expect(response.status).toBe(201);
                 expect(response.body.status).toBe("Approval");
 
-                response = await request(app).post(`/products/${product_id}/sales_approval`).set("Authorization", sellerA_token).send({
+                response = await request(app).post(`/orders/sales-approval`).set("Authorization", sellerA_token).send({
                     buyer_id: buyerB_id,
+                    product_id,
                 });
 
                 expect(response.status).toBe(201);
@@ -128,7 +134,9 @@ describe("API TEST", () => {
             });
 
             it("구매자A/구매 확정", async () => {
-                const response = await request(app).post(`/products/${product_id}/purchase_confirm`).set("Authorization", buyerA_token);
+                const response = await request(app).post(`/orders/purchase-confirm`).set("Authorization", buyerA_token).send({
+                    product_id,
+                });
 
                 expect(response.status).toBe(201);
                 expect(response.body.status).toBe("Confirm");
@@ -138,7 +146,9 @@ describe("API TEST", () => {
             });
 
             it("구매자B/구매 확정", async () => {
-                const response = await request(app).post(`/products/${product_id}/purchase_confirm`).set("Authorization", buyerB_token);
+                const response = await request(app).post(`/orders/purchase-confirm`).set("Authorization", buyerB_token).send({
+                    product_id,
+                });
 
                 expect(response.status).toBe(201);
                 expect(response.body.status).toBe("Confirm");
@@ -148,7 +158,7 @@ describe("API TEST", () => {
             });
 
             it("구매자A/구매한 용품 조회", async () => {
-                const response = await request(app).get("/user/purchased_list").set("Authorization", buyerA_token);
+                const response = await request(app).get("/users/purchased-list").set("Authorization", buyerA_token);
 
                 expect(response.status).toBe(200);
                 expect(Array.isArray(response.body)).toBe(true);

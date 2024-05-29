@@ -5,7 +5,7 @@ var router = Router();
 
 // 토큰 발급
 // 회원만
-router.post("/token", async (req, res) => {
+router.post("/", async (req, res) => {
     const user = req.body;
     try {
         const token = await issue_token(user);

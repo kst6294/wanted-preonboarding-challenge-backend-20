@@ -6,7 +6,7 @@ var router = Router();
 
 // 구매한 용품
 // 구매자로서
-router.get("/purchased_list", verifyToken, async (req, res, next) => {
+router.get("/purchased-list", verifyToken, async (req, res, next) => {
     const buyer_id = req.decoded.id;
 
     try {
@@ -20,7 +20,7 @@ router.get("/purchased_list", verifyToken, async (req, res, next) => {
 
 // 예약중인 용품
 // 구매자/판매자로서
-router.get("/reserved_list", verifyToken, async (req, res, next) => {
+router.get("/reserved-list", verifyToken, async (req, res, next) => {
     const buyer_id = req.decoded.id;
     const seller_id = req.decoded.id;
 

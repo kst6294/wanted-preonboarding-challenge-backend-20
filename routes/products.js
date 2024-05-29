@@ -32,7 +32,7 @@ router.get("/:product_id", async function (req, res, next) {
 
 // 제품 등록
 // 회원만 가능
-router.post("/", verifyToken, async function (req, res, next) {
+router.post("/register", verifyToken, async function (req, res, next) {
     const seller_id = req.decoded.id;
     const post_data = req.body;
 
@@ -47,8 +47,8 @@ router.post("/", verifyToken, async function (req, res, next) {
 
 // 제품 구매
 // 판매중 상품만 가능
-router.post("/:product_id/purchase", verifyToken, async function (req, res, next) {
-    const { product_id } = req.params;
+router.post("/purchase", verifyToken, async function (req, res, next) {
+    const { product_id } = req.body;
     const buyer_id = req.decoded.id;
 
     try {
