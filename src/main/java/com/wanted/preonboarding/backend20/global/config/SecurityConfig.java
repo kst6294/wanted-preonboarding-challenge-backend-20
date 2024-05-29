@@ -30,7 +30,7 @@ public class SecurityConfig {
     };
 
     private static final String[] PERMIT_GET_PATTERNS = new String[] {
-            "/product/**"
+            "/products/**"
     };
 
     @Bean

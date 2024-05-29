@@ -9,6 +9,8 @@ import com.wanted.preonboarding.backend20.global.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,7 +29,8 @@ public class OrderController {
     }
 
     @GetMapping("/history")
-    public ResponseEntity<Page<OrderInfoDto>> findOrderHistoryBetweenSellerAndBuyer(@RequestParam Long sellerId, @AuthMember Member buyer, Pageable pageable) {
+    public ResponseEntity<Page<OrderInfoDto>> findOrderHistoryBetweenSellerAndBuyer(@RequestParam Long sellerId, @AuthMember Member buyer,
+                                                                                    @PageableDefault(sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
         if (buyer == null) throw new CustomException(ErrorCode.AUTHENTICATION_ERROR);
         return ResponseEntity.ok(orderService.findOrderHistoryBetweenSellerAndBuyer(sellerId, buyer, pageable));
     }

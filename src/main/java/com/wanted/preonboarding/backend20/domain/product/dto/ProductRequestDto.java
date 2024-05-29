@@ -14,14 +14,12 @@ public class ProductRequestDto {
     @NotBlank
     private String name;
 
-    @NotBlank
     @Min(1)
     private int price;
 
     @NotBlank
     private String description;
 
-    @NotBlank
     @Min(1)
     private int totalQuantity;
 }
