@@ -10,6 +10,8 @@ import java.time.Duration;
 @AllArgsConstructor
 public enum RedisKey implements EnumType {
     USERS("users", 36000),
+    USERS_ENTITY("users_entity", 36000),
+    PRODUCT_ENTITY("product_entity", 36000),
     REFRESH_TOKEN("refresh_token", 36000),
     ORDER_LOCK("order_lock", 1),
     PRODUCT_QUEUE("product_queue", 1),

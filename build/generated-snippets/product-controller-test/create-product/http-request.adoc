@@ -2,13 +2,13 @@
 ----
 POST /api/v1/product HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtUUtIdUlnVkZAd2FudGVkLmNvbSIsInJvbGUiOiJOT1JNQUwiLCJpYXQiOjE3MTY5Nzk0NzksImV4cCI6MTcxNjk4MzA3OX0.9q_PMLM2dwSxN6RxZDYoEgGje_pgn5W3pmn7tdK4XwI
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJWQmNOR0B3YW50ZWQuY29tIiwicm9sZSI6Ik5PUk1BTCIsImlhdCI6MTcxNjk5MTgyMiwiZXhwIjoxNzE2OTk1NDIyfQ.HsZuFfULsplUMFXwv4kRtB-Kad3KNwx0K5DTdt1IOqY
 Content-Length: 74
 Host: localhost:8080
 
 {
-  "productName" : "aplpzapmno",
-  "price" : 91981019,
-  "quantity" : 5
+  "productName" : "hmqroqavak",
+  "price" : 78447390,
+  "quantity" : 9
 }
 ----

@@ -18,8 +18,6 @@ import java.util.Set;
 @Builder
 @AllArgsConstructor
 @Table(name = "USERS")
-@Cacheable
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @Entity
 public class Users extends BaseEntity {
 

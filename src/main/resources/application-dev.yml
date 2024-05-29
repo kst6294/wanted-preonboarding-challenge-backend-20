@@ -22,13 +22,6 @@ spring:
     properties:
       hibernate:
         default_batch_fetch_size: 100
-      cache:
-        use_second_level_cache: true
-        use_query_cache: true
-        region.factory_class: com.redislabs.modules.rejson.hibernate.RedisRegionFactory
-        redis:
-          default_cache_ttl: 600
-          redis_expiry_policy_factory_class: com.redislabs.modules.rejson.hibernate.DefaultRedisExpiryPolicyFactory
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher

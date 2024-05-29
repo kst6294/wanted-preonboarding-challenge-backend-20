@@ -2,8 +2,8 @@
 ----
 {
   "status" : 400,
-  "message" : "updateOrder 해당 주문의 주문 상태 변경을 지원 하지 않습니다. 주문 번호 ::: 98412408 현재 주문 상태 ::: ORDERED 변경 불가 상태 ::: SETTLEMENT",
-  "timestamp" : "2024-05-29 19:44:36",
+  "message" : "updateOrder 해당 주문의 주문 상태 변경을 지원 하지 않습니다. 주문 번호 ::: 53001191 현재 주문 상태 ::: ORDERED 변경 불가 상태 ::: SETTLEMENT",
+  "timestamp" : "2024-05-29 23:10:18",
   "error" : "BeanPropertyBindingResult"
 }
 ----

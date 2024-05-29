@@ -1,6 +1,6 @@
 [source,bash]
 ----
-$ echo '{"orderId":51872197,"orderStatus":"SETTLEMENT"}' | http PATCH 'http://localhost:8080/api/v1/order' \
+$ echo '{"orderId":48125172,"orderStatus":"SETTLEMENT"}' | http PATCH 'http://localhost:8080/api/v1/order' \
     'Content-Type:application/json;charset=UTF-8' \
-    'Authorization:Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJVd0tzZWlAd2FudGVkLmNvbSIsInJvbGUiOiJOT1JNQUwiLCJpYXQiOjE3MTY5Nzk0NzYsImV4cCI6MTcxNjk4MzA3Nn0.bRSHCjzbu1daNVPhLu5zhsfsMqko5tYJSNf93Def_oU'
+    'Authorization:Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJpcU9waUpwUVp6QHdhbnRlZC5jb20iLCJyb2xlIjoiTk9STUFMIiwiaWF0IjoxNzE2OTkxODE4LCJleHAiOjE3MTY5OTU0MTh9.fOdFXqXpmBrbtdhEsHJAwW0bAEnhLJhOvvxx6WVD1gk'
 ----

@@ -29,10 +29,10 @@ public class DataInitializer implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        for (DataGenerator generator : DataProvider.getGenerators()) {
-            int size = DataProvider.getSize(generator);
-            generator.generate(size);
-        }
+//        for (DataGenerator generator : DataProvider.getGenerators()) {
+//            int size = DataProvider.getSize(generator);
+//            generator.generate(size);
+//        }
     }
 
 }

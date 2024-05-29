@@ -28,8 +28,16 @@ public class UserFindServiceImpl implements UserFindService{
 
     @Override
     public Users fetchUserEntity(String email) {
-        return userFindRepository.fetchUserEntity(email).orElseThrow(() -> new NotFoundUserException(email));
+        Optional<Users> users = userRedisFindService.fetchUserEntity(email);
+        return users.orElseGet(()-> fetchUserEntityInDb(email));
     }
+
+    public Users fetchUserEntityInDb(String email) {
+        Users users = userFindRepository.fetchUserEntity(email).orElseThrow(() -> new NotFoundUserException(email));
+        userRedisQueryService.saveInCache(users);
+        return users;
+    }
+
 
     private BaseUserInfo fetchUserInfoInDb(String email) {
         BaseUserInfo baseUserInfo = userFindRepository.fetchUserInfo(email).orElseThrow(() -> new NotFoundUserException(email));

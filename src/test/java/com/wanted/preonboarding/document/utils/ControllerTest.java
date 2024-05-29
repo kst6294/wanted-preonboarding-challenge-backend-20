@@ -17,12 +17,8 @@ import com.wanted.preonboarding.module.order.validator.strategy.OrderStatusTrans
 import com.wanted.preonboarding.module.product.controller.ProductController;
 import com.wanted.preonboarding.module.product.service.ProductFindService;
 import com.wanted.preonboarding.module.product.service.ProductQueryService;
-import com.wanted.preonboarding.module.queue.controller.QueueController;
-import com.wanted.preonboarding.module.queue.service.QueueNotificationService;
-import com.wanted.preonboarding.module.queue.service.UserQueueService;
 import com.wanted.preonboarding.module.user.service.UserFindService;
 import org.junit.jupiter.api.Disabled;
-import org.mockito.Mock;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
@@ -31,7 +27,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
         AuthController.class,
         ProductController.class,
         OrderController.class,
-        QueueController.class
 })
 public abstract class ControllerTest extends SecuritySupportTest {
 
@@ -77,10 +72,5 @@ public abstract class ControllerTest extends SecuritySupportTest {
     @MockBean
     protected OrderFindService orderFindService;
 
-    @MockBean
-    protected UserQueueService userQueueService;
-
-    @MockBean
-    protected QueueNotificationService queueNotificationService;
 
 }

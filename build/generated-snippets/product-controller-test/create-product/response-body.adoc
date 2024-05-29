@@ -2,12 +2,12 @@
 ----
 {
   "data" : {
-    "id" : 7299,
-    "productName" : "aplpzapmno",
-    "price" : 91981019,
+    "id" : 2390,
+    "productName" : "hmqroqavak",
+    "price" : 78447390,
     "productStatus" : "ON_STOCK",
-    "seller" : "CZurCwMPUf@wanted.com",
-    "quantity" : 5631
+    "seller" : "zaPbmBBLzLSID@wanted.com",
+    "quantity" : 5060
   },
   "response" : {
     "status" : 200,

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.wanted.preonboarding.auth.core.JwtAuthTokenTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2024-05-29T14:10:15" hostname="lyusang-won-ui-MacBookPro.local" time="0.071">
+  <properties/>
+  <testcase name="토큰 파싱 테스트 - 잘못된 서명 토큰" classname="com.wanted.preonboarding.auth.core.JwtAuthTokenTest" time="0.045"/>
+  <testcase name="토큰 생성 테스트" classname="com.wanted.preonboarding.auth.core.JwtAuthTokenTest" time="0.012"/>
+  <testcase name="만료된 토큰 파싱 테스트" classname="com.wanted.preonboarding.auth.core.JwtAuthTokenTest" time="0.013"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -11,12 +11,14 @@ Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
 X-Frame-Options: DENY
-Content-Length: 1428
+Content-Length: 1584
 
 {
   "data" : {
     "redisKey" : {
+      "USERS_ENTITY" : "REDIS KEY :  users_entity, '\n'REDIS TTL :  36000",
       "ORDER_LOCK" : "REDIS KEY :  order_lock, '\n'REDIS TTL :  1",
+      "PRODUCT_ENTITY" : "REDIS KEY :  product_entity, '\n'REDIS TTL :  36000",
       "REFRESH_TOKEN" : "REDIS KEY :  refresh_token, '\n'REDIS TTL :  36000",
       "PRODUCT_QUEUE" : "REDIS KEY :  product_queue, '\n'REDIS TTL :  1",
       "USERS" : "REDIS KEY :  users, '\n'REDIS TTL :  36000"

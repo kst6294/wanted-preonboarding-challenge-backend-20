@@ -6,6 +6,6 @@ Content-Length: 24
 Host: localhost:8080
 
 {
-  "productId" : 9489
+  "productId" : 3765
 }
 ----
