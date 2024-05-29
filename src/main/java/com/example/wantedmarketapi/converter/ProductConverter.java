@@ -7,6 +7,8 @@ import com.example.wantedmarketapi.dto.request.ProductRequestDto.*;
 import com.example.wantedmarketapi.dto.response.ProductResponseDto.*;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 public class ProductConverter {
 
@@ -24,6 +26,21 @@ public class ProductConverter {
                 .id(product.getId())
                 .name(product.getName())
                 .build();
+    }
+
+    public static GetProductResponse toGetProductResponse(Product product) {
+        return GetProductResponse.builder()
+                .name(product.getName())
+                .price(product.getPrice())
+                .productStatus(product.getProductStatus())
+                .reservationStatus(product.getReservationStatus())
+                .build();
+    }
+
+    public static List<GetProductResponse> toGetProductListResponseList(List<Product> productList) {
+        return productList.stream()
+                .map(product -> ProductConverter.toGetProductResponse(product))
+                .toList();
     }
 
 }

@@ -25,6 +25,9 @@ public class Product extends BaseEntity {
 
     private Integer price;
 
+    @Builder.Default
+    private Boolean reservationStatus = false;
+
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private ProductStatus productStatus;
