@@ -29,6 +29,11 @@ public class OrderService {
         if(product.getSeller().getId().equals(user.getId()))
             throw new IllegalArgumentException("본인이 등록한 제품은 구매할 수 없습니다.");
 
+        if(product.getStatus().equals(EProductStatus.IN_RESERVATION))
+            throw new IllegalArgumentException("해당 제품은 현재 예약 중입니다.");
+        if(product.getStatus().equals(EProductStatus.COMPLETED))
+            throw new IllegalArgumentException("해당 제품은 이미 판매 완료되었습니다.");
+
         orderRepository.save(Order.builder()
                 .product(product)
                 .buyer(user)
