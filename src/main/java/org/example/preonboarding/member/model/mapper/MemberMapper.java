@@ -14,7 +14,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Mapper
 public interface MemberMapper {
-    MemberMapper INSTNACE = Mappers.getMapper(MemberMapper.class);
+    MemberMapper INSTANCE = Mappers.getMapper(MemberMapper.class);
     BCryptPasswordEncoder PASSWORD_ENCODER = new BCryptPasswordEncoder();
 
     @Mapping(target = "password", source = "password", qualifiedByName = "passwordEncoding")

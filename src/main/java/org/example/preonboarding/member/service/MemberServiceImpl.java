@@ -25,15 +25,15 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public SignupResponse createUser(SignupRequest signupRequest) {
-        Member savedMember = memberRepository.save(MemberMapper.INSTNACE.toMember(signupRequest));
-        return MemberMapper.INSTNACE.toSignupResponse(savedMember);
+        Member savedMember = memberRepository.save(MemberMapper.INSTANCE.toMember(signupRequest));
+        return MemberMapper.INSTANCE.toSignupResponse(savedMember);
     }
 
     @Override
     public List<MemberResponse> getUsers() {
         List<Member> members = memberRepository.findAll();
         return members.stream()
-                .map(MemberMapper.INSTNACE::toMemberResponse)
+                .map(MemberMapper.INSTANCE::toMemberResponse)
                 .collect(Collectors.toList());
     }
 
@@ -41,7 +41,7 @@ public class MemberServiceImpl implements MemberService {
     public MemberResponse getUserByUserId(String userId) {
         Member member = memberRepository.findByUserId(userId).orElseThrow(() ->
                 new RuntimeException(userId)); // TODO: spring security 추가 후 UsernameNotFoundException으로 변경
-        return MemberMapper.INSTNACE.toMemberResponse(member);
+        return MemberMapper.INSTANCE.toMemberResponse(member);
     }
 
     @Override
