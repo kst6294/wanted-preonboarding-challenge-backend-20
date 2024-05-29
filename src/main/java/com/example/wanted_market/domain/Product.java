@@ -24,10 +24,6 @@ public class Product {
     @JoinColumn(name = "seller_id", nullable = false)
     private User seller;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "order_id", nullable = false)
-    private Order order;
-
     @Column(name = "name", nullable = false)
     private String name;
 
@@ -39,9 +35,8 @@ public class Product {
     private EProductStatus status;
 
     @Builder
-    public Product(User seller, Order order, String name, int price, EProductStatus status){
+    public Product(User seller, String name, int price, EProductStatus status){
         this.seller = seller;
-        this.order = order;
         this.name = name;
         this.price = price;
         this.status = status;

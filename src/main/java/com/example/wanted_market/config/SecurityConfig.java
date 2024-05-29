@@ -28,6 +28,7 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(requestMatcherRegistry -> requestMatcherRegistry
                         .requestMatchers("/auth/**").permitAll()
+                        .requestMatchers("/product/**").permitAll()
                         .anyRequest().authenticated())
                 .getOrBuild();
     }
