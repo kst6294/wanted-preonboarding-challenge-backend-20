@@ -5,7 +5,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import wanted.market.api.domain.product.enums.Status;
+import wanted.market.api.domain.product.enums.ProductStatus;
 import wanted.market.api.domain.user.entity.User;
 
 import java.time.LocalDateTime;
@@ -13,9 +13,11 @@ import java.time.LocalDateTime;
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
+@Table(name= "products")
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "product_id")
     private Long id;
     @Column(name = "product_name")
     private String name;
@@ -25,11 +27,11 @@ public class Product {
     private Long count;
     @Column
     @Enumerated(EnumType.STRING)
-    private Status status;
+    private ProductStatus productStatus;
     @Column
     private LocalDateTime registerTime;
     @ManyToOne
-    @JoinColumn(name ="user_id")
+    @JoinColumn(name ="seller_id")
     private User user;
 
 
@@ -39,7 +41,11 @@ public class Product {
         this.price = price;
         this.count = count;
         this.user = user;
-        this.status = Status.SALE;
+        this.productStatus = ProductStatus.SALE;
         this.registerTime = LocalDateTime.now();
+    }
+
+    public void modifiedPrice(Long price){
+        this.price = price;
     }
 }

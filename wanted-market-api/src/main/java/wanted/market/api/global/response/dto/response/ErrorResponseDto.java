@@ -2,15 +2,16 @@ package wanted.market.api.global.response.dto.response;
 
 import lombok.Builder;
 import lombok.Getter;
-import wanted.market.api.global.response.enums.ResponseMessage;
+
 @Getter
-public class MessageResponseDto {
+public class ErrorResponseDto {
 
-
+    private String domain;
     private String message;
 
     @Builder
-    public MessageResponseDto(String message){
+    public ErrorResponseDto(String domain, String message){
+        this.domain = domain;
         this.message = message;
     }
 

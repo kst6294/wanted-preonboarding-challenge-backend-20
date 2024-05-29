@@ -3,6 +3,7 @@ package wanted.market.api.domain.product.dto.internal;
 import lombok.Builder;
 import lombok.Getter;
 import wanted.market.api.domain.product.entity.Product;
+import wanted.market.api.domain.user.dto.internal.UserInfoDto;
 
 @Getter
 public class ProductInfoDto {
@@ -12,23 +13,26 @@ public class ProductInfoDto {
     private Long price;
     private Long count;
     private String status;
+    private UserInfoDto seller;
 
     @Builder
-    private ProductInfoDto(Long id, String name, Long price, Long count, String status) {
+    private ProductInfoDto(Long id, String name, Long price, Long count, String status, UserInfoDto user) {
         this.id = id;
         this.name = name;
         this.price = price;
         this.count = count;
         this.status = status;
+        this.seller = user;
     }
 
-    public static ProductInfoDto fromProduct(Product product){
+    public static ProductInfoDto fromProductAndUser(Product product, UserInfoDto user){
         return ProductInfoDto.builder()
                 .id(product.getId())
                 .name(product.getName())
                 .price(product.getPrice())
                 .count(product.getCount())
-                .status(product.getStatus().getStatus())
+                .status(product.getProductStatus().getStatus())
+                .user(user)
                 .build();
     }
 }
