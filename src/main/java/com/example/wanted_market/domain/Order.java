@@ -38,4 +38,8 @@ public class Order {
         this.buyer = buyer;
         this.status = status;
     }
+
+    public void setStatus(EOrderStatus status) {
+        this.status = status;
+    }
 }

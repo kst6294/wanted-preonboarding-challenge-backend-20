@@ -8,9 +8,9 @@ import com.example.wanted_market.repository.ProductRepository;
 import com.example.wanted_market.repository.UserRepository;
 import com.example.wanted_market.type.EOrderStatus;
 import com.example.wanted_market.type.EProductStatus;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -19,6 +19,12 @@ public class OrderService {
     private final OrderRepository orderRepository;
 
     private final ProductService productService;
+
+    @Transactional(readOnly = true)
+    public Order getOrderById(Long userId) {
+        return orderRepository.findById(userId)
+                .orElseThrow(() -> { throw new IllegalArgumentException("해당 주문이 존재하지 않습니다."); });
+    }
 
     // 구매
     @Transactional
@@ -41,5 +47,21 @@ public class OrderService {
                 .build());
 
         product.setStatus(EProductStatus.IN_RESERVATION);
+    }
+
+    // 판매 승인
+    @Transactional
+    public void approval(Long productId, Long orderId, Long userId) {
+        Product product = productService.getProductById(productId);
+        User user = productService.getUserById(userId);
+        Order order = getOrderById(orderId);
+
+        if(order.getStatus().equals(EOrderStatus.COMPLETED))
+            throw new IllegalArgumentException("이미 완료된 주문입니다.");
+        if(!product.getSeller().getId().equals(user.getId()))
+            throw new IllegalArgumentException("판매자만 판매 승인할 수 있습니다.");
+
+        product.setStatus(EProductStatus.COMPLETED);
+        order.setStatus(EOrderStatus.COMPLETED);
     }
 }
