@@ -58,6 +58,18 @@ public class ProductFindRepositoryImpl extends AbstractCommonRepository implemen
     }
 
     @Override
+    public Optional<Product> fetchProductEntity(long productId, String email) {
+        return Optional.ofNullable(
+                queryFactory
+                        .selectFrom(product)
+                        .innerJoin(product.seller, users)
+                        .fetchJoin()
+                        .where(productIdEq(productId), emailEq(email))
+                        .fetchOne()
+        );
+    }
+
+    @Override
     public List<BaseSku> fetchBaseSkus(ItemFilter filter, Pageable pageable) {
 
         List<OrderSpecifier<?>> orders = createOrderSpecifiersFromPageable(product, filter.getOrderType());
@@ -86,5 +98,10 @@ public class ProductFindRepositoryImpl extends AbstractCommonRepository implemen
     private BooleanExpression productIdEq(long productId){
         return product.id.eq(productId);
     }
+
+    private BooleanExpression emailEq(String email){
+        return product.seller.email.eq(email);
+    }
+
 
 }

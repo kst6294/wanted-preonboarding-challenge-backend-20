@@ -1,5 +1,5 @@
 :doctype: book
 :icons: font
 
-[[user-role]]
+[[userRole]]
 include::{snippets}/common-doc-controller-test/enums/custom-response-fields-userRole.adoc[]

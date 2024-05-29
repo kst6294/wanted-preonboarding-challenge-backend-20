@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.wanted.preonboarding.module.product.mapper.ProductMapperImplTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2024-05-29T02:28:40" hostname="lyusang-won-ui-MacBookPro.local" time="0.036">
+<testsuite name="com.wanted.preonboarding.module.product.mapper.ProductMapperImplTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2024-05-29T10:44:39" hostname="lyusang-won-ui-MacBookPro.local" time="0.041">
   <properties/>
-  <testcase name="CreateProduct와 Users를 Product로 매핑" classname="com.wanted.preonboarding.module.product.mapper.ProductMapperImplTest" time="0.018"/>
-  <testcase name="Product를 BaseSku로 매핑" classname="com.wanted.preonboarding.module.product.mapper.ProductMapperImplTest" time="0.018"/>
+  <testcase name="CreateProduct와 Users를 Product로 매핑" classname="com.wanted.preonboarding.module.product.mapper.ProductMapperImplTest" time="0.019"/>
+  <testcase name="Product를 BaseSku로 매핑" classname="com.wanted.preonboarding.module.product.mapper.ProductMapperImplTest" time="0.022"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

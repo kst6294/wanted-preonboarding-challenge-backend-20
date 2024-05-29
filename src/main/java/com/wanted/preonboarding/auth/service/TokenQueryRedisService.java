@@ -18,7 +18,7 @@ public class TokenQueryRedisService extends AbstractRedisService implements Toke
     public void saveToken(AuthToken token) {
         String key = generateKey(RedisKey.REFRESH_TOKEN, token.getSubject());
         String value = JsonUtils.toJson(token);
-        save(key, value, RedisKey.REFRESH_TOKEN.getHourDuration());
+        save(key, value, RedisKey.REFRESH_TOKEN.getSecondDuration());
     }
 
 }

@@ -1,6 +1,6 @@
 [source,json,options="nowrap"]
 ----
 {
-  "productId" : 1239
+  "productId" : 9489
 }
 ----

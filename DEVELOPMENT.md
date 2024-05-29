@@ -44,3 +44,6 @@
   - 브랜치: `feature/product-quantity`
   - 기능: 제품 수량 추가 및 제품 당 한개만 구매 가능
 
+7. **부가 기능 추가**
+- 브랜치: `feature/additional-function`
+- 기능: 로깅 필터 추가 및 여러가지 테스트

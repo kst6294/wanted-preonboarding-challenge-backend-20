@@ -1,10 +1,8 @@
 package com.wanted.preonboarding.document;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.wanted.preonboarding.data.auth.AuthModuleHelper;
 import com.wanted.preonboarding.document.utils.CustomResponseFieldsSnippet;
 import com.wanted.preonboarding.document.utils.RestDocsTestSupport;
-import com.wanted.preonboarding.module.user.core.BaseUserInfo;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.http.MediaType;
@@ -20,8 +18,8 @@ import java.util.Arrays;
 import java.util.Map;
 
 
-import static org.springframework.restdocs.payload.PayloadDocumentation.beneathPath;
-import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
+import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.restdocs.snippet.Attributes.attributes;
 import static org.springframework.restdocs.snippet.Attributes.key;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -82,6 +80,26 @@ public class CommonDocControllerTest extends RestDocsTestSupport {
                                 enumConvertFieldDescriptor((enumDocs.getUserRole()))
                         )
                 ));
+    }
+
+    @Test
+    public void errorSample() throws Exception {
+        CommonDocController.SampleRequest sampleRequest = new CommonDocController.SampleRequest("name","hhh.naver");
+
+        mockMvc.perform(
+                        post("/test/error")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(objectMapper.writeValueAsString(sampleRequest))
+                )
+                .andExpect(status().is4xxClientError())
+                .andDo(
+                        restDocs.document(
+                                responseFields(
+                                        errorStatusMsg()
+                                )
+                        )
+                )
+        ;
     }
 
     public static CustomResponseFieldsSnippet customResponseFields

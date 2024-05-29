@@ -24,7 +24,7 @@ class TokenQueryRedisServiceTest extends RedisServiceTest {
         String tokenJson = JsonUtils.toJson(token);
         String key = tokenQueryRedisService.generateKey(RedisKey.REFRESH_TOKEN, token.getSubject());
         tokenQueryRedisService.saveToken(token);
-        verify(valueOperations, times(1)).set(eq(key), eq(tokenJson), eq(RedisKey.REFRESH_TOKEN.getHourDuration()));
+        verify(valueOperations, times(1)).set(eq(key), eq(tokenJson), eq(RedisKey.REFRESH_TOKEN.getSecondDuration()));
     }
 
 

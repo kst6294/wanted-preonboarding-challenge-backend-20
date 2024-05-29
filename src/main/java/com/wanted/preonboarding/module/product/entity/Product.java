@@ -1,18 +1,15 @@
 package com.wanted.preonboarding.module.product.entity;
 
 import com.wanted.preonboarding.module.common.entity.BaseEntity;
-import com.wanted.preonboarding.module.exception.product.ProductOutOfStockException;
-import com.wanted.preonboarding.module.order.entity.OrderHistory;
 import com.wanted.preonboarding.module.order.entity.OrderProductSnapShot;
 import com.wanted.preonboarding.module.product.enums.ProductStatus;
 import com.wanted.preonboarding.module.user.entity.Users;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import java.util.HashSet;
-import java.util.LinkedHashSet;
 import java.util.Set;
 
 
@@ -37,6 +34,7 @@ public class Product extends BaseEntity {
     @Column(name = "PRICE", nullable = false)
     private long price;
 
+    @Column(name = "PRODUCT_STATUS", nullable = false)
     @Enumerated(EnumType.STRING)
     private ProductStatus productStatus;
 
@@ -73,6 +71,12 @@ public class Product extends BaseEntity {
 
     public void outOfStock(){
         productStatus = ProductStatus.OUT_OF_STOCK;
+    }
+
+    public void update(String productName, long price, int quantity){
+        this.productName = productName;
+        this.price = price;
+        this.quantity = quantity;
     }
 
 }

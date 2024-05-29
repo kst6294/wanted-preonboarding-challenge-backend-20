@@ -10,13 +10,29 @@ import org.jeasy.random.randomizers.text.StringRandomizer;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Random;
 
 public class UsersModuleHelper {
+
+    public static Users toMasterUser(){
+        Map<String, Object> stringObjectMap = new HashMap<>();
+        stringObjectMap.put("id", 0L);
+        stringObjectMap.put("email", "test@wanted.com");
+        stringObjectMap.put("passwordHash", "123456789");
+        stringObjectMap.put("phoneNumber", generatePhoneNumber());
+        stringObjectMap.put("memberShip", MemberShip.NORMAL);
+        stringObjectMap.put("products", new HashSet<>());
+
+        EasyRandom instance = EasyRandomUtils.getInstance(stringObjectMap);
+        return instance.nextObject(Users.class);
+    }
+
 
     public static Users toUsers(){
         Map<String, Object> stringObjectMap = new HashMap<>();
         stringObjectMap.put("id", 0L);
         stringObjectMap.put("email", generateEmail());
+        stringObjectMap.put("passwordHash", "123456789");
         stringObjectMap.put("phoneNumber", generatePhoneNumber());
         stringObjectMap.put("memberShip", MemberShip.NORMAL);
         stringObjectMap.put("products", new HashSet<>());
@@ -41,7 +57,9 @@ public class UsersModuleHelper {
 
 
     private static String generateEmail(){
-        StringRandomizer stringRandomizer = new StringRandomizer(10);
+        Random random = new Random();
+
+        StringRandomizer stringRandomizer = new StringRandomizer(3, 15, random.nextInt());
         String email = stringRandomizer.getRandomValue();
         return email+"@wanted.com";
     }

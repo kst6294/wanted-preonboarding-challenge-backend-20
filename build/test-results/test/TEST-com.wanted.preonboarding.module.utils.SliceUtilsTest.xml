@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.wanted.preonboarding.module.utils.SliceUtilsTest" tests="4" skipped="0" failures="0" errors="0" timestamp="2024-05-29T02:28:41" hostname="lyusang-won-ui-MacBookPro.local" time="0.003">
+<testsuite name="com.wanted.preonboarding.module.utils.SliceUtilsTest" tests="4" skipped="0" failures="0" errors="0" timestamp="2024-05-29T10:44:40" hostname="lyusang-won-ui-MacBookPro.local" time="0.003">
   <properties/>
   <testcase name="toSlice_withContentEqualToPageSize_returnsSliceWithoutNext()" classname="com.wanted.preonboarding.module.utils.SliceUtilsTest" time="0.0"/>
-  <testcase name="toSlice_withContentLessThanPageSize_returnsSliceWithoutNext()" classname="com.wanted.preonboarding.module.utils.SliceUtilsTest" time="0.0"/>
-  <testcase name="emptySlice_returnsEmptySlice()" classname="com.wanted.preonboarding.module.utils.SliceUtilsTest" time="0.001"/>
+  <testcase name="toSlice_withContentLessThanPageSize_returnsSliceWithoutNext()" classname="com.wanted.preonboarding.module.utils.SliceUtilsTest" time="0.001"/>
+  <testcase name="emptySlice_returnsEmptySlice()" classname="com.wanted.preonboarding.module.utils.SliceUtilsTest" time="0.0"/>
   <testcase name="toSlice_withContentGreaterThanPageSize_returnsSliceWithNext()" classname="com.wanted.preonboarding.module.utils.SliceUtilsTest" time="0.002"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>

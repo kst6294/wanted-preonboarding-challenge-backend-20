@@ -1,0 +1,34 @@
+[[overview-http-status-codes]]
+
+=== WANDTED OPEN MARKET API POSTMAN COLLECTION
+
+link:/static/WANTED_MARKET_API.postman_collection.json[Download Postman Collection]
+
+=== WANDTED OPEN MARKET API HTTP STATUS CODE
+
+|===
+| 상태 코드 | 설명
+
+| `200 OK`
+| 성공
+
+| `400 Bad Request`
+| 잘못된 요청
+
+| `401 Unauthorized`
+| 비인증 상태
+
+| `403 Forbidden`
+| 권한 거부
+
+| `404 Not Found`
+| 존재하지 않는 요청 리소스
+
+| `500 Internal Server Error`
+| 서버 에러
+|===
+
+[[overview-error-response]]
+=== HTTP Error Response
+include::{snippets}/common-doc-controller-test/error-sample/http-response.adoc[]
+include::{snippets}/common-doc-controller-test/error-sample/response-fields.adoc[]

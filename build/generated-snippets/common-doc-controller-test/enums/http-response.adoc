@@ -11,14 +11,15 @@ Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
 X-Frame-Options: DENY
-Content-Length: 1531
+Content-Length: 1428
 
 {
   "data" : {
     "redisKey" : {
-      "ORDER_LOCK" : "REDIS KEY order_lock, REDIS TTL 1",
-      "REFRESH_TOKEN" : "REDIS KEY refresh_token, REDIS TTL 60",
-      "USERS" : "REDIS KEY users, REDIS TTL 60"
+      "ORDER_LOCK" : "REDIS KEY :  order_lock, '\n'REDIS TTL :  1",
+      "REFRESH_TOKEN" : "REDIS KEY :  refresh_token, '\n'REDIS TTL :  36000",
+      "PRODUCT_QUEUE" : "REDIS KEY :  product_queue, '\n'REDIS TTL :  1",
+      "USERS" : "REDIS KEY :  users, '\n'REDIS TTL :  36000"
     },
     "yn" : {
       "Y" : "Y means YES, N meas NO",
@@ -29,11 +30,11 @@ Content-Length: 1531
       "NORMAL" : "USER MEMBERSHIP"
     },
     "jwtErrorEnum" : {
-      "UNSUPPORTED_TOKEN" : "JWT ERROR NAME UNSUPPORTED_TOKEN, ERROR MSG Unsupported JWT token.",
-      "MALFORMED_TOKEN" : "JWT ERROR NAME MALFORMED_TOKEN, ERROR MSG Invalid JWT token.",
-      "ILLEGAL_ARGUMENT" : "JWT ERROR NAME ILLEGAL_ARGUMENT, ERROR MSG JWT token compact of handler are invalid.",
-      "INVALID_SIGNATURE" : "JWT ERROR NAME INVALID_SIGNATURE, ERROR MSG Invalid JWT signature.",
-      "EXPIRED_TOKEN" : "JWT ERROR NAME EXPIRED_TOKEN, ERROR MSG Expired JWT token."
+      "UNSUPPORTED_TOKEN" : "Unsupported JWT token.",
+      "MALFORMED_TOKEN" : "Invalid JWT token.",
+      "ILLEGAL_ARGUMENT" : "JWT token compact of handler are invalid.",
+      "INVALID_SIGNATURE" : "Invalid JWT signature.",
+      "EXPIRED_TOKEN" : "Expired JWT token."
     },
     "productStatus" : {
       "OUT_STOCK" : "제품의 판매 상태 완료",

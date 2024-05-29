@@ -3,6 +3,6 @@
 $ curl 'http://localhost:8080/api/v1/order' -i -X POST \
     -H 'Content-Type: application/json;charset=UTF-8' \
     -d '{
-  "productId" : 1239
+  "productId" : 9489
 }'
 ----

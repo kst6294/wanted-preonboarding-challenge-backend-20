@@ -2,8 +2,8 @@
 ----
 {
   "status" : 400,
-  "message" : "createOrder 해당 상품을 찾을 수 없습니다. 상품 ID: 72106729 createOrder ",
-  "timestamp" : "2024-05-29 11:28:36",
+  "message" : "createOrder 해당 상품을 찾을 수 없습니다. 상품 ID: 76046114 createOrder ",
+  "timestamp" : "2024-05-29 19:44:36",
   "error" : "BeanPropertyBindingResult"
 }
 ----

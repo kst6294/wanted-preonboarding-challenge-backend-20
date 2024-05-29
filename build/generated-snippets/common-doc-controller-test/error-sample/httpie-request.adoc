@@ -1,0 +1,8 @@
+[source,bash]
+----
+$ echo '{
+  "name" : "name",
+  "email" : "hhh.naver"
+}' | http POST 'http://localhost:8080/test/error' \
+    'Content-Type:application/json;charset=UTF-8'
+----

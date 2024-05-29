@@ -6,7 +6,6 @@ import com.wanted.preonboarding.module.exception.user.NotFoundUserException;
 import com.wanted.preonboarding.module.user.core.BaseUserInfo;
 import com.wanted.preonboarding.module.user.service.UserFindService;
 import jakarta.validation.ConstraintValidatorContext;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

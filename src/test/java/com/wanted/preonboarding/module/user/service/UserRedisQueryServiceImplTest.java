@@ -1,6 +1,5 @@
 package com.wanted.preonboarding.module.user.service;
 
-import com.wanted.preonboarding.auth.core.JwtAuthToken;
 import com.wanted.preonboarding.data.auth.AuthModuleHelper;
 import com.wanted.preonboarding.document.utils.RedisServiceTest;
 import com.wanted.preonboarding.module.common.enums.RedisKey;
@@ -26,7 +25,7 @@ class UserRedisQueryServiceImplTest extends RedisServiceTest {
         String tokenJson = JsonUtils.toJson(baseUserInfo);
         String key = userRedisQueryService.generateKey(RedisKey.USERS, baseUserInfo.getEmail());
         userRedisQueryService.saveInCache(baseUserInfo);
-        verify(valueOperations, times(1)).set(eq(key), eq(tokenJson), eq(RedisKey.USERS.getHourDuration()));
+        verify(valueOperations, times(1)).set(eq(key), eq(tokenJson), eq(RedisKey.USERS.getSecondDuration()));
     }
 
 }

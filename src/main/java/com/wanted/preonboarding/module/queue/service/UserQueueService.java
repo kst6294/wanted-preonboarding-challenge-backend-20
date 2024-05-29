@@ -8,18 +8,16 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class SessionQueueService extends RedisQueueService<String>{
+public class UserQueueService extends RedisQueueService<String>{
 
-    public SessionQueueService(StringRedisTemplate redisTemplate) {
+    public UserQueueService(StringRedisTemplate redisTemplate) {
         super(redisTemplate);
     }
 
-
-    public int getPosition(String sessionId) {
+    public int getPosition(String email) {
         List<String> queue = super.getQueue(RedisKey.PRODUCT_QUEUE);
-        return queue.indexOf(sessionId) + 1;
+        return queue.indexOf(email) + 1;
     }
-
 
     @Override
     protected Optional<String> processItem(String value) {

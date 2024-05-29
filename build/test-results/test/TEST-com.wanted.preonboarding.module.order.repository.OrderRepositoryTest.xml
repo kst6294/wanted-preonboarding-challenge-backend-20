@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.wanted.preonboarding.module.order.repository.OrderRepositoryTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2024-05-29T02:28:38" hostname="lyusang-won-ui-MacBookPro.local" time="0.042">
+<testsuite name="com.wanted.preonboarding.module.order.repository.OrderRepositoryTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2024-05-29T10:44:32" hostname="lyusang-won-ui-MacBookPro.local" time="0.042">
   <properties/>
   <testcase name="Order 저장 및 조회" classname="com.wanted.preonboarding.module.order.repository.OrderRepositoryTest" time="0.042"/>
-  <system-out><![CDATA[2024-05-29T11:28:38.682+09:00  INFO 85295 --- [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.wanted.preonboarding.module.order.repository.OrderRepositoryTest]: OrderRepositoryTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-2024-05-29T11:28:38.687+09:00  INFO 85295 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.wanted.preonboarding.PreonboardingApplication for test class com.wanted.preonboarding.module.order.repository.OrderRepositoryTest
+  <system-out><![CDATA[2024-05-29T19:44:32.239+09:00  INFO 96329 --- [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.wanted.preonboarding.module.order.repository.OrderRepositoryTest]: OrderRepositoryTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2024-05-29T19:44:32.249+09:00  INFO 96329 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.wanted.preonboarding.PreonboardingApplication for test class com.wanted.preonboarding.module.order.repository.OrderRepositoryTest
 Hibernate: insert into users (delete_yn,email,insert_date,insert_operator,membership,password_hash,phone_number,update_date,update_operator,user_id) values (?,?,?,?,?,?,?,?,?,default)
 Hibernate: insert into product (delete_yn,insert_date,insert_operator,price,product_name,product_status,quantity,user_id,update_date,update_operator,product_id) values (?,?,?,?,?,?,?,?,?,?,default)
 Hibernate: insert into users (delete_yn,email,insert_date,insert_operator,membership,password_hash,phone_number,update_date,update_operator,user_id) values (?,?,?,?,?,?,?,?,?,default)

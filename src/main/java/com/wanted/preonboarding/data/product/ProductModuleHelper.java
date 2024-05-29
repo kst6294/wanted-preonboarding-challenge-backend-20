@@ -21,7 +21,8 @@ public class ProductModuleHelper {
         Random random = new Random();
 
         stringObjectMap.put("users", null);
-        stringObjectMap.put("quantity", random.nextInt(9000));
+        stringObjectMap.put("price", random.nextInt(100000000));
+        stringObjectMap.put("quantity", random.nextInt(2, 10));
 
         EasyRandom instance = EasyRandomUtils.getInstance(stringObjectMap);
         return instance.nextObject(CreateProduct.class);
@@ -32,7 +33,8 @@ public class ProductModuleHelper {
         Random random = new Random();
 
         stringObjectMap.put("users", seller);
-        stringObjectMap.put("quantity", random.nextInt(9000));
+        stringObjectMap.put("price", random.nextInt(100000000));
+        stringObjectMap.put("quantity", random.nextInt(10) + 2);
 
         EasyRandom instance = EasyRandomUtils.getInstance(stringObjectMap);
         return instance.nextObject(CreateProduct.class);
@@ -44,7 +46,8 @@ public class ProductModuleHelper {
         Random random = new Random();
 
         stringObjectMap.put("users", UsersModuleHelper.toUsersWithId());
-        stringObjectMap.put("quantity", random.nextInt(9000));
+        stringObjectMap.put("price", random.nextInt(100000000));
+        stringObjectMap.put("quantity", random.nextInt(10) + 2);
 
         EasyRandom instance = EasyRandomUtils.getInstance(stringObjectMap);
         return instance.nextObject(CreateProduct.class);
@@ -64,6 +67,7 @@ public class ProductModuleHelper {
 
         stringObjectMap.put("id", 0L);
         stringObjectMap.put("productStatus", ProductStatus.ON_STOCK);
+        stringObjectMap.put("price", random.nextInt(100000000));
         stringObjectMap.put("quantity", quantity);
 
         EasyRandom instance = EasyRandomUtils.getInstance(stringObjectMap);
@@ -71,7 +75,20 @@ public class ProductModuleHelper {
     }
 
 
+    public static Product toProduct(CreateProduct createProduct){
+        Map<String, Object> stringObjectMap = new HashMap<>();
+        Random random = new Random();
 
+        stringObjectMap.put("id", 0L);
+        stringObjectMap.put("productName", createProduct.getProductName());
+        stringObjectMap.put("price", createProduct.getPrice());
+        stringObjectMap.put("productStatus", ProductStatus.ON_STOCK);
+        stringObjectMap.put("quantity", random.nextInt(10) + 2);
+        stringObjectMap.put("seller", createProduct.getUsers());
+
+        EasyRandom instance = EasyRandomUtils.getInstance(stringObjectMap);
+        return instance.nextObject(Product.class);
+    }
 
     public static Product toProductWithId(CreateProduct createProduct){
         Map<String, Object> stringObjectMap = new HashMap<>();
@@ -81,7 +98,7 @@ public class ProductModuleHelper {
         stringObjectMap.put("productName", createProduct.getProductName());
         stringObjectMap.put("price", createProduct.getPrice());
         stringObjectMap.put("productStatus", ProductStatus.ON_STOCK);
-        stringObjectMap.put("quantity", random.nextInt(9000));
+        stringObjectMap.put("quantity", random.nextInt(10) + 2);
 
         EasyRandom instance = EasyRandomUtils.getInstance(stringObjectMap);
         return instance.nextObject(Product.class);
@@ -95,7 +112,7 @@ public class ProductModuleHelper {
         stringObjectMap.put("productName", createProduct.getProductName());
         stringObjectMap.put("price", createProduct.getPrice());
         stringObjectMap.put("productStatus", ProductStatus.ON_STOCK);
-        stringObjectMap.put("quantity", random.nextInt(9000));
+        stringObjectMap.put("quantity", random.nextInt(10) + 2);
         stringObjectMap.put("seller", seller);
         EasyRandom instance = EasyRandomUtils.getInstance(stringObjectMap);
         return instance.nextObject(Product.class);
@@ -112,7 +129,7 @@ public class ProductModuleHelper {
         stringObjectMap.put("price", product.getPrice());
         stringObjectMap.put("productStatus", product.getProductStatus());
         stringObjectMap.put("seller", product.getSeller().getEmail());
-        stringObjectMap.put("quantity", random.nextInt(9000));
+        stringObjectMap.put("quantity", random.nextInt(9000) + 2);
 
         EasyRandom instance = EasyRandomUtils.getInstance(stringObjectMap);
         return instance.nextObject(BaseSku.class);

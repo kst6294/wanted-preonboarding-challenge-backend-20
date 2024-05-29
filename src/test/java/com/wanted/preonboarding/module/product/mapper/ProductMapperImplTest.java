@@ -1,12 +1,10 @@
 package com.wanted.preonboarding.module.product.mapper;
 
 import com.wanted.preonboarding.data.product.ProductModuleHelper;
-import com.wanted.preonboarding.data.users.UsersModuleHelper;
 import com.wanted.preonboarding.module.product.core.BaseSku;
 import com.wanted.preonboarding.module.product.dto.CreateProduct;
 import com.wanted.preonboarding.module.product.entity.Product;
 import com.wanted.preonboarding.module.product.enums.ProductStatus;
-import com.wanted.preonboarding.module.user.entity.Users;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

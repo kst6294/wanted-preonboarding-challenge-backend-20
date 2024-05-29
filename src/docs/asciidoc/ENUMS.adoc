@@ -1,39 +1,13 @@
 = Enums Documentation
 
 == JWT Error Enum
-
-==== CURL Request
-include::../../../build/generated-snippets/common-doc-controller-test/enums/curl-request.adoc[]
-
-==== Custom Response Fields: JWT Error Enum
-include::../../../build/generated-snippets/common-doc-controller-test/enums/custom-response-fields-jwtErrorEnum.adoc[]
+include::{snippets}/common-doc-controller-test/enums/custom-response-fields-jwtErrorEnum.adoc[]
 
 == Membership
-
-==== Custom Response Fields: Membership
-include::../../../build/generated-snippets/common-doc-controller-test/enums/custom-response-fields-membership.adoc[]
+include::{snippets}/common-doc-controller-test/enums/custom-response-fields-membership.adoc[]
 
 == Redis Key
-
-==== Custom Response Fields: Redis Key
-include::../../../build/generated-snippets/common-doc-controller-test/enums/custom-response-fields-redisKey.adoc[]
+include::{snippets}/common-doc-controller-test/enums/custom-response-fields-redisKey.adoc[]
 
 == YN
-
-==== Custom Response Fields: YN
-include::../../../build/generated-snippets/common-doc-controller-test/enums/custom-response-fields-yn.adoc[]
-
-==== HTTP Request
-include::../../../build/generated-snippets/common-doc-controller-test/enums/http-request.adoc[]
-
-==== HTTP Response
-include::../../../build/generated-snippets/common-doc-controller-test/enums/http-response.adoc[]
-
-==== HTTPie Request
-include::../../../build/generated-snippets/common-doc-controller-test/enums/httpie-request.adoc[]
-
-==== Request Body
-include::../../../build/generated-snippets/common-doc-controller-test/enums/request-body.adoc[]
-
-==== Response Body
-include::../../../build/generated-snippets/common-doc-controller-test/enums/response-body.adoc[]
+include::{snippets}/common-doc-controller-test/enums/custom-response-fields-yn.adoc[]

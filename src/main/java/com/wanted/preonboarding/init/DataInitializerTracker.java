@@ -1,6 +1,8 @@
-package com.wanted.preonboarding;
+package com.wanted.preonboarding.init;
 
-public interface DataInitializerInterface {
+public interface DataInitializerTracker {
 
-    void initialize();
+    void start(String entity);
+    void end(String entity);
+
 }

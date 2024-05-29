@@ -1,0 +1,4 @@
+[source,json,options="nowrap"]
+----
+{"productName":"ndowqayovi","price":7903799,"quantity":6}
+----

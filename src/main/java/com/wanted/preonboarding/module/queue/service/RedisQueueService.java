@@ -1,10 +1,11 @@
-package com.wanted.preonboarding.module.common.service;
+package com.wanted.preonboarding.module.queue.service;
 
 import com.wanted.preonboarding.module.common.enums.RedisKey;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -20,12 +21,17 @@ public abstract class RedisQueueService<T> implements QueueService<T>{
     }
 
     @Override
-    public Optional<T> pop(String key) {
-        String value = redisTemplate.opsForList().leftPop(key);
+    public Optional<T> pop(RedisKey redisKey) {
+        String value = redisTemplate.opsForList().leftPop(redisKey.getKey());
         if (value != null) {
             return processItem(value);
         }
-        return null;
+        return Optional.empty();
+    }
+
+    @Override
+    public List<String> getQueue(RedisKey redisKey) {
+        return redisTemplate.opsForList().range(redisKey.getKey(), 0, -1);
     }
 
     protected abstract Optional<T> processItem(String value);

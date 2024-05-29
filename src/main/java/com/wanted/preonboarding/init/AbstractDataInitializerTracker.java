@@ -1,22 +1,21 @@
-package com.wanted.preonboarding;
+package com.wanted.preonboarding.init;
 
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 @Slf4j
 @Component
-@RequiredArgsConstructor
-public abstract class AbstractDataInitializer implements DataInitializerInterface{
+public abstract class AbstractDataInitializerTracker implements DataInitializerTracker {
 
 
     @Override
-    public void initialize() {
-
+    public void start(String entity) {
+        log.info("Starting data initializer for {}", entity);
     }
 
-
-    private void buildMessage(String entity){
-        
+    @Override
+    public void end(String entity) {
+        log.info("Finished data initializer for {}", entity);
     }
+
 }

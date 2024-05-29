@@ -1,0 +1,7 @@
+[source,json,options="nowrap"]
+----
+{
+  "name" : "name",
+  "email" : "hhh.naver"
+}
+----

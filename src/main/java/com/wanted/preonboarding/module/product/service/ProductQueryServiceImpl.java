@@ -6,6 +6,7 @@ import com.wanted.preonboarding.module.product.dto.CreateProduct;
 import com.wanted.preonboarding.module.product.entity.Product;
 import com.wanted.preonboarding.module.product.mapper.ProductMapper;
 import com.wanted.preonboarding.module.product.repository.ProductRepository;
+import com.wanted.preonboarding.module.utils.SecurityUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,6 +26,15 @@ public class ProductQueryServiceImpl implements ProductQueryService{
         Product savedProduct = productRepository.save(product);
         return productMapper.toSku(savedProduct);
     }
+
+    @Override
+    public Sku updateProduct(long productId, CreateProduct createProduct) {
+        String email = SecurityUtils.currentUserEmail();
+        Product product = productFindService.fetchProductEntity(productId, email);
+        product.update(createProduct.getProductName(), createProduct.getPrice(), createProduct.getQuantity());
+        return productMapper.toSku(product);
+    }
+
 
     @Override
     public Product doBooking(long productId) {

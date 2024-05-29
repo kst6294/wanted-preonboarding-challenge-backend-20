@@ -11,6 +11,7 @@ public interface ProductFindService {
     Sku fetchProduct(long productId);
 
     Product fetchProductEntity(long productId);
+    Product fetchProductEntity(long productId, String email);
 
     CustomSlice<Sku> fetchProducts(ItemFilter filter, Pageable pageable);
 

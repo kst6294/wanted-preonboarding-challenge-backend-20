@@ -1,0 +1,10 @@
+[source,bash]
+----
+$ echo '{
+  "productName" : "ndowqayovi",
+  "price" : 7903799,
+  "quantity" : 6
+}' | http PATCH 'http://localhost:8080/api/v1/product/3439' \
+    'Content-Type:application/json;charset=UTF-8' \
+    'Authorization:Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJlTWNTQHdhbnRlZC5jb20iLCJyb2xlIjoiTk9STUFMIiwiaWF0IjoxNzE2OTc5NDc5LCJleHAiOjE3MTY5ODMwNzl9.KVwQqQcjJoR5ppeJwA2rdicOe39SJ2L2YfDg6-WUqBM'
+----

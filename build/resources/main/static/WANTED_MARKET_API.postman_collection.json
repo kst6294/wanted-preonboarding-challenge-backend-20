@@ -1,0 +1,664 @@
+{
+	"info": {
+		"_postman_id": "f17eea80-6b0b-4743-b5a1-2f1ac2930315",
+		"name": "WANTED OPEN MARKET API",
+		"description": "## 원티드 프리온보딩 챌린지 백엔드 20 사전과제",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "14581216"
+	},
+	"item": [
+		{
+			"name": "Auth API",
+			"item": [
+				{
+					"name": "get AccessToken",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"email\":\"test@wanted.com\",\"password\":\"123456789\"}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/v1/auth/authentication",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"authentication"
+							]
+						},
+						"description": "리스폰스 헤더에  \n토큰값 존재"
+					},
+					"response": []
+				}
+			],
+			"description": "인증 / 인가\n\n자세한 설명은 Wanted Market API 문서 Auth Api를 참조한다.\n\n- AccessToken 발급"
+		},
+		{
+			"name": "Product API",
+			"item": [
+				{
+					"name": "POST Product",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const host = pm.environment.get(\"host\");",
+									"console.log(\"Host:\", host);",
+									"",
+									"const authRequest = {",
+									"    url: `${pm.environment.get(\"host\")}/api/v1/auth/authentication`,",
+									"    method: 'POST',",
+									"    header: {",
+									"        'Content-Type': 'application/json'",
+									"    },",
+									"    body: {",
+									"        mode: 'raw',",
+									"        raw: JSON.stringify({",
+									"            email: 'test@wanted.com',",
+									"            password: '123456789'",
+									"        })",
+									"    }",
+									"};",
+									"",
+									"pm.sendRequest(authRequest, function (err, res) {",
+									"    if (err) {",
+									"        console.log(\"Error:\", err);",
+									"        return;",
+									"    }",
+									"",
+									"    console.log(\"Auth response:\", res);",
+									"",
+									"    const authHeader = res.headers.get('Authorization');",
+									"    if (authHeader && authHeader.startsWith('Bearer ')) {",
+									"        const token = authHeader;",
+									"        pm.environment.set(\"authToken\", token);",
+									"        console.log(\"Token set in environment:\", token);",
+									"    } else {",
+									"        console.log(\"Auth header not found or invalid\");",
+									"    }",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{authToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"productName\": \"테스트 상품 1\",\n    \"price\": 1000,\n    \"quantity\": 2\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/v1/products?lastDomainId=380&orderType",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"products"
+							],
+							"query": [
+								{
+									"key": "lastDomainId",
+									"value": "380"
+								},
+								{
+									"key": "orderType",
+									"value": null
+								}
+							]
+						},
+						"description": "Scripts에\n\nPre-request로 토큰값 세팅"
+					},
+					"response": []
+				},
+				{
+					"name": "GET Products",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/v1/products?lastDomainId=101&orderType=PAST&size=100",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"products"
+							],
+							"query": [
+								{
+									"key": "lastDomainId",
+									"value": "101",
+									"description": "for noOffset key default null"
+								},
+								{
+									"key": "orderType",
+									"value": "PAST",
+									"description": "default desc(LATEST, PAST)"
+								},
+								{
+									"key": "size",
+									"value": "100",
+									"description": "default 20"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Product",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/v1/product/1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"product",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PATCH Product",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const host = pm.environment.get(\"host\");",
+									"console.log(\"Host:\", host);",
+									"",
+									"const authRequest = {",
+									"    url: `${pm.environment.get(\"host\")}/api/v1/auth/authentication`,",
+									"    method: 'POST',",
+									"    header: {",
+									"        'Content-Type': 'application/json'",
+									"    },",
+									"    body: {",
+									"        mode: 'raw',",
+									"        raw: JSON.stringify({",
+									"            email: 'test@wanted.com',",
+									"            password: '123456789'",
+									"        })",
+									"    }",
+									"};",
+									"",
+									"pm.sendRequest(authRequest, function (err, res) {",
+									"    if (err) {",
+									"        console.log(\"Error:\", err);",
+									"        return;",
+									"    }",
+									"",
+									"    console.log(\"Auth response:\", res);",
+									"",
+									"    const authHeader = res.headers.get('Authorization');",
+									"    if (authHeader && authHeader.startsWith('Bearer ')) {",
+									"        const token = authHeader;",
+									"        pm.environment.set(\"authToken\", token);",
+									"        console.log(\"Token set in environment:\", token);",
+									"    } else {",
+									"        console.log(\"Auth header not found or invalid\");",
+									"    }",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{authToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"productName\": \"테스트 상품 1\",\n    \"price\": 2000,\n    \"quantity\": 2\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/v1/product/1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"product",
+								"1"
+							]
+						},
+						"description": "Scripts에\n\nPre-request로 토큰값 세팅"
+					},
+					"response": []
+				}
+			],
+			"description": "상품 관련 API\n\n자세한 설명은 Wanted Market API 문서 Product Api를 참조한다.\n\n- 상품 등록\n    \n- 상품 조회\n    \n- 상품 목록 조회"
+		},
+		{
+			"name": "Order API",
+			"item": [
+				{
+					"name": "GET Order",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const host = pm.environment.get(\"host\");",
+									"console.log(\"Host:\", host);",
+									"",
+									"const authRequest = {",
+									"    url: `${pm.environment.get(\"host\")}/api/v1/auth/authentication`,",
+									"    method: 'POST',",
+									"    header: {",
+									"        'Content-Type': 'application/json'",
+									"    },",
+									"    body: {",
+									"        mode: 'raw',",
+									"        raw: JSON.stringify({",
+									"            email: 'test@wanted.com',",
+									"            password: '123456789'",
+									"        })",
+									"    }",
+									"};",
+									"",
+									"pm.sendRequest(authRequest, function (err, res) {",
+									"    if (err) {",
+									"        console.log(\"Error:\", err);",
+									"        return;",
+									"    }",
+									"",
+									"    console.log(\"Auth response:\", res);",
+									"",
+									"    const authHeader = res.headers.get('Authorization');",
+									"    if (authHeader && authHeader.startsWith('Bearer ')) {",
+									"        const token = authHeader;",
+									"        pm.environment.set(\"authToken\", token);",
+									"        console.log(\"Token set in environment:\", token);",
+									"    } else {",
+									"        console.log(\"Auth header not found or invalid\");",
+									"    }",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{authToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/api/v1/order/23",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"order",
+								"23"
+							]
+						},
+						"description": "Scripts에\n\nPre-request로 토큰값 세팅"
+					},
+					"response": []
+				},
+				{
+					"name": "GET Orders",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const host = pm.environment.get(\"host\");",
+									"console.log(\"Host:\", host);",
+									"",
+									"const authRequest = {",
+									"    url: `${pm.environment.get(\"host\")}/api/v1/auth/authentication`,",
+									"    method: 'POST',",
+									"    header: {",
+									"        'Content-Type': 'application/json'",
+									"    },",
+									"    body: {",
+									"        mode: 'raw',",
+									"        raw: JSON.stringify({",
+									"            email: 'test@wanted.com',",
+									"            password: '123456789'",
+									"        })",
+									"    }",
+									"};",
+									"",
+									"pm.sendRequest(authRequest, function (err, res) {",
+									"    if (err) {",
+									"        console.log(\"Error:\", err);",
+									"        return;",
+									"    }",
+									"",
+									"    console.log(\"Auth response:\", res);",
+									"",
+									"    const authHeader = res.headers.get('Authorization');",
+									"    if (authHeader && authHeader.startsWith('Bearer ')) {",
+									"        const token = authHeader;",
+									"        pm.environment.set(\"authToken\", token);",
+									"        console.log(\"Token set in environment:\", token);",
+									"    } else {",
+									"        console.log(\"Auth header not found or invalid\");",
+									"    }",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{authToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/api/v1/orders?lastDomainId&userRole&orderType&size",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"orders"
+							],
+							"query": [
+								{
+									"key": "lastDomainId",
+									"value": null,
+									"description": "for noOffset key default null"
+								},
+								{
+									"key": "userRole",
+									"value": null,
+									"description": "default null SELLER, BUYER"
+								},
+								{
+									"key": "orderType",
+									"value": null,
+									"description": "default desc means LATEST (LATEST, PAST)"
+								},
+								{
+									"key": "size",
+									"value": null,
+									"description": "default 20"
+								}
+							]
+						},
+						"description": "userRole 에 값이 없으면  \n판매한 주문, 구매한 주문 다 조회  \n  \n값이 있으면 각각 해당하는 주문만 조회"
+					},
+					"response": []
+				},
+				{
+					"name": "Post Order",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const host = pm.environment.get(\"host\");",
+									"console.log(\"Host:\", host);",
+									"",
+									"const authRequest = {",
+									"    url: `${pm.environment.get(\"host\")}/api/v1/auth/authentication`,",
+									"    method: 'POST',",
+									"    header: {",
+									"        'Content-Type': 'application/json'",
+									"    },",
+									"    body: {",
+									"        mode: 'raw',",
+									"        raw: JSON.stringify({",
+									"            email: 'test@wanted.com',",
+									"            password: '123456789'",
+									"        })",
+									"    }",
+									"};",
+									"",
+									"pm.sendRequest(authRequest, function (err, res) {",
+									"    if (err) {",
+									"        console.log(\"Error:\", err);",
+									"        return;",
+									"    }",
+									"",
+									"    console.log(\"Auth response:\", res);",
+									"",
+									"    const authHeader = res.headers.get('Authorization');",
+									"    if (authHeader && authHeader.startsWith('Bearer ')) {",
+									"        const token = authHeader;",
+									"        pm.environment.set(\"authToken\", token);",
+									"        console.log(\"Token set in environment:\", token);",
+									"    } else {",
+									"        console.log(\"Auth header not found or invalid\");",
+									"    }",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{authToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"productId\":383\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/v1/order",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"order"
+							]
+						},
+						"description": "정상 주문 처리"
+					},
+					"response": []
+				},
+				{
+					"name": "PATCH Order",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const host = pm.environment.get(\"host\");",
+									"console.log(\"Host:\", host);",
+									"",
+									"const authRequest = {",
+									"    url: `${pm.environment.get(\"host\")}/api/v1/auth/authentication`,",
+									"    method: 'POST',",
+									"    header: {",
+									"        'Content-Type': 'application/json'",
+									"    },",
+									"    body: {",
+									"        mode: 'raw',",
+									"        raw: JSON.stringify({",
+									"            email: 'test@wanted.com',",
+									"            password: '123456789'",
+									"        })",
+									"    }",
+									"};",
+									"",
+									"pm.sendRequest(authRequest, function (err, res) {",
+									"    if (err) {",
+									"        console.log(\"Error:\", err);",
+									"        return;",
+									"    }",
+									"",
+									"    console.log(\"Auth response:\", res);",
+									"",
+									"    const authHeader = res.headers.get('Authorization');",
+									"    if (authHeader && authHeader.startsWith('Bearer ')) {",
+									"        const token = authHeader;",
+									"        pm.environment.set(\"authToken\", token);",
+									"        console.log(\"Token set in environment:\", token);",
+									"    } else {",
+									"        console.log(\"Auth header not found or invalid\");",
+									"    }",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{authToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"orderId\": 21,\n    \"orderStatus\": \"COMPLETED\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/v1/order",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"order"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "주문 관련 API\n\n자세한 설명은 Wanted Market API 문서 Order Api를 참조한다.\n\n- 상품 등록\n    \n- 상품 조회\n    \n- 상품 목록 조회"
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "host",
+			"value": "http://localhost:8088",
+			"type": "string"
+		},
+		{
+			"key": "authToken",
+			"value": "",
+			"type": "string"
+		}
+	]
+}

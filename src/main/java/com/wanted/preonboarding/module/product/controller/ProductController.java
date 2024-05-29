@@ -35,6 +35,12 @@ public class ProductController {
         return ResponseEntity.ok(ApiResponse.success(productFindService.fetchProduct(productId)));
     }
 
+    @PreAuthorize("hasAnyAuthority('NORMAL')")
+    @PatchMapping("/product/{productId}")
+    public ResponseEntity<ApiResponse<Sku>> updateProduct(@PathVariable("productId") Long productId, @RequestBody @Validated CreateProduct createProduct) {
+        return ResponseEntity.ok(ApiResponse.success(productQueryService.updateProduct(productId, createProduct)));
+    }
+
     @GetMapping("/products")
     public ResponseEntity<ApiResponse<CustomSlice<Sku>>> fetchProduct(@ModelAttribute ItemFilter filter, Pageable pageable) {
         return ResponseEntity.ok(ApiResponse.success(productFindService.fetchProducts(filter, pageable)));

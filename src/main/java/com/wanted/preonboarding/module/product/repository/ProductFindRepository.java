@@ -14,6 +14,8 @@ public interface ProductFindRepository {
 
     Optional<Product> fetchProductEntity(long productId);
 
+    Optional<Product> fetchProductEntity(long productId, String email);
+
     List<BaseSku> fetchBaseSkus(ItemFilter filter, Pageable pageable);
 
 }

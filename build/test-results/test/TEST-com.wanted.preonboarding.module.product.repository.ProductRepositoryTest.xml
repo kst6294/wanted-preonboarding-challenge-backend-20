@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.wanted.preonboarding.module.product.repository.ProductRepositoryTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2024-05-29T02:28:41" hostname="lyusang-won-ui-MacBookPro.local" time="0.029">
+<testsuite name="com.wanted.preonboarding.module.product.repository.ProductRepositoryTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2024-05-29T10:44:32" hostname="lyusang-won-ui-MacBookPro.local" time="0.034">
   <properties/>
-  <testcase name="Product 저장 및 조회" classname="com.wanted.preonboarding.module.product.repository.ProductRepositoryTest" time="0.013"/>
-  <testcase name="Product 삭제" classname="com.wanted.preonboarding.module.product.repository.ProductRepositoryTest" time="0.016"/>
-  <system-out><![CDATA[2024-05-29T11:28:41.262+09:00  INFO 85295 --- [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.wanted.preonboarding.module.product.repository.ProductRepositoryTest]: ProductRepositoryTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-2024-05-29T11:28:41.266+09:00  INFO 85295 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.wanted.preonboarding.PreonboardingApplication for test class com.wanted.preonboarding.module.product.repository.ProductRepositoryTest
+  <testcase name="Product 저장 및 조회" classname="com.wanted.preonboarding.module.product.repository.ProductRepositoryTest" time="0.015"/>
+  <testcase name="Product 삭제" classname="com.wanted.preonboarding.module.product.repository.ProductRepositoryTest" time="0.019"/>
+  <system-out><![CDATA[2024-05-29T19:44:32.477+09:00  INFO 96329 --- [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.wanted.preonboarding.module.product.repository.ProductRepositoryTest]: ProductRepositoryTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2024-05-29T19:44:32.483+09:00  INFO 96329 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.wanted.preonboarding.PreonboardingApplication for test class com.wanted.preonboarding.module.product.repository.ProductRepositoryTest
 Hibernate: insert into users (delete_yn,email,insert_date,insert_operator,membership,password_hash,phone_number,update_date,update_operator,user_id) values (?,?,?,?,?,?,?,?,?,default)
 Hibernate: insert into product (delete_yn,insert_date,insert_operator,price,product_name,product_status,quantity,user_id,update_date,update_operator,product_id) values (?,?,?,?,?,?,?,?,?,?,default)
 Hibernate: insert into users (delete_yn,email,insert_date,insert_operator,membership,password_hash,phone_number,update_date,update_operator,user_id) values (?,?,?,?,?,?,?,?,?,default)

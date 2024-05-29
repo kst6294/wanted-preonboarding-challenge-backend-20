@@ -1,4 +1,4 @@
-package com.wanted.preonboarding.module.queue;
+package com.wanted.preonboarding.module.queue.service;
 
 import com.wanted.preonboarding.infra.config.websocket.QueueStatus;
 import lombok.RequiredArgsConstructor;

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.wanted.preonboarding.module.order.service.strategy.OrderSettlementUpdateServiceTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2024-05-29T02:28:39" hostname="lyusang-won-ui-MacBookPro.local" time="0.095">
+<testsuite name="com.wanted.preonboarding.module.order.service.strategy.OrderSettlementUpdateServiceTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2024-05-29T10:44:38" hostname="lyusang-won-ui-MacBookPro.local" time="0.101">
   <properties/>
-  <testcase name="주문 상태 업데이트 - SETTLEMENT 상태로 변경, 상품 업데이트" classname="com.wanted.preonboarding.module.order.service.strategy.OrderSettlementUpdateServiceTest" time="0.047"/>
-  <testcase name="주문 상태 업데이트 - SETTLEMENT 상태로 변경, 상품 업데이트 X" classname="com.wanted.preonboarding.module.order.service.strategy.OrderSettlementUpdateServiceTest" time="0.047"/>
+  <testcase name="주문 상태 업데이트 - SETTLEMENT 상태로 변경, 상품 업데이트" classname="com.wanted.preonboarding.module.order.service.strategy.OrderSettlementUpdateServiceTest" time="0.05"/>
+  <testcase name="주문 상태 업데이트 - SETTLEMENT 상태로 변경, 상품 업데이트 X" classname="com.wanted.preonboarding.module.order.service.strategy.OrderSettlementUpdateServiceTest" time="0.05"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

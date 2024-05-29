@@ -2,13 +2,13 @@ jwtErrorEnum
 |===
 |코드|코드명
 |`+UNSUPPORTED_TOKEN+`
-|JWT ERROR NAME UNSUPPORTED_TOKEN, ERROR MSG Unsupported JWT token.
+|Unsupported JWT token.
 |`+MALFORMED_TOKEN+`
-|JWT ERROR NAME MALFORMED_TOKEN, ERROR MSG Invalid JWT token.
+|Invalid JWT token.
 |`+ILLEGAL_ARGUMENT+`
-|JWT ERROR NAME ILLEGAL_ARGUMENT, ERROR MSG JWT token compact of handler are invalid.
+|JWT token compact of handler are invalid.
 |`+INVALID_SIGNATURE+`
-|JWT ERROR NAME INVALID_SIGNATURE, ERROR MSG Invalid JWT signature.
+|Invalid JWT signature.
 |`+EXPIRED_TOKEN+`
-|JWT ERROR NAME EXPIRED_TOKEN, ERROR MSG Expired JWT token.
+|Expired JWT token.
 |===

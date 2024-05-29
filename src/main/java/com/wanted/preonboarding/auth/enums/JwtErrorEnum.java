@@ -39,6 +39,6 @@ public enum JwtErrorEnum implements EnumType {
 
     @Override
     public String getDescription() {
-        return String.format("JWT ERROR NAME %s, ERROR MSG %s", name(), message);
+        return String.format("%s", message);
     }
 }

@@ -6,7 +6,6 @@ import com.wanted.preonboarding.data.EasyRandomUtils;
 import com.wanted.preonboarding.module.user.core.BaseUserInfo;
 import com.wanted.preonboarding.module.user.entity.Users;
 import com.wanted.preonboarding.module.user.enums.MemberShip;
-import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import org.jeasy.random.EasyRandom;
 import org.jeasy.random.randomizers.text.StringRandomizer;

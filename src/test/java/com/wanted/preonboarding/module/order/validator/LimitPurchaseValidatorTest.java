@@ -1,7 +1,6 @@
 package com.wanted.preonboarding.module.order.validator;
 
 import com.wanted.preonboarding.data.order.OrderModuleHelper;
-import com.wanted.preonboarding.module.order.dto.CreateOrder;
 import com.wanted.preonboarding.module.order.service.OrderFindService;
 import jakarta.validation.ConstraintValidatorContext;
 import org.junit.jupiter.api.DisplayName;

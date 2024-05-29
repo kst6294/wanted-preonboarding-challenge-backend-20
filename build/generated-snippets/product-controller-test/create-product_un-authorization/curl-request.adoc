@@ -3,8 +3,8 @@
 $ curl 'http://localhost:8080/api/v1/product' -i -X POST \
     -H 'Content-Type: application/json;charset=UTF-8' \
     -d '{
-  "productName" : "dgjtxxkzkh",
-  "price" : 66144658,
-  "quantity" : 303
+  "productName" : "zjmritksrp",
+  "price" : 99395865,
+  "quantity" : 9
 }'
 ----

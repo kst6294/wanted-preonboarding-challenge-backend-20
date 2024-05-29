@@ -6,9 +6,10 @@
 :toclevels: 2
 :sectlinks:
 :docinfo: shared-head
-:linkcss:
+include::summary.adoc[]
 
 include::AUTH-API.adoc[]
 include::PRODUCT-API.adoc[]
 include::ORDER-API.adoc[]
 include::ENUMS.adoc[]
+

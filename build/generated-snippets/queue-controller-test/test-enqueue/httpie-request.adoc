@@ -1,0 +1,5 @@
+[source,bash]
+----
+$ http POST 'http://localhost:8080/api/v1/enqueue' \
+    'Authorization:Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJIZ2dLY3J5QHdhbnRlZC5jb20iLCJyb2xlIjoiTk9STUFMIiwiaWF0IjoxNzE2OTc5NDgwLCJleHAiOjE3MTY5ODMwODB9.jcl_nNDhRWjz5nLjdnJMd_WjHng2V9hNpih0Dzs3sOo'
+----

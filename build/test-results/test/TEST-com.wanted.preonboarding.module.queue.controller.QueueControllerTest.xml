@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.wanted.preonboarding.module.queue.controller.QueueControllerTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2024-05-29T10:44:40" hostname="lyusang-won-ui-MacBookPro.local" time="0.068">
+  <properties/>
+  <testcase name="testGetPosition()" classname="com.wanted.preonboarding.module.queue.controller.QueueControllerTest" time="0.023"/>
+  <testcase name="testEnqueue()" classname="com.wanted.preonboarding.module.queue.controller.QueueControllerTest" time="0.023"/>
+  <testcase name="testDequeue()" classname="com.wanted.preonboarding.module.queue.controller.QueueControllerTest" time="0.022"/>
+  <system-out><![CDATA[2024-05-29T19:44:40.245+09:00  INFO 96329 --- [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.wanted.preonboarding.module.queue.controller.QueueControllerTest]: QueueControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2024-05-29T19:44:40.255+09:00  INFO 96329 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.wanted.preonboarding.PreonboardingApplication for test class com.wanted.preonboarding.module.queue.controller.QueueControllerTest
+2024-05-29T19:44:40.258+09:00  INFO 96329 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2024-05-29T19:44:40.258+09:00  INFO 96329 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2024-05-29T19:44:40.258+09:00  INFO 96329 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+
+MockHttpServletRequest:
+      HTTP Method = GET
+      Request URI = /api/v1/queue/position
+       Parameters = {}
+          Headers = [Authorization:"Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJrWGhyYVV4dVlDd3J3VUB3YW50ZWQuY29tIiwicm9sZSI6Ik5PUk1BTCIsImlhdCI6MTcxNjk3OTQ4MCwiZXhwIjoxNzE2OTgzMDgwfQ.LvpaqoS15x7SlmAyl143WEfsqng7VEKiJ49WAvrLDJM"]
+             Body = null
+    Session Attrs = {}
+
+Handler:
+             Type = com.wanted.preonboarding.module.queue.controller.QueueController
+           Method = com.wanted.preonboarding.module.queue.controller.QueueController#getPosition()
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 200
+    Error message = null
+          Headers = [Vary:"Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers", Content-Type:"application/json;charset=UTF-8", X-Content-Type-Options:"nosniff", X-XSS-Protection:"0", Cache-Control:"no-cache, no-store, max-age=0, must-revalidate", Pragma:"no-cache", Expires:"0", X-Frame-Options:"DENY"]
+     Content type = application/json;charset=UTF-8
+             Body = 1
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+2024-05-29T19:44:40.281+09:00  INFO 96329 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2024-05-29T19:44:40.281+09:00  INFO 96329 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2024-05-29T19:44:40.281+09:00  INFO 96329 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+
+MockHttpServletRequest:
+      HTTP Method = POST
+      Request URI = /api/v1/enqueue
+       Parameters = {}
+          Headers = [Authorization:"Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJIZ2dLY3J5QHdhbnRlZC5jb20iLCJyb2xlIjoiTk9STUFMIiwiaWF0IjoxNzE2OTc5NDgwLCJleHAiOjE3MTY5ODMwODB9.jcl_nNDhRWjz5nLjdnJMd_WjHng2V9hNpih0Dzs3sOo"]
+             Body = null
+    Session Attrs = {}
+
+Handler:
+             Type = com.wanted.preonboarding.module.queue.controller.QueueController
+           Method = com.wanted.preonboarding.module.queue.controller.QueueController#enqueue()
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 200
+    Error message = null
+          Headers = [Vary:"Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers", X-Content-Type-Options:"nosniff", X-XSS-Protection:"0", Cache-Control:"no-cache, no-store, max-age=0, must-revalidate", Pragma:"no-cache", Expires:"0", X-Frame-Options:"DENY"]
+     Content type = null
+             Body = 
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+2024-05-29T19:44:40.304+09:00  INFO 96329 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2024-05-29T19:44:40.304+09:00  INFO 96329 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2024-05-29T19:44:40.304+09:00  INFO 96329 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+
+MockHttpServletRequest:
+      HTTP Method = POST
+      Request URI = /api/v1/dequeue
+       Parameters = {}
+          Headers = []
+             Body = null
+    Session Attrs = {}
+
+Handler:
+             Type = com.wanted.preonboarding.module.queue.controller.QueueController
+           Method = com.wanted.preonboarding.module.queue.controller.QueueController#dequeue()
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 200
+    Error message = null
+          Headers = [Vary:"Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers", X-Content-Type-Options:"nosniff", X-XSS-Protection:"0", Cache-Control:"no-cache, no-store, max-age=0, must-revalidate", Pragma:"no-cache", Expires:"0", X-Frame-Options:"DENY"]
+     Content type = null
+             Body = 
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

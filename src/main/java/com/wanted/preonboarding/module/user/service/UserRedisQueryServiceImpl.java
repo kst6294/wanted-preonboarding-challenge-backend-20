@@ -18,7 +18,7 @@ public class UserRedisQueryServiceImpl extends AbstractRedisService implements U
     public void saveInCache(UserInfo userInfo){
         String key = generateKey(RedisKey.USERS, userInfo.getEmail());
         String value = JsonUtils.toJson(userInfo);
-        save(key, value, RedisKey.USERS.getHourDuration());
+        save(key, value, RedisKey.USERS.getSecondDuration());
     }
 
 }

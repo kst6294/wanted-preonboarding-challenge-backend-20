@@ -1,13 +1,11 @@
 package com.wanted.preonboarding.module.order.mapper;
 
 import com.wanted.preonboarding.data.order.OrderFactory;
-import com.wanted.preonboarding.data.product.ProductFactory;
 import com.wanted.preonboarding.data.users.UsersModuleHelper;
 import com.wanted.preonboarding.document.utils.SecuritySupportTest;
 import com.wanted.preonboarding.module.common.dto.CustomSlice;
 import com.wanted.preonboarding.module.common.filter.ItemFilter;
 import com.wanted.preonboarding.module.order.core.DetailedOrderContext;
-import com.wanted.preonboarding.module.product.core.Sku;
 import com.wanted.preonboarding.module.user.entity.Users;
 import org.assertj.core.api.AssertionsForInterfaceTypes;
 import org.junit.jupiter.api.BeforeEach;

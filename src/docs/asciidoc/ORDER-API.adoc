@@ -8,35 +8,34 @@
 
 include::{snippets}/order/create-order/http-request.adoc[]
 include::{snippets}/order/create-order/request-fields.adoc[]
-include::{snippets}/order/create-order/request-body.adoc[]
 
 === 주문 생성 응답
 
 include::{snippets}/order/create-order/http-response.adoc[]
 include::{snippets}/order/create-order/response-fields-beneath-data.adoc[]
 
-=== 주문 생성 실패 - 비회원
-
-include::{snippets}/order/get-order-unauthorized/http-request.adoc[]
-include::{snippets}/order/get-order-unauthorized/http-response.adoc[]
 
 === 유효하지 않은 주문 - 상품 없음
 
 include::{snippets}/order/create-order-invalid-product/http-request.adoc[]
 include::{snippets}/order/create-order-invalid-product/request-fields.adoc[]
 include::{snippets}/order/create-order-invalid-product/response-fields.adoc[]
+include::{snippets}/order/create-order-invalid-product/response-body.adoc[]
+
 
 === 유효하지 않은 주문 - 이미 예약 중 또는 판매 완료된 제품
 
 include::{snippets}/order/create-order-out-of-stock/http-request.adoc[]
 include::{snippets}/order/create-order-out-of-stock/request-fields.adoc[]
 include::{snippets}/order/create-order-out-of-stock/response-fields.adoc[]
+include::{snippets}/order/create-order-out-of-stock/response-body.adoc[]
 
 === 유효하지 않은 주문 - 구매 이력이 존재하는 제품
 
 include::{snippets}/order/create-order-has-purchase-history/http-request.adoc[]
 include::{snippets}/order/create-order-has-purchase-history/request-fields.adoc[]
 include::{snippets}/order/create-order-has-purchase-history/response-fields.adoc[]
+include::{snippets}/order/create-order-out-of-stock/response-body.adoc[]
 
 == 주문 수정
 
@@ -44,7 +43,6 @@ include::{snippets}/order/create-order-has-purchase-history/response-fields.adoc
 
 include::{snippets}/order/update-order-completed/http-request.adoc[]
 include::{snippets}/order/update-order-completed/request-fields.adoc[]
-include::{snippets}/order/update-order-completed/request-body.adoc[]
 
 === 주문 수정 응답 - COMPLETED
 
@@ -61,7 +59,6 @@ include::{snippets}/order/update-order-completed-invalid-status/response-body.ad
 
 include::{snippets}/order/update-order-settlement/http-request.adoc[]
 include::{snippets}/order/update-order-settlement/request-fields.adoc[]
-include::{snippets}/order/update-order-settlement/request-body.adoc[]
 
 === 주문 수정 응답 - SETTLEMENT
 

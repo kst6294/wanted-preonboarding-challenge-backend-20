@@ -1,5 +1,5 @@
 :doctype: book
 :icons: font
 
-[[membership]]
-include::{snippets}/common-doc-controller-test/enums/custom-response-fields-membership.adoc[]
+[[jwtErrorEnum]]
+include::{snippets}/common-doc-controller-test/enums/custom-response-fields-jwtErrorEnum.adoc[]

@@ -25,13 +25,11 @@ import org.springframework.restdocs.payload.JsonFieldType;
 import java.util.List;
 
 import static com.wanted.preonboarding.document.utils.RestDocsConfig.field;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
 import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
@@ -64,6 +62,57 @@ class ProductControllerTest extends RestDocsTestSupport {
                         .content(objectMapper.writeValueAsString(createProduct)))
                 .andExpect(status().isOk())
                 .andDo(document("product/post-product",
+                        requestFields(
+                                fieldWithPath("productName").type(JsonFieldType.STRING).description("상품 명")
+                                        .attributes(field("constraints", "상품명은 100자를 넘어갈 수 없습니다.")),
+                                fieldWithPath("price").type(JsonFieldType.NUMBER).description("상품 가격")
+                                        .attributes(field("constraints", "상품 가격은 최소 0원  최대 100,000,000원 입니다.")),
+                                fieldWithPath("quantity").type(JsonFieldType.NUMBER).description("상품 가격")
+                                        .attributes(field("constraints", "재고는 최소 1개   최대 9000개 이하 입니다."))
+                        ),
+                        responseFields(
+                                beneathPath("data"),
+                                fieldWithPath("id").type(JsonFieldType.NUMBER).description("상품 ID (PK)"),
+                                fieldWithPath("productName").type(JsonFieldType.STRING).description("상품 명"),
+                                fieldWithPath("price").type(JsonFieldType.NUMBER).description("상품 가격"),
+                                fieldWithPath("productStatus").type(JsonFieldType.STRING).description(DocumentLinkGenerator.generateLinkCode(DocumentLinkGenerator.DocUrl.PRODUCT_STATUS)),
+                                fieldWithPath("seller").type(JsonFieldType.STRING).description("상품 등록자 이메일"),
+                                fieldWithPath("quantity").type(JsonFieldType.NUMBER).description("상품 재고")
+
+                        ),
+                        responseFields(
+                                beneathPath("response"),
+                                statusMsg()
+                        )
+                ));
+    }
+
+    @Test
+    @DisplayName("상품 수정")
+    void updateProduct() throws Exception {
+        BaseUserInfo userInfo = AuthModuleHelper.toBaseUserInfo();
+        when(userFindService.fetchUserInfo(anyString())).thenReturn(userInfo);
+
+        securityUserMockSetting();
+
+        // given
+        CreateProduct createProduct = ProductModuleHelper.toCreateProduct();
+        Product product = ProductFactory.generateProduct(createProduct);
+        BaseSku sku = ProductModuleHelper.toSku(product);
+
+        when(productFindService.fetchProductEntity(anyLong())).thenReturn(product);
+        when(productQueryService.updateProduct(anyLong(), any(CreateProduct.class))).thenReturn(sku);
+
+        // when & then
+        mockMvc.perform(patch("/api/v1/product/{productId}", product.getId())
+                        .header(AuthConstants.AUTHORIZATION_HEADER, AuthConstants.BEARER_PREFIX + token)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(createProduct)))
+                .andExpect(status().isOk())
+                .andDo(document("product/patch-product",
+                        pathParameters(
+                                parameterWithName("productId").description("상품 ID")
+                        ),
                         requestFields(
                                 fieldWithPath("productName").type(JsonFieldType.STRING).description("상품 명")
                                         .attributes(field("constraints", "상품명은 100자를 넘어갈 수 없습니다.")),

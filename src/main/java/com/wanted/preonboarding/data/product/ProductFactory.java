@@ -19,6 +19,12 @@ public class ProductFactory {
         return product;
     }
 
+    public static Product generateProduct(Users users) {
+        CreateProduct createProduct = ProductModuleHelper.toCreateProduct(users);
+        return ProductModuleHelper.toProduct(createProduct);
+    }
+
+
     public static List<Sku> generateSkus(int size) {
         List<BaseSku> baseSkus = generateBaseSkus(size);
         return new ArrayList<>(baseSkus);

@@ -7,6 +7,7 @@ import com.wanted.preonboarding.module.product.entity.Product;
 public interface ProductQueryService {
 
     Sku createProduct(CreateProduct createProduct);
+    Sku updateProduct(long productId, CreateProduct createProduct);
 
     Product doBooking(long productId);
     void outOfStock(long productId);

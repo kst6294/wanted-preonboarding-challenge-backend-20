@@ -20,7 +20,7 @@ public class OrderLockRedisChecker extends AbstractRedisService implements Order
     public boolean lock(long productId) {
         String key = generateKey(RedisKey.ORDER_LOCK, String.valueOf(productId));
         if (!keyExists(key)) {
-            save(key, LOCK_SUCCESS, RedisKey.ORDER_LOCK.getHourDuration());
+            save(key, LOCK_SUCCESS, RedisKey.ORDER_LOCK.getSecondDuration());
             return true;
         }
         return false;

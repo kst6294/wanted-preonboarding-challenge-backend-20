@@ -1,0 +1,7 @@
+[source,http,options="nowrap"]
+----
+GET /api/v1/queue/position HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJrWGhyYVV4dVlDd3J3VUB3YW50ZWQuY29tIiwicm9sZSI6Ik5PUk1BTCIsImlhdCI6MTcxNjk3OTQ4MCwiZXhwIjoxNzE2OTgzMDgwfQ.LvpaqoS15x7SlmAyl143WEfsqng7VEKiJ49WAvrLDJM
+Host: localhost:8080
+
+----

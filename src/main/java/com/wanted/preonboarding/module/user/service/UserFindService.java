@@ -9,5 +9,4 @@ public interface UserFindService {
     BaseUserInfo fetchUserInfo(String email);
 
     Users fetchUserEntity(String email);
-
 }

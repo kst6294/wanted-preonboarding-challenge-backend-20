@@ -32,6 +32,7 @@ public class Users extends BaseEntity {
     @Column(name = "EMAIL", unique = true, nullable = false)
     private String email;
 
+    @Setter
     @Column(name = "PASSWORD_HASH", nullable = false)
     private String passwordHash;
 
@@ -41,21 +42,6 @@ public class Users extends BaseEntity {
 
     @OneToMany(mappedBy = "seller", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     private Set<Product> products;
-
-
-    public void addProduct(Product product) {
-        if (!products.contains(product)) {
-            products.add(product);
-            product.setSeller(this);
-        }
-    }
-
-    public void removeProduct(Product product) {
-        if (products.contains(product)) {
-            products.remove(product);
-            product.setSeller(null);
-        }
-    }
 
 
 }

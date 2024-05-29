@@ -15,6 +15,18 @@ include::{snippets}/product/post-product/request-body.adoc[]
 include::{snippets}/product/post-product/http-response.adoc[]
 include::{snippets}/product/post-product/response-fields-beneath-data.adoc[]
 
+=== 상품 수정 요청
+
+include::{snippets}/product/patch-product/http-request.adoc[]
+include::{snippets}/product/patch-product/request-fields.adoc[]
+include::{snippets}/product/patch-product/request-body.adoc[]
+
+=== 상품 수정 응답
+
+include::{snippets}/product/patch-product/http-response.adoc[]
+include::{snippets}/product/patch-product/response-fields-beneath-data.adoc[]
+
+
 === 상품 등록 실패 - 비회원
 
 include::{snippets}/product/post-product-unauthorized/http-request.adoc[]

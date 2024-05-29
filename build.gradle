@@ -35,6 +35,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+	implementation 'org.springframework.boot:spring-boot-starter-websocket'
 
 	//HIBERNATE
 	implementation 'org.hibernate:hibernate-core:6.2.7.Final'
@@ -77,6 +78,7 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-testcontainers'
 
 	//EASY RANDOM
+	implementation 'org.jeasy:easy-random-core:5.0.0'
 	testImplementation 'org.jeasy:easy-random-core:5.0.0'
 
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
@@ -103,6 +105,7 @@ asciidoctor {
 	sources {
 		include("**/index.adoc", "**/common/*.adoc")
 	}
+	attributes 'snippets': snippetsDir
 
 	baseDirFollowsSourceFile()
 }

@@ -1,18 +1,24 @@
 package com.wanted.preonboarding.document;
 
+import com.wanted.preonboarding.auth.dto.CreateAuthToken;
 import com.wanted.preonboarding.auth.enums.JwtErrorEnum;
 import com.wanted.preonboarding.module.common.enums.EnumType;
 import com.wanted.preonboarding.module.common.enums.OrderType;
 import com.wanted.preonboarding.module.common.enums.RedisKey;
 import com.wanted.preonboarding.module.common.enums.Yn;
+import com.wanted.preonboarding.module.exception.user.NotFoundUserException;
 import com.wanted.preonboarding.module.order.enums.OrderStatus;
 import com.wanted.preonboarding.module.order.enums.UserRole;
 import com.wanted.preonboarding.module.product.enums.ProductStatus;
 import com.wanted.preonboarding.module.user.enums.MemberShip;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotEmpty;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
 import java.util.Map;
@@ -49,8 +55,28 @@ public class CommonDocController {
         return ApiResponseDto.of(build);
     }
 
+
+    @PostMapping("/error")
+    public void errorSample(@RequestBody @Validated SampleRequest sampleRequest) {
+    }
+
+
     private Map<String, String> getDocs(EnumType[] enumTypes) {
         return Arrays.stream(enumTypes)
                 .collect(Collectors.toMap(EnumType::getName, EnumType::getDescription));
     }
+
+    @Getter
+    @Setter
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class SampleRequest {
+
+        @NotEmpty
+        private String name;
+
+        @Email
+        private String email;
+    }
+
 }

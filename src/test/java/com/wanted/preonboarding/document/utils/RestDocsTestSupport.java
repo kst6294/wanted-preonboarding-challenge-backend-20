@@ -8,6 +8,7 @@ import com.wanted.preonboarding.auth.handler.JwtAuthorizationDeniedHandler;
 import com.wanted.preonboarding.infra.config.jwt.JwtConfig;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Import;
@@ -31,6 +32,7 @@ import java.util.List;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @Disabled
 @ExtendWith(RestDocumentationExtension.class)
 @Import({
@@ -95,7 +97,6 @@ public abstract class RestDocsTestSupport extends ControllerTest {
         fieldDescriptors.add(fieldWithPath("numberOfElements").type(JsonFieldType.NUMBER).description("이 페이지에서 검색된 크기(size와 다른 개념)"));
         fieldDescriptors.add(fieldWithPath("empty").type(JsonFieldType.BOOLEAN).description("조회가 아무것도 되지 않았는지 여부"));
         fieldDescriptors.add(fieldWithPath("lastDomainId").optional().type(JsonFieldType.NUMBER).description("커서 기반을 위한 기준 아이디"));
-        fieldDescriptors.add(fieldWithPath("cursorValue").optional().type(JsonFieldType.STRING).description("커서 기반을 위한 기준 값"));
 
         return fieldDescriptors;
     }

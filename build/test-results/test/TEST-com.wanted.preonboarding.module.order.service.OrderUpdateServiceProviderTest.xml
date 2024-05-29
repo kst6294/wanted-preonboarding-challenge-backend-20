@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.wanted.preonboarding.module.order.service.OrderUpdateServiceProviderTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2024-05-29T02:28:39" hostname="lyusang-won-ui-MacBookPro.local" time="0.002">
+<testsuite name="com.wanted.preonboarding.module.order.service.OrderUpdateServiceProviderTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2024-05-29T10:44:38" hostname="lyusang-won-ui-MacBookPro.local" time="0.002">
   <properties/>
   <testcase name="getOrderStatusTransition_validStatus()" classname="com.wanted.preonboarding.module.order.service.OrderUpdateServiceProviderTest" time="0.001"/>
   <testcase name="getOrderStatusTransition_invalidStatus()" classname="com.wanted.preonboarding.module.order.service.OrderUpdateServiceProviderTest" time="0.001"/>

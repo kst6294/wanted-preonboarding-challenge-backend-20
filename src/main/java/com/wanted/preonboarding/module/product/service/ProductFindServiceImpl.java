@@ -44,4 +44,10 @@ public class ProductFindServiceImpl implements ProductFindService {
                 .orElseThrow(() -> new NotFoundProductException(productId));
     }
 
+    @Override
+    public Product fetchProductEntity(long productId, String email) {
+        return productFindRepository.fetchProductEntity(productId, email)
+                .orElseThrow(() -> new NotFoundProductException(productId));
+    }
+
 }

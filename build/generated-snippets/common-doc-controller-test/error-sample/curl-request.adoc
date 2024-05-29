@@ -1,0 +1,9 @@
+[source,bash]
+----
+$ curl 'http://localhost:8080/test/error' -i -X POST \
+    -H 'Content-Type: application/json;charset=UTF-8' \
+    -d '{
+  "name" : "name",
+  "email" : "hhh.naver"
+}'
+----

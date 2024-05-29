@@ -1,0 +1,8 @@
+[source,http,options="nowrap"]
+----
+POST /api/v1/enqueue HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJIZ2dLY3J5QHdhbnRlZC5jb20iLCJyb2xlIjoiTk9STUFMIiwiaWF0IjoxNzE2OTc5NDgwLCJleHAiOjE3MTY5ODMwODB9.jcl_nNDhRWjz5nLjdnJMd_WjHng2V9hNpih0Dzs3sOo
+Host: localhost:8080
+Content-Type: application/x-www-form-urlencoded
+
+----

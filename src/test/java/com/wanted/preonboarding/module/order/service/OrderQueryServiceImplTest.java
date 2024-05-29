@@ -11,12 +11,9 @@ import com.wanted.preonboarding.module.order.dto.CreateOrder;
 import com.wanted.preonboarding.module.order.entity.Order;
 import com.wanted.preonboarding.module.order.mapper.OrderMapper;
 import com.wanted.preonboarding.module.order.repository.OrderRepository;
-import com.wanted.preonboarding.module.product.core.BaseSku;
-import com.wanted.preonboarding.module.product.core.Sku;
 import com.wanted.preonboarding.module.product.dto.CreateProduct;
 import com.wanted.preonboarding.module.product.entity.Product;
 import com.wanted.preonboarding.module.product.enums.ProductStatus;
-import com.wanted.preonboarding.module.product.service.ProductFindService;
 import com.wanted.preonboarding.module.product.service.ProductQueryService;
 import com.wanted.preonboarding.module.user.entity.Users;
 import com.wanted.preonboarding.module.user.service.UserFindService;
@@ -29,7 +26,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.when;
 

@@ -30,6 +30,7 @@ public class ProductMapperImpl implements ProductMapper{
                 .productStatus(product.getProductStatus())
                 .seller(product.getSeller().getEmail())
                 .quantity(product.getQuantity())
+                .price(product.getPrice())
                 .build();
     }
 }

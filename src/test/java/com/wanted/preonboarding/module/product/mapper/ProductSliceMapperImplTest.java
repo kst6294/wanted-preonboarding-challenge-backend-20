@@ -2,7 +2,6 @@ package com.wanted.preonboarding.module.product.mapper;
 
 import com.wanted.preonboarding.data.product.ProductFactory;
 import com.wanted.preonboarding.module.common.dto.CustomSlice;
-import com.wanted.preonboarding.module.common.enums.OrderType;
 import com.wanted.preonboarding.module.product.core.Sku;
 import com.wanted.preonboarding.module.common.filter.ItemFilter;
 import org.junit.jupiter.api.DisplayName;
@@ -21,7 +20,6 @@ import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class ProductSliceMapperImplTest {

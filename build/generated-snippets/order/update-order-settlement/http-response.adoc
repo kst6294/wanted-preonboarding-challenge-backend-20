@@ -11,14 +11,14 @@ Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
 X-Frame-Options: DENY
-Content-Length: 238
+Content-Length: 248
 
 {
   "data" : {
-    "orderId" : 16476764,
-    "productId" : 2376,
-    "buyer" : "Kv@wanted.com",
-    "seller" : "uwFNeIV@wanted.com",
+    "orderId" : 34181492,
+    "productId" : 6920,
+    "buyer" : "UwKsei@wanted.com",
+    "seller" : "hupcxLQsCciAL@wanted.com",
     "orderStatus" : "COMPLETED"
   },
   "response" : {

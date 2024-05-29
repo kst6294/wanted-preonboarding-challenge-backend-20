@@ -1,4 +1,4 @@
-package com.wanted.preonboarding;
+package com.wanted.preonboarding.init;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -10,10 +10,20 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class DataInitializer implements CommandLineRunner {
 
-
+    /**
+     * 데이터를 초기화 하는 코드
+     * 서버를 시작할때 마다 데이터를 넣기 때문에
+     * 데이터 추가를 원치 않으시면 주석 처리 하세요.
+     * @param args
+     * @throws Exception
+     */
 
     @Override
     public void run(String... args) throws Exception {
-
+        for (DataGenerator generator : DataProvider.getGenerators()) {
+            int size = DataProvider.getSize(generator);
+            generator.generate(size);
+        }
     }
+
 }

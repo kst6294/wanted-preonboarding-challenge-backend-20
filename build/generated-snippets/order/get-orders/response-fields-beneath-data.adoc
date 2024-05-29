@@ -80,8 +80,4 @@
 |`+Number+`
 |false
 |커서 기반을 위한 기준 아이디
-|`+cursorValue+`
-|`+String+`
-|false
-|커서 기반을 위한 기준 값
 |===
