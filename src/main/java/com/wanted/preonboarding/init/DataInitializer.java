@@ -14,6 +14,10 @@ public class DataInitializer implements CommandLineRunner {
      * 데이터를 초기화 하는 코드
      * 서버를 시작할때 마다 데이터를 넣기 때문에
      * 데이터 추가를 원치 않으시면 주석 처리 하세요.
+     *
+     *
+     * 데이터 생성 수는 DataGeneratorRegister 에 size 수를 조정하세요.
+     *
      * @param args
      * @throws Exception
      */

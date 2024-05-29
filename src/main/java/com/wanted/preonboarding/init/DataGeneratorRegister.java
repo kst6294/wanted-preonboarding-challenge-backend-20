@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class DataGeneratorRegistrar {
+public class DataGeneratorRegister {
 
     private final UserDataInitializer userDataInitializer;
     private final ProductDataInitializer productDataInitializer;
