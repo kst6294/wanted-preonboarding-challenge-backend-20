@@ -39,5 +39,4 @@ public class OrderQueryServiceImpl implements OrderQueryService{
         return orderRepository.save(order);
     }
 
-
 }

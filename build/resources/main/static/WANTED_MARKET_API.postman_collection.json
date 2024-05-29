@@ -342,8 +342,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "{{authToken}}",
-								"type": "text"
+								"value": "{{authToken}}"
 							}
 						],
 						"url": {
@@ -415,12 +414,11 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "{{authToken}}",
-								"type": "text"
+								"value": "{{authToken}}"
 							}
 						],
 						"url": {
-							"raw": "{{host}}/api/v1/orders?lastDomainId&userRole&orderType&size",
+							"raw": "{{host}}/api/v1/orders?lastDomainId&userRole=SELLER&orderType&size",
 							"host": [
 								"{{host}}"
 							],
@@ -437,7 +435,7 @@
 								},
 								{
 									"key": "userRole",
-									"value": null,
+									"value": "SELLER",
 									"description": "default null SELLER, BUYER"
 								},
 								{
@@ -522,14 +520,32 @@
 							}
 						},
 						"url": {
-							"raw": "{{host}}/api/v1/order",
+							"raw": "{{host}}/api/v1/orders?lastDomainId&userRole=BUYER&orderType&size",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"api",
 								"v1",
-								"order"
+								"orders"
+							],
+							"query": [
+								{
+									"key": "lastDomainId",
+									"value": null
+								},
+								{
+									"key": "userRole",
+									"value": "BUYER"
+								},
+								{
+									"key": "orderType",
+									"value": null
+								},
+								{
+									"key": "size",
+									"value": null
+								}
 							]
 						},
 						"description": "정상 주문 처리"
@@ -589,8 +605,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "{{authToken}}",
-								"type": "text"
+								"value": "{{authToken}}"
 							}
 						],
 						"body": {
@@ -625,6 +640,171 @@
 				}
 			],
 			"description": "주문 관련 API\n\n자세한 설명은 Wanted Market API 문서 Order Api를 참조한다.\n\n- 상품 등록\n    \n- 상품 조회\n    \n- 상품 목록 조회"
+		},
+		{
+			"name": "Queue API",
+			"item": [
+				{
+					"name": "enqueue",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const host = pm.environment.get(\"host\");",
+									"console.log(\"Host:\", host);",
+									"",
+									"const authRequest = {",
+									"    url: `${pm.environment.get(\"host\")}/api/v1/auth/authentication`,",
+									"    method: 'POST',",
+									"    header: {",
+									"        'Content-Type': 'application/json'",
+									"    },",
+									"    body: {",
+									"        mode: 'raw',",
+									"        raw: JSON.stringify({",
+									"            email: 'test@wanted.com',",
+									"            password: '123456789'",
+									"        })",
+									"    }",
+									"};",
+									"",
+									"pm.sendRequest(authRequest, function (err, res) {",
+									"    if (err) {",
+									"        console.log(\"Error:\", err);",
+									"        return;",
+									"    }",
+									"",
+									"    console.log(\"Auth response:\", res);",
+									"",
+									"    const authHeader = res.headers.get('Authorization');",
+									"    if (authHeader && authHeader.startsWith('Bearer ')) {",
+									"        const token = authHeader;",
+									"        pm.environment.set(\"authToken\", token);",
+									"        console.log(\"Token set in environment:\", token);",
+									"    } else {",
+									"        console.log(\"Auth header not found or invalid\");",
+									"    }",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{authToken}}"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/api/v1/enqueue",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"enqueue"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Positoin",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const host = pm.environment.get(\"host\");",
+									"console.log(\"Host:\", host);",
+									"",
+									"const authRequest = {",
+									"    url: `${pm.environment.get(\"host\")}/api/v1/auth/authentication`,",
+									"    method: 'POST',",
+									"    header: {",
+									"        'Content-Type': 'application/json'",
+									"    },",
+									"    body: {",
+									"        mode: 'raw',",
+									"        raw: JSON.stringify({",
+									"            email: 'test@wanted.com',",
+									"            password: '123456789'",
+									"        })",
+									"    }",
+									"};",
+									"",
+									"pm.sendRequest(authRequest, function (err, res) {",
+									"    if (err) {",
+									"        console.log(\"Error:\", err);",
+									"        return;",
+									"    }",
+									"",
+									"    console.log(\"Auth response:\", res);",
+									"",
+									"    const authHeader = res.headers.get('Authorization');",
+									"    if (authHeader && authHeader.startsWith('Bearer ')) {",
+									"        const token = authHeader;",
+									"        pm.environment.set(\"authToken\", token);",
+									"        console.log(\"Token set in environment:\", token);",
+									"    } else {",
+									"        console.log(\"Auth header not found or invalid\");",
+									"    }",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{authToken}}"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/api/v1/queue/position",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"queue",
+								"position"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "dequeue",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/v1/dequeue",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"dequeue"
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		}
 	],
 	"event": [

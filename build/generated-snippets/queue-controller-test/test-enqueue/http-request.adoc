@@ -1,7 +1,7 @@
 [source,http,options="nowrap"]
 ----
 POST /api/v1/enqueue HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJIZ2dLY3J5QHdhbnRlZC5jb20iLCJyb2xlIjoiTk9STUFMIiwiaWF0IjoxNzE2OTc5NDgwLCJleHAiOjE3MTY5ODMwODB9.jcl_nNDhRWjz5nLjdnJMd_WjHng2V9hNpih0Dzs3sOo
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJyUUdGdUB3YW50ZWQuY29tIiwicm9sZSI6Ik5PUk1BTCIsImlhdCI6MTcxNjk4NDIxMCwiZXhwIjoxNzE2OTg3ODEwfQ.SxZ3gTnZrzc9mE8-GVuc_gdOL69g9PbFex5TPXhWldM
 Host: localhost:8080
 Content-Type: application/x-www-form-urlencoded
 

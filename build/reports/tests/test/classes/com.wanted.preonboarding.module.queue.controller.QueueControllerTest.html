@@ -23,7 +23,7 @@
 <tr>
 <td>
 <div class="infoBox" id="tests">
-<div class="counter">3</div>
+<div class="counter">1</div>
 <p>tests</p>
 </div>
 </td>
@@ -41,7 +41,7 @@
 </td>
 <td>
 <div class="infoBox" id="duration">
-<div class="counter">0.068s</div>
+<div class="counter">0.261s</div>
 <p>duration</p>
 </div>
 </td>
@@ -66,6 +66,9 @@
 <li>
 <a href="#tab1">Standard output</a>
 </li>
+<li>
+<a href="#tab2">Standard error</a>
+</li>
 </ul>
 <div id="tab0" class="tab">
 <h2>Tests</h2>
@@ -78,18 +81,8 @@
 </tr>
 </thead>
 <tr>
-<td class="success">testDequeue()</td>
-<td class="success">0.022s</td>
-<td class="success">passed</td>
-</tr>
-<tr>
 <td class="success">testEnqueue()</td>
-<td class="success">0.023s</td>
-<td class="success">passed</td>
-</tr>
-<tr>
-<td class="success">testGetPosition()</td>
-<td class="success">0.023s</td>
+<td class="success">0.261s</td>
 <td class="success">passed</td>
 </tr>
 </table>
@@ -97,57 +90,43 @@
 <div id="tab1" class="tab">
 <h2>Standard output</h2>
 <span class="code">
-<pre>2024-05-29T19:44:40.245+09:00  INFO 96329 --- [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.wanted.preonboarding.module.queue.controller.QueueControllerTest]: QueueControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-2024-05-29T19:44:40.255+09:00  INFO 96329 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.wanted.preonboarding.PreonboardingApplication for test class com.wanted.preonboarding.module.queue.controller.QueueControllerTest
-2024-05-29T19:44:40.258+09:00  INFO 96329 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
-2024-05-29T19:44:40.258+09:00  INFO 96329 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
-2024-05-29T19:44:40.258+09:00  INFO 96329 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+<pre>21:03:28.076 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.wanted.preonboarding.module.queue.controller.QueueControllerTest]: QueueControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+21:03:28.172 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.wanted.preonboarding.PreonboardingApplication for test class com.wanted.preonboarding.module.queue.controller.QueueControllerTest
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
 
-MockHttpServletRequest:
-      HTTP Method = GET
-      Request URI = /api/v1/queue/position
-       Parameters = {}
-          Headers = [Authorization:&quot;Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJrWGhyYVV4dVlDd3J3VUB3YW50ZWQuY29tIiwicm9sZSI6Ik5PUk1BTCIsImlhdCI6MTcxNjk3OTQ4MCwiZXhwIjoxNzE2OTgzMDgwfQ.LvpaqoS15x7SlmAyl143WEfsqng7VEKiJ49WAvrLDJM&quot;]
-             Body = null
-    Session Attrs = {}
+ :: Spring Boot ::                (v3.3.0)
 
-Handler:
-             Type = com.wanted.preonboarding.module.queue.controller.QueueController
-           Method = com.wanted.preonboarding.module.queue.controller.QueueController#getPosition()
+2024-05-29T21:03:28.364+09:00  INFO 2217 --- [    Test worker] c.w.p.m.q.c.QueueControllerTest          : Starting QueueControllerTest using Java 21.0.3 with PID 2217 (started by sangwon-ryu in /Users/sangwon-ryu/wanted-preonboarding-challenge-backend-20)
+2024-05-29T21:03:28.365+09:00 DEBUG 2217 --- [    Test worker] c.w.p.m.q.c.QueueControllerTest          : Running with Spring Boot v3.3.0, Spring v6.1.8
+2024-05-29T21:03:28.365+09:00  INFO 2217 --- [    Test worker] c.w.p.m.q.c.QueueControllerTest          : No active profile set, falling back to 1 default profile: &quot;default&quot;
+2024-05-29T21:03:29.709+09:00  WARN 2217 --- [    Test worker] .s.s.UserDetailsServiceAutoConfiguration : 
 
-Async:
-    Async started = false
-     Async result = null
+Using generated security password: 11d5eb5d-e38f-47ad-8470-22ea24d18599
 
-Resolved Exception:
-             Type = null
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
 
-ModelAndView:
-        View name = null
-             View = null
-            Model = null
-
-FlashMap:
-       Attributes = null
-
-MockHttpServletResponse:
-           Status = 200
-    Error message = null
-          Headers = [Vary:&quot;Origin&quot;, &quot;Access-Control-Request-Method&quot;, &quot;Access-Control-Request-Headers&quot;, Content-Type:&quot;application/json;charset=UTF-8&quot;, X-Content-Type-Options:&quot;nosniff&quot;, X-XSS-Protection:&quot;0&quot;, Cache-Control:&quot;no-cache, no-store, max-age=0, must-revalidate&quot;, Pragma:&quot;no-cache&quot;, Expires:&quot;0&quot;, X-Frame-Options:&quot;DENY&quot;]
-     Content type = application/json;charset=UTF-8
-             Body = 1
-    Forwarded URL = null
-   Redirected URL = null
-          Cookies = []
-2024-05-29T19:44:40.281+09:00  INFO 96329 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
-2024-05-29T19:44:40.281+09:00  INFO 96329 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
-2024-05-29T19:44:40.281+09:00  INFO 96329 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+2024-05-29T21:03:29.714+09:00  INFO 2217 --- [    Test worker] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
+2024-05-29T21:03:29.937+09:00  INFO 2217 --- [    Test worker] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@31e3c34, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@b4d83ac, org.springframework.security.web.context.SecurityContextHolderFilter@407b41e6, org.springframework.security.web.header.HeaderWriterFilter@7a34c1f6, org.springframework.web.filter.CorsFilter@13d10057, org.springframework.security.web.authentication.logout.LogoutFilter@1868ed54, com.wanted.preonboarding.auth.filter.JwtAuthenticationFilter@66944c7c, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@6cfd08e9, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@4ea48b2e, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@14993306, org.springframework.security.web.session.SessionManagementFilter@3e998033, org.springframework.security.web.access.ExceptionTranslationFilter@70840a5a, org.springframework.security.web.access.intercept.AuthorizationFilter@50bb1c1f]
+2024-05-29T21:03:30.123+09:00 DEBUG 2217 --- [    Test worker] c.w.p.auth.filter.CustomLoggingFilter    : Filter 'loggingFilterRegistration' configured for use
+2024-05-29T21:03:30.123+09:00 DEBUG 2217 --- [    Test worker] c.w.p.auth.filter.CustomLoggingFilter    : Filter 'customLoggingFilter' configured for use
+2024-05-29T21:03:30.126+09:00  INFO 2217 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2024-05-29T21:03:30.126+09:00  INFO 2217 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2024-05-29T21:03:30.127+09:00  INFO 2217 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+2024-05-29T21:03:30.152+09:00  INFO 2217 --- [    Test worker] c.w.p.m.q.c.QueueControllerTest          : Started QueueControllerTest in 1.946 seconds (process running for 2.527)
+2024-05-29T21:03:30.189+09:00  INFO 2217 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2024-05-29T21:03:30.189+09:00  INFO 2217 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2024-05-29T21:03:30.190+09:00  INFO 2217 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
 
 MockHttpServletRequest:
       HTTP Method = POST
       Request URI = /api/v1/enqueue
        Parameters = {}
-          Headers = [Authorization:&quot;Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJIZ2dLY3J5QHdhbnRlZC5jb20iLCJyb2xlIjoiTk9STUFMIiwiaWF0IjoxNzE2OTc5NDgwLCJleHAiOjE3MTY5ODMwODB9.jcl_nNDhRWjz5nLjdnJMd_WjHng2V9hNpih0Dzs3sOo&quot;]
+          Headers = [Authorization:&quot;Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJyUUdGdUB3YW50ZWQuY29tIiwicm9sZSI6Ik5PUk1BTCIsImlhdCI6MTcxNjk4NDIxMCwiZXhwIjoxNzE2OTg3ODEwfQ.SxZ3gTnZrzc9mE8-GVuc_gdOL69g9PbFex5TPXhWldM&quot;]
              Body = null
     Session Attrs = {}
 
@@ -179,46 +158,16 @@ MockHttpServletResponse:
     Forwarded URL = null
    Redirected URL = null
           Cookies = []
-2024-05-29T19:44:40.304+09:00  INFO 96329 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
-2024-05-29T19:44:40.304+09:00  INFO 96329 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
-2024-05-29T19:44:40.304+09:00  INFO 96329 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
-
-MockHttpServletRequest:
-      HTTP Method = POST
-      Request URI = /api/v1/dequeue
-       Parameters = {}
-          Headers = []
-             Body = null
-    Session Attrs = {}
-
-Handler:
-             Type = com.wanted.preonboarding.module.queue.controller.QueueController
-           Method = com.wanted.preonboarding.module.queue.controller.QueueController#dequeue()
-
-Async:
-    Async started = false
-     Async result = null
-
-Resolved Exception:
-             Type = null
-
-ModelAndView:
-        View name = null
-             View = null
-            Model = null
-
-FlashMap:
-       Attributes = null
-
-MockHttpServletResponse:
-           Status = 200
-    Error message = null
-          Headers = [Vary:&quot;Origin&quot;, &quot;Access-Control-Request-Method&quot;, &quot;Access-Control-Request-Headers&quot;, X-Content-Type-Options:&quot;nosniff&quot;, X-XSS-Protection:&quot;0&quot;, Cache-Control:&quot;no-cache, no-store, max-age=0, must-revalidate&quot;, Pragma:&quot;no-cache&quot;, Expires:&quot;0&quot;, X-Frame-Options:&quot;DENY&quot;]
-     Content type = null
-             Body = 
-    Forwarded URL = null
-   Redirected URL = null
-          Cookies = []
+</pre>
+</span>
+</div>
+<div id="tab2" class="tab">
+<h2>Standard error</h2>
+<span class="code">
+<pre>WARNING: A Java agent has been loaded dynamically (/Users/sangwon-ryu/.gradle/caches/modules-2/files-2.1/net.bytebuddy/byte-buddy-agent/1.14.16/4a451ee6484abac3a498df0f3b33ed00a6fced4d/byte-buddy-agent-1.14.16.jar)
+WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
+WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
+WARNING: Dynamic loading of agents will be disallowed by default in a future release
 </pre>
 </span>
 </div>
@@ -230,7 +179,7 @@ MockHttpServletResponse:
 <input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
 </label>
 </div>Generated by 
-<a href="http://www.gradle.org">Gradle 8.7</a> at 2024. 5. 29. 오후 7:44:40</p>
+<a href="http://www.gradle.org">Gradle 8.7</a> at 2024. 5. 29. 오후 9:03:30</p>
 </div>
 </div>
 </body>

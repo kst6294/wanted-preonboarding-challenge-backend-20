@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.wanted.preonboarding.module.order.validator.ProductStatusValidatorTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2024-05-29T10:44:38" hostname="lyusang-won-ui-MacBookPro.local" time="0.1">
-  <properties/>
-  <testcase name="재고가 있는 제품" classname="com.wanted.preonboarding.module.order.validator.ProductStatusValidatorTest" time="0.036"/>
-  <testcase name="예약중인 상품" classname="com.wanted.preonboarding.module.order.validator.ProductStatusValidatorTest" time="0.032"/>
-  <testcase name="존재하지 않는 제품" classname="com.wanted.preonboarding.module.order.validator.ProductStatusValidatorTest" time="0.032"/>
-  <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[]]></system-err>
-</testsuite>

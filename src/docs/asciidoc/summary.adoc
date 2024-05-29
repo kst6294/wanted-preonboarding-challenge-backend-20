@@ -1,9 +1,5 @@
 [[overview-http-status-codes]]
 
-=== WANDTED OPEN MARKET API POSTMAN COLLECTION
-
-link:/static/WANTED_MARKET_API.postman_collection.json[Download Postman Collection]
-
 === WANDTED OPEN MARKET API HTTP STATUS CODE
 
 |===
