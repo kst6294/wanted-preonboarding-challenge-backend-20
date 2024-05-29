@@ -1,3 +1,14 @@
+# Wanted Market API
+
+본 프로젝트는 `원티드 프리온보딩 챌린지 백엔드 20 사전과제`입니다.
+
+### API 문서
+
+RestAPI Docs: [Postman](https://documenter.getpostman.com/view/26755334/2sA3QteBBp)
+
+---
+
+
 ## 원티드 프리온보딩 챌린지 백엔드 20 사전과제
 
 
