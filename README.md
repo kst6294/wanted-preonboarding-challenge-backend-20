@@ -14,17 +14,18 @@
 
 [![Postman](https://img.shields.io/badge/Postman-FF6C37?style=flat&logo=postman&logoColor=white)](https://documenter.getpostman.com/view/34090317/2sA3QqhYdL)
 
-| Category | Summary            | Method | URI                                     | Request Header       | Request Body                                    | Success Code |
-| -------- | ------------------ | ------ | --------------------------------------- | -------------------- | ----------------------------------------------- | ------------ |
-| 계정     | 토큰 발급          | POST   | /token/                                 |                      | username: string <br> password: string          | 200          |
-| 비회원   | 목록 조회          | GET    | /products/                              |                      |                                                 | 200          |
-|          | 상세 조회          | GET    | /products/{product_id}                  |                      |                                                 | 200          |
-| 회원     | 제품 등록          | POST   | /products/                              | Authorization: token | name: string <br> price: float <br> amount: int | 201          |
-|          | 제품 구매          | POST   | /products/{product_id}/purchase         | Authorization: token |                                                 | 201          |
-|          | 판매 승인          | POST   | /products/{product_id}/sales_approval   | Authorization: token |                                                 | 201          |
-|          | 구매 확정          | POST   | /products/{product_id}/purchase_confirm | Authorization: token |                                                 | 201          |
-|          | 구매한 용품 조회   | GET    | /user/purchased_list                    | Authorization: token |                                                 | 200          |
-|          | 예약중인 용품 조회 | GET    | /user/reserved_list                     | Authorization: token |                                                 | 200          |
+| Category | Summary            | Method | URI                      | Request Header       | Request Body                                    | Success Code |
+| -------- | ------------------ | ------ | ------------------------ | -------------------- | ----------------------------------------------- | ------------ |
+| 계정     | 토큰 발급          | POST   | /token/                  |                      | username: string <br> password: string          | 200          |
+| 비회원   | 목록 조회          | GET    | /products/               |                      |                                                 | 200          |
+|          | 상세 조회          | GET    | /products/{product_id}   |                      |                                                 | 200          |
+| 회원     | 제품 등록          | POST   | /products/register       | Authorization: token | name: string <br> price: float <br> amount: int | 201          |
+|          | 제품 구매          | POST   | /products/purchase       | Authorization: token | product_id: int                                 | 201          |
+|          | 제품 주문서 보기   | GET    | /orders/                 | Authorization: token | product_id: int                                 | 200          |
+|          | 판매 승인          | POST   | /orders/sales-approval   | Authorization: token | product_id: int <br> buyer_id: int              | 201          |
+|          | 구매 확정          | POST   | /orders/purchase-confirm | Authorization: token | product_id: int                                 | 201          |
+|          | 구매한 용품 조회   | GET    | /user/purchased-list     | Authorization: token |                                                 | 200          |
+|          | 예약중인 용품 조회 | GET    | /user/reserved-list      | Authorization: token |                                                 | 200          |
 
 ## 📊 테스트 리포터
 
