@@ -7,6 +7,6 @@ import wanted.preonboard.market.domain.common.ProductState;
 @Data
 public class ProductUpdateDto {
     private JsonNullable<String> name;
-    private JsonNullable<Double> price;
+    private JsonNullable<Long> price;
     private JsonNullable<ProductState> state;
 }

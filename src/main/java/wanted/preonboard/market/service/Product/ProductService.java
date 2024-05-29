@@ -8,11 +8,11 @@ import wanted.preonboard.market.domain.entity.Product;
 import java.util.List;
 
 public interface ProductService {
-    Boolean createProduct(Long sellerId, ProductInsertDto product);
+    Boolean createProduct(Integer sellerId, ProductInsertDto product);
 
     List<Product> getProducts();
 
-    Product getProductById(Long productId);
+    Product getProductById(Integer productId);
 
-    Boolean updateProductById(Long productId, ProductUpdateDto product);
+    Boolean updateProductById(Integer productId, ProductUpdateDto product);
 }

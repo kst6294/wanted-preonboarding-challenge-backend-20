@@ -5,9 +5,9 @@ import wanted.preonboard.market.domain.common.ProductState;
 
 @Data
 public class Product {
-    private Long id;
-    private Long sellerId;
+    private Integer id;
+    private Integer sellerId;
     private String name;
-    private double price;
+    private Long price;
     private ProductState state;
 }

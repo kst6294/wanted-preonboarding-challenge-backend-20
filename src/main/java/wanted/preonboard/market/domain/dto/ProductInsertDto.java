@@ -5,5 +5,5 @@ import lombok.Data;
 @Data
 public class ProductInsertDto {
     private String name;
-    private double price;
+    private Long price;
 }

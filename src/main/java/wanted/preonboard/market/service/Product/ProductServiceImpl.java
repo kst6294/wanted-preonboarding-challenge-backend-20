@@ -19,7 +19,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Boolean createProduct(Long sellerId, ProductInsertDto product) {
+    public Boolean createProduct(Integer sellerId, ProductInsertDto product) {
         Product newProduct = new Product();
         newProduct.setSellerId(sellerId);
         newProduct.setName(product.getName());
@@ -33,12 +33,12 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Product getProductById(Long id) {
+    public Product getProductById(Integer id) {
         return productMapper.getProductById(id);
     }
 
     @Override
-    public Boolean updateProductById(Long productId, ProductUpdateDto product) {
+    public Boolean updateProductById(Integer productId, ProductUpdateDto product) {
         Product productToUpdate = productMapper.getProductById(productId);
         if (product.getName() != null) {
             productToUpdate.setName(product.getName().get());

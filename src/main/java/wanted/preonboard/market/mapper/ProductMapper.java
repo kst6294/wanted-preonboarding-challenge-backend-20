@@ -10,6 +10,6 @@ import java.util.List;
 public interface ProductMapper {
     int insertProduct(Product product);
     List<Product> getProducts();
-    Product getProductById(Long id);
+    Product getProductById(Integer id);
     int updateProductById(Product product);
 }

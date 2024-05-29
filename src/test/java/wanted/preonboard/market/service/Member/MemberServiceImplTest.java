@@ -16,7 +16,7 @@ class MemberServiceImplTest {
     void getMemberByEmail() {
         String memberEmail = "john@example.com";
         Member mockMember = new Member(
-            1L, "John Doe", memberEmail, "password"
+            1, "John Doe", memberEmail, "password"
         );
 
         Mockito.when(memberMapper.selectMemberByEmail(memberEmail))

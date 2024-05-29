@@ -14,7 +14,6 @@ import wanted.preonboard.market.mapper.ProductMapper;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -41,7 +40,7 @@ class ProductServiceImplTest {
 
         when(productMapper.insertProduct(any(Product.class))).thenReturn(1);
 
-        Boolean result = productService.createProduct(1L, productInsertDto);
+        Boolean result = productService.createProduct(1, productInsertDto);
 
         assertTrue(result);
         verify(productMapper, times(1)).insertProduct(any(Product.class));
@@ -50,7 +49,7 @@ class ProductServiceImplTest {
     @Test
     void getProducts() {
         Product product = new Product();
-        product.setId(1L);
+        product.setId(1);
         product.setName("Test Product");
 
         when(productMapper.getProducts()).thenReturn(Collections.singletonList(product));
@@ -66,41 +65,41 @@ class ProductServiceImplTest {
     @Test
     void getProductById() {
         Product product = new Product();
-        product.setId(1L);
+        product.setId(1);
         product.setName("Test Product");
 
-        when(productMapper.getProductById(1L)).thenReturn(product);
+        when(productMapper.getProductById(1)).thenReturn(product);
 
-        Product foundProduct = productService.getProductById(1L);
+        Product foundProduct = productService.getProductById(1);
 
         assertNotNull(foundProduct);
         assertEquals("Test Product", foundProduct.getName());
-        verify(productMapper, times(1)).getProductById(1L);
+        verify(productMapper, times(1)).getProductById(1);
     }
 
     @Test
     void updateProductById() {
         ProductUpdateDto productUpdateDto = new ProductUpdateDto();
         productUpdateDto.setName(JsonNullable.of("Updated Product"));
-        productUpdateDto.setPrice(JsonNullable.of(200D));
+        productUpdateDto.setPrice(JsonNullable.of(2000L));
         productUpdateDto.setState(JsonNullable.of(ProductState.valueOf("RESERVED")));
 
         Product existingProduct = new Product();
-        existingProduct.setId(1L);
+        existingProduct.setId(1);
         existingProduct.setName("Old Product");
-        existingProduct.setPrice(100L);
+        existingProduct.setPrice(1000L);
         existingProduct.setState(ProductState.valueOf("ON_SALE"));
 
-        when(productMapper.getProductById(1L)).thenReturn(existingProduct);
+        when(productMapper.getProductById(1)).thenReturn(existingProduct);
         when(productMapper.updateProductById(any(Product.class))).thenReturn(1);
 
-        Boolean result = productService.updateProductById(1L, productUpdateDto);
+        Boolean result = productService.updateProductById(1, productUpdateDto);
 
         assertTrue(result);
         assertEquals("Updated Product", existingProduct.getName());
         assertEquals(200L, existingProduct.getPrice());
         assertEquals(ProductState.RESERVED, existingProduct.getState());
-        verify(productMapper, times(1)).getProductById(1L);
+        verify(productMapper, times(1)).getProductById(1);
         verify(productMapper, times(1)).updateProductById(any(Product.class));
     }
 }

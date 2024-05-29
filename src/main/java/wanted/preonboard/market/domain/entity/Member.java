@@ -8,7 +8,7 @@ import lombok.Data;
 @AllArgsConstructor
 public class Member {
     @JsonIgnore
-    private Long id;
+    private Integer id;
     private String username;
     private String email;
     @JsonIgnore

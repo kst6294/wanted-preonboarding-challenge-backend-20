@@ -46,7 +46,7 @@ public class ProductController {
     }
 
     @GetMapping("/{productId}")
-    public ResponseEntity<?> getProductById(@PathVariable Long productId) {
+    public ResponseEntity<?> getProductById(@PathVariable Integer productId) {
         try {
             return new ResponseOk(productService.getProductById(productId)).toResponse();
         } catch (NullPointerException e) {
@@ -55,7 +55,7 @@ public class ProductController {
     }
 
     @PatchMapping("/{productId}")
-    public ResponseEntity<?> updateProductById(@PathVariable Long productId, @RequestBody ProductUpdateDto product) {
+    public ResponseEntity<?> updateProductById(@PathVariable Integer productId, @RequestBody ProductUpdateDto product) {
         try {
             return new ResponseOk(productService.updateProductById(productId, product)).toResponse();
         } catch (NullPointerException e) {
