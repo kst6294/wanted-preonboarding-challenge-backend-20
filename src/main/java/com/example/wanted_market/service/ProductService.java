@@ -10,6 +10,7 @@ import com.example.wanted_market.repository.UserRepository;
 import com.example.wanted_market.type.EProductStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -21,17 +22,20 @@ public class ProductService {
     private final ProductRepository productRepository;
     private final UserRepository userRepository;
 
+    @Transactional(readOnly = true)
     public User getUserById(Long userId) {
         return userRepository.findById(userId)
                 .orElseThrow(() -> { throw new IllegalArgumentException("해당 사용자가 존재하지 않습니다."); });
     }
 
+    @Transactional(readOnly = true)
     public Product getProductById(Long productId) {
         return productRepository.findProductById(productId)
                 .orElseThrow(() -> { throw new IllegalArgumentException("해당 제품이 존재하지 않습니다."); });
     }
 
     // 제품 등록
+    @Transactional
     public void register(Long userId, ProductRegesterRequestDto productRegesterRequestDto) {
         User user = getUserById(userId);
 
@@ -44,6 +48,7 @@ public class ProductService {
     }
 
     // 제품 목록 조회
+    @Transactional(readOnly = true)
     public List<ProductResponseDto> getList() {
         List<ProductResponseDto> productList = productRepository.findAllProductDetails().stream()
                 .map(p -> new ProductResponseDto(
@@ -57,6 +62,7 @@ public class ProductService {
     }
 
     // 제품 상세 조회
+    @Transactional(readOnly = true)
     public ProductDetailResponseDto getDetail(Long productId) {
         Product product = getProductById(productId);
 

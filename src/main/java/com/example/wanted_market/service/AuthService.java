@@ -8,8 +8,7 @@ import com.example.wanted_market.type.ERole;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -19,6 +18,7 @@ public class AuthService {
     private final PasswordEncoder passwordEncoder;
 
     // 회원가입
+    @Transactional
     public void register(AuthRegisterRequestDto authRegisterRequestDto) {
         // 이메일 중복 확인
         if(userRepository.existsByEmail(authRegisterRequestDto.email()))
@@ -33,6 +33,7 @@ public class AuthService {
     }
 
     // 로그인
+    @Transactional(readOnly = true)
     public Long login(AuthLoginRequestDto authLoginRequestDto) {
         // 이메일 확인
         User user = userRepository.findByEmail(authLoginRequestDto.email()).orElseThrow(
