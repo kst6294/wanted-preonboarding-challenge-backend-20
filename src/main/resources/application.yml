@@ -1,0 +1,24 @@
+server:
+  port: 8090
+
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: create
+
+    properties:
+      hibernate:
+        use_sql_comments: true
+        format_sql: true
+  datasource:
+    url: jdbc:h2:tcp://localhost/~/wanted
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+
+
+logging:
+  level:
+    org.hibernate.SQL: debug
+    org.hibernate.type: trace
+
