@@ -1,16 +1,14 @@
 package com.example.wanted_market.controller;
 
 import com.example.wanted_market.dto.request.ProductRegesterRequestDto;
+import com.example.wanted_market.dto.response.ProductDetailResponseDto;
 import com.example.wanted_market.dto.response.ProductResponseDto;
 import com.example.wanted_market.service.ProductService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -43,6 +41,17 @@ public class ProductController {
         try {
             List<ProductResponseDto> productList = productService.getList();
             return ResponseEntity.ok(productList);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body("Product List failed: "+e.getMessage());
+        }
+    }
+
+    /** 제품 상세 조회 **/
+    @GetMapping("/{productId}")
+    public ResponseEntity<?> getDetail(@PathVariable Long productId) {
+        try{
+            ProductDetailResponseDto productDetail = productService.getDetail(productId);
+            return ResponseEntity.ok(productDetail);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body("Product List failed: "+e.getMessage());
         }

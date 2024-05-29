@@ -3,6 +3,7 @@ package com.example.wanted_market.service;
 import com.example.wanted_market.domain.Product;
 import com.example.wanted_market.domain.User;
 import com.example.wanted_market.dto.request.ProductRegesterRequestDto;
+import com.example.wanted_market.dto.response.ProductDetailResponseDto;
 import com.example.wanted_market.dto.response.ProductResponseDto;
 import com.example.wanted_market.repository.ProductRepository;
 import com.example.wanted_market.repository.UserRepository;
@@ -48,5 +49,21 @@ public class ProductService {
                 )).collect(Collectors.toList());
 
         return productList;
+    }
+
+    // 제품 상세 조회
+    public ProductDetailResponseDto getDetail(Long productId) {
+        Product product = productRepository.findProductById(productId)
+                .orElseThrow(() -> { throw new IllegalArgumentException("해당 제품이 존재하지 않습니다."); });
+
+        ProductDetailResponseDto productDetail = 
+                ProductDetailResponseDto.builder()
+                        .name(product.getName())
+                        .price(product.getPrice())
+                        .status(product.getStatus())
+                        .sellerNickname(product.getSeller().getNickname())
+                .build();
+        
+        return productDetail;
     }
 }
