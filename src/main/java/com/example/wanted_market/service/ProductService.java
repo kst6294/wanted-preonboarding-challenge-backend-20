@@ -3,11 +3,15 @@ package com.example.wanted_market.service;
 import com.example.wanted_market.domain.Product;
 import com.example.wanted_market.domain.User;
 import com.example.wanted_market.dto.request.ProductRegesterRequestDto;
+import com.example.wanted_market.dto.response.ProductResponseDto;
 import com.example.wanted_market.repository.ProductRepository;
 import com.example.wanted_market.repository.UserRepository;
 import com.example.wanted_market.type.EProductStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -31,5 +35,18 @@ public class ProductService {
                 .price(productRegesterRequestDto.price())
                 .status(EProductStatus.FOR_SALE)
                 .build());
+    }
+
+    // 제품 목록 조회
+    public List<ProductResponseDto> getList() {
+        List<ProductResponseDto> productList = productRepository.findAllProductDetails().stream()
+                .map(p -> new ProductResponseDto(
+                        p.getId(),
+                        p.getName(),
+                        p.getPrice(),
+                        p.getStatus()
+                )).collect(Collectors.toList());
+
+        return productList;
     }
 }
