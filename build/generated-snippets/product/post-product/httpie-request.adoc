@@ -1,6 +1,6 @@
 [source,bash]
 ----
-$ echo '{"productName":"hmqroqavak","price":78447390,"quantity":9}' | http POST 'http://localhost:8080/api/v1/product' \
+$ echo '{"productName":"vzcqcqzdyt","price":67575512,"quantity":7}' | http POST 'http://localhost:8080/api/v1/product' \
     'Content-Type:application/json;charset=UTF-8' \
-    'Authorization:Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJWQmNOR0B3YW50ZWQuY29tIiwicm9sZSI6Ik5PUk1BTCIsImlhdCI6MTcxNjk5MTgyMiwiZXhwIjoxNzE2OTk1NDIyfQ.HsZuFfULsplUMFXwv4kRtB-Kad3KNwx0K5DTdt1IOqY'
+    'Authorization:Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJaeVZuQ1dFY0B3YW50ZWQuY29tIiwicm9sZSI6Ik5PUk1BTCIsImlhdCI6MTcxNjk5Mzc5NSwiZXhwIjoxNzE2OTk3Mzk1fQ.qAkcutKjQT6xeSbZ2uAAjxD5oC8Oy4_ezgL9cghIrWo'
 ----

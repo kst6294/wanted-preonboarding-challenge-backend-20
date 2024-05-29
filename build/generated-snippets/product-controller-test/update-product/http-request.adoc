@@ -1,14 +1,14 @@
 [source,http,options="nowrap"]
 ----
-PATCH /api/v1/product/5830 HTTP/1.1
+PATCH /api/v1/product/6575 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJHTVdAd2FudGVkLmNvbSIsInJvbGUiOiJOT1JNQUwiLCJpYXQiOjE3MTY5OTE4MjEsImV4cCI6MTcxNjk5NTQyMX0.1m83WlvDso6LPWkLT9lKmAP8QFxhP3lJSSgKjvmpoyw
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqS0B3YW50ZWQuY29tIiwicm9sZSI6Ik5PUk1BTCIsImlhdCI6MTcxNjk5Mzc5NSwiZXhwIjoxNzE2OTk3Mzk1fQ.aCOrddAEFUmwnUr-AoOB1vYWIr00E6qiUBQsqbIEVRY
 Content-Length: 74
 Host: localhost:8080
 
 {
-  "productName" : "qwgalqhfdz",
-  "price" : 24012129,
-  "quantity" : 2
+  "productName" : "gkbwnvmopk",
+  "price" : 21987771,
+  "quantity" : 3
 }
 ----

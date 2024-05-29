@@ -11,16 +11,16 @@ Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
 X-Frame-Options: DENY
-Content-Length: 262
+Content-Length: 253
 
 {
   "data" : {
-    "id" : 2390,
-    "productName" : "hmqroqavak",
-    "price" : 78447390,
+    "id" : 7721,
+    "productName" : "vzcqcqzdyt",
+    "price" : 67575512,
     "productStatus" : "ON_STOCK",
-    "seller" : "zaPbmBBLzLSID@wanted.com",
-    "quantity" : 5060
+    "seller" : "YIlN@wanted.com",
+    "quantity" : 5279
   },
   "response" : {
     "status" : 200,

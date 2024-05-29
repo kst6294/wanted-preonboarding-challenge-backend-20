@@ -3,7 +3,7 @@
 $ curl 'http://localhost:8080/api/v1/auth/authentication' -i -X POST \
     -H 'Content-Type: application/json;charset=UTF-8' \
     -d '{
-  "email" : "QBPfMQ@wanted.com",
-  "password" : "jyfmdbfaaj"
+  "email" : "OlHTa@wanted.com",
+  "password" : "quvmjcfxwf"
 }'
 ----

@@ -1,9 +1,9 @@
 [source,bash]
 ----
 $ echo '{
-  "orderId" : 43443085,
+  "orderId" : 53496454,
   "orderStatus" : "COMPLETED"
 }' | http PATCH 'http://localhost:8080/api/v1/order' \
     'Content-Type:application/json;charset=UTF-8' \
-    'Authorization:Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtSmVWZUZkUXVOQHdhbnRlZC5jb20iLCJyb2xlIjoiTk9STUFMIiwiaWF0IjoxNzE2OTkxODE4LCJleHAiOjE3MTY5OTU0MTh9.5C90uDh536o68tg9FSkups3-q0dbzflWawwyk_rVIbg'
+    'Authorization:Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ4ZFJudENnZUNZb0B3YW50ZWQuY29tIiwicm9sZSI6Ik5PUk1BTCIsImlhdCI6MTcxNjk5Mzc5MiwiZXhwIjoxNzE2OTk3MzkyfQ.vYPRIkdWfa8R2SPf-uggbXChV-h8DiNBgbuYJx4pUH0'
 ----

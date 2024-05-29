@@ -1,6 +1,6 @@
 [source,bash]
 ----
-$ echo '{"productId":4099}' | http POST 'http://localhost:8080/api/v1/order' \
+$ echo '{"productId":5744}' | http POST 'http://localhost:8080/api/v1/order' \
     'Content-Type:application/json;charset=UTF-8' \
-    'Authorization:Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJHVWZpVkpUcklAd2FudGVkLmNvbSIsInJvbGUiOiJOT1JNQUwiLCJpYXQiOjE3MTY5OTE4MTgsImV4cCI6MTcxNjk5NTQxOH0.BzSIk7C0tDvapm70mdnmv7np5xUSOl0ajHwBGmABbt8'
+    'Authorization:Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJpaEZVSVV0QHdhbnRlZC5jb20iLCJyb2xlIjoiTk9STUFMIiwiaWF0IjoxNzE2OTkzNzkxLCJleHAiOjE3MTY5OTczOTF9.C7b3uyjybD2CnYyrRRqcnBVHnpP0ZPi-4oJOdXm7di4'
 ----

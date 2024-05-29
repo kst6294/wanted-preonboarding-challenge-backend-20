@@ -2,6 +2,6 @@
 ----
 $ curl 'http://localhost:8080/api/v1/product' -i -X POST \
     -H 'Content-Type: application/json;charset=UTF-8' \
-    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJWQmNOR0B3YW50ZWQuY29tIiwicm9sZSI6Ik5PUk1BTCIsImlhdCI6MTcxNjk5MTgyMiwiZXhwIjoxNzE2OTk1NDIyfQ.HsZuFfULsplUMFXwv4kRtB-Kad3KNwx0K5DTdt1IOqY' \
-    -d '{"productName":"hmqroqavak","price":78447390,"quantity":9}'
+    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJaeVZuQ1dFY0B3YW50ZWQuY29tIiwicm9sZSI6Ik5PUk1BTCIsImlhdCI6MTcxNjk5Mzc5NSwiZXhwIjoxNzE2OTk3Mzk1fQ.qAkcutKjQT6xeSbZ2uAAjxD5oC8Oy4_ezgL9cghIrWo' \
+    -d '{"productName":"vzcqcqzdyt","price":67575512,"quantity":7}'
 ----

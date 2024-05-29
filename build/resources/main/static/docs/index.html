@@ -484,7 +484,6 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel2">
-<li><a href="#_wandted_open_market_api_postman_collection">WANDTED OPEN MARKET API POSTMAN COLLECTION</a></li>
 <li><a href="#_wandted_open_market_api_http_status_code">WANDTED OPEN MARKET API HTTP STATUS CODE</a></li>
 <li><a href="#overview-error-response">HTTP Error Response</a></li>
 <li><a href="#_auth_api">Auth API</a>
@@ -559,18 +558,16 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_membership">Membership</a></li>
 <li><a href="#_redis_key">Redis Key</a></li>
 <li><a href="#_yn">YN</a></li>
+<li><a href="#_orderstatus">OrderStatus</a></li>
+<li><a href="#_ordertype">OrderType</a></li>
+<li><a href="#_productstatus">ProductStatus</a></li>
+<li><a href="#_userrole">UserRole</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 <div id="content">
-<div class="sect2">
-<h3 id="_wandted_open_market_api_postman_collection"><a class="link" href="#_wandted_open_market_api_postman_collection">WANDTED OPEN MARKET API POSTMAN COLLECTION</a></h3>
-<div class="paragraph">
-<p><a href="/static/WANTED_MARKET_API.postman_collection.json">Download Postman Collection</a></p>
-</div>
-</div>
 <div class="sect2">
 <h3 id="_wandted_open_market_api_http_status_code"><a class="link" href="#_wandted_open_market_api_http_status_code">WANDTED OPEN MARKET API HTTP STATUS CODE</a></h3>
 <table class="tableblock frame-all grid-all stretch">
@@ -632,7 +629,7 @@ Content-Length: 159
 {
   "status" : 400,
   "message" : "email must be a well-formed email address",
-  "timestamp" : "2024-05-29 19:44:35",
+  "timestamp" : "2024-05-29 23:42:27",
   "error" : "BeanPropertyBindingResult"
 }</code></pre>
 </div>
@@ -688,10 +685,10 @@ Content-Length: 159
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /api/v1/auth/authentication HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Content-Length: 49
+Content-Length: 53
 Host: localhost:8080
 
-{"email":"oK@wanted.com","password":"cqsvvpkcpl"}</code></pre>
+{"email":"KtQsPi@wanted.com","password":"quwxvdehjh"}</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
@@ -728,7 +725,7 @@ Host: localhost:8080
 </table>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="json" class="language-json hljs">{"email":"oK@wanted.com","password":"cqsvvpkcpl"}</code></pre>
+<pre class="highlightjs highlight nowrap"><code data-lang="json" class="language-json hljs">{"email":"KtQsPi@wanted.com","password":"quwxvdehjh"}</code></pre>
 </div>
 </div>
 </div>
@@ -740,7 +737,7 @@ Host: localhost:8080
 Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJUekB3YW50ZWQuY29tIiwicm9sZSI6Ik5PUk1BTCIsImlhdCI6MTcxNjk3OTQ3MywiZXhwIjoxNzE2OTgzMDczfQ.ufZH9YTvYVEBX3o9l40TQu_roudKNQ6ybvJLjDdvXL4
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJPdXZSQHdhbnRlZC5jb20iLCJyb2xlIjoiTk9STUFMIiwiaWF0IjoxNzE2OTkzNzQ2LCJleHAiOjE3MTY5OTczNDZ9.4t7bThq17gtH3qGjXQDG5K-xNa1dHgmM-UDPb8jCjLU
 Content-Type: application/json;charset=UTF-8
 X-Content-Type-Options: nosniff
 X-XSS-Protection: 0
@@ -817,11 +814,11 @@ Content-Length: 112
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /api/v1/product HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtUUtIdUlnVkZAd2FudGVkLmNvbSIsInJvbGUiOiJOT1JNQUwiLCJpYXQiOjE3MTY5Nzk0NzksImV4cCI6MTcxNjk4MzA3OX0.9q_PMLM2dwSxN6RxZDYoEgGje_pgn5W3pmn7tdK4XwI
-Content-Length: 58
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ5ZFRKckB3YW50ZWQuY29tIiwicm9sZSI6Ik5PUk1BTCIsImlhdCI6MTcxNjk5Mzc1MSwiZXhwIjoxNzE2OTk3MzUxfQ.kApg-r2azCkMLMt0hzWh6DtD22h4z3RrpU5TAOMcC6M
+Content-Length: 57
 Host: localhost:8080
 
-{"productName":"aplpzapmno","price":91981019,"quantity":5}</code></pre>
+{"productName":"lyjepzyiue","price":8647627,"quantity":9}</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
@@ -865,7 +862,7 @@ Host: localhost:8080
 </table>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="json" class="language-json hljs">{"productName":"aplpzapmno","price":91981019,"quantity":5}</code></pre>
+<pre class="highlightjs highlight nowrap"><code data-lang="json" class="language-json hljs">{"productName":"lyjepzyiue","price":8647627,"quantity":9}</code></pre>
 </div>
 </div>
 </div>
@@ -884,16 +881,16 @@ Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
 X-Frame-Options: DENY
-Content-Length: 259
+Content-Length: 261
 
 {
   "data" : {
-    "id" : 7299,
-    "productName" : "aplpzapmno",
-    "price" : 91981019,
+    "id" : 8833,
+    "productName" : "lyjepzyiue",
+    "price" : 8647627,
     "productStatus" : "ON_STOCK",
-    "seller" : "CZurCwMPUf@wanted.com",
-    "quantity" : 5631
+    "seller" : "NcHmHyiizWfgk@wanted.com",
+    "quantity" : 3608
   },
   "response" : {
     "status" : 200,
@@ -959,13 +956,13 @@ Content-Length: 259
 <h3 id="_상품_수정_요청"><a class="link" href="#_상품_수정_요청">상품 수정 요청</a></h3>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">PATCH /api/v1/product/3439 HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">PATCH /api/v1/product/9321 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJlTWNTQHdhbnRlZC5jb20iLCJyb2xlIjoiTk9STUFMIiwiaWF0IjoxNzE2OTc5NDc5LCJleHAiOjE3MTY5ODMwNzl9.KVwQqQcjJoR5ppeJwA2rdicOe39SJ2L2YfDg6-WUqBM
-Content-Length: 57
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtS0B3YW50ZWQuY29tIiwicm9sZSI6Ik5PUk1BTCIsImlhdCI6MTcxNjk5Mzc1MSwiZXhwIjoxNzE2OTk3MzUxfQ.l0RJTb7ZbDqZqOaK0rAF5hNBWh6Rs_k8uMSb6BsxzV4
+Content-Length: 58
 Host: localhost:8080
 
-{"productName":"ndowqayovi","price":7903799,"quantity":6}</code></pre>
+{"productName":"kmdixndvhe","price":94925290,"quantity":7}</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
@@ -1009,7 +1006,7 @@ Host: localhost:8080
 </table>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="json" class="language-json hljs">{"productName":"ndowqayovi","price":7903799,"quantity":6}</code></pre>
+<pre class="highlightjs highlight nowrap"><code data-lang="json" class="language-json hljs">{"productName":"kmdixndvhe","price":94925290,"quantity":7}</code></pre>
 </div>
 </div>
 </div>
@@ -1028,16 +1025,16 @@ Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
 X-Frame-Options: DENY
-Content-Length: 251
+Content-Length: 257
 
 {
   "data" : {
-    "id" : 3439,
-    "productName" : "ndowqayovi",
-    "price" : 7903799,
+    "id" : 9321,
+    "productName" : "kmdixndvhe",
+    "price" : 94925290,
     "productStatus" : "ON_STOCK",
-    "seller" : "KCX@wanted.com",
-    "quantity" : 4560
+    "seller" : "tSttaSWf@wanted.com",
+    "quantity" : 2968
   },
   "response" : {
     "status" : 200,
@@ -1108,7 +1105,7 @@ Content-Type: application/json;charset=UTF-8
 Content-Length: 58
 Host: localhost:8080
 
-{"productName":"zjmritksrp","price":99395865,"quantity":9}</code></pre>
+{"productName":"jdtnnpwolg","price":88681502,"quantity":2}</code></pre>
 </div>
 </div>
 <div class="listingblock">
@@ -1135,7 +1132,7 @@ X-Frame-Options: DENY</code></pre>
 <h3 id="_상품_조회_요청"><a class="link" href="#_상품_조회_요청">상품 조회 요청</a></h3>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /api/v1/product/1331 HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /api/v1/product/2321 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Host: localhost:8080</code></pre>
 </div>
@@ -1175,16 +1172,16 @@ Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
 X-Frame-Options: DENY
-Content-Length: 261
+Content-Length: 263
 
 {
   "data" : {
-    "id" : 1331,
-    "productName" : "jmyffhtzum",
-    "price" : 89726128,
+    "id" : 2321,
+    "productName" : "nhwhdwepqv",
+    "price" : 43043528,
     "productStatus" : "ON_STOCK",
-    "seller" : "TCprSgMQmFnM@wanted.com",
-    "quantity" : 6906
+    "seller" : "ALorsTkrUJDapB@wanted.com",
+    "quantity" : 5448
   },
   "response" : {
     "status" : 200,
@@ -1276,80 +1273,80 @@ Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
 X-Frame-Options: DENY
-Content-Length: 2271
+Content-Length: 2267
 
 {
   "data" : {
     "content" : [ {
-      "id" : 7179,
-      "productName" : "wbvrwywxgu",
-      "price" : 46431573,
+      "id" : 7590,
+      "productName" : "naigaxmqlf",
+      "price" : 2017492,
       "productStatus" : "ON_STOCK",
-      "seller" : "kBjbnYVtAvsHfL@wanted.com",
-      "quantity" : 7323
+      "seller" : "qgCbXwqwRtB@wanted.com",
+      "quantity" : 222
     }, {
-      "id" : 6546,
-      "productName" : "ajxtjxkywp",
-      "price" : 1204047,
+      "id" : 9413,
+      "productName" : "tomgezqpox",
+      "price" : 42758617,
       "productStatus" : "ON_STOCK",
-      "seller" : "tLEtieSRrOO@wanted.com",
-      "quantity" : 1339
+      "seller" : "bqtZoc@wanted.com",
+      "quantity" : 8339
     }, {
-      "id" : 3186,
-      "productName" : "owpmdmypnz",
-      "price" : 68051867,
+      "id" : 1466,
+      "productName" : "wdcmohsffn",
+      "price" : 25103275,
       "productStatus" : "ON_STOCK",
-      "seller" : "UvthRObuOamw@wanted.com",
-      "quantity" : 4210
+      "seller" : "xSGoCsvSeQE@wanted.com",
+      "quantity" : 7923
     }, {
-      "id" : 9520,
-      "productName" : "jlifxnfqrt",
-      "price" : 22433791,
+      "id" : 5752,
+      "productName" : "qrunvfhnbw",
+      "price" : 63875748,
       "productStatus" : "ON_STOCK",
-      "seller" : "avDooQUtsN@wanted.com",
-      "quantity" : 5181
+      "seller" : "asaGsJxOON@wanted.com",
+      "quantity" : 3916
     }, {
-      "id" : 7812,
-      "productName" : "fngobcrnna",
-      "price" : 74367957,
+      "id" : 4719,
+      "productName" : "yonqzqzoof",
+      "price" : 94487726,
       "productStatus" : "ON_STOCK",
-      "seller" : "zZGSL@wanted.com",
-      "quantity" : 1211
+      "seller" : "jSuRGYTVUxS@wanted.com",
+      "quantity" : 6008
     }, {
-      "id" : 3529,
-      "productName" : "jdcqumzjqo",
-      "price" : 67029915,
+      "id" : 5738,
+      "productName" : "crjtplnkxp",
+      "price" : 13244952,
       "productStatus" : "ON_STOCK",
-      "seller" : "KVFpCDHKFX@wanted.com",
-      "quantity" : 3105
+      "seller" : "cSrONFayt@wanted.com",
+      "quantity" : 2643
     }, {
-      "id" : 9518,
-      "productName" : "ngopigrwuq",
-      "price" : 82275192,
+      "id" : 1114,
+      "productName" : "ygutixmkks",
+      "price" : 10424938,
       "productStatus" : "ON_STOCK",
-      "seller" : "pbNOkeJutlku@wanted.com",
-      "quantity" : 7967
+      "seller" : "AYYPeX@wanted.com",
+      "quantity" : 2589
     }, {
-      "id" : 4919,
-      "productName" : "rkrolwmdul",
-      "price" : 54781920,
+      "id" : 4898,
+      "productName" : "bjddrqysof",
+      "price" : 60142509,
       "productStatus" : "ON_STOCK",
-      "seller" : "HLAuyADJt@wanted.com",
-      "quantity" : 210
+      "seller" : "nYUJVJZjKC@wanted.com",
+      "quantity" : 8064
     }, {
-      "id" : 5460,
-      "productName" : "egtauaiyde",
-      "price" : 11744267,
+      "id" : 9082,
+      "productName" : "ctmltcmtiq",
+      "price" : 68620213,
       "productStatus" : "ON_STOCK",
-      "seller" : "eekwdupy@wanted.com",
-      "quantity" : 3072
+      "seller" : "tJsWiFZunaPdJ@wanted.com",
+      "quantity" : 7572
     }, {
-      "id" : 8223,
-      "productName" : "pguaaykmcp",
-      "price" : 56070860,
+      "id" : 1469,
+      "productName" : "roxcvqzdzw",
+      "price" : 30870865,
       "productStatus" : "ON_STOCK",
-      "seller" : "krAqyrTnzgzVj@wanted.com",
-      "quantity" : 3390
+      "seller" : "PHlMusjOymsXN@wanted.com",
+      "quantity" : 6882
     } ],
     "last" : true,
     "first" : true,
@@ -1362,7 +1359,7 @@ Content-Length: 2271
     "size" : 5,
     "numberOfElements" : 10,
     "empty" : false,
-    "lastDomainId" : 8223
+    "lastDomainId" : 1469
   },
   "response" : {
     "status" : 200,
@@ -1502,11 +1499,11 @@ Content-Length: 2271
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /api/v1/order HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBbXRNd0B3YW50ZWQuY29tIiwicm9sZSI6Ik5PUk1BTCIsImlhdCI6MTcxNjk3OTQ3NiwiZXhwIjoxNzE2OTgzMDc2fQ.UfjHabLtwLJRQkcwwd7nXZkq6YWb8HQ5pfa310kwilw
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBbE1hS0B3YW50ZWQuY29tIiwicm9sZSI6Ik5PUk1BTCIsImlhdCI6MTcxNjk5Mzc0OCwiZXhwIjoxNzE2OTk3MzQ4fQ.8ebBM7NqRzsn3n3iP9_GvA_8ArRubxR2jYyxcSyzcik
 Content-Length: 18
 Host: localhost:8080
 
-{"productId":5592}</code></pre>
+{"productId":1559}</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
@@ -1550,14 +1547,14 @@ Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
 X-Frame-Options: DENY
-Content-Length: 239
+Content-Length: 237
 
 {
   "data" : {
-    "orderId" : 1483100,
-    "productId" : 5592,
-    "buyer" : "AmtMw@wanted.com",
-    "seller" : "LCuiUsLz@wanted.com",
+    "orderId" : 12594532,
+    "productId" : 1559,
+    "buyer" : "AlMaK@wanted.com",
+    "seller" : "ZsYjd@wanted.com",
     "orderStatus" : "ORDERED"
   },
   "response" : {
@@ -1620,11 +1617,11 @@ Content-Length: 239
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /api/v1/order HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJteGlaeFRHQ2RzZXZAd2FudGVkLmNvbSIsInJvbGUiOiJOT1JNQUwiLCJpYXQiOjE3MTY5Nzk0NzYsImV4cCI6MTcxNjk4MzA3Nn0.mTCnnTBDzZUCogWa-qb5_icZW-77C_EPHAGaAsGBemM
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJESENNa25HQHdhbnRlZC5jb20iLCJyb2xlIjoiTk9STUFMIiwiaWF0IjoxNzE2OTkzNzQ4LCJleHAiOjE3MTY5OTczNDh9.0aOqUdA9xVUhuiv5saHd8HtTlLxYaLqLy87eP9oIEAk
 Content-Length: 22
 Host: localhost:8080
 
-{"productId":76046114}</code></pre>
+{"productId":51623483}</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
@@ -1696,8 +1693,8 @@ Host: localhost:8080
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="json" class="language-json hljs">{
   "status" : 400,
-  "message" : "createOrder 해당 상품을 찾을 수 없습니다. 상품 ID: 76046114 createOrder ",
-  "timestamp" : "2024-05-29 19:44:36",
+  "message" : "createOrder 해당 상품을 찾을 수 없습니다. 상품 ID: 51623483 createOrder ",
+  "timestamp" : "2024-05-29 23:42:28",
   "error" : "BeanPropertyBindingResult"
 }</code></pre>
 </div>
@@ -1709,11 +1706,11 @@ Host: localhost:8080
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /api/v1/order HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJXSUdIRUtHZkB3YW50ZWQuY29tIiwicm9sZSI6Ik5PUk1BTCIsImlhdCI6MTcxNjk3OTQ3NiwiZXhwIjoxNzE2OTgzMDc2fQ.Z54flK1ibzrczdGsUR_5k4sBuAXu0SX_xBOE1Bzqblk
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJQYVVhYUB3YW50ZWQuY29tIiwicm9sZSI6Ik5PUk1BTCIsImlhdCI6MTcxNjk5Mzc0NywiZXhwIjoxNzE2OTk3MzQ3fQ._9HGMz8GEvFLkNhiTg8EY8eC74aNKq1ax2sVO3lH0iM
 Content-Length: 18
 Host: localhost:8080
 
-{"productId":7536}</code></pre>
+{"productId":6411}</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
@@ -1786,7 +1783,7 @@ Host: localhost:8080
 <pre class="highlightjs highlight nowrap"><code data-lang="json" class="language-json hljs">{
   "status" : 400,
   "message" : "createOrder 이미 예약중 또는 판매완료 된 상품 입니다. ",
-  "timestamp" : "2024-05-29 19:44:36",
+  "timestamp" : "2024-05-29 23:42:27",
   "error" : "BeanPropertyBindingResult"
 }</code></pre>
 </div>
@@ -1798,11 +1795,11 @@ Host: localhost:8080
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /api/v1/order HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJrbGRmeWl1SWdmeGtRckB3YW50ZWQuY29tIiwicm9sZSI6Ik5PUk1BTCIsImlhdCI6MTcxNjk3OTQ3NiwiZXhwIjoxNzE2OTgzMDc2fQ.YSDSTHINq4g6jGaku89pIuy8lmb3RFkLn2NM86j91Rs
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJoUlN6QVZhdEB3YW50ZWQuY29tIiwicm9sZSI6Ik5PUk1BTCIsImlhdCI6MTcxNjk5Mzc0NywiZXhwIjoxNzE2OTk3MzQ3fQ.LWTHJJq2g965s1Tw_-P7Ygq0Imxr2bKHlDFVEHFVLUY
 Content-Length: 18
 Host: localhost:8080
 
-{"productId":2223}</code></pre>
+{"productId":1400}</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
@@ -1875,7 +1872,7 @@ Host: localhost:8080
 <pre class="highlightjs highlight nowrap"><code data-lang="json" class="language-json hljs">{
   "status" : 400,
   "message" : "createOrder 이미 예약중 또는 판매완료 된 상품 입니다. ",
-  "timestamp" : "2024-05-29 19:44:36",
+  "timestamp" : "2024-05-29 23:42:27",
   "error" : "BeanPropertyBindingResult"
 }</code></pre>
 </div>
@@ -1892,11 +1889,11 @@ Host: localhost:8080
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">PATCH /api/v1/order HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJuUVJnYUl3QlFoY0B3YW50ZWQuY29tIiwicm9sZSI6Ik5PUk1BTCIsImlhdCI6MTcxNjk3OTQ3NiwiZXhwIjoxNzE2OTgzMDc2fQ.PoyDAE_-Ig_4879Dm-2c1NNckLDJJodztQg4Wj9k-IY
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJFQ052RUB3YW50ZWQuY29tIiwicm9sZSI6Ik5PUk1BTCIsImlhdCI6MTcxNjk5Mzc0NywiZXhwIjoxNzE2OTk3MzQ3fQ.X2g5zJs47jPCCKFsG1fJhVCYWQVl2uKpwjZ5aSyiTSo
 Content-Length: 46
 Host: localhost:8080
 
-{"orderId":17741561,"orderStatus":"COMPLETED"}</code></pre>
+{"orderId":20341262,"orderStatus":"COMPLETED"}</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
@@ -1947,14 +1944,14 @@ Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
 X-Frame-Options: DENY
-Content-Length: 247
+Content-Length: 237
 
 {
   "data" : {
-    "orderId" : 8933923,
-    "productId" : 4669,
-    "buyer" : "nQRgaIwBQhc@wanted.com",
-    "seller" : "DZhYpKNZhf@wanted.com",
+    "orderId" : 69043209,
+    "productId" : 7767,
+    "buyer" : "ECNvE@wanted.com",
+    "seller" : "ysSZD@wanted.com",
     "orderStatus" : "ORDERED"
   },
   "response" : {
@@ -2017,11 +2014,11 @@ Content-Length: 247
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">PATCH /api/v1/order HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJPb0hzRFJRQHdhbnRlZC5jb20iLCJyb2xlIjoiTk9STUFMIiwiaWF0IjoxNzE2OTc5NDc2LCJleHAiOjE3MTY5ODMwNzZ9.bwxCBVY6N1CB0nFhjdwjS0ZbrTb_MrBw0YJidclCGok
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJuWm9ZbHVJdEB3YW50ZWQuY29tIiwicm9sZSI6Ik5PUk1BTCIsImlhdCI6MTcxNjk5Mzc0OCwiZXhwIjoxNzE2OTk3MzQ4fQ.EF6VNMptMoDeMQkHPMD57NCCSKhf7Q_cJHKX4jGgDUU
 Content-Length: 47
 Host: localhost:8080
 
-{"orderId":98412408,"orderStatus":"SETTLEMENT"}</code></pre>
+{"orderId":37322168,"orderStatus":"SETTLEMENT"}</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
@@ -2060,8 +2057,8 @@ Host: localhost:8080
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="json" class="language-json hljs">{
   "status" : 400,
-  "message" : "updateOrder 해당 주문의 주문 상태 변경을 지원 하지 않습니다. 주문 번호 ::: 98412408 현재 주문 상태 ::: ORDERED 변경 불가 상태 ::: SETTLEMENT",
-  "timestamp" : "2024-05-29 19:44:36",
+  "message" : "updateOrder 해당 주문의 주문 상태 변경을 지원 하지 않습니다. 주문 번호 ::: 37322168 현재 주문 상태 ::: ORDERED 변경 불가 상태 ::: SETTLEMENT",
+  "timestamp" : "2024-05-29 23:42:28",
   "error" : "BeanPropertyBindingResult"
 }</code></pre>
 </div>
@@ -2073,11 +2070,11 @@ Host: localhost:8080
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">PATCH /api/v1/order HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJVd0tzZWlAd2FudGVkLmNvbSIsInJvbGUiOiJOT1JNQUwiLCJpYXQiOjE3MTY5Nzk0NzYsImV4cCI6MTcxNjk4MzA3Nn0.bRSHCjzbu1daNVPhLu5zhsfsMqko5tYJSNf93Def_oU
-Content-Length: 47
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJacFRQekdGeUJAd2FudGVkLmNvbSIsInJvbGUiOiJOT1JNQUwiLCJpYXQiOjE3MTY5OTM3NDcsImV4cCI6MTcxNjk5NzM0N30.qPmZ-z_5s2hBw8NKph0CTvStLC0VgoKAalubO9H5tqg
+Content-Length: 46
 Host: localhost:8080
 
-{"orderId":51872197,"orderStatus":"SETTLEMENT"}</code></pre>
+{"orderId":1027856,"orderStatus":"SETTLEMENT"}</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
@@ -2128,14 +2125,14 @@ Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
 X-Frame-Options: DENY
-Content-Length: 248
+Content-Length: 243
 
 {
   "data" : {
-    "orderId" : 34181492,
-    "productId" : 6920,
-    "buyer" : "UwKsei@wanted.com",
-    "seller" : "hupcxLQsCciAL@wanted.com",
+    "orderId" : 22219962,
+    "productId" : 3389,
+    "buyer" : "ZpTPzGFyB@wanted.com",
+    "seller" : "QWOnm@wanted.com",
     "orderStatus" : "COMPLETED"
   },
   "response" : {
@@ -2198,11 +2195,11 @@ Content-Length: 248
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">PATCH /api/v1/order HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJRUGRmQHdhbnRlZC5jb20iLCJyb2xlIjoiTk9STUFMIiwiaWF0IjoxNzE2OTc5NDc2LCJleHAiOjE3MTY5ODMwNzZ9.P2IMJYtAAXp3C7iAuDXkuILNfXUYkG_j_pf4EpOVC8Q
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJCdnVaSUB3YW50ZWQuY29tIiwicm9sZSI6Ik5PUk1BTCIsImlhdCI6MTcxNjk5Mzc0OCwiZXhwIjoxNzE2OTk3MzQ4fQ.3mkJNvMf8eWFNoy80b-XDHWtDZn3zZexTp41Rx8gQTw
 Content-Length: 46
 Host: localhost:8080
 
-{"orderId":54226926,"orderStatus":"COMPLETED"}</code></pre>
+{"orderId":10811243,"orderStatus":"COMPLETED"}</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
@@ -2241,8 +2238,8 @@ Host: localhost:8080
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="json" class="language-json hljs">{
   "status" : 400,
-  "message" : "updateOrder 해당 주문의 주문 상태 변경을 지원 하지 않습니다. 주문 번호 ::: 54226926 현재 주문 상태 ::: COMPLETED 변경 불가 상태 ::: COMPLETED",
-  "timestamp" : "2024-05-29 19:44:36",
+  "message" : "updateOrder 해당 주문의 주문 상태 변경을 지원 하지 않습니다. 주문 번호 ::: 10811243 현재 주문 상태 ::: COMPLETED 변경 불가 상태 ::: COMPLETED",
+  "timestamp" : "2024-05-29 23:42:28",
   "error" : "BeanPropertyBindingResult"
 }</code></pre>
 </div>
@@ -2257,9 +2254,9 @@ Host: localhost:8080
 <h3 id="_주문_조회_요청"><a class="link" href="#_주문_조회_요청">주문 조회 요청</a></h3>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /api/v1/order/92599023 HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /api/v1/order/55968501 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJZZ2lvcFRXQ0JMcXhvS0B3YW50ZWQuY29tIiwicm9sZSI6Ik5PUk1BTCIsImlhdCI6MTcxNjk3OTQ3NiwiZXhwIjoxNzE2OTgzMDc2fQ.kQrcecaJKEMYNB5hNPWGnsq7uXqZpHIYsGxqL0fDKqg
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtZEFvQHdhbnRlZC5jb20iLCJyb2xlIjoiTk9STUFMIiwiaWF0IjoxNzE2OTkzNzQ3LCJleHAiOjE3MTY5OTczNDd9.JtfnD1uWLPQyiquvjb-cfzaV0VrWA3MSHeT-cU_mRck
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -2298,37 +2295,37 @@ Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
 X-Frame-Options: DENY
-Content-Length: 972
+Content-Length: 942
 
 {
   "data" : [ {
-    "orderId" : 92599023,
-    "productId" : 1167,
-    "buyer" : "YgiopTWCBLqxoK@wanted.com",
-    "seller" : "zwucqfnsol",
+    "orderId" : 55968501,
+    "productId" : 7723,
+    "buyer" : "mdAo@wanted.com",
+    "seller" : "nsikgazikx",
     "orderStatus" : "ORDERED",
-    "price" : 41313127,
-    "productName" : "ghpdchbhkh",
+    "price" : 15471060,
+    "productName" : "jnjodbtdas",
     "insertDate" : "2013-10-13 18:30:26",
     "isCurrentUserSeller" : false
   }, {
-    "orderId" : 92599023,
-    "productId" : 1167,
-    "buyer" : "YgiopTWCBLqxoK@wanted.com",
-    "seller" : "zwucqfnsol",
+    "orderId" : 55968501,
+    "productId" : 7723,
+    "buyer" : "mdAo@wanted.com",
+    "seller" : "nsikgazikx",
     "orderStatus" : "COMPLETED",
-    "price" : 41313127,
-    "productName" : "ghpdchbhkh",
+    "price" : 15471060,
+    "productName" : "jnjodbtdas",
     "insertDate" : "2013-10-13 18:30:26",
     "isCurrentUserSeller" : false
   }, {
-    "orderId" : 92599023,
-    "productId" : 1167,
-    "buyer" : "YgiopTWCBLqxoK@wanted.com",
-    "seller" : "zwucqfnsol",
+    "orderId" : 55968501,
+    "productId" : 7723,
+    "buyer" : "mdAo@wanted.com",
+    "seller" : "nsikgazikx",
     "orderStatus" : "SETTLEMENT",
-    "price" : 41313127,
-    "productName" : "ghpdchbhkh",
+    "price" : 15471060,
+    "productName" : "jnjodbtdas",
     "insertDate" : "2013-10-13 18:30:26",
     "isCurrentUserSeller" : false
   } ],
@@ -2416,7 +2413,7 @@ Content-Length: 972
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /api/v1/orders?size=5 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0QnFzaW90cVFZQHdhbnRlZC5jb20iLCJyb2xlIjoiTk9STUFMIiwiaWF0IjoxNzE2OTc5NDc3LCJleHAiOjE3MTY5ODMwNzd9.bKPG3HEvSR-1LWmS18UBq8XX8oxjXy_c3UsHlt3nlvM
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJrYnlPdlBpWnpabHpAd2FudGVkLmNvbSIsInJvbGUiOiJOT1JNQUwiLCJpYXQiOjE3MTY5OTM3NDgsImV4cCI6MTcxNjk5NzM0OH0.cnY2s07xb32Vg3s6VIJQ4YQD2tjhpWTPEaGyio3SOAs
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -2466,58 +2463,58 @@ Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
 X-Frame-Options: DENY
-Content-Length: 1903
+Content-Length: 1913
 
 {
   "data" : {
     "content" : [ {
-      "orderId" : 96812804,
-      "productId" : 5115,
-      "buyer" : "tBqsiotqQY@wanted.com",
-      "seller" : "zxfvmffhjx",
+      "orderId" : 22178977,
+      "productId" : 7626,
+      "buyer" : "kbyOvPiZzZlz@wanted.com",
+      "seller" : "uifiuvxfgh",
       "orderStatus" : "ORDERED",
-      "price" : 44059534,
-      "productName" : "ukuvwumgic",
+      "price" : 69182356,
+      "productName" : "acftiuzsct",
       "insertDate" : "2013-10-13 18:30:26",
       "isCurrentUserSeller" : false
     }, {
-      "orderId" : 44835489,
-      "productId" : 7879,
-      "buyer" : "tBqsiotqQY@wanted.com",
-      "seller" : "vffaztutsh",
+      "orderId" : 74655635,
+      "productId" : 8875,
+      "buyer" : "kbyOvPiZzZlz@wanted.com",
+      "seller" : "hsdlubrvou",
       "orderStatus" : "ORDERED",
-      "price" : 23374258,
-      "productName" : "eiafceyfbg",
+      "price" : 16732204,
+      "productName" : "vzpgrswieg",
       "insertDate" : "2013-10-13 18:30:26",
       "isCurrentUserSeller" : false
     }, {
-      "orderId" : 29742049,
-      "productId" : 1011,
-      "buyer" : "tBqsiotqQY@wanted.com",
-      "seller" : "xxwrdmolou",
+      "orderId" : 80069368,
+      "productId" : 3921,
+      "buyer" : "kbyOvPiZzZlz@wanted.com",
+      "seller" : "ulndvmpeox",
       "orderStatus" : "ORDERED",
-      "price" : 68617503,
-      "productName" : "sdicepdgci",
+      "price" : 58114676,
+      "productName" : "ceqrgbuyvi",
       "insertDate" : "2013-10-13 18:30:26",
       "isCurrentUserSeller" : false
     }, {
-      "orderId" : 98949752,
-      "productId" : 4238,
-      "buyer" : "tBqsiotqQY@wanted.com",
-      "seller" : "fquwrgqcyk",
+      "orderId" : 49212287,
+      "productId" : 4862,
+      "buyer" : "kbyOvPiZzZlz@wanted.com",
+      "seller" : "uoejjiareo",
       "orderStatus" : "ORDERED",
-      "price" : 55504966,
-      "productName" : "ebqegxuygi",
+      "price" : 58376798,
+      "productName" : "iegwfkkskt",
       "insertDate" : "2013-10-13 18:30:26",
       "isCurrentUserSeller" : false
     }, {
-      "orderId" : 91948948,
-      "productId" : 5380,
-      "buyer" : "tBqsiotqQY@wanted.com",
-      "seller" : "oqsrlswzol",
+      "orderId" : 73110901,
+      "productId" : 5425,
+      "buyer" : "kbyOvPiZzZlz@wanted.com",
+      "seller" : "yovbwggnvh",
       "orderStatus" : "ORDERED",
-      "price" : 56367756,
-      "productName" : "tdgmbwvpgz",
+      "price" : 98746800,
+      "productName" : "bqbwugmnvj",
       "insertDate" : "2013-10-13 18:30:26",
       "isCurrentUserSeller" : false
     } ],
@@ -2532,7 +2529,7 @@ Content-Length: 1903
     "size" : 5,
     "numberOfElements" : 5,
     "empty" : false,
-    "lastDomainId" : 13617027
+    "lastDomainId" : 79459934
   },
   "response" : {
     "status" : 200,
@@ -2766,9 +2763,19 @@ Content-Length: 1903
 <td class="tableblock halign-left valign-top"><p class="tableblock">코드명</p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>USERS_ENTITY</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">REDIS KEY :  users_entity, '
+'REDIS TTL :  36000</p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>ORDER_LOCK</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">REDIS KEY :  order_lock, '
 'REDIS TTL :  1</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>PRODUCT_ENTITY</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">REDIS KEY :  product_entity, '
+'REDIS TTL :  36000</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>REFRESH_TOKEN</code></p></td>
@@ -2817,11 +2824,135 @@ Content-Length: 1903
 </table>
 </div>
 </div>
+<div class="sect1">
+<h2 id="_orderstatus"><a class="link" href="#_orderstatus">OrderStatus</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>orderStatus</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">코드</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">코드명</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>COMPLETED</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Order status: COMPLETED</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>ORDERED</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Order status: ORDERED</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>SETTLEMENT</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Order status: SETTLEMENT</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_ordertype"><a class="link" href="#_ordertype">OrderType</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>orderType</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">코드</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">코드명</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>PAST</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">id ASC</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>LATEST</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">id DESC</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_productstatus"><a class="link" href="#_productstatus">ProductStatus</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>productStatus</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">코드</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">코드명</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>OUT_STOCK</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">제품의 판매 상태 완료</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>OUT_OF_STOCK</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">제품의 판매 상태 품절</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>ON_STOCK</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">제품의 판매 상태 판매중</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>BOOKING</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">제품의 판매 상태 예약중</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_userrole"><a class="link" href="#_userrole">UserRole</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>userRole</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">코드</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">코드명</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>BUYER</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">판매자 / 구매자</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>SELLER</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">판매자 / 구매자</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1-SNAPSHOT<br>
-Last updated 2024-05-29 17:26:19 +0900
+Last updated 2024-05-29 19:50:29 +0900
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">

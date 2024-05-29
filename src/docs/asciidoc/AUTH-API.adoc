@@ -11,7 +11,7 @@ include::{snippets}/auth/get-access-token/request-fields.adoc[]
 include::{snippets}/auth/get-access-token/request-body.adoc[]
 
 === Access Token 발급 응답
-
+==== 응답 헤더에 토큰값 존재 (Header Authorization)
 include::{snippets}/auth/get-access-token/http-response.adoc[]
 include::{snippets}/auth/get-access-token/response-fields.adoc[]
 include::{snippets}/auth/get-access-token/response-body.adoc[]
