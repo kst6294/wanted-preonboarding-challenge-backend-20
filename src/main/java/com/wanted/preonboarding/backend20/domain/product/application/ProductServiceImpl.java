@@ -5,7 +5,6 @@ import com.wanted.preonboarding.backend20.domain.product.domain.Product;
 import com.wanted.preonboarding.backend20.domain.product.dto.ProductDetailDto;
 import com.wanted.preonboarding.backend20.domain.product.dto.ProductOutlineDto;
 import com.wanted.preonboarding.backend20.domain.product.dto.ProductRequestDto;
-import com.wanted.preonboarding.backend20.domain.product.enums.ProductStatus;
 import com.wanted.preonboarding.backend20.domain.product.repository.ProductRepository;
 import com.wanted.preonboarding.backend20.global.exception.CustomException;
 import com.wanted.preonboarding.backend20.global.exception.ErrorCode;
@@ -36,16 +35,6 @@ public class ProductServiceImpl implements ProductService {
     public void updateProduct(Long id, ProductRequestDto dto, Member seller) {
         Product product = findProduct(id);
         product.updateProduct(dto);
-    }
-
-    @Override
-    @Transactional
-    public void deleteProduct(Long id, Member seller) {
-        Product product = findProduct(id);
-        if (!product.getStatus().equals(ProductStatus.SALE)) {
-            throw new CustomException(ErrorCode.ONLY_SALES_PRODUCT_CAN_DELETE);
-        }
-        productRepository.delete(product);
     }
 
     @Override

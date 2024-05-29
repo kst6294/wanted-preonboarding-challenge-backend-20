@@ -11,7 +11,6 @@ public interface ProductService {
 
     void createProduct(ProductRequestDto dto, Member seller);
     void updateProduct(Long id, ProductRequestDto dto, Member seller);
-    void deleteProduct(Long id, Member seller);
 
     Page<ProductOutlineDto> searchAllProducts(Pageable pageable);
     ProductDetailDto searchProductById(Long id);
