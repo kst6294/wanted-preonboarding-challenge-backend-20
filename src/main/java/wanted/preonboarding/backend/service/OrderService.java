@@ -106,14 +106,29 @@ public class OrderService {
 
     /**
      * 거래 내역 조회 - 특정 제품에 대한 구매자와 판매자 간 거래 내역
+     * 현재 사용자가 판매자인 경우, 제품에 대한 모든 구매자와의 거래 내역 조회
+     * 현재 사용자가 구매자인 경우, 제품에 대한 판매자와의 거래 내역 조회
      */
     @Transactional(readOnly = true)
-    public OrderResponse getOrderHistory(final Long memberId, final Long itemId) {
+    public OrderListResponse getOrderHistory(final Long memberId, final Long itemId) {
+        //제품 정보 조회
+        Item foundItem = itemRepository.findItemById(itemId).orElseThrow(() -> {
+            throw new IllegalArgumentException("제품 정보가 존재하지 않습니다.");
+        });
+
+        //현재 사용자가 제품 판매자면 구매자 목록 조회 및 반환
+        if (foundItem.getMember().getId().equals(memberId)) {
+            List<Orders> foundOrders = orderRepository.findOrdersByItemId(itemId);
+            return OrderListResponse.from(foundOrders);
+        }
+
+        //현재 사용자가 제품 판매자가 아니면 제품에 대한 판매자와의 거래 내역 조회
         Optional<Orders> foundOrder = orderRepository.findOrderHistory(memberId, itemId);
 
-        //거래 내역이 있으면 주문 정보를 담은 객체 반환
-        //거래 내역이 없으면 빈 객체 반환
-        return foundOrder.map(OrderResponse::from).orElseGet(OrderResponse::new);
+        //거래 내역이 있으면 주문 정보를 담은 리스트 반환
+        //거래 내역이 없으면 빈 리스트 반환
+        return foundOrder.map(orders -> OrderListResponse.from(List.of(orders)))
+                .orElseGet(() -> OrderListResponse.from(List.of()));
     }
 
     /**

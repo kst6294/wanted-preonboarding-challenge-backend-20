@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import wanted.preonboarding.backend.auth.Session;
 import wanted.preonboarding.backend.dto.response.OrderListResponse;
-import wanted.preonboarding.backend.dto.response.OrderResponse;
 import wanted.preonboarding.backend.service.OrderService;
 
 @RestController
@@ -22,8 +21,8 @@ public class OrderQueryController {
      * 특정 아이템에 대한 판매자와 사용자(구매자) 간 거래 내역 조회
      */
     @GetMapping("/history/{itemId}")
-    public OrderResponse getOrderHistory(@PathVariable final Long itemId,
-                                         final HttpSession session) {
+    public OrderListResponse getOrderHistory(@PathVariable final Long itemId,
+                                final HttpSession session) {
         Long memberId = (Long) session.getAttribute(Session.MEMBER);
         return orderService.getOrderHistory(memberId, itemId);
     }
