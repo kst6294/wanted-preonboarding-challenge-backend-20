@@ -21,9 +21,14 @@ public class ProductService {
     private final ProductRepository productRepository;
     private final UserRepository userRepository;
 
-    private User getUserById(Long userId) {
+    public User getUserById(Long userId) {
         return userRepository.findById(userId)
                 .orElseThrow(() -> { throw new IllegalArgumentException("해당 사용자가 존재하지 않습니다."); });
+    }
+
+    public Product getProductById(Long productId) {
+        return productRepository.findProductById(productId)
+                .orElseThrow(() -> { throw new IllegalArgumentException("해당 제품이 존재하지 않습니다."); });
     }
 
     // 제품 등록
@@ -53,8 +58,7 @@ public class ProductService {
 
     // 제품 상세 조회
     public ProductDetailResponseDto getDetail(Long productId) {
-        Product product = productRepository.findProductById(productId)
-                .orElseThrow(() -> { throw new IllegalArgumentException("해당 제품이 존재하지 않습니다."); });
+        Product product = getProductById(productId);
 
         ProductDetailResponseDto productDetail = 
                 ProductDetailResponseDto.builder()

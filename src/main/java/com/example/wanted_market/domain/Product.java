@@ -41,4 +41,8 @@ public class Product {
         this.price = price;
         this.status = status;
     }
+
+    public void setStatus(EProductStatus status) {
+        this.status = status;
+    }
 }
