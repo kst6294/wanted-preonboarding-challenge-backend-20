@@ -4,6 +4,23 @@ import { show_orders, approve_sale_order, confirm_purchase_order } from "../serv
 
 var router = Router();
 
+// 제품의 주문서 보기
+// 구매자로서 주문서
+// 또는 판매자로서 주문서 목록 제공
+router.post("/", verifyToken, async function (req, res, next) {
+    const { product_id } = req.body;
+    const buyer_id = req.decoded.id;
+    const seller_id = req.decoded.id;
+
+    try {
+        const orders = await show_orders({ buyer_id, product_id, seller_id });
+
+        res.status(200).json(orders);
+    } catch (err) {
+        next(err);
+    }
+});
+
 // 판매 승인
 // 본인 상품만 가능
 // 예약중 상품만 가능

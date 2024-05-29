@@ -115,6 +115,15 @@ describe("API TEST", () => {
                 expect(response.body.length).toBe(2);
             });
 
+            it("판매자/주문서 확인", async () => {
+                let response = await request(app).post(`/orders`).set("Authorization", sellerA_token).send({
+                    product_id,
+                });
+
+                expect(response.status).toBe(200);
+                expect(response.body.length).toBe(2);
+            });
+
             it("판매자/판매 승인", async () => {
                 let response = await request(app).post(`/orders/sales-approval`).set("Authorization", sellerA_token).send({
                     buyer_id: buyerA_id,
@@ -133,6 +142,15 @@ describe("API TEST", () => {
                 expect(response.body.status).toBe("Approval");
             });
 
+            it("구매자A/주문서 확인", async () => {
+                let response = await request(app).post(`/orders`).set("Authorization", buyerA_token).send({
+                    product_id,
+                });
+
+                expect(response.status).toBe(200);
+                expect(response.body.status).toBe("Approval");
+            });
+
             it("구매자A/구매 확정", async () => {
                 const response = await request(app).post(`/orders/purchase-confirm`).set("Authorization", buyerA_token).send({
                     product_id,
@@ -140,7 +158,9 @@ describe("API TEST", () => {
 
                 expect(response.status).toBe(201);
                 expect(response.body.status).toBe("Confirm");
+            });
 
+            it("상품 재고 확인(재고)", async () => {
                 const check = await request(app).get(`/products/${product_id}`);
                 expect(check.body.status).not.toBe("SoldOut");
             });
@@ -152,7 +172,9 @@ describe("API TEST", () => {
 
                 expect(response.status).toBe(201);
                 expect(response.body.status).toBe("Confirm");
+            });
 
+            it("상품 재고 확인(절판)", async () => {
                 const check = await request(app).get(`/products/${product_id}`);
                 expect(check.body.status).toBe("SoldOut");
             });
