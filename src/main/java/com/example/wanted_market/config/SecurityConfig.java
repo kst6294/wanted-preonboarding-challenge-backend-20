@@ -29,12 +29,6 @@ public class SecurityConfig {
                 .authorizeHttpRequests(requestMatcherRegistry -> requestMatcherRegistry
                         .requestMatchers("/auth/**").permitAll()
                         .anyRequest().authenticated())
-                .formLogin(formLogin -> formLogin
-                        .loginPage("/login")  // 커스텀 로그인 페이지를 사용하려면 이 부분을 수정합니다.
-                        .permitAll())
-                .logout(logout -> logout
-                        .logoutUrl("/logout")
-                        .permitAll())
                 .getOrBuild();
     }
 }
