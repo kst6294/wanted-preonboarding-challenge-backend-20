@@ -1,5 +1,6 @@
 package com.example.wantedmarketapi.util;
 
+import com.example.wantedmarketapi.domain.Product;
 import com.example.wantedmarketapi.domain.member.Member;
 import com.example.wantedmarketapi.domain.member.Password;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -27,6 +28,17 @@ public class TestUtil {
             BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
             setField(member, "password", Password.encrypt("Test1234!@#$", encoder));
             return member;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static Product createProductWithReflection() {
+        try {
+            Constructor<Product> constructor = Product.class.getDeclaredConstructor();
+            constructor.setAccessible(true);
+            Product product = constructor.newInstance();
+            return product;
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
