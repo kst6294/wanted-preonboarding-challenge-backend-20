@@ -8,4 +8,6 @@ public interface ProductQueryService {
 
     List<GetProductResponse> getProductList();
 
+    GetProductDetailsResponse getProductDetails(Long productId);
+
 }

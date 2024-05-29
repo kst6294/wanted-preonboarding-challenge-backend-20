@@ -7,6 +7,8 @@ import com.example.wantedmarketapi.domain.Product;
 import com.example.wantedmarketapi.domain.enums.ProductStatus;
 import com.example.wantedmarketapi.dto.request.ProductRequestDto.*;
 import com.example.wantedmarketapi.dto.response.ProductResponseDto.*;
+import com.example.wantedmarketapi.exception.GlobalErrorCode;
+import com.example.wantedmarketapi.exception.custom.ProductException;
 import com.example.wantedmarketapi.repository.ProductRepository;
 import com.example.wantedmarketapi.service.impl.ProductQueryServiceImpl;
 import com.example.wantedmarketapi.util.TestUtil;
@@ -18,6 +20,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 @ExtendWith(MockitoExtension.class)
 public class ProductQueryServiceImplTest {
@@ -58,5 +61,47 @@ public class ProductQueryServiceImplTest {
         assertEquals(2000, result.get(1).getPrice());
 
         verify(productRepository, times(1)).findAll();
+    }
+
+    @Test
+    void getProductDetails_ShouldReturnProductDetails() {
+
+        // Given
+        Long productId = 1L;
+        Product product = TestUtil.createProductWithReflection();
+        TestUtil.setField(product, "name", "Test Product");
+        TestUtil.setField(product, "price", 1000);
+        TestUtil.setField(product, "productStatus", ProductStatus.SALE);
+        TestUtil.setField(product, "reservationStatus", false);
+
+        when(productRepository.findById(productId)).thenReturn(Optional.of(product));
+
+        // When
+        GetProductDetailsResponse result = productQueryService.getProductDetails(productId);
+
+        // Then
+        assertNotNull(result);
+        assertEquals("Test Product", result.getName());
+        assertEquals(1000, result.getPrice());
+        assertEquals(ProductStatus.SALE, result.getProductStatus());
+        assertEquals(false, result.getReservationStatus());
+
+        verify(productRepository, times(1)).findById(productId);
+    }
+
+    @Test
+    void getProductDetails_ShouldThrowException_WhenProductNotFound() {
+
+        // Given
+        Long productId = 1L;
+        when(productRepository.findById(productId)).thenReturn(Optional.empty());
+
+        // When & Then
+        ProductException exception = assertThrows(ProductException.class, () -> {
+            productQueryService.getProductDetails(productId);
+        });
+
+        assertEquals(GlobalErrorCode.PRODUCT_NOT_FOUND, exception.getErrorCode());
+        verify(productRepository, times(1)).findById(productId);
     }
 }

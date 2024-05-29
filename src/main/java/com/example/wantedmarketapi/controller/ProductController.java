@@ -44,4 +44,11 @@ public class ProductController {
         return BaseResponse.onSuccess(productQueryService.getProductList());
     }
 
+    @Operation(summary = "제품 상세 조회 API", description = "제품의 상세정보를 조회합니다")
+    @ApiResponses({@ApiResponse(responseCode = "200", description = "성공")})
+    @GetMapping("/{productId}")
+    public BaseResponse<GetProductDetailsResponse> getProductDetails(@PathVariable(name = "productId") Long productId){
+        return BaseResponse.onSuccess(productQueryService.getProductDetails(productId));
+    }
+
 }

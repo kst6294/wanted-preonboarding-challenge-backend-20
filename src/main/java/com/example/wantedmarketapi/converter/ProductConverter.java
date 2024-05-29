@@ -43,4 +43,14 @@ public class ProductConverter {
                 .toList();
     }
 
+    public static GetProductDetailsResponse toGetProductDetailsResponse(Product product) {
+        return GetProductDetailsResponse.builder()
+                .name(product.getName())
+                .price(product.getPrice())
+                .productStatus(product.getProductStatus())
+                .reservationStatus(product.getReservationStatus())
+                .tradeList(product.getTradeList())
+                .build();
+    }
+
 }
