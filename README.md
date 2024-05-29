@@ -52,7 +52,7 @@
 <br>
 
 ### 제출방법
-1. 이 repository 를 clone 해주세요.
+1. 이 repository 를 fork 해주세요.
 2. feature/{name} 으로 브랜치를 생성해주세요. 예: feature/suntae-kim
 3. 과제를 진행해주세요.
 4. 소스코드를 Push 하고 PR을 올려주세요. 
