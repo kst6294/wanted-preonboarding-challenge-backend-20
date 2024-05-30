@@ -33,7 +33,7 @@ public class UserController {
     @PostMapping("/sing-in")
     public ResponseEntity<TokenResponse> login(
             @RequestBody UserLogin request
-            ) {
+    ) {
         return ResponseEntity
                 .ok()
                 .body(TokenResponse.from(userService.login(request)));
