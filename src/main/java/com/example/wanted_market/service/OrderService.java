@@ -56,10 +56,10 @@ public class OrderService {
 
     // 판매 승인
     @Transactional
-    public void approval(Long productId, Long orderId, Long userId) {
-        Product product = productService.getProductById(productId);
+    public void approval(Long orderId, Long userId) {
         User user = productService.getUserById(userId);
         Order order = getOrderById(orderId);
+        Product product = productService.getProductById(order.getProduct().getId());
 
         if(order.getStatus().equals(EOrderStatus.COMPLETED))
             throw new IllegalArgumentException("이미 완료된 주문입니다.");

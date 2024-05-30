@@ -34,15 +34,14 @@ public class OrderController {
     }
 
     /** 판매 승인 **/
-    @PatchMapping("/approval/{productId}/{orderId}")
-    public ResponseEntity<?> approval(@PathVariable Long productId,
-                                      @PathVariable Long orderId, HttpSession session) {
+    @PatchMapping("/approval/{orderId}")
+    public ResponseEntity<?> approval(@PathVariable Long orderId, HttpSession session) {
         try{
             Long userId = (Long)session.getAttribute("loginUser");
             if(userId == null)
                 throw new IllegalArgumentException("로그인이 필요합니다.");
 
-            orderService.approval(productId, orderId, userId);
+            orderService.approval(orderId, userId);
             return ResponseEntity.ok("Sale Approval success");
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body("Sale Approval failed: "+e.getMessage());

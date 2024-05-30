@@ -23,6 +23,7 @@ public record ProductDetailResponseDto(
 
     @Builder
     public record TransactionDto(
+            Long orderId,
             String buyerNickname,
             EOrderStatus orderStatus,
             String orderTime

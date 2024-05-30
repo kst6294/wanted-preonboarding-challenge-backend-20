@@ -81,6 +81,7 @@ public class ProductService {
 
         List<TransactionDto> transaction = orderRepository.findByProductId(productId).stream()
                 .map(order -> TransactionDto.builder()
+                        .orderId(order.getId())
                         .buyerNickname(order.getBuyer().getNickname())
                         .orderStatus(order.getStatus())
                         .orderTime(DateUtil.formatDateTime(order.getCreateDate()))
