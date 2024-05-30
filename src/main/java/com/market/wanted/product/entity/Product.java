@@ -24,7 +24,7 @@ public class Product extends BaseEntity {
 
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "member_id")
-    private Member buyer;
+    private Member seller;
 
     @Enumerated(EnumType.STRING)
     private ProductStatus status = ProductStatus.SALE;
@@ -37,6 +37,10 @@ public class Product extends BaseEntity {
     public Product(String productName, long price, Member buyer) {
         this.productName = productName;
         this.price = price;
-        this.buyer = buyer;
+        this.seller = buyer;
+    }
+
+    public void addSeller(Member seller) {
+        this.seller = seller;
     }
 }
