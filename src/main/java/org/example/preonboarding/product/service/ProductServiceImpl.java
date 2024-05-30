@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.example.preonboarding.member.model.entity.Member;
 import org.example.preonboarding.member.repository.MemberRepository;
+import org.example.preonboarding.member.util.MemberUtil;
 import org.example.preonboarding.product.exception.ProductNotFoundException;
 import org.example.preonboarding.product.model.entity.Product;
 import org.example.preonboarding.product.model.mapper.ProductMapper;
@@ -25,6 +26,7 @@ import static org.example.preonboarding.product.model.enums.ProductType.UNCLASSI
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class ProductServiceImpl implements ProductService {
+    private final MemberUtil memberUtil;
     private final ProductRepository productRepository;
     private final MemberRepository memberRepository;
     private final ProductNumberFactory productNumberFactory;
@@ -35,6 +37,13 @@ public class ProductServiceImpl implements ProductService {
         return products.stream()
                 .map(ProductMapper.INSTANCE::toProductResponse)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<ProductResponse> getProductsByUser() {
+        Member currentUser = memberUtil.getCurrentUser();
+        List<Product> myProducts = productRepository.findAllBySeller(currentUser);
+        return myProducts.stream().map(ProductMapper.INSTANCE::toProductResponse).toList();
     }
 
     @Override

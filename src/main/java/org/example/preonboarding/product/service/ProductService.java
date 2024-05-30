@@ -11,6 +11,8 @@ public interface ProductService {
 
     List<ProductResponse> getProducts();
 
+    List<ProductResponse> getProductsByUser();
+
     ProductResponse getProductById(Long productId);
 
     ProductResponse createProduct(ProductCreateRequest productCreateRequest);
