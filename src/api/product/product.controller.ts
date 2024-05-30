@@ -6,29 +6,19 @@ import {
   Param,
   Post,
   Query,
-  Req,
-  UseGuards,
 } from '@nestjs/common';
 import { ProductService } from './product.service';
-import {
-  ApiBadRequestResponse,
-  ApiExtraModels,
-  ApiNotFoundResponse,
-  ApiTags,
-  getSchemaPath,
-} from '@nestjs/swagger';
+import { ApiExtraModels, ApiTags } from '@nestjs/swagger';
 import {
   ProductRegisterRequestDto,
   ProductRegisterResponseDto,
 } from './dto/product-register.dto';
-import { JwtAccessGuard } from '../auth/guard/jwt-access.guard';
 import { User } from '../../common/decorator/user.decorator';
 import { IJwtPayload } from '../auth/interface/jwt-payload.interface';
 import { ResponseEntity } from '../../common/response.common';
 import { ProductSummaryResponseDto } from './dto/product-summary.dto';
-import { ApiPagenationRequest } from '../../common/decorator/pagination-request.decorator';
 import { PaginationRequestDto } from '../../common/dto/pagination-request.dto';
-import { ApiCommonResponse } from '../../common/decorator/common-response.decorator';
+import { OkResponse } from '../../common/decorator/common-response.decorator';
 import {
   ProductPurchaseRequestDto,
   ProductPurchaseResponseDto,
@@ -41,9 +31,10 @@ import {
   ProductDetailResponseDto,
   ProductDetailResquestDto,
 } from './dto/product-detail.dto';
-import { MemberAccessGuard } from '../auth/guard/member-access.guard';
 import { ProductDetailWithTransactionResponseDto } from './dto/product-deatil-with-transaction.dto';
 import { ProductApproveRequestDto } from './dto/product-approve.dto';
+import { LoginAuth } from '../../common/decorator/login-auth.decorator';
+import { Exception } from '../../common/decorator/exception.decorator';
 
 @ApiTags('Product')
 @Controller('product')
@@ -54,12 +45,9 @@ export class ProductController {
    * 제품 등록
    */
   @Post()
-  @ApiExtraModels(ProductRegisterResponseDto)
-  @ApiCommonResponse({
-    $ref: getSchemaPath(ProductRegisterResponseDto),
-  })
   @HttpCode(201)
-  @UseGuards(JwtAccessGuard)
+  @LoginAuth()
+  @OkResponse(ProductRegisterResponseDto)
   async registerProduct(
     @Body() productDto: ProductRegisterRequestDto,
     @User() user: IJwtPayload,
@@ -80,14 +68,7 @@ export class ProductController {
    * 제품 목록 보기
    */
   @Get('/list')
-  @ApiPagenationRequest()
-  @ApiExtraModels(ProductSummaryResponseDto)
-  @ApiCommonResponse({
-    type: 'array',
-    items: {
-      $ref: getSchemaPath(ProductSummaryResponseDto),
-    },
-  })
+  @OkResponse(ProductSummaryResponseDto)
   async getProductList(
     @Query() paginateQuery: PaginationRequestDto,
   ): Promise<ResponseEntity<ProductSummaryResponseDto[]>> {
@@ -101,17 +82,12 @@ export class ProductController {
   /**
    * 제품 구매 신청
    */
-  @ApiExtraModels(ProductPurchaseResponseDto)
-  @ApiCommonResponse({
-    $ref: getSchemaPath(ProductPurchaseResponseDto),
-  })
-  @ApiNotFoundResponse({ description: '해당하는 제품이 존재하지 않을 경우' })
-  @ApiBadRequestResponse({
-    description: '해당하는 제품이 판매 가능 상태가 아닐 경우',
-  })
   @Post('/purchase')
   @HttpCode(200)
-  @UseGuards(JwtAccessGuard)
+  @LoginAuth()
+  @OkResponse(ProductPurchaseResponseDto)
+  @Exception(400, '해당하는 제품이 판매 가능 상태가 아닙니다')
+  @Exception(404, '해당하는 제품이 존재하지 않습니다')
   async purchaseProduct(
     @Body() productDto: ProductPurchaseRequestDto,
     @User() user: IJwtPayload,
@@ -129,13 +105,11 @@ export class ProductController {
   /**
    * 제품 상세 보기
    */
-  @ApiExtraModels(ProductDetailWithTransactionResponseDto)
-  @ApiCommonResponse({
-    $ref: getSchemaPath(ProductDetailWithTransactionResponseDto),
-  })
-  @ApiNotFoundResponse({ description: '해당하는 제품이 존재하지 않을 경우' })
-  @UseGuards(MemberAccessGuard)
   @Get('/:productIdx')
+  @LoginAuth()
+  @Exception(404, '해당하는 제품이 존재하지 않습니다')
+  @OkResponse(ProductDetailResponseDto)
+  @OkResponse(ProductDetailWithTransactionResponseDto)
   async getProductDetail(
     @Param() productDetailDto: ProductDetailResquestDto,
     @User() user?: IJwtPayload,
@@ -177,12 +151,11 @@ export class ProductController {
   /**
    * 판매 승인
    */
-  @ApiExtraModels()
-  @ApiCommonResponse({}, '판매 승인')
-  @ApiNotFoundResponse({ description: '해당하는 제품이 존재하지 않을 경우' })
-  @ApiBadRequestResponse({ description: '해당하는 제품의 판매자가 아닐 경우' })
-  @UseGuards(JwtAccessGuard)
   @Post('/:productIdx/approve')
+  @LoginAuth()
+  @ApiExtraModels()
+  @Exception(400, '해당하는 제품의 판매자가 아닙니다')
+  @Exception(404, '해당하는 제품이 존재하지 않습니다')
   async approveProduct(
     @Body() productApproveDto: ProductApproveRequestDto,
     @User() user: IJwtPayload,

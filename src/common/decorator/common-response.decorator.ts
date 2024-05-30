@@ -1,15 +1,9 @@
 import { applyDecorators } from '@nestjs/common';
-import { ApiOkResponse } from '@nestjs/swagger';
-import {
-  ReferenceObject,
-  SchemaObject,
-} from '@nestjs/swagger/dist/interfaces/open-api-spec.interface';
+import { ApiExtraModels, ApiOkResponse, getSchemaPath } from '@nestjs/swagger';
 
-export const ApiCommonResponse = (
-  obj: SchemaObject & Partial<ReferenceObject>,
-  message: string = '',
-) => {
+export const OkResponse = <T>(schema: new (...args: any[]) => T) => {
   return applyDecorators(
+    ApiExtraModels(schema),
     ApiOkResponse({
       schema: {
         properties: {
@@ -19,10 +13,10 @@ export const ApiCommonResponse = (
           },
           message: {
             type: 'string',
-            example: message,
+            example: 'message',
           },
           data: {
-            ...obj,
+            $ref: getSchemaPath(schema),
           },
         },
       },

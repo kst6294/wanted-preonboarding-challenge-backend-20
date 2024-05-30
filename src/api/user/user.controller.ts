@@ -6,33 +6,23 @@ import {
   Post,
   Query,
   Res,
-  UseGuards,
 } from '@nestjs/common';
 import { UserService } from './user.service';
-import {
-  ApiBadRequestResponse,
-  ApiConflictResponse,
-  ApiExtraModels,
-  ApiOkResponse,
-  ApiOperation,
-  ApiResponse,
-  ApiTags,
-  getSchemaPath,
-} from '@nestjs/swagger';
+import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { SignupRequestDto, SignupResponseDto } from './dto/signup.dto';
 import { ResponseEntity } from '../../common/response.common';
 import { LoginRequestDto } from './dto/login.dto';
 import { AuthService } from '../auth/auth.service';
 import { Response } from 'express';
-import { ApiCommonResponse } from '../../common/decorator/common-response.decorator';
-import { JwtAccessGuard } from '../auth/guard/jwt-access.guard';
-import { ApiPagenationRequest } from '../../common/decorator/pagination-request.decorator';
+import { OkResponse } from '../../common/decorator/common-response.decorator';
 import { User } from '../../common/decorator/user.decorator';
 import { IJwtPayload } from '../auth/interface/jwt-payload.interface';
 import { MyPurchasedProductResponseDto } from './dto/purchased-product.dto';
 import { PaginationRequestDto } from '../../common/dto/pagination-request.dto';
 import { ReservedProductResponseDto } from './dto/reserved-product.dto';
 import { SoldProductListResponseDto } from './dto/selling-product.dto';
+import { Exception } from '../../common/decorator/exception.decorator';
+import { LoginAuth } from '../../common/decorator/login-auth.decorator';
 
 @ApiTags('User')
 @Controller('user')
@@ -45,15 +35,10 @@ export class UserController {
   /**
    * 회원가입
    */
-  @ApiExtraModels(SignupResponseDto)
-  @ApiCommonResponse({
-    $ref: getSchemaPath(SignupResponseDto),
-  })
-  @ApiConflictResponse({
-    description: '이미 존재하는 이메일입니다',
-  })
-  @HttpCode(201)
   @Post('signup')
+  @HttpCode(201)
+  @OkResponse(SignupResponseDto)
+  @Exception(409, '이미 존재하는 아이디입니다')
   async signup(
     @Body() signupDto: SignupRequestDto,
   ): Promise<ResponseEntity<SignupResponseDto>> {
@@ -72,14 +57,12 @@ export class UserController {
         schema: {
           type: 'string',
           example:
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZHgiOjMsIm5hbWUiOiLsnKDrj5nshKAiLCJpYXQiOjE3MTY4OTg1OTIsImV4cCI6MTcxNjk4NDk5Mn0.OIJJx8gvXzrCSxFTjOK0WybWM_KP4WzsZ_MKrxKahvQ;',
+            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZHgiOjMsIm5hbWUiOiLsnKDrj5nshKAiLCJpYXQiOjE3MTY4OTg1OTIsImV4cCI6MTcxNjk4NDk5Mn0.OIJJx8gvXzrCSxFTjOK0WybWM_KP4WzsZ_MKrxKahvQ',
         },
       },
     },
   })
-  @ApiBadRequestResponse({
-    description: '아이디 또는 비밀번호가 일치하지 않습니다',
-  })
+  @Exception(400, '아이디 또는 비밀번호가 일치하지 않습니다')
   @Post('login')
   async login(
     @Body() loginDto: LoginRequestDto,
@@ -102,13 +85,9 @@ export class UserController {
   /**
    * 내가 구매한 제품 목록
    */
-  @ApiPagenationRequest()
-  @ApiExtraModels(MyPurchasedProductResponseDto)
-  @ApiCommonResponse({
-    $ref: getSchemaPath(MyPurchasedProductResponseDto),
-  })
   @Get('purchased/list')
-  @UseGuards(JwtAccessGuard)
+  @OkResponse(MyPurchasedProductResponseDto)
+  @LoginAuth()
   async getMyPurchasedProduct(
     @User() user: IJwtPayload,
     @Query() paginateQuery: PaginationRequestDto,
@@ -127,13 +106,9 @@ export class UserController {
   /**
    * 내가 예약중인 제품 목록
    */
-  @ApiPagenationRequest()
-  @ApiExtraModels(ReservedProductResponseDto)
-  @ApiCommonResponse({
-    $ref: getSchemaPath(ReservedProductResponseDto),
-  })
   @Get('reserved/list')
-  @UseGuards(JwtAccessGuard)
+  @OkResponse(ReservedProductResponseDto)
+  @LoginAuth()
   async getMyReservedProduct(
     @Query() paginateQuery: PaginationRequestDto,
     @User() user: IJwtPayload,
@@ -150,13 +125,9 @@ export class UserController {
   /**
    * 내가 판매중인 제품 목록
    */
-  @ApiPagenationRequest()
-  @ApiExtraModels(SoldProductListResponseDto)
-  @ApiCommonResponse({
-    $ref: getSchemaPath(SoldProductListResponseDto),
-  })
   @Get('sold/list')
-  @UseGuards(JwtAccessGuard)
+  @OkResponse(SoldProductListResponseDto)
+  @LoginAuth()
   async getMySellingProduct(
     @Query() paginateQuery: PaginationRequestDto,
     @User() user: IJwtPayload,
