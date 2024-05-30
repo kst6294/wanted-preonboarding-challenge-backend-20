@@ -1,4 +1,4 @@
-package com.exception_study.user_account.dto.request;
+package com.exception_study.api.user_account.dto.request;
 
 import lombok.Getter;
 

@@ -3,7 +3,7 @@ package com.exception_study.api.product.controller;
 import com.exception_study.api.product.dto.ProductDto;
 import com.exception_study.api.product.service.ProductService;
 import com.exception_study.api.product.dto.response.DetailsWithHistoryResponse;
-import com.exception_study.user_account.dto.request.RegisterRequest;
+import com.exception_study.api.user_account.dto.request.RegisterRequest;
 import com.exception_study.global.dto.response.ResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;

@@ -1,11 +1,11 @@
-package com.exception_study.user_account.controller;
+package com.exception_study.api.user_account.controller;
 
 import com.exception_study.global.dto.response.ResponseDto;
-import com.exception_study.user_account.service.UserAccountService;
-import com.exception_study.user_account.dto.request.LoginRequest;
-import com.exception_study.user_account.dto.response.LoginResponse;
-import com.exception_study.user_account.dto.response.SignUpResponse;
-import com.exception_study.user_account.dto.UserAccountDto;
+import com.exception_study.api.user_account.service.UserAccountService;
+import com.exception_study.api.user_account.dto.request.LoginRequest;
+import com.exception_study.api.user_account.dto.response.LoginResponse;
+import com.exception_study.api.user_account.dto.response.SignUpResponse;
+import com.exception_study.api.user_account.dto.UserAccountDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

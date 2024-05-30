@@ -1,7 +1,7 @@
 package com.exception_study.api.product_order.entity;
 
 import com.exception_study.api.product.entity.Product;
-import com.exception_study.user_account.entity.UserAccount;
+import com.exception_study.api.user_account.entity.UserAccount;
 import jakarta.persistence.*;
 import lombok.*;
 

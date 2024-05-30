@@ -1,4 +1,4 @@
-package com.exception_study.user_account.entity;
+package com.exception_study.api.user_account.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

@@ -1,7 +1,7 @@
 package com.exception_study.api.product.dto;
 
 import com.exception_study.api.product.entity.Product;
-import com.exception_study.user_account.dto.UserAccountDto;
+import com.exception_study.api.user_account.dto.UserAccountDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 

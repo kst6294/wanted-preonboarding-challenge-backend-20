@@ -1,4 +1,4 @@
-package com.exception_study.user_account.dto.response;
+package com.exception_study.api.user_account.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

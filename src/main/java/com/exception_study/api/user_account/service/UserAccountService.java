@@ -1,14 +1,14 @@
-package com.exception_study.user_account.service;
+package com.exception_study.api.user_account.service;
 
+import com.exception_study.api.user_account.dto.UserAccountDto;
+import com.exception_study.api.user_account.repository.UserAccountRepository;
 import com.exception_study.global.config.security.TokenProvider;
 import com.exception_study.global.exception.ErrorCode;
 import com.exception_study.global.exception.StudyApplicationException;
-import com.exception_study.user_account.dto.request.LoginRequest;
-import com.exception_study.user_account.dto.response.LoginResponse;
-import com.exception_study.user_account.dto.response.SignUpResponse;
-import com.exception_study.user_account.dto.UserAccountDto;
-import com.exception_study.user_account.entity.UserAccount;
-import com.exception_study.user_account.repository.UserAccountRepository;
+import com.exception_study.api.user_account.dto.request.LoginRequest;
+import com.exception_study.api.user_account.dto.response.LoginResponse;
+import com.exception_study.api.user_account.dto.response.SignUpResponse;
+import com.exception_study.api.user_account.entity.UserAccount;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;

@@ -1,6 +1,6 @@
-package com.exception_study.user_account.dto;
+package com.exception_study.api.user_account.dto;
 
-import com.exception_study.user_account.entity.UserAccount;
+import com.exception_study.api.user_account.entity.UserAccount;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
