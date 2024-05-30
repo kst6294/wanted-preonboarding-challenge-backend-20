@@ -2,6 +2,7 @@ package com.wanted.challenge.product.controller;
 
 import com.wanted.challenge.account.model.AccountDetail;
 import com.wanted.challenge.product.model.Price;
+import com.wanted.challenge.product.request.PurchaseRequest;
 import com.wanted.challenge.product.request.RegisterRequest;
 import com.wanted.challenge.product.service.ProductService;
 import jakarta.validation.Valid;
@@ -29,6 +30,15 @@ public class ProductController {
         Long productId = productService.register(registerRequest.name(), price, accountDetail);
 
         return ResponseEntity.created(URI.create("/products/" + productId))
+                .build();
+    }
+
+    @PostMapping("/purchase")
+    public ResponseEntity<Void> purchase(@RequestBody @Valid PurchaseRequest purchaseRequest,
+                                         @AuthenticationPrincipal AccountDetail accountDetail) {
+        productService.purchase(purchaseRequest.productId(), accountDetail);
+
+        return ResponseEntity.ok()
                 .build();
     }
 }
