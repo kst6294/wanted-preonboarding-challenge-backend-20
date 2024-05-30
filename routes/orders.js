@@ -8,7 +8,7 @@ var router = Router();
 // 제품의 주문서 보기
 // 구매자로서 주문서
 // 또는 판매자로서 주문서 목록 제공
-router.post("/", verifyToken, async function (req, res, next) {
+router.get("/", verifyToken, async function (req, res, next) {
     const { product_id } = req.body;
     const buyer_id = req.decoded.id;
     const seller_id = req.decoded.id;

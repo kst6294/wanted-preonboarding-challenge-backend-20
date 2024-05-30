@@ -114,7 +114,7 @@ describe("API TEST", () => {
             });
 
             it("판매자/주문서 확인", async () => {
-                let response = await request(app).post(`/orders`).set("Authorization", sellerA_token).send({
+                let response = await request(app).get(`/orders`).set("Authorization", sellerA_token).send({
                     product_id,
                 });
 
@@ -141,7 +141,7 @@ describe("API TEST", () => {
             });
 
             it("구매자A/주문서 확인", async () => {
-                let response = await request(app).post(`/orders`).set("Authorization", buyerA_token).send({
+                let response = await request(app).get(`/orders`).set("Authorization", buyerA_token).send({
                     product_id,
                 });
 

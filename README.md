@@ -8,6 +8,7 @@
 [![Express](https://img.shields.io/badge/Express-%23000000?style=flat&logo=express)](https://expressjs.com/ko/)
 [![Knex.js](https://img.shields.io/badge/Knex.js-%23D26B38?style=flat&logo=knexdotjs&logoColor=white)](https://knexjs.org)
 [![JWT](https://img.shields.io/badge/JWT-000000?style=flat&logo=jsonwebtokens)](https://jwt.io)
+[![SQLite](https://img.shields.io/badge/SQLite-003B57?style=flat&logo=sqlite)](https://www.sqlite.org)
 [![Jest](https://img.shields.io/badge/Jest-C21325?style=flat&logo=jest&logoColor=white)](https://jestjs.io)
 
 ## 📄 API 명세서
@@ -84,7 +85,7 @@ wanted-preonboarding-challenge-backend-20
 
 2. 환경변수 .env
 
-    ```sh
+    ```python
     PORT=5002
     NODE_ENV=development
     JWT_SECRET= #openssl rand -hex 64
@@ -124,27 +125,68 @@ wanted-preonboarding-challenge-backend-20
 ##### 1단계 (필수)
 
 1. 제품 등록과 구매는 회원만 가능합니다.
+
+    - [x] jwt 토큰을 발급받은 회원이 요청시 토큰을 보내면 인증한다. [auth.js#L3-L12](https://github.com/NarciSource/wanted-preonboarding-challenge-backend-20/blob/e5dcf993274d3f308dc35f11838ccc6213e46786/middlewares/auth.js#L3-L12)
+
 2. 비회원은 등록된 제품의 목록조회와 상세조회만 가능합니다.
+
+    - [x] `GET	/products/` [products.js#L10-L18](https://github.com/NarciSource/wanted-preonboarding-challenge-backend-20/blob/e5dcf993274d3f308dc35f11838ccc6213e46786/routes/products.js#L10-L18)
+    - [x] `GET	/products/{product_id}` [products.js#L22-L32](https://github.com/NarciSource/wanted-preonboarding-challenge-backend-20/blob/e5dcf993274d3f308dc35f11838ccc6213e46786/routes/products.js#L22-L32)
+
 3. 등록된 제품에는 "제품명", "가격", "예약상태"가 포함되어야하고, 목록조회와 상세조회시에 예약상태를 포함해야합니다.
+
+    - [x] Products 테이블 생성 [query.sql#L21-L29](https://github.com/NarciSource/wanted-preonboarding-challenge-backend-20/blob/e5dcf993274d3f308dc35f11838ccc6213e46786/db/query.sql#L21-L29)
+
 4. 제품의 상태는 "판매중", "예약중", "완료" 세가지가 존재합니다.
+
+    - [x] enum 형태(sqlite에서 IN)로 구현 [query.sql#L27](https://github.com/NarciSource/wanted-preonboarding-challenge-backend-20/blob/e5dcf993274d3f308dc35f11838ccc6213e46786/db/query.sql#L27)
+
 5. 구매자가 제품의 상세페이지에서 구매하기 버튼을 누르면 거래가 시작됩니다.
+
+    - [x] `POST /products/purchase` [products.js#L51-L62](https://github.com/NarciSource/wanted-preonboarding-challenge-backend-20/blob/e5dcf993274d3f308dc35f11838ccc6213e46786/routes/products.js#L51-L62)
+
 6. 판매자와 구매자는 제품의 상세정보를 조회하면 당사자간의 거래내역을 확인할 수 있습니다.
+
+    - [x] `GET	/orders/` [orders.js#L11-L23](https://github.com/NarciSource/wanted-preonboarding-challenge-backend-20/blob/e5dcf993274d3f308dc35f11838ccc6213e46786/routes/orders.js#L11-L23)
+
 7. 모든 사용자는 내가 "구매한 용품(내가 구매자)"과 "예약중인 용품(내가 구매자/판매자 모두)"의 목록을 확인할 수 있습니다.
+
+    - [x] `GET	/user/purchased-list` [users.js#L10-L20](https://github.com/NarciSource/wanted-preonboarding-challenge-backend-20/blob/e5dcf993274d3f308dc35f11838ccc6213e46786/routes/users.js#L10-L20)
+    - [x] `GET	/user/reserved-list` [users.js#L24-L35](https://github.com/NarciSource/wanted-preonboarding-challenge-backend-20/blob/e5dcf993274d3f308dc35f11838ccc6213e46786/routes/users.js#L24-L35)
+
 8. 판매자는 거래진행중인 구매자에 대해 '판매승인'을 하는 경우 거래가 완료됩니다.
+
+    - [x] `POST /orders/sales-approval` [orders.js#L28-L39](https://github.com/NarciSource/wanted-preonboarding-challenge-backend-20/blob/e5dcf993274d3f308dc35f11838ccc6213e46786/routes/orders.js#L28-L39)
 
 <br>
 
 ##### 2단계 (선택)
 
 9. 제품에 수량이 추가됩니다. 제품정보에 "제품명", "가격", "예약상태", "수량"이 포함되어야합니다.
+
+    - [x] [query.sql#L26](https://github.com/NarciSource/wanted-preonboarding-challenge-backend-20/blob/e5dcf993274d3f308dc35f11838ccc6213e46786/db/query.sql#L26), [productService.js#L42](https://github.com/NarciSource/wanted-preonboarding-challenge-backend-20/blob/e5dcf993274d3f308dc35f11838ccc6213e46786/services/productService.js#L42)
+
 10. 다수의 구매자가 한 제품에 대해 구매하기가 가능합니다. (단, 한 명이 구매할 수 있는 수량은 1개뿐입니다.)
+
+    - [x] Orders 관계 테이블 생성 [query.sql#L31-L39](https://github.com/NarciSource/wanted-preonboarding-challenge-backend-20/blob/e5dcf993274d3f308dc35f11838ccc6213e46786/db/query.sql#L31-L39)
+
 11. 구매확정의 단계가 추가됩니다. 구매자는 판매자가 판매승인한 제품에 대해 구매확정을 할 수 있습니다.
+
+    - [x] `POST /orders/purchase-confirm` [orders.js#L44-L55](https://github.com/NarciSource/wanted-preonboarding-challenge-backend-20/blob/e5dcf993274d3f308dc35f11838ccc6213e46786/routes/orders.js#L44-L55)
+
 12. 거래가 시작되는 경우 수량에 따라 제품의 상태가 변경됩니다.
+
     - 추가 판매가 가능한 수량이 남아있는 경우 - 판매중
     - 추가 판매가 불가능하고 현재 구매확정을 대기하고 있는 경우 - 예약중
     - 모든 수량에 대해 모든 구매자가 모두 구매확정한 경우 - 완료
+
+    - [x] sql 트리거로 수행 [query.sql#L40-L63](https://github.com/NarciSource/wanted-preonboarding-challenge-backend-20/blob/e5dcf993274d3f308dc35f11838ccc6213e46786/db/query.sql#L40-L63)
+
 13. "구매한 용품"과 "예약중인 용품" 목록의 정보에서 구매하기 당시의 가격 정보가 나타나야합니다.
+
     - 예) 구매자 A가 구매하기 요청한 당시의 제품 B의 가격이 3000원이었고 이후에 4000원으로 바뀌었다 하더라도 목록에서는 3000원으로 나타나야합니다.
+
+    - [x] Orders 테이블에 price 컬럼 [query.sql#L34](https://github.com/NarciSource/wanted-preonboarding-challenge-backend-20/blob/e5dcf993274d3f308dc35f11838ccc6213e46786/db/query.sql#L34)
 
 ##### 공통
 
