@@ -1,6 +1,7 @@
 package com.sunyesle.wanted_market.controller;
 
 import com.sunyesle.wanted_market.dto.ProductRequest;
+import com.sunyesle.wanted_market.dto.ProductResponse;
 import com.sunyesle.wanted_market.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -18,9 +19,9 @@ public class ProductController {
     private final ProductService productService;
 
     @PostMapping
-    public ResponseEntity<Void> saveProduct(@RequestBody ProductRequest request){
-        productService.save(request);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+    public ResponseEntity<ProductResponse> saveProduct(@RequestBody ProductRequest request){
+        ProductResponse response = productService.save(request);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
 }
