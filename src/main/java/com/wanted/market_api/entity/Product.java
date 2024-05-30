@@ -31,4 +31,5 @@ public class Product {
     private Member member;
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private List<Order> orders;
+    private int count;
 }

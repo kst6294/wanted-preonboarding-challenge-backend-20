@@ -37,6 +37,7 @@ public class ProductServiceImpl implements ProductService {
                 Product.builder()
                         .name(productCreateRequestDto.getName())
                         .price(productCreateRequestDto.getPrice())
+                        .count(productCreateRequestDto.getCount())
                         .member(member)
                         .productStatus(ProductStatus.IN_SALE)
                         .build()
@@ -51,6 +52,7 @@ public class ProductServiceImpl implements ProductService {
                 .id(product.getId())
                 .name(product.getName())
                 .price(product.getPrice())
+                .count(product.getCount())
                 .productStatus(product.getProductStatus())
                 .build();
     }
@@ -67,6 +69,7 @@ public class ProductServiceImpl implements ProductService {
                                 .id(product.getId())
                                 .name(product.getName())
                                 .price(product.getPrice())
+                                .count(product.getCount())
                                 .productStatus(product.getProductStatus())
                                 .build()
                 ).collect(Collectors.toList()))

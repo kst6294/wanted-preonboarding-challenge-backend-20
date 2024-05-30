@@ -6,4 +6,5 @@ import lombok.Getter;
 public class ProductCreateRequestDto {
     private String name;
     private int price;
+    private int count;
 }
