@@ -50,14 +50,19 @@ public class MyPageController {
     }
 
     @PostMapping("/seller/{order_id}/confirm")
-    public String confirmOrder(@RequestAttribute("memberId") Long memberId, @PathVariable("order_id") Long orderId) {
-        myPageService.sellConfirm();
+    public String confirmOrder(
+            @RequestHeader("memberId") Long memberId,
+            @PathVariable("order_id") Long orderId) {
+        // 판매승인
+        myPageService.sellConfirm(memberId, orderId);
         return "confirm";
     }
 
     @PostMapping("/buyer/{order_id}/finish")
-    public String finishOrder(@RequestAttribute("memberId") Long memberId, @PathVariable("order_id") Long orderId) {
-        myPageService.buyFinish();
+    public String finishOrder(
+            @RequestHeader("memberId") Long memberId,
+            @PathVariable("order_id") Long orderId) {
+        myPageService.buyFinish(memberId, orderId);
         return "finish";
     }
 
