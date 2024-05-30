@@ -9,7 +9,6 @@ import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,5 +65,26 @@ class ProductAcceptanceTest {
                         .log().all()
                         .extract();
         return response;
+    }
+
+    @Test
+    void 제품을_조회한다() throws JsonProcessingException {
+        String name = "스위치";
+        Integer price = 300000;
+        ProductRequest productRequest = new ProductRequest(name, price);
+        ExtractableResponse<Response> productResponse = 제품_등록_요청(productRequest);
+        ProductResponse savedProductInfo = productResponse.as(ProductResponse.class);
+
+        ExtractableResponse<Response> response =
+                given()
+                        .log().all()
+                        .basePath("/api/v1/products/" + savedProductInfo.getId())
+                .when()
+                        .get()
+                .then()
+                        .log().all()
+                        .extract();
+
+        assertThat(response.statusCode()).isEqualTo(HttpStatus.OK.value());
     }
 }

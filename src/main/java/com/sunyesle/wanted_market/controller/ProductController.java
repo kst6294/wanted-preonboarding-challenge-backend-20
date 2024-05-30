@@ -1,15 +1,13 @@
 package com.sunyesle.wanted_market.controller;
 
+import com.sunyesle.wanted_market.dto.ProductDetailResponse;
 import com.sunyesle.wanted_market.dto.ProductRequest;
 import com.sunyesle.wanted_market.dto.ProductResponse;
 import com.sunyesle.wanted_market.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/products")
@@ -24,4 +22,9 @@ public class ProductController {
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<ProductDetailResponse> getProduct(@PathVariable Long id){
+        ProductDetailResponse response = productService.getProduct(id);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
 }
