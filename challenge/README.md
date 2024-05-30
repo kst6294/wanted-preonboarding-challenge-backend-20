@@ -1,3 +1,4 @@
+
 # 개발과정
 ## 기획문서
 ### API 문서 링크
@@ -19,4 +20,5 @@ Goods 상태
 - 완료 : soldout
 
 
-### PostMan 
+### PostMan API 문서 링크
+- https://documenter.getpostman.com/view/19830678/2sA3Qv7AL5
