@@ -5,7 +5,6 @@ import static org.mockito.Mockito.*;
 
 import com.example.wantedmarketapi.domain.Product;
 import com.example.wantedmarketapi.domain.enums.ProductStatus;
-import com.example.wantedmarketapi.dto.request.ProductRequestDto.*;
 import com.example.wantedmarketapi.dto.response.ProductResponseDto.*;
 import com.example.wantedmarketapi.exception.GlobalErrorCode;
 import com.example.wantedmarketapi.exception.custom.ProductException;

@@ -14,4 +14,14 @@ public class TradeResponseDto {
         String productName;
     }
 
+    @Getter
+    @Builder
+    @NoArgsConstructor(access = AccessLevel.PROTECTED)
+    @AllArgsConstructor(access = AccessLevel.PROTECTED)
+    public static class PurchaseProductListResponse {
+        Long productId;
+        String productName;
+        Integer productPrice;
+    }
+
 }

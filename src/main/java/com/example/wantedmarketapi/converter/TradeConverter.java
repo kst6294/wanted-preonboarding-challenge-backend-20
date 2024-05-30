@@ -6,6 +6,8 @@ import com.example.wantedmarketapi.domain.member.Member;
 import com.example.wantedmarketapi.dto.response.TradeResponseDto.*;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 public class TradeConverter {
 
@@ -23,6 +25,20 @@ public class TradeConverter {
                 .sellerId(trade.getSeller().getId())
                 .purchaserId(trade.getPurchaser().getId())
                 .build();
+    }
+
+    public static PurchaseProductListResponse toPurchaseProductListResponse(Trade trade) {
+        return PurchaseProductListResponse.builder()
+                .productId(trade.getProduct().getId())
+                .productName(trade.getProduct().getName())
+                .productPrice(trade.getProduct().getPrice())
+                .build();
+    }
+
+    public static List<PurchaseProductListResponse> toGetPurchaseProductListResponseList(List<Trade> tradeList) {
+        return tradeList.stream()
+                .map(trade -> TradeConverter.toPurchaseProductListResponse(trade))
+                .toList();
     }
 
 }

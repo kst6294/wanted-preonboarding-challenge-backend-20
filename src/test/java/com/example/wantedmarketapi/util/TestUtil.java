@@ -1,6 +1,7 @@
 package com.example.wantedmarketapi.util;
 
 import com.example.wantedmarketapi.domain.Product;
+import com.example.wantedmarketapi.domain.Trade;
 import com.example.wantedmarketapi.domain.member.Member;
 import com.example.wantedmarketapi.domain.member.Password;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -39,6 +40,17 @@ public class TestUtil {
             constructor.setAccessible(true);
             Product product = constructor.newInstance();
             return product;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static Trade createTradeWithReflection() {
+        try {
+            Constructor<Trade> constructor = Trade.class.getDeclaredConstructor();
+            constructor.setAccessible(true);
+            Trade trade = constructor.newInstance();
+            return trade;
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
