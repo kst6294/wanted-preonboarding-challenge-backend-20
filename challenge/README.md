@@ -47,3 +47,13 @@
 > **POST**
 >
 > productId: 제품 번호
+
+### 제품 목록 조회
+
+#### /products?page={page}&size={size}
+
+> **GET**
+>
+> page: 페이지 번호, optional
+>
+> size: 한 페이지의 데이터 개수, optional
