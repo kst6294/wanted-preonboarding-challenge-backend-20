@@ -54,7 +54,7 @@ public class ProductService {
 
     // 상품 등록
     @Transactional
-    public void registerProduct(String name, int price) throws Exception {
+    public void registerProduct(String name, int price, int quantity) throws Exception {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         if (authentication == null || !authentication.isAuthenticated()) {
@@ -70,6 +70,7 @@ public class ProductService {
         product.setName(name);
         product.setPrice(price);
         product.setSeller(seller);
+        product.setQuantity(quantity);
 
         productRepository.save(product);
     }

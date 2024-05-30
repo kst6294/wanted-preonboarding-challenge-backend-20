@@ -17,13 +17,13 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
-    // 상품 목록 조회
+    // 상품목록 조회
     @GetMapping()
     public List<Product> getAllProducts() {
         return productService.getAllProducts();
     }
 
-    // 상품 상세 조회
+    // 상품상세 조회
     @GetMapping("/{id}")
     public ResponseEntity getProductById(@PathVariable Long id) {
         try {
@@ -38,14 +38,15 @@ public class ProductController {
         }
     }
 
-    // 상품 등록
+    // 상품등록
     @PostMapping("/register")
     public ResponseEntity registerProduct(@RequestBody Map<String, String> request) {
         try {
             String name = request.get("name");
             int price = Integer.parseInt(request.get("price"));
+            int quantity = Integer.parseInt(request.get("quantity"));
 
-            productService.registerProduct(name, price);
+            productService.registerProduct(name, price, quantity);
             return ResponseEntity.ok("상품 등록이 완료되었습니다.");
         } catch (Exception e) {
             Map<String, String> errorResponse = new HashMap<>();
@@ -54,6 +55,7 @@ public class ProductController {
         }
     }
 
+    // 판매목록 조회
     @GetMapping("/my")
     public ResponseEntity getMyProducts() {
         try {

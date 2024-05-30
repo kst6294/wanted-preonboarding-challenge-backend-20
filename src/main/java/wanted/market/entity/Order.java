@@ -14,6 +14,7 @@ public class Order {
 
     public Order() {
         this.orderDate = LocalDateTime.now();
+        this.orderStatus = OrderStatus.REQUEST;
     }
 
     @Id
@@ -27,6 +28,20 @@ public class Order {
     @ManyToOne
     @JoinColumn(name = "product_id")
     private Product product;
+
+    @Enumerated(EnumType.STRING)
+    private OrderStatus orderStatus;
+
+    // 구매당시 가격
+    private int buyPrice;
+
+    public void approve() {
+        this.orderStatus = OrderStatus.APPROVED;
+    }
+
+    public void confirm() {
+        this.orderStatus = OrderStatus.CONFIRMED;
+    }
 
     private LocalDateTime orderDate;
 }

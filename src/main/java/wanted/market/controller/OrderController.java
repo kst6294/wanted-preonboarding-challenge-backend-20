@@ -32,6 +32,7 @@ public class OrderController {
         }
     }
 
+    // 구매목록 조회
     @GetMapping("/my")
     public ResponseEntity getMyOrders() {
         try {
@@ -45,13 +46,28 @@ public class OrderController {
     }
 
     // 판매승인
-    @PostMapping("/confirm")
-    public ResponseEntity confirmOrder(@RequestBody Map<String, String> request) {
+    @PostMapping("/approve")
+    public ResponseEntity approveOrder(@RequestBody Map<String, String> request) {
         try {
             Long orderId = Long.parseLong(request.get("orderId").toString());
 
-            orderService.confirmOrder(orderId);
+            orderService.approveOrder(orderId);
             return ResponseEntity.ok("판매승인을 완료하였습니다.");
+        } catch (Exception e) {
+            Map<String, String> errorResponse = new HashMap<>();
+            errorResponse.put("error", e.getMessage());
+            return ResponseEntity.badRequest().body(errorResponse);
+        }
+    }
+
+    // 구매확정
+    @PostMapping("/purchase/confirm")
+    public ResponseEntity purchaseConfirmOrder(@RequestBody Map<String, String> request) {
+        try {
+            Long orderId = Long.parseLong(request.get("orderId").toString());
+
+            orderService.purchaseConfirmOrder(orderId);
+            return ResponseEntity.ok("구매확정을 완료하였습니다.");
         } catch (Exception e) {
             Map<String, String> errorResponse = new HashMap<>();
             errorResponse.put("error", e.getMessage());

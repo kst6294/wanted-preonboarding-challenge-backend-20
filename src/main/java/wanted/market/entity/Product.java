@@ -23,6 +23,10 @@ public class Product {
     // 가격
     private int price;
 
+    // 수량
+    private int quantity;
+
+    // 판매자
     @ManyToOne
     @JoinColumn(name = "seller_id")
     private User seller;
@@ -36,6 +40,10 @@ public class Product {
     }
 
     public void sell() {
-        this.productStatus = ProductStatus.SOLD_OUT;
+        quantity--;
+        if(quantity <= 0) {
+            quantity = 0;
+            this.productStatus = ProductStatus.SOLD_OUT;
+        }
     }
 }
