@@ -16,7 +16,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Service;
 
-/** 토큰 생성, 유효성 검사, 토큰에서 정보 추출을 담당하는 클래스 */
+/**
+ * 토큰 생성, 유효성 검사, 토큰에서 정보 추출을 담당하는 클래스
+ */
 @RequiredArgsConstructor
 @Service
 @Slf4j
@@ -27,7 +29,7 @@ public class TokenProvider {
   /**
    * JWT 토큰 생성
    *
-   * @param user user 객체
+   * @param user      user 객체
    * @param expiredAt 유효 시간
    * @return Token
    */
@@ -40,7 +42,7 @@ public class TokenProvider {
    * JWT 토큰을 만들어 반환
    *
    * @param expiry 유효 기간
-   * @param user user 객체
+   * @param user   user 객체
    * @return Token
    */
   private String makeToken(Date expiry, User user) {
@@ -54,7 +56,7 @@ public class TokenProvider {
         .setIssuedAt(now) // 내용 isa: 현재 시간
         .setExpiration(expiry) // 내용 exp: expiry 멤버 변수값
         .setSubject(user.getEmail()) // 내용 sub: User email
-        .claim("id", user.getNickname())
+        .claim("id", user.getId())
         .claim("nickname", user.getNickname())
         // 서명: 비밀값과 함께 해시값을 HS256 방식으로 암호화
         .signWith(SignatureAlgorithm.HS256, jwtProperties.getSecretKey())
