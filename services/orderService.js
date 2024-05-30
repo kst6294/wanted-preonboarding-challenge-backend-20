@@ -1,4 +1,3 @@
-import { transaction } from "../db/dbClient.js";
 import orderDao from "../model/orderDao.js";
 import productDao from "../model/productDao.js";
 const { get_orders, get_order, update_order } = orderDao;
@@ -16,19 +15,20 @@ export async function show_orders({ buyer_id, product_id, seller_id }) {
     }
 }
 
-export async function approve_sale_order({ buyer_id, product_id, seller_id }) {
-    let updated_order;
+export async function approve_sale_order({ buyer_id, product_id, seller_id }, transactionProvider) {
+    const transaction = await transactionProvider();
 
-    await transaction(async (trx) => {
-        const is_sellers_product = await get_product({ product_id, seller_id }).transacting(trx);
+    try {
+        let updated_order;
+        const is_sellers_product = await get_product({ product_id, seller_id }).transacting(transaction);
 
         if (is_sellers_product) {
-            const item = await get_order({ buyer_id, product_id, status: "Reserved" }).transacting(trx);
+            const item = await get_order({ buyer_id, product_id, status: "Reserved" }).transacting(transaction);
 
             if (item) {
-                await update_order({ buyer_id, product_id, status: "Reserved" }, { status: "Approval" }).transacting(trx);
+                await update_order({ buyer_id, product_id, status: "Reserved" }, { status: "Approval" }).transacting(transaction);
 
-                updated_order = await get_order({ buyer_id, product_id }).transacting(trx);
+                updated_order = await get_order({ buyer_id, product_id }).transacting(transaction);
             } else {
                 const error = new Error("예약 상품 아님");
                 error.status = 409;
@@ -39,27 +39,36 @@ export async function approve_sale_order({ buyer_id, product_id, seller_id }) {
             error.status = 409;
             throw error;
         }
-    });
 
-    return updated_order;
+        await transaction.commit();
+        return updated_order;
+    } catch (error) {
+        await transaction.rollback();
+        throw error;
+    }
 }
 
-export async function confirm_purchase_order({ buyer_id, product_id }) {
-    let updated_order;
+export async function confirm_purchase_order({ buyer_id, product_id }, transactionProvider) {
+    const transaction = await transactionProvider();
 
-    await transaction(async (trx) => {
-        const item = await get_order({ buyer_id, product_id, status: "Approval" }).transacting(trx);
+    try {
+        let updated_order;
+        const item = await get_order({ buyer_id, product_id, status: "Approval" }).transacting(transaction);
 
         if (item) {
-            await update_order({ buyer_id, product_id, status: "Approval" }, { status: "Confirm" }).transacting(trx);
+            await update_order({ buyer_id, product_id, status: "Approval" }, { status: "Confirm" }).transacting(transaction);
 
-            updated_order = await get_order({ buyer_id, product_id }).transacting(trx);
+            updated_order = await get_order({ buyer_id, product_id }).transacting(transaction);
         } else {
             const error = new Error("판매 승인 상품 아님");
             error.status = 409;
             throw error;
         }
-    });
 
-    return updated_order;
+        await transaction.commit();
+        return updated_order;
+    } catch (error) {
+        await transaction.rollback();
+        throw error;
+    }
 }

@@ -1,5 +1,6 @@
 import { Router } from "express";
 import verifyToken from "../middlewares/auth.js";
+import transactionHandler from "../middlewares/transactionHandler.js";
 import { show_orders, approve_sale_order, confirm_purchase_order } from "../services/orderService.js";
 
 var router = Router();
@@ -24,12 +25,12 @@ router.post("/", verifyToken, async function (req, res, next) {
 // 판매 승인
 // 본인 상품만 가능
 // 예약중 상품만 가능
-router.post("/sales-approval", verifyToken, async function (req, res, next) {
+router.post("/sales-approval", verifyToken, transactionHandler, async function (req, res, next) {
     const { buyer_id, product_id } = req.body;
     const seller_id = req.decoded.id;
 
     try {
-        const updated_order = await approve_sale_order({ buyer_id, product_id, seller_id });
+        const updated_order = await approve_sale_order({ buyer_id, product_id, seller_id }, req.transactionProvider);
 
         res.status(201).json(updated_order);
     } catch (err) {
@@ -40,12 +41,12 @@ router.post("/sales-approval", verifyToken, async function (req, res, next) {
 // 구매 확정
 // 본인 주문서만 가능
 // 판매자 승인 받은 상품만 가능
-router.post("/purchase-confirm", verifyToken, async function (req, res, next) {
+router.post("/purchase-confirm", verifyToken, transactionHandler, async function (req, res, next) {
     const { product_id } = req.body;
     const buyer_id = req.decoded.id;
 
     try {
-        const updated_order = await confirm_purchase_order({ buyer_id, product_id });
+        const updated_order = await confirm_purchase_order({ buyer_id, product_id }, req.transactionProvider);
 
         res.status(201).json(updated_order);
     } catch (err) {

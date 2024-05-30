@@ -1,5 +1,6 @@
 import { Router } from "express";
 import verifyToken from "../middlewares/auth.js";
+import transactionHandler from "../middlewares/transactionHandler.js";
 import { view_product_list, view_product_detail, register_product, purchase_product } from "../services/productService.js";
 
 var router = Router();
@@ -37,7 +38,7 @@ router.post("/register", verifyToken, async function (req, res, next) {
     const post_data = req.body;
 
     try {
-        const product_id = await register_product(seller_id, post_data);
+        const product_id = await register_product({ seller_id, post_data });
 
         res.status(201).json({ product_id });
     } catch (err) {
@@ -47,12 +48,12 @@ router.post("/register", verifyToken, async function (req, res, next) {
 
 // 제품 구매
 // 판매중 상품만 가능
-router.post("/purchase", verifyToken, async function (req, res, next) {
+router.post("/purchase", verifyToken, transactionHandler, async function (req, res, next) {
     const { product_id } = req.body;
     const buyer_id = req.decoded.id;
 
     try {
-        const order = await purchase_product(product_id, buyer_id);
+        const order = await purchase_product({ product_id, buyer_id }, req.transactionProvider);
 
         res.status(201).json(order);
     } catch (err) {

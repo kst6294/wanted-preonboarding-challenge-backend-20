@@ -13,6 +13,7 @@ const knexConfig = {
         connection: {
             filename: "db/test.sqlite3",
         },
+        pool: { min: 0, max: 10 },
     },
 
     development: {
@@ -21,6 +22,7 @@ const knexConfig = {
         connection: {
             filename: "db/dev.sqlite3",
         },
+        pool: { min: 0, max: 10 },
     },
 
     staging: {},
