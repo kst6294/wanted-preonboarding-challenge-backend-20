@@ -65,3 +65,13 @@
 > **GET**
 >
 > productId: 제품 번호
+
+### 구매 제품 조회
+
+#### /products/purchase?page={page}&size={size}
+
+> **GET**
+>
+> page: 페이지 번호, optional
+>
+> size: 한 페이지의 데이터 개수, optional
