@@ -1,5 +1,6 @@
 package wanted.market.api.domain.product.controller;
 
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,8 +20,8 @@ public class ProductController {
     private final ProductService productService;
 
     @PostMapping("")
-    public ResponseEntity<RegisterProductResponseDto> registerProduct(@RequestBody RegisterProductRequestDto requestDto) {
-        return ResponseEntity.ok(productService.registerProduct(requestDto));
+    public ResponseEntity<RegisterProductResponseDto> registerProduct(HttpServletRequest request, @RequestBody RegisterProductRequestDto requestDto) {
+        return ResponseEntity.ok(productService.registerProduct(request, requestDto));
     }
 
     @GetMapping("")
@@ -30,8 +31,9 @@ public class ProductController {
     }
 
     @PutMapping("")
-    public ResponseEntity<ModifiedProductResponseDto> modifiedProduct(@RequestBody ModifiedProductRequestDto requestDto){
-        return ResponseEntity.ok().body(productService.modifiedProduct(requestDto));
+    public ResponseEntity<ModifiedProductResponseDto> modifiedProduct(HttpServletRequest request,
+                                                                      @RequestBody ModifiedProductRequestDto requestDto){
+        return ResponseEntity.ok().body(productService.modifyProduct(request, requestDto));
     }
     @GetMapping("/{productId}")
     public ResponseEntity<ProductDetailResponseDto> searchProductDetail(@PathVariable Long productId) {

@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-@Table(name= "products")
+@Table(name = "products")
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,25 +27,27 @@ public class Product {
     private Long count;
     @Column
     @Enumerated(EnumType.STRING)
-    private ProductStatus productStatus;
+    private ProductStatus status;
     @Column
     private LocalDateTime registerTime;
     @ManyToOne
-    @JoinColumn(name ="seller_id")
+    @JoinColumn(name = "seller_id")
     private User user;
 
 
     @Builder
-    public Product(String name, Long price, Long count, User user){
+    public Product(String name, Long price, Long count, User user) {
         this.name = name;
         this.price = price;
         this.count = count;
         this.user = user;
-        this.productStatus = ProductStatus.SALE;
+        this.status = ProductStatus.SALE;
         this.registerTime = LocalDateTime.now();
     }
 
-    public void modifiedPrice(Long price){
-        this.price = price;
-    }
+    public void modifiedPrice(Long price) {this.price = price;}
+
+    public void reserve() {this.status = ProductStatus.RESERVED;}
+
+    public void complete() { this.status = ProductStatus.COMPLETED;}
 }

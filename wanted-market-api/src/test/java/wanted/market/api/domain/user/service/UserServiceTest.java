@@ -1,5 +1,6 @@
 package wanted.market.api.domain.user.service;
 
+import jakarta.servlet.http.HttpServletRequest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -25,18 +26,20 @@ class UserServiceTest {
     @InjectMocks
     private UserService userService;
 
-
+    @Mock
+    private HttpServletRequest request;
 
     @Test
     @DisplayName("Success - is User")
     void isUser(){
-        Long userId=1L;
         // given
         User user = User.builder().nickname("testNickname").build();
+        Long userId = 1L;
+        when(request.getHeader("userId")).thenReturn("1");
         when(userRepository.findById(userId)).thenReturn(Optional.of(user));
 
         // then
-        assertEquals("testNickname", userService.getUser(userId).getNickname());
+        assertEquals("testNickname", userService.getUser(request).getNickname());
     }
     @Test
     @DisplayName("Failure - is not User")
@@ -46,6 +49,6 @@ class UserServiceTest {
         when(userRepository.findById(userId)).thenReturn(Optional.empty());
 
         // then
-        assertThrows(WantedException.class, ()->userService.getUser(userId));
+        assertThrows(WantedException.class, ()->userService.getUser(request));
     }
 }

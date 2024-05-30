@@ -5,7 +5,6 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class RegisterOrderRequestDto {
-    private Long productId;
-    private Long price;
+public class ApproveOrderRequestDto {
+    private Long orderId;
 }

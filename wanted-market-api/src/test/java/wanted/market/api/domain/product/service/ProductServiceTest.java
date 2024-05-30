@@ -1,5 +1,6 @@
 package wanted.market.api.domain.product.service;
 
+import jakarta.servlet.http.HttpServletRequest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -28,12 +29,12 @@ class ProductServiceTest {
     private ProductRepository productRepository;
     @InjectMocks
     private ProductService productService;
-
+    @Mock
+    private HttpServletRequest mockRequest;
     @Test
     @DisplayName("Success - resisterProduct()")
     void registerSuccess() {
         RegisterProductRequestDto requestDto = RegisterProductRequestDto.builder()
-                .userId(1L)
                 .price(1234L)
                 .count(1L)
                 .productName("testProduct")
@@ -42,10 +43,10 @@ class ProductServiceTest {
                 .nickname("testNickname")
                 .build();
         Product product = Product.builder().build();
-        when(userService.getUser(requestDto.getUserId())).thenReturn(user);
+        when(userService.getUser(mockRequest)).thenReturn(user);
 
 
-        productService.registerProduct(requestDto);
+        productService.registerProduct(mockRequest, requestDto);
 
         verify(productRepository, times(1)).save(any(Product.class));
     }
@@ -79,7 +80,7 @@ class ProductServiceTest {
         });
 
 
-        assertEquals(ExceptionMessage.ISNOTEXIST.getName(), exception.getMessage());
+        assertEquals(ExceptionMessage.IS_NOT_EXIST.getName(), exception.getMessage());
         verify(productRepository, times(1)).findById(1L);
     }
 

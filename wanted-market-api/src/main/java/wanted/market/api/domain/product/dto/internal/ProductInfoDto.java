@@ -31,7 +31,7 @@ public class ProductInfoDto {
                 .name(product.getName())
                 .price(product.getPrice())
                 .count(product.getCount())
-                .status(product.getProductStatus().getStatus())
+                .status(product.getStatus().getStatus())
                 .user(user)
                 .build();
     }

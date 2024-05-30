@@ -1,5 +1,6 @@
 package wanted.market.api.domain.user.service;
 
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import wanted.market.api.domain.user.entity.User;
@@ -15,7 +16,8 @@ public class UserService {
     private final UserRepository userRepository;
 
 
-    public User getUser(Long userId){
-        return userRepository.findById(userId).orElseThrow(()->new WantedException(ExceptionDomain.USER,ExceptionMessage.ISNOTUSER));
+    public User getUser(HttpServletRequest request){
+        Long userId= Long.parseLong(request.getHeader("userId"));
+        return userRepository.findById(userId).orElseThrow(()->new WantedException(ExceptionDomain.USER,ExceptionMessage.IS_NOT_USER));
     }
 }

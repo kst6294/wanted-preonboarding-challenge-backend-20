@@ -7,7 +7,7 @@ import wanted.market.api.domain.product.entity.Product;
 import wanted.market.api.domain.product.enums.ProductStatus;
 
 public interface ProductRepository extends JpaRepository<Product, Long> {
-    Page<Product> findAllByProductStatusNot(ProductStatus productStatus, Pageable pageable);
+    Page<Product> findAllByStatusNot(ProductStatus status, Pageable pageable);
 
-    Page<Product> findAllByProductStatus(ProductStatus productStatus, Pageable pageable);
+    Page<Product> findAllByStatus(ProductStatus status, Pageable pageable);
 }

@@ -49,4 +49,8 @@ public class Order {
         this.orderTime = LocalDateTime.now();
         this.status = OrderStatus.RESERVED;
     }
+
+    public void approve() {
+        this.status = OrderStatus.APPROVED;
+    }
 }
