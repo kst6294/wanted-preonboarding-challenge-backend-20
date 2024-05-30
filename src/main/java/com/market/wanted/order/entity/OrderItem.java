@@ -3,14 +3,14 @@ package com.market.wanted.order.entity;
 import com.market.wanted.common.entity.BaseEntity;
 import com.market.wanted.product.entity.Product;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import static jakarta.persistence.FetchType.*;
 
+@Builder
 @Getter
 @Entity
+@AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class OrderItem extends BaseEntity {
 
@@ -25,8 +25,12 @@ public class OrderItem extends BaseEntity {
     @JoinColumn(name = "product_id")
     private Product product;
 
-    public OrderItem(long price, Product product) {
-        this.price = price;
-        this.product = product;
-    }
+    @Setter
+    @OneToOne(fetch = LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "order_id")
+    private Order order;
+
+
+
+
 }

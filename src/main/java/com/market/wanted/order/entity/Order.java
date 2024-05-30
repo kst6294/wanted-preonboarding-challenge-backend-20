@@ -20,25 +20,39 @@ public class Order extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus;
 
     @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "member_id")
+    @JoinColumn(name = "seller_id")
     private Member seller;
 
-    @OneToOne(fetch = LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "order_item_id")
+    @ManyToOne(fetch = LAZY)
+    @JoinColumn(name = "buyer_id")
+    private Member buyer;
+
+    @OneToOne(mappedBy = "order", cascade = CascadeType.ALL)
     private OrderItem orderItem;
 
-    public Order(OrderStatus orderStatus, Member seller, OrderItem orderItem) {
+    public Order(OrderStatus orderStatus, Member seller, Member buyer) {
         this.orderStatus = orderStatus;
         this.seller = seller;
+        this.buyer = buyer;
+    }
+
+    public void addOrderItem(OrderItem orderItem) {
         this.orderItem = orderItem;
+        orderItem.setOrder(this);
+
     }
 
     public void confirm() {
         this.orderStatus = OrderStatus.COMPLETE;
-        this.orderItem.getProduct().changeStatus(ProductStatus.SOLD_OUT);
+        orderItem.getProduct().changeStatus(ProductStatus.SOLD_OUT);
+    }
+
+    public void addBuyer(Member buyer) {
+        this.buyer = buyer;
     }
 }
 
