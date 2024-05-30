@@ -41,6 +41,7 @@ public class OrderServiceImpl implements OrderService {
                         .product(product)
                         .buyerId(buyerId)
                         .sellerId(sellerId)
+                        .priceAtPurchase(product.getPrice())
                         .orderStatus(OrderStatus.AWAITING_CONFIRMATION)
                         .build()
         );

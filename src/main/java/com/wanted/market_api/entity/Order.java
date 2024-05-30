@@ -20,6 +20,7 @@ public class Order {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id", nullable = false)
     private Product product;
+    private int priceAtPurchase;
     @Column(name = "buyer_id", nullable = false)
     private long buyerId;
     @Column(name = "seller_id", nullable = false)
@@ -29,6 +30,6 @@ public class Order {
     private OrderStatus orderStatus;
 
     public void confirm() {
-        this.orderStatus = OrderStatus.CONFIRMED;
+        this.orderStatus = OrderStatus.SELLING_CONFIRMED;
     }
 }
