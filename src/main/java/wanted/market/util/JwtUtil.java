@@ -32,7 +32,7 @@ public class JwtUtil {
     }
 
     // 토큰 만료 기한(하루)
-    private final int EXPIRATION_TIME = 60 * 60 * 24;
+    private final int EXPIRATION_TIME = 1000 * 60 * 60 * 24;
 
     // 토큰 만료 여부 확인
     private Boolean isTokenExpired(String token) {

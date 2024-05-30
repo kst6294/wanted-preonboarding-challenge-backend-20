@@ -7,22 +7,22 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import wanted.market.service.WantedUserDetailService;
 import wanted.market.util.JwtRequestFilter;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfigurer {
 
-    private UserDetailsService userDetailsService;
+    private WantedUserDetailService userDetailsService;
     private JwtRequestFilter jwtRequestFilter;
 
-    public SecurityConfigurer(UserDetailsService userDetailsService, JwtRequestFilter jwtRequestFilter) {
+    public SecurityConfigurer(WantedUserDetailService userDetailsService, JwtRequestFilter jwtRequestFilter) {
         this.userDetailsService = userDetailsService;
         this.jwtRequestFilter = jwtRequestFilter;
     }
@@ -42,9 +42,7 @@ public class SecurityConfigurer {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         // 로그인 인증요청 부분은 CSRF 보호 비활성화
         http
-                .csrf(csrf -> csrf
-                        .ignoringRequestMatchers("/auth/**","/h2-console/**")
-                )
+                .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/auth/**").permitAll()
                         .requestMatchers("/h2-console/**").permitAll() // H2 콘솔 접근 허용

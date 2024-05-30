@@ -31,6 +31,10 @@ public class WantedUserDetails implements UserDetails {
         return user.getUsername();
     }
 
+    public User getUser() {
+        return user;
+    }
+
     @Override
     public boolean isAccountNonExpired() {
         return true;
