@@ -19,7 +19,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
@@ -72,5 +71,10 @@ public class ProductServiceImpl implements ProductService {
                                 .build()
                 ).collect(Collectors.toList()))
                 .build();
+    }
+
+    @Override
+    public Product findWithMemberById(long productId) {
+        return productRepository.findWithMemberById(productId).orElseThrow(() -> new BaseException(ErrorCode.PRODUCT_NOT_FOUND));
     }
 }

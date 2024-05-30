@@ -14,7 +14,9 @@ public enum ErrorCode {
     INVALID_PASSWORD(HttpStatus.BAD_REQUEST, "ACC-005", "올바르지 않은 비밀번호입니다."),
     JWT_REQUIRED(HttpStatus.FORBIDDEN, "ACCOUNT-006", "해당 API는 JWT 인증이 필요합니다."),
 
-    PRODUCT_NOT_FOUND(HttpStatus.NOT_FOUND, "PRODUCT-001", "제품을 찾을 수 없습니다.")
+    PRODUCT_NOT_FOUND(HttpStatus.NOT_FOUND, "PRODUCT-001", "제품을 찾을 수 없습니다."),
+
+    ORDER_NOT_FOUND(HttpStatus.NOT_FOUND, "ORDER-001", "주문을 찾을 수 없습니다.")
 
     ;
     private final HttpStatus httpStatus;

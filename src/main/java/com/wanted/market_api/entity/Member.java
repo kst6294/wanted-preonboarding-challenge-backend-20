@@ -8,6 +8,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
+import java.util.List;
+
 @Entity
 @SuperBuilder
 @Getter
@@ -21,4 +23,6 @@ public class Member {
     private String password;
     @Enumerated(EnumType.STRING)
     private Role role;
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+    private List<Product> products;
 }

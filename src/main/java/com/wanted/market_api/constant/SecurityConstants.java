@@ -10,6 +10,8 @@ public class SecurityConstants {
     };
 
     public static final String[] MEMBER_API_PATTERNS = new String[]{
-            "/api/v1/product/**"
+            "/api/v1/product/**",
+            "/api/v1/order**",
+            "/api/v1/order/**"
     };
 }
