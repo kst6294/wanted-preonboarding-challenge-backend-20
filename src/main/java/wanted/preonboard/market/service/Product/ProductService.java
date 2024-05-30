@@ -1,8 +1,8 @@
 package wanted.preonboard.market.service.Product;
 
-import wanted.preonboard.market.domain.Product.dto.ProductInsertDto;
-import wanted.preonboard.market.domain.Product.dto.ProductUpdateDto;
-import wanted.preonboard.market.domain.Product.Product;
+import wanted.preonboard.market.domain.product.dto.ProductInsertDto;
+import wanted.preonboard.market.domain.product.dto.ProductUpdateDto;
+import wanted.preonboard.market.domain.product.Product;
 
 import java.util.List;
 

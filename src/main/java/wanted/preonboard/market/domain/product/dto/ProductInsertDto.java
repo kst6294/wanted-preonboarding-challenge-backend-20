@@ -1,4 +1,4 @@
-package wanted.preonboard.market.domain.Product.dto;
+package wanted.preonboard.market.domain.product.dto;
 
 import lombok.Data;
 

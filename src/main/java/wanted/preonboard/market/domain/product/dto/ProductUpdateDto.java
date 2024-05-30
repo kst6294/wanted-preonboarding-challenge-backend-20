@@ -1,8 +1,8 @@
-package wanted.preonboard.market.domain.Product.dto;
+package wanted.preonboard.market.domain.product.dto;
 
 import lombok.Data;
 import org.openapitools.jackson.nullable.JsonNullable;
-import wanted.preonboard.market.domain.Product.ProductState;
+import wanted.preonboard.market.domain.product.ProductState;
 
 @Data
 public class ProductUpdateDto {

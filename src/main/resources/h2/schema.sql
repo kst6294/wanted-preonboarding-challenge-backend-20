@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS `product`
     `seller_id` INT NOT NULL,
     `name`      VARCHAR(255) NOT NULL,
     `price`     INT NOT NULL,
-    `state`     ENUM ('ON_SALE', 'RESERVED', 'COMPLETED') NOT NULL DEFAULT 'ON_SALE'
+    `state`     ENUM ('ON_SALE', 'RESERVED', 'SALES_COMPLETED') NOT NULL DEFAULT 'ON_SALE'
 );
 
 CREATE TABLE IF NOT EXISTS `contract`
@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS `contract`
     `product_id` INT NOT NULL,
     `seller_id`  INT NOT NULL,
     `buyer_id`   INT NOT NULL,
-    `state`      ENUM ('REQUESTED', 'ACCEPTED', 'REJECTED', 'CANCELED', 'COMPLETED') NOT NULL DEFAULT 'REQUESTED'
+    `state`      ENUM ('WAITING_APPROVAL','APPROVED') NOT NULL DEFAULT 'WAITING_APPROVAL'
 );
 
 ALTER TABLE `member`

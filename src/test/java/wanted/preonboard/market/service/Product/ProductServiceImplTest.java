@@ -6,10 +6,10 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.openapitools.jackson.nullable.JsonNullable;
-import wanted.preonboard.market.domain.Product.ProductState;
-import wanted.preonboard.market.domain.Product.dto.ProductInsertDto;
-import wanted.preonboard.market.domain.Product.dto.ProductUpdateDto;
-import wanted.preonboard.market.domain.Product.Product;
+import wanted.preonboard.market.domain.product.ProductState;
+import wanted.preonboard.market.domain.product.dto.ProductInsertDto;
+import wanted.preonboard.market.domain.product.dto.ProductUpdateDto;
+import wanted.preonboard.market.domain.product.Product;
 import wanted.preonboard.market.mapper.ProductMapper;
 
 import java.util.Collections;
