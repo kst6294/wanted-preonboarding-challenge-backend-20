@@ -42,7 +42,7 @@ public class SecurityConfig {
             authorizeRequests.requestMatchers("/signup", "/login")
                     .permitAll();
 
-            authorizeRequests.requestMatchers(HttpMethod.GET, "/products/**")
+            authorizeRequests.requestMatchers(HttpMethod.GET, "/products", "/products/{productId:[\\d+]}")
                     .permitAll();
 
             authorizeRequests.anyRequest()

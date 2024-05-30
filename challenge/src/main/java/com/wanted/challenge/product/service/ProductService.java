@@ -13,6 +13,7 @@ import com.wanted.challenge.product.repository.ProductRepository;
 import com.wanted.challenge.product.repository.PurchaseRepository;
 import com.wanted.challenge.product.response.ProductDetailResponse;
 import com.wanted.challenge.product.response.ProductPreviewResponse;
+import com.wanted.challenge.product.response.PurchaseProductResponse;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -47,7 +48,7 @@ public class ProductService {
         validBuyer(buyerId, product);
 
         Account buyer = accountRepository.getReferenceById(buyerId);
-        Purchase purchase = new Purchase(buyer, PurchaseDetail.DEPOSIT);
+        Purchase purchase = new Purchase(buyer, product, PurchaseDetail.DEPOSIT);
         purchaseRepository.save(purchase);
     }
 
@@ -77,5 +78,10 @@ public class ProductService {
                 .toList();
 
         return new ProductDetailResponse(product, purchaseDetails);
+    }
+
+    public List<PurchaseProductResponse> purchaseProducts(AccountDetail accountDetail) {
+        Long buyerId = accountDetail.getAccountId();
+        return productRepository.retrievePurchaseProducts(buyerId);
     }
 }

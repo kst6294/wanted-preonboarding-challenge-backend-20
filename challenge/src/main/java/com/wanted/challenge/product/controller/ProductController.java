@@ -6,9 +6,11 @@ import com.wanted.challenge.product.request.PurchaseRequest;
 import com.wanted.challenge.product.request.RegisterRequest;
 import com.wanted.challenge.product.response.ProductDetailResponse;
 import com.wanted.challenge.product.response.ProductPreviewResponse;
+import com.wanted.challenge.product.response.PurchaseProductResponse;
 import com.wanted.challenge.product.service.ProductService;
 import jakarta.validation.Valid;
 import java.net.URI;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -62,5 +64,14 @@ public class ProductController {
         ProductDetailResponse productDetailResponse = productService.detail(productId, accountDetail);
 
         return ResponseEntity.ok(productDetailResponse);
+    }
+
+    @GetMapping("/purchase")
+    public ResponseEntity<List<PurchaseProductResponse>> purchaseProducts(
+            @AuthenticationPrincipal AccountDetail accountDetail) {
+
+        List<PurchaseProductResponse> purchaseProductResponses = productService.purchaseProducts(accountDetail);
+
+        return ResponseEntity.ok(purchaseProductResponses);
     }
 }

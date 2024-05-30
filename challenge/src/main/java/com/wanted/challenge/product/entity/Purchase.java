@@ -32,12 +32,17 @@ public class Purchase {
     @JoinColumn(name = "buyer_id", referencedColumnName = "account_id")
     Account buyer;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "product_id")
+    Product product;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "purchase_detail_code")
     PurchaseDetail purchaseDetail;
 
-    public Purchase(Account buyer, PurchaseDetail purchaseDetail) {
+    public Purchase(Account buyer, Product product, PurchaseDetail purchaseDetail) {
         this.buyer = buyer;
+        this.product = product;
         this.purchaseDetail = purchaseDetail;
     }
 }
