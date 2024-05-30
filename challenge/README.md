@@ -39,3 +39,11 @@
 > name: 제품명
 >
 > price: 제품 가격
+
+### 제품 구매
+
+#### /products/purchase
+
+> **POST**
+>
+> productId: 제품 번호
