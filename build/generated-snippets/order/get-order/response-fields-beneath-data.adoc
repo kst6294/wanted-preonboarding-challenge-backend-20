@@ -19,7 +19,7 @@
 |`+orderStatus+`
 |`+String+`
 |true
-|주문 상태
+|link:common/orderStatus.html[주문 상태 코드,role="popup"]
 |`+price+`
 |`+Number+`
 |true

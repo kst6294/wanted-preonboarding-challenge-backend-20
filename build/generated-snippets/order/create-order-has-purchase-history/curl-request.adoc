@@ -2,6 +2,6 @@
 ----
 $ curl 'http://localhost:8080/api/v1/order' -i -X POST \
     -H 'Content-Type: application/json;charset=UTF-8' \
-    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ3VXBGT0B3YW50ZWQuY29tIiwicm9sZSI6Ik5PUk1BTCIsImlhdCI6MTcxNzAzMDYzNiwiZXhwIjoxNzE3MDM0MjM2fQ.Dm51z3uvMqS0QYaZjJ4HdC4coz4syz-ajayZ75Qd4Yw' \
-    -d '{"productId":4518}'
+    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJYcUlVWlpURFFVQHdhbnRlZC5jb20iLCJyb2xlIjoiTk9STUFMIiwiaWF0IjoxNzE3MDMzNjM3LCJleHAiOjE3MTcwMzcyMzd9.OWBeyRxlT6QudROvlyzruy69X97erBYgNsvGFMY8oX8' \
+    -d '{"productId":1302}'
 ----

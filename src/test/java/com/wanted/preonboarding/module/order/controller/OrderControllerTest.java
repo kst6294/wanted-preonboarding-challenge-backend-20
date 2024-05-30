@@ -263,7 +263,7 @@ class OrderControllerTest extends RestDocsTestSupport {
                 .andDo(document("order/update-order-completed",
                         requestFields(
                                 fieldWithPath("orderId").type(JsonFieldType.NUMBER).description("주문 ID"),
-                                fieldWithPath("orderStatus").type(JsonFieldType.STRING).description("주문 상태")
+                                fieldWithPath("orderStatus").type(JsonFieldType.STRING).description(DocumentLinkGenerator.generateLinkCode(DocumentLinkGenerator.DocUrl.ORDER_STATUS))
                         ),
                         responseFields(
                                 beneathPath("data"),
@@ -313,7 +313,7 @@ class OrderControllerTest extends RestDocsTestSupport {
                 .andDo(document("order/update-order-completed-invalid-status",
                         requestFields(
                                 fieldWithPath("orderId").type(JsonFieldType.NUMBER).description("주문 ID"),
-                                fieldWithPath("orderStatus").type(JsonFieldType.STRING).description("주문 상태")
+                                fieldWithPath("orderStatus").type(JsonFieldType.STRING).description(DocumentLinkGenerator.generateLinkCode(DocumentLinkGenerator.DocUrl.ORDER_STATUS))
                         ),
                         responseFields(
                                 errorStatusMsg()
@@ -354,7 +354,7 @@ class OrderControllerTest extends RestDocsTestSupport {
                 .andDo(document("order/update-order-settlement",
                         requestFields(
                                 fieldWithPath("orderId").type(JsonFieldType.NUMBER).description("주문 ID"),
-                                fieldWithPath("orderStatus").type(JsonFieldType.STRING).description("주문 상태")
+                                fieldWithPath("orderStatus").type(JsonFieldType.STRING).description(DocumentLinkGenerator.generateLinkCode(DocumentLinkGenerator.DocUrl.ORDER_STATUS))
                         ),
                         responseFields(
                                 beneathPath("data"),
@@ -405,7 +405,7 @@ class OrderControllerTest extends RestDocsTestSupport {
                 .andDo(document("order/update-order-settlement-invalid-status",
                         requestFields(
                                 fieldWithPath("orderId").type(JsonFieldType.NUMBER).description("주문 ID"),
-                                fieldWithPath("orderStatus").type(JsonFieldType.STRING).description("주문 상태")
+                                fieldWithPath("orderStatus").type(JsonFieldType.STRING).description(DocumentLinkGenerator.generateLinkCode(DocumentLinkGenerator.DocUrl.ORDER_STATUS))
                         ),
                         responseFields(
                                 errorStatusMsg()
@@ -445,7 +445,7 @@ class OrderControllerTest extends RestDocsTestSupport {
                                 fieldWithPath("productId").type(JsonFieldType.NUMBER).description("제품 ID"),
                                 fieldWithPath("buyer").type(JsonFieldType.STRING).description("구매자 EMAIL"),
                                 fieldWithPath("seller").type(JsonFieldType.STRING).description("판매자 EMAIL"),
-                                fieldWithPath("orderStatus").type(JsonFieldType.STRING).description("주문 상태"),
+                                fieldWithPath("orderStatus").type(JsonFieldType.STRING).description(DocumentLinkGenerator.generateLinkCode(DocumentLinkGenerator.DocUrl.ORDER_STATUS)),
                                 fieldWithPath("price").type(JsonFieldType.NUMBER).description("제품 가격"),
                                 fieldWithPath("productName").type(JsonFieldType.STRING).description("제품 이름"),
                                 fieldWithPath("insertDate").type(JsonFieldType.STRING).description("주문 상태 변경 일자"),

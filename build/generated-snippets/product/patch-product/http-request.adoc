@@ -1,10 +1,10 @@
 [source,http,options="nowrap"]
 ----
-PATCH /api/v1/product/4584 HTTP/1.1
+PATCH /api/v1/product/9859 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJKb0RAd2FudGVkLmNvbSIsInJvbGUiOiJOT1JNQUwiLCJpYXQiOjE3MTcwMzA2NDAsImV4cCI6MTcxNzAzNDI0MH0.LtjfO_5xEv-Q5eT6m1ToioHkvyOCBVFcsfKCVRXq4ok
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJxQHdhbnRlZC5jb20iLCJyb2xlIjoiTk9STUFMIiwiaWF0IjoxNzE3MDMzNjQxLCJleHAiOjE3MTcwMzcyNDF9.hZ1DYtFbVoztmgKIPmBFWD8BanHjkzuGKa2mwCQUZpc
 Content-Length: 58
 Host: localhost:8080
 
-{"productName":"achmifjbkl","price":10277397,"quantity":2}
+{"productName":"nnbwdvffoj","price":77758565,"quantity":7}
 ----

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.wanted.preonboarding.module.order.service.OrderQueryServiceImplTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2024-05-30T00:57:19" hostname="lyusang-won-ui-MacBookPro.local" time="0.113">
+<testsuite name="com.wanted.preonboarding.module.order.service.OrderQueryServiceImplTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2024-05-30T01:47:21" hostname="lyusang-won-ui-MacBookPro.local" time="0.115">
   <properties/>
-  <testcase name="Order 생성" classname="com.wanted.preonboarding.module.order.service.OrderQueryServiceImplTest" time="0.113"/>
+  <testcase name="Order 생성" classname="com.wanted.preonboarding.module.order.service.OrderQueryServiceImplTest" time="0.115"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

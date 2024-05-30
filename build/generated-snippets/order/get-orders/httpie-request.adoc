@@ -2,5 +2,5 @@
 ----
 $ http GET 'http://localhost:8080/api/v1/orders?size=5' \
     'Content-Type:application/json;charset=UTF-8' \
-    'Authorization:Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJSaExFYnZvUUB3YW50ZWQuY29tIiwicm9sZSI6Ik5PUk1BTCIsImlhdCI6MTcxNzAzMDYzNywiZXhwIjoxNzE3MDM0MjM3fQ.scaVz4mYgAIo23q_P4KYwv-v8pbpKy1R6u7-JHTvizs'
+    'Authorization:Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkWFJlYlhAd2FudGVkLmNvbSIsInJvbGUiOiJOT1JNQUwiLCJpYXQiOjE3MTcwMzM2MzgsImV4cCI6MTcxNzAzNzIzOH0.523_RjphAnnk8Uf0bfVgTiZgsT65u0u11m9xJnQh1xc'
 ----

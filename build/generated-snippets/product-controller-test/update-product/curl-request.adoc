@@ -1,11 +1,11 @@
 [source,bash]
 ----
-$ curl 'http://localhost:8080/api/v1/product/4584' -i -X PATCH \
+$ curl 'http://localhost:8080/api/v1/product/9859' -i -X PATCH \
     -H 'Content-Type: application/json;charset=UTF-8' \
-    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJKb0RAd2FudGVkLmNvbSIsInJvbGUiOiJOT1JNQUwiLCJpYXQiOjE3MTcwMzA2NDAsImV4cCI6MTcxNzAzNDI0MH0.LtjfO_5xEv-Q5eT6m1ToioHkvyOCBVFcsfKCVRXq4ok' \
+    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJxQHdhbnRlZC5jb20iLCJyb2xlIjoiTk9STUFMIiwiaWF0IjoxNzE3MDMzNjQxLCJleHAiOjE3MTcwMzcyNDF9.hZ1DYtFbVoztmgKIPmBFWD8BanHjkzuGKa2mwCQUZpc' \
     -d '{
-  "productName" : "achmifjbkl",
-  "price" : 10277397,
-  "quantity" : 2
+  "productName" : "nnbwdvffoj",
+  "price" : 77758565,
+  "quantity" : 7
 }'
 ----

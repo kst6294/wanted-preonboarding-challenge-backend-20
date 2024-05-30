@@ -1,10 +1,10 @@
 [source,bash]
 ----
 $ echo '{
-  "productName" : "fiwxekvlqe",
-  "price" : 16540489,
-  "quantity" : 2
+  "productName" : "lamuhcyluk",
+  "price" : 93016591,
+  "quantity" : 8
 }' | http POST 'http://localhost:8080/api/v1/product' \
     'Content-Type:application/json;charset=UTF-8' \
-    'Authorization:Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJMWE16REVZRkdAd2FudGVkLmNvbSIsInJvbGUiOiJOT1JNQUwiLCJpYXQiOjE3MTcwMzA2NDAsImV4cCI6MTcxNzAzNDI0MH0.p4CySpBFVY4Z-sGGEfB-oEejsMgkXFMexKtV2AevTMs'
+    'Authorization:Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJQSVdCY0B3YW50ZWQuY29tIiwicm9sZSI6Ik5PUk1BTCIsImlhdCI6MTcxNzAzMzY0MiwiZXhwIjoxNzE3MDM3MjQyfQ.bkWdTBGz6sWfQ7EFF7F4dt-mQNb8oCWyqWYtM66DqaI'
 ----
