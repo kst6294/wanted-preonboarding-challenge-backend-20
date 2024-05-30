@@ -26,7 +26,7 @@ export async function purchase_product({ product_id, buyer_id }, transactionProv
 
     try {
         let order;
-        const item = await get_product({ product_id, status: "Available" }).transacting(transaction);
+        const item = await get_product({ product_id, status: "Available" }).forUpdate().transacting(transaction);
 
         if (item) {
             // 주문서 작성
@@ -35,7 +35,9 @@ export async function purchase_product({ product_id, buyer_id }, transactionProv
                 product_id,
                 price: item.price,
                 status: "Reserved",
-            }).transacting(transaction);
+            })
+                .forShare()
+                .transacting(transaction);
 
             await decrease_product({ product_id }).transacting(transaction);
 

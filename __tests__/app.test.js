@@ -76,9 +76,7 @@ describe("API TEST", () => {
             });
 
             it("구매자A/제품 구매", async () => {
-                const response = await request(app).post(`/products/purchase`).set("Authorization", buyerA_token).send({
-                    product_id,
-                });
+                const response = await request(app).post(`/products/purchase`).set("Authorization", buyerA_token).send({ product_id });
 
                 expect(response.status).toBe(201);
                 expect(response.body.status).toBe("Reserved");
@@ -185,6 +183,25 @@ describe("API TEST", () => {
                 expect(response.status).toBe(200);
                 expect(Array.isArray(response.body)).toBe(true);
                 expect(response.body.length).toBe(1);
+            });
+        });
+
+        describe("동시 접근", () => {
+            it("판매자/제품 등록", async () => {
+                const response = await request(app).post("/products/register").set("Authorization", sellerA_token).send({
+                    name: "Test_Product",
+                    price: "15.99",
+                    amount: 2,
+                });
+                product_id = response.body.product_id;
+
+                expect(response.status).toBe(201);
+            });
+
+            it("구매자A & B/제품 동시 구매", async () => {
+                const responses = await Promise.all([buyerA_token, buyerB_token].map((token) => request(app).post(`/products/purchase`).set("Authorization", token).send({ product_id })));
+
+                expect(responses.some((response) => response.status === 501)).toBe(true);
             });
         });
     });
