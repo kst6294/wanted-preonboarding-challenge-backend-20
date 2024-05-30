@@ -27,3 +27,15 @@
 #### /logout
 
 > **POST**
+
+## 제품
+
+### 제품 등록
+
+#### /products/register
+
+> **POST**
+>
+> name: 제품명
+>
+> price: 제품 가격
