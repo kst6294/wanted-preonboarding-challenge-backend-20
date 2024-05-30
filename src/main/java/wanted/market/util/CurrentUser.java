@@ -9,11 +9,16 @@ import wanted.market.entity.User;
 @Component
 public class CurrentUser {
 
-    public User getUser() throws Exception {
+    public User getUser(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         if (authentication == null || !authentication.isAuthenticated()) {
-            throw new Exception("사용자 인증이 필요합니다.");
+            return null;
+        }
+
+        // 비회원인 경우 anonymous 로 String 객체 반환하는 부분 추가 처리
+        if(authentication.getPrincipal() instanceof String){
+            return null;
         }
 
         WantedUserDetails userDetails = (WantedUserDetails) authentication.getPrincipal();

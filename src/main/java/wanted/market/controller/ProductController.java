@@ -9,7 +9,6 @@ import wanted.market.service.ProductService;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/products")
@@ -27,10 +26,16 @@ public class ProductController {
     // 상품 상세 조회
     @GetMapping("/{id}")
     public ResponseEntity getProductById(@PathVariable Long id) {
-        Optional<Product> product = productService.getProductById(id);
+        try {
+            Map<String, Object> result = productService.getProductById(id);
 
-        return product.map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
+            return (result.isEmpty())? ResponseEntity.notFound().build() : ResponseEntity.ok(result);
+
+        }catch (Exception e){
+            Map<String, String> errorResponse = new HashMap<>();
+            errorResponse.put("error", e.getMessage());
+            return ResponseEntity.badRequest().body(errorResponse);
+        }
     }
 
     // 상품 등록
