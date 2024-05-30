@@ -28,5 +28,4 @@ public class Trade extends BaseEntity {
     @JoinColumn(name = "seller_id")
     private Member seller;
 
-
 }

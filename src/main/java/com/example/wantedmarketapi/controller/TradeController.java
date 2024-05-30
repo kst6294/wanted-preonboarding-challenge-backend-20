@@ -38,8 +38,17 @@ public class TradeController {
     @Operation(summary = "구매한 용퓸 조회 API", description = "구매한 용품을 조회합니다")
     @ApiResponses({@ApiResponse(responseCode = "200", description = "성공")})
     @GetMapping("/purchases")
-    public BaseResponse<List<PurchaseProductListResponse>> getMyPurchaseProductList(@Parameter(hidden = true) @AuthMember Member member){
+    public BaseResponse<List<GetProductResponse>> getMyPurchaseProductList(@Parameter(hidden = true) @AuthMember Member member){
         return BaseResponse.onSuccess(tradeQueryService.getMyPurchaseProductList(member));
     }
+
+    @Operation(summary = "예약중인 용퓸 조회 API", description = "예약중인 용품을 조회합니다")
+    @ApiResponses({@ApiResponse(responseCode = "200", description = "성공")})
+    @GetMapping("/reservation")
+    public BaseResponse<List<GetProductResponse>> getMyReservationProductList(@Parameter(hidden = true) @AuthMember Member member){
+        return BaseResponse.onSuccess(tradeQueryService.getMyReservationProductList(member));
+    }
+
+
 
 }

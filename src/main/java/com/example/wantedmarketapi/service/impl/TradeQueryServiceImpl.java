@@ -19,8 +19,14 @@ public class TradeQueryServiceImpl implements TradeQueryService {
 
     private final TradeRepository tradeRepository;
 
-    public List<PurchaseProductListResponse> getMyPurchaseProductList(Member member) {
-        return TradeConverter.toGetPurchaseProductListResponseList(tradeRepository.findAllByPurchaserIdAndProduct_ProductStatus(member.getId(), ProductStatus.DONE));
+    @Override
+    public List<GetProductResponse> getMyPurchaseProductList(Member member) {
+        return TradeConverter.toGetProductResponseList(tradeRepository.findAllByPurchaserIdAndProduct_ProductStatus(member.getId(), ProductStatus.DONE));
+    }
+
+    @Override
+    public List<GetProductResponse> getMyReservationProductList(Member member) {
+        return TradeConverter.toGetProductResponseList(tradeRepository.findAllByPurchaserIdOrSellerIdAndProduct_ProductStatus(member.getId(), member.getId(), ProductStatus.RESERVATION));
     }
 
 }

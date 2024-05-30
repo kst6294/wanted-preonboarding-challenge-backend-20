@@ -7,6 +7,7 @@ import java.util.List;
 
 public interface TradeQueryService {
 
-    List<PurchaseProductListResponse> getMyPurchaseProductList(Member member);
+    List<GetProductResponse> getMyPurchaseProductList(Member member);
 
+    List<GetProductResponse> getMyReservationProductList(Member member);
 }

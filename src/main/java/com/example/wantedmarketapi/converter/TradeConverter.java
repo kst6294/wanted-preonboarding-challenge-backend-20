@@ -27,17 +27,17 @@ public class TradeConverter {
                 .build();
     }
 
-    public static PurchaseProductListResponse toPurchaseProductListResponse(Trade trade) {
-        return PurchaseProductListResponse.builder()
+    public static GetProductResponse toGetProductResponse(Trade trade) {
+        return GetProductResponse.builder()
                 .productId(trade.getProduct().getId())
                 .productName(trade.getProduct().getName())
                 .productPrice(trade.getProduct().getPrice())
                 .build();
     }
 
-    public static List<PurchaseProductListResponse> toGetPurchaseProductListResponseList(List<Trade> tradeList) {
+    public static List<GetProductResponse> toGetProductResponseList(List<Trade> tradeList) {
         return tradeList.stream()
-                .map(trade -> TradeConverter.toPurchaseProductListResponse(trade))
+                .map(TradeConverter::toGetProductResponse)
                 .toList();
     }
 

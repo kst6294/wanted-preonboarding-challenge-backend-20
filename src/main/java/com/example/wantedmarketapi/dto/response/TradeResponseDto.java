@@ -18,7 +18,7 @@ public class TradeResponseDto {
     @Builder
     @NoArgsConstructor(access = AccessLevel.PROTECTED)
     @AllArgsConstructor(access = AccessLevel.PROTECTED)
-    public static class PurchaseProductListResponse {
+    public static class GetProductResponse {
         Long productId;
         String productName;
         Integer productPrice;
