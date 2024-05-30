@@ -25,6 +25,7 @@ public class TokenExpireExceptionHandler {
 
 
     private static final String REFRESH_TOKEN_ERR_MSG = "Refresh token is invalid or expired";
+    private static final String TRUE = "true";
 
     @ExceptionHandler(CustomExpiredJwtException.class)
     public ResponseEntity<?> handleExpiredJwtException(CustomExpiredJwtException e, HttpServletRequest request) {
@@ -34,9 +35,11 @@ public class TokenExpireExceptionHandler {
         if(authToken.isPresent()) {
             AuthToken refreshToken = authToken.get();
             AuthToken newAuthToken = authTokenGenerateService.generateToken(refreshToken.getSubject());
-            return ResponseEntity.ok()
-                    .header(AuthConstants.AUTHORIZATION_HEADER, AuthConstants.BEARER_PREFIX + newAuthToken.getToken())
-                    .body(ApiResponse.success(null, AuthConstants.REFRESH_TOKEN_ISSUED_MESSAGE));
+            return ResponseEntity.ok(ResponseEntity.status(201)
+                            .header(AuthConstants.REFRESH_TOKEN_ISSUE, TRUE)
+                            .header(AuthConstants.AUTHORIZATION_HEADER, AuthConstants.BEARER_PREFIX + newAuthToken.getToken())
+                            .body(ApiResponse.success(null, AuthConstants.REFRESH_TOKEN_ISSUED_MESSAGE))
+                    );
         }
 
         throw new UnAuthorizationException(REFRESH_TOKEN_ERR_MSG);
