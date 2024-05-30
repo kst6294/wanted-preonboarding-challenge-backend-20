@@ -33,12 +33,12 @@ public class MemberController {
             String hashPwd = passwordEncoder.encode(memberDto.getPassword());
             memberDto.setPassword(hashPwd);
             if (memberService.insertMember(memberDto)) {
-                response = new ResponseOk(MemberMessage.REGISTERED_SUCCESSFULLY.getMessage()).toResponse();
+                response = new ResponseOk(MemberMessage.REGISTERED_SUCCESSFULLY).toResponse();
             } else {
-                response = new ResponseBad(MemberMessage.ERROR.getMessage()).toResponse();
+                response = new ResponseBad(MemberMessage.ERROR).toResponse();
             }
         } catch (DataIntegrityViolationException e) {
-            response = new ResponseBad(MemberMessage.USER_ALREADY_EXISTS.getMessage()).toResponse();
+            response = new ResponseBad(MemberMessage.USER_ALREADY_EXISTS).toResponse();
         }
         return response;
     }

@@ -7,10 +7,10 @@ import java.util.Map;
 
 public record ResponseOk(Object body) {
     public ResponseEntity<Map<String, Object>> toResponse() {
-        if (body.getClass().equals(String.class)) {
+        if (body.getClass().equals(String.class) || body.getClass().isEnum()) {
             return ResponseEntity.ok(Map.of(
                 ResponseMessage.STATUS.getKey(), ResponseMessage.SUCCESS.getKey(),
-                ResponseMessage.MESSAGE.getKey(), body
+                ResponseMessage.MESSAGE.getKey(), body.toString()
             ));
         }
         return ResponseEntity.ok(Map.of(

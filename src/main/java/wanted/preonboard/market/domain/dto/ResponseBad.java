@@ -9,7 +9,7 @@ public record ResponseBad(Object body) {
     public ResponseEntity<Map<String, Object>> toResponse() {
         return ResponseEntity.badRequest().body(Map.of(
             ResponseMessage.STATUS.getKey(), ResponseMessage.FAILED.getKey(),
-            ResponseMessage.MESSAGE.getKey(), body
+            ResponseMessage.MESSAGE.getKey(), body.toString()
         ));
     }
 }

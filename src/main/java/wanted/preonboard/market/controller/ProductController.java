@@ -30,12 +30,12 @@ public class ProductController {
         ResponseEntity<Map<String, Object>> response;
         try {
             if (productService.createProduct(user.getMember().getId(), product)) {
-                response = new ResponseOk(ProductMessage.REGISTERED_SUCCESSFULLY.getMessage()).toResponse();
+                response = new ResponseOk(ProductMessage.REGISTERED_SUCCESSFULLY).toResponse();
             } else {
-                response = new ResponseBad(ProductMessage.ERROR.getMessage()).toResponse();
+                response = new ResponseBad(ProductMessage.ERROR).toResponse();
             }
         } catch (Exception e) {
-            response = new ResponseBad(ProductMessage.ERROR.getMessage() + e.getMessage()).toResponse();
+            response = new ResponseBad(ProductMessage.ERROR + e.getMessage()).toResponse();
         }
         return response;
     }
@@ -50,7 +50,7 @@ public class ProductController {
         try {
             return new ResponseOk(productService.getProductById(productId)).toResponse();
         } catch (NullPointerException e) {
-            return new ResponseBad(ProductMessage.INVALID_PRODUCT_ID.getMessage()).toResponse();
+            return new ResponseBad(ProductMessage.INVALID_PRODUCT_ID).toResponse();
         }
     }
 
@@ -60,9 +60,9 @@ public class ProductController {
             return new ResponseOk(productService.updateProductById(productId, product)).toResponse();
         } catch (NullPointerException e) {
             System.out.println(e);
-            return new ResponseBad(ProductMessage.INVALID_PRODUCT_ID.getMessage()).toResponse();
+            return new ResponseBad(ProductMessage.INVALID_PRODUCT_ID).toResponse();
         } catch (Exception e) {
-            return new ResponseBad(ProductMessage.ERROR.getMessage() + e.getMessage()).toResponse();
+            return new ResponseBad(ProductMessage.ERROR + e.getMessage()).toResponse();
         }
     }
 }

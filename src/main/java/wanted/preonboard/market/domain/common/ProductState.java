@@ -12,4 +12,8 @@ public enum ProductState {
         this.state = state;
     }
 
+    @Override
+    public String toString() {
+        return state;
+    }
 }

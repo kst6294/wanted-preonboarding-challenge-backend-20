@@ -17,4 +17,9 @@ public enum MemberMessage {
     MemberMessage(String message) {
         this.message = message;
     }
+
+    @Override
+    public String toString() {
+        return message;
+    }
 }
