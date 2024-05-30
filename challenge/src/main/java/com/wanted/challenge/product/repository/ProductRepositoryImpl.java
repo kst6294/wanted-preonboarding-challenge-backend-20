@@ -7,10 +7,13 @@ import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.JPQLQuery;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import com.wanted.challenge.product.model.Reservation;
 import com.wanted.challenge.product.response.ProductPreviewResponse;
 import com.wanted.challenge.product.response.PurchaseProductResponse;
 import com.wanted.challenge.product.response.QProductPreviewResponse;
 import com.wanted.challenge.product.response.QPurchaseProductResponse;
+import com.wanted.challenge.product.response.QReserveProductResponse;
+import com.wanted.challenge.product.response.ReserveProductResponse;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -85,5 +88,31 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
                 .select(purchase.id.max())
                 .from(purchase)
                 .where(purchase.product.eq(product));
+    }
+
+    public Page<ReserveProductResponse> retrieveReserveProducts(Long buyerId, Pageable pageable) {
+        List<ReserveProductResponse> content = jpaQueryFactory
+                .select(new QReserveProductResponse(
+                        product.id,
+                        product.name,
+                        product.price
+                ))
+                .from(product)
+                .where(product.reservation.eq(Reservation.RESERVE))
+
+                .orderBy(product.id.desc())
+
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+
+                .fetch();
+
+        JPAQuery<Long> countQuery = jpaQueryFactory
+                .select(product.count())
+                .from(product)
+
+                .where(product.reservation.eq(Reservation.RESERVE));
+
+        return PageableExecutionUtils.getPage(content, pageable, countQuery::fetchOne);
     }
 }

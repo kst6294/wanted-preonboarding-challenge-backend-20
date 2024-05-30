@@ -7,6 +7,7 @@ import com.wanted.challenge.product.request.RegisterRequest;
 import com.wanted.challenge.product.response.ProductDetailResponse;
 import com.wanted.challenge.product.response.ProductPreviewResponse;
 import com.wanted.challenge.product.response.PurchaseProductResponse;
+import com.wanted.challenge.product.response.ReserveProductResponse;
 import com.wanted.challenge.product.service.ProductService;
 import jakarta.validation.Valid;
 import java.net.URI;
@@ -72,6 +73,17 @@ public class ProductController {
 
         Page<PurchaseProductResponse> purchaseProductResponses =
                 productService.purchaseProducts(accountDetail, pageable);
+
+        return ResponseEntity.ok(purchaseProductResponses);
+    }
+
+    @GetMapping("/reserve")
+    public ResponseEntity<Page<ReserveProductResponse>> reserveProducts(
+            @AuthenticationPrincipal AccountDetail accountDetail,
+            Pageable pageable) {
+
+        Page<ReserveProductResponse> purchaseProductResponses =
+                productService.reserveProducts(accountDetail, pageable);
 
         return ResponseEntity.ok(purchaseProductResponses);
     }

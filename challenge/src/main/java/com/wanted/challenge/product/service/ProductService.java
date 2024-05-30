@@ -14,6 +14,7 @@ import com.wanted.challenge.product.repository.PurchaseRepository;
 import com.wanted.challenge.product.response.ProductDetailResponse;
 import com.wanted.challenge.product.response.ProductPreviewResponse;
 import com.wanted.challenge.product.response.PurchaseProductResponse;
+import com.wanted.challenge.product.response.ReserveProductResponse;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -83,5 +84,10 @@ public class ProductService {
     public Page<PurchaseProductResponse> purchaseProducts(AccountDetail accountDetail, Pageable pageable) {
         Long buyerId = accountDetail.getAccountId();
         return productRepository.retrievePurchaseProducts(buyerId, pageable);
+    }
+
+    public Page<ReserveProductResponse> reserveProducts(AccountDetail accountDetail, Pageable pageable) {
+        Long buyerId = accountDetail.getAccountId();
+        return productRepository.retrieveReserveProducts(buyerId, pageable);
     }
 }
