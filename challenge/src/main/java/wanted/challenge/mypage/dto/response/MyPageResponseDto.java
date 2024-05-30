@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class MyPageResponseDto {
@@ -30,18 +31,20 @@ public class MyPageResponseDto {
     @Setter
     @NoArgsConstructor
     public static class sellOrderDetail {
-        private int orderId;
-        private int goodsId;
+        private Long orderId;
+        private Long goodsId;
         private String goodsName;
         private String goodsStatus;
-        private int buyerId;
-        private int buyerName;
+
+        private Long buyerId;
+        private String buyerName;
+
         private String orderStatus;
         private int quantity;
         private int orderPrice;
-        private Long orderDate;
-        private Long confirmDate;
-        private Long finishDate;
+        private LocalDateTime orderDate;
+        private LocalDateTime confirmDate;
+        private LocalDateTime finishDate;
     }
 
 
@@ -49,17 +52,19 @@ public class MyPageResponseDto {
     @Setter
     @NoArgsConstructor
     public static class buyOrderDetail {
-        private int orderId;
-        private int goodsId;
+        private Long orderId;
+        private Long goodsId;
         private String goodsName;
         private String goodsStatus;
-        private int sellerId;
-        private int sellerName;
+
+        private Long sellerId;
+        private String sellerName;
+
         private String orderStatus;
         private int quantity;
         private int orderPrice;
-        private Long orderDate;
-        private Long confirmDate;
-        private Long finishDate;
+        private LocalDateTime orderDate;
+        private LocalDateTime confirmDate;
+        private LocalDateTime finishDate;
     }
 }

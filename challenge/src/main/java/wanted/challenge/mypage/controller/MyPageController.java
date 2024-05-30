@@ -21,25 +21,31 @@ public class MyPageController {
 
 
     @GetMapping("/seller")
-    public List<orderListItemInfo> getSellerInfo(@RequestAttribute("memberId") Long memberId) {
+    public List<orderListItemInfo> getSellerInfo(
+            @RequestHeader("memberId") Long memberId) {
         return mapper.orderToOrderListItemInfo(myPageService.getSellOrderList(memberId));
 
     }
 
     @GetMapping("/seller/{order_id}")
-    public sellOrderDetail getSellerOrderDetail(@RequestAttribute("memberId") Long memberId, @PathVariable("order_id") Long orderId) throws Exception {
+    public sellOrderDetail getSellerOrderDetail(
+            @RequestHeader("memberId") Long memberId,
+            @PathVariable("order_id") Long orderId) throws Exception {
 
         return myPageService.getSellerOrderDetail(memberId, orderId);
     }
 
     @GetMapping("/buyer")
-    public List<orderListItemInfo> getBuyerInfo(@RequestAttribute("memberId") Long memberId) {
+    public List<orderListItemInfo> getBuyerInfo(
+            @RequestHeader("memberId") Long memberId) {
         return mapper.orderToOrderListItemInfo(myPageService.getBuyOrderList(memberId));
 //        return null;
     }
 
     @GetMapping("/buyer/{order_id}")
-    public buyOrderDetail getBuyerOrderDetail(@RequestAttribute("memberId") Long memberId, @PathVariable("order_id") Long orderId) throws Exception {
+    public buyOrderDetail getBuyerOrderDetail(
+            @RequestHeader("memberId") Long memberId,
+            @PathVariable("order_id") Long orderId) throws Exception {
         return myPageService.getBuyerOrderDetail(memberId, orderId);
     }
 
