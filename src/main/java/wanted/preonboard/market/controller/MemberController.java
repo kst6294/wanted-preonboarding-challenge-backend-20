@@ -6,10 +6,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-import wanted.preonboard.market.domain.dto.MemberDto;
-import wanted.preonboard.market.domain.dto.ResponseBad;
-import wanted.preonboard.market.domain.dto.ResponseOk;
-import wanted.preonboard.market.domain.entity.Member;
+import wanted.preonboard.market.domain.member.dto.MemberDto;
+import wanted.preonboard.market.domain.common.ResponseBad;
+import wanted.preonboard.market.domain.common.ResponseOk;
+import wanted.preonboard.market.domain.member.Member;
 import wanted.preonboard.market.message.MemberMessage;
 import wanted.preonboard.market.service.Member.MemberService;
 

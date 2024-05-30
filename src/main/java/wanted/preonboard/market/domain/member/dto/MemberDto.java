@@ -1,4 +1,4 @@
-package wanted.preonboard.market.domain.dto;
+package wanted.preonboard.market.domain.member.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

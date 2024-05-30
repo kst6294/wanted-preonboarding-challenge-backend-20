@@ -1,7 +1,6 @@
-package wanted.preonboard.market.domain.entity;
+package wanted.preonboard.market.domain.Product;
 
 import lombok.Data;
-import wanted.preonboard.market.domain.common.ProductState;
 
 @Data
 public class Product {

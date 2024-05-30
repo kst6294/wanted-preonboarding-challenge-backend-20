@@ -1,8 +1,7 @@
 package wanted.preonboard.market.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
-import wanted.preonboard.market.domain.dto.ProductInsertDto;
-import wanted.preonboard.market.domain.entity.Product;
+import wanted.preonboard.market.domain.Product.Product;
 
 import java.util.List;
 

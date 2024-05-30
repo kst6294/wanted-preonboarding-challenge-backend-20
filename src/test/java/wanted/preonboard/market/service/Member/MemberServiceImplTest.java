@@ -2,8 +2,8 @@ package wanted.preonboard.market.service.Member;
 
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import wanted.preonboard.market.domain.dto.MemberDto;
-import wanted.preonboard.market.domain.entity.Member;
+import wanted.preonboard.market.domain.member.dto.MemberDto;
+import wanted.preonboard.market.domain.member.Member;
 import wanted.preonboard.market.mapper.MemberMapper;
 
 import static org.junit.jupiter.api.Assertions.*;

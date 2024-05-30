@@ -2,9 +2,9 @@ package wanted.preonboard.market.service.Product;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import wanted.preonboard.market.domain.dto.ProductInsertDto;
-import wanted.preonboard.market.domain.dto.ProductUpdateDto;
-import wanted.preonboard.market.domain.entity.Product;
+import wanted.preonboard.market.domain.Product.dto.ProductInsertDto;
+import wanted.preonboard.market.domain.Product.dto.ProductUpdateDto;
+import wanted.preonboard.market.domain.Product.Product;
 import wanted.preonboard.market.mapper.ProductMapper;
 
 import java.util.List;

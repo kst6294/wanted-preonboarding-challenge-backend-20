@@ -1,4 +1,4 @@
-package wanted.preonboard.market.domain.entity;
+package wanted.preonboard.market.domain.member;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;

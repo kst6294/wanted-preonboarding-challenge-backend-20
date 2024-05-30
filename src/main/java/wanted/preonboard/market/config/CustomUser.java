@@ -3,7 +3,7 @@ package wanted.preonboard.market.config;
 import lombok.Getter;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
-import wanted.preonboard.market.domain.entity.Member;
+import wanted.preonboard.market.domain.member.Member;
 
 import java.util.List;
 

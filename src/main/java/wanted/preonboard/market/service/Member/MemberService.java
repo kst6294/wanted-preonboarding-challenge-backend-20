@@ -1,7 +1,7 @@
 package wanted.preonboard.market.service.Member;
 
-import wanted.preonboard.market.domain.dto.MemberDto;
-import wanted.preonboard.market.domain.entity.Member;
+import wanted.preonboard.market.domain.member.dto.MemberDto;
+import wanted.preonboard.market.domain.member.Member;
 
 public interface MemberService {
     boolean insertMember(MemberDto memberDto);

@@ -1,9 +1,8 @@
 package wanted.preonboard.market.service.Product;
 
-import org.springframework.security.core.Authentication;
-import wanted.preonboard.market.domain.dto.ProductInsertDto;
-import wanted.preonboard.market.domain.dto.ProductUpdateDto;
-import wanted.preonboard.market.domain.entity.Product;
+import wanted.preonboard.market.domain.Product.dto.ProductInsertDto;
+import wanted.preonboard.market.domain.Product.dto.ProductUpdateDto;
+import wanted.preonboard.market.domain.Product.Product;
 
 import java.util.List;
 

@@ -2,14 +2,13 @@ package wanted.preonboard.market.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import wanted.preonboard.market.config.CustomUser;
-import wanted.preonboard.market.domain.dto.ProductInsertDto;
-import wanted.preonboard.market.domain.dto.ProductUpdateDto;
-import wanted.preonboard.market.domain.dto.ResponseBad;
-import wanted.preonboard.market.domain.dto.ResponseOk;
+import wanted.preonboard.market.domain.Product.dto.ProductInsertDto;
+import wanted.preonboard.market.domain.Product.dto.ProductUpdateDto;
+import wanted.preonboard.market.domain.common.ResponseBad;
+import wanted.preonboard.market.domain.common.ResponseOk;
 import wanted.preonboard.market.message.ProductMessage;
 import wanted.preonboard.market.service.Product.ProductService;
 

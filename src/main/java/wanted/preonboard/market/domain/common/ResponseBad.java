@@ -1,4 +1,4 @@
-package wanted.preonboard.market.domain.dto;
+package wanted.preonboard.market.domain.common;
 
 import org.springframework.http.ResponseEntity;
 import wanted.preonboard.market.message.ResponseMessage;
