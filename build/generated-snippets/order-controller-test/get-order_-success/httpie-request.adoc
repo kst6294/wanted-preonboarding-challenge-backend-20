@@ -1,6 +1,6 @@
 [source,bash]
 ----
-$ http GET 'http://localhost:8080/api/v1/order/97494017' \
+$ http GET 'http://localhost:8080/api/v1/order/34026156' \
     'Content-Type:application/json;charset=UTF-8' \
-    'Authorization:Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwcXlNZW5Ad2FudGVkLmNvbSIsInJvbGUiOiJOT1JNQUwiLCJpYXQiOjE3MTY5OTM3OTEsImV4cCI6MTcxNjk5NzM5MX0.odgKiUZmrFNbyEumkCGN4JYwpudXyIgUZVc7NiDqBXE'
+    'Authorization:Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ3T0xRanBZdVBqc3RSZkB3YW50ZWQuY29tIiwicm9sZSI6Ik5PUk1BTCIsImlhdCI6MTcxNzAyOTQ3OCwiZXhwIjoxNzE3MDMzMDc4fQ.U_kSD6LoIe7NgJsr-RN2STSPq-KhIrqX0ntoh6FOqds'
 ----

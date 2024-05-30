@@ -5,5 +5,5 @@ Content-Type: application/json;charset=UTF-8
 Content-Length: 52
 Host: localhost:8080
 
-{"email":"OlHTa@wanted.com","password":"quvmjcfxwf"}
+{"email":"CdBjl@wanted.com","password":"qffsabolnp"}
 ----

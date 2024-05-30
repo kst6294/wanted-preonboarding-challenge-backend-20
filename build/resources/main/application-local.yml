@@ -15,7 +15,7 @@ spring:
       maximum-pool-size: 10
     url: jdbc:mysql://127.0.0.1:3306/ryuqq?useSSL=true&useUnicode=true&serverTimezone=Asia/Seoul&allowMultiQueries=true
     username: root
-    password: Ff@20122104
+    password:
   jpa:
     generate-ddl: false
     hibernate:

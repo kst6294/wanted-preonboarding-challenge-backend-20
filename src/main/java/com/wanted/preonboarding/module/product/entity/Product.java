@@ -1,6 +1,7 @@
 package com.wanted.preonboarding.module.product.entity;
 
 import com.wanted.preonboarding.module.common.entity.BaseEntity;
+import com.wanted.preonboarding.module.exception.product.ProductOutOfStockException;
 import com.wanted.preonboarding.module.order.entity.OrderProductSnapShot;
 import com.wanted.preonboarding.module.product.enums.ProductStatus;
 import com.wanted.preonboarding.module.user.entity.Users;
@@ -64,7 +65,10 @@ public class Product extends BaseEntity {
             if (quantity == 0) {
                 productStatus = ProductStatus.BOOKING;
             }
+        }else{
+            throw new ProductOutOfStockException(id);
         }
+
     }
 
     public void outOfStock(){

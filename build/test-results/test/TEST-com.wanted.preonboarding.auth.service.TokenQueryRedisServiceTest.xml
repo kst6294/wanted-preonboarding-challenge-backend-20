@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.wanted.preonboarding.auth.service.TokenQueryRedisServiceTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2024-05-29T14:43:10" hostname="lyusang-won-ui-MacBookPro.local" time="0.008">
+<testsuite name="com.wanted.preonboarding.auth.service.TokenQueryRedisServiceTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2024-05-30T00:37:57" hostname="lyusang-won-ui-MacBookPro.local" time="0.007">
   <properties/>
-  <testcase name="토큰 저장 테스트" classname="com.wanted.preonboarding.auth.service.TokenQueryRedisServiceTest" time="0.008"/>
+  <testcase name="토큰 저장 테스트" classname="com.wanted.preonboarding.auth.service.TokenQueryRedisServiceTest" time="0.007"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

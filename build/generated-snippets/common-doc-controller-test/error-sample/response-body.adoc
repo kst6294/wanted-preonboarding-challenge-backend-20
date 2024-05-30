@@ -3,7 +3,7 @@
 {
   "status" : 400,
   "message" : "email must be a well-formed email address",
-  "timestamp" : "2024-05-29 23:43:11",
+  "timestamp" : "2024-05-30 09:37:57",
   "error" : "BeanPropertyBindingResult"
 }
 ----

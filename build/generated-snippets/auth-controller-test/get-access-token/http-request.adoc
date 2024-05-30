@@ -6,7 +6,7 @@ Content-Length: 63
 Host: localhost:8080
 
 {
-  "email" : "OlHTa@wanted.com",
-  "password" : "quvmjcfxwf"
+  "email" : "CdBjl@wanted.com",
+  "password" : "qffsabolnp"
 }
 ----

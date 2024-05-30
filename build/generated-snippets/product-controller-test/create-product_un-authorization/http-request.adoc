@@ -6,8 +6,8 @@ Content-Length: 74
 Host: localhost:8080
 
 {
-  "productName" : "pnjouqkban",
-  "price" : 56832836,
-  "quantity" : 5
+  "productName" : "dhplccinwg",
+  "price" : 27634485,
+  "quantity" : 9
 }
 ----

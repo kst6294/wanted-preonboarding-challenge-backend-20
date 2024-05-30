@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.wanted.preonboarding.module.user.repository.UserFindRepositoryImplTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2024-05-29T14:43:16" hostname="lyusang-won-ui-MacBookPro.local" time="0.025">
+<testsuite name="com.wanted.preonboarding.module.user.repository.UserFindRepositoryImplTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2024-05-30T00:38:02" hostname="lyusang-won-ui-MacBookPro.local" time="0.026">
   <properties/>
-  <testcase name="email로 BaseUserInfo 조회" classname="com.wanted.preonboarding.module.user.repository.UserFindRepositoryImplTest" time="0.014"/>
+  <testcase name="email로 BaseUserInfo 조회" classname="com.wanted.preonboarding.module.user.repository.UserFindRepositoryImplTest" time="0.015"/>
   <testcase name="email로 User Entity 조회" classname="com.wanted.preonboarding.module.user.repository.UserFindRepositoryImplTest" time="0.01"/>
-  <system-out><![CDATA[2024-05-29T23:43:16.482+09:00  INFO 6868 --- [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.wanted.preonboarding.module.user.repository.UserFindRepositoryImplTest]: UserFindRepositoryImplTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-2024-05-29T23:43:16.491+09:00  INFO 6868 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.wanted.preonboarding.PreonboardingApplication for test class com.wanted.preonboarding.module.user.repository.UserFindRepositoryImplTest
+  <system-out><![CDATA[2024-05-30T09:38:02.849+09:00  INFO 8150 --- [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.wanted.preonboarding.module.user.repository.UserFindRepositoryImplTest]: UserFindRepositoryImplTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2024-05-30T09:38:02.859+09:00  INFO 8150 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.wanted.preonboarding.PreonboardingApplication for test class com.wanted.preonboarding.module.user.repository.UserFindRepositoryImplTest
 Hibernate: insert into users (delete_yn,email,insert_date,insert_operator,membership,password_hash,phone_number,update_date,update_operator,user_id) values (?,?,?,?,?,?,?,?,?,default)
 Hibernate: select u1_0.phone_number,u1_0.email,u1_0.password_hash,u1_0.membership from users u1_0 where u1_0.email=?
 Hibernate: insert into users (delete_yn,email,insert_date,insert_operator,membership,password_hash,phone_number,update_date,update_operator,user_id) values (?,?,?,?,?,?,?,?,?,default)
