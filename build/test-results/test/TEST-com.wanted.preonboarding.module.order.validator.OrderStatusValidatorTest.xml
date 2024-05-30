@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.wanted.preonboarding.module.order.validator.OrderStatusValidatorTest" tests="4" skipped="0" failures="0" errors="0" timestamp="2024-05-30T00:38:01" hostname="lyusang-won-ui-MacBookPro.local" time="0.195">
+<testsuite name="com.wanted.preonboarding.module.order.validator.OrderStatusValidatorTest" tests="4" skipped="0" failures="0" errors="0" timestamp="2024-05-30T00:54:10" hostname="lyusang-won-ui-MacBookPro.local" time="0.202">
   <properties/>
-  <testcase name="유효한 주문 상태 업데이트 - 판매 승인" classname="com.wanted.preonboarding.module.order.validator.OrderStatusValidatorTest" time="0.049"/>
-  <testcase name="유효하지 않은 주문 상태 업데이트 - 상태 전환 불가능" classname="com.wanted.preonboarding.module.order.validator.OrderStatusValidatorTest" time="0.05"/>
-  <testcase name="유효하지 않은 주문 상태 업데이트 - 주문 없음" classname="com.wanted.preonboarding.module.order.validator.OrderStatusValidatorTest" time="0.048"/>
-  <testcase name="유효하지 않은 주문 상태 업데이트 - 프로바이더 없음" classname="com.wanted.preonboarding.module.order.validator.OrderStatusValidatorTest" time="0.048"/>
+  <testcase name="유효한 주문 상태 업데이트 - 판매 승인" classname="com.wanted.preonboarding.module.order.validator.OrderStatusValidatorTest" time="0.05"/>
+  <testcase name="유효하지 않은 주문 상태 업데이트 - 상태 전환 불가능" classname="com.wanted.preonboarding.module.order.validator.OrderStatusValidatorTest" time="0.049"/>
+  <testcase name="유효하지 않은 주문 상태 업데이트 - 주문 없음" classname="com.wanted.preonboarding.module.order.validator.OrderStatusValidatorTest" time="0.051"/>
+  <testcase name="유효하지 않은 주문 상태 업데이트 - 프로바이더 없음" classname="com.wanted.preonboarding.module.order.validator.OrderStatusValidatorTest" time="0.05"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

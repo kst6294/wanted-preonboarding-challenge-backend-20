@@ -38,7 +38,8 @@ include::{snippets}/order/create-order-has-purchase-history/response-fields.adoc
 include::{snippets}/order/create-order-out-of-stock/response-body.adoc[]
 
 == 주문 수정
-
+=== 주문 수정은 COMPLETED -> SETTLEMENT 로만 가능 또한 구매자만 COMPLETED 판매자만 SETTLEMENT로 상태 업데이트 가능
+=== 판매자가 자기 상품을 구매 시 예외 발생
 === 주문 수정 요청 - COMPLETED
 
 include::{snippets}/order/update-order-completed/http-request.adoc[]

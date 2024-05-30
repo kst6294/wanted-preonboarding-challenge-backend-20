@@ -1,14 +1,14 @@
 [source,http,options="nowrap"]
 ----
-PATCH /api/v1/product/2099 HTTP/1.1
+PATCH /api/v1/product/1467 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJyZ05OdUB3YW50ZWQuY29tIiwicm9sZSI6Ik5PUk1BTCIsImlhdCI6MTcxNzAyOTQ4MSwiZXhwIjoxNzE3MDMzMDgxfQ.vRYApNfraGVv2tiTGuGOaQi2R1bsYwyIazny57UsiAU
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJoVnBZUUB3YW50ZWQuY29tIiwicm9sZSI6Ik5PUk1BTCIsImlhdCI6MTcxNzAzMDQ1MCwiZXhwIjoxNzE3MDM0MDUwfQ.H34CeL63dnepWfp0-s1Ubu-2Takopa32tL3MfJexFJY
 Content-Length: 74
 Host: localhost:8080
 
 {
-  "productName" : "adfqijelqe",
-  "price" : 90787741,
-  "quantity" : 2
+  "productName" : "emfzzyggwy",
+  "price" : 70906853,
+  "quantity" : 6
 }
 ----

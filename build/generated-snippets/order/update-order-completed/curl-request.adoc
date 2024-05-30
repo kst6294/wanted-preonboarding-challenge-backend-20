@@ -2,6 +2,6 @@
 ----
 $ curl 'http://localhost:8080/api/v1/order' -i -X PATCH \
     -H 'Content-Type: application/json;charset=UTF-8' \
-    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJscmpFVnR2UXlIUXhAd2FudGVkLmNvbSIsInJvbGUiOiJOT1JNQUwiLCJpYXQiOjE3MTcwMjk0NzgsImV4cCI6MTcxNzAzMzA3OH0.WoVMSET3eGaEW7ti9mTQhibnsy3rRSWMM86buGrG74U' \
-    -d '{"orderId":75022423,"orderStatus":"COMPLETED"}'
+    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBUm1jbnBmUWJwUFFAd2FudGVkLmNvbSIsInJvbGUiOiJOT1JNQUwiLCJpYXQiOjE3MTcwMzA0NDMsImV4cCI6MTcxNzAzNDA0M30.3ketjUVxo679MBx3zAOQjalHsluZoPwkg7VHeo-fv4U' \
+    -d '{"orderId":43421691,"orderStatus":"COMPLETED"}'
 ----

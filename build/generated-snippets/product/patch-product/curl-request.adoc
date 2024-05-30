@@ -1,7 +1,7 @@
 [source,bash]
 ----
-$ curl 'http://localhost:8080/api/v1/product/2099' -i -X PATCH \
+$ curl 'http://localhost:8080/api/v1/product/1467' -i -X PATCH \
     -H 'Content-Type: application/json;charset=UTF-8' \
-    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJyZ05OdUB3YW50ZWQuY29tIiwicm9sZSI6Ik5PUk1BTCIsImlhdCI6MTcxNzAyOTQ4MSwiZXhwIjoxNzE3MDMzMDgxfQ.vRYApNfraGVv2tiTGuGOaQi2R1bsYwyIazny57UsiAU' \
-    -d '{"productName":"adfqijelqe","price":90787741,"quantity":2}'
+    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJoVnBZUUB3YW50ZWQuY29tIiwicm9sZSI6Ik5PUk1BTCIsImlhdCI6MTcxNzAzMDQ1MCwiZXhwIjoxNzE3MDM0MDUwfQ.H34CeL63dnepWfp0-s1Ubu-2Takopa32tL3MfJexFJY' \
+    -d '{"productName":"emfzzyggwy","price":70906853,"quantity":6}'
 ----

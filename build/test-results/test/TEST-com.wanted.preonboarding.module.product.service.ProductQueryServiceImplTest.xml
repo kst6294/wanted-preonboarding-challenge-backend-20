@@ -1,13 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.wanted.preonboarding.module.product.service.ProductQueryServiceImplTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2024-05-30T00:37:52" hostname="lyusang-won-ui-MacBookPro.local" time="0.995">
+<testsuite name="com.wanted.preonboarding.module.product.service.ProductQueryServiceImplTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2024-05-30T00:54:11" hostname="lyusang-won-ui-MacBookPro.local" time="0.17">
   <properties/>
-  <testcase name="Product 품절" classname="com.wanted.preonboarding.module.product.service.ProductQueryServiceImplTest" time="0.909"/>
-  <testcase name="Product 예약" classname="com.wanted.preonboarding.module.product.service.ProductQueryServiceImplTest" time="0.034"/>
-  <testcase name="Product 생성" classname="com.wanted.preonboarding.module.product.service.ProductQueryServiceImplTest" time="0.048"/>
+  <testcase name="Product 품절" classname="com.wanted.preonboarding.module.product.service.ProductQueryServiceImplTest" time="0.112"/>
+  <testcase name="Product 예약" classname="com.wanted.preonboarding.module.product.service.ProductQueryServiceImplTest" time="0.026"/>
+  <testcase name="Product 생성" classname="com.wanted.preonboarding.module.product.service.ProductQueryServiceImplTest" time="0.031"/>
   <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[WARNING: A Java agent has been loaded dynamically (/Users/sangwon-ryu/.gradle/caches/modules-2/files-2.1/net.bytebuddy/byte-buddy-agent/1.14.16/4a451ee6484abac3a498df0f3b33ed00a6fced4d/byte-buddy-agent-1.14.16.jar)
-WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
-WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
-WARNING: Dynamic loading of agents will be disallowed by default in a future release
-]]></system-err>
+  <system-err><![CDATA[]]></system-err>
 </testsuite>

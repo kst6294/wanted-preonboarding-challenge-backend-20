@@ -15,8 +15,8 @@ Content-Length: 204
 
 {
   "status" : 400,
-  "message" : "createOrder 해당 상품을 찾을 수 없습니다. 상품 ID: 73465430 createOrder ",
-  "timestamp" : "2024-05-30 09:37:58",
+  "message" : "createOrder 해당 상품을 찾을 수 없습니다. 상품 ID: 61672383 createOrder ",
+  "timestamp" : "2024-05-30 09:54:04",
   "error" : "BeanPropertyBindingResult"
 }
 ----

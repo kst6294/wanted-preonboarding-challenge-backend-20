@@ -2,6 +2,6 @@
 ----
 $ curl 'http://localhost:8080/api/v1/product' -i -X POST \
     -H 'Content-Type: application/json;charset=UTF-8' \
-    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjVVVaS0B3YW50ZWQuY29tIiwicm9sZSI6Ik5PUk1BTCIsImlhdCI6MTcxNzAyOTQ4MiwiZXhwIjoxNzE3MDMzMDgyfQ.jk1SwJgLX51mkx9PMGMwl2AiAf_ixdp5YgZWq3HUvzA' \
-    -d '{"productName":"qzdkrisegs","price":37676302,"quantity":4}'
+    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0cUB3YW50ZWQuY29tIiwicm9sZSI6Ik5PUk1BTCIsImlhdCI6MTcxNzAzMDQ1MSwiZXhwIjoxNzE3MDM0MDUxfQ.HEtDVDw1IpmaYy7huM7e-XEFpgMOgOL8GYiFOHQxc8c' \
+    -d '{"productName":"aqfqhjnoml","price":97968603,"quantity":2}'
 ----

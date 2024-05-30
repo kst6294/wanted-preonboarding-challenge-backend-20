@@ -1,0 +1,7 @@
+[source,bash]
+----
+$ echo '{
+  "productId" : 1415
+}' | http POST 'http://localhost:8080/api/v1/order' \
+    'Content-Type:application/json;charset=UTF-8'
+----

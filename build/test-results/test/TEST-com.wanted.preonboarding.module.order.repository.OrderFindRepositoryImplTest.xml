@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.wanted.preonboarding.module.order.repository.OrderFindRepositoryImplTest" tests="10" skipped="0" failures="0" errors="0" timestamp="2024-05-30T00:37:59" hostname="lyusang-won-ui-MacBookPro.local" time="0.807">
+<testsuite name="com.wanted.preonboarding.module.order.repository.OrderFindRepositoryImplTest" tests="10" skipped="0" failures="0" errors="0" timestamp="2024-05-30T00:54:08" hostname="lyusang-won-ui-MacBookPro.local" time="0.931">
   <properties/>
-  <testcase name="재고 카운트 및 제품 구매 확정 단계 조회 - 완료 상태" classname="com.wanted.preonboarding.module.order.repository.OrderFindRepositoryImplTest" time="0.464"/>
-  <testcase name="Order Entity 조회" classname="com.wanted.preonboarding.module.order.repository.OrderFindRepositoryImplTest" time="0.05"/>
-  <testcase name="DetailedOrderContext snapshot 조회 - 구매자가 조회" classname="com.wanted.preonboarding.module.order.repository.OrderFindRepositoryImplTest" time="0.047"/>
-  <testcase name="DetailedOrderContext 조회 - 구매자가 조회" classname="com.wanted.preonboarding.module.order.repository.OrderFindRepositoryImplTest" time="0.034"/>
+  <testcase name="재고 카운트 및 제품 구매 확정 단계 조회 - 완료 상태" classname="com.wanted.preonboarding.module.order.repository.OrderFindRepositoryImplTest" time="0.563"/>
+  <testcase name="Order Entity 조회" classname="com.wanted.preonboarding.module.order.repository.OrderFindRepositoryImplTest" time="0.054"/>
+  <testcase name="DetailedOrderContext snapshot 조회 - 구매자가 조회" classname="com.wanted.preonboarding.module.order.repository.OrderFindRepositoryImplTest" time="0.046"/>
+  <testcase name="DetailedOrderContext 조회 - 구매자가 조회" classname="com.wanted.preonboarding.module.order.repository.OrderFindRepositoryImplTest" time="0.039"/>
   <testcase name="DetailedOrderContext 조회 - 판매자가 조회" classname="com.wanted.preonboarding.module.order.repository.OrderFindRepositoryImplTest" time="0.032"/>
-  <testcase name="DetailedOrderContext 조회 - 그냥 조회" classname="com.wanted.preonboarding.module.order.repository.OrderFindRepositoryImplTest" time="0.038"/>
-  <testcase name="재고 카운트 및 제품 구매 확정 단계 조회 - 판매중 상태" classname="com.wanted.preonboarding.module.order.repository.OrderFindRepositoryImplTest" time="0.038"/>
-  <testcase name="재고 카운트 및 제품 구매 확정 단계 조회 - 예약 상태" classname="com.wanted.preonboarding.module.order.repository.OrderFindRepositoryImplTest" time="0.035"/>
-  <testcase name="DetailedOrderContext 조회 snapshot - 판매자가 조회" classname="com.wanted.preonboarding.module.order.repository.OrderFindRepositoryImplTest" time="0.034"/>
-  <testcase name="구매이력 조회" classname="com.wanted.preonboarding.module.order.repository.OrderFindRepositoryImplTest" time="0.032"/>
-  <system-out><![CDATA[2024-05-30T09:37:59.351+09:00  INFO 8150 --- [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.wanted.preonboarding.module.order.repository.OrderFindRepositoryImplTest]: OrderFindRepositoryImplTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-2024-05-30T09:37:59.367+09:00  INFO 8150 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.wanted.preonboarding.PreonboardingApplication for test class com.wanted.preonboarding.module.order.repository.OrderFindRepositoryImplTest
+  <testcase name="DetailedOrderContext 조회 - 그냥 조회" classname="com.wanted.preonboarding.module.order.repository.OrderFindRepositoryImplTest" time="0.042"/>
+  <testcase name="재고 카운트 및 제품 구매 확정 단계 조회 - 판매중 상태" classname="com.wanted.preonboarding.module.order.repository.OrderFindRepositoryImplTest" time="0.04"/>
+  <testcase name="재고 카운트 및 제품 구매 확정 단계 조회 - 예약 상태" classname="com.wanted.preonboarding.module.order.repository.OrderFindRepositoryImplTest" time="0.042"/>
+  <testcase name="DetailedOrderContext 조회 snapshot - 판매자가 조회" classname="com.wanted.preonboarding.module.order.repository.OrderFindRepositoryImplTest" time="0.036"/>
+  <testcase name="구매이력 조회" classname="com.wanted.preonboarding.module.order.repository.OrderFindRepositoryImplTest" time="0.034"/>
+  <system-out><![CDATA[2024-05-30T09:54:08.028+09:00  INFO 9384 --- [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.wanted.preonboarding.module.order.repository.OrderFindRepositoryImplTest]: OrderFindRepositoryImplTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2024-05-30T09:54:08.058+09:00  INFO 9384 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.wanted.preonboarding.PreonboardingApplication for test class com.wanted.preonboarding.module.order.repository.OrderFindRepositoryImplTest
   .   ____          _            __ _ _
  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
 ( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
@@ -22,18 +22,18 @@
 
  :: Spring Boot ::                (v3.3.0)
 
-2024-05-30T09:37:59.378+09:00  INFO 8150 --- [    Test worker] c.w.p.m.o.r.OrderFindRepositoryImplTest  : Starting OrderFindRepositoryImplTest using Java 21.0.3 with PID 8150 (started by sangwon-ryu in /Users/sangwon-ryu/wanted-preonboarding-challenge-backend-20)
-2024-05-30T09:37:59.378+09:00 DEBUG 8150 --- [    Test worker] c.w.p.m.o.r.OrderFindRepositoryImplTest  : Running with Spring Boot v3.3.0, Spring v6.1.8
-2024-05-30T09:37:59.378+09:00  INFO 8150 --- [    Test worker] c.w.p.m.o.r.OrderFindRepositoryImplTest  : No active profile set, falling back to 1 default profile: "default"
-2024-05-30T09:37:59.414+09:00  INFO 8150 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
-2024-05-30T09:37:59.414+09:00  INFO 8150 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2024-05-30T09:37:59.433+09:00  INFO 8150 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 18 ms. Found 3 JPA repository interfaces.
-2024-05-30T09:37:59.438+09:00  INFO 8150 --- [    Test worker] beddedDataSourceBeanFactoryPostProcessor : Replacing 'dataSource' DataSource bean with embedded version
-2024-05-30T09:37:59.447+09:00  INFO 8150 --- [    Test worker] o.s.j.d.e.EmbeddedDatabaseFactory        : Starting embedded database: url='jdbc:h2:mem:533bb930-c8db-41c3-8460-db52fa03be43;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=false', username='sa'
-2024-05-30T09:37:59.458+09:00  INFO 8150 --- [    Test worker] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
-2024-05-30T09:37:59.458+09:00  INFO 8150 --- [    Test worker] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
-2024-05-30T09:37:59.462+09:00  INFO 8150 --- [    Test worker] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
-2024-05-30T09:37:59.514+09:00  INFO 8150 --- [    Test worker] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-05-30T09:54:08.081+09:00  INFO 9384 --- [    Test worker] c.w.p.m.o.r.OrderFindRepositoryImplTest  : Starting OrderFindRepositoryImplTest using Java 21.0.3 with PID 9384 (started by sangwon-ryu in /Users/sangwon-ryu/wanted-preonboarding-challenge-backend-20)
+2024-05-30T09:54:08.081+09:00 DEBUG 9384 --- [    Test worker] c.w.p.m.o.r.OrderFindRepositoryImplTest  : Running with Spring Boot v3.3.0, Spring v6.1.8
+2024-05-30T09:54:08.081+09:00  INFO 9384 --- [    Test worker] c.w.p.m.o.r.OrderFindRepositoryImplTest  : No active profile set, falling back to 1 default profile: "default"
+2024-05-30T09:54:08.178+09:00  INFO 9384 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2024-05-30T09:54:08.178+09:00  INFO 9384 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-05-30T09:54:08.222+09:00  INFO 9384 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 44 ms. Found 3 JPA repository interfaces.
+2024-05-30T09:54:08.231+09:00  INFO 9384 --- [    Test worker] beddedDataSourceBeanFactoryPostProcessor : Replacing 'dataSource' DataSource bean with embedded version
+2024-05-30T09:54:08.243+09:00  INFO 9384 --- [    Test worker] o.s.j.d.e.EmbeddedDatabaseFactory        : Starting embedded database: url='jdbc:h2:mem:d5683674-e05c-4e7b-b5f6-032af27b043b;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=false', username='sa'
+2024-05-30T09:54:08.268+09:00  INFO 9384 --- [    Test worker] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-05-30T09:54:08.269+09:00  INFO 9384 --- [    Test worker] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2024-05-30T09:54:08.273+09:00  INFO 9384 --- [    Test worker] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-05-30T09:54:08.352+09:00  INFO 9384 --- [    Test worker] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
 Hibernate: drop table if exists orders cascade 
 Hibernate: drop table if exists orders_history cascade 
 Hibernate: drop table if exists orders_product_snapshot cascade 
@@ -50,8 +50,8 @@ Hibernate: alter table if exists orders add constraint FKsb9w6305d2be0rwbtifi7wy
 Hibernate: alter table if exists orders_history add constraint FK6j8fy7l6bc3bskbgu028ng191 foreign key (order_id) references orders
 Hibernate: alter table if exists orders_product_snapshot add constraint FKngqo5alcy00ll06engecg1vnj foreign key (product_id) references product
 Hibernate: alter table if exists product add constraint FK47nyv78b35eaufr6aa96vep6n foreign key (user_id) references users
-2024-05-30T09:37:59.522+09:00  INFO 8150 --- [    Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
-2024-05-30T09:37:59.543+09:00  INFO 8150 --- [    Test worker] c.w.p.m.o.r.OrderFindRepositoryImplTest  : Started OrderFindRepositoryImplTest in 0.175 seconds (process running for 7.046)
+2024-05-30T09:54:08.363+09:00  INFO 9384 --- [    Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-05-30T09:54:08.389+09:00  INFO 9384 --- [    Test worker] c.w.p.m.o.r.OrderFindRepositoryImplTest  : Started OrderFindRepositoryImplTest in 0.33 seconds (process running for 7.381)
 Hibernate: insert into users (delete_yn,email,insert_date,insert_operator,membership,password_hash,phone_number,update_date,update_operator,user_id) values (?,?,?,?,?,?,?,?,?,default)
 Hibernate: insert into users (delete_yn,email,insert_date,insert_operator,membership,password_hash,phone_number,update_date,update_operator,user_id) values (?,?,?,?,?,?,?,?,?,default)
 Hibernate: insert into product (delete_yn,insert_date,insert_operator,price,product_name,product_status,quantity,user_id,update_date,update_operator,product_id) values (?,?,?,?,?,?,?,?,?,?,default)

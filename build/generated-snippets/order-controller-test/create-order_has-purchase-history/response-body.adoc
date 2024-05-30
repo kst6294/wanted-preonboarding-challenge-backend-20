@@ -3,7 +3,7 @@
 {
   "status" : 400,
   "message" : "createOrder 구매 이력이 존재합니다. createOrder ",
-  "timestamp" : "2024-05-30 09:37:58",
+  "timestamp" : "2024-05-30 09:54:04",
   "error" : "BeanPropertyBindingResult"
 }
 ----

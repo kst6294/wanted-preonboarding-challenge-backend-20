@@ -2,12 +2,12 @@
 ----
 {
   "data" : {
-    "id" : 9673,
-    "productName" : "qzdkrisegs",
-    "price" : 37676302,
+    "id" : 5637,
+    "productName" : "aqfqhjnoml",
+    "price" : 97968603,
     "productStatus" : "ON_STOCK",
-    "seller" : "vGjAMPrhabww@wanted.com",
-    "quantity" : 8335
+    "seller" : "qyOqBTnHKohya@wanted.com",
+    "quantity" : 1686
   },
   "response" : {
     "status" : 200,

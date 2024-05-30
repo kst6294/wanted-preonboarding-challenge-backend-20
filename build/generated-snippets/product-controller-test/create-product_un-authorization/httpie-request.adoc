@@ -1,9 +1,9 @@
 [source,bash]
 ----
 $ echo '{
-  "productName" : "dhplccinwg",
-  "price" : 27634485,
-  "quantity" : 9
+  "productName" : "zihjcjmlia",
+  "price" : 31776871,
+  "quantity" : 3
 }' | http POST 'http://localhost:8080/api/v1/product' \
     'Content-Type:application/json;charset=UTF-8'
 ----

@@ -4,7 +4,7 @@ HTTP/1.1 200 OK
 Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJpQ0tPbHNwZmtAd2FudGVkLmNvbSIsInJvbGUiOiJOT1JNQUwiLCJpYXQiOjE3MTcwMjk0NzcsImV4cCI6MTcxNzAzMzA3N30.L4UbJtoaD_LdbI7ZZMIdzJj_BB-M_7cl1sF4Gsx-NR4
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwQHdhbnRlZC5jb20iLCJyb2xlIjoiTk9STUFMIiwiaWF0IjoxNzE3MDMwNDQ2LCJleHAiOjE3MTcwMzQwNDZ9.ZyV-jAf9st2JU3aNH4TVO2Pky22jbS-B8w9MllpTCTQ
 Content-Type: application/json;charset=UTF-8
 X-Content-Type-Options: nosniff
 X-XSS-Protection: 0
