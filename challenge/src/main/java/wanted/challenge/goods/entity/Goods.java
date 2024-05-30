@@ -26,7 +26,7 @@ public class Goods {
 
     private int goodsPrice;
 
-    private String reservedStatus;
+    private String reservedStatus = "sale";
 
     private int quantity;
     @Column(nullable = false, updatable = false)
