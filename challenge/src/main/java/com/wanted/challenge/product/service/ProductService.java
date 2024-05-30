@@ -80,8 +80,8 @@ public class ProductService {
         return new ProductDetailResponse(product, purchaseDetails);
     }
 
-    public List<PurchaseProductResponse> purchaseProducts(AccountDetail accountDetail) {
+    public Page<PurchaseProductResponse> purchaseProducts(AccountDetail accountDetail, Pageable pageable) {
         Long buyerId = accountDetail.getAccountId();
-        return productRepository.retrievePurchaseProducts(buyerId);
+        return productRepository.retrievePurchaseProducts(buyerId, pageable);
     }
 }

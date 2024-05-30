@@ -45,8 +45,8 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
         return PageableExecutionUtils.getPage(content, pageable, countQuery::fetchOne);
     }
 
-    public List<PurchaseProductResponse> retrievePurchaseProducts(Long buyerId) {
-        return jpaQueryFactory
+    public Page<PurchaseProductResponse> retrievePurchaseProducts(Long buyerId, Pageable pageable) {
+        List<PurchaseProductResponse> content = jpaQueryFactory
                 .select(new QPurchaseProductResponse(
                         product.id,
                         product.reservation,
@@ -61,7 +61,23 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
 
                 .where(purchase.buyer.id.eq(buyerId))
 
+                .orderBy(purchase.id.desc())
+
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+
                 .fetch();
+
+        JPAQuery<Long> countQuery = jpaQueryFactory
+                .select(product.count())
+                .from(product)
+
+                .innerJoin(purchase)
+                .on(purchase.id.eq(maxPurchaseId()))
+
+                .where(purchase.buyer.id.eq(buyerId));
+
+        return PageableExecutionUtils.getPage(content, pageable, countQuery::fetchOne);
     }
 
     private static JPQLQuery<Long> maxPurchaseId() {

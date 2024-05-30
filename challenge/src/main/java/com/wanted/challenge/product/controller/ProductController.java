@@ -10,7 +10,6 @@ import com.wanted.challenge.product.response.PurchaseProductResponse;
 import com.wanted.challenge.product.service.ProductService;
 import jakarta.validation.Valid;
 import java.net.URI;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -67,10 +66,12 @@ public class ProductController {
     }
 
     @GetMapping("/purchase")
-    public ResponseEntity<List<PurchaseProductResponse>> purchaseProducts(
-            @AuthenticationPrincipal AccountDetail accountDetail) {
+    public ResponseEntity<Page<PurchaseProductResponse>> purchaseProducts(
+            @AuthenticationPrincipal AccountDetail accountDetail,
+            Pageable pageable) {
 
-        List<PurchaseProductResponse> purchaseProductResponses = productService.purchaseProducts(accountDetail);
+        Page<PurchaseProductResponse> purchaseProductResponses =
+                productService.purchaseProducts(accountDetail, pageable);
 
         return ResponseEntity.ok(purchaseProductResponses);
     }
