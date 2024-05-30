@@ -11,7 +11,11 @@ import com.wanted.challenge.product.model.Price;
 import com.wanted.challenge.product.model.PurchaseDetail;
 import com.wanted.challenge.product.repository.ProductRepository;
 import com.wanted.challenge.product.repository.PurchaseRepository;
+import com.wanted.challenge.product.response.ProductDetailResponse;
 import com.wanted.challenge.product.response.ProductPreviewResponse;
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -55,5 +59,23 @@ public class ProductService {
 
     public Page<ProductPreviewResponse> preview(Pageable pageable) {
         return productRepository.retrieveProductsPreview(pageable);
+    }
+
+    public ProductDetailResponse detail(Long productId, AccountDetail accountDetail) {
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new CustomException(ExceptionStatus.NOT_FOUND));
+
+        if (Objects.isNull(accountDetail)) {
+            return new ProductDetailResponse(product, Collections.emptyList());
+        }
+
+        Long buyerId = accountDetail.getAccountId();
+        List<Purchase> purchases = purchaseRepository.findByBuyerId(buyerId);
+
+        List<PurchaseDetail> purchaseDetails = purchases.stream()
+                .map(Purchase::getPurchaseDetail)
+                .toList();
+
+        return new ProductDetailResponse(product, purchaseDetails);
     }
 }
