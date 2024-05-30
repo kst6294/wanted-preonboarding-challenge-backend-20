@@ -30,7 +30,7 @@ public class ProductController {
 
     private final ProductService productService;
 
-    @PostMapping("/register")
+    @PostMapping
     public ResponseEntity<Void> register(@RequestBody @Valid RegisterRequest registerRequest,
                                          @AuthenticationPrincipal AccountDetail accountDetail) {
 
