@@ -8,7 +8,7 @@ import lombok.RequiredArgsConstructor;
 public enum ProductSellingStatus {
     SELLING("판매 중"),
     RESERVATION("예약 중"),
-    STOP("판매 중지");
+    COMPLETE("완료");
 
     private final String text;
 }

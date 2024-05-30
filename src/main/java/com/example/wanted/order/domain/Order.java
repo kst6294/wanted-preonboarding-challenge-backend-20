@@ -2,8 +2,6 @@ package com.example.wanted.order.domain;
 
 import com.example.wanted.product.domain.Product;
 import com.example.wanted.user.domain.User;
-import com.example.wanted.user.infrastucture.UserEntity;
-import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 

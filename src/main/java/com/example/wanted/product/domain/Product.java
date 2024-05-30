@@ -40,4 +40,13 @@ public class Product {
                 .sellingStatus(ProductSellingStatus.SELLING)
                 .build();
     }
+
+    public void deductQuantity() {
+        if(this.quantity == 1) {
+            sellingStatus = ProductSellingStatus.STOP;
+        } else if (this.quantity < 1) {
+            throw new IllegalArgumentException("차감할 재고 수량이 없습니다.");
+        }
+        this.quantity -=1;
+    }
 }
