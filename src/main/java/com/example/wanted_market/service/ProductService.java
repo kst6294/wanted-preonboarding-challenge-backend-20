@@ -55,7 +55,7 @@ public class ProductService {
     // 제품 목록 조회
     @Transactional(readOnly = true)
     public List<ProductResponseDto> getList() {
-        List<ProductResponseDto> productList = productRepository.findAllProductDetails().stream()
+        List<ProductResponseDto> productList = productRepository.findAllProducts().stream()
                 .map(p -> new ProductResponseDto(
                         p.getId(),
                         p.getName(),

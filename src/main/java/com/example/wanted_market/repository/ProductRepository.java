@@ -9,8 +9,8 @@ import java.util.Optional;
 
 public interface ProductRepository extends JpaRepository<Product, Long> {
 
-    @Query("SELECT p FROM Product p")
-    List<Product> findAllProductDetails();
+    @Query("SELECT p FROM Product p ORDER BY p.createDate DESC")
+    List<Product> findAllProducts();
 
     Optional<Product> findProductById(Long productId);
 }
