@@ -92,6 +92,21 @@ class ProductAcceptanceTest {
     }
 
     @Test
+    void 존재하지_않는_제품을_조회할_경우_제품조회에_실패한다() throws JsonProcessingException {
+        ExtractableResponse<Response> response =
+                given()
+                        .log().all()
+                        .basePath("/api/v1/products/" + 100)
+                .when()
+                        .get()
+                .then()
+                        .log().all()
+                        .extract();
+
+        assertThat(response.statusCode()).isEqualTo(HttpStatus.NOT_FOUND.value());
+    }
+
+    @Test
     void 제품_목록을_조회한다() throws JsonProcessingException {
         ProductRequest productRequest1 = new ProductRequest("스위치", 300000);
         ProductRequest productRequest2 = new ProductRequest("당근", 1000);

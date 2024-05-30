@@ -5,6 +5,8 @@ import com.sunyesle.wanted_market.dto.ProductRequest;
 import com.sunyesle.wanted_market.dto.ProductResponse;
 import com.sunyesle.wanted_market.entity.Product;
 import com.sunyesle.wanted_market.enums.ProductStatus;
+import com.sunyesle.wanted_market.exception.ErrorCodeException;
+import com.sunyesle.wanted_market.exception.ProductErrorCode;
 import com.sunyesle.wanted_market.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -27,7 +29,7 @@ public class ProductService {
     }
 
     public ProductDetailResponse getProduct(Long id) {
-        Product product = productRepository.findById(id).orElseThrow(RuntimeException::new);
+        Product product = productRepository.findById(id).orElseThrow(() -> new ErrorCodeException(ProductErrorCode.PRODUCT_NOT_FOUND));
         return ProductDetailResponse.of(product);
     }
 
