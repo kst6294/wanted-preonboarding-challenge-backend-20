@@ -12,11 +12,12 @@ import com.wanted.challenge.product.entity.Product;
 import com.wanted.challenge.product.entity.Purchase;
 import com.wanted.challenge.product.model.Price;
 import com.wanted.challenge.product.response.PurchaseProductResponse;
-import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 
 class ProductRepositoryTest extends IntegrationTestSupport {
 
@@ -47,12 +48,12 @@ class ProductRepositoryTest extends IntegrationTestSupport {
         purchaseRepository.save(new Purchase(buyer, product2, DELIVERY));
 
         // when
-        List<PurchaseProductResponse> purchaseProductResponses =
-                productRepository.retrievePurchaseProducts(buyer.getId());
+        Page<PurchaseProductResponse> purchaseProductResponses =
+                productRepository.retrievePurchaseProducts(buyer.getId(), PageRequest.of(0, 10));
 
         // then
         Assertions.assertThat(purchaseProductResponses)
                 .extracting(PurchaseProductResponse::name, PurchaseProductResponse::purchaseDetail)
-                .containsExactlyInAnyOrder(tuple("product1", ARRIVAL), tuple("product2", DELIVERY));
+                .containsExactly(tuple("product2", DELIVERY), tuple("product1", ARRIVAL));
     }
 }
