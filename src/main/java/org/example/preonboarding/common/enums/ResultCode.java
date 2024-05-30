@@ -13,6 +13,11 @@ public enum ResultCode implements ResultCodeAware {
     REFRESH_SUCCESS(3, "refresh token success"),
     WITHDRAW_SUCCESS(4, "withdraw success"),
     WITHDRAW_FAIL(5, "withdraw fail"),
+
+    /* product */
+    PRODUCT_DELETE_FAIL(6, "product delete fail"),
+    PRODUCT_CREATE_FAIL(7, "product create fail"),
+
     FAIL(99, "99 fail"),
     ;
     public final int code;

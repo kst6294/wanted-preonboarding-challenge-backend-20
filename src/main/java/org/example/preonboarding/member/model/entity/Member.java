@@ -4,10 +4,12 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.example.preonboarding.common.entity.BaseEntity;
 import org.example.preonboarding.member.model.enums.Role;
+import org.example.preonboarding.product.model.entity.Product;
 import org.hibernate.annotations.Comment;
 import org.hibernate.annotations.DynamicUpdate;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Getter
@@ -41,5 +43,8 @@ public class Member extends BaseEntity {
     @Column
     @Comment("탈퇴일시")
     private LocalDateTime deletedAt;
+
+    @OneToMany(mappedBy = "seller", cascade = CascadeType.ALL)
+    private List<Product> products;
 
 }

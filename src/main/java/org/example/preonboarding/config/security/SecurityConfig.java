@@ -8,6 +8,7 @@ import org.example.preonboarding.config.filter.CustomUsernamePasswordAuthenticat
 import org.example.preonboarding.member.service.MemberService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -39,7 +40,6 @@ public class SecurityConfig {
 
     // api white list
     private static final String[] API_WHITE_LIST = {
-            "/api/**",
             "/auth/**"
     };
 
@@ -58,6 +58,8 @@ public class SecurityConfig {
                                 .requestMatchers(RESOURCE_LIST).permitAll()
                                 .requestMatchers(PERMITTED_LIST).permitAll()
                                 .requestMatchers(API_WHITE_LIST).permitAll()
+                                .requestMatchers(HttpMethod.GET, "/api/**").permitAll()
+                                .requestMatchers("/api/**").authenticated()
                                 .anyRequest().authenticated()
 //                                .anyRequest().permitAll() // 로그인 하지 않고 모두 권한을 가짐
                         ;
