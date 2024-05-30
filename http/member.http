@@ -5,12 +5,11 @@ Content-Type: application/json
 {
   "userId": "aaa",
   "name":"testName",
-  "password":"bbb",
-  "regNo":"111111-222222"
+  "password":"bbb"
 }
 
 ### login
-POST {{host}}/api/login
+POST {{host}}/login
 Content-Type: application/json
 
 {
