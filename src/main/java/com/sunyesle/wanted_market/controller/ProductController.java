@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/v1/products")
 @RequiredArgsConstructor
@@ -25,6 +27,12 @@ public class ProductController {
     @GetMapping("/{id}")
     public ResponseEntity<ProductDetailResponse> getProduct(@PathVariable Long id){
         ProductDetailResponse response = productService.getProduct(id);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<ProductDetailResponse>> getProducts(){
+        List<ProductDetailResponse> response = productService.getProducts();
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 }

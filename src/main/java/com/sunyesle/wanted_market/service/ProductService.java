@@ -9,6 +9,8 @@ import com.sunyesle.wanted_market.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class ProductService {
@@ -27,5 +29,10 @@ public class ProductService {
     public ProductDetailResponse getProduct(Long id) {
         Product product = productRepository.findById(id).orElseThrow(RuntimeException::new);
         return ProductDetailResponse.of(product);
+    }
+
+    public List<ProductDetailResponse> getProducts() {
+        List<Product> products = productRepository.findAll();
+        return products.stream().map(ProductDetailResponse::of).toList();
     }
 }
