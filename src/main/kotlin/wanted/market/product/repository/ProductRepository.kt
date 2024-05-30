@@ -9,5 +9,5 @@ import java.util.*
 @Repository
 interface ProductRepository : JpaRepository<Product, Long>{
 
-    fun findByIdAndProductStatus(id: Long, productStatus: ProductStatus): Optional<Product>
+    fun findBySellerIdAndProductStatus(sellerId: Long, productStatus: ProductStatus): List<Product>
 }

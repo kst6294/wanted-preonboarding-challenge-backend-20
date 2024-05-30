@@ -4,6 +4,7 @@ import jakarta.persistence.*
 import wanted.market.common.BaseEntity
 import wanted.market.member.entity.Member
 import wanted.market.product.entity.Product
+import java.time.LocalDateTime
 
 @Entity
 @Table(name = "orders")
@@ -23,4 +24,6 @@ class Order (
 ) : BaseEntity() {
     @Enumerated(EnumType.STRING)
     var orderStatus: OrderStatus? = OrderStatus.PENDING
+
+    val completeDate : LocalDateTime? = null
 }

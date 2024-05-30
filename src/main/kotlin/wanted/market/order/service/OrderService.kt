@@ -18,8 +18,11 @@ class OrderService(@Autowired private val memberService: MemberService,
                    @Autowired private val orderRepository: OrderRepository) {
     @Transactional
     fun order(memberId: Long, productId: Long) {
+        //TODO : Order 완료 시점 저장
+
         val buyer = memberService.findMember(memberId)
         val product = productService.findProductOnSale(productId)
+        product.productStatus = ProductStatus.RESERVED
         orderRepository.save(Order(buyer, product))
     }
 
@@ -35,8 +38,7 @@ class OrderService(@Autowired private val memberService: MemberService,
         order.product.productStatus = ProductStatus.SOLD
     }
 
-    //예약
     @Transactional
-    fun reserve(memberId: Long, productId: Long) {
+    fun findOrder(memberId: Long, productId: Long) {
     }
 }

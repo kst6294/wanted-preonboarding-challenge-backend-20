@@ -3,6 +3,7 @@ package wanted.market.product.entity
 import jakarta.persistence.*
 import wanted.market.common.BaseEntity
 import wanted.market.member.entity.Member
+import java.util.Objects
 
 
 @Entity
@@ -24,4 +25,9 @@ class Product(
 ) : BaseEntity() {
     @Enumerated(EnumType.STRING)
     var productStatus: ProductStatus = ProductStatus.SALE
+
+    fun isSaleProduct(): Boolean {
+        return Objects.equals(productStatus, ProductStatus.SALE)
+    }
+
 }

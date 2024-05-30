@@ -19,7 +19,7 @@ class Initializer(@Autowired private val productRepository: ProductRepository,
     fun saveProduct() {
 
         val member = Member("노을", "hello@gmail.com")
-        entityManager.persist(member)
+//        entityManager.persist(member)
 //        memberRepository.save(member)
 //
 //        productRepository.save(Product("상품1", 100, member))
