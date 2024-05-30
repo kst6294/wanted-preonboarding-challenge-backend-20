@@ -1,0 +1,13 @@
+package wanted.pre.onboading;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+
+@SpringBootTest
+class OnboadingApplicationTests {
+
+	@Test
+	void contextLoads() {
+	}
+
+}
