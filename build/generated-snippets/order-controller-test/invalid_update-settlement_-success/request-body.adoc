@@ -1,7 +1,0 @@
-[source,json,options="nowrap"]
-----
-{
-  "orderId" : 42706985,
-  "orderStatus" : "COMPLETED"
-}
-----

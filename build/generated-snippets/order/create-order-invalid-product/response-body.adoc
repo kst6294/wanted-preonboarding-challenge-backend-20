@@ -1,9 +1,0 @@
-[source,json,options="nowrap"]
-----
-{
-  "status" : 400,
-  "message" : "createOrder 해당 상품을 찾을 수 없습니다. 상품 ID: 22966265 createOrder ",
-  "timestamp" : "2024-05-30 18:18:02",
-  "error" : "BeanPropertyBindingResult"
-}
-----

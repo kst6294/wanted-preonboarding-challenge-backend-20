@@ -1,8 +1,0 @@
-.+/api/v1/order/{orderId}+
-|===
-|Parameter|Description
-
-|`+orderId+`
-|주문 ID
-
-|===

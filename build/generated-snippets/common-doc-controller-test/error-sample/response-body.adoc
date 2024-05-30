@@ -1,9 +1,0 @@
-[source,json,options="nowrap"]
-----
-{
-  "status" : 400,
-  "message" : "email must be a well-formed email address",
-  "timestamp" : "2024-05-30 18:18:01",
-  "error" : "BeanPropertyBindingResult"
-}
-----

@@ -1,8 +1,0 @@
-memberShip
-|===
-|코드|코드명
-|`+GUEST+`
-|USER MEMBERSHIP
-|`+NORMAL+`
-|USER MEMBERSHIP
-|===

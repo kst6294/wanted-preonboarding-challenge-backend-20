@@ -1,8 +1,0 @@
-[source,json,options="nowrap"]
-----
-{
-  "productName" : "cvmmfnrczx",
-  "price" : 7537298,
-  "quantity" : 9
-}
-----

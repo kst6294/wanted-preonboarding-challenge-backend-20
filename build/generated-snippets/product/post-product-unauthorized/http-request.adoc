@@ -1,9 +1,0 @@
-[source,http,options="nowrap"]
-----
-POST /api/v1/product HTTP/1.1
-Content-Type: application/json;charset=UTF-8
-Content-Length: 57
-Host: localhost:8080
-
-{"productName":"cvmmfnrczx","price":7537298,"quantity":9}
-----

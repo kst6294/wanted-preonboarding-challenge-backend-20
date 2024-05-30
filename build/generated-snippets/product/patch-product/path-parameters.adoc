@@ -1,8 +1,0 @@
-.+/api/v1/product/{productId}+
-|===
-|Parameter|Description
-
-|`+productId+`
-|상품 ID
-
-|===

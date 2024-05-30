@@ -1,8 +1,0 @@
-orderType
-|===
-|코드|코드명
-|`+PAST+`
-|id ASC
-|`+LATEST+`
-|id DESC
-|===
