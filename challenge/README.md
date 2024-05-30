@@ -65,3 +65,11 @@
 > page: 페이지 번호, optional
 >
 > size: 한 페이지의 데이터 개수, optional
+
+### 판매자 예약 제품 조회
+
+#### GET /products/reserve?page={page}&size={size}
+
+> page: 페이지 번호, optional
+>
+> size: 한 페이지의 데이터 개수, optional
