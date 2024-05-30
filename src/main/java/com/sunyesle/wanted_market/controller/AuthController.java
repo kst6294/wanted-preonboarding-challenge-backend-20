@@ -1,5 +1,7 @@
 package com.sunyesle.wanted_market.controller;
 
+import com.sunyesle.wanted_market.dto.SigninRequest;
+import com.sunyesle.wanted_market.dto.SigninResponse;
 import com.sunyesle.wanted_market.dto.SignupRequest;
 import com.sunyesle.wanted_market.dto.SignupResponse;
 import com.sunyesle.wanted_market.service.AuthService;
@@ -21,5 +23,11 @@ public class AuthController {
     public ResponseEntity<SignupResponse> signup(@RequestBody SignupRequest request) {
         SignupResponse response = authService.signup(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    }
+
+    @PostMapping("/signin")
+    public ResponseEntity<SigninResponse> signin(@RequestBody SigninRequest request) {
+        SigninResponse response = authService.signin(request);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 }

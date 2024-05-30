@@ -18,3 +18,6 @@ spring:
         show_sql: true
         format_sql: true
     open-in-view: false
+jwt:
+  expiration-time: 3600000 # 1 hour
+  secret: dwFLZLb2JrcNMwAzEtrFXYjAX+LYJ70UlX/tSL8Is7Q=
