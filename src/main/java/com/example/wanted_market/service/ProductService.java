@@ -4,10 +4,14 @@ import com.example.wanted_market.domain.Product;
 import com.example.wanted_market.domain.User;
 import com.example.wanted_market.dto.request.ProductRegesterRequestDto;
 import com.example.wanted_market.dto.response.ProductDetailResponseDto;
+import com.example.wanted_market.dto.response.ProductDetailResponseDto.ProductDetailDto;
+import com.example.wanted_market.dto.response.ProductDetailResponseDto.TransactionDto;
 import com.example.wanted_market.dto.response.ProductResponseDto;
+import com.example.wanted_market.repository.OrderRepository;
 import com.example.wanted_market.repository.ProductRepository;
 import com.example.wanted_market.repository.UserRepository;
 import com.example.wanted_market.type.EProductStatus;
+import com.example.wanted_market.util.DateUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,6 +25,7 @@ public class ProductService {
 
     private final ProductRepository productRepository;
     private final UserRepository userRepository;
+    private final OrderRepository orderRepository;
 
     @Transactional(readOnly = true)
     public User getUserById(Long userId) {
@@ -66,14 +71,28 @@ public class ProductService {
     public ProductDetailResponseDto getDetail(Long productId) {
         Product product = getProductById(productId);
 
-        ProductDetailResponseDto productDetail = 
-                ProductDetailResponseDto.builder()
+        ProductDetailDto productDetail =
+                ProductDetailDto.builder()
                         .name(product.getName())
                         .price(product.getPrice())
                         .status(product.getStatus())
                         .sellerNickname(product.getSeller().getNickname())
-                .build();
+                        .build();
+
+        List<TransactionDto> transaction = orderRepository.findByProductId(productId).stream()
+                .map(order -> TransactionDto.builder()
+                        .buyerNickname(order.getBuyer().getNickname())
+                        .orderStatus(order.getStatus())
+                        .orderTime(DateUtil.formatDateTime(order.getCreateDate()))
+                        .build()
+                ).collect(Collectors.toList());
+
+        ProductDetailResponseDto productDetailResponse =
+                ProductDetailResponseDto.builder()
+                        .productDetail(productDetail)
+                        .transactions(transaction)
+                        .build();
         
-        return productDetail;
+        return productDetailResponse;
     }
 }

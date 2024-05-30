@@ -9,6 +9,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicUpdate;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -34,12 +36,16 @@ public class Product {
     @Enumerated(EnumType.STRING)
     private EProductStatus status;
 
+    @Column(name = "create_date", nullable = false)
+    private LocalDateTime createDate;
+
     @Builder
     public Product(User seller, String name, int price, EProductStatus status){
         this.seller = seller;
         this.name = name;
         this.price = price;
         this.status = status;
+        this.createDate = LocalDateTime.now();
     }
 
     public void setStatus(EProductStatus status) {
