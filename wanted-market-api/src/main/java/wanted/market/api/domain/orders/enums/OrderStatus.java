@@ -1,5 +1,7 @@
 package wanted.market.api.domain.orders.enums;
 
+import wanted.market.api.domain.product.enums.ProductStatus;
+
 public enum OrderStatus {
 
     RESERVED("승인대기"),
@@ -15,5 +17,13 @@ public enum OrderStatus {
 
     public String getStatus(){
         return this.status;
+    }
+
+    public static OrderStatus addDefaultValueOf(String name){
+        try{
+            return OrderStatus.valueOf(name);
+        } catch(IllegalArgumentException e){
+            return RESERVED;
+        }
     }
 }

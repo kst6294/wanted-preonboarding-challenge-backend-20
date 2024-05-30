@@ -54,11 +54,12 @@ public class OrderService {
                 .build();
     }
 
-    public OrderListResponseDto searchBuyOrderList(HttpServletRequest request, Long targetUserId) {
+    public OrderListResponseDto searchBuyOrderList(HttpServletRequest request, Long targetUserId, String status) {
         User user = userService.getUser(request);
+        OrderStatus orderStatus = OrderStatus.addDefaultValueOf(status.toUpperCase());
         List<Order> orders;
         if(targetUserId==null) orders = orderRepository.findAllByUserId(user.getId());
-        else orders = orderRepository.findAllByUserIdAndProductUserId(user.getId(), targetUserId);
+        else orders = orderRepository.findAllByUserIdAndProductUserIdAndStatus(user.getId(), targetUserId, orderStatus);
 
         List<OrderInfoDto> orderInfoDtos = orders.stream()
                 .map(order ->
@@ -68,11 +69,12 @@ public class OrderService {
         return OrderListResponseDto.builder().orderInfo(orderInfoDtos).build();
     }
 
-    public OrderListResponseDto searchSellOrderList(HttpServletRequest request, Long targetUserId) {
+    public OrderListResponseDto searchSellOrderList(HttpServletRequest request, Long targetUserId, String status) {
         User user = userService.getUser(request);
+        OrderStatus orderStatus = OrderStatus.addDefaultValueOf(status.toUpperCase());
         List<Order> orders;
         if(targetUserId==null) orders = orderRepository.findAllByProductUserId(user.getId());
-        else orders = orderRepository.findAllByUserIdAndProductUserId(targetUserId, user.getId());
+        else orders = orderRepository.findAllByUserIdAndProductUserIdAndStatus(targetUserId, user.getId(), orderStatus);
         List<OrderInfoDto> orderInfoDtos = orders.stream()
                 .map(order ->
                         OrderInfoDto.fromOrderAndDtos(order,ProductInfoDto.fromProductAndUser(order.getProduct(),  UserInfoDto.fromProduct(order.getProduct())))

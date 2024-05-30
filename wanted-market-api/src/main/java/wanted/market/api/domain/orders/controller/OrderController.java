@@ -24,14 +24,18 @@ public class OrderController {
     }
 
     @GetMapping("/selling")
-    public ResponseEntity<OrderListResponseDto> searchSellOrderList(HttpServletRequest request, @RequestParam(required = false, value = "target") Long targetUser){
+    public ResponseEntity<OrderListResponseDto> searchSellOrderList(HttpServletRequest request,
+                                                                    @RequestParam(required = false, value = "target") Long targetUser,
+                                                                    @RequestParam(required = false, defaultValue = "RESERVED", value = "status") String status){
 
-        return ResponseEntity.ok().body(orderService.searchSellOrderList(request, targetUser));
+        return ResponseEntity.ok().body(orderService.searchSellOrderList(request, targetUser, status));
     }
     @GetMapping("/buying")
-    public ResponseEntity<OrderListResponseDto> searchBuyOrderList(HttpServletRequest request, @RequestParam(required = false, value = "target") Long targetUser){
+    public ResponseEntity<OrderListResponseDto> searchBuyOrderList(HttpServletRequest request,
+                                                                   @RequestParam(required = false, value = "target") Long targetUser,
+                                                                   @RequestParam(required = false, defaultValue = "RESERVED", value = "status") String status) {
 
-        return ResponseEntity.ok().body(orderService.searchBuyOrderList(request, targetUser));
+        return ResponseEntity.ok().body(orderService.searchBuyOrderList(request, targetUser, status));
     }
     @PutMapping("/approving")
     public ResponseEntity<ApproveOrderResponseDto> approveOrder(HttpServletRequest request, @RequestBody ApproveOrderRequestDto requestDto){
