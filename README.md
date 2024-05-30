@@ -9,5 +9,8 @@
 | 제품 목록 조회  | GET         | /product/list         | PRODUCT|
 | 제품 상세 조회  | GET         | /product/{productId}  | PRODUCT|
 | 구매            | POST        | /order/purchase/{productId} | ORDER |
-| 판매 승인       | PATCH       | /order/approval/{productId}/{orderId} | ORDER |
-| 사용자 거래 목록 조회 | GET   | /order/my-transactions | ORDER |
+| 판매 승인       | PATCH       | /order/approval/{orderId} | ORDER |
+| 사용자 거래 목록 조회 | GET   | /order/my-transactions | ORDER |  
+
+
+요구사항 1단계까지 완료했습니다.
