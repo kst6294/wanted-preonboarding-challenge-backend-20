@@ -32,7 +32,7 @@
 
 ### 제품 등록
 
-#### /products/register
+#### /products
 
 > **POST**
 >
