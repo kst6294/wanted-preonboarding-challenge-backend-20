@@ -73,4 +73,14 @@ public class ProductService {
 
         productRepository.save(product);
     }
+
+    // 판매목록 조회
+    @Transactional(readOnly = true)
+    public List<Product> getMyProducts() throws Exception {
+        User user = currentUser.getUser();
+        if (user == null) {
+            throw new Exception("사용자 인증이 필요합니다.");
+        }
+        return productRepository.findBySeller(user);
+    }
 }

@@ -11,6 +11,8 @@ import wanted.market.repository.OrderRepository;
 import wanted.market.repository.ProductRepository;
 import wanted.market.util.CurrentUser;
 
+import java.util.List;
+
 @Service
 public class OrderService {
 
@@ -77,5 +79,14 @@ public class OrderService {
         product.sell();
 
         return orderRepository.save(order);
+    }
+
+    // 구매목록 조회
+    public List<Order> getMyOrders() throws Exception {
+        User user = currentUser.getUser();
+        if (user == null) {
+            throw new Exception("사용자 인증이 필요합니다.");
+        }
+        return orderRepository.findByBuyer(user);
     }
 }

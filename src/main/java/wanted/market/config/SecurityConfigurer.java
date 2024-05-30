@@ -48,6 +48,7 @@ public class SecurityConfigurer {
                         .requestMatchers("/h2-console/**").permitAll() // H2 콘솔 접근 허용
                         .requestMatchers("/products/**").permitAll()
                         .requestMatchers("/products/register").authenticated()
+                        .requestMatchers("/products/my").authenticated()
                         .requestMatchers("/orders/**").authenticated()
                         .anyRequest().authenticated()
                 )

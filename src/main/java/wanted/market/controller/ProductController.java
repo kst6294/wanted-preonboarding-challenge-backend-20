@@ -53,4 +53,16 @@ public class ProductController {
             return ResponseEntity.badRequest().body(errorResponse);
         }
     }
+
+    @GetMapping("/my")
+    public ResponseEntity getMyProducts() {
+        try {
+            List<Product> products = productService.getMyProducts();
+            return ResponseEntity.ok(products);
+        } catch (Exception e) {
+            Map<String, String> errors = new HashMap<>();
+            errors.put("error", e.getMessage());
+            return ResponseEntity.badRequest().body(errors);
+        }
+    }
 }

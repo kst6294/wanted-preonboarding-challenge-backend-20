@@ -3,9 +3,11 @@ package wanted.market.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import wanted.market.entity.Order;
 import wanted.market.service.OrderService;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -22,11 +24,23 @@ public class OrderController {
             Long productId = Long.parseLong(request.get("productId").toString());
 
             orderService.registerOrder(productId);
-            return ResponseEntity.ok("주문 예약을 완료하였습니다.");
+            return ResponseEntity.ok("주문예약을 완료하였습니다.");
         } catch (Exception e) {
             Map<String, String> errorResponse = new HashMap<>();
             errorResponse.put("error", e.getMessage());
             return ResponseEntity.badRequest().body(errorResponse);
+        }
+    }
+
+    @GetMapping("/my")
+    public ResponseEntity getMyOrders() {
+        try {
+            List<Order> orders = orderService.getMyOrders();
+            return ResponseEntity.ok(orders);
+        } catch (Exception e) {
+            Map<String, String> errors = new HashMap<>();
+            errors.put("error", e.getMessage());
+            return ResponseEntity.badRequest().body(errors);
         }
     }
 
@@ -37,7 +51,7 @@ public class OrderController {
             Long orderId = Long.parseLong(request.get("orderId").toString());
 
             orderService.confirmOrder(orderId);
-            return ResponseEntity.ok("주문을 판매 완료하였습니다.");
+            return ResponseEntity.ok("판매승인을 완료하였습니다.");
         } catch (Exception e) {
             Map<String, String> errorResponse = new HashMap<>();
             errorResponse.put("error", e.getMessage());
