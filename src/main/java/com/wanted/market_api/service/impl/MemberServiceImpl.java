@@ -60,4 +60,9 @@ public class MemberServiceImpl implements MemberService {
 
         return new MemberLoginResponseDto(jwtProvider.generateToken(new CustomMemberDetails(member)));
     }
+
+    @Override
+    public Member findById(long memberId) {
+        return memberRepository.findById(memberId).orElseThrow(() -> new BaseException(ErrorCode.USER_NOT_FOUND));
+    }
 }

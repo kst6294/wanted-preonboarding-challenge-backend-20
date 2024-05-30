@@ -41,7 +41,8 @@ public class JwtProvider {
     public boolean validateToken(String token) {
         try {
             Jws<Claims> claimsJws = Jwts.parserBuilder().setSigningKey(getKey()).build().parseClaimsJws(token);
-            if (claimsJws.getBody().getExpiration().before(new Date())) {
+            System.out.println("CURRENT TIME: " + new Date());
+            if (claimsJws.getBody().getExpiration().after(new Date())) {
                 return true;
             }
         } catch (io.jsonwebtoken.security.SecurityException | MalformedJwtException e) {

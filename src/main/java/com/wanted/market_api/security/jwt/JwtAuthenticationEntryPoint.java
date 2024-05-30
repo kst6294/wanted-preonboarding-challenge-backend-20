@@ -21,9 +21,9 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
                          AuthenticationException authException) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
         ErrorResponse errorResponse = ErrorResponse.builder()
-                .statusCode(ErrorCode.EXPIRED_JWT.getHttpStatus().value())
-                .serverCode(ErrorCode.EXPIRED_JWT.getCode())
-                .message(ErrorCode.EXPIRED_JWT.getMessage())
+                .statusCode(ErrorCode.UNAUTHORIZED_JWT.getHttpStatus().value())
+                .serverCode(ErrorCode.UNAUTHORIZED_JWT.getCode())
+                .message(ErrorCode.UNAUTHORIZED_JWT.getMessage())
                 .build();
         String json = objectMapper.writeValueAsString(errorResponse);
 
