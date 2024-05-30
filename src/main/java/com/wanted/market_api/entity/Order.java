@@ -29,7 +29,19 @@ public class Order {
     @Column(name = "order_status", nullable = false)
     private OrderStatus orderStatus;
 
-    public void confirm() {
+    public void confirmOrder() {
         this.orderStatus = OrderStatus.SELLING_CONFIRMED;
+    }
+
+    public void declineOrder() {
+        this.orderStatus = OrderStatus.SELL_DECLINED;
+    }
+
+    public void confirmPurchase() {
+        this.orderStatus = OrderStatus.PURCHASE_CONFIRMED;
+    }
+
+    public void declinePurchase() {
+        this.orderStatus = OrderStatus.PURCHASE_DECLINED;
     }
 }

@@ -78,6 +78,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product findWithMemberById(long productId) {
-        return productRepository.findWithMemberById(productId).orElseThrow(() -> new BaseException(ErrorCode.PRODUCT_NOT_FOUND));
+        return productRepository.findWithMemberById(productId)
+                .orElseThrow(() -> new BaseException(ErrorCode.PRODUCT_NOT_FOUND));
     }
 }

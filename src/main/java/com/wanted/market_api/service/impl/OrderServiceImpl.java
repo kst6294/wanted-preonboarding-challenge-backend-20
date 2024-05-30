@@ -1,8 +1,6 @@
 package com.wanted.market_api.service.impl;
 
-import com.wanted.market_api.constant.CustomerIdentity;
-import com.wanted.market_api.constant.ErrorCode;
-import com.wanted.market_api.constant.OrderStatus;
+import com.wanted.market_api.constant.*;
 import com.wanted.market_api.dto.ApiResponse;
 import com.wanted.market_api.dto.response.order.OrderResponseDto;
 import com.wanted.market_api.dto.response.order.PagingOrderResponseDto;
@@ -21,6 +19,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
@@ -32,9 +31,18 @@ public class OrderServiceImpl implements OrderService {
 
     private final ProductService productService;
 
+    private final List<OrderStatus> ONGOING_ORDER_STATUS = List.of(
+            OrderStatus.AWAITING_CONFIRMATION,
+            OrderStatus.SELLING_CONFIRMED
+    );
+
+    @Transactional
     @Override
     public ApiResponse purchase(Long productId, Long buyerId) {
         Product product = productService.findWithMemberById(productId);
+        if (product.getCount() == 0) {
+            throw new BaseException(ErrorCode.PRODUCT_OUT_OF_INVENTORY);
+        }
         long sellerId = product.getMember().getId();
         orderRepository.save(
                 Order.builder()
@@ -45,6 +53,7 @@ public class OrderServiceImpl implements OrderService {
                         .orderStatus(OrderStatus.AWAITING_CONFIRMATION)
                         .build()
         );
+        product.decrementCount();
         return new ApiResponse();
     }
 
@@ -74,10 +83,53 @@ public class OrderServiceImpl implements OrderService {
 
     @Transactional
     @Override
-    public ApiResponse confirmOrder(Long orderId, Long memberId) {
-        Order order = orderRepository.findByIdAndSellerId(orderId, memberId)
+    public ApiResponse confirmOrder(Long orderId, Long memberId, UserAction userAction) {
+        Order order = orderRepository.findOrderAndProductByIdAndSellerId(orderId, memberId)
                 .orElseThrow(() -> new BaseException(ErrorCode.ORDER_NOT_FOUND));
-        order.confirm();
+        if (userAction.equals(UserAction.CONFIRM)) {
+            confirmOrder(order);
+        } else {
+            declineOrder(order);
+        }
         return new ApiResponse();
+    }
+
+    @Transactional
+    private void confirmOrder(Order order) {
+        order.confirmOrder();
+    }
+
+    @Transactional
+    private void declineOrder(Order order) {
+        order.declineOrder();
+        order.getProduct().incrementCount();
+    }
+
+    @Transactional
+    @Override
+    public ApiResponse confirmPurchase(Long orderId, Long memberId, UserAction userAction) {
+        Order order = orderRepository.findOrderAndProductByIdAndBuyerId(orderId, memberId)
+                .orElseThrow(() -> new BaseException(ErrorCode.ORDER_NOT_FOUND));
+        if (userAction.equals(UserAction.CONFIRM)) {
+            confirmPurchase(order);
+        } else {
+            declinePurchase(order);
+        }
+        return new ApiResponse();
+    }
+
+    @Transactional
+    private void confirmPurchase(Order order) {
+        order.confirmPurchase();
+        int onGoingConfirmationCount = orderRepository.countByOrderStatusIn(ONGOING_ORDER_STATUS);
+        if (order.getProduct().getCount() == 0 && onGoingConfirmationCount == 0) {
+            order.getProduct().completeSale();
+        }
+    }
+
+
+    private void declinePurchase(Order order) {
+        order.declinePurchase();
+        order.getProduct().incrementCount();
     }
 }

@@ -15,6 +15,7 @@ public enum ErrorCode {
     JWT_REQUIRED(HttpStatus.FORBIDDEN, "ACCOUNT-006", "해당 API는 JWT 인증이 필요합니다."),
 
     PRODUCT_NOT_FOUND(HttpStatus.NOT_FOUND, "PRODUCT-001", "제품을 찾을 수 없습니다."),
+    PRODUCT_OUT_OF_INVENTORY(HttpStatus.BAD_REQUEST, "PRODUCT-002", "제품의 수량이 부족합니다."),
 
     ORDER_NOT_FOUND(HttpStatus.NOT_FOUND, "ORDER-001", "주문을 찾을 수 없습니다.")
 

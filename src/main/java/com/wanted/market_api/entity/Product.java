@@ -32,4 +32,26 @@ public class Product {
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private List<Order> orders;
     private int count;
+
+    public void decrementCount() {
+        this.count--;
+
+        if (this.count == 0 && this.productStatus.equals(ProductStatus.IN_SALE)) {
+            this.productStatus = ProductStatus.IN_RESERVATION;
+        }
+    }
+
+    public void incrementCount() {
+        this.count++;
+
+        if ((this.productStatus.equals(ProductStatus.COMPLETE)
+                || this.productStatus.equals(ProductStatus.IN_RESERVATION))
+                && this.count != 0) {
+            this.productStatus = ProductStatus.IN_SALE;
+        }
+    }
+
+    public void completeSale() {
+        this.productStatus = ProductStatus.COMPLETE;
+    }
 }
