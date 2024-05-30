@@ -4,74 +4,64 @@
 
 ## 회원
 
-### 로그인
+### 회원가입
 
-#### /signup
+#### [POST] /signup
 
-> **POST**
->
 > loginId: 로그인 아이디
 >
 > password: 비밀번호
 
-#### /login
+### 로그인
 
-> **POST**
->
+#### [POST] /login
+
 > *x-www-form-urlencoded*
 >
 > loginId: 로그인 아이디
 >
 > password: 비밀번호
 
-#### /logout
+### 로그아웃
 
-> **POST**
+#### [POST] /logout
+
+>
 
 ## 제품
 
 ### 제품 등록
 
-#### /products
+#### [POST] /products
 
-> **POST**
->
 > name: 제품명
 >
 > price: 제품 가격
 
 ### 제품 구매
 
-#### /products/purchase
+#### [POST] /products/purchase
 
-> **POST**
->
 > productId: 제품 번호
 
 ### 제품 목록 조회
 
-#### /products?page={page}&size={size}
+#### GET /products?page={page}&size={size}
 
-> **GET**
->
 > page: 페이지 번호, optional
 >
 > size: 한 페이지의 데이터 개수, optional
 
 ### 제품 상세 조회
 
-#### /products/{productId}
+#### GET /products/{productId}
 
-> **GET**
->
 > productId: 제품 번호
 
 ### 구매 제품 조회
 
-#### /products/purchase?page={page}&size={size}
+#### GET /products/purchase?page={page}&size={size}
 
-> **GET**
->
 > page: 페이지 번호, optional
 >
 > size: 한 페이지의 데이터 개수, optional
