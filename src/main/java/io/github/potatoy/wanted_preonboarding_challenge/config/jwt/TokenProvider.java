@@ -16,9 +16,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Service;
 
-/**
- * 토큰 생성, 유효성 검사, 토큰에서 정보 추출을 담당하는 클래스
- */
+/** 토큰 생성, 유효성 검사, 토큰에서 정보 추출을 담당하는 클래스 */
 @RequiredArgsConstructor
 @Service
 @Slf4j
@@ -29,7 +27,7 @@ public class TokenProvider {
   /**
    * JWT 토큰 생성
    *
-   * @param user      user 객체
+   * @param user user 객체
    * @param expiredAt 유효 시간
    * @return Token
    */
@@ -42,7 +40,7 @@ public class TokenProvider {
    * JWT 토큰을 만들어 반환
    *
    * @param expiry 유효 기간
-   * @param user   user 객체
+   * @param user user 객체
    * @return Token
    */
   private String makeToken(Date expiry, User user) {
