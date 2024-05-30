@@ -53,4 +53,11 @@ public class ProductConverter {
                 .build();
     }
 
+    public static SetProductStatusResponse toSetProductStatusResponse(Product product) {
+        return SetProductStatusResponse.builder()
+                .name(product.getName())
+                .productStatus(product.getProductStatus())
+                .build();
+    }
+
 }

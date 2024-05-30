@@ -51,4 +51,11 @@ public class ProductController {
         return BaseResponse.onSuccess(productQueryService.getProductDetails(productId));
     }
 
+    @Operation(summary = "제품 판매 승인 API", description = "제품을 상판매 승인으로 변경합니다")
+    @ApiResponses({@ApiResponse(responseCode = "200", description = "성공")})
+    @PutMapping("/{productId}")
+    public BaseResponse<SetProductStatusResponse> setProductStatus(@Parameter(hidden = true) @AuthMember Member member, @PathVariable(name = "productId") Long productId){
+        return BaseResponse.onSuccess(ProductConverter.toSetProductStatusResponse(productCommandService.setProductStatus(member, productId)));
+    }
+
 }

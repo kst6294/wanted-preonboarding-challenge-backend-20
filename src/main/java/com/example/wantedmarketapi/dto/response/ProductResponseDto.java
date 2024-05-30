@@ -41,4 +41,13 @@ public class ProductResponseDto {
         List<Trade> tradeList;
     }
 
+    @Getter
+    @Builder
+    @NoArgsConstructor(access = AccessLevel.PROTECTED)
+    @AllArgsConstructor(access = AccessLevel.PROTECTED)
+    public static class SetProductStatusResponse {
+        String name;
+        ProductStatus productStatus;
+    }
+
 }

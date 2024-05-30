@@ -8,4 +8,6 @@ public interface ProductCommandService {
 
     Product createProduct(Member member, CreateProductRequest request);
 
+    Product setProductStatus(Member member, Long productId);
+
 }
