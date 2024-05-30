@@ -57,3 +57,11 @@
 > page: 페이지 번호, optional
 >
 > size: 한 페이지의 데이터 개수, optional
+
+### 제품 상세 조회
+
+#### /products/{productId}
+
+> **GET**
+>
+> productId: 제품 번호
