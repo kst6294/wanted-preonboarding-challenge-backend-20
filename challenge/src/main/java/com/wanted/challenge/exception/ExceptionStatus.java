@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 
 @Getter
 public enum ExceptionStatus {
+    NEGATIVE_PRICE("금액은 음수일 수 없습니다.");
 
     private final String message;
     private final HttpStatus httpStatus;
