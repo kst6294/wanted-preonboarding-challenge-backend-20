@@ -17,7 +17,7 @@ public class ProductConverter {
                 .name(request.getName())
                 .price(request.getPrice())
                 .productStatus(ProductStatus.SALE)
-                .member(member)
+                .seller(member)
                 .build();
     }
 

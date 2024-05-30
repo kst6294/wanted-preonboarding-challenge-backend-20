@@ -33,10 +33,13 @@ public class Product extends BaseEntity {
     private ProductStatus productStatus;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id")
-    private Member member;
+    @JoinColumn(name = "seller_id")
+    private Member seller;
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private List<Trade> tradeList = new ArrayList<>();
 
+    public void setProductStatus(ProductStatus productStatus) {
+        this.productStatus = productStatus;
+    }
 }

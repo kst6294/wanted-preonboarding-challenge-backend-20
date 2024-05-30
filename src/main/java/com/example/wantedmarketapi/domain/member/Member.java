@@ -28,7 +28,7 @@ public class Member extends BaseEntity {
     @Embedded
     private Password password;
 
-    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "seller", cascade = CascadeType.ALL)
     private List<Product> productList = new ArrayList<>();
 
     @OneToMany(mappedBy = "purchaser", cascade = CascadeType.ALL)
