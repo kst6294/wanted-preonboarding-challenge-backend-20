@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.wanted.preonboarding.module.order.service.OrderFindServiceImplTest" tests="7" skipped="0" failures="0" errors="0" timestamp="2024-05-30T09:12:10" hostname="lyusang-won-ui-MacBookPro.local" time="0.525">
+<testsuite name="com.wanted.preonboarding.module.order.service.OrderFindServiceImplTest" tests="7" skipped="0" failures="0" errors="0" timestamp="2024-05-30T09:18:03" hostname="lyusang-won-ui-MacBookPro.local" time="0.496">
   <properties/>
-  <testcase name="거래 내역 조회 판매자 - 성공" classname="com.wanted.preonboarding.module.order.service.OrderFindServiceImplTest" time="0.179"/>
-  <testcase name="주문 단일 조회 - 성공" classname="com.wanted.preonboarding.module.order.service.OrderFindServiceImplTest" time="0.031"/>
-  <testcase name="거래 내역 조회 구매자 - 성공" classname="com.wanted.preonboarding.module.order.service.OrderFindServiceImplTest" time="0.121"/>
-  <testcase name="구매이력 조회" classname="com.wanted.preonboarding.module.order.service.OrderFindServiceImplTest" time="0.023"/>
-  <testcase name="거래내역 조회 - 성공" classname="com.wanted.preonboarding.module.order.service.OrderFindServiceImplTest" time="0.114"/>
-  <testcase name="구매확정 카운트 조회" classname="com.wanted.preonboarding.module.order.service.OrderFindServiceImplTest" time="0.024"/>
-  <testcase name="거래내역 조회 - 성공" classname="com.wanted.preonboarding.module.order.service.OrderFindServiceImplTest" time="0.031"/>
+  <testcase name="거래 내역 조회 판매자 - 성공" classname="com.wanted.preonboarding.module.order.service.OrderFindServiceImplTest" time="0.169"/>
+  <testcase name="주문 단일 조회 - 성공" classname="com.wanted.preonboarding.module.order.service.OrderFindServiceImplTest" time="0.032"/>
+  <testcase name="거래 내역 조회 구매자 - 성공" classname="com.wanted.preonboarding.module.order.service.OrderFindServiceImplTest" time="0.107"/>
+  <testcase name="구매이력 조회" classname="com.wanted.preonboarding.module.order.service.OrderFindServiceImplTest" time="0.025"/>
+  <testcase name="거래내역 조회 - 성공" classname="com.wanted.preonboarding.module.order.service.OrderFindServiceImplTest" time="0.109"/>
+  <testcase name="구매확정 카운트 조회" classname="com.wanted.preonboarding.module.order.service.OrderFindServiceImplTest" time="0.021"/>
+  <testcase name="거래내역 조회 - 성공" classname="com.wanted.preonboarding.module.order.service.OrderFindServiceImplTest" time="0.03"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

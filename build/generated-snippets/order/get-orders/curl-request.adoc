@@ -2,5 +2,5 @@
 ----
 $ curl 'http://localhost:8080/api/v1/orders?size=5' -i -X GET \
     -H 'Content-Type: application/json;charset=UTF-8' \
-    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJESmFRWVZAd2FudGVkLmNvbSIsInJvbGUiOiJOT1JNQUwiLCJpYXQiOjE3MTcwNjAzMjgsImV4cCI6MTcxNzA2MzkyOH0.h7zkYr8cLUFTfIVfHxUoz2ZXwq-8_HtD5YqnJjcJrKU'
+    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJHaHptR3ZrQHdhbnRlZC5jb20iLCJyb2xlIjoiTk9STUFMIiwiaWF0IjoxNzE3MDYwNjgyLCJleHAiOjE3MTcwNjQyODJ9.6R5O09p5qJifCEaQ5EwZ5SZN2_IBpaxAyeRyY5caBd8'
 ----

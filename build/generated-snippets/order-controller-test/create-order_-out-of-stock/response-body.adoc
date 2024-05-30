@@ -3,7 +3,7 @@
 {
   "status" : 400,
   "message" : "createOrder 이미 예약중 또는 판매완료 된 상품 입니다. ",
-  "timestamp" : "2024-05-30 18:12:08",
+  "timestamp" : "2024-05-30 18:18:01",
   "error" : "BeanPropertyBindingResult"
 }
 ----

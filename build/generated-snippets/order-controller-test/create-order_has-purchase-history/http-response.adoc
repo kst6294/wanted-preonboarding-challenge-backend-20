@@ -15,8 +15,8 @@ Content-Length: 176
 
 {
   "status" : 400,
-  "message" : "createOrder  createOrder 구매 이력이 존재합니다.",
-  "timestamp" : "2024-05-30 18:12:08",
+  "message" : "createOrder 구매 이력이 존재합니다. createOrder ",
+  "timestamp" : "2024-05-30 18:18:01",
   "error" : "BeanPropertyBindingResult"
 }
 ----

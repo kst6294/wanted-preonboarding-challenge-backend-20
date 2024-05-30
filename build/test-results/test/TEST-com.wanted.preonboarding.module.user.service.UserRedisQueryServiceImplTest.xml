@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.wanted.preonboarding.module.user.service.UserRedisQueryServiceImplTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2024-05-30T09:12:13" hostname="lyusang-won-ui-MacBookPro.local" time="0.008">
+<testsuite name="com.wanted.preonboarding.module.user.service.UserRedisQueryServiceImplTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2024-05-30T09:18:06" hostname="lyusang-won-ui-MacBookPro.local" time="0.007">
   <properties/>
-  <testcase name="UserInfo 저장 테스트" classname="com.wanted.preonboarding.module.user.service.UserRedisQueryServiceImplTest" time="0.008"/>
+  <testcase name="UserInfo 저장 테스트" classname="com.wanted.preonboarding.module.user.service.UserRedisQueryServiceImplTest" time="0.007"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

@@ -1,5 +1,5 @@
 [source,bash]
 ----
-$ http GET 'http://localhost:8080/api/v1/product/2954' \
+$ http GET 'http://localhost:8080/api/v1/product/2112' \
     'Content-Type:application/json;charset=UTF-8'
 ----

@@ -2,11 +2,11 @@
 ----
 POST /api/v1/order HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJMUEZyYkB3YW50ZWQuY29tIiwicm9sZSI6Ik5PUk1BTCIsImlhdCI6MTcxNzA2MDMyOCwiZXhwIjoxNzE3MDYzOTI4fQ.4FGjZhvhPtFKanGYAamX3G74unbm20nekBVjujfQ7Yo
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJPWktAd2FudGVkLmNvbSIsInJvbGUiOiJOT1JNQUwiLCJpYXQiOjE3MTcwNjA2ODIsImV4cCI6MTcxNzA2NDI4Mn0.E9K6TkQYjYrirzyAV2hl34xrXuPBGRMedqa7YrwHnVU
 Content-Length: 24
 Host: localhost:8080
 
 {
-  "productId" : 1243
+  "productId" : 3105
 }
 ----
