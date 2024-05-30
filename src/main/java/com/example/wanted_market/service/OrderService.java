@@ -3,14 +3,19 @@ package com.example.wanted_market.service;
 import com.example.wanted_market.domain.Order;
 import com.example.wanted_market.domain.Product;
 import com.example.wanted_market.domain.User;
+import com.example.wanted_market.dto.response.UserTransactionResponseDto;
 import com.example.wanted_market.repository.OrderRepository;
 import com.example.wanted_market.repository.ProductRepository;
 import com.example.wanted_market.repository.UserRepository;
 import com.example.wanted_market.type.EOrderStatus;
 import com.example.wanted_market.type.EProductStatus;
+import com.example.wanted_market.util.DateUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -63,5 +68,24 @@ public class OrderService {
 
         product.setStatus(EProductStatus.COMPLETED);
         order.setStatus(EOrderStatus.COMPLETED);
+    }
+
+    // 사용자 거래 목록 조회
+    @Transactional(readOnly = true)
+    public List<UserTransactionResponseDto> getMyTransaction(Long userId) {
+
+        List<UserTransactionResponseDto> transactions = orderRepository.findOrderByBuyerOrSellerOrderByCreateDateDesc(userId).stream()
+                .map(order -> UserTransactionResponseDto.builder()
+                        .userRole(order.getBuyer().getId().equals(userId) ? "Buyer" : "Seller")
+                        .productId(order.getProduct().getId())
+                        .productName(order.getProduct().getName())
+                        .price(order.getProduct().getPrice())
+                        .productStatus(order.getProduct().getStatus())
+                        .orderStatus(order.getStatus())
+                        .orderTime(DateUtil.formatDateTime(order.getCreateDate()))
+                        .build()
+                ).collect(Collectors.toList());
+
+        return transactions;
     }
 }
