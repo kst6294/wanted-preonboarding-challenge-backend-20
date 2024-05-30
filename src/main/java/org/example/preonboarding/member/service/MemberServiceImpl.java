@@ -2,7 +2,6 @@ package org.example.preonboarding.member.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-
 import org.example.preonboarding.member.exception.WithdrawException;
 import org.example.preonboarding.member.model.entity.Member;
 import org.example.preonboarding.member.model.mapper.MemberMapper;
@@ -48,7 +47,7 @@ public class MemberServiceImpl implements MemberService {
     @Transactional
     public WithdrawResponse deleteUser(String userId) throws WithdrawException {
         int deleteCount = memberRepository.deleteByUserId(userId);
-        if(deleteCount < 1) {
+        if (deleteCount < 1) {
             throw new WithdrawException();
         }
         return WithdrawResponse.builder()

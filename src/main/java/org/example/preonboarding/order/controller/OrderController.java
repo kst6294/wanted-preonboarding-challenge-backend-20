@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @RestController
 @Slf4j
@@ -42,6 +43,18 @@ public class OrderController {
                 Api.<OrderResponse>builder()
                         .resultCode(ResultCode.SUCCESS)
                         .data(orderService.approveOrder(orderId))
+                        .build()
+        );
+    }
+
+
+    // 로그인 user가 구매한 제품
+    @GetMapping("/my-buy-order")
+    public ResponseEntity<?> getMyBuyOrders() {
+        return ResponseEntity.status(HttpStatus.OK).body(
+                Api.<List<OrderResponse>>builder()
+                        .resultCode(ResultCode.WITHDRAW_SUCCESS)
+                        .data(orderService.getMyBuyOrders())
                         .build()
         );
     }

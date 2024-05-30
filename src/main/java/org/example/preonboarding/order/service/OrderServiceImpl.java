@@ -14,7 +14,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -47,7 +49,7 @@ public class OrderServiceImpl implements OrderService {
                 new IllegalArgumentException("주문을 찾지 못했습니다.")
         );
 
-        if(!Objects.equals(order.getSeller().getId(), memberUtil.getCurrentUser().getId())) {
+        if (!Objects.equals(order.getSeller().getId(), memberUtil.getCurrentUser().getId())) {
             throw new IllegalArgumentException("주문의 판매자와 현재 사용자가 일치하지 않습니다.");
         }
 
@@ -55,6 +57,14 @@ public class OrderServiceImpl implements OrderService {
         Order approvedOrder = orderRepository.save(order);
 
         return OrderResponse.of(approvedOrder);
+    }
+
+    @Override
+    public List<OrderResponse> getMyBuyOrders() {
+        Member currentUser = memberUtil.getCurrentUser();
+        List<Order> orders = orderRepository.findAllByBuyer(currentUser);
+
+        return orders.stream().map(OrderResponse::of).collect(Collectors.toList());
     }
 
     private void deductStockQuantities(Product product) {
