@@ -1,13 +1,19 @@
+-- CreateEnum
+CREATE TYPE "ProductStatus" AS ENUM ('AVAILABLE', 'RESERVED', 'SOLD');
+
+-- CreateEnum
+CREATE TYPE "TransactionStatus" AS ENUM ('RESERVED', 'Confirm');
+
 -- CreateTable
 CREATE TABLE "product_tb" (
     "idx" SERIAL NOT NULL,
     "user_idx" INTEGER NOT NULL,
     "name" VARCHAR NOT NULL,
     "price" INTEGER NOT NULL,
-    "status" VARCHAR NOT NULL,
     "created_at" TIMESTAMPTZ(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMPTZ(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "deleted_at" TIMESTAMPTZ(6),
+    "status" "ProductStatus" NOT NULL DEFAULT 'AVAILABLE',
 
     CONSTRAINT "product_tb_pkey" PRIMARY KEY ("idx")
 );
@@ -18,10 +24,10 @@ CREATE TABLE "transaction_tb" (
     "user_idx" INTEGER NOT NULL,
     "product_idx" INTEGER NOT NULL,
     "price" INTEGER NOT NULL,
-    "status" VARCHAR NOT NULL,
     "created_at" TIMESTAMPTZ(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMPTZ(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "deleted_at" TIMESTAMPTZ(6),
+    "status" "TransactionStatus" NOT NULL DEFAULT 'RESERVED',
 
     CONSTRAINT "transaction_tb_pkey" PRIMARY KEY ("idx")
 );
@@ -30,7 +36,7 @@ CREATE TABLE "transaction_tb" (
 CREATE TABLE "user_tb" (
     "idx" SERIAL NOT NULL,
     "name" VARCHAR NOT NULL,
-    "email" SERIAL NOT NULL,
+    "email" VARCHAR NOT NULL,
     "password" CHAR(60) NOT NULL,
     "created_at" TIMESTAMPTZ(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMPTZ(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -38,6 +44,9 @@ CREATE TABLE "user_tb" (
 
     CONSTRAINT "user_tb_pkey" PRIMARY KEY ("idx")
 );
+
+-- CreateIndex
+CREATE UNIQUE INDEX "transaction_tb_pk" ON "transaction_tb"("user_idx", "product_idx");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "email_deleted_at_unique" ON "user_tb"("email", "deleted_at");
