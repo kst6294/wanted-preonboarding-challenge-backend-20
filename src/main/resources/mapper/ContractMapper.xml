@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="wanted.preonboard.market.mapper.ContractMapper">
+
+    <insert id="createContract" parameterType="Contract">
+        INSERT INTO contract (product_id, seller_id, buyer_id)
+        VALUES (#{productId}, #{sellerId}, #{buyerId})
+    </insert>
+</mapper>
