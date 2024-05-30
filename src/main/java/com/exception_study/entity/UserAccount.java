@@ -19,8 +19,10 @@ public class UserAccount {
     @Id
     @Column(name = "user_Id")
     private String userId;
+
     @Column(name = "password")
     private String password;
+
     @Column(name = "user_name")
     private String userName;
 

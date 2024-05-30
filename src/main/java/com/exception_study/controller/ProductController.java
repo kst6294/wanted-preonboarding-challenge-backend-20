@@ -2,6 +2,8 @@ package com.exception_study.controller;
 
 import com.exception_study.dto.ProductDto;
 import com.exception_study.dto.request.RegisterRequest;
+import com.exception_study.dto.response.DetailsWithHistoryResponse;
+import com.exception_study.dto.response.HistoryResponse;
 import com.exception_study.dto.response.ResponseDto;
 import com.exception_study.service.ProductService;
 import lombok.RequiredArgsConstructor;
@@ -36,15 +38,28 @@ public class ProductController {
         return ResponseDto.success(result);
     }
 
-    @PostMapping("/{id}/details/buy")
-    public ResponseDto<ProductDto> buy(@PathVariable int id, @AuthenticationPrincipal String userId){
-        ProductDto result = productService.buy(id, userId);
+    @GetMapping("/{id}/details/authenticated")
+    public ResponseDto<DetailsWithHistoryResponse> details(@PathVariable int id, @AuthenticationPrincipal String userId){
+        DetailsWithHistoryResponse result = productService.getDetails(id,userId);
         return ResponseDto.success(result);
     }
 
+    @PostMapping("/{id}/details/reserve")
+    public ResponseDto<ProductDto> reserve(@PathVariable int id, @AuthenticationPrincipal String userId){
+        ProductDto result = productService.reserve(id, userId);
+        return ResponseDto.success(result);
+    }
 
+    @GetMapping("/{id}/approve")
+    public ResponseDto<Void> approve(@PathVariable int id, @AuthenticationPrincipal String userId){
+        productService.approve(id,userId);
+        return ResponseDto.success();
+    }
 
-
-
+    @GetMapping("/history")
+    public ResponseDto<HistoryResponse> history(@AuthenticationPrincipal String userId){
+        HistoryResponse result = productService.history(userId);
+        return ResponseDto.success(result);
+    }
 
 }

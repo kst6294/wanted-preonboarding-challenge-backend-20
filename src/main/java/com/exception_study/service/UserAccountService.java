@@ -14,7 +14,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+@Transactional
 @Slf4j
 @RequiredArgsConstructor
 @Service
@@ -29,7 +31,7 @@ public class UserAccountService {
     public SignUpResponse signUp(UserAccountDto dto){
         log.info("input Data {},{}",dto.getUserId(),dto.getPassword());
         if(userAccountRepository.existsById(dto.getUserId())){
-            throw new IllegalArgumentException("Already Exists User!");
+            throw new StudyApplicationException(ErrorCode.USER_ALREADY_EXIST);
         }
 
         String encodedPassword = passwordEncoder.encode(dto.getPassword());
@@ -38,6 +40,7 @@ public class UserAccountService {
         return SignUpResponse.of("SignUp Success");
     }
 
+    @Transactional(readOnly = true)
     public LoginResponse login(LoginRequest request){
         String userId = request.getUserId();
         String password = request.getPassword();
@@ -53,6 +56,7 @@ public class UserAccountService {
 
         return LoginResponse.of(token,expiredTime);
     }
+
 
 
 
