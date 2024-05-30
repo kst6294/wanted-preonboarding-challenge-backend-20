@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.wanted.preonboarding.auth.handler.JwtAccessDeniedHandlerTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2024-05-30T00:54:07" hostname="lyusang-won-ui-MacBookPro.local" time="0.001">
+<testsuite name="com.wanted.preonboarding.auth.handler.JwtAccessDeniedHandlerTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2024-05-30T00:57:14" hostname="lyusang-won-ui-MacBookPro.local" time="0.002">
   <properties/>
-  <testcase name="AccessDeniedHandler가 접근 권한이 없는 경우에 올바르게 응답을 반환하는지 테스트" classname="com.wanted.preonboarding.auth.handler.JwtAccessDeniedHandlerTest" time="0.001"/>
+  <testcase name="AccessDeniedHandler가 접근 권한이 없는 경우에 올바르게 응답을 반환하는지 테스트" classname="com.wanted.preonboarding.auth.handler.JwtAccessDeniedHandlerTest" time="0.002"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

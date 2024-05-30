@@ -2,12 +2,12 @@
 ----
 PATCH /api/v1/order HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBUm1jbnBmUWJwUFFAd2FudGVkLmNvbSIsInJvbGUiOiJOT1JNQUwiLCJpYXQiOjE3MTcwMzA0NDMsImV4cCI6MTcxNzAzNDA0M30.3ketjUVxo679MBx3zAOQjalHsluZoPwkg7VHeo-fv4U
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJreFhoQmlAd2FudGVkLmNvbSIsInJvbGUiOiJOT1JNQUwiLCJpYXQiOjE3MTcwMzA2MzYsImV4cCI6MTcxNzAzNDIzNn0.IB9KQs-qD08mEc4z42YTMMiHvSlth8VAonvOOFxPaTc
 Content-Length: 57
 Host: localhost:8080
 
 {
-  "orderId" : 43421691,
+  "orderId" : 95339080,
   "orderStatus" : "COMPLETED"
 }
 ----

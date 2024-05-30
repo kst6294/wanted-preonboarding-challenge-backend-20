@@ -1,8 +1,8 @@
 [source,bash]
 ----
 $ echo '{
-  "productId" : 61672383
+  "productId" : 38540483
 }' | http POST 'http://localhost:8080/api/v1/order' \
     'Content-Type:application/json;charset=UTF-8' \
-    'Authorization:Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0Q3VNUWJOQHdhbnRlZC5jb20iLCJyb2xlIjoiTk9STUFMIiwiaWF0IjoxNzE3MDMwNDQ0LCJleHAiOjE3MTcwMzQwNDR9.jCARrkn1pKKi6xR79RXDqrrqgHYV_UywROgNLaoCAg4'
+    'Authorization:Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJic0RaR1lAd2FudGVkLmNvbSIsInJvbGUiOiJOT1JNQUwiLCJpYXQiOjE3MTcwMzA2MzcsImV4cCI6MTcxNzAzNDIzN30.ouPgA05MJ5l_LhQJGtFVyBuOl9VHI6hbECk6UhHgVsI'
 ----

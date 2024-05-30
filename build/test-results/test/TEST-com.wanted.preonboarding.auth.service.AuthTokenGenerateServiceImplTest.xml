@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.wanted.preonboarding.auth.service.AuthTokenGenerateServiceImplTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2024-05-30T00:54:07" hostname="lyusang-won-ui-MacBookPro.local" time="0.03">
+<testsuite name="com.wanted.preonboarding.auth.service.AuthTokenGenerateServiceImplTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2024-05-30T00:57:14" hostname="lyusang-won-ui-MacBookPro.local" time="0.055">
   <properties/>
-  <testcase name="토큰 생성 테스트" classname="com.wanted.preonboarding.auth.service.AuthTokenGenerateServiceImplTest" time="0.03"/>
+  <testcase name="토큰 생성 테스트" classname="com.wanted.preonboarding.auth.service.AuthTokenGenerateServiceImplTest" time="0.055"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

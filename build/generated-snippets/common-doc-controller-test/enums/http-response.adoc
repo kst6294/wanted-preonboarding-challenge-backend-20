@@ -11,7 +11,7 @@ Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
 X-Frame-Options: DENY
-Content-Length: 1584
+Content-Length: 1540
 
 {
   "data" : {
@@ -49,9 +49,9 @@ Content-Length: 1584
       "LATEST" : "id DESC"
     },
     "orderStatus" : {
-      "COMPLETED" : "Order status: COMPLETED",
-      "ORDERED" : "Order status: ORDERED",
-      "SETTLEMENT" : "Order status: SETTLEMENT"
+      "COMPLETED" : "예약중",
+      "ORDERED" : "판매중",
+      "SETTLEMENT" : "완료"
     },
     "userRole" : {
       "BUYER" : "판매자 / 구매자",

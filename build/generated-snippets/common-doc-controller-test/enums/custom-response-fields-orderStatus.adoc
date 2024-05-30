@@ -2,9 +2,9 @@ orderStatus
 |===
 |코드|코드명
 |`+COMPLETED+`
-|Order status: COMPLETED
+|예약중
 |`+ORDERED+`
-|Order status: ORDERED
+|판매중
 |`+SETTLEMENT+`
-|Order status: SETTLEMENT
+|완료
 |===

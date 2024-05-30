@@ -15,10 +15,10 @@ Content-Length: 246
 
 {
   "data" : {
-    "orderId" : 14724170,
-    "productId" : 4495,
-    "buyer" : "MUwOnvlAvTqm@wanted.com",
-    "seller" : "nnINO@wanted.com",
+    "orderId" : 68631376,
+    "productId" : 4334,
+    "buyer" : "HwJY@wanted.com",
+    "seller" : "MihmOHHxZUSak@wanted.com",
     "orderStatus" : "COMPLETED"
   },
   "response" : {

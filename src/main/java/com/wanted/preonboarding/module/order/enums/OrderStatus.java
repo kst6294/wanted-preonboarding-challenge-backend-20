@@ -22,7 +22,7 @@ public enum OrderStatus implements EnumType {
 
     @Override
     public String getDescription() {
-        return String.format("Order status: %s", name());
+        return String.format(displayName);
     }
 
     public boolean isCompleted(){

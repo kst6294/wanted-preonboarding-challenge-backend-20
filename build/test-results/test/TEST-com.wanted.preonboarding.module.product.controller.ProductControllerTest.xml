@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.wanted.preonboarding.module.product.controller.ProductControllerTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2024-05-30T00:54:10" hostname="lyusang-won-ui-MacBookPro.local" time="0.483">
+<testsuite name="com.wanted.preonboarding.module.product.controller.ProductControllerTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2024-05-30T00:57:20" hostname="lyusang-won-ui-MacBookPro.local" time="0.446">
   <properties/>
-  <testcase name="상품 수정" classname="com.wanted.preonboarding.module.product.controller.ProductControllerTest" time="0.057"/>
-  <testcase name="상품 목록 조회" classname="com.wanted.preonboarding.module.product.controller.ProductControllerTest" time="0.299"/>
-  <testcase name="상품 등록 실패 - 비회원" classname="com.wanted.preonboarding.module.product.controller.ProductControllerTest" time="0.022"/>
-  <testcase name="상품 조회" classname="com.wanted.preonboarding.module.product.controller.ProductControllerTest" time="0.039"/>
-  <testcase name="상품 등록" classname="com.wanted.preonboarding.module.product.controller.ProductControllerTest" time="0.064"/>
-  <system-out><![CDATA[2024-05-30T09:54:10.823+09:00  INFO 9384 --- [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.wanted.preonboarding.module.product.controller.ProductControllerTest]: ProductControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-2024-05-30T09:54:10.838+09:00  INFO 9384 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.wanted.preonboarding.PreonboardingApplication for test class com.wanted.preonboarding.module.product.controller.ProductControllerTest
-2024-05-30T09:54:10.841+09:00  INFO 9384 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
-2024-05-30T09:54:10.842+09:00  INFO 9384 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
-2024-05-30T09:54:10.842+09:00  INFO 9384 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+  <testcase name="상품 수정" classname="com.wanted.preonboarding.module.product.controller.ProductControllerTest" time="0.056"/>
+  <testcase name="상품 목록 조회" classname="com.wanted.preonboarding.module.product.controller.ProductControllerTest" time="0.296"/>
+  <testcase name="상품 등록 실패 - 비회원" classname="com.wanted.preonboarding.module.product.controller.ProductControllerTest" time="0.013"/>
+  <testcase name="상품 조회" classname="com.wanted.preonboarding.module.product.controller.ProductControllerTest" time="0.038"/>
+  <testcase name="상품 등록" classname="com.wanted.preonboarding.module.product.controller.ProductControllerTest" time="0.043"/>
+  <system-out><![CDATA[2024-05-30T09:57:20.482+09:00  INFO 9860 --- [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.wanted.preonboarding.module.product.controller.ProductControllerTest]: ProductControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2024-05-30T09:57:20.495+09:00  INFO 9860 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.wanted.preonboarding.PreonboardingApplication for test class com.wanted.preonboarding.module.product.controller.ProductControllerTest
+2024-05-30T09:57:20.498+09:00  INFO 9860 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2024-05-30T09:57:20.498+09:00  INFO 9860 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2024-05-30T09:57:20.499+09:00  INFO 9860 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
 
 MockHttpServletRequest:
       HTTP Method = PATCH
-      Request URI = /api/v1/product/1467
+      Request URI = /api/v1/product/4584
        Parameters = {}
-          Headers = [Content-Type:"application/json;charset=UTF-8", Authorization:"Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJoVnBZUUB3YW50ZWQuY29tIiwicm9sZSI6Ik5PUk1BTCIsImlhdCI6MTcxNzAzMDQ1MCwiZXhwIjoxNzE3MDM0MDUwfQ.H34CeL63dnepWfp0-s1Ubu-2Takopa32tL3MfJexFJY", Content-Length:"58"]
-             Body = {"productName":"emfzzyggwy","price":70906853,"quantity":6}
+          Headers = [Content-Type:"application/json;charset=UTF-8", Authorization:"Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJKb0RAd2FudGVkLmNvbSIsInJvbGUiOiJOT1JNQUwiLCJpYXQiOjE3MTcwMzA2NDAsImV4cCI6MTcxNzAzNDI0MH0.LtjfO_5xEv-Q5eT6m1ToioHkvyOCBVFcsfKCVRXq4ok", Content-Length:"58"]
+             Body = {"productName":"achmifjbkl","price":10277397,"quantity":2}
     Session Attrs = {}
 
 Handler:
@@ -44,13 +44,13 @@ MockHttpServletResponse:
     Error message = null
           Headers = [Vary:"Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers", Content-Type:"application/json;charset=UTF-8", X-Content-Type-Options:"nosniff", X-XSS-Protection:"0", Cache-Control:"no-cache, no-store, max-age=0, must-revalidate", Pragma:"no-cache", Expires:"0", X-Frame-Options:"DENY"]
      Content type = application/json;charset=UTF-8
-             Body = {"data":{"id":1467,"productName":"emfzzyggwy","price":70906853,"productStatus":"ON_STOCK","seller":"CvqywTVEqDPmz@wanted.com","quantity":2684},"response":{"status":200,"message":"success"}}
+             Body = {"data":{"id":4584,"productName":"achmifjbkl","price":10277397,"productStatus":"ON_STOCK","seller":"adOz@wanted.com","quantity":1818},"response":{"status":200,"message":"success"}}
     Forwarded URL = null
    Redirected URL = null
           Cookies = []
-2024-05-30T09:54:10.899+09:00  INFO 9384 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
-2024-05-30T09:54:10.899+09:00  INFO 9384 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
-2024-05-30T09:54:10.899+09:00  INFO 9384 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+2024-05-30T09:57:20.554+09:00  INFO 9860 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2024-05-30T09:57:20.554+09:00  INFO 9860 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2024-05-30T09:57:20.554+09:00  INFO 9860 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
 
 MockHttpServletRequest:
       HTTP Method = GET
@@ -84,20 +84,20 @@ MockHttpServletResponse:
     Error message = null
           Headers = [Vary:"Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers", Content-Type:"application/json;charset=UTF-8", X-Content-Type-Options:"nosniff", X-XSS-Protection:"0", Cache-Control:"no-cache, no-store, max-age=0, must-revalidate", Pragma:"no-cache", Expires:"0", X-Frame-Options:"DENY"]
      Content type = application/json;charset=UTF-8
-             Body = {"data":{"content":[{"id":3545,"productName":"smycryovjd","price":22104617,"productStatus":"ON_STOCK","seller":"iZFpKWn@wanted.com","quantity":7410},{"id":2659,"productName":"youlozzcah","price":36385493,"productStatus":"ON_STOCK","seller":"slQWYMeOrWk@wanted.com","quantity":5087},{"id":2736,"productName":"pubnwudbqm","price":11249152,"productStatus":"ON_STOCK","seller":"peQzGhgKaiJ@wanted.com","quantity":7175},{"id":5076,"productName":"buahqpoqnh","price":42129498,"productStatus":"ON_STOCK","seller":"SZJBwaRArDVZ@wanted.com","quantity":3460},{"id":6652,"productName":"rmlvwkiwvo","price":23943495,"productStatus":"ON_STOCK","seller":"JpkQ@wanted.com","quantity":4227},{"id":1301,"productName":"sxvczhnips","price":6036845,"productStatus":"ON_STOCK","seller":"YuzVJ@wanted.com","quantity":87},{"id":3991,"productName":"rjohmnadjs","price":31926535,"productStatus":"ON_STOCK","seller":"oZrEcTzD@wanted.com","quantity":6150},{"id":7221,"productName":"tbhrrtolra","price":90719986,"productStatus":"ON_STOCK","seller":"hLX@wanted.com","quantity":5122},{"id":3481,"productName":"alshpudtdm","price":95694048,"productStatus":"ON_STOCK","seller":"TeQJCQzxmWD@wanted.com","quantity":1664},{"id":7320,"productName":"fodtjojojj","price":28855772,"productStatus":"ON_STOCK","seller":"pPnNcHBzNwJAY@wanted.com","quantity":4005}],"last":true,"first":true,"number":0,"sort":{"empty":true,"sorted":false,"unsorted":true},"size":5,"numberOfElements":10,"empty":false,"lastDomainId":7320},"response":{"status":200,"message":"success"}}
+             Body = {"data":{"content":[{"id":2674,"productName":"qsfycpnezv","price":88687237,"productStatus":"ON_STOCK","seller":"IUlqwine@wanted.com","quantity":2087},{"id":6485,"productName":"itlbquujqc","price":801778,"productStatus":"ON_STOCK","seller":"KjgZ@wanted.com","quantity":1249},{"id":2899,"productName":"xyflrrwnau","price":50562314,"productStatus":"ON_STOCK","seller":"DjbU@wanted.com","quantity":2630},{"id":8858,"productName":"aghewmnzoj","price":74910592,"productStatus":"ON_STOCK","seller":"rWqoQiUkCtyPUE@wanted.com","quantity":3720},{"id":4193,"productName":"kaywmmcssn","price":47330127,"productStatus":"ON_STOCK","seller":"mFBSffhJqQ@wanted.com","quantity":3468},{"id":9432,"productName":"bpzvidkeap","price":20089449,"productStatus":"ON_STOCK","seller":"rRqSqZiGYqyJv@wanted.com","quantity":648},{"id":6293,"productName":"kqsvgtcilu","price":70430602,"productStatus":"ON_STOCK","seller":"ZROifeif@wanted.com","quantity":365},{"id":8020,"productName":"jpjgirvvwr","price":49864069,"productStatus":"ON_STOCK","seller":"XNjs@wanted.com","quantity":5654},{"id":8184,"productName":"riczflkvgl","price":64326882,"productStatus":"ON_STOCK","seller":"aRMwuMCd@wanted.com","quantity":8986},{"id":3282,"productName":"frverfgdmx","price":65906003,"productStatus":"ON_STOCK","seller":"wQcf@wanted.com","quantity":6026}],"last":true,"first":true,"number":0,"sort":{"empty":true,"unsorted":true,"sorted":false},"size":5,"numberOfElements":10,"empty":false,"lastDomainId":3282},"response":{"status":200,"message":"success"}}
     Forwarded URL = null
    Redirected URL = null
           Cookies = []
-2024-05-30T09:54:11.198+09:00  INFO 9384 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
-2024-05-30T09:54:11.198+09:00  INFO 9384 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
-2024-05-30T09:54:11.199+09:00  INFO 9384 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+2024-05-30T09:57:20.850+09:00  INFO 9860 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2024-05-30T09:57:20.850+09:00  INFO 9860 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2024-05-30T09:57:20.851+09:00  INFO 9860 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
 
 MockHttpServletRequest:
       HTTP Method = POST
       Request URI = /api/v1/product
        Parameters = {}
           Headers = [Content-Type:"application/json;charset=UTF-8", Content-Length:"58"]
-             Body = {"productName":"zihjcjmlia","price":31776871,"quantity":3}
+             Body = {"productName":"oxhkmcekct","price":96405236,"quantity":2}
     Session Attrs = {}
 
 Handler:
@@ -128,13 +128,13 @@ MockHttpServletResponse:
     Forwarded URL = null
    Redirected URL = null
           Cookies = []
-2024-05-30T09:54:11.221+09:00  INFO 9384 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
-2024-05-30T09:54:11.221+09:00  INFO 9384 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
-2024-05-30T09:54:11.221+09:00  INFO 9384 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+2024-05-30T09:57:20.864+09:00  INFO 9860 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2024-05-30T09:57:20.864+09:00  INFO 9860 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2024-05-30T09:57:20.864+09:00  INFO 9860 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
 
 MockHttpServletRequest:
       HTTP Method = GET
-      Request URI = /api/v1/product/4772
+      Request URI = /api/v1/product/4319
        Parameters = {}
           Headers = [Content-Type:"application/json;charset=UTF-8"]
              Body = null
@@ -164,20 +164,20 @@ MockHttpServletResponse:
     Error message = null
           Headers = [Vary:"Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers", Content-Type:"application/json;charset=UTF-8", X-Content-Type-Options:"nosniff", X-XSS-Protection:"0", Cache-Control:"no-cache, no-store, max-age=0, must-revalidate", Pragma:"no-cache", Expires:"0", X-Frame-Options:"DENY"]
      Content type = application/json;charset=UTF-8
-             Body = {"data":{"id":4772,"productName":"dnigbbdxqe","price":76715385,"productStatus":"ON_STOCK","seller":"WfeBOGTAG@wanted.com","quantity":7674},"response":{"status":200,"message":"success"}}
+             Body = {"data":{"id":4319,"productName":"xhlllooesa","price":31942545,"productStatus":"ON_STOCK","seller":"paECfnJvookeT@wanted.com","quantity":8106},"response":{"status":200,"message":"success"}}
     Forwarded URL = null
    Redirected URL = null
           Cookies = []
-2024-05-30T09:54:11.260+09:00  INFO 9384 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
-2024-05-30T09:54:11.260+09:00  INFO 9384 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
-2024-05-30T09:54:11.261+09:00  INFO 9384 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+2024-05-30T09:57:20.902+09:00  INFO 9860 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2024-05-30T09:57:20.902+09:00  INFO 9860 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2024-05-30T09:57:20.902+09:00  INFO 9860 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
 
 MockHttpServletRequest:
       HTTP Method = POST
       Request URI = /api/v1/product
        Parameters = {}
-          Headers = [Content-Type:"application/json;charset=UTF-8", Authorization:"Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0cUB3YW50ZWQuY29tIiwicm9sZSI6Ik5PUk1BTCIsImlhdCI6MTcxNzAzMDQ1MSwiZXhwIjoxNzE3MDM0MDUxfQ.HEtDVDw1IpmaYy7huM7e-XEFpgMOgOL8GYiFOHQxc8c", Content-Length:"58"]
-             Body = {"productName":"aqfqhjnoml","price":97968603,"quantity":2}
+          Headers = [Content-Type:"application/json;charset=UTF-8", Authorization:"Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJMWE16REVZRkdAd2FudGVkLmNvbSIsInJvbGUiOiJOT1JNQUwiLCJpYXQiOjE3MTcwMzA2NDAsImV4cCI6MTcxNzAzNDI0MH0.p4CySpBFVY4Z-sGGEfB-oEejsMgkXFMexKtV2AevTMs", Content-Length:"58"]
+             Body = {"productName":"fiwxekvlqe","price":16540489,"quantity":2}
     Session Attrs = {}
 
 Handler:
@@ -204,7 +204,7 @@ MockHttpServletResponse:
     Error message = null
           Headers = [Vary:"Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers", Content-Type:"application/json;charset=UTF-8", X-Content-Type-Options:"nosniff", X-XSS-Protection:"0", Cache-Control:"no-cache, no-store, max-age=0, must-revalidate", Pragma:"no-cache", Expires:"0", X-Frame-Options:"DENY"]
      Content type = application/json;charset=UTF-8
-             Body = {"data":{"id":5637,"productName":"aqfqhjnoml","price":97968603,"productStatus":"ON_STOCK","seller":"qyOqBTnHKohya@wanted.com","quantity":1686},"response":{"status":200,"message":"success"}}
+             Body = {"data":{"id":3975,"productName":"fiwxekvlqe","price":16540489,"productStatus":"ON_STOCK","seller":"rzHqJMxtGLk@wanted.com","quantity":8396},"response":{"status":200,"message":"success"}}
     Forwarded URL = null
    Redirected URL = null
           Cookies = []

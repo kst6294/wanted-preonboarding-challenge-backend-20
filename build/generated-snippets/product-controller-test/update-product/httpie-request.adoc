@@ -1,10 +1,10 @@
 [source,bash]
 ----
 $ echo '{
-  "productName" : "emfzzyggwy",
-  "price" : 70906853,
-  "quantity" : 6
-}' | http PATCH 'http://localhost:8080/api/v1/product/1467' \
+  "productName" : "achmifjbkl",
+  "price" : 10277397,
+  "quantity" : 2
+}' | http PATCH 'http://localhost:8080/api/v1/product/4584' \
     'Content-Type:application/json;charset=UTF-8' \
-    'Authorization:Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJoVnBZUUB3YW50ZWQuY29tIiwicm9sZSI6Ik5PUk1BTCIsImlhdCI6MTcxNzAzMDQ1MCwiZXhwIjoxNzE3MDM0MDUwfQ.H34CeL63dnepWfp0-s1Ubu-2Takopa32tL3MfJexFJY'
+    'Authorization:Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJKb0RAd2FudGVkLmNvbSIsInJvbGUiOiJOT1JNQUwiLCJpYXQiOjE3MTcwMzA2NDAsImV4cCI6MTcxNzAzNDI0MH0.LtjfO_5xEv-Q5eT6m1ToioHkvyOCBVFcsfKCVRXq4ok'
 ----

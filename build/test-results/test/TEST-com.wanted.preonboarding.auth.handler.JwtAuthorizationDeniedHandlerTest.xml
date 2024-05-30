@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.wanted.preonboarding.auth.handler.JwtAuthorizationDeniedHandlerTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2024-05-30T00:54:07" hostname="lyusang-won-ui-MacBookPro.local" time="0.035">
+<testsuite name="com.wanted.preonboarding.auth.handler.JwtAuthorizationDeniedHandlerTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2024-05-30T00:57:14" hostname="lyusang-won-ui-MacBookPro.local" time="0.041">
   <properties/>
-  <testcase name="AuthenticationEntryPoint가 로그인 필요 메시지를 올바르게 반환하는지 테스트" classname="com.wanted.preonboarding.auth.handler.JwtAuthorizationDeniedHandlerTest" time="0.035"/>
+  <testcase name="AuthenticationEntryPoint가 로그인 필요 메시지를 올바르게 반환하는지 테스트" classname="com.wanted.preonboarding.auth.handler.JwtAuthorizationDeniedHandlerTest" time="0.041"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

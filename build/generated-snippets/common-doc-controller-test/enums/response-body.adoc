@@ -36,9 +36,9 @@
       "LATEST" : "id DESC"
     },
     "orderStatus" : {
-      "COMPLETED" : "Order status: COMPLETED",
-      "ORDERED" : "Order status: ORDERED",
-      "SETTLEMENT" : "Order status: SETTLEMENT"
+      "COMPLETED" : "예약중",
+      "ORDERED" : "판매중",
+      "SETTLEMENT" : "완료"
     },
     "userRole" : {
       "BUYER" : "판매자 / 구매자",

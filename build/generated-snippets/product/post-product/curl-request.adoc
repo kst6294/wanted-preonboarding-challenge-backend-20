@@ -2,6 +2,6 @@
 ----
 $ curl 'http://localhost:8080/api/v1/product' -i -X POST \
     -H 'Content-Type: application/json;charset=UTF-8' \
-    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0cUB3YW50ZWQuY29tIiwicm9sZSI6Ik5PUk1BTCIsImlhdCI6MTcxNzAzMDQ1MSwiZXhwIjoxNzE3MDM0MDUxfQ.HEtDVDw1IpmaYy7huM7e-XEFpgMOgOL8GYiFOHQxc8c' \
-    -d '{"productName":"aqfqhjnoml","price":97968603,"quantity":2}'
+    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJMWE16REVZRkdAd2FudGVkLmNvbSIsInJvbGUiOiJOT1JNQUwiLCJpYXQiOjE3MTcwMzA2NDAsImV4cCI6MTcxNzAzNDI0MH0.p4CySpBFVY4Z-sGGEfB-oEejsMgkXFMexKtV2AevTMs' \
+    -d '{"productName":"fiwxekvlqe","price":16540489,"quantity":2}'
 ----
