@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import wanted.challenge.mypage.entity.Member;
-import wanted.challenge.order.entity.Order;
+import wanted.challenge.mypage.entity.Orders;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -34,11 +34,11 @@ public class Goods {
 
     //memberId
     @ManyToOne
-    @JoinColumn(name = "member_id")
-    private Member member;
+    @JoinColumn(name = "seller_id")
+    private Member seller;
 
-    @OneToMany
-    private List<Order> orderList = new ArrayList<>();
+    @OneToMany(mappedBy = "goods")
+    private List<Orders> orderList = new ArrayList<>();
 
     public Goods(String goodsName, int goodsPrice, String reservedStatus, int quantity) {
         this.goodsName = goodsName;
@@ -49,13 +49,13 @@ public class Goods {
 
     // 제품 추가되면 member에도 추가
     // 추가되면, User에도 추가해야함.
-    public void setMember(Member member) {
-        this.member = member;
+    public void setSeller(Member member) {
+        this.seller = member;
         member.getGoodsList().add(this);
     }
     // 제거하면 User에도 제거해야함.
-    public void removeUser(Member member) {
+    public void removeSeller(Member member) {
         member.getGoodsList().remove(this);
-        this.member = null;
+        this.seller = null;
     }
 }

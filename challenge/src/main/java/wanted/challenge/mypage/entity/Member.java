@@ -6,7 +6,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import wanted.challenge.goods.entity.Goods;
-import wanted.challenge.order.entity.Order;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -27,10 +26,10 @@ public class Member {
 
     private LocalDateTime createdAt = LocalDateTime.now();
 
-    @OneToMany(mappedBy = "member")
+    @OneToMany(mappedBy = "seller")
     private List<Goods> goodsList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "member")
-    private List<Order> orderList = new ArrayList<>();
+    @OneToMany(mappedBy = "buyer")
+    private List<Orders> orderList = new ArrayList<>();
 
 }

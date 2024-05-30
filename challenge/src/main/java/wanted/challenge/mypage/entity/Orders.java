@@ -1,4 +1,4 @@
-package wanted.challenge.order.entity;
+package wanted.challenge.mypage.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @Setter
 @Getter
 @NoArgsConstructor
-public class Order {
+public class Orders {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,14 +34,15 @@ public class Order {
     private LocalDateTime finishDate;
 
     @ManyToOne
-    @JoinColumn(name = "member_id")
-    private Member member;
+    @JoinColumn(name = "buyer_id")
+    private Member buyer;
 
     @ManyToOne
     @JoinColumn(name = "goods_id")
     private Goods goods;
 
-    public Order(String goodsName, int orderPrice, int quantity, String orderStatus) {
+
+    public Orders(String goodsName, int orderPrice, int quantity, String orderStatus) {
         this.goodsName = goodsName;
         this.orderPrice = orderPrice;
         this.quantity = quantity;
@@ -49,8 +50,8 @@ public class Order {
     }
 
     // 주문 추가되면 member에도 추가
-    public void setMember(Member member) {
-        this.member = member;
+    public void setBuyer(Member member) {
+        this.buyer = member;
         member.getOrderList().add(this);
     }
 
@@ -58,6 +59,17 @@ public class Order {
     public void setGoods(Goods goods) {
         this.goods = goods;
         goods.getOrderList().add(this);
+    }
+
+    public void setSeller(Member member) {
+        this.goods.setSeller(member);
+    }
+
+    public Member getSeller() {
+        return this.goods.getSeller();
+    }
+    public Long getSellerId() {
+        return this.goods.getSeller().getMemberId();
     }
 
     //주문 취소는 고려하지않음
