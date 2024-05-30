@@ -41,7 +41,7 @@
 </td>
 <td>
 <div class="infoBox" id="duration">
-<div class="counter">0.846s</div>
+<div class="counter">0.861s</div>
 <p>duration</p>
 </div>
 </td>
@@ -81,61 +81,61 @@
 <tr>
 <td class="success">DetailedOrderContext 조회 - 구매자가 조회</td>
 <td class="success">fetchDetailedOrderContexts_byBuyer()</td>
-<td class="success">0.042s</td>
+<td class="success">0.043s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">DetailedOrderContext snapshot 조회 - 구매자가 조회</td>
 <td class="success">fetchDetailedOrderContexts_byBuyer_snapshot()</td>
-<td class="success">0.050s</td>
+<td class="success">0.052s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">DetailedOrderContext 조회 - 그냥 조회</td>
 <td class="success">fetchDetailedOrderContexts_byNoIssuer()</td>
-<td class="success">0.037s</td>
+<td class="success">0.034s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">DetailedOrderContext 조회 - 판매자가 조회</td>
 <td class="success">fetchDetailedOrderContexts_bySeller()</td>
-<td class="success">0.031s</td>
+<td class="success">0.033s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">DetailedOrderContext 조회 snapshot - 판매자가 조회</td>
 <td class="success">fetchDetailedOrderContexts_bySeller_snapshot()</td>
-<td class="success">0.037s</td>
+<td class="success">0.035s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">Order Entity 조회</td>
 <td class="success">fetchOrderEntity()</td>
-<td class="success">0.089s</td>
+<td class="success">0.080s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">재고 카운트 및 제품 구매 확정 단계 조회 - 예약 상태</td>
 <td class="success">fetchSettlementProductCount_booking()</td>
-<td class="success">0.039s</td>
+<td class="success">0.042s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">재고 카운트 및 제품 구매 확정 단계 조회 - 판매중 상태</td>
 <td class="success">fetchSettlementProductCount_onStock()</td>
-<td class="success">0.041s</td>
+<td class="success">0.040s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">재고 카운트 및 제품 구매 확정 단계 조회 - 완료 상태</td>
 <td class="success">fetchSettlementProductCount_outOfStock()</td>
-<td class="success">0.450s</td>
+<td class="success">0.469s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">구매이력 조회</td>
 <td class="success">hasPurchaseHistory()</td>
-<td class="success">0.030s</td>
+<td class="success">0.033s</td>
 <td class="success">passed</td>
 </tr>
 </table>
@@ -143,8 +143,8 @@
 <div id="tab1" class="tab">
 <h2>Standard output</h2>
 <span class="code">
-<pre>2024-05-30T10:47:19.427+09:00  INFO 11143 --- [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.wanted.preonboarding.module.order.repository.OrderFindRepositoryImplTest]: OrderFindRepositoryImplTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-2024-05-30T10:47:19.441+09:00  INFO 11143 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.wanted.preonboarding.PreonboardingApplication for test class com.wanted.preonboarding.module.order.repository.OrderFindRepositoryImplTest
+<pre>2024-05-30T18:12:09.439+09:00  INFO 20790 --- [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.wanted.preonboarding.module.order.repository.OrderFindRepositoryImplTest]: OrderFindRepositoryImplTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2024-05-30T18:12:09.453+09:00  INFO 20790 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.wanted.preonboarding.PreonboardingApplication for test class com.wanted.preonboarding.module.order.repository.OrderFindRepositoryImplTest
   .   ____          _            __ _ _
  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
 ( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
@@ -154,18 +154,18 @@
 
  :: Spring Boot ::                (v3.3.0)
 
-2024-05-30T10:47:19.452+09:00  INFO 11143 --- [    Test worker] c.w.p.m.o.r.OrderFindRepositoryImplTest  : Starting OrderFindRepositoryImplTest using Java 21.0.3 with PID 11143 (started by sangwon-ryu in /Users/sangwon-ryu/wanted-preonboarding-challenge-backend-20)
-2024-05-30T10:47:19.452+09:00 DEBUG 11143 --- [    Test worker] c.w.p.m.o.r.OrderFindRepositoryImplTest  : Running with Spring Boot v3.3.0, Spring v6.1.8
-2024-05-30T10:47:19.452+09:00  INFO 11143 --- [    Test worker] c.w.p.m.o.r.OrderFindRepositoryImplTest  : No active profile set, falling back to 1 default profile: &quot;default&quot;
-2024-05-30T10:47:19.490+09:00  INFO 11143 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
-2024-05-30T10:47:19.490+09:00  INFO 11143 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2024-05-30T10:47:19.505+09:00  INFO 11143 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 14 ms. Found 3 JPA repository interfaces.
-2024-05-30T10:47:19.510+09:00  INFO 11143 --- [    Test worker] beddedDataSourceBeanFactoryPostProcessor : Replacing 'dataSource' DataSource bean with embedded version
-2024-05-30T10:47:19.525+09:00  INFO 11143 --- [    Test worker] o.s.j.d.e.EmbeddedDatabaseFactory        : Starting embedded database: url='jdbc:h2:mem:e8dfb6df-d2b4-47e4-9025-6bad4beea99e;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=false', username='sa'
-2024-05-30T10:47:19.537+09:00  INFO 11143 --- [    Test worker] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
-2024-05-30T10:47:19.538+09:00  INFO 11143 --- [    Test worker] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
-2024-05-30T10:47:19.542+09:00  INFO 11143 --- [    Test worker] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
-2024-05-30T10:47:19.602+09:00  INFO 11143 --- [    Test worker] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-05-30T18:12:09.464+09:00  INFO 20790 --- [    Test worker] c.w.p.m.o.r.OrderFindRepositoryImplTest  : Starting OrderFindRepositoryImplTest using Java 21.0.3 with PID 20790 (started by sangwon-ryu in /Users/sangwon-ryu/wanted-preonboarding-challenge-backend-20)
+2024-05-30T18:12:09.465+09:00 DEBUG 20790 --- [    Test worker] c.w.p.m.o.r.OrderFindRepositoryImplTest  : Running with Spring Boot v3.3.0, Spring v6.1.8
+2024-05-30T18:12:09.465+09:00  INFO 20790 --- [    Test worker] c.w.p.m.o.r.OrderFindRepositoryImplTest  : No active profile set, falling back to 1 default profile: &quot;default&quot;
+2024-05-30T18:12:09.504+09:00  INFO 20790 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2024-05-30T18:12:09.505+09:00  INFO 20790 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-05-30T18:12:09.520+09:00  INFO 20790 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 15 ms. Found 3 JPA repository interfaces.
+2024-05-30T18:12:09.526+09:00  INFO 20790 --- [    Test worker] beddedDataSourceBeanFactoryPostProcessor : Replacing 'dataSource' DataSource bean with embedded version
+2024-05-30T18:12:09.540+09:00  INFO 20790 --- [    Test worker] o.s.j.d.e.EmbeddedDatabaseFactory        : Starting embedded database: url='jdbc:h2:mem:09d3e51a-d659-4c34-a2f0-46da4602bfe5;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=false', username='sa'
+2024-05-30T18:12:09.552+09:00  INFO 20790 --- [    Test worker] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-05-30T18:12:09.554+09:00  INFO 20790 --- [    Test worker] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2024-05-30T18:12:09.558+09:00  INFO 20790 --- [    Test worker] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-05-30T18:12:09.626+09:00  INFO 20790 --- [    Test worker] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
 Hibernate: drop table if exists orders cascade 
 Hibernate: drop table if exists orders_history cascade 
 Hibernate: drop table if exists orders_product_snapshot cascade 
@@ -182,8 +182,8 @@ Hibernate: alter table if exists orders add constraint FKsb9w6305d2be0rwbtifi7wy
 Hibernate: alter table if exists orders_history add constraint FK6j8fy7l6bc3bskbgu028ng191 foreign key (order_id) references orders
 Hibernate: alter table if exists orders_product_snapshot add constraint FKngqo5alcy00ll06engecg1vnj foreign key (product_id) references product
 Hibernate: alter table if exists product add constraint FK47nyv78b35eaufr6aa96vep6n foreign key (user_id) references users
-2024-05-30T10:47:19.610+09:00  INFO 11143 --- [    Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
-2024-05-30T10:47:19.640+09:00  INFO 11143 --- [    Test worker] c.w.p.m.o.r.OrderFindRepositoryImplTest  : Started OrderFindRepositoryImplTest in 0.198 seconds (process running for 8.762)
+2024-05-30T18:12:09.637+09:00  INFO 20790 --- [    Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-05-30T18:12:09.665+09:00  INFO 20790 --- [    Test worker] c.w.p.m.o.r.OrderFindRepositoryImplTest  : Started OrderFindRepositoryImplTest in 0.21 seconds (process running for 9.11)
 Hibernate: insert into users (delete_yn,email,insert_date,insert_operator,membership,password_hash,phone_number,update_date,update_operator,user_id) values (?,?,?,?,?,?,?,?,?,default)
 Hibernate: insert into users (delete_yn,email,insert_date,insert_operator,membership,password_hash,phone_number,update_date,update_operator,user_id) values (?,?,?,?,?,?,?,?,?,default)
 Hibernate: insert into product (delete_yn,insert_date,insert_operator,price,product_name,product_status,quantity,user_id,update_date,update_operator,product_id) values (?,?,?,?,?,?,?,?,?,?,default)
@@ -285,7 +285,7 @@ Hibernate: select opss1_0.order_id from orders_product_snapshot opss1_0 join ord
 <input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
 </label>
 </div>Generated by 
-<a href="http://www.gradle.org">Gradle 8.7</a> at 2024. 5. 30. 오전 10:47:23</p>
+<a href="http://www.gradle.org">Gradle 8.7</a> at 2024. 5. 30. 오후 6:12:13</p>
 </div>
 </div>
 </body>

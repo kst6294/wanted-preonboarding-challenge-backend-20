@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.wanted.preonboarding.module.order.service.strategy.OrderCompletedUpdateServiceTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2024-05-30T01:47:21" hostname="lyusang-won-ui-MacBookPro.local" time="0.045">
+<testsuite name="com.wanted.preonboarding.module.order.service.strategy.OrderCompletedUpdateServiceTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2024-05-30T09:12:11" hostname="lyusang-won-ui-MacBookPro.local" time="0.046">
   <properties/>
-  <testcase name="주문 상태 업데이트 - COMPLETED 상태로 변경" classname="com.wanted.preonboarding.module.order.service.strategy.OrderCompletedUpdateServiceTest" time="0.045"/>
+  <testcase name="주문 상태 업데이트 - COMPLETED 상태로 변경" classname="com.wanted.preonboarding.module.order.service.strategy.OrderCompletedUpdateServiceTest" time="0.046"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

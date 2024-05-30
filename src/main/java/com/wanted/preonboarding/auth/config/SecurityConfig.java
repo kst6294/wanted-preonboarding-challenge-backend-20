@@ -6,6 +6,7 @@ import com.wanted.preonboarding.auth.filter.CustomLoggingFilter;
 import com.wanted.preonboarding.auth.filter.JwtAuthenticationFilter;
 import com.wanted.preonboarding.auth.handler.JwtAccessDeniedHandler;
 import com.wanted.preonboarding.auth.handler.JwtAuthorizationDeniedHandler;
+import com.wanted.preonboarding.auth.service.CustomDetailUserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
@@ -26,7 +27,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @RequiredArgsConstructor
 public class SecurityConfig {
 
-
+    private final CustomDetailUserService customDetailUserService;
     private final AuthTokenProvider authTokenProvider;
     private final JwtAuthorizationDeniedHandler jwtAuthorizationDeniedHandler;
     private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
@@ -52,7 +53,8 @@ public class SecurityConfig {
                 .exceptionHandling(exceptions -> exceptions
                         .authenticationEntryPoint(jwtAuthorizationDeniedHandler)
                         .accessDeniedHandler(jwtAccessDeniedHandler)
-                );
+                )
+                .userDetailsService(customDetailUserService);
 
         http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 

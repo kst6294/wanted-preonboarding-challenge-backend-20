@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.wanted.preonboarding.module.order.validator.strategy.OrderSettlementTransitionTest" tests="4" skipped="0" failures="0" errors="0" timestamp="2024-05-30T01:47:21" hostname="lyusang-won-ui-MacBookPro.local" time="0.178">
+<testsuite name="com.wanted.preonboarding.module.order.validator.strategy.OrderSettlementTransitionTest" tests="4" skipped="0" failures="0" errors="0" timestamp="2024-05-30T09:12:11" hostname="lyusang-won-ui-MacBookPro.local" time="0.183">
   <properties/>
-  <testcase name="getHandledStatus 메서드가 COMPLETED 상태를 반환하는지 테스트" classname="com.wanted.preonboarding.module.order.validator.strategy.OrderSettlementTransitionTest" time="0.044"/>
-  <testcase name="canTransition 메서드가 SETTLEMENT 상태로 전환이 가능한지 테스트, 구매자만 업데이트 가능" classname="com.wanted.preonboarding.module.order.validator.strategy.OrderSettlementTransitionTest" time="0.043"/>
-  <testcase name="canTransition 메서드가 SETTLEMENT 상태가 아닌 상태로 전환이 불가능한지 테스트" classname="com.wanted.preonboarding.module.order.validator.strategy.OrderSettlementTransitionTest" time="0.045"/>
-  <testcase name="canTransition 메서드가 SETTLEMENT 상태로 전환이 가능한지 테스트, 판매자 업데이트시 실패" classname="com.wanted.preonboarding.module.order.validator.strategy.OrderSettlementTransitionTest" time="0.044"/>
+  <testcase name="getHandledStatus 메서드가 COMPLETED 상태를 반환하는지 테스트" classname="com.wanted.preonboarding.module.order.validator.strategy.OrderSettlementTransitionTest" time="0.045"/>
+  <testcase name="canTransition 메서드가 SETTLEMENT 상태로 전환이 가능한지 테스트, 구매자만 업데이트 가능" classname="com.wanted.preonboarding.module.order.validator.strategy.OrderSettlementTransitionTest" time="0.045"/>
+  <testcase name="canTransition 메서드가 SETTLEMENT 상태가 아닌 상태로 전환이 불가능한지 테스트" classname="com.wanted.preonboarding.module.order.validator.strategy.OrderSettlementTransitionTest" time="0.046"/>
+  <testcase name="canTransition 메서드가 SETTLEMENT 상태로 전환이 가능한지 테스트, 판매자 업데이트시 실패" classname="com.wanted.preonboarding.module.order.validator.strategy.OrderSettlementTransitionTest" time="0.046"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

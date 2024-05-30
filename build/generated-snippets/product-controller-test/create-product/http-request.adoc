@@ -2,13 +2,13 @@
 ----
 POST /api/v1/product HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJQSVdCY0B3YW50ZWQuY29tIiwicm9sZSI6Ik5PUk1BTCIsImlhdCI6MTcxNzAzMzY0MiwiZXhwIjoxNzE3MDM3MjQyfQ.bkWdTBGz6sWfQ7EFF7F4dt-mQNb8oCWyqWYtM66DqaI
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJYRE9tanFZc2FAd2FudGVkLmNvbSIsInJvbGUiOiJOT1JNQUwiLCJpYXQiOjE3MTcwNjAzMzIsImV4cCI6MTcxNzA2MzkzMn0.vhHW3aFp9N-Yiq24F-aatp9vxM23gmhYhcKqLSEKnrQ
 Content-Length: 74
 Host: localhost:8080
 
 {
-  "productName" : "lamuhcyluk",
-  "price" : 93016591,
+  "productName" : "eqlniwkdjy",
+  "price" : 38507199,
   "quantity" : 8
 }
 ----

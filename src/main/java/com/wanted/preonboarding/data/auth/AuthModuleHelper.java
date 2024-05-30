@@ -1,6 +1,7 @@
 package com.wanted.preonboarding.data.auth;
 
 import com.wanted.preonboarding.auth.core.JwtAuthToken;
+import com.wanted.preonboarding.auth.core.UserPrincipal;
 import com.wanted.preonboarding.auth.dto.CreateAuthToken;
 import com.wanted.preonboarding.data.EasyRandomUtils;
 import com.wanted.preonboarding.module.user.core.BaseUserInfo;
@@ -9,9 +10,11 @@ import com.wanted.preonboarding.module.user.enums.MemberShip;
 import io.jsonwebtoken.security.Keys;
 import org.jeasy.random.EasyRandom;
 import org.jeasy.random.randomizers.text.StringRandomizer;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import javax.crypto.spec.SecretKeySpec;
 import java.security.Key;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -75,6 +78,18 @@ public class AuthModuleHelper {
         EasyRandom instance = EasyRandomUtils.getInstance(stringObjectMap);
         return instance.nextObject(BaseUserInfo.class);
     }
+
+    public static UserPrincipal toUserPrincipal(BaseUserInfo baseUserInfo){
+        Map<String, Object> stringObjectMap = new HashMap<>();
+        stringObjectMap.put("email", baseUserInfo.getEmail());
+        stringObjectMap.put("phoneNumber", baseUserInfo.getPhoneNumber());
+        stringObjectMap.put("passwordHash", baseUserInfo.getPasswordHash());
+        stringObjectMap.put("authorities", Collections.singletonList(new SimpleGrantedAuthority(baseUserInfo.getMemberShip().name())));
+        EasyRandom instance = EasyRandomUtils.getInstance(stringObjectMap);
+        return instance.nextObject(UserPrincipal.class);
+    }
+
+
 
 
     public static BaseUserInfo toBaseUserInfo(Users users){

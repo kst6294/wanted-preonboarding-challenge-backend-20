@@ -3,6 +3,7 @@ package com.wanted.preonboarding.document.utils;
 
 import com.wanted.preonboarding.auth.controller.AuthController;
 import com.wanted.preonboarding.auth.service.AuthTokenGenerateService;
+import com.wanted.preonboarding.auth.service.CustomDetailUserService;
 import com.wanted.preonboarding.auth.service.TokenFindService;
 import com.wanted.preonboarding.auth.validator.PasswordChecker;
 import com.wanted.preonboarding.module.order.controller.OrderController;
@@ -71,6 +72,9 @@ public abstract class ControllerTest extends SecuritySupportTest {
 
     @MockBean
     protected OrderFindService orderFindService;
+
+    @MockBean
+    protected CustomDetailUserService customDetailUserService;
 
 
 }

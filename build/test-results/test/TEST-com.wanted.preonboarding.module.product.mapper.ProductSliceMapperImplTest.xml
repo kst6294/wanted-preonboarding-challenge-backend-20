@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.wanted.preonboarding.module.product.mapper.ProductSliceMapperImplTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2024-05-30T01:47:22" hostname="lyusang-won-ui-MacBookPro.local" time="0.162">
+<testsuite name="com.wanted.preonboarding.module.product.mapper.ProductSliceMapperImplTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2024-05-30T09:12:12" hostname="lyusang-won-ui-MacBookPro.local" time="0.168">
   <properties/>
-  <testcase name="toSlice: 빈 데이터 처리" classname="com.wanted.preonboarding.module.product.mapper.ProductSliceMapperImplTest" time="0.0"/>
-  <testcase name="toSlice: 데이터를 포함한 슬라이스 반환" classname="com.wanted.preonboarding.module.product.mapper.ProductSliceMapperImplTest" time="0.162"/>
+  <testcase name="toSlice: 빈 데이터 처리" classname="com.wanted.preonboarding.module.product.mapper.ProductSliceMapperImplTest" time="0.001"/>
+  <testcase name="toSlice: 데이터를 포함한 슬라이스 반환" classname="com.wanted.preonboarding.module.product.mapper.ProductSliceMapperImplTest" time="0.167"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

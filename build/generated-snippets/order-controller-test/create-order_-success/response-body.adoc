@@ -2,10 +2,10 @@
 ----
 {
   "data" : {
-    "orderId" : 88555230,
-    "productId" : 4795,
-    "buyer" : "JSUOcEEOWFb@wanted.com",
-    "seller" : "vpgVLyghKT@wanted.com",
+    "orderId" : 1377112,
+    "productId" : 1243,
+    "buyer" : "LPFrb@wanted.com",
+    "seller" : "HunFXjNX@wanted.com",
     "orderStatus" : "ORDERED"
   },
   "response" : {

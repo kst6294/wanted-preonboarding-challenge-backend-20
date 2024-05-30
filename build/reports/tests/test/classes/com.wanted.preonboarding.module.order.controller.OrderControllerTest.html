@@ -41,7 +41,7 @@
 </td>
 <td>
 <div class="infoBox" id="duration">
-<div class="counter">1.831s</div>
+<div class="counter">1.839s</div>
 <p>duration</p>
 </div>
 </td>
@@ -93,31 +93,31 @@
 <tr>
 <td class="success">주문 생성</td>
 <td class="success">createOrder_Success()</td>
-<td class="success">0.087s</td>
+<td class="success">0.073s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">유효하지 않은 주문 - 이미 구매한 제품</td>
 <td class="success">createOrder_hasPurchaseHistory()</td>
-<td class="success">0.216s</td>
+<td class="success">0.219s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">주문 실패 - 비회원</td>
 <td class="success">createOrder_unAuthorization()</td>
-<td class="success">0.135s</td>
+<td class="success">0.137s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">거래내역 조회 - 성공</td>
 <td class="success">fetchDetailedOrderContexts_success()</td>
-<td class="success">0.221s</td>
+<td class="success">0.233s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">주문 상세 조회 - 성공</td>
 <td class="success">getOrder_Success()</td>
-<td class="success">0.196s</td>
+<td class="success">0.198s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
@@ -129,19 +129,19 @@
 <tr>
 <td class="success">주문 수정 - COMPLETED 에서 COMPLETED 로 잘못된 요청</td>
 <td class="success">invalid_updateSettlement_Success()</td>
-<td class="success">0.108s</td>
+<td class="success">0.083s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">주문 수정 - COMPLETED</td>
 <td class="success">updateOrderCompleted_Success()</td>
-<td class="success">0.297s</td>
+<td class="success">0.304s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">주문 수정 - SETTLEMENT</td>
 <td class="success">updateOrderSettlement_Success()</td>
-<td class="success">0.210s</td>
+<td class="success">0.231s</td>
 <td class="success">passed</td>
 </tr>
 </table>
@@ -149,8 +149,8 @@
 <div id="tab1" class="tab">
 <h2>Standard output</h2>
 <span class="code">
-<pre>2024-05-30T10:47:17.038+09:00  INFO 11143 --- [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.wanted.preonboarding.module.order.controller.OrderControllerTest]: OrderControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-2024-05-30T10:47:17.057+09:00  INFO 11143 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.wanted.preonboarding.PreonboardingApplication for test class com.wanted.preonboarding.module.order.controller.OrderControllerTest
+<pre>2024-05-30T18:12:07.078+09:00  INFO 20790 --- [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.wanted.preonboarding.module.order.controller.OrderControllerTest]: OrderControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2024-05-30T18:12:07.096+09:00  INFO 20790 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.wanted.preonboarding.PreonboardingApplication for test class com.wanted.preonboarding.module.order.controller.OrderControllerTest
   .   ____          _            __ _ _
  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
 ( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
@@ -160,33 +160,33 @@
 
  :: Spring Boot ::                (v3.3.0)
 
-2024-05-30T10:47:17.071+09:00  INFO 11143 --- [    Test worker] c.w.p.m.o.c.OrderControllerTest          : Starting OrderControllerTest using Java 21.0.3 with PID 11143 (started by sangwon-ryu in /Users/sangwon-ryu/wanted-preonboarding-challenge-backend-20)
-2024-05-30T10:47:17.071+09:00 DEBUG 11143 --- [    Test worker] c.w.p.m.o.c.OrderControllerTest          : Running with Spring Boot v3.3.0, Spring v6.1.8
-2024-05-30T10:47:17.071+09:00  INFO 11143 --- [    Test worker] c.w.p.m.o.c.OrderControllerTest          : No active profile set, falling back to 1 default profile: &quot;default&quot;
-2024-05-30T10:47:17.246+09:00  WARN 11143 --- [    Test worker] .s.s.UserDetailsServiceAutoConfiguration : 
+2024-05-30T18:12:07.111+09:00  INFO 20790 --- [    Test worker] c.w.p.m.o.c.OrderControllerTest          : Starting OrderControllerTest using Java 21.0.3 with PID 20790 (started by sangwon-ryu in /Users/sangwon-ryu/wanted-preonboarding-challenge-backend-20)
+2024-05-30T18:12:07.111+09:00 DEBUG 20790 --- [    Test worker] c.w.p.m.o.c.OrderControllerTest          : Running with Spring Boot v3.3.0, Spring v6.1.8
+2024-05-30T18:12:07.112+09:00  INFO 20790 --- [    Test worker] c.w.p.m.o.c.OrderControllerTest          : No active profile set, falling back to 1 default profile: &quot;default&quot;
+2024-05-30T18:12:07.257+09:00  WARN 20790 --- [    Test worker] .s.s.UserDetailsServiceAutoConfiguration : 
 
-Using generated security password: a27010a4-f95e-4bea-af48-35e27e9efa65
+Using generated security password: 55b32902-fec9-44f3-bb0e-5c6f9d549b8a
 
 This generated password is for development use only. Your security configuration must be updated before running your application in production.
 
-2024-05-30T10:47:17.247+09:00  INFO 11143 --- [    Test worker] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
-2024-05-30T10:47:17.304+09:00  INFO 11143 --- [    Test worker] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@74770a8b, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@a7adeb1, org.springframework.security.web.context.SecurityContextHolderFilter@308b8e8f, org.springframework.security.web.header.HeaderWriterFilter@5a6e1f51, org.springframework.web.filter.CorsFilter@111c2c9c, org.springframework.security.web.authentication.logout.LogoutFilter@247b411d, com.wanted.preonboarding.auth.filter.JwtAuthenticationFilter@1cf676b8, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@1faa627c, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@3514624f, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@501904ff, org.springframework.security.web.session.SessionManagementFilter@5c2424a0, org.springframework.security.web.access.ExceptionTranslationFilter@79aac496, org.springframework.security.web.access.intercept.AuthorizationFilter@7e1e6f28]
-2024-05-30T10:47:17.343+09:00 DEBUG 11143 --- [    Test worker] c.w.p.auth.filter.CustomLoggingFilter    : Filter 'loggingFilterRegistration' configured for use
-2024-05-30T10:47:17.343+09:00 DEBUG 11143 --- [    Test worker] c.w.p.auth.filter.CustomLoggingFilter    : Filter 'customLoggingFilter' configured for use
-2024-05-30T10:47:17.344+09:00  INFO 11143 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
-2024-05-30T10:47:17.344+09:00  INFO 11143 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
-2024-05-30T10:47:17.344+09:00  INFO 11143 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
-2024-05-30T10:47:17.349+09:00  INFO 11143 --- [    Test worker] c.w.p.m.o.c.OrderControllerTest          : Started OrderControllerTest in 0.29 seconds (process running for 6.471)
-2024-05-30T10:47:17.355+09:00  INFO 11143 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
-2024-05-30T10:47:17.355+09:00  INFO 11143 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
-2024-05-30T10:47:17.356+09:00  INFO 11143 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+2024-05-30T18:12:07.257+09:00  WARN 20790 --- [    Test worker] r$InitializeUserDetailsManagerConfigurer : Found 2 UserDetailsService beans, with names [inMemoryUserDetailsManager, com.wanted.preonboarding.auth.service.CustomDetailUserService#0]. Global Authentication Manager will not use a UserDetailsService for username/password login. Consider publishing a single UserDetailsService bean.
+2024-05-30T18:12:07.309+09:00  INFO 20790 --- [    Test worker] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@478cea4, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@5ccb2393, org.springframework.security.web.context.SecurityContextHolderFilter@651665e5, org.springframework.security.web.header.HeaderWriterFilter@131b7eb9, org.springframework.web.filter.CorsFilter@35cca8bd, org.springframework.security.web.authentication.logout.LogoutFilter@bda763e, com.wanted.preonboarding.auth.filter.JwtAuthenticationFilter@49e84b0a, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@37a2806c, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@7f04de97, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@b27b17d, org.springframework.security.web.session.SessionManagementFilter@7f4bbb1c, org.springframework.security.web.access.ExceptionTranslationFilter@2b9f2f24, org.springframework.security.web.access.intercept.AuthorizationFilter@71f1a533]
+2024-05-30T18:12:07.346+09:00 DEBUG 20790 --- [    Test worker] c.w.p.auth.filter.CustomLoggingFilter    : Filter 'loggingFilterRegistration' configured for use
+2024-05-30T18:12:07.346+09:00 DEBUG 20790 --- [    Test worker] c.w.p.auth.filter.CustomLoggingFilter    : Filter 'customLoggingFilter' configured for use
+2024-05-30T18:12:07.346+09:00  INFO 20790 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2024-05-30T18:12:07.346+09:00  INFO 20790 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2024-05-30T18:12:07.347+09:00  INFO 20790 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+2024-05-30T18:12:07.351+09:00  INFO 20790 --- [    Test worker] c.w.p.m.o.c.OrderControllerTest          : Started OrderControllerTest in 0.252 seconds (process running for 6.796)
+2024-05-30T18:12:07.356+09:00  INFO 20790 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2024-05-30T18:12:07.356+09:00  INFO 20790 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2024-05-30T18:12:07.356+09:00  INFO 20790 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
 
 MockHttpServletRequest:
       HTTP Method = PATCH
       Request URI = /api/v1/order
        Parameters = {}
-          Headers = [Content-Type:&quot;application/json;charset=UTF-8&quot;, Authorization:&quot;Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJRaUlAd2FudGVkLmNvbSIsInJvbGUiOiJOT1JNQUwiLCJpYXQiOjE3MTcwMzM2MzcsImV4cCI6MTcxNzAzNzIzN30.nNAmr7qHxOwIWlF27QIN18gbnEkkloi8q8CmnRmCfk4&quot;, Content-Length:&quot;46&quot;]
-             Body = {&quot;orderId&quot;:35840024,&quot;orderStatus&quot;:&quot;COMPLETED&quot;}
+          Headers = [Content-Type:&quot;application/json;charset=UTF-8&quot;, Authorization:&quot;Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJyQ1NYWUhIUnl5dGNSQHdhbnRlZC5jb20iLCJyb2xlIjoiTk9STUFMIiwiaWF0IjoxNzE3MDYwMzI3LCJleHAiOjE3MTcwNjM5Mjd9.TE8noivt1o5mXfkCTC-XMck4UKWes-3KV4i-05QRGv4&quot;, Content-Length:&quot;46&quot;]
+             Body = {&quot;orderId&quot;:18910668,&quot;orderStatus&quot;:&quot;COMPLETED&quot;}
     Session Attrs = {}
 
 Handler:
@@ -213,19 +213,19 @@ MockHttpServletResponse:
     Error message = null
           Headers = [Vary:&quot;Origin&quot;, &quot;Access-Control-Request-Method&quot;, &quot;Access-Control-Request-Headers&quot;, Content-Type:&quot;application/json;charset=UTF-8&quot;, X-Content-Type-Options:&quot;nosniff&quot;, X-XSS-Protection:&quot;0&quot;, Cache-Control:&quot;no-cache, no-store, max-age=0, must-revalidate&quot;, Pragma:&quot;no-cache&quot;, Expires:&quot;0&quot;, X-Frame-Options:&quot;DENY&quot;]
      Content type = application/json;charset=UTF-8
-             Body = {&quot;data&quot;:{&quot;orderId&quot;:97149120,&quot;productId&quot;:7034,&quot;buyer&quot;:&quot;QiI@wanted.com&quot;,&quot;seller&quot;:&quot;WZVxussvGEvbDK@wanted.com&quot;,&quot;orderStatus&quot;:&quot;ORDERED&quot;},&quot;response&quot;:{&quot;status&quot;:200,&quot;message&quot;:&quot;success&quot;}}
+             Body = {&quot;data&quot;:{&quot;orderId&quot;:78549275,&quot;productId&quot;:4419,&quot;buyer&quot;:&quot;rCSXYHHRyytcR@wanted.com&quot;,&quot;seller&quot;:&quot;zRaaZ@wanted.com&quot;,&quot;orderStatus&quot;:&quot;ORDERED&quot;},&quot;response&quot;:{&quot;status&quot;:200,&quot;message&quot;:&quot;success&quot;}}
     Forwarded URL = null
    Redirected URL = null
           Cookies = []
-2024-05-30T10:47:17.652+09:00  INFO 11143 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
-2024-05-30T10:47:17.652+09:00  INFO 11143 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
-2024-05-30T10:47:17.653+09:00  INFO 11143 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+2024-05-30T18:12:07.660+09:00  INFO 20790 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2024-05-30T18:12:07.660+09:00  INFO 20790 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2024-05-30T18:12:07.661+09:00  INFO 20790 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
 
 MockHttpServletRequest:
       HTTP Method = GET
-      Request URI = /api/v1/order/44844781
+      Request URI = /api/v1/order/49220169
        Parameters = {}
-          Headers = [Content-Type:&quot;application/json;charset=UTF-8&quot;, Authorization:&quot;Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJxQktaZk5pc0ZAd2FudGVkLmNvbSIsInJvbGUiOiJOT1JNQUwiLCJpYXQiOjE3MTcwMzM2MzcsImV4cCI6MTcxNzAzNzIzN30.PvYC2gq2v_b1dcgTixuNdxlcQLH0Cu26qvF43PuLE-w&quot;]
+          Headers = [Content-Type:&quot;application/json;charset=UTF-8&quot;, Authorization:&quot;Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJpc2ZvZ0VsdVdTYkhAd2FudGVkLmNvbSIsInJvbGUiOiJOT1JNQUwiLCJpYXQiOjE3MTcwNjAzMjcsImV4cCI6MTcxNzA2MzkyN30.hPDIXTqBpnwBqyuO2gtkIgXeqYK46TJddmnHZclHZjE&quot;]
              Body = null
     Session Attrs = {}
 
@@ -253,20 +253,20 @@ MockHttpServletResponse:
     Error message = null
           Headers = [Vary:&quot;Origin&quot;, &quot;Access-Control-Request-Method&quot;, &quot;Access-Control-Request-Headers&quot;, Content-Type:&quot;application/json;charset=UTF-8&quot;, X-Content-Type-Options:&quot;nosniff&quot;, X-XSS-Protection:&quot;0&quot;, Cache-Control:&quot;no-cache, no-store, max-age=0, must-revalidate&quot;, Pragma:&quot;no-cache&quot;, Expires:&quot;0&quot;, X-Frame-Options:&quot;DENY&quot;]
      Content type = application/json;charset=UTF-8
-             Body = {&quot;data&quot;:[{&quot;orderId&quot;:44844781,&quot;productId&quot;:5163,&quot;buyer&quot;:&quot;qBKZfNisF@wanted.com&quot;,&quot;seller&quot;:&quot;nadbzvitzf&quot;,&quot;orderStatus&quot;:&quot;ORDERED&quot;,&quot;price&quot;:97198862,&quot;productName&quot;:&quot;ufxnsnkhdt&quot;,&quot;insertDate&quot;:&quot;2013-10-13 18:30:26&quot;,&quot;isCurrentUserSeller&quot;:false},{&quot;orderId&quot;:44844781,&quot;productId&quot;:5163,&quot;buyer&quot;:&quot;qBKZfNisF@wanted.com&quot;,&quot;seller&quot;:&quot;nadbzvitzf&quot;,&quot;orderStatus&quot;:&quot;COMPLETED&quot;,&quot;price&quot;:97198862,&quot;productName&quot;:&quot;ufxnsnkhdt&quot;,&quot;insertDate&quot;:&quot;2013-10-13 18:30:26&quot;,&quot;isCurrentUserSeller&quot;:false},{&quot;orderId&quot;:44844781,&quot;productId&quot;:5163,&quot;buyer&quot;:&quot;qBKZfNisF@wanted.com&quot;,&quot;seller&quot;:&quot;nadbzvitzf&quot;,&quot;orderStatus&quot;:&quot;SETTLEMENT&quot;,&quot;price&quot;:97198862,&quot;productName&quot;:&quot;ufxnsnkhdt&quot;,&quot;insertDate&quot;:&quot;2013-10-13 18:30:26&quot;,&quot;isCurrentUserSeller&quot;:false}],&quot;response&quot;:{&quot;status&quot;:200,&quot;message&quot;:&quot;success&quot;}}
+             Body = {&quot;data&quot;:[{&quot;orderId&quot;:49220169,&quot;productId&quot;:9967,&quot;buyer&quot;:&quot;isfogEluWSbH@wanted.com&quot;,&quot;seller&quot;:&quot;ywmnvuflqd&quot;,&quot;orderStatus&quot;:&quot;ORDERED&quot;,&quot;price&quot;:50748158,&quot;productName&quot;:&quot;cxgvojgvwr&quot;,&quot;insertDate&quot;:&quot;2013-10-13 18:30:26&quot;,&quot;isCurrentUserSeller&quot;:false},{&quot;orderId&quot;:49220169,&quot;productId&quot;:9967,&quot;buyer&quot;:&quot;isfogEluWSbH@wanted.com&quot;,&quot;seller&quot;:&quot;ywmnvuflqd&quot;,&quot;orderStatus&quot;:&quot;COMPLETED&quot;,&quot;price&quot;:50748158,&quot;productName&quot;:&quot;cxgvojgvwr&quot;,&quot;insertDate&quot;:&quot;2013-10-13 18:30:26&quot;,&quot;isCurrentUserSeller&quot;:false},{&quot;orderId&quot;:49220169,&quot;productId&quot;:9967,&quot;buyer&quot;:&quot;isfogEluWSbH@wanted.com&quot;,&quot;seller&quot;:&quot;ywmnvuflqd&quot;,&quot;orderStatus&quot;:&quot;SETTLEMENT&quot;,&quot;price&quot;:50748158,&quot;productName&quot;:&quot;cxgvojgvwr&quot;,&quot;insertDate&quot;:&quot;2013-10-13 18:30:26&quot;,&quot;isCurrentUserSeller&quot;:false}],&quot;response&quot;:{&quot;status&quot;:200,&quot;message&quot;:&quot;success&quot;}}
     Forwarded URL = null
    Redirected URL = null
           Cookies = []
-2024-05-30T10:47:17.848+09:00  INFO 11143 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
-2024-05-30T10:47:17.848+09:00  INFO 11143 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
-2024-05-30T10:47:17.848+09:00  INFO 11143 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+2024-05-30T18:12:07.859+09:00  INFO 20790 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2024-05-30T18:12:07.859+09:00  INFO 20790 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2024-05-30T18:12:07.859+09:00  INFO 20790 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
 
 MockHttpServletRequest:
       HTTP Method = POST
       Request URI = /api/v1/order
        Parameters = {}
-          Headers = [Content-Type:&quot;application/json;charset=UTF-8&quot;, Authorization:&quot;Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJYcUlVWlpURFFVQHdhbnRlZC5jb20iLCJyb2xlIjoiTk9STUFMIiwiaWF0IjoxNzE3MDMzNjM3LCJleHAiOjE3MTcwMzcyMzd9.OWBeyRxlT6QudROvlyzruy69X97erBYgNsvGFMY8oX8&quot;, Content-Length:&quot;18&quot;]
-             Body = {&quot;productId&quot;:1302}
+          Headers = [Content-Type:&quot;application/json;charset=UTF-8&quot;, Authorization:&quot;Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzSUNla2FVWVJAd2FudGVkLmNvbSIsInJvbGUiOiJOT1JNQUwiLCJpYXQiOjE3MTcwNjAzMjcsImV4cCI6MTcxNzA2MzkyN30.ZcRztwHeTDCN7UIn1RfAYGtDl11bPz2lhA6Upk959Qo&quot;, Content-Length:&quot;18&quot;]
+             Body = {&quot;productId&quot;:8238}
     Session Attrs = {}
 
 Handler:
@@ -293,20 +293,20 @@ MockHttpServletResponse:
     Error message = null
           Headers = [Vary:&quot;Origin&quot;, &quot;Access-Control-Request-Method&quot;, &quot;Access-Control-Request-Headers&quot;, Content-Type:&quot;application/json;charset=UTF-8&quot;, X-Content-Type-Options:&quot;nosniff&quot;, X-XSS-Protection:&quot;0&quot;, Cache-Control:&quot;no-cache, no-store, max-age=0, must-revalidate&quot;, Pragma:&quot;no-cache&quot;, Expires:&quot;0&quot;, X-Frame-Options:&quot;DENY&quot;]
      Content type = application/json;charset=UTF-8
-             Body = {&quot;status&quot;:400,&quot;message&quot;:&quot;createOrder 구매 이력이 존재합니다. createOrder &quot;,&quot;timestamp&quot;:&quot;2024-05-30 10:47:18&quot;,&quot;error&quot;:&quot;BeanPropertyBindingResult&quot;}
+             Body = {&quot;status&quot;:400,&quot;message&quot;:&quot;createOrder  createOrder 구매 이력이 존재합니다.&quot;,&quot;timestamp&quot;:&quot;2024-05-30 18:12:08&quot;,&quot;error&quot;:&quot;BeanPropertyBindingResult&quot;}
     Forwarded URL = null
    Redirected URL = null
           Cookies = []
-2024-05-30T10:47:18.064+09:00  INFO 11143 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
-2024-05-30T10:47:18.064+09:00  INFO 11143 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
-2024-05-30T10:47:18.064+09:00  INFO 11143 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+2024-05-30T18:12:08.078+09:00  INFO 20790 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2024-05-30T18:12:08.078+09:00  INFO 20790 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2024-05-30T18:12:08.078+09:00  INFO 20790 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
 
 MockHttpServletRequest:
       HTTP Method = POST
       Request URI = /api/v1/order
        Parameters = {}
-          Headers = [Content-Type:&quot;application/json;charset=UTF-8&quot;, Authorization:&quot;Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJCYWhAd2FudGVkLmNvbSIsInJvbGUiOiJOT1JNQUwiLCJpYXQiOjE3MTcwMzM2MzgsImV4cCI6MTcxNzAzNzIzOH0.jCDnogTzKCjgwLWi0NheZ5BIwO6XBHV3k7GrkEPTBE0&quot;, Content-Length:&quot;18&quot;]
-             Body = {&quot;productId&quot;:9946}
+          Headers = [Content-Type:&quot;application/json;charset=UTF-8&quot;, Authorization:&quot;Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJQellqUWJWb2lEUUB3YW50ZWQuY29tIiwicm9sZSI6Ik5PUk1BTCIsImlhdCI6MTcxNzA2MDMyOCwiZXhwIjoxNzE3MDYzOTI4fQ.T8VU7F6nqzNGA_m_z_FpLmBtcoKrgx3Pp4qG3f70d3I&quot;, Content-Length:&quot;18&quot;]
+             Body = {&quot;productId&quot;:3108}
     Session Attrs = {}
 
 Handler:
@@ -333,20 +333,20 @@ MockHttpServletResponse:
     Error message = null
           Headers = [Vary:&quot;Origin&quot;, &quot;Access-Control-Request-Method&quot;, &quot;Access-Control-Request-Headers&quot;, Content-Type:&quot;application/json;charset=UTF-8&quot;, X-Content-Type-Options:&quot;nosniff&quot;, X-XSS-Protection:&quot;0&quot;, Cache-Control:&quot;no-cache, no-store, max-age=0, must-revalidate&quot;, Pragma:&quot;no-cache&quot;, Expires:&quot;0&quot;, X-Frame-Options:&quot;DENY&quot;]
      Content type = application/json;charset=UTF-8
-             Body = {&quot;status&quot;:400,&quot;message&quot;:&quot;createOrder 이미 예약중 또는 판매완료 된 상품 입니다. &quot;,&quot;timestamp&quot;:&quot;2024-05-30 10:47:18&quot;,&quot;error&quot;:&quot;BeanPropertyBindingResult&quot;}
+             Body = {&quot;status&quot;:400,&quot;message&quot;:&quot;createOrder 이미 예약중 또는 판매완료 된 상품 입니다. &quot;,&quot;timestamp&quot;:&quot;2024-05-30 18:12:08&quot;,&quot;error&quot;:&quot;BeanPropertyBindingResult&quot;}
     Forwarded URL = null
    Redirected URL = null
           Cookies = []
-2024-05-30T10:47:18.273+09:00  INFO 11143 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
-2024-05-30T10:47:18.274+09:00  INFO 11143 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
-2024-05-30T10:47:18.274+09:00  INFO 11143 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+2024-05-30T18:12:08.288+09:00  INFO 20790 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2024-05-30T18:12:08.289+09:00  INFO 20790 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2024-05-30T18:12:08.289+09:00  INFO 20790 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
 
 MockHttpServletRequest:
       HTTP Method = POST
       Request URI = /api/v1/order
        Parameters = {}
           Headers = [Content-Type:&quot;application/json;charset=UTF-8&quot;, Content-Length:&quot;18&quot;]
-             Body = {&quot;productId&quot;:7807}
+             Body = {&quot;productId&quot;:6731}
     Session Attrs = {}
 
 Handler:
@@ -377,16 +377,16 @@ MockHttpServletResponse:
     Forwarded URL = null
    Redirected URL = null
           Cookies = []
-2024-05-30T10:47:18.408+09:00  INFO 11143 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
-2024-05-30T10:47:18.408+09:00  INFO 11143 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
-2024-05-30T10:47:18.409+09:00  INFO 11143 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+2024-05-30T18:12:08.425+09:00  INFO 20790 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2024-05-30T18:12:08.425+09:00  INFO 20790 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2024-05-30T18:12:08.425+09:00  INFO 20790 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
 
 MockHttpServletRequest:
       HTTP Method = PATCH
       Request URI = /api/v1/order
        Parameters = {}
-          Headers = [Content-Type:&quot;application/json;charset=UTF-8&quot;, Authorization:&quot;Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJMR0NkVkB3YW50ZWQuY29tIiwicm9sZSI6Ik5PUk1BTCIsImlhdCI6MTcxNzAzMzYzOCwiZXhwIjoxNzE3MDM3MjM4fQ.0gSWClrjPpNgw5pG0r9m2XRgdzDOngkz-776opJlqys&quot;, Content-Length:&quot;47&quot;]
-             Body = {&quot;orderId&quot;:78934527,&quot;orderStatus&quot;:&quot;SETTLEMENT&quot;}
+          Headers = [Content-Type:&quot;application/json;charset=UTF-8&quot;, Authorization:&quot;Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJTV3lIQHdhbnRlZC5jb20iLCJyb2xlIjoiTk9STUFMIiwiaWF0IjoxNzE3MDYwMzI4LCJleHAiOjE3MTcwNjM5Mjh9.Zr_ylJpqlq2khx73u9ZFhvHycH04TmTpW75u1SkCAjw&quot;, Content-Length:&quot;47&quot;]
+             Body = {&quot;orderId&quot;:49471711,&quot;orderStatus&quot;:&quot;SETTLEMENT&quot;}
     Session Attrs = {}
 
 Handler:
@@ -413,20 +413,20 @@ MockHttpServletResponse:
     Error message = null
           Headers = [Vary:&quot;Origin&quot;, &quot;Access-Control-Request-Method&quot;, &quot;Access-Control-Request-Headers&quot;, Content-Type:&quot;application/json;charset=UTF-8&quot;, X-Content-Type-Options:&quot;nosniff&quot;, X-XSS-Protection:&quot;0&quot;, Cache-Control:&quot;no-cache, no-store, max-age=0, must-revalidate&quot;, Pragma:&quot;no-cache&quot;, Expires:&quot;0&quot;, X-Frame-Options:&quot;DENY&quot;]
      Content type = application/json;charset=UTF-8
-             Body = {&quot;data&quot;:{&quot;orderId&quot;:52286179,&quot;productId&quot;:2281,&quot;buyer&quot;:&quot;LGCdV@wanted.com&quot;,&quot;seller&quot;:&quot;iFybfqrncFsW@wanted.com&quot;,&quot;orderStatus&quot;:&quot;COMPLETED&quot;},&quot;response&quot;:{&quot;status&quot;:200,&quot;message&quot;:&quot;success&quot;}}
+             Body = {&quot;data&quot;:{&quot;orderId&quot;:70317076,&quot;productId&quot;:5641,&quot;buyer&quot;:&quot;SWyH@wanted.com&quot;,&quot;seller&quot;:&quot;HBps@wanted.com&quot;,&quot;orderStatus&quot;:&quot;COMPLETED&quot;},&quot;response&quot;:{&quot;status&quot;:200,&quot;message&quot;:&quot;success&quot;}}
     Forwarded URL = null
    Redirected URL = null
           Cookies = []
-2024-05-30T10:47:18.618+09:00  INFO 11143 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
-2024-05-30T10:47:18.618+09:00  INFO 11143 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
-2024-05-30T10:47:18.619+09:00  INFO 11143 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+2024-05-30T18:12:08.656+09:00  INFO 20790 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2024-05-30T18:12:08.656+09:00  INFO 20790 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2024-05-30T18:12:08.656+09:00  INFO 20790 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
 
 MockHttpServletRequest:
       HTTP Method = PATCH
       Request URI = /api/v1/order
        Parameters = {}
-          Headers = [Content-Type:&quot;application/json;charset=UTF-8&quot;, Authorization:&quot;Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJQQ3FhVnRURVF2R0B3YW50ZWQuY29tIiwicm9sZSI6Ik5PUk1BTCIsImlhdCI6MTcxNzAzMzYzOCwiZXhwIjoxNzE3MDM3MjM4fQ.cTxYggxmx1SzyRd-eDgLwUBnF5-6CoLa48XAOwHL7n0&quot;, Content-Length:&quot;47&quot;]
-             Body = {&quot;orderId&quot;:94060162,&quot;orderStatus&quot;:&quot;SETTLEMENT&quot;}
+          Headers = [Content-Type:&quot;application/json;charset=UTF-8&quot;, Authorization:&quot;Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJlVFhQT05CdG5LdE9Ad2FudGVkLmNvbSIsInJvbGUiOiJOT1JNQUwiLCJpYXQiOjE3MTcwNjAzMjgsImV4cCI6MTcxNzA2MzkyOH0.abzM6htDqzXzyZSMJjns_i-06bLmcfb10ICdp_CpdLU&quot;, Content-Length:&quot;47&quot;]
+             Body = {&quot;orderId&quot;:73282218,&quot;orderStatus&quot;:&quot;SETTLEMENT&quot;}
     Session Attrs = {}
 
 Handler:
@@ -453,20 +453,20 @@ MockHttpServletResponse:
     Error message = null
           Headers = [Vary:&quot;Origin&quot;, &quot;Access-Control-Request-Method&quot;, &quot;Access-Control-Request-Headers&quot;, Content-Type:&quot;application/json;charset=UTF-8&quot;, X-Content-Type-Options:&quot;nosniff&quot;, X-XSS-Protection:&quot;0&quot;, Cache-Control:&quot;no-cache, no-store, max-age=0, must-revalidate&quot;, Pragma:&quot;no-cache&quot;, Expires:&quot;0&quot;, X-Frame-Options:&quot;DENY&quot;]
      Content type = application/json;charset=UTF-8
-             Body = {&quot;status&quot;:400,&quot;message&quot;:&quot;updateOrder 해당 주문의 주문 상태 변경을 지원 하지 않습니다. 주문 번호 ::: 94060162 현재 주문 상태 ::: ORDERED 변경 불가 상태 ::: SETTLEMENT&quot;,&quot;timestamp&quot;:&quot;2024-05-30 10:47:18&quot;,&quot;error&quot;:&quot;BeanPropertyBindingResult&quot;}
+             Body = {&quot;status&quot;:400,&quot;message&quot;:&quot;updateOrder 해당 주문의 주문 상태 변경을 지원 하지 않습니다. 주문 번호 ::: 73282218 현재 주문 상태 ::: ORDERED 변경 불가 상태 ::: SETTLEMENT&quot;,&quot;timestamp&quot;:&quot;2024-05-30 18:12:08&quot;,&quot;error&quot;:&quot;BeanPropertyBindingResult&quot;}
     Forwarded URL = null
    Redirected URL = null
           Cookies = []
-2024-05-30T10:47:18.697+09:00  INFO 11143 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
-2024-05-30T10:47:18.697+09:00  INFO 11143 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
-2024-05-30T10:47:18.697+09:00  INFO 11143 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+2024-05-30T18:12:08.734+09:00  INFO 20790 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2024-05-30T18:12:08.734+09:00  INFO 20790 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2024-05-30T18:12:08.734+09:00  INFO 20790 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
 
 MockHttpServletRequest:
       HTTP Method = POST
       Request URI = /api/v1/order
        Parameters = {}
-          Headers = [Content-Type:&quot;application/json;charset=UTF-8&quot;, Authorization:&quot;Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJsbnRUc3FSQHdhbnRlZC5jb20iLCJyb2xlIjoiTk9STUFMIiwiaWF0IjoxNzE3MDMzNjM4LCJleHAiOjE3MTcwMzcyMzh9.q_vvVfebvZs79WSr04PcdlBYxvQmEAGoi2k8xmqZ4Lg&quot;, Content-Length:&quot;22&quot;]
-             Body = {&quot;productId&quot;:26103552}
+          Headers = [Content-Type:&quot;application/json;charset=UTF-8&quot;, Authorization:&quot;Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJuWVlMT0hySWFAd2FudGVkLmNvbSIsInJvbGUiOiJOT1JNQUwiLCJpYXQiOjE3MTcwNjAzMjgsImV4cCI6MTcxNzA2MzkyOH0.pQSiRMZx-WJhqC_Spd0tpy8B4xYZH1hl_fH6-lbsJEQ&quot;, Content-Length:&quot;22&quot;]
+             Body = {&quot;productId&quot;:79542246}
     Session Attrs = {}
 
 Handler:
@@ -493,20 +493,20 @@ MockHttpServletResponse:
     Error message = null
           Headers = [Vary:&quot;Origin&quot;, &quot;Access-Control-Request-Method&quot;, &quot;Access-Control-Request-Headers&quot;, Content-Type:&quot;application/json;charset=UTF-8&quot;, X-Content-Type-Options:&quot;nosniff&quot;, X-XSS-Protection:&quot;0&quot;, Cache-Control:&quot;no-cache, no-store, max-age=0, must-revalidate&quot;, Pragma:&quot;no-cache&quot;, Expires:&quot;0&quot;, X-Frame-Options:&quot;DENY&quot;]
      Content type = application/json;charset=UTF-8
-             Body = {&quot;status&quot;:400,&quot;message&quot;:&quot;createOrder 해당 상품을 찾을 수 없습니다. 상품 ID: 26103552 createOrder &quot;,&quot;timestamp&quot;:&quot;2024-05-30 10:47:18&quot;,&quot;error&quot;:&quot;BeanPropertyBindingResult&quot;}
+             Body = {&quot;status&quot;:400,&quot;message&quot;:&quot;createOrder 해당 상품을 찾을 수 없습니다. 상품 ID: 79542246 createOrder &quot;,&quot;timestamp&quot;:&quot;2024-05-30 18:12:08&quot;,&quot;error&quot;:&quot;BeanPropertyBindingResult&quot;}
     Forwarded URL = null
    Redirected URL = null
           Cookies = []
-2024-05-30T10:47:18.770+09:00  INFO 11143 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
-2024-05-30T10:47:18.770+09:00  INFO 11143 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
-2024-05-30T10:47:18.770+09:00  INFO 11143 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+2024-05-30T18:12:08.810+09:00  INFO 20790 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2024-05-30T18:12:08.810+09:00  INFO 20790 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2024-05-30T18:12:08.810+09:00  INFO 20790 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
 
 MockHttpServletRequest:
       HTTP Method = PATCH
       Request URI = /api/v1/order
        Parameters = {}
-          Headers = [Content-Type:&quot;application/json;charset=UTF-8&quot;, Authorization:&quot;Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJXTUVLSUpDb0B3YW50ZWQuY29tIiwicm9sZSI6Ik5PUk1BTCIsImlhdCI6MTcxNzAzMzYzOCwiZXhwIjoxNzE3MDM3MjM4fQ.kxDfVDZiqqPvQlno0WOLqgkqr5CLU1yr2Il7J4PWjWs&quot;, Content-Length:&quot;46&quot;]
-             Body = {&quot;orderId&quot;:11193367,&quot;orderStatus&quot;:&quot;COMPLETED&quot;}
+          Headers = [Content-Type:&quot;application/json;charset=UTF-8&quot;, Authorization:&quot;Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJpUEhmVmZNQ3RMQURDdUB3YW50ZWQuY29tIiwicm9sZSI6Ik5PUk1BTCIsImlhdCI6MTcxNzA2MDMyOCwiZXhwIjoxNzE3MDYzOTI4fQ.0I73a-cdwizMiVoG1Ej4yslZXjsxY_K5-4zmrfa9UUs&quot;, Content-Length:&quot;46&quot;]
+             Body = {&quot;orderId&quot;:88695019,&quot;orderStatus&quot;:&quot;COMPLETED&quot;}
     Session Attrs = {}
 
 Handler:
@@ -533,20 +533,20 @@ MockHttpServletResponse:
     Error message = null
           Headers = [Vary:&quot;Origin&quot;, &quot;Access-Control-Request-Method&quot;, &quot;Access-Control-Request-Headers&quot;, Content-Type:&quot;application/json;charset=UTF-8&quot;, X-Content-Type-Options:&quot;nosniff&quot;, X-XSS-Protection:&quot;0&quot;, Cache-Control:&quot;no-cache, no-store, max-age=0, must-revalidate&quot;, Pragma:&quot;no-cache&quot;, Expires:&quot;0&quot;, X-Frame-Options:&quot;DENY&quot;]
      Content type = application/json;charset=UTF-8
-             Body = {&quot;status&quot;:400,&quot;message&quot;:&quot;updateOrder 해당 주문의 주문 상태 변경을 지원 하지 않습니다. 주문 번호 ::: 11193367 현재 주문 상태 ::: COMPLETED 변경 불가 상태 ::: COMPLETED&quot;,&quot;timestamp&quot;:&quot;2024-05-30 10:47:18&quot;,&quot;error&quot;:&quot;BeanPropertyBindingResult&quot;}
+             Body = {&quot;status&quot;:400,&quot;message&quot;:&quot;updateOrder 해당 주문의 주문 상태 변경을 지원 하지 않습니다. 주문 번호 ::: 88695019 현재 주문 상태 ::: COMPLETED 변경 불가 상태 ::: COMPLETED&quot;,&quot;timestamp&quot;:&quot;2024-05-30 18:12:08&quot;,&quot;error&quot;:&quot;BeanPropertyBindingResult&quot;}
     Forwarded URL = null
    Redirected URL = null
           Cookies = []
-2024-05-30T10:47:18.878+09:00  INFO 11143 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
-2024-05-30T10:47:18.878+09:00  INFO 11143 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
-2024-05-30T10:47:18.879+09:00  INFO 11143 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+2024-05-30T18:12:08.890+09:00  INFO 20790 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2024-05-30T18:12:08.890+09:00  INFO 20790 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2024-05-30T18:12:08.890+09:00  INFO 20790 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
 
 MockHttpServletRequest:
       HTTP Method = POST
       Request URI = /api/v1/order
        Parameters = {}
-          Headers = [Content-Type:&quot;application/json;charset=UTF-8&quot;, Authorization:&quot;Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJKU1VPY0VFT1dGYkB3YW50ZWQuY29tIiwicm9sZSI6Ik5PUk1BTCIsImlhdCI6MTcxNzAzMzYzOCwiZXhwIjoxNzE3MDM3MjM4fQ.P6fd3blszNHUqhKO8deIUAIU7zC8vLEe-tElaCluBDE&quot;, Content-Length:&quot;18&quot;]
-             Body = {&quot;productId&quot;:4795}
+          Headers = [Content-Type:&quot;application/json;charset=UTF-8&quot;, Authorization:&quot;Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJMUEZyYkB3YW50ZWQuY29tIiwicm9sZSI6Ik5PUk1BTCIsImlhdCI6MTcxNzA2MDMyOCwiZXhwIjoxNzE3MDYzOTI4fQ.4FGjZhvhPtFKanGYAamX3G74unbm20nekBVjujfQ7Yo&quot;, Content-Length:&quot;18&quot;]
+             Body = {&quot;productId&quot;:1243}
     Session Attrs = {}
 
 Handler:
@@ -573,19 +573,19 @@ MockHttpServletResponse:
     Error message = null
           Headers = [Vary:&quot;Origin&quot;, &quot;Access-Control-Request-Method&quot;, &quot;Access-Control-Request-Headers&quot;, Content-Type:&quot;application/json;charset=UTF-8&quot;, X-Content-Type-Options:&quot;nosniff&quot;, X-XSS-Protection:&quot;0&quot;, Cache-Control:&quot;no-cache, no-store, max-age=0, must-revalidate&quot;, Pragma:&quot;no-cache&quot;, Expires:&quot;0&quot;, X-Frame-Options:&quot;DENY&quot;]
      Content type = application/json;charset=UTF-8
-             Body = {&quot;data&quot;:{&quot;orderId&quot;:88555230,&quot;productId&quot;:4795,&quot;buyer&quot;:&quot;JSUOcEEOWFb@wanted.com&quot;,&quot;seller&quot;:&quot;vpgVLyghKT@wanted.com&quot;,&quot;orderStatus&quot;:&quot;ORDERED&quot;},&quot;response&quot;:{&quot;status&quot;:200,&quot;message&quot;:&quot;success&quot;}}
+             Body = {&quot;data&quot;:{&quot;orderId&quot;:1377112,&quot;productId&quot;:1243,&quot;buyer&quot;:&quot;LPFrb@wanted.com&quot;,&quot;seller&quot;:&quot;HunFXjNX@wanted.com&quot;,&quot;orderStatus&quot;:&quot;ORDERED&quot;},&quot;response&quot;:{&quot;status&quot;:200,&quot;message&quot;:&quot;success&quot;}}
     Forwarded URL = null
    Redirected URL = null
           Cookies = []
-2024-05-30T10:47:18.965+09:00  INFO 11143 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
-2024-05-30T10:47:18.965+09:00  INFO 11143 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
-2024-05-30T10:47:18.965+09:00  INFO 11143 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+2024-05-30T18:12:08.965+09:00  INFO 20790 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2024-05-30T18:12:08.965+09:00  INFO 20790 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2024-05-30T18:12:08.965+09:00  INFO 20790 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
 
 MockHttpServletRequest:
       HTTP Method = GET
       Request URI = /api/v1/orders
        Parameters = {size=[5]}
-          Headers = [Content-Type:&quot;application/json;charset=UTF-8&quot;, Authorization:&quot;Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkWFJlYlhAd2FudGVkLmNvbSIsInJvbGUiOiJOT1JNQUwiLCJpYXQiOjE3MTcwMzM2MzgsImV4cCI6MTcxNzAzNzIzOH0.523_RjphAnnk8Uf0bfVgTiZgsT65u0u11m9xJnQh1xc&quot;]
+          Headers = [Content-Type:&quot;application/json;charset=UTF-8&quot;, Authorization:&quot;Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJESmFRWVZAd2FudGVkLmNvbSIsInJvbGUiOiJOT1JNQUwiLCJpYXQiOjE3MTcwNjAzMjgsImV4cCI6MTcxNzA2MzkyOH0.h7zkYr8cLUFTfIVfHxUoz2ZXwq-8_HtD5YqnJjcJrKU&quot;]
              Body = null
     Session Attrs = {}
 
@@ -613,7 +613,7 @@ MockHttpServletResponse:
     Error message = null
           Headers = [Vary:&quot;Origin&quot;, &quot;Access-Control-Request-Method&quot;, &quot;Access-Control-Request-Headers&quot;, Content-Type:&quot;application/json;charset=UTF-8&quot;, X-Content-Type-Options:&quot;nosniff&quot;, X-XSS-Protection:&quot;0&quot;, Cache-Control:&quot;no-cache, no-store, max-age=0, must-revalidate&quot;, Pragma:&quot;no-cache&quot;, Expires:&quot;0&quot;, X-Frame-Options:&quot;DENY&quot;]
      Content type = application/json;charset=UTF-8
-             Body = {&quot;data&quot;:{&quot;content&quot;:[{&quot;orderId&quot;:10457316,&quot;productId&quot;:5000,&quot;buyer&quot;:&quot;dXRebX@wanted.com&quot;,&quot;seller&quot;:&quot;bjzomsanry&quot;,&quot;orderStatus&quot;:&quot;ORDERED&quot;,&quot;price&quot;:59152226,&quot;productName&quot;:&quot;kuflqiiglq&quot;,&quot;insertDate&quot;:&quot;2013-10-13 18:30:26&quot;,&quot;isCurrentUserSeller&quot;:false},{&quot;orderId&quot;:33367137,&quot;productId&quot;:3899,&quot;buyer&quot;:&quot;dXRebX@wanted.com&quot;,&quot;seller&quot;:&quot;lhhkahpclm&quot;,&quot;orderStatus&quot;:&quot;ORDERED&quot;,&quot;price&quot;:4907141,&quot;productName&quot;:&quot;hlhwczzsru&quot;,&quot;insertDate&quot;:&quot;2013-10-13 18:30:26&quot;,&quot;isCurrentUserSeller&quot;:false},{&quot;orderId&quot;:72432383,&quot;productId&quot;:3167,&quot;buyer&quot;:&quot;dXRebX@wanted.com&quot;,&quot;seller&quot;:&quot;owbzfxqglv&quot;,&quot;orderStatus&quot;:&quot;ORDERED&quot;,&quot;price&quot;:95135086,&quot;productName&quot;:&quot;wxuwxwurll&quot;,&quot;insertDate&quot;:&quot;2013-10-13 18:30:26&quot;,&quot;isCurrentUserSeller&quot;:false},{&quot;orderId&quot;:40463036,&quot;productId&quot;:5402,&quot;buyer&quot;:&quot;dXRebX@wanted.com&quot;,&quot;seller&quot;:&quot;zjwlarwktm&quot;,&quot;orderStatus&quot;:&quot;ORDERED&quot;,&quot;price&quot;:24447246,&quot;productName&quot;:&quot;ldrjrrnrwk&quot;,&quot;insertDate&quot;:&quot;2013-10-13 18:30:26&quot;,&quot;isCurrentUserSeller&quot;:false},{&quot;orderId&quot;:72718426,&quot;productId&quot;:3994,&quot;buyer&quot;:&quot;dXRebX@wanted.com&quot;,&quot;seller&quot;:&quot;bstwvcowwd&quot;,&quot;orderStatus&quot;:&quot;ORDERED&quot;,&quot;price&quot;:51017956,&quot;productName&quot;:&quot;tmoxnpqulz&quot;,&quot;insertDate&quot;:&quot;2013-10-13 18:30:26&quot;,&quot;isCurrentUserSeller&quot;:false}],&quot;last&quot;:false,&quot;first&quot;:true,&quot;number&quot;:0,&quot;sort&quot;:{&quot;empty&quot;:true,&quot;unsorted&quot;:true,&quot;sorted&quot;:false},&quot;size&quot;:5,&quot;numberOfElements&quot;:5,&quot;empty&quot;:false,&quot;lastDomainId&quot;:12677691},&quot;response&quot;:{&quot;status&quot;:200,&quot;message&quot;:&quot;success&quot;}}
+             Body = {&quot;data&quot;:{&quot;content&quot;:[{&quot;orderId&quot;:7121030,&quot;productId&quot;:6076,&quot;buyer&quot;:&quot;DJaQYV@wanted.com&quot;,&quot;seller&quot;:&quot;qzpzhjnomy&quot;,&quot;orderStatus&quot;:&quot;ORDERED&quot;,&quot;price&quot;:27940511,&quot;productName&quot;:&quot;kbrvctcviw&quot;,&quot;insertDate&quot;:&quot;2013-10-13 18:30:26&quot;,&quot;isCurrentUserSeller&quot;:false},{&quot;orderId&quot;:26351460,&quot;productId&quot;:5868,&quot;buyer&quot;:&quot;DJaQYV@wanted.com&quot;,&quot;seller&quot;:&quot;matfqmkxla&quot;,&quot;orderStatus&quot;:&quot;ORDERED&quot;,&quot;price&quot;:12188288,&quot;productName&quot;:&quot;pzkjabzgmq&quot;,&quot;insertDate&quot;:&quot;2013-10-13 18:30:26&quot;,&quot;isCurrentUserSeller&quot;:false},{&quot;orderId&quot;:28152984,&quot;productId&quot;:3972,&quot;buyer&quot;:&quot;DJaQYV@wanted.com&quot;,&quot;seller&quot;:&quot;ydidsgpjyf&quot;,&quot;orderStatus&quot;:&quot;ORDERED&quot;,&quot;price&quot;:63399579,&quot;productName&quot;:&quot;bkfsuzquzf&quot;,&quot;insertDate&quot;:&quot;2013-10-13 18:30:26&quot;,&quot;isCurrentUserSeller&quot;:false},{&quot;orderId&quot;:36076402,&quot;productId&quot;:1631,&quot;buyer&quot;:&quot;DJaQYV@wanted.com&quot;,&quot;seller&quot;:&quot;tyhavcltiu&quot;,&quot;orderStatus&quot;:&quot;ORDERED&quot;,&quot;price&quot;:55063230,&quot;productName&quot;:&quot;vbkeqlzpbr&quot;,&quot;insertDate&quot;:&quot;2013-10-13 18:30:26&quot;,&quot;isCurrentUserSeller&quot;:false},{&quot;orderId&quot;:52497692,&quot;productId&quot;:3302,&quot;buyer&quot;:&quot;DJaQYV@wanted.com&quot;,&quot;seller&quot;:&quot;idkammloxe&quot;,&quot;orderStatus&quot;:&quot;ORDERED&quot;,&quot;price&quot;:75829181,&quot;productName&quot;:&quot;izhvhimvsa&quot;,&quot;insertDate&quot;:&quot;2013-10-13 18:30:26&quot;,&quot;isCurrentUserSeller&quot;:false}],&quot;last&quot;:false,&quot;first&quot;:true,&quot;number&quot;:0,&quot;sort&quot;:{&quot;empty&quot;:true,&quot;unsorted&quot;:true,&quot;sorted&quot;:false},&quot;size&quot;:5,&quot;numberOfElements&quot;:5,&quot;empty&quot;:false,&quot;lastDomainId&quot;:69758897},&quot;response&quot;:{&quot;status&quot;:200,&quot;message&quot;:&quot;success&quot;}}
     Forwarded URL = null
    Redirected URL = null
           Cookies = []
@@ -628,7 +628,7 @@ MockHttpServletResponse:
 <input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
 </label>
 </div>Generated by 
-<a href="http://www.gradle.org">Gradle 8.7</a> at 2024. 5. 30. 오전 10:47:23</p>
+<a href="http://www.gradle.org">Gradle 8.7</a> at 2024. 5. 30. 오후 6:12:13</p>
 </div>
 </div>
 </body>

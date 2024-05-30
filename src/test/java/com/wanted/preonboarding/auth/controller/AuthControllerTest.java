@@ -2,6 +2,7 @@ package com.wanted.preonboarding.auth.controller;
 
 import com.wanted.preonboarding.auth.config.AuthConstants;
 import com.wanted.preonboarding.auth.core.AuthToken;
+import com.wanted.preonboarding.auth.core.UserPrincipal;
 import com.wanted.preonboarding.auth.dto.CreateAuthToken;
 import com.wanted.preonboarding.data.auth.AuthModuleHelper;
 import com.wanted.preonboarding.document.utils.RestDocsTestSupport;
@@ -30,9 +31,11 @@ class AuthControllerTest extends RestDocsTestSupport {
         CreateAuthToken createAuthToken = AuthModuleHelper.toCreateAuthToken();
         AuthToken authToken = AuthModuleHelper.toJwtAuthToken_another_constructor();
         BaseUserInfo baseUserInfo = AuthModuleHelper.toBaseUserInfo();
+        UserPrincipal userPrincipal = AuthModuleHelper.toUserPrincipal(baseUserInfo);
 
         when(authTokenGenerateService.generateToken(anyString())).thenReturn(authToken);
         when(userFindService.fetchUserInfo(createAuthToken.getEmail())).thenReturn(baseUserInfo);
+        when(customDetailUserService.loadUserByUsername(createAuthToken.getEmail())).thenReturn(userPrincipal);
 
         // when & then
         mockMvc.perform(post("/api/v1/auth/authentication")

@@ -2,12 +2,12 @@
 ----
 {
   "data" : {
-    "id" : 7427,
-    "productName" : "lamuhcyluk",
-    "price" : 93016591,
+    "id" : 2138,
+    "productName" : "eqlniwkdjy",
+    "price" : 38507199,
     "productStatus" : "ON_STOCK",
-    "seller" : "LnQzGPfASG@wanted.com",
-    "quantity" : 8757
+    "seller" : "XPlwlsn@wanted.com",
+    "quantity" : 1216
   },
   "response" : {
     "status" : 200,

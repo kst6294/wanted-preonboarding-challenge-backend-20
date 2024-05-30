@@ -8,11 +8,13 @@ import com.wanted.preonboarding.module.user.core.BaseUserInfo;
 import com.wanted.preonboarding.module.user.core.UserInfo;
 import com.wanted.preonboarding.module.user.service.UserFindService;
 import com.wanted.preonboarding.module.utils.DateGeneratorUtil;
+import com.wanted.preonboarding.module.utils.SecurityUtils;
 import io.jsonwebtoken.security.Keys;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import java.security.Key;
@@ -31,11 +33,11 @@ public class AuthTokenProvider {
         this.key = Keys.hmacShaKeyFor(jwtConfig.getSecret().getBytes());
     }
 
-    public AuthToken createAuthToken(UserInfo userInfo, boolean isRefreshToken) {
+    public AuthToken createAuthToken(UserDetails userDetails, boolean isRefreshToken) {
         Date issue = DateGeneratorUtil.generateCurrentDate();
         long expirationTime = jwtConfig.getExpirationTime(isRefreshToken);
         Date expiry = new Date(issue.getTime() + expirationTime);
-        return new JwtAuthToken(userInfo.getEmail(), userInfo.getMemberShip().name(), issue, expiry, key);
+        return new JwtAuthToken(userDetails.getUsername(), SecurityUtils.getAuthorization(userDetails.getAuthorities()).getName(), issue, expiry, key);
     }
 
     public Authentication getAuthentication(String token){

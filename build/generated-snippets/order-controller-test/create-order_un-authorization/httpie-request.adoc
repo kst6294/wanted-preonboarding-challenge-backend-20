@@ -1,7 +1,7 @@
 [source,bash]
 ----
 $ echo '{
-  "productId" : 7807
+  "productId" : 6731
 }' | http POST 'http://localhost:8080/api/v1/order' \
     'Content-Type:application/json;charset=UTF-8'
 ----

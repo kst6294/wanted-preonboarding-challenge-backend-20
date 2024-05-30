@@ -1,5 +1,5 @@
 [source,bash]
 ----
-$ echo '{"productName":"yardufnlkh","price":72497085,"quantity":3}' | http POST 'http://localhost:8080/api/v1/product' \
+$ echo '{"productName":"rfqblwkaty","price":3645745,"quantity":4}' | http POST 'http://localhost:8080/api/v1/product' \
     'Content-Type:application/json;charset=UTF-8'
 ----
