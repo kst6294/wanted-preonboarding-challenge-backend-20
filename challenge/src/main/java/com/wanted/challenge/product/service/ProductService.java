@@ -11,7 +11,10 @@ import com.wanted.challenge.product.model.Price;
 import com.wanted.challenge.product.model.PurchaseDetail;
 import com.wanted.challenge.product.repository.ProductRepository;
 import com.wanted.challenge.product.repository.PurchaseRepository;
+import com.wanted.challenge.product.response.ProductPreviewResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -48,5 +51,9 @@ public class ProductService {
         if (product.getSeller().getId().equals(buyerId)) {
             throw new CustomException(ExceptionStatus.SELF_BUY);
         }
+    }
+
+    public Page<ProductPreviewResponse> preview(Pageable pageable) {
+        return productRepository.retrieveProductsPreview(pageable);
     }
 }

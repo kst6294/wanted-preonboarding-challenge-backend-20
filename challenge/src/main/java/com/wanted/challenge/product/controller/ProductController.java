@@ -4,12 +4,16 @@ import com.wanted.challenge.account.model.AccountDetail;
 import com.wanted.challenge.product.model.Price;
 import com.wanted.challenge.product.request.PurchaseRequest;
 import com.wanted.challenge.product.request.RegisterRequest;
+import com.wanted.challenge.product.response.ProductPreviewResponse;
 import com.wanted.challenge.product.service.ProductService;
 import jakarta.validation.Valid;
 import java.net.URI;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -40,5 +44,12 @@ public class ProductController {
 
         return ResponseEntity.ok()
                 .build();
+    }
+
+    @GetMapping
+    public ResponseEntity<Page<ProductPreviewResponse>> preview(Pageable pageable) {
+        Page<ProductPreviewResponse> preview = productService.preview(pageable);
+
+        return ResponseEntity.ok(preview);
     }
 }
