@@ -20,11 +20,11 @@ public class PurchaseService {
     private final PurchaseRepository purchaseRepository;
     private final AccountRepository accountRepository;
 
-    public void approve(Long productId, Long buyerId, Long accountId) {
+    public void approve(Long productId, Long buyerId, Long sellerId) {
         Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new CustomException(ExceptionStatus.NOT_FOUND));
 
-        if (!product.getId().equals(accountId)) {
+        if (!product.getId().equals(sellerId)) {
             throw new CustomException(ExceptionStatus.NOT_SELLER);
         }
 
@@ -37,5 +37,20 @@ public class PurchaseService {
         Account buyer = accountRepository.getReferenceById(buyerId);
 
         purchaseRepository.save(new Purchase(buyer, product, PurchaseDetail.APPROVE));
+    }
+
+    public void confirm(Long productId, Long buyerId) {
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new CustomException(ExceptionStatus.NOT_FOUND));
+
+        PurchaseDetail lastPurchaseDetail = purchaseRepository.retrieveLastPurchaseDetail(buyerId, productId);
+
+        if (lastPurchaseDetail != PurchaseDetail.APPROVE) {
+            throw new CustomException(ExceptionStatus.CAN_NOT_CONFIRM);
+        }
+
+        Account buyer = accountRepository.getReferenceById(buyerId);
+
+        purchaseRepository.save(new Purchase(buyer, product, PurchaseDetail.CONFIRM));
     }
 }

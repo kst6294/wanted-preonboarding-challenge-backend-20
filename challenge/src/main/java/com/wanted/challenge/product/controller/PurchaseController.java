@@ -2,6 +2,7 @@ package com.wanted.challenge.product.controller;
 
 import com.wanted.challenge.account.model.AccountDetail;
 import com.wanted.challenge.product.request.ApproveRequest;
+import com.wanted.challenge.product.request.ConfirmRequest;
 import com.wanted.challenge.product.service.PurchaseService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +25,16 @@ public class PurchaseController {
                                                 @AuthenticationPrincipal AccountDetail accountDetail) {
 
         purchaseService.approve(approveRequest.productId(), approveRequest.buyerId(), accountDetail.getAccountId());
+
+        return ResponseEntity.ok()
+                .build();
+    }
+
+    @PostMapping("/confirm")
+    public ResponseEntity<Void> confirmPurchase(@RequestBody @Valid ConfirmRequest confirmRequest,
+                                                @AuthenticationPrincipal AccountDetail accountDetail) {
+
+        purchaseService.confirm(confirmRequest.productId(), accountDetail.getAccountId());
 
         return ResponseEntity.ok()
                 .build();
