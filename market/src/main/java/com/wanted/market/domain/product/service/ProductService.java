@@ -9,7 +9,6 @@ import com.wanted.market.domain.product.request.RegisterRequest;
 import com.wanted.market.global.auth.service.SessionUtils;
 import com.wanted.market.global.common.code.ProductStatusCode;
 import com.wanted.market.global.common.exception.DataNotFoundException;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
@@ -27,8 +26,8 @@ public class ProductService {
     private final MemberService memberService;
     private final SessionUtils sessionUtils;
 
-    public long register(RegisterRequest request, HttpServletRequest httpRequest) {
-        Member member = memberService.getMember(sessionUtils.getMemberNo(httpRequest));
+    public long register(RegisterRequest request) {
+        Member member = memberService.getMember(sessionUtils.getMemberNo());
 
         Product product = Product.builder()
                 .seller(member)

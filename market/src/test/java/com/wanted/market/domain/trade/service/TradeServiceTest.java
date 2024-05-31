@@ -88,7 +88,7 @@ class TradeServiceTest {
                 .product(product)
                 .seller(seller)
                 .buyer(buyer)
-                .status(TradeStatusCode.PENDING)
+                .status(TradeStatusCode.REQUEST)
                 .build();
 
         tradeRepository.save(trade);
@@ -116,14 +116,14 @@ class TradeServiceTest {
         HttpServletRequest httpRequest = getHttpServletRequest(buyer);
 
         //when
-        long result = tradeService.requestTrade(new TradeRequest(product.getProductNo(), 0), httpRequest);// 0 은 쓰레기 값
-        Trade trade = tradeService.getTrade(product.getProductNo(), httpRequest);
+        long result = tradeService.requestTrade(new TradeRequest(product.getProductNo(), 0));// 0 은 쓰레기 값
+        Trade trade = tradeService.getTrade(product.getProductNo());
 
         TradeStatusCode tradeStatus = trade.getStatus();
         ProductStatusCode productStatus = product.getStatus();
 
         //then
-        Assertions.assertEquals(tradeStatus, TradeStatusCode.PENDING);
+        Assertions.assertEquals(tradeStatus, TradeStatusCode.REQUEST);
         Assertions.assertEquals(productStatus, ProductStatusCode.RESERVE);
     }
 
@@ -139,10 +139,10 @@ class TradeServiceTest {
         long tradeNo = createTrade(product, seller, buyer).getTradeNo();
 
         HttpServletRequest httpRequest = getHttpServletRequest(seller);
-        tradeService.approveTrade(new TradeRequest(product.getProductNo(), tradeNo), httpRequest);
+        tradeService.acceptTrade(new TradeRequest(product.getProductNo(), tradeNo));
 
         //when
-        Trade trade = tradeService.getTrade(product.getProductNo(), httpRequest);
+        Trade trade = tradeService.getTrade(product.getProductNo());
 
         TradeStatusCode tradeStatus = trade.getStatus();
         ProductStatusCode productStatus = product.getStatus();

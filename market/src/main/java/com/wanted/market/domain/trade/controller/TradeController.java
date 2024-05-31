@@ -6,7 +6,6 @@ import com.wanted.market.domain.trade.response.ListResponse;
 import com.wanted.market.domain.trade.service.TradeService;
 import com.wanted.market.global.common.code.ResponseCode;
 import com.wanted.market.global.common.response.BaseResponse;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.BindingResult;
@@ -20,49 +19,55 @@ public class TradeController {
     private final TradeService tradeService;
 
     @PostMapping("/request")
-    public BaseResponse requestTrade(@RequestBody @Valid TradeRequest request, BindingResult result, HttpServletRequest httpRequest) {
-        tradeService.requestTrade(request, httpRequest);
+    public BaseResponse requestTrade(@RequestBody @Valid TradeRequest request, BindingResult result) {
+        tradeService.requestTrade(request);
         return new BaseResponse(ResponseCode.SUCCESS);
     }
 
     @PostMapping("/approve")
-    public BaseResponse approveTrade(@RequestBody @Valid TradeRequest request,BindingResult result,  HttpServletRequest httpRequest) {
-        tradeService.approveTrade(request, httpRequest);
+    public BaseResponse acceptTrade(@RequestBody @Valid TradeRequest request, BindingResult result) {
+        tradeService.acceptTrade(request);
+        return new BaseResponse(ResponseCode.SUCCESS);
+    }
+
+    @PostMapping("/complete")
+    public BaseResponse completeTrade(@RequestBody @Valid TradeRequest request, BindingResult result) {
+        tradeService.completeTrade(request);
         return new BaseResponse(ResponseCode.SUCCESS);
     }
 
     @GetMapping("/{product_no}")
-    public BaseResponse getTrades(@PathVariable("product_no") int productNo, HttpServletRequest httpRequest) {
-        return new ListResponse(ResponseCode.SUCCESS, tradeService.getTrades(productNo, httpRequest));
+    public BaseResponse getTrades(@PathVariable("product_no") int productNo) {
+        return new ListResponse(ResponseCode.SUCCESS, tradeService.getTrades(productNo));
     }
 
     @GetMapping("/purchased/{page}")
-    public BaseResponse getPurchasedTrades(@PathVariable("page") int page, HttpServletRequest httpRequest) {
+    public BaseResponse getPurchasedTrades(@PathVariable("page") int page) {
 
         if (page < 0) {
             return new BaseResponse(ResponseCode.BAD_REQUEST);
         }
 
-        return new ListResponse(ResponseCode.SUCCESS, tradeService.getPurchasedTrades(page - 1, httpRequest));
+        return new ListResponse(ResponseCode.SUCCESS, tradeService.getPurchasedTrades(page - 1));
     }
 
     @GetMapping("/reserved/{page}")
-    public BaseResponse getReservedTrades(@PathVariable("page") int page, HttpServletRequest httpRequest) {
+    public BaseResponse getReservedTrades(@PathVariable("page") int page) {
 
         if (page < 0) {
             return new BaseResponse(ResponseCode.BAD_REQUEST);
         }
 
-        return new ListResponse(ResponseCode.SUCCESS, tradeService.getReservedTrades(page - 1, httpRequest));
+        return new ListResponse(ResponseCode.SUCCESS, tradeService.getReservedTrades(page - 1));
     }
 
     @GetMapping("/detail/{product_no}")
-    public BaseResponse getTrade(@PathVariable("product_no") long productNo, HttpServletRequest httpRequest) {
+    public BaseResponse getTrade(@PathVariable("product_no") long productNo) {
 
         if(productNo < 0) {
          return new BaseResponse(ResponseCode.BAD_REQUEST);
         }
 
-        return new DetailResponse(ResponseCode.SUCCESS, tradeService.getTrade(productNo, httpRequest));
+        return new DetailResponse(ResponseCode.SUCCESS, tradeService.getTrade(productNo));
     }
 }

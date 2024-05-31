@@ -4,6 +4,7 @@ import com.wanted.market.domain.member.entity.Member;
 import com.wanted.market.global.common.code.ProductStatusCode;
 import com.wanted.market.global.common.entity.BaseTimeEntity;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -11,7 +12,10 @@ import lombok.Getter;
 @Entity
 @Getter
 @Builder
+@AllArgsConstructor
 public class Product extends BaseTimeEntity {
+
+    private final int SOLD_OUT = 0;
 
     @Id
     @GeneratedValue
@@ -26,6 +30,8 @@ public class Product extends BaseTimeEntity {
 
     private long price;
 
+    private int quantity;
+
     private String description;
 
     @Enumerated(EnumType.STRING)
@@ -34,17 +40,20 @@ public class Product extends BaseTimeEntity {
     public Product() {
     }
 
-    public Product(Long productNo, Member seller, String name, long price, String description, ProductStatusCode status) {
-        this.productNo = productNo;
-        this.seller = seller;
-        this.name = name;
-        this.price = price;
-        this.description = description;
-        this.status = status;
-    }
+    public void changeStatus() {
 
-    public void changeStatus(ProductStatusCode status) {
-        this.status = status;
+        if (quantity == SOLD_OUT) {
+            this.status = ProductStatusCode.COMPLETE;
+            return;
+        }
+
+        quantity -= 1;
+
+        if (quantity == SOLD_OUT) {
+            this.status = ProductStatusCode.RESERVE;
+        } else {
+            this.status = ProductStatusCode.ON_SALE;
+        }
     }
 
     public boolean isAvailable() {

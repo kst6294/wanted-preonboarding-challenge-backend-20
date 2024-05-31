@@ -36,6 +36,8 @@ public class Trade extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     private TradeStatusCode status;
 
+    private long lastPrice;
+
     public Trade() {
     }
 
@@ -43,7 +45,8 @@ public class Trade extends BaseTimeEntity {
         this.product = product;
         this.seller = product.getSeller();
         this.buyer = buyer;
-        this.status = TradeStatusCode.PENDING;
+        this.status = TradeStatusCode.REQUEST;
+        this.lastPrice = product.getPrice();
 
         buyer.getBuyerTrades().add(this);
         product.getSeller().getSellerTrades().add(this);

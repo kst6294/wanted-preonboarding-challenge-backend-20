@@ -6,7 +6,6 @@ import com.wanted.market.domain.product.response.ListResponse;
 import com.wanted.market.domain.product.service.ProductService;
 import com.wanted.market.global.common.code.ResponseCode;
 import com.wanted.market.global.common.response.BaseResponse;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.BindingResult;
@@ -20,13 +19,13 @@ public class ProductController {
     private final ProductService productService;
 
     @PostMapping("/reigster")
-    public BaseResponse register(@RequestBody @Valid RegisterRequest request, BindingResult bindingResult, HttpServletRequest httpRequest) {
+    public BaseResponse register(@RequestBody @Valid RegisterRequest request, BindingResult bindingResult) {
 
         if(bindingResult.hasErrors()) {
             return new BaseResponse(ResponseCode.BAD_REQUEST);
         }
 
-        productService.register(request, httpRequest);
+        productService.register(request);
 
         return new BaseResponse(ResponseCode.SUCCESS);
     }

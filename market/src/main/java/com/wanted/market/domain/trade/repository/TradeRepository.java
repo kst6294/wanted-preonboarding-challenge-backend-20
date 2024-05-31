@@ -26,4 +26,6 @@ public interface TradeRepository extends JpaRepository<Trade, Long> {
     @Query(value = "SELECT new com.wanted.market.domain.trade.dto.TradeDto(t.tradeNo, t.product.productNo, t.product.name, t.status) FROM Trade t WHERE (t.buyer.memberNo=:memberNo OR t.seller.memberNo=:memberNo) AND t.status=:status")
     Page<TradeDto> findByMemberNoAndStatus(long memberNo, TradeStatusCode status, Pageable pageable);
 
+    Optional<Trade> findByBuyerMemberNoAndTradeNoAndStatus(long buyerMemberNo, long tradeNo, TradeStatusCode status);
+
 }
