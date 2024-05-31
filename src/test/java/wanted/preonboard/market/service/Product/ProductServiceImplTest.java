@@ -6,10 +6,11 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.openapitools.jackson.nullable.JsonNullable;
+import wanted.preonboard.market.domain.product.Product;
 import wanted.preonboard.market.domain.product.ProductState;
 import wanted.preonboard.market.domain.product.dto.ProductInsertDto;
+import wanted.preonboard.market.domain.product.dto.ProductResDto;
 import wanted.preonboard.market.domain.product.dto.ProductUpdateDto;
-import wanted.preonboard.market.domain.product.Product;
 import wanted.preonboard.market.mapper.ProductMapper;
 
 import java.util.Collections;
@@ -48,13 +49,13 @@ class ProductServiceImplTest {
 
     @Test
     void getProducts() {
-        Product product = new Product();
+        ProductResDto product = new ProductResDto();
         product.setId(1);
         product.setName("Test Product");
 
         when(productMapper.getProducts()).thenReturn(Collections.singletonList(product));
 
-        List<Product> products = productService.getProducts();
+        List<ProductResDto> products = productService.getProducts();
 
         assertNotNull(products);
         assertEquals(1, products.size());
@@ -64,7 +65,7 @@ class ProductServiceImplTest {
 
     @Test
     void getProductById() {
-        Product product = new Product();
+        ProductResDto product = new ProductResDto();
         product.setId(1);
         product.setName("Test Product");
 
@@ -84,7 +85,7 @@ class ProductServiceImplTest {
         productUpdateDto.setPrice(JsonNullable.of(2000L));
         productUpdateDto.setState(JsonNullable.of(ProductState.valueOf("RESERVED")));
 
-        Product existingProduct = new Product();
+        ProductResDto existingProduct = new ProductResDto();
         existingProduct.setId(1);
         existingProduct.setName("Old Product");
         existingProduct.setPrice(1000L);
@@ -97,7 +98,7 @@ class ProductServiceImplTest {
 
         assertTrue(result);
         assertEquals("Updated Product", existingProduct.getName());
-        assertEquals(200L, existingProduct.getPrice());
+        assertEquals(2000L, existingProduct.getPrice());
         assertEquals(ProductState.RESERVED, existingProduct.getState());
         verify(productMapper, times(1)).getProductById(1);
         verify(productMapper, times(1)).updateProductById(any(Product.class));
