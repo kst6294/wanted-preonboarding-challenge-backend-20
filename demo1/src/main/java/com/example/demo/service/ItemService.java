@@ -67,17 +67,24 @@ public class ItemService {
                 .orElseThrow(() -> new ItemBuyException("존재하지 않는 상품입니다."));
 
 
-        //0개일때 거래 불가능
-        if(item.getQuantity() == 0){
-            throw new ItemBuyException("아이템 잔여가 0개입니다.");
-        }
+
 
         //===============================로직 시작 ==============================//
         //1. 사용자가 아이템 구매시 로직
         if(itemBuy.itemState().equals(RESERVED)){
             //한 명이 구매할 수 있는 수량은 1개에 대한 검증 로직
             //item_id와 purchase_id를 조회했을 때 값이 있으면 false
-           return reservedItem(item, member, itemBuy);
+
+            //0개일때 거래 불가능
+            if(item.getQuantity() == 0){
+                throw new ItemBuyException("아이템 잔여가 0개입니다.");
+            }
+
+
+            if(reservedItem(item, member, itemBuy)){
+                reduceItem(item);
+                return true;
+            };
         }
 
         //2. 사용자가 판매승인 하는 로직
@@ -89,7 +96,7 @@ public class ItemService {
         if(itemBuy.itemState().equals(PURCHASE)){
             //판매승인 했을시 Item에서 현재 아이템 개수에서 -1
             if(purchaseItem(member, itemBuy)){
-                return reduceItem(item);
+                return checkItem(item);
             }
 
         }
@@ -135,7 +142,7 @@ public class ItemService {
         // 구매한 용품 조회 로직 구현
         Member member = findbyEmail(authentication);
 
-        List<Buy> buys = buyRespository.findByPurchaseIdAndItemState(member.getId(), SOLD);
+        List<Buy> buys = buyRespository.findByPurchaseIdAndItemState(member.getId(), PURCHASE);
         return buys.stream().map((s) -> new ItemBuyList(s));
     }
 
@@ -162,7 +169,10 @@ public class ItemService {
             throw new ItemBuyException("판매자와 구매자가 동일한 사람");
         }
 
+
         Buy buy = new Buy(item.getMember().getId(), member.getId(), item.getPrice(), itemBuy.itemState(), item);
+
+
         return buyRespository.save(buy).getSellId().equals(buy.getSellId());
 
     }
@@ -191,17 +201,11 @@ public class ItemService {
 
     }
 
-    private boolean reduceItem(Item item){
-        item.reduceItem(1);
-
-        //추가 판매 가능한 수량이 남아 있는 경우
-        if(item.getQuantity() != 0){
-            item.changeItemState(AVAILABLE);
-        }
+    private boolean checkItem(Item item){
 
         //추가 판매가 불가능하고 현재 구매확정을 대기하고 있는 경우
         List<Buy> buy = buyRespository.findByItem(item);
-        int checkPurchase = 0;
+        int checkPurchase = 0; //현재 구매수량
         for(Buy resultBuy : buy){
             //구매확정이 되었을 떄 checkPurchase 증가
             if(resultBuy.getItemState().equals(PURCHASE)){
@@ -209,13 +213,8 @@ public class ItemService {
             }
         }
 
-
-        //item의 개수가 0 이거나 구매확정 갯수가 한개라도 있으면 예약 완료
-        if(item.getQuantity()  == 0 && checkPurchase == 0){
-            item.changeItemState(RESERVED);
-        }
-
-        if(item.getQuantity()  == 0 && checkPurchase != 0){
+        //buy테이블이 구매확정 갯수와 총 buy의 갯수가 동일하다면 현재 item은 전부 판매
+        if(checkPurchase == buy.size()){
             item.changeItemState(SOLD);
         }
 
@@ -230,4 +229,15 @@ public class ItemService {
         return member;
     }
 
+
+    private void reduceItem(Item item){
+        item.reduceItem(1);
+
+        //추가 판매 가능한 수량이 남아 있는 경우
+        if(item.getQuantity() != 0){
+            item.changeItemState(AVAILABLE); //이용가능
+        }else{
+            item.changeItemState(RESERVED); //예약중
+        }
+    }
 }
