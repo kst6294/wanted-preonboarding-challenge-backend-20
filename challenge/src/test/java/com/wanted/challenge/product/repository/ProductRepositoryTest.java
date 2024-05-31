@@ -1,7 +1,6 @@
 package com.wanted.challenge.product.repository;
 
-import static com.wanted.challenge.product.model.PurchaseDetail.ARRIVAL;
-import static com.wanted.challenge.product.model.PurchaseDetail.DELIVERY;
+import static com.wanted.challenge.product.model.PurchaseDetail.APPROVE;
 import static com.wanted.challenge.product.model.PurchaseDetail.DEPOSIT;
 import static org.assertj.core.groups.Tuple.tuple;
 
@@ -41,11 +40,9 @@ class ProductRepositoryTest extends IntegrationTestSupport {
         Product product2 = productRepository.save(new Product(seller, "product2", new Price(20_000)));
 
         purchaseRepository.save(new Purchase(buyer, product1, DEPOSIT));
-        purchaseRepository.save(new Purchase(buyer, product1, DELIVERY));
-        purchaseRepository.save(new Purchase(buyer, product1, ARRIVAL));
+        purchaseRepository.save(new Purchase(buyer, product1, APPROVE));
 
         purchaseRepository.save(new Purchase(buyer, product2, DEPOSIT));
-        purchaseRepository.save(new Purchase(buyer, product2, DELIVERY));
 
         // when
         Page<PurchaseProductResponse> purchaseProductResponses =
@@ -54,6 +51,6 @@ class ProductRepositoryTest extends IntegrationTestSupport {
         // then
         Assertions.assertThat(purchaseProductResponses)
                 .extracting(PurchaseProductResponse::name, PurchaseProductResponse::purchaseDetail)
-                .containsExactly(tuple("product2", DELIVERY), tuple("product1", ARRIVAL));
+                .containsExactly(tuple("product2", DEPOSIT), tuple("product1", APPROVE));
     }
 }
