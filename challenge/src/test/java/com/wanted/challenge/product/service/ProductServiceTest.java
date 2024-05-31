@@ -6,7 +6,6 @@ import static com.wanted.challenge.transact.model.TransactState.DEPOSIT;
 import com.wanted.challenge.IntegrationTestSupport;
 import com.wanted.challenge.account.entity.Account;
 import com.wanted.challenge.account.repository.AccountRepository;
-import com.wanted.challenge.exception.CustomException;
 import com.wanted.challenge.exception.ExceptionStatus;
 import com.wanted.challenge.product.entity.Product;
 import com.wanted.challenge.product.model.Price;
@@ -117,7 +116,6 @@ class ProductServiceTest extends IntegrationTestSupport {
         // when
         // then
         Assertions.assertThatThrownBy(() -> productService.purchase(product.getId(), buyer1.getId()))
-                .isExactlyInstanceOf(CustomException.class)
                 .hasFieldOrPropertyWithValue("exceptionStatus", ExceptionStatus.PURCHASE_ALREADY);
     }
 
@@ -137,5 +135,29 @@ class ProductServiceTest extends IntegrationTestSupport {
         Assertions.assertThat(afterProduct)
                 .extracting(Product::getReservation, Product::getQuantity)
                 .containsExactly(Reservation.RESERVE, new Quantity(0));
+    }
+
+    @Test
+    @DisplayName("본인 제품을 본인이 구매하는 경우 예외가 발생한다")
+    void selfBuy() throws Exception {
+
+        // when
+        // then
+        Assertions.assertThatThrownBy(() -> productService.purchase(product.getId(), seller.getId()))
+                .hasFieldOrPropertyWithValue("exceptionStatus", ExceptionStatus.SELF_BUY);
+    }
+
+    @Test
+    @DisplayName("수량이 0인 제품은 구매할 수 없다")
+    void zeroQuantity() throws Exception {
+
+        // given
+        Product newProduct = productRepository.save(
+                new Product(seller, "newProduct", new Price(100), new Quantity(0)));
+
+        // when
+        // then
+        Assertions.assertThatThrownBy(() -> productService.purchase(newProduct.getId(), buyer1.getId()))
+                .hasFieldOrPropertyWithValue("exceptionStatus", ExceptionStatus.CAN_NOT_PURCHASE);
     }
 }
