@@ -20,7 +20,7 @@ import wanted.preonboard.market.service.Contract.ContractService;
 import wanted.preonboard.market.service.Product.ProductService;
 
 @RestController
-@RequestMapping("/contract")
+@RequestMapping("/contracts")
 public class ContractController {
     private final ContractService contractService;
     private final ProductService productService;
