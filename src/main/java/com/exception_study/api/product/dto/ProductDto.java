@@ -12,18 +12,21 @@ public class ProductDto {
     private String name;
     private int price;
     private String status;
+    private int quantity;
     private UserAccountDto seller;
 
 
-    public static ProductDto of(Long id, String name, int price, String status,UserAccountDto seller){
-        return new ProductDto(id,name,price,status,seller);
+    public static ProductDto of(Long id, String name, int price, String status, int quantity, UserAccountDto seller) {
+        return new ProductDto(id, name, price, status, quantity, seller);
     }
-    public static ProductDto from(Product entity){
+
+    public static ProductDto from(Product entity) {
         return ProductDto.of(
                 entity.getId(),
                 entity.getName(),
                 entity.getPrice(),
                 entity.getStatus(),
+                entity.getQuantity(),
                 UserAccountDto.from(entity.getSeller())
         );
     }

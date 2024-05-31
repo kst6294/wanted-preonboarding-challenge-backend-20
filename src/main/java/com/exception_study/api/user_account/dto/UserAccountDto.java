@@ -19,7 +19,7 @@ public class UserAccountDto {
     public static UserAccountDto from(UserAccount entity){
         return UserAccountDto.of(
                 entity.getUserId(),
-                entity.getPassword(),
+                "",
                 entity.getUserName()
         );
     }

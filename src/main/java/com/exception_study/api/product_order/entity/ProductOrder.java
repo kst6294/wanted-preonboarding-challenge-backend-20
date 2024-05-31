@@ -5,6 +5,8 @@ import com.exception_study.api.user_account.entity.UserAccount;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.Objects;
+
 
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -42,4 +44,16 @@ public class ProductOrder {
         return new ProductOrder(id,product,price,seller,buyer,sellerStatus,buyerStatus);
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ProductOrder that = (ProductOrder) o;
+        return price == that.price && Objects.equals(id, that.id) && Objects.equals(product, that.product) && Objects.equals(seller, that.seller) && Objects.equals(buyer, that.buyer) && Objects.equals(sellerStatus, that.sellerStatus) && Objects.equals(buyerStatus, that.buyerStatus);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, product, price, seller, buyer, sellerStatus, buyerStatus);
+    }
 }

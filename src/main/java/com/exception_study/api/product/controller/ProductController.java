@@ -32,13 +32,13 @@ public class ProductController {
     }
 
     @GetMapping("/{id}/details")
-    public ResponseDto<ProductDto> details(@PathVariable int id){
+    public ResponseDto<ProductDto> details(@PathVariable Long id){
         ProductDto result = productService.getDetails(id);
         return ResponseDto.success(result);
     }
 
     @GetMapping("/{id}/details/authenticated")
-    public ResponseDto<DetailsWithHistoryResponse> details(@PathVariable int id, @AuthenticationPrincipal String userId){
+    public ResponseDto<DetailsWithHistoryResponse> details(@PathVariable Long id, @AuthenticationPrincipal String userId){
         DetailsWithHistoryResponse result = productService.getDetails(id,userId);
         return ResponseDto.success(result);
     }

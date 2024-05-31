@@ -19,9 +19,9 @@ public class UserAccountController {
     private final UserAccountService userAccountService;
 
     @PostMapping("/signUp")
-    public ResponseDto<SignUpResponse> signUp(@RequestBody UserAccountDto dto){
-        SignUpResponse response = userAccountService.signUp(dto);
-        return ResponseDto.success(response);
+    public ResponseDto<Void> signUp(@RequestBody UserAccountDto dto){
+        userAccountService.signUp(dto);
+        return ResponseDto.success();
     }
 
     @PostMapping("/login")

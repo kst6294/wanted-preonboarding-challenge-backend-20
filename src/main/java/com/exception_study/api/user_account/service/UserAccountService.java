@@ -28,8 +28,7 @@ public class UserAccountService {
     @Value("JwtSecretKey")
     private String SECRET_KEY;
 
-    public SignUpResponse signUp(UserAccountDto dto){
-        log.info("input Data {},{}",dto.getUserId(),dto.getPassword());
+    public void signUp(UserAccountDto dto){
         if(userAccountRepository.existsById(dto.getUserId())){
             throw new StudyApplicationException(ErrorCode.USER_ALREADY_EXIST);
         }
@@ -37,7 +36,6 @@ public class UserAccountService {
         String encodedPassword = passwordEncoder.encode(dto.getPassword());
         UserAccount userAccount = UserAccount.of(dto.getUserId(), encodedPassword,dto.getUserName());
         userAccountRepository.save(userAccount);
-        return SignUpResponse.of("SignUp Success");
     }
 
     @Transactional(readOnly = true)

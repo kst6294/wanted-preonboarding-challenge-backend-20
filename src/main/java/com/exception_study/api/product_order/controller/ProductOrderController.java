@@ -15,15 +15,21 @@ public class ProductOrderController {
     private final ProductOrderService productOrderService;
 
 
-    @PostMapping("/{id}/reserve")
-    public ResponseDto<ProductOrderDto> reserve(@PathVariable int id, @AuthenticationPrincipal String userId){
-        ProductOrderDto result = productOrderService.reserve(id, userId);
+    @PutMapping("/{productId}/reserve")
+    public ResponseDto<ProductOrderDto> reserve(@PathVariable Long productId, @AuthenticationPrincipal String userId){
+        ProductOrderDto result = productOrderService.reserve(productId, userId);
         return ResponseDto.success(result);
     }
 
-    @GetMapping("/{id}/approve")
-    public ResponseDto<Void> approve(@PathVariable int id, @AuthenticationPrincipal String userId){
+    @PutMapping("/{id}/approve")
+    public ResponseDto<Void> approve(@PathVariable Long id, @AuthenticationPrincipal String userId){
         productOrderService.approve(id,userId);
+        return ResponseDto.success();
+    }
+
+    @PutMapping("/{id}/confirm")
+    public ResponseDto<Void> confirm(@PathVariable Long id, @AuthenticationPrincipal String userId){
+        productOrderService.confirm(id,userId);
         return ResponseDto.success();
     }
 

@@ -35,12 +35,12 @@ public class ProductService {
         UserAccount userAccount = userAccountRepository.findById(userId).orElseThrow(
                 () -> new StudyApplicationException(ErrorCode.USER_NOT_FOUND)
         );
-        Product product = Product.of(dto.getName(), dto.getPrice(),userAccount);
+        Product product = Product.of(dto.getName(), dto.getPrice(),dto.getQuantity(),userAccount);
         productRepository.save(product);
     }
 
     @Transactional(readOnly = true)
-    public ProductDto getDetails(int id) {
+    public ProductDto getDetails(Long id) {
         Product product = productRepository.findById(id).orElseThrow(
                 () -> new StudyApplicationException(ErrorCode.PRODUCT_NOT_FOUND)
         );
@@ -48,7 +48,7 @@ public class ProductService {
     }
 
     @Transactional(readOnly = true)
-    public DetailsWithHistoryResponse getDetails(int id, String userId) {
+    public DetailsWithHistoryResponse getDetails(Long id, String userId) {
         UserAccount userAccount = userAccountRepository.findById(userId).orElseThrow(
                 () -> new StudyApplicationException(ErrorCode.USER_NOT_FOUND)
         );

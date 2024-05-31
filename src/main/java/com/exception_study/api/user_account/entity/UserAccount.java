@@ -8,8 +8,9 @@ import lombok.*;
 import java.util.Objects;
 
 @Getter
+@Setter
 @AllArgsConstructor
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
 @ToString
 @Entity
 public class UserAccount {
