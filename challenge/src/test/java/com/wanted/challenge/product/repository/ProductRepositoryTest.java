@@ -1,7 +1,7 @@
 package com.wanted.challenge.product.repository;
 
-import static com.wanted.challenge.purchase.model.PurchaseDetail.APPROVE;
-import static com.wanted.challenge.purchase.model.PurchaseDetail.DEPOSIT;
+import static com.wanted.challenge.transact.model.TransactDetail.APPROVE;
+import static com.wanted.challenge.transact.model.TransactDetail.DEPOSIT;
 import static org.assertj.core.groups.Tuple.tuple;
 
 import com.wanted.challenge.IntegrationTestSupport;
@@ -11,8 +11,8 @@ import com.wanted.challenge.product.entity.Product;
 import com.wanted.challenge.product.model.Price;
 import com.wanted.challenge.product.model.Quantity;
 import com.wanted.challenge.product.response.PurchaseProductResponse;
-import com.wanted.challenge.purchase.entity.Purchase;
-import com.wanted.challenge.purchase.repository.PurchaseRepository;
+import com.wanted.challenge.transact.entity.Transact;
+import com.wanted.challenge.transact.repository.TransactRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -23,7 +23,7 @@ import org.springframework.data.domain.PageRequest;
 class ProductRepositoryTest extends IntegrationTestSupport {
 
     @Autowired
-    PurchaseRepository purchaseRepository;
+    TransactRepository transactRepository;
 
     @Autowired
     AccountRepository accountRepository;
@@ -41,10 +41,10 @@ class ProductRepositoryTest extends IntegrationTestSupport {
         Product product1 = productRepository.save(new Product(seller, "product1", new Price(10_000), new Quantity(1)));
         Product product2 = productRepository.save(new Product(seller, "product2", new Price(20_000), new Quantity(1)));
 
-        purchaseRepository.save(new Purchase(buyer, product1, DEPOSIT));
-        purchaseRepository.save(new Purchase(buyer, product1, APPROVE));
+        transactRepository.save(new Transact(buyer, product1, DEPOSIT));
+        transactRepository.save(new Transact(buyer, product1, APPROVE));
 
-        purchaseRepository.save(new Purchase(buyer, product2, DEPOSIT));
+        transactRepository.save(new Transact(buyer, product2, DEPOSIT));
 
         // when
         Page<PurchaseProductResponse> purchaseProductResponses =
@@ -52,7 +52,7 @@ class ProductRepositoryTest extends IntegrationTestSupport {
 
         // then
         Assertions.assertThat(purchaseProductResponses)
-                .extracting(PurchaseProductResponse::name, PurchaseProductResponse::purchaseDetail)
+                .extracting(PurchaseProductResponse::name, PurchaseProductResponse::transactDetail)
                 .containsExactly(tuple("product2", DEPOSIT), tuple("product1", APPROVE));
     }
 }

@@ -15,9 +15,9 @@ import com.wanted.challenge.product.response.PurchaseDetailResponse;
 import com.wanted.challenge.product.response.PurchaseInfo;
 import com.wanted.challenge.product.response.PurchaseProductResponse;
 import com.wanted.challenge.product.response.ReserveProductResponse;
-import com.wanted.challenge.purchase.entity.Purchase;
-import com.wanted.challenge.purchase.model.PurchaseDetail;
-import com.wanted.challenge.purchase.repository.PurchaseRepository;
+import com.wanted.challenge.transact.entity.Transact;
+import com.wanted.challenge.transact.model.TransactDetail;
+import com.wanted.challenge.transact.repository.TransactRepository;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.LinkedHashMap;
@@ -39,7 +39,7 @@ public class ProductService {
 
     private final AccountRepository accountRepository;
     private final ProductRepository productRepository;
-    private final PurchaseRepository purchaseRepository;
+    private final TransactRepository transactRepository;
 
     @Transactional
     public Long register(String name, Price price, Quantity quantity, Long sellerId) {
@@ -63,8 +63,8 @@ public class ProductService {
         product.purchase();
 
         Account buyer = accountRepository.getReferenceById(buyerId);
-        Purchase purchase = new Purchase(buyer, product, PurchaseDetail.DEPOSIT);
-        purchaseRepository.save(purchase);
+        Transact transact = new Transact(buyer, product, TransactDetail.DEPOSIT);
+        transactRepository.save(transact);
     }
 
     private void validBuyer(Long buyerId, Product product) {
@@ -74,7 +74,7 @@ public class ProductService {
     }
 
     private void validPurchaseAlready(Long buyerId, Long productId) {
-        if (purchaseRepository.isPurchaseAlready(buyerId, productId)) {
+        if (transactRepository.isPurchaseAlready(buyerId, productId)) {
             throw new CustomException(ExceptionStatus.PURCHASE_ALREADY);
         }
     }
@@ -112,12 +112,12 @@ public class ProductService {
     }
 
     private List<PurchaseInfo> getBuyerInfos(Long productId) {
-        List<Purchase> purchases = purchaseRepository.findByProductId(productId);
+        List<Transact> transacts = transactRepository.findByProductId(productId);
 
-        Map<Long, List<PurchaseDetail>> buyerPurchaseDetails = purchases.stream()
-                .sorted(Comparator.comparing(Purchase::getId).reversed())
+        Map<Long, List<TransactDetail>> buyerPurchaseDetails = transacts.stream()
+                .sorted(Comparator.comparing(Transact::getId).reversed())
                 .collect(Collectors.groupingBy(purchase -> purchase.getBuyer().getId(), LinkedHashMap::new,
-                        Collectors.mapping(Purchase::getPurchaseDetail, Collectors.toList())));
+                        Collectors.mapping(Transact::getTransactDetail, Collectors.toList())));
 
         return buyerPurchaseDetails.entrySet()
                 .stream()
@@ -127,10 +127,10 @@ public class ProductService {
     }
 
     private List<PurchaseInfo> getPurchaseDetailInfos(Long accountId) {
-        List<Purchase> purchases = purchaseRepository.findByBuyerId(accountId);
+        List<Transact> transacts = transactRepository.findByBuyerId(accountId);
 
-        return purchases.stream()
-                .map(Purchase::getPurchaseDetail)
+        return transacts.stream()
+                .map(Transact::getTransactDetail)
                 .map(PurchaseDetailResponse::new)
                 .map(PurchaseInfo.class::cast)
                 .toList();

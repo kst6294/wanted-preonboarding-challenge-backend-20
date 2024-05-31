@@ -1,7 +1,7 @@
 package com.wanted.challenge.product.service;
 
-import static com.wanted.challenge.purchase.model.PurchaseDetail.APPROVE;
-import static com.wanted.challenge.purchase.model.PurchaseDetail.DEPOSIT;
+import static com.wanted.challenge.transact.model.TransactDetail.APPROVE;
+import static com.wanted.challenge.transact.model.TransactDetail.DEPOSIT;
 
 import com.wanted.challenge.IntegrationTestSupport;
 import com.wanted.challenge.account.entity.Account;
@@ -16,8 +16,8 @@ import com.wanted.challenge.product.repository.ProductRepository;
 import com.wanted.challenge.product.response.ProductDetailResponse;
 import com.wanted.challenge.product.response.PurchaseBuyerResponse;
 import com.wanted.challenge.product.response.PurchaseDetailResponse;
-import com.wanted.challenge.purchase.entity.Purchase;
-import com.wanted.challenge.purchase.repository.PurchaseRepository;
+import com.wanted.challenge.transact.entity.Transact;
+import com.wanted.challenge.transact.repository.TransactRepository;
 import java.util.List;
 import java.util.Optional;
 import org.assertj.core.api.Assertions;
@@ -38,7 +38,7 @@ class ProductServiceTest extends IntegrationTestSupport {
     ProductRepository productRepository;
 
     @Autowired
-    PurchaseRepository purchaseRepository;
+    TransactRepository transactRepository;
 
     Account buyer1;
     Account buyer2;
@@ -60,10 +60,10 @@ class ProductServiceTest extends IntegrationTestSupport {
     void purchaseDetailResponses() throws Exception {
 
         // given
-        purchaseRepository.save(new Purchase(buyer1, product, DEPOSIT));
-        purchaseRepository.save(new Purchase(buyer1, product, APPROVE));
+        transactRepository.save(new Transact(buyer1, product, DEPOSIT));
+        transactRepository.save(new Transact(buyer1, product, APPROVE));
 
-        purchaseRepository.save(new Purchase(buyer2, product, DEPOSIT));
+        transactRepository.save(new Transact(buyer2, product, DEPOSIT));
 
         // when
         ProductDetailResponse productDetailResponse =

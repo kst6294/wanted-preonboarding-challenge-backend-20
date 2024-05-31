@@ -1,8 +1,8 @@
-package com.wanted.challenge.purchase.entity;
+package com.wanted.challenge.transact.entity;
 
 import com.wanted.challenge.account.entity.Account;
 import com.wanted.challenge.product.entity.Product;
-import com.wanted.challenge.purchase.model.PurchaseDetail;
+import com.wanted.challenge.transact.model.TransactDetail;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -22,7 +22,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @Table(name = "purchases")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Purchase {
+public class Transact {
 
     @Id
     @Column(name = "purchase_id")
@@ -39,11 +39,11 @@ public class Purchase {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "purchase_detail_code")
-    PurchaseDetail purchaseDetail;
+    TransactDetail transactDetail;
 
-    public Purchase(Account buyer, Product product, PurchaseDetail purchaseDetail) {
+    public Transact(Account buyer, Product product, TransactDetail transactDetail) {
         this.buyer = buyer;
         this.product = product;
-        this.purchaseDetail = purchaseDetail;
+        this.transactDetail = transactDetail;
     }
 }

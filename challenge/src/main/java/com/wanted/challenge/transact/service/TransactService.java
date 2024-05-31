@@ -1,4 +1,4 @@
-package com.wanted.challenge.purchase.service;
+package com.wanted.challenge.transact.service;
 
 import com.wanted.challenge.account.entity.Account;
 import com.wanted.challenge.account.repository.AccountRepository;
@@ -6,9 +6,9 @@ import com.wanted.challenge.exception.CustomException;
 import com.wanted.challenge.exception.ExceptionStatus;
 import com.wanted.challenge.product.entity.Product;
 import com.wanted.challenge.product.repository.ProductRepository;
-import com.wanted.challenge.purchase.entity.Purchase;
-import com.wanted.challenge.purchase.model.PurchaseDetail;
-import com.wanted.challenge.purchase.repository.PurchaseRepository;
+import com.wanted.challenge.transact.entity.Transact;
+import com.wanted.challenge.transact.model.TransactDetail;
+import com.wanted.challenge.transact.repository.TransactRepository;
 import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,10 +17,10 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
-public class PurchaseService {
+public class TransactService {
 
     private final ProductRepository productRepository;
-    private final PurchaseRepository purchaseRepository;
+    private final TransactRepository transactRepository;
     private final AccountRepository accountRepository;
 
     @Transactional
@@ -32,15 +32,15 @@ public class PurchaseService {
             throw new CustomException(ExceptionStatus.NOT_SELLER);
         }
 
-        PurchaseDetail lastPurchaseDetail = purchaseRepository.retrieveLastPurchaseDetail(buyerId, productId);
+        TransactDetail lastTransactDetail = transactRepository.retrieveLastTransactDetail(buyerId, productId);
 
-        if (lastPurchaseDetail != PurchaseDetail.DEPOSIT) {
+        if (lastTransactDetail != TransactDetail.DEPOSIT) {
             throw new CustomException(ExceptionStatus.CAN_NOT_APPROVE);
         }
 
         Account buyer = accountRepository.getReferenceById(buyerId);
 
-        purchaseRepository.save(new Purchase(buyer, product, PurchaseDetail.APPROVE));
+        transactRepository.save(new Transact(buyer, product, TransactDetail.APPROVE));
     }
 
     @Transactional
@@ -48,22 +48,22 @@ public class PurchaseService {
         Product product = productRepository.findProductWithUpdateLockById(productId)
                 .orElseThrow(() -> new CustomException(ExceptionStatus.NOT_FOUND));
 
-        PurchaseDetail lastPurchaseDetail = purchaseRepository.retrieveLastPurchaseDetail(buyerId, productId);
+        TransactDetail lastTransactDetail = transactRepository.retrieveLastTransactDetail(buyerId, productId);
 
-        if (lastPurchaseDetail != PurchaseDetail.APPROVE) {
+        if (lastTransactDetail != TransactDetail.APPROVE) {
             throw new CustomException(ExceptionStatus.CAN_NOT_CONFIRM);
         }
 
         Account buyer = accountRepository.getReferenceById(buyerId);
-        purchaseRepository.save(new Purchase(buyer, product, PurchaseDetail.CONFIRM));
+        transactRepository.save(new Transact(buyer, product, TransactDetail.CONFIRM));
 
         isAllConfirm(product);
     }
 
     private void isAllConfirm(Product product) {
-        Set<PurchaseDetail> purchaseDetails = purchaseRepository.retrieveProductPurchaseDetails(product);
+        Set<TransactDetail> transactDetails = transactRepository.retrieveProductTransactDetails(product);
 
-        if (purchaseDetails.size() == 1 && purchaseDetails.contains(PurchaseDetail.CONFIRM)) {
+        if (transactDetails.size() == 1 && transactDetails.contains(TransactDetail.CONFIRM)) {
             product.complete();
         }
     }

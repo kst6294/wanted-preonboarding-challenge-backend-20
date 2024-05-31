@@ -1,9 +1,9 @@
-package com.wanted.challenge.purchase.controller;
+package com.wanted.challenge.transact.controller;
 
 import com.wanted.challenge.account.model.AccountDetail;
-import com.wanted.challenge.purchase.request.ApproveRequest;
-import com.wanted.challenge.purchase.request.ConfirmRequest;
-import com.wanted.challenge.purchase.service.PurchaseService;
+import com.wanted.challenge.transact.request.ApproveRequest;
+import com.wanted.challenge.transact.request.ConfirmRequest;
+import com.wanted.challenge.transact.service.TransactService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -15,16 +15,16 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/purchases")
-public class PurchaseController {
+@RequestMapping("/transacts")
+public class TransactController {
 
-    private final PurchaseService purchaseService;
+    private final TransactService transactService;
 
     @PostMapping("/approve")
     public ResponseEntity<Void> purchaseApprove(@RequestBody @Valid ApproveRequest approveRequest,
                                                 @AuthenticationPrincipal AccountDetail accountDetail) {
 
-        purchaseService.approve(approveRequest.productId(), approveRequest.buyerId(), accountDetail.getAccountId());
+        transactService.approve(approveRequest.productId(), approveRequest.buyerId(), accountDetail.getAccountId());
 
         return ResponseEntity.ok()
                 .build();
@@ -34,7 +34,7 @@ public class PurchaseController {
     public ResponseEntity<Void> confirmPurchase(@RequestBody @Valid ConfirmRequest confirmRequest,
                                                 @AuthenticationPrincipal AccountDetail accountDetail) {
 
-        purchaseService.confirm(confirmRequest.productId(), accountDetail.getAccountId());
+        transactService.confirm(confirmRequest.productId(), accountDetail.getAccountId());
 
         return ResponseEntity.ok()
                 .build();

@@ -1,4 +1,4 @@
-package com.wanted.challenge.purchase.request;
+package com.wanted.challenge.transact.request;
 
 import jakarta.validation.constraints.NotNull;
 

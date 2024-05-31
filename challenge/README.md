@@ -80,7 +80,7 @@
 
 ### 판매 승인
 
-#### POST /purchase/approve
+#### POST /transacts/approve
 
 > productId: 제품 번호
 >

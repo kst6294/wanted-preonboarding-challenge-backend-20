@@ -8,10 +8,10 @@ import com.wanted.challenge.product.model.Price;
 import com.wanted.challenge.product.model.Quantity;
 import com.wanted.challenge.product.model.Reservation;
 import com.wanted.challenge.product.repository.ProductRepository;
-import com.wanted.challenge.purchase.entity.Purchase;
-import com.wanted.challenge.purchase.model.PurchaseDetail;
-import com.wanted.challenge.purchase.repository.PurchaseRepository;
-import com.wanted.challenge.purchase.service.PurchaseService;
+import com.wanted.challenge.transact.entity.Transact;
+import com.wanted.challenge.transact.model.TransactDetail;
+import com.wanted.challenge.transact.repository.TransactRepository;
+import com.wanted.challenge.transact.service.TransactService;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -19,10 +19,10 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.util.ReflectionTestUtils;
 
-class PurchaseServiceTest extends IntegrationTestSupport {
+class TransactServiceTest extends IntegrationTestSupport {
 
     @Autowired
-    PurchaseService purchaseService;
+    TransactService transactService;
 
     @Autowired
     AccountRepository accountRepository;
@@ -31,7 +31,7 @@ class PurchaseServiceTest extends IntegrationTestSupport {
     ProductRepository productRepository;
 
     @Autowired
-    PurchaseRepository purchaseRepository;
+    TransactRepository transactRepository;
 
     Account buyer1;
     Account buyer2;
@@ -50,11 +50,11 @@ class PurchaseServiceTest extends IntegrationTestSupport {
 
         product = productRepository.save(product);
 
-        purchaseRepository.save(new Purchase(buyer1, product, PurchaseDetail.DEPOSIT));
-        purchaseRepository.save(new Purchase(buyer2, product, PurchaseDetail.DEPOSIT));
+        transactRepository.save(new Transact(buyer1, product, TransactDetail.DEPOSIT));
+        transactRepository.save(new Transact(buyer2, product, TransactDetail.DEPOSIT));
 
-        purchaseRepository.save(new Purchase(buyer1, product, PurchaseDetail.APPROVE));
-        purchaseRepository.save(new Purchase(buyer2, product, PurchaseDetail.APPROVE));
+        transactRepository.save(new Transact(buyer1, product, TransactDetail.APPROVE));
+        transactRepository.save(new Transact(buyer2, product, TransactDetail.APPROVE));
     }
 
     @Test
@@ -62,8 +62,8 @@ class PurchaseServiceTest extends IntegrationTestSupport {
     void confirmAll() throws Exception {
 
         // when
-        purchaseService.confirm(product.getId(), buyer1.getId());
-        purchaseService.confirm(product.getId(), buyer2.getId());
+        transactService.confirm(product.getId(), buyer1.getId());
+        transactService.confirm(product.getId(), buyer2.getId());
 
         // then
         Product afterProduct = productRepository.findById(product.getId())
