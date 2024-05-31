@@ -2,9 +2,10 @@ package wanted.preonboard.market.service.Product;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import wanted.preonboard.market.domain.product.dto.ProductInsertDto;
-import wanted.preonboard.market.domain.product.dto.ProductUpdateDto;
 import wanted.preonboard.market.domain.product.Product;
+import wanted.preonboard.market.domain.product.dto.ProductInsertDto;
+import wanted.preonboard.market.domain.product.dto.ProductResDto;
+import wanted.preonboard.market.domain.product.dto.ProductUpdateDto;
 import wanted.preonboard.market.mapper.ProductMapper;
 
 import java.util.List;
@@ -28,12 +29,12 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<Product> getProducts() {
+    public List<ProductResDto> getProducts() {
         return productMapper.getProducts();
     }
 
     @Override
-    public Product getProductById(Integer id) {
+    public ProductResDto getProductById(Integer id) {
         return productMapper.getProductById(id);
     }
 

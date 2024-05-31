@@ -1,17 +1,17 @@
 package wanted.preonboard.market.service.Product;
 
 import wanted.preonboard.market.domain.product.dto.ProductInsertDto;
+import wanted.preonboard.market.domain.product.dto.ProductResDto;
 import wanted.preonboard.market.domain.product.dto.ProductUpdateDto;
-import wanted.preonboard.market.domain.product.Product;
 
 import java.util.List;
 
 public interface ProductService {
     Boolean createProduct(Integer sellerId, ProductInsertDto product);
 
-    List<Product> getProducts();
+    List<ProductResDto> getProducts();
 
-    Product getProductById(Integer productId);
+    ProductResDto getProductById(Integer productId);
 
     Boolean updateProductById(Integer productId, ProductUpdateDto product);
 }

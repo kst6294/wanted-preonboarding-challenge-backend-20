@@ -7,12 +7,12 @@
         INSERT INTO product (name, price, seller_id)
         VALUES (#{name}, #{price}, #{sellerId})
     </insert>
-    <select id="getProducts" resultType="Product">
-        SELECT *
+    <select id="getProducts" resultType="ProductResDto">
+        SELECT *, (SELECT username FROM member WHERE id = seller_id) AS sellerName
         FROM product
     </select>
-    <select id="getProductById" resultType="Product">
-        SELECT *
+    <select id="getProductById" resultType="ProductResDto">
+        SELECT *, (SELECT username FROM member WHERE id = seller_id) AS sellerName
         FROM product
         WHERE id = #{id}
     </select>

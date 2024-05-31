@@ -5,6 +5,7 @@ import lombok.Getter;
 @Getter
 public enum ProductMessage {
     ERROR("제품 등록 중 알 수 없는 오류가 발생했습니다."),
+    FIND_ERROR("제품 조회 중 알 수 없는 오류가 발생했습니다."),
     PRODUCT_NOT_FOUND("제품을 찾을 수 없습니다."),
     PRODUCT_ALREADY_EXISTS("이미 존재하는 제품입니다."),
     PRODUCT_ALREADY_SOLD("이미 판매된 제품입니다."),
