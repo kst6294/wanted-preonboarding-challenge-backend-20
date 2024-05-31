@@ -48,7 +48,7 @@ class OrderTest {
         assertThat(order.getSeller().getAccount()).isEqualTo("seller@gmail.com");
         assertThat(order.getBuyer().getAccount()).isEqualTo("buy@gmail.com");
         assertThat(order.getBuyer().getName()).isEqualTo("홍길동");
-        assertThat(order.getOrderStatus()).isEqualTo(OrderStatus.REQUEST);
+        assertThat(order.getStatus()).isEqualTo(OrderStatus.REQUEST);
     }
 
     @DisplayName("")

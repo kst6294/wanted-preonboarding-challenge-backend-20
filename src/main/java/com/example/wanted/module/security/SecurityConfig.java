@@ -3,7 +3,7 @@ package com.example.wanted.module.security;
 import com.example.wanted.module.jwt.JwtAccessDeniedHandler;
 import com.example.wanted.module.jwt.JwtAuthenticationEntryPoint;
 import com.example.wanted.module.jwt.JwtTokenFilter;
-import com.example.wanted.module.jwt.JwtUtil;
+import com.example.wanted.module.jwt.JwtUtilImpl;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -27,7 +27,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class SecurityConfig {
 
-    private final JwtUtil jwtUtil;
+    private final JwtUtilImpl jwtUtil;
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
     private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
 

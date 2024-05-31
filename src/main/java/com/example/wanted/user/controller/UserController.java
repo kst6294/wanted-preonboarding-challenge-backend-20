@@ -27,7 +27,7 @@ public class UserController {
     ) {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
-                .body(userService.create(request));
+                .body(userService.create(request).getId());
     }
 
     @PostMapping("/sing-in")

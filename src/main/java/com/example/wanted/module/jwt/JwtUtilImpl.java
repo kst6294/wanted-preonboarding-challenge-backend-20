@@ -1,7 +1,7 @@
 package com.example.wanted.module.jwt;
 
 import com.example.wanted.user.domain.User;
-import com.example.wanted.user.infrastucture.UserEntity;
+import com.example.wanted.user.service.port.JwtUtil;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -14,15 +14,13 @@ import java.util.Date;
 
 @Component
 @Slf4j
-public class JwtUtil {
-//    private final RedisUtil redisUtil;
+public class JwtUtilImpl implements JwtUtil {
 
     private final Key key;
-//    private final String accessKey;
 
     private Long ACCESS_TOKEN_EXPIRE_LENGTH;
 
-    public JwtUtil(
+    public JwtUtilImpl(
             @Value("${spring.jwt.secret-key}") String accessKey,
             @Value("${spring.jwt.access-token-expire}") Long ACCESS_TOKEN_EXPIRE_LENGTH) {
         byte[] keyBytes = Decoders.BASE64.decode(accessKey);
