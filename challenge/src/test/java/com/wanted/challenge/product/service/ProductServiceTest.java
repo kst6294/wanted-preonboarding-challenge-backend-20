@@ -9,6 +9,7 @@ import com.wanted.challenge.account.repository.AccountRepository;
 import com.wanted.challenge.product.entity.Product;
 import com.wanted.challenge.product.entity.Purchase;
 import com.wanted.challenge.product.model.Price;
+import com.wanted.challenge.product.model.Quantity;
 import com.wanted.challenge.product.repository.ProductRepository;
 import com.wanted.challenge.product.repository.PurchaseRepository;
 import com.wanted.challenge.product.response.ProductDetailResponse;
@@ -48,7 +49,7 @@ class ProductServiceTest extends IntegrationTestSupport {
 
         seller = accountRepository.save(new Account("seller", "1234"));
 
-        product = productRepository.save(new Product(seller, "상품", new Price(10_000)));
+        product = productRepository.save(new Product(seller, "상품", new Price(10_000), new Quantity(2)));
 
         purchaseRepository.save(new Purchase(buyer1, product, DEPOSIT));
         purchaseRepository.save(new Purchase(buyer1, product, APPROVE));

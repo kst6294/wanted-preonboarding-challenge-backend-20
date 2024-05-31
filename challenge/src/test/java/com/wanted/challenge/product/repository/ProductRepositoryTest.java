@@ -10,6 +10,7 @@ import com.wanted.challenge.account.repository.AccountRepository;
 import com.wanted.challenge.product.entity.Product;
 import com.wanted.challenge.product.entity.Purchase;
 import com.wanted.challenge.product.model.Price;
+import com.wanted.challenge.product.model.Quantity;
 import com.wanted.challenge.product.response.PurchaseProductResponse;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -36,8 +37,8 @@ class ProductRepositoryTest extends IntegrationTestSupport {
         // given
         Account seller = accountRepository.save(new Account("seller", "password"));
         Account buyer = accountRepository.save(new Account("buyer", "password"));
-        Product product1 = productRepository.save(new Product(seller, "product1", new Price(10_000)));
-        Product product2 = productRepository.save(new Product(seller, "product2", new Price(20_000)));
+        Product product1 = productRepository.save(new Product(seller, "product1", new Price(10_000), new Quantity(1)));
+        Product product2 = productRepository.save(new Product(seller, "product2", new Price(20_000), new Quantity(1)));
 
         purchaseRepository.save(new Purchase(buyer, product1, DEPOSIT));
         purchaseRepository.save(new Purchase(buyer, product1, APPROVE));
