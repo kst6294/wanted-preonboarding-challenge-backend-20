@@ -1,7 +1,6 @@
 package com.wanted.challenge.product.service;
 
 import com.wanted.challenge.account.entity.Account;
-import com.wanted.challenge.account.model.AccountDetail;
 import com.wanted.challenge.account.repository.AccountRepository;
 import com.wanted.challenge.exception.CustomException;
 import com.wanted.challenge.exception.ExceptionStatus;
@@ -13,11 +12,18 @@ import com.wanted.challenge.product.repository.ProductRepository;
 import com.wanted.challenge.product.repository.PurchaseRepository;
 import com.wanted.challenge.product.response.ProductDetailResponse;
 import com.wanted.challenge.product.response.ProductPreviewResponse;
+import com.wanted.challenge.product.response.PurchaseBuyerResponse;
+import com.wanted.challenge.product.response.PurchaseDetailResponse;
+import com.wanted.challenge.product.response.PurchaseInfo;
 import com.wanted.challenge.product.response.PurchaseProductResponse;
 import com.wanted.challenge.product.response.ReserveProductResponse;
 import java.util.Collections;
+import java.util.Comparator;
+import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Objects;
+import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -31,8 +37,7 @@ public class ProductService {
     private final ProductRepository productRepository;
     private final PurchaseRepository purchaseRepository;
 
-    public Long register(String name, Price price, AccountDetail accountDetail) {
-        Long sellerId = accountDetail.getAccountId();
+    public Long register(String name, Price price, Long sellerId) {
         Account seller = accountRepository.getReferenceById(sellerId);
 
         Product product = new Product(seller, name, price);
@@ -41,11 +46,10 @@ public class ProductService {
         return product.getId();
     }
 
-    public void purchase(Long productId, AccountDetail accountDetail) {
+    public void purchase(Long productId, Long buyerId) {
         Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new CustomException(ExceptionStatus.NOT_FOUND));
 
-        Long buyerId = accountDetail.getAccountId();
         validBuyer(buyerId, product);
 
         Account buyer = accountRepository.getReferenceById(buyerId);
@@ -63,31 +67,58 @@ public class ProductService {
         return productRepository.retrieveProductsPreview(pageable);
     }
 
-    public ProductDetailResponse detail(Long productId, AccountDetail accountDetail) {
+    public ProductDetailResponse detail(Long productId, Optional<Long> optAccountId) {
         Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new CustomException(ExceptionStatus.NOT_FOUND));
 
-        if (Objects.isNull(accountDetail)) {
+        if (optAccountId.isEmpty()) {
             return new ProductDetailResponse(product, Collections.emptyList());
         }
 
-        Long buyerId = accountDetail.getAccountId();
-        List<Purchase> purchases = purchaseRepository.findByBuyerId(buyerId);
+        Long accountId = optAccountId.get();
+        List<PurchaseInfo> purchaseInfos = createPurchaseInfos(product, accountId);
 
-        List<PurchaseDetail> purchaseDetails = purchases.stream()
-                .map(Purchase::getPurchaseDetail)
-                .toList();
-
-        return new ProductDetailResponse(product, purchaseDetails);
+        return new ProductDetailResponse(product, purchaseInfos);
     }
 
-    public Page<PurchaseProductResponse> purchaseProducts(AccountDetail accountDetail, Pageable pageable) {
-        Long buyerId = accountDetail.getAccountId();
+    private List<PurchaseInfo> createPurchaseInfos(Product product, Long accountId) {
+        if (product.getSeller().getId().equals(accountId)) {
+            return createBuyerInfos(product.getId());
+        }
+
+        return createPurchaseDetailInfos(accountId);
+    }
+
+    private List<PurchaseInfo> createBuyerInfos(Long productId) {
+        List<Purchase> purchases = purchaseRepository.findByProductId(productId);
+
+        Map<Long, List<PurchaseDetail>> buyerPurchaseDetails = purchases.stream()
+                .sorted(Comparator.comparing(Purchase::getId).reversed())
+                .collect(Collectors.groupingBy(purchase -> purchase.getBuyer().getId(), LinkedHashMap::new,
+                        Collectors.mapping(Purchase::getPurchaseDetail, Collectors.toList())));
+
+        return buyerPurchaseDetails.entrySet()
+                .stream()
+                .map(entry -> new PurchaseBuyerResponse(entry.getKey(), entry.getValue()))
+                .map(PurchaseInfo.class::cast)
+                .toList();
+    }
+
+    private List<PurchaseInfo> createPurchaseDetailInfos(Long accountId) {
+        List<Purchase> purchases = purchaseRepository.findByBuyerId(accountId);
+
+        return purchases.stream()
+                .map(Purchase::getPurchaseDetail)
+                .map(PurchaseDetailResponse::new)
+                .map(PurchaseInfo.class::cast)
+                .toList();
+    }
+
+    public Page<PurchaseProductResponse> purchaseProducts(Long buyerId, Pageable pageable) {
         return productRepository.retrievePurchaseProducts(buyerId, pageable);
     }
 
-    public Page<ReserveProductResponse> reserveProducts(AccountDetail accountDetail, Pageable pageable) {
-        Long buyerId = accountDetail.getAccountId();
+    public Page<ReserveProductResponse> reserveProducts(Long buyerId, Pageable pageable) {
         return productRepository.retrieveReserveProducts(buyerId, pageable);
     }
 }

@@ -11,6 +11,8 @@ import com.wanted.challenge.product.response.ReserveProductResponse;
 import com.wanted.challenge.product.service.ProductService;
 import jakarta.validation.Valid;
 import java.net.URI;
+import java.util.Objects;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -35,7 +37,7 @@ public class ProductController {
                                          @AuthenticationPrincipal AccountDetail accountDetail) {
 
         Price price = new Price(registerRequest.price());
-        Long productId = productService.register(registerRequest.name(), price, accountDetail);
+        Long productId = productService.register(registerRequest.name(), price, accountDetail.getAccountId());
 
         return ResponseEntity.created(URI.create("/products/" + productId))
                 .build();
@@ -44,7 +46,7 @@ public class ProductController {
     @PostMapping("/purchase")
     public ResponseEntity<Void> purchase(@RequestBody @Valid PurchaseRequest purchaseRequest,
                                          @AuthenticationPrincipal AccountDetail accountDetail) {
-        productService.purchase(purchaseRequest.productId(), accountDetail);
+        productService.purchase(purchaseRequest.productId(), accountDetail.getAccountId());
 
         return ResponseEntity.ok()
                 .build();
@@ -61,9 +63,17 @@ public class ProductController {
     public ResponseEntity<ProductDetailResponse> detail(@PathVariable Long productId,
                                                         @AuthenticationPrincipal AccountDetail accountDetail) {
 
-        ProductDetailResponse productDetailResponse = productService.detail(productId, accountDetail);
+        ProductDetailResponse productDetailResponse = productService.detail(productId, getAccountId(accountDetail));
 
         return ResponseEntity.ok(productDetailResponse);
+    }
+
+    private Optional<Long> getAccountId(AccountDetail accountDetail) {
+        if (Objects.isNull(accountDetail)) {
+            return Optional.empty();
+        }
+
+        return Optional.ofNullable(accountDetail.getAccountId());
     }
 
     @GetMapping("/purchase")
@@ -72,7 +82,7 @@ public class ProductController {
             Pageable pageable) {
 
         Page<PurchaseProductResponse> purchaseProductResponses =
-                productService.purchaseProducts(accountDetail, pageable);
+                productService.purchaseProducts(accountDetail.getAccountId(), pageable);
 
         return ResponseEntity.ok(purchaseProductResponses);
     }
@@ -83,7 +93,7 @@ public class ProductController {
             Pageable pageable) {
 
         Page<ReserveProductResponse> purchaseProductResponses =
-                productService.reserveProducts(accountDetail, pageable);
+                productService.reserveProducts(accountDetail.getAccountId(), pageable);
 
         return ResponseEntity.ok(purchaseProductResponses);
     }
