@@ -98,20 +98,20 @@ public class ProductService {
         }
 
         Long accountId = optAccountId.get();
-        List<PurchaseInfo> purchaseInfos = createPurchaseInfos(product, accountId);
+        List<PurchaseInfo> purchaseInfos = getPurchaseInfos(product, accountId);
 
         return new ProductDetailResponse(product, purchaseInfos);
     }
 
-    private List<PurchaseInfo> createPurchaseInfos(Product product, Long accountId) {
+    private List<PurchaseInfo> getPurchaseInfos(Product product, Long accountId) {
         if (product.getSeller().getId().equals(accountId)) {
-            return createBuyerInfos(product.getId());
+            return getBuyerInfos(product.getId());
         }
 
-        return createPurchaseDetailInfos(accountId);
+        return getPurchaseDetailInfos(accountId);
     }
 
-    private List<PurchaseInfo> createBuyerInfos(Long productId) {
+    private List<PurchaseInfo> getBuyerInfos(Long productId) {
         List<Purchase> purchases = purchaseRepository.findByProductId(productId);
 
         Map<Long, List<PurchaseDetail>> buyerPurchaseDetails = purchases.stream()
@@ -126,7 +126,7 @@ public class ProductService {
                 .toList();
     }
 
-    private List<PurchaseInfo> createPurchaseDetailInfos(Long accountId) {
+    private List<PurchaseInfo> getPurchaseDetailInfos(Long accountId) {
         List<Purchase> purchases = purchaseRepository.findByBuyerId(accountId);
 
         return purchases.stream()
