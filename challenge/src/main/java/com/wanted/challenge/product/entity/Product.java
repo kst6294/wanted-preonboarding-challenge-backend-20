@@ -50,10 +50,11 @@ public class Product {
     @Column(name = "reservation_code")
     private Reservation reservation;
 
-    public Product(Account seller, String name, Price price) {
+    public Product(Account seller, String name, Price price, Quantity quantity) {
         this.seller = seller;
         this.name = name;
         this.price = price;
+        this.quantity = quantity;
         this.reservation = Reservation.SALE;
     }
 

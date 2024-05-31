@@ -2,6 +2,7 @@ package com.wanted.challenge.product.controller;
 
 import com.wanted.challenge.account.model.AccountDetail;
 import com.wanted.challenge.product.model.Price;
+import com.wanted.challenge.product.model.Quantity;
 import com.wanted.challenge.product.request.PurchaseRequest;
 import com.wanted.challenge.product.request.RegisterRequest;
 import com.wanted.challenge.product.response.ProductDetailResponse;
@@ -37,7 +38,8 @@ public class ProductController {
                                          @AuthenticationPrincipal AccountDetail accountDetail) {
 
         Price price = new Price(registerRequest.price());
-        Long productId = productService.register(registerRequest.name(), price, accountDetail.getAccountId());
+        Quantity quantity = new Quantity(registerRequest.quantity());
+        Long productId = productService.register(registerRequest.name(), price, quantity, accountDetail.getAccountId());
 
         return ResponseEntity.created(URI.create("/products/" + productId))
                 .build();

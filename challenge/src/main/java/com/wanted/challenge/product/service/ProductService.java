@@ -39,10 +39,10 @@ public class ProductService {
     private final ProductRepository productRepository;
     private final PurchaseRepository purchaseRepository;
 
-    public Long register(String name, Price price, Long sellerId) {
+    public Long register(String name, Price price, Quantity quantity, Long sellerId) {
         Account seller = accountRepository.getReferenceById(sellerId);
 
-        Product product = new Product(seller, name, price);
+        Product product = new Product(seller, name, price, quantity);
         productRepository.save(product);
 
         return product.getId();
