@@ -11,7 +11,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import wanted.preonboard.market.message.MemberMessage;
 
-import java.util.Collections;
+import java.util.List;
 
 @Component
 public class CustomUsernamePasswordAuthenticationProvider implements AuthenticationProvider {
@@ -31,9 +31,7 @@ public class CustomUsernamePasswordAuthenticationProvider implements Authenticat
         CustomUser user = (CustomUser) customUserDetailsService.loadUserByUsername(username);
         if (user != null) {
             if (passwordEncoder.matches(password, user.getPassword())) {
-                return new UsernamePasswordAuthenticationToken(user, password, Collections.singletonList(
-                    new SimpleGrantedAuthority("USER")
-                ));
+                return new UsernamePasswordAuthenticationToken(user, password, List.of(new SimpleGrantedAuthority("ROLE_USER")));
             } else {
                 throw new BadCredentialsException(MemberMessage.WRONG_PASSWORD.getMessage());
             }

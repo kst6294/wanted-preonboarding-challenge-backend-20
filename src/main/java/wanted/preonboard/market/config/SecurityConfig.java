@@ -12,12 +12,14 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.security.web.csrf.CsrfTokenRequestAttributeHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import wanted.preonboard.market.filter.CsrfCookieFilter;
 
 @Configuration
 public class SecurityConfig {
@@ -50,10 +52,13 @@ public class SecurityConfig {
                 .ignoringRequestMatchers("/register")
                 .ignoringRequestMatchers(AntPathRequestMatcher.antMatcher(HttpMethod.GET, "/products/**"))
                 .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()))
+            .addFilterAfter(new CsrfCookieFilter(), BasicAuthenticationFilter.class)
             .authorizeHttpRequests((requests) -> requests
+                .requestMatchers("/user").authenticated()
+                .requestMatchers("/contracts/**").hasRole("USER")
+                .requestMatchers("/products/**").hasRole("USER")
                 .requestMatchers(HttpMethod.POST, "/register").permitAll()
                 .requestMatchers(HttpMethod.GET, "/products/**").permitAll()
-                .anyRequest().authenticated()
             )
             .formLogin(Customizer.withDefaults())
             .httpBasic(Customizer.withDefaults());
