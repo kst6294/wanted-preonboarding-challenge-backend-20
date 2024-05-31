@@ -10,9 +10,9 @@ public interface ProductService {
 
 	List<Object> list();
 
-	List<Object> purchaseList();
+	List<Object> purchaseList(Long buyer_id);
 
-	List<Object> reserveList();
+	List<Object> reserveList(Long id);
 
 	ProductDTO readOne(Long id);
 

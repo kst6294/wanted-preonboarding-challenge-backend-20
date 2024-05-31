@@ -38,14 +38,14 @@ public class ProductController {
 
 	@GetMapping("/purchase")
 	public ResponseEntity<ResultDTO<Object>> purchaseList() {
-		List<Object> productList = productService.purchaseList();
+		List<Object> productList = productService.purchaseList(1L);
 
 		return ResponseEntity.ok(ResultDTO.res(HttpStatus.OK, "상품 리스트 반환 성공", productList));
 	}
 
 	@GetMapping("/reserve")
 	public ResponseEntity<ResultDTO<Object>> reserveList() {
-		List<Object> productList = productService.reserveList();
+		List<Object> productList = productService.reserveList(1L);
 
 		return ResponseEntity.ok(ResultDTO.res(HttpStatus.OK, "상품 리스트 반환 성공", productList));
 	}
