@@ -1,6 +1,5 @@
 package com.wanted.challenge.transact.service;
 
-import com.wanted.challenge.account.repository.AccountRepository;
 import com.wanted.challenge.exception.CustomException;
 import com.wanted.challenge.exception.ExceptionStatus;
 import com.wanted.challenge.product.entity.Product;
@@ -23,7 +22,6 @@ public class TransactService {
 
     private final ProductRepository productRepository;
     private final TransactRepository transactRepository;
-    private final AccountRepository accountRepository;
     private final TransactLogRepository transactLogRepository;
 
     @Transactional
