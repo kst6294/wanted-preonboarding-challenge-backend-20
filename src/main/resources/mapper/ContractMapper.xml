@@ -7,4 +7,47 @@
         INSERT INTO contract (product_id, seller_id, buyer_id)
         VALUES (#{productId}, #{sellerId}, #{buyerId})
     </insert>
+    <update id="approveContract" parameterType="Contract">
+        UPDATE contract
+        SET state = 'APPROVED'
+        WHERE id = #{id}
+    </update>
+    <select id="selectContractsByProductId" resultType="ContractResDto">
+        SELECT *,
+               (SELECT username FROM member WHERE id = seller_id) AS seller_name,
+               (SELECT username FROM member WHERE id = buyer_id)  AS buyer_name
+        FROM contract
+        WHERE product_id = #{productId}
+    </select>
+    <select id="selectContractsByUserIds" resultType="ContractResDto">
+        SELECT *,
+               (SELECT username FROM member WHERE id = seller_id) AS seller_name,
+               (SELECT username FROM member WHERE id = buyer_id)  AS buyer_name
+        FROM contract
+        WHERE (seller_id = #{userId1} AND buyer_id = #{userId2})
+           OR (seller_id = #{userId2} AND buyer_id = #{userId1})
+    </select>
+    <select id="selectPurchasedContractsByUserId"
+            resultType="Product">
+        SELECT DISTINCT product.*,
+        FROM contract
+                 INNER JOIN product ON contract.product_id = product.id
+        WHERE contract.buyer_id = #{userId}
+          AND contract.state = 'APPROVED'
+    </select>
+
+    <select id="selectReservationContractsByUserId"
+            resultType="Product">
+        SELECT DISTINCT product.*
+        FROM contract
+                 INNER JOIN product ON contract.product_id = product.id
+        WHERE (contract.buyer_id = #{userId} OR product.seller_id = #{userId})
+          AND contract.state = 'WAITING_APPROVAL'
+    </select>
+    <select id="selectContractById" resultType="Contract">
+        SELECT *
+        FROM contract
+        WHERE id = #{id}
+    </select>
+
 </mapper>

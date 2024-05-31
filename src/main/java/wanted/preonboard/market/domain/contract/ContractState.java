@@ -4,7 +4,7 @@ import lombok.Getter;
 
 @Getter
 public enum ContractState {
-    WAITING("거래대기"), COMPLETED("거래완료");
+    WAITING_APPROVAL("거래대기"), APPROVED("거래승인");
 
     private final String state;
 
