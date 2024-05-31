@@ -10,8 +10,12 @@ import java.time.LocalDateTime
 @Table(name = "orders")
 class Order (
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "consumer_id")
+    @JoinColumn(name = "buyer_id")
     var buyer: Member,
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "seller_id")
+    var seller: Member,
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id")
@@ -19,11 +23,11 @@ class Order (
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long? = -1
+    val id: Long = -1
 
 ) : BaseEntity() {
     @Enumerated(EnumType.STRING)
     var orderStatus: OrderStatus? = OrderStatus.PENDING
 
-    val completeDate : LocalDateTime? = null
+    var completeDate : LocalDateTime? = null
 }

@@ -13,7 +13,7 @@ class Member(
 
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
-        val id: Long? = -1
+        val id: Long = -1
 
 ) : BaseEntity()
 

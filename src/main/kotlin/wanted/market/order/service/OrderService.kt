@@ -11,6 +11,7 @@ import wanted.market.order.entity.OrderStatus
 import wanted.market.order.repository.OrderRepository
 import wanted.market.product.entity.ProductStatus
 import wanted.market.product.service.ProductService
+import java.time.LocalDateTime
 
 @Service
 class OrderService(@Autowired private val memberService: MemberService,
@@ -18,12 +19,10 @@ class OrderService(@Autowired private val memberService: MemberService,
                    @Autowired private val orderRepository: OrderRepository) {
     @Transactional
     fun order(memberId: Long, productId: Long) {
-        //TODO : Order 완료 시점 저장
-
         val buyer = memberService.findMember(memberId)
         val product = productService.findProductOnSale(productId)
         product.productStatus = ProductStatus.RESERVED
-        orderRepository.save(Order(buyer, product))
+        orderRepository.save(Order(buyer, product.seller, product))
     }
 
     @Transactional
@@ -33,8 +32,12 @@ class OrderService(@Autowired private val memberService: MemberService,
         val order = orderRepository.findById(orderId)
             .orElseThrow { OrderException(ErrorCode.ORDER_NOT_FOUND)}
 
-        //TODO : 셀러와 주어진 멤버의 id가 같아야 함.
+        if (order.seller.id == memberId) {
+            throw OrderException(ErrorCode.SELLER_APPROVAL_ONLY)
+        }
+
         order.orderStatus = OrderStatus.APPROVED
+        order.completeDate = LocalDateTime.now()
         order.product.productStatus = ProductStatus.SOLD
     }
 

@@ -32,7 +32,10 @@ class ProductService(@Autowired private val productRepository: ProductRepository
         val product = findProductById(productId)
         val order = orderRepository.findByBuyerIdAndProductId(memberId, productId)
             .orElseThrow{OrderException(ErrorCode.ORDER_NOT_FOUND)}
-            return ProductDetailResponse.from(product, order, product.seller)
+        return ProductDetailResponse.from(product, order, product.seller)
+
+        //내가 구매자인 경우와 판매자인 경우 거래 내역 불러오기
+
     }
 
     private fun findProductById(productId: Long): Product {
@@ -68,7 +71,7 @@ class ProductService(@Autowired private val productRepository: ProductRepository
     }
 
     fun findReserveProductBySeller(sellerId: Long): List<ProductResponse> {
-        return productRepository.findBySellerIdAndProductStatus(sellerId, ProductStatus.RESERVED)
-            .map { product -> ProductResponse.from(product) }
+        return orderRepository.findBySellerIdAndOrderStatus(sellerId, OrderStatus.PENDING)
+            .map { order -> ProductResponse.from(order.product) }
     }
 }

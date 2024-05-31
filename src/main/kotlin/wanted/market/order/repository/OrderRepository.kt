@@ -13,5 +13,6 @@ interface OrderRepository : JpaRepository<Order, Long> {
     fun findByBuyerIdAndOrderStatus(buyerId: Long, orderStatus: OrderStatus) : List<Order>
 
     fun findByBuyerIdAndProductId(buyerId: Long, productId: Long) : Optional<Order>
+    fun findBySellerIdAndOrderStatus(sellerId: Long, orderStatus: OrderStatus): List<Order>
 
 }

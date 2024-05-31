@@ -9,6 +9,7 @@ enum class ErrorCode(val httpStatus: Int, val message: String) {
 
     PRODUCT_NOT_FOUND(404, "존재하지 않는 상품입니다."),
     PRODUCT_NOT_FOR_SALE(400, "판매 중인 상품이 아닙니다."),
+    SELLER_APPROVAL_ONLY(400, "판매자만 승인할 수 있습니다."),
 
 
     ORDER_NOT_FOUND(404, "존재하지 않는 주문입니다."),
