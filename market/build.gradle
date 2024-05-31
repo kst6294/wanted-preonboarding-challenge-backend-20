@@ -1,0 +1,37 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '2.7.1'
+	id 'io.spring.dependency-management' version '1.1.5'
+}
+
+group = 'com.wanted'
+version = '0.0.1-SNAPSHOT'
+
+java {
+	sourceCompatibility = '1.8'
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+	// Lombok dependencies
+	implementation 'org.projectlombok:lombok:1.18.28'
+	annotationProcessor 'org.projectlombok:lombok:1.18.28'
+
+	implementation 'org.springframework.boot:spring-boot-starter'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+	implementation 'mysql:mysql-connector-java:8.0.30'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
