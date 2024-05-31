@@ -6,9 +6,11 @@ import ITransaction, {
 } from "../interfaces/ITransaction.dto";
 import TransactionRepository from "../repositories/transaction.repository";
 import database from "../database";
+import TaskQueue from "../task-queue";
 
 export default class TransactionService {
   repository = new TransactionRepository();
+  taskQueue = new TaskQueue(1);
 
   private async updateProductStatus(conn: PoolConnection, dto: ITransaction) {
     const [[transaction], [product]] = await Promise.all([
@@ -57,20 +59,22 @@ export default class TransactionService {
       throw new HttpError(409, message);
     }
 
-    try {
-      await conn.beginTransaction();
+    await this.taskQueue.runTask(async () => {
+      try {
+        await conn.beginTransaction();
 
-      await this.repository.insertTransaction(conn, dto);
-      await this.updateProductStatus(conn, dto);
+        await this.repository.insertTransaction(conn, dto);
+        await this.updateProductStatus(conn, dto);
 
-      await conn.commit();
-    } catch (error) {
-      await conn.rollback();
+        await conn.commit();
+      } catch (error) {
+        await conn.rollback();
 
-      throw error;
-    } finally {
-      conn.release();
-    }
+        throw error;
+      } finally {
+        conn.release();
+      }
+    });
   }
 
   async approveTransaction(dto: ITransaction) {
