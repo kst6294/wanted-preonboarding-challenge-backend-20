@@ -1,6 +1,6 @@
 package com.wanted.challenge.product.response;
 
-import com.wanted.challenge.transact.model.TransactDetail;
+import com.wanted.challenge.transact.model.TransactState;
 
-public record PurchaseDetailResponse(TransactDetail transactDetail) implements PurchaseInfo {
+public record PurchaseDetailResponse(TransactState transactState) implements PurchaseInfo {
 }

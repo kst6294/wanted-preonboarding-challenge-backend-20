@@ -2,7 +2,7 @@ package com.wanted.challenge.transact.entity;
 
 import com.wanted.challenge.account.entity.Account;
 import com.wanted.challenge.product.entity.Product;
-import com.wanted.challenge.transact.model.TransactDetail;
+import com.wanted.challenge.transact.model.TransactState;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -38,12 +38,12 @@ public class Transact {
     Product product;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "transact_detail_code")
-    TransactDetail transactDetail;
+    @Column(name = "transact_state_code")
+    TransactState transactState;
 
-    public Transact(Account buyer, Product product, TransactDetail transactDetail) {
+    public Transact(Account buyer, Product product, TransactState transactState) {
         this.buyer = buyer;
         this.product = product;
-        this.transactDetail = transactDetail;
+        this.transactState = transactState;
     }
 }

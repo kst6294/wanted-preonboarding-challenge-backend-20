@@ -1,7 +1,7 @@
 package com.wanted.challenge.product.service;
 
-import static com.wanted.challenge.transact.model.TransactDetail.APPROVE;
-import static com.wanted.challenge.transact.model.TransactDetail.DEPOSIT;
+import static com.wanted.challenge.transact.model.TransactState.APPROVE;
+import static com.wanted.challenge.transact.model.TransactState.DEPOSIT;
 
 import com.wanted.challenge.IntegrationTestSupport;
 import com.wanted.challenge.account.entity.Account;

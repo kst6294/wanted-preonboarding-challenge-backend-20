@@ -55,7 +55,7 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
                         product.reservation,
                         product.name,
                         product.price,
-                        transact.transactDetail
+                        transact.transactState
                 ))
                 .from(product)
 

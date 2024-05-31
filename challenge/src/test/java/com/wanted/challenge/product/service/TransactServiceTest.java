@@ -9,7 +9,7 @@ import com.wanted.challenge.product.model.Quantity;
 import com.wanted.challenge.product.model.Reservation;
 import com.wanted.challenge.product.repository.ProductRepository;
 import com.wanted.challenge.transact.entity.Transact;
-import com.wanted.challenge.transact.model.TransactDetail;
+import com.wanted.challenge.transact.model.TransactState;
 import com.wanted.challenge.transact.repository.TransactRepository;
 import com.wanted.challenge.transact.service.TransactService;
 import org.assertj.core.api.Assertions;
@@ -50,11 +50,11 @@ class TransactServiceTest extends IntegrationTestSupport {
 
         product = productRepository.save(product);
 
-        transactRepository.save(new Transact(buyer1, product, TransactDetail.DEPOSIT));
-        transactRepository.save(new Transact(buyer2, product, TransactDetail.DEPOSIT));
+        transactRepository.save(new Transact(buyer1, product, TransactState.DEPOSIT));
+        transactRepository.save(new Transact(buyer2, product, TransactState.DEPOSIT));
 
-        transactRepository.save(new Transact(buyer1, product, TransactDetail.APPROVE));
-        transactRepository.save(new Transact(buyer2, product, TransactDetail.APPROVE));
+        transactRepository.save(new Transact(buyer1, product, TransactState.APPROVE));
+        transactRepository.save(new Transact(buyer2, product, TransactState.APPROVE));
     }
 
     @Test

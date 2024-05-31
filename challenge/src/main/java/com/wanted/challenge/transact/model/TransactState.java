@@ -1,5 +1,5 @@
 package com.wanted.challenge.transact.model;
 
-public enum TransactDetail {
+public enum TransactState {
     DEPOSIT, APPROVE, CONFIRM;
 }

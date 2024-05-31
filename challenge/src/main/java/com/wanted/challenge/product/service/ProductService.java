@@ -16,7 +16,7 @@ import com.wanted.challenge.product.response.PurchaseInfo;
 import com.wanted.challenge.product.response.PurchaseProductResponse;
 import com.wanted.challenge.product.response.ReserveProductResponse;
 import com.wanted.challenge.transact.entity.Transact;
-import com.wanted.challenge.transact.model.TransactDetail;
+import com.wanted.challenge.transact.model.TransactState;
 import com.wanted.challenge.transact.repository.TransactRepository;
 import java.util.Collections;
 import java.util.Comparator;
@@ -63,7 +63,7 @@ public class ProductService {
         product.purchase();
 
         Account buyer = accountRepository.getReferenceById(buyerId);
-        Transact transact = new Transact(buyer, product, TransactDetail.DEPOSIT);
+        Transact transact = new Transact(buyer, product, TransactState.DEPOSIT);
         transactRepository.save(transact);
     }
 
@@ -114,10 +114,10 @@ public class ProductService {
     private List<PurchaseInfo> getBuyerInfos(Long productId) {
         List<Transact> transacts = transactRepository.findByProductId(productId);
 
-        Map<Long, List<TransactDetail>> buyerPurchaseDetails = transacts.stream()
+        Map<Long, List<TransactState>> buyerPurchaseDetails = transacts.stream()
                 .sorted(Comparator.comparing(Transact::getId).reversed())
                 .collect(Collectors.groupingBy(purchase -> purchase.getBuyer().getId(), LinkedHashMap::new,
-                        Collectors.mapping(Transact::getTransactDetail, Collectors.toList())));
+                        Collectors.mapping(Transact::getTransactState, Collectors.toList())));
 
         return buyerPurchaseDetails.entrySet()
                 .stream()
@@ -130,7 +130,7 @@ public class ProductService {
         List<Transact> transacts = transactRepository.findByBuyerId(accountId);
 
         return transacts.stream()
-                .map(Transact::getTransactDetail)
+                .map(Transact::getTransactState)
                 .map(PurchaseDetailResponse::new)
                 .map(PurchaseInfo.class::cast)
                 .toList();

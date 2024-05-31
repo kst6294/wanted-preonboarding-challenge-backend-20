@@ -1,7 +1,7 @@
 package com.wanted.challenge.product.repository;
 
-import static com.wanted.challenge.transact.model.TransactDetail.APPROVE;
-import static com.wanted.challenge.transact.model.TransactDetail.DEPOSIT;
+import static com.wanted.challenge.transact.model.TransactState.APPROVE;
+import static com.wanted.challenge.transact.model.TransactState.DEPOSIT;
 import static org.assertj.core.groups.Tuple.tuple;
 
 import com.wanted.challenge.IntegrationTestSupport;
@@ -52,7 +52,7 @@ class ProductRepositoryTest extends IntegrationTestSupport {
 
         // then
         Assertions.assertThat(purchaseProductResponses)
-                .extracting(PurchaseProductResponse::name, PurchaseProductResponse::transactDetail)
+                .extracting(PurchaseProductResponse::name, PurchaseProductResponse::transactState)
                 .containsExactly(tuple("product2", DEPOSIT), tuple("product1", APPROVE));
     }
 }

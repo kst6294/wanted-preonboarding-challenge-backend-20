@@ -7,7 +7,7 @@ import com.wanted.challenge.exception.ExceptionStatus;
 import com.wanted.challenge.product.entity.Product;
 import com.wanted.challenge.product.repository.ProductRepository;
 import com.wanted.challenge.transact.entity.Transact;
-import com.wanted.challenge.transact.model.TransactDetail;
+import com.wanted.challenge.transact.model.TransactState;
 import com.wanted.challenge.transact.repository.TransactRepository;
 import java.util.Set;
 import lombok.RequiredArgsConstructor;
@@ -32,15 +32,15 @@ public class TransactService {
             throw new CustomException(ExceptionStatus.NOT_SELLER);
         }
 
-        TransactDetail lastTransactDetail = transactRepository.retrieveLastTransactDetail(buyerId, productId);
+        TransactState lastTransactState = transactRepository.retrieveLastTransactDetail(buyerId, productId);
 
-        if (lastTransactDetail != TransactDetail.DEPOSIT) {
+        if (lastTransactState != TransactState.DEPOSIT) {
             throw new CustomException(ExceptionStatus.CAN_NOT_APPROVE);
         }
 
         Account buyer = accountRepository.getReferenceById(buyerId);
 
-        transactRepository.save(new Transact(buyer, product, TransactDetail.APPROVE));
+        transactRepository.save(new Transact(buyer, product, TransactState.APPROVE));
     }
 
     @Transactional
@@ -48,22 +48,22 @@ public class TransactService {
         Product product = productRepository.findProductWithUpdateLockById(productId)
                 .orElseThrow(() -> new CustomException(ExceptionStatus.NOT_FOUND));
 
-        TransactDetail lastTransactDetail = transactRepository.retrieveLastTransactDetail(buyerId, productId);
+        TransactState lastTransactState = transactRepository.retrieveLastTransactDetail(buyerId, productId);
 
-        if (lastTransactDetail != TransactDetail.APPROVE) {
+        if (lastTransactState != TransactState.APPROVE) {
             throw new CustomException(ExceptionStatus.CAN_NOT_CONFIRM);
         }
 
         Account buyer = accountRepository.getReferenceById(buyerId);
-        transactRepository.save(new Transact(buyer, product, TransactDetail.CONFIRM));
+        transactRepository.save(new Transact(buyer, product, TransactState.CONFIRM));
 
         isAllConfirm(product);
     }
 
     private void isAllConfirm(Product product) {
-        Set<TransactDetail> transactDetails = transactRepository.retrieveProductTransactDetails(product);
+        Set<TransactState> transactStates = transactRepository.retrieveProductTransactDetails(product);
 
-        if (transactDetails.size() == 1 && transactDetails.contains(TransactDetail.CONFIRM)) {
+        if (transactStates.size() == 1 && transactStates.contains(TransactState.CONFIRM)) {
             product.complete();
         }
     }
