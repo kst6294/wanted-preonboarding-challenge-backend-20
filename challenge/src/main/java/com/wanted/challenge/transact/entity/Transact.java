@@ -20,12 +20,12 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
-@Table(name = "purchases")
+@Table(name = "transacts")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Transact {
 
     @Id
-    @Column(name = "purchase_id")
+    @Column(name = "transact_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -38,7 +38,7 @@ public class Transact {
     Product product;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "purchase_detail_code")
+    @Column(name = "transact_detail_code")
     TransactDetail transactDetail;
 
     public Transact(Account buyer, Product product, TransactDetail transactDetail) {
