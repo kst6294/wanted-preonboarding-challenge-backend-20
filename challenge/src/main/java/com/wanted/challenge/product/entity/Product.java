@@ -59,5 +59,9 @@ public class Product {
 
     public void purchase() {
         this.quantity = Quantity.minus(this.quantity);
+
+        if (quantity.value() == 0 && this.reservation == Reservation.SALE) {
+            this.reservation = Reservation.RESERVE;
+        }
     }
 }

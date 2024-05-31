@@ -49,7 +49,7 @@ public class ProductService {
     }
 
     public void purchase(Long productId, Long buyerId) {
-        Product product = productRepository.findById(productId)
+        Product product = productRepository.findProductWithUpdateLockById(productId)
                 .orElseThrow(() -> new CustomException(ExceptionStatus.NOT_FOUND));
 
         validBuyer(buyerId, product);
