@@ -17,6 +17,8 @@ import com.wanted.challenge.product.response.ProductDetailResponse;
 import com.wanted.challenge.product.response.PurchaseBuyerResponse;
 import com.wanted.challenge.product.response.PurchaseDetailResponse;
 import com.wanted.challenge.transact.entity.Transact;
+import com.wanted.challenge.transact.entity.TransactLog;
+import com.wanted.challenge.transact.repository.TransactLogRepository;
 import com.wanted.challenge.transact.repository.TransactRepository;
 import java.util.List;
 import java.util.Optional;
@@ -40,6 +42,9 @@ class ProductServiceTest extends IntegrationTestSupport {
     @Autowired
     TransactRepository transactRepository;
 
+    @Autowired
+    TransactLogRepository transactLogRepository;
+
     Account buyer1;
     Account buyer2;
     Account seller;
@@ -60,10 +65,12 @@ class ProductServiceTest extends IntegrationTestSupport {
     void purchaseDetailResponses() throws Exception {
 
         // given
-        transactRepository.save(new Transact(buyer1, product, DEPOSIT));
-        transactRepository.save(new Transact(buyer1, product, APPROVE));
+        Transact transact1 = transactRepository.save(new Transact(buyer1, product));
+        transactLogRepository.save(new TransactLog(transact1, DEPOSIT));
+        transactLogRepository.save(new TransactLog(transact1, APPROVE));
 
-        transactRepository.save(new Transact(buyer2, product, DEPOSIT));
+        Transact transact2 = transactRepository.save(new Transact(buyer2, product));
+        transactLogRepository.save(new TransactLog(transact2, DEPOSIT));
 
         // when
         ProductDetailResponse productDetailResponse =
@@ -81,10 +88,12 @@ class ProductServiceTest extends IntegrationTestSupport {
     void purchaseBuyerResponses() throws Exception {
 
         // given
-        transactRepository.save(new Transact(buyer1, product, DEPOSIT));
-        transactRepository.save(new Transact(buyer1, product, APPROVE));
+        Transact transact1 = transactRepository.save(new Transact(buyer1, product));
+        transactLogRepository.save(new TransactLog(transact1, DEPOSIT));
+        transactLogRepository.save(new TransactLog(transact1, APPROVE));
 
-        transactRepository.save(new Transact(buyer2, product, DEPOSIT));
+        Transact transact2 = transactRepository.save(new Transact(buyer2, product));
+        transactLogRepository.save(new TransactLog(transact2, DEPOSIT));
 
         // when
         ProductDetailResponse productDetailResponse =

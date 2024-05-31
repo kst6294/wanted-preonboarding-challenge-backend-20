@@ -12,6 +12,8 @@ import com.wanted.challenge.product.model.Price;
 import com.wanted.challenge.product.model.Quantity;
 import com.wanted.challenge.product.response.PurchaseProductResponse;
 import com.wanted.challenge.transact.entity.Transact;
+import com.wanted.challenge.transact.entity.TransactLog;
+import com.wanted.challenge.transact.repository.TransactLogRepository;
 import com.wanted.challenge.transact.repository.TransactRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -31,6 +33,9 @@ class ProductRepositoryTest extends IntegrationTestSupport {
     @Autowired
     ProductRepository productRepository;
 
+    @Autowired
+    TransactLogRepository transactLogRepository;
+
     @Test
     @DisplayName("구매한 제품과 가장 마지막 거래 내용 확인")
     void retrievePurchaseProducts() throws Exception {
@@ -41,10 +46,12 @@ class ProductRepositoryTest extends IntegrationTestSupport {
         Product product1 = productRepository.save(new Product(seller, "product1", new Price(10_000), new Quantity(1)));
         Product product2 = productRepository.save(new Product(seller, "product2", new Price(20_000), new Quantity(1)));
 
-        transactRepository.save(new Transact(buyer, product1, DEPOSIT));
-        transactRepository.save(new Transact(buyer, product1, APPROVE));
+        Transact transact1 = transactRepository.save(new Transact(buyer, product1));
+        transactLogRepository.save(new TransactLog(transact1, DEPOSIT));
+        transactLogRepository.save(new TransactLog(transact1, APPROVE));
 
-        transactRepository.save(new Transact(buyer, product2, DEPOSIT));
+        Transact transact2 = transactRepository.save(new Transact(buyer, product2));
+        transactLogRepository.save(new TransactLog(transact2, DEPOSIT));
 
         // when
         Page<PurchaseProductResponse> purchaseProductResponses =

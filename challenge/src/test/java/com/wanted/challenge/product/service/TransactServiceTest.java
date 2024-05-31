@@ -9,7 +9,9 @@ import com.wanted.challenge.product.model.Quantity;
 import com.wanted.challenge.product.model.Reservation;
 import com.wanted.challenge.product.repository.ProductRepository;
 import com.wanted.challenge.transact.entity.Transact;
+import com.wanted.challenge.transact.entity.TransactLog;
 import com.wanted.challenge.transact.model.TransactState;
+import com.wanted.challenge.transact.repository.TransactLogRepository;
 import com.wanted.challenge.transact.repository.TransactRepository;
 import com.wanted.challenge.transact.service.TransactService;
 import org.assertj.core.api.Assertions;
@@ -33,6 +35,9 @@ class TransactServiceTest extends IntegrationTestSupport {
     @Autowired
     TransactRepository transactRepository;
 
+    @Autowired
+    TransactLogRepository transactLogRepository;
+
     Account buyer1;
     Account buyer2;
     Account seller;
@@ -50,11 +55,13 @@ class TransactServiceTest extends IntegrationTestSupport {
 
         product = productRepository.save(product);
 
-        transactRepository.save(new Transact(buyer1, product, TransactState.DEPOSIT));
-        transactRepository.save(new Transact(buyer2, product, TransactState.DEPOSIT));
+        Transact transact1 = transactRepository.save(new Transact(buyer1, product));
+        transactLogRepository.save(new TransactLog(transact1, TransactState.DEPOSIT));
+        transactLogRepository.save(new TransactLog(transact1, TransactState.APPROVE));
 
-        transactRepository.save(new Transact(buyer1, product, TransactState.APPROVE));
-        transactRepository.save(new Transact(buyer2, product, TransactState.APPROVE));
+        Transact transact2 = transactRepository.save(new Transact(buyer2, product));
+        transactLogRepository.save(new TransactLog(transact2, TransactState.DEPOSIT));
+        transactLogRepository.save(new TransactLog(transact2, TransactState.APPROVE));
     }
 
     @Test
