@@ -31,7 +31,7 @@ public class TransactService {
         Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new CustomException(ExceptionStatus.NOT_FOUND));
 
-        if (!product.getId().equals(sellerId)) {
+        if (!product.getSeller().getId().equals(sellerId)) {
             throw new CustomException(ExceptionStatus.NOT_SELLER);
         }
 
