@@ -25,7 +25,7 @@ public class ProductService {
         );
 
         Product product = Product.from(productCreate, user);
-        product = productRepository.register(product);
+        product = productRepository.save(product);
 
         return product.getId();
     }

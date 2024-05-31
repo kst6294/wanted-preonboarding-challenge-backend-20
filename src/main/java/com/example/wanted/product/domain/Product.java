@@ -43,10 +43,19 @@ public class Product {
 
     public void deductQuantity() {
         if(this.quantity == 1) {
-            sellingStatus = ProductSellingStatus.STOP;
+            sellingStatus = ProductSellingStatus.RESERVATION;
         } else if (this.quantity < 1) {
             throw new IllegalArgumentException("차감할 재고 수량이 없습니다.");
         }
         this.quantity -=1;
     }
+
+    public boolean checkSeller(User user) {
+        return this.seller.getId().equals(user.getId());
+    }
+
+    public void complete() {
+        sellingStatus = ProductSellingStatus.COMPLETE;
+    }
+
 }

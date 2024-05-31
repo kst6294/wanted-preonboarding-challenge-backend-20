@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 public class ProductRepositoryImpl implements ProductRepository {
     private final ProductJpaRepository productJpaRepository;
     @Override
-    public Product register(Product product) {
+    public Product save(Product product) {
         return productJpaRepository.save(ProductEntity.fromModel(product)).toModel();
     }
 
