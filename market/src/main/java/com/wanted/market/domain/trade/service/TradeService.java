@@ -84,11 +84,12 @@ public class TradeService {
     }
 
     public List<TradeDto> getPurchasedTrades(final int page) {
-        return tradeRepository.findByBuyerNo(sessionUtils.getMemberNo(), PageRequest.of(page, 10)).toList();
+        return tradeRepository.findByBuyerNo(sessionUtils.getMemberNo(), TradeStatusCode.COMPLETE, PageRequest.of(page, 10)).toList();
     }
 
-    public List<TradeDto> getReservedTrades(final int page) {
-        return tradeRepository.findByMemberNoAndStatus(sessionUtils.getMemberNo(), TradeStatusCode.REQUEST, PageRequest.of(page, 10)).toList();
+    public List<TradeDto> getReservedTrades(final int page, String state) {
+        TradeStatusCode tradeStatusCode = TradeStatusCode.valueOf(state);
+        return tradeRepository.findByMemberNoAndStatus(sessionUtils.getMemberNo(), tradeStatusCode, PageRequest.of(page, 10)).toList();
     }
 
     public Trade getTrade(long productNo) {

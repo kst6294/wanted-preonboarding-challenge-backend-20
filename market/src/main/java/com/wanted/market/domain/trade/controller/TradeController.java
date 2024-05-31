@@ -5,6 +5,7 @@ import com.wanted.market.domain.trade.response.DetailResponse;
 import com.wanted.market.domain.trade.response.ListResponse;
 import com.wanted.market.domain.trade.service.TradeService;
 import com.wanted.market.global.common.code.ResponseCode;
+import com.wanted.market.global.common.code.TradeStatusCode;
 import com.wanted.market.global.common.response.BaseResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -51,14 +52,18 @@ public class TradeController {
         return new ListResponse(ResponseCode.SUCCESS, tradeService.getPurchasedTrades(page - 1));
     }
 
-    @GetMapping("/reserved/{page}")
-    public BaseResponse getReservedTrades(@PathVariable("page") int page) {
+    @GetMapping("/{state}/{page}")
+    public BaseResponse getReservedTrades(@PathVariable("page") int page, @PathVariable("state") String state) {
 
         if (page < 0) {
             return new BaseResponse(ResponseCode.BAD_REQUEST);
         }
 
-        return new ListResponse(ResponseCode.SUCCESS, tradeService.getReservedTrades(page - 1));
+        if (! TradeStatusCode.isAvailable(state)) {
+            return new BaseResponse(ResponseCode.BAD_REQUEST);
+        }
+
+        return new ListResponse(ResponseCode.SUCCESS, tradeService.getReservedTrades(page - 1, state));
     }
 
     @GetMapping("/detail/{product_no}")
