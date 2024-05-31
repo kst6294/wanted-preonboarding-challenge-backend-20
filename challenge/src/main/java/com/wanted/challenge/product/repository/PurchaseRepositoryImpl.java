@@ -6,6 +6,7 @@ import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.JPQLQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.wanted.challenge.product.model.PurchaseDetail;
+import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -27,5 +28,16 @@ public class PurchaseRepositoryImpl implements PurchaseRepositoryCustom {
                 .from(purchase)
                 .where(purchase.buyer.id.eq(buyerId),
                         purchase.product.id.eq(productId));
+    }
+
+    public boolean isPurchaseAlready(Long buyerId, Long productId) {
+        Long purchaseId = jpaQueryFactory
+                .select(purchase.id)
+                .from(purchase)
+                .where(purchase.buyer.id.eq(buyerId),
+                        purchase.product.id.eq(productId))
+                .fetchFirst();
+
+        return Objects.nonNull(purchaseId);
     }
 }

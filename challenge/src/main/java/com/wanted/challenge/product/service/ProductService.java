@@ -8,6 +8,7 @@ import com.wanted.challenge.product.entity.Product;
 import com.wanted.challenge.product.entity.Purchase;
 import com.wanted.challenge.product.model.Price;
 import com.wanted.challenge.product.model.PurchaseDetail;
+import com.wanted.challenge.product.model.Quantity;
 import com.wanted.challenge.product.repository.ProductRepository;
 import com.wanted.challenge.product.repository.PurchaseRepository;
 import com.wanted.challenge.product.response.ProductDetailResponse;
@@ -22,6 +23,7 @@ import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
@@ -51,6 +53,10 @@ public class ProductService {
                 .orElseThrow(() -> new CustomException(ExceptionStatus.NOT_FOUND));
 
         validBuyer(buyerId, product);
+        validPurchaseAlready(buyerId, product.getId());
+        validQuantity(product.getQuantity());
+
+        product.purchase();
 
         Account buyer = accountRepository.getReferenceById(buyerId);
         Purchase purchase = new Purchase(buyer, product, PurchaseDetail.DEPOSIT);
@@ -60,6 +66,18 @@ public class ProductService {
     private void validBuyer(Long buyerId, Product product) {
         if (product.getSeller().getId().equals(buyerId)) {
             throw new CustomException(ExceptionStatus.SELF_BUY);
+        }
+    }
+
+    private void validPurchaseAlready(Long buyerId, Long productId) {
+        if (purchaseRepository.isPurchaseAlready(buyerId, productId)) {
+            throw new CustomException(ExceptionStatus.PURCHASE_ALREADY);
+        }
+    }
+
+    private void validQuantity(Quantity quantity) {
+        if (Objects.isNull(quantity) || quantity.value() <= 0) {
+            throw new CustomException(ExceptionStatus.CAN_NOT_PURCHASE);
         }
     }
 
