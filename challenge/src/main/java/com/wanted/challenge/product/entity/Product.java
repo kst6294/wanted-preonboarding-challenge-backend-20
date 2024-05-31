@@ -64,4 +64,10 @@ public class Product {
             this.reservation = Reservation.RESERVE;
         }
     }
+
+    public void complete() {
+        if (this.reservation == Reservation.RESERVE) {
+            this.reservation = Reservation.COMPLETE;
+        }
+    }
 }
