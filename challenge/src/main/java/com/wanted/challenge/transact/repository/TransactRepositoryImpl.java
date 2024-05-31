@@ -23,6 +23,9 @@ public class TransactRepositoryImpl implements TransactRepositoryCustom {
                 .select(transactLog.transactState)
                 .from(transact)
 
+                .innerJoin(transactLog)
+                .on(transact.eq(transactLog.transact))
+
                 .where(transact.id.eq(transactId))
 
                 .fetch();
