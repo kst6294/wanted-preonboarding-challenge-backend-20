@@ -1,3 +1,4 @@
+import { PoolConnection } from "mysql2/promise";
 import HttpError from "../errors/HttpError";
 import { ProductStatus } from "../interfaces/IProduct.dto";
 import ITransaction, {
@@ -5,7 +6,6 @@ import ITransaction, {
 } from "../interfaces/ITransaction.dto";
 import TransactionRepository from "../repositories/transaction.repository";
 import database from "../database";
-import { PoolConnection } from "mysql2/promise";
 
 export default class TransactionService {
   repository = new TransactionRepository();
@@ -69,7 +69,7 @@ export default class TransactionService {
 
       throw error;
     } finally {
-      await conn.release();
+      conn.release();
     }
   }
 
@@ -102,7 +102,7 @@ export default class TransactionService {
 
       throw error;
     } finally {
-      await conn.release();
+      conn.release();
     }
   }
 
@@ -136,7 +136,7 @@ export default class TransactionService {
 
       throw error;
     } finally {
-      await conn.release();
+      conn.release();
     }
   }
 }
