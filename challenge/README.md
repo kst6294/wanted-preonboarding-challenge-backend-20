@@ -85,3 +85,9 @@
 > productId: 제품 번호
 >
 > buyerId: 구매자 번호
+
+### 구매 확정
+
+#### POST /transacts/confirm
+
+> productId: 제품 번호
