@@ -54,10 +54,10 @@ public class PurchaseService {
             throw new CustomException(ExceptionStatus.CAN_NOT_CONFIRM);
         }
 
-        isAllConfirm(product);
-
         Account buyer = accountRepository.getReferenceById(buyerId);
         purchaseRepository.save(new Purchase(buyer, product, PurchaseDetail.CONFIRM));
+
+        isAllConfirm(product);
     }
 
     private void isAllConfirm(Product product) {
