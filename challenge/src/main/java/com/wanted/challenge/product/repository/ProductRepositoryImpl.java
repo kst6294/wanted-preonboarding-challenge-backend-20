@@ -1,7 +1,7 @@
 package com.wanted.challenge.product.repository;
 
 import static com.wanted.challenge.product.entity.QProduct.product;
-import static com.wanted.challenge.product.entity.QPurchase.purchase;
+import static com.wanted.challenge.transact.entity.QTransact.transact;
 
 import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.JPQLQuery;
@@ -55,16 +55,16 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
                         product.reservation,
                         product.name,
                         product.price,
-                        purchase.purchaseDetail
+                        transact.transactDetail
                 ))
                 .from(product)
 
-                .innerJoin(purchase)
-                .on(purchase.id.eq(maxPurchaseId()))
+                .innerJoin(transact)
+                .on(transact.id.eq(maxPurchaseId()))
 
-                .where(purchase.buyer.id.eq(buyerId))
+                .where(transact.buyer.id.eq(buyerId))
 
-                .orderBy(purchase.id.desc())
+                .orderBy(transact.id.desc())
 
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
@@ -75,19 +75,19 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
                 .select(product.count())
                 .from(product)
 
-                .innerJoin(purchase)
-                .on(purchase.id.eq(maxPurchaseId()))
+                .innerJoin(transact)
+                .on(transact.id.eq(maxPurchaseId()))
 
-                .where(purchase.buyer.id.eq(buyerId));
+                .where(transact.buyer.id.eq(buyerId));
 
         return PageableExecutionUtils.getPage(content, pageable, countQuery::fetchOne);
     }
 
     private static JPQLQuery<Long> maxPurchaseId() {
         return JPAExpressions
-                .select(purchase.id.max())
-                .from(purchase)
-                .where(purchase.product.eq(product));
+                .select(transact.id.max())
+                .from(transact)
+                .where(transact.product.eq(product));
     }
 
     public Page<ReserveProductResponse> retrieveReserveProducts(Long buyerId, Pageable pageable) {

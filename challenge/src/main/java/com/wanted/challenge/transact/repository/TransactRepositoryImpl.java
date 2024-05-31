@@ -1,6 +1,6 @@
 package com.wanted.challenge.transact.repository;
 
-import static com.wanted.challenge.product.entity.QPurchase.purchase;
+import static com.wanted.challenge.transact.entity.QTransact.transact;
 
 import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.JPQLQuery;
@@ -20,36 +20,36 @@ public class TransactRepositoryImpl implements TransactRepositoryCustom {
 
     public TransactDetail retrieveLastTransactDetail(Long buyerId, Long productId) {
         return jpaQueryFactory
-                .select(purchase.purchaseDetail)
-                .from(purchase)
-                .where(purchase.id.eq(maxPurchaseId(buyerId, productId)))
+                .select(transact.transactDetail)
+                .from(transact)
+                .where(transact.id.eq(maxPurchaseId(buyerId, productId)))
                 .fetchOne();
     }
 
     private static JPQLQuery<Long> maxPurchaseId(Long buyerId, Long productId) {
         return JPAExpressions
-                .select(purchase.id.max())
-                .from(purchase)
-                .where(purchase.buyer.id.eq(buyerId),
-                        purchase.product.id.eq(productId));
+                .select(transact.id.max())
+                .from(transact)
+                .where(transact.buyer.id.eq(buyerId),
+                        transact.product.id.eq(productId));
     }
 
     public boolean isPurchaseAlready(Long buyerId, Long productId) {
-        Long purchaseId = jpaQueryFactory
-                .select(purchase.id)
-                .from(purchase)
-                .where(purchase.buyer.id.eq(buyerId),
-                        purchase.product.id.eq(productId))
+        Long transactId = jpaQueryFactory
+                .select(transact.id)
+                .from(transact)
+                .where(transact.buyer.id.eq(buyerId),
+                        transact.product.id.eq(productId))
                 .fetchFirst();
 
-        return Objects.nonNull(purchaseId);
+        return Objects.nonNull(transactId);
     }
 
     public Set<TransactDetail> retrieveProductTransactDetails(Product product) {
         List<TransactDetail> transactDetails = jpaQueryFactory
-                .selectDistinct(purchase.purchaseDetail)
-                .from(purchase)
-                .where(purchase.id.in(lastBuyerPurchaseId(product)))
+                .selectDistinct(transact.transactDetail)
+                .from(transact)
+                .where(transact.id.in(lastBuyerPurchaseId(product)))
                 .fetch();
 
         return EnumSet.copyOf(transactDetails);
@@ -57,9 +57,9 @@ public class TransactRepositoryImpl implements TransactRepositoryCustom {
 
     private static JPQLQuery<Long> lastBuyerPurchaseId(Product product) {
         return JPAExpressions
-                .select(purchase.id.max())
-                .from(purchase)
-                .groupBy(purchase.buyer)
-                .where(purchase.product.eq(product));
+                .select(transact.id.max())
+                .from(transact)
+                .groupBy(transact.buyer)
+                .where(transact.product.eq(product));
     }
 }
