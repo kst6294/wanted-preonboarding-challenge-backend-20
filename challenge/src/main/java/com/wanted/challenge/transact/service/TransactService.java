@@ -1,14 +1,16 @@
 package com.wanted.challenge.transact.service;
 
-import com.wanted.challenge.account.entity.Account;
 import com.wanted.challenge.account.repository.AccountRepository;
 import com.wanted.challenge.exception.CustomException;
 import com.wanted.challenge.exception.ExceptionStatus;
 import com.wanted.challenge.product.entity.Product;
 import com.wanted.challenge.product.repository.ProductRepository;
 import com.wanted.challenge.transact.entity.Transact;
+import com.wanted.challenge.transact.entity.TransactLog;
 import com.wanted.challenge.transact.model.TransactState;
+import com.wanted.challenge.transact.repository.TransactLogRepository;
 import com.wanted.challenge.transact.repository.TransactRepository;
+import java.util.List;
 import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -22,6 +24,7 @@ public class TransactService {
     private final ProductRepository productRepository;
     private final TransactRepository transactRepository;
     private final AccountRepository accountRepository;
+    private final TransactLogRepository transactLogRepository;
 
     @Transactional
     public void approve(Long productId, Long buyerId, Long sellerId) {
@@ -32,15 +35,16 @@ public class TransactService {
             throw new CustomException(ExceptionStatus.NOT_SELLER);
         }
 
-        TransactState lastTransactState = transactRepository.retrieveLastTransactDetail(buyerId, productId);
+        Transact transact = transactRepository.findByBuyerIdAndProductId(buyerId, productId)
+                .orElseThrow(() -> new CustomException(ExceptionStatus.NOT_FOUND));
 
-        if (lastTransactState != TransactState.DEPOSIT) {
-            throw new CustomException(ExceptionStatus.CAN_NOT_APPROVE);
+        List<TransactState> transactStates = transactRepository.retrieveAllTransactState(transact.getId());
+
+        if (transactStates.contains(TransactState.APPROVE)) {
+            throw new CustomException(ExceptionStatus.APPROVE_ALREADY);
         }
 
-        Account buyer = accountRepository.getReferenceById(buyerId);
-
-        transactRepository.save(new Transact(buyer, product, TransactState.APPROVE));
+        transactLogRepository.save(new TransactLog(transact, TransactState.APPROVE));
     }
 
     @Transactional
@@ -48,20 +52,22 @@ public class TransactService {
         Product product = productRepository.findProductWithUpdateLockById(productId)
                 .orElseThrow(() -> new CustomException(ExceptionStatus.NOT_FOUND));
 
-        TransactState lastTransactState = transactRepository.retrieveLastTransactDetail(buyerId, productId);
+        TransactState lastTransactState = transactRepository.retrieveLastTransactState(buyerId, productId);
 
         if (lastTransactState != TransactState.APPROVE) {
             throw new CustomException(ExceptionStatus.CAN_NOT_CONFIRM);
         }
 
-        Account buyer = accountRepository.getReferenceById(buyerId);
-        transactRepository.save(new Transact(buyer, product, TransactState.CONFIRM));
+        Transact transact = transactRepository.findByBuyerIdAndProductId(buyerId, productId)
+                .orElseThrow(() -> new CustomException(ExceptionStatus.NOT_FOUND));
+
+        transactLogRepository.save(new TransactLog(transact, TransactState.CONFIRM));
 
         isAllConfirm(product);
     }
 
     private void isAllConfirm(Product product) {
-        Set<TransactState> transactStates = transactRepository.retrieveProductTransactDetails(product);
+        Set<TransactState> transactStates = transactRepository.retrieveDistinctProductTransactStates(product);
 
         if (transactStates.size() == 1 && transactStates.contains(TransactState.CONFIRM)) {
             product.complete();

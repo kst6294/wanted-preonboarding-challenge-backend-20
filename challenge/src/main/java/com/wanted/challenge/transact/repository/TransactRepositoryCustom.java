@@ -2,13 +2,16 @@ package com.wanted.challenge.transact.repository;
 
 import com.wanted.challenge.product.entity.Product;
 import com.wanted.challenge.transact.model.TransactState;
+import java.util.List;
 import java.util.Set;
 
 public interface TransactRepositoryCustom {
 
-    TransactState retrieveLastTransactDetail(Long buyerId, Long productId);
+    List<TransactState> retrieveAllTransactState(Long transactId);
 
-    boolean isPurchaseAlready(Long buyerId, Long productId);
+    List<TransactState> retrieveAllTransactState(Long buyerId, Long productId);
 
-    Set<TransactState> retrieveProductTransactDetails(Product product);
+    TransactState retrieveLastTransactState(Long buyerId, Long productId);
+
+    Set<TransactState> retrieveDistinctProductTransactStates(Product product);
 }

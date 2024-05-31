@@ -1,12 +1,13 @@
 package com.wanted.challenge.transact.entity;
 
 import com.wanted.challenge.account.entity.Account;
+import com.wanted.challenge.base.BaseEntity;
 import com.wanted.challenge.product.entity.Product;
-import com.wanted.challenge.transact.model.TransactState;
+import com.wanted.challenge.product.model.Price;
+import com.wanted.challenge.product.model.PriceConverter;
 import jakarta.persistence.Column;
+import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -22,7 +23,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @Table(name = "transacts")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Transact {
+public class Transact extends BaseEntity {
 
     @Id
     @Column(name = "transact_id")
@@ -37,13 +38,12 @@ public class Transact {
     @JoinColumn(name = "product_id")
     Product product;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "transact_state_code")
-    TransactState transactState;
+    @Convert(converter = PriceConverter.class)
+    private Price price;
 
-    public Transact(Account buyer, Product product, TransactState transactState) {
+    public Transact(Account buyer, Product product) {
         this.buyer = buyer;
         this.product = product;
-        this.transactState = transactState;
+        this.price = product.getPrice();
     }
 }

@@ -2,6 +2,7 @@ package com.wanted.challenge.product.repository;
 
 import static com.wanted.challenge.product.entity.QProduct.product;
 import static com.wanted.challenge.transact.entity.QTransact.transact;
+import static com.wanted.challenge.transact.entity.QTransactLog.transactLog;
 
 import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.JPQLQuery;
@@ -55,12 +56,15 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
                         product.reservation,
                         product.name,
                         product.price,
-                        transact.transactState
+                        transactLog.transactState
                 ))
                 .from(product)
 
                 .innerJoin(transact)
-                .on(transact.id.eq(maxPurchaseId()))
+                .on(transact.product.eq(product))
+
+                .innerJoin(transactLog)
+                .on(transactLog.id.eq(lastTransactLogId()))
 
                 .where(transact.buyer.id.eq(buyerId))
 
@@ -75,18 +79,22 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
                 .select(product.count())
                 .from(product)
 
-                .innerJoin(transact)
-                .on(transact.id.eq(maxPurchaseId()))
+                .innerJoin(transactLog)
+                .on(transactLog.id.eq(lastTransactLogId()))
 
                 .where(transact.buyer.id.eq(buyerId));
 
         return PageableExecutionUtils.getPage(content, pageable, countQuery::fetchOne);
     }
 
-    private static JPQLQuery<Long> maxPurchaseId() {
+    private static JPQLQuery<Long> lastTransactLogId() {
         return JPAExpressions
-                .select(transact.id.max())
+                .select(transactLog.id.max())
                 .from(transact)
+
+                .innerJoin(transactLog)
+                .on(transactLog.transact.eq(transact))
+
                 .where(transact.product.eq(product));
     }
 

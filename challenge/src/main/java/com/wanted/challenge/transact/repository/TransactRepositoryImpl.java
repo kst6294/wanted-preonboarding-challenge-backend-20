@@ -1,6 +1,7 @@
 package com.wanted.challenge.transact.repository;
 
 import static com.wanted.challenge.transact.entity.QTransact.transact;
+import static com.wanted.challenge.transact.entity.QTransactLog.transactLog;
 
 import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.JPQLQuery;
@@ -9,7 +10,6 @@ import com.wanted.challenge.product.entity.Product;
 import com.wanted.challenge.transact.model.TransactState;
 import java.util.EnumSet;
 import java.util.List;
-import java.util.Objects;
 import java.util.Set;
 import lombok.RequiredArgsConstructor;
 
@@ -18,48 +18,67 @@ public class TransactRepositoryImpl implements TransactRepositoryCustom {
 
     private final JPAQueryFactory jpaQueryFactory;
 
-    public TransactState retrieveLastTransactDetail(Long buyerId, Long productId) {
+    public List<TransactState> retrieveAllTransactState(Long transactId) {
         return jpaQueryFactory
-                .select(transact.transactState)
+                .select(transactLog.transactState)
                 .from(transact)
-                .where(transact.id.eq(maxPurchaseId(buyerId, productId)))
+
+                .where(transact.id.eq(transactId))
+
+                .fetch();
+    }
+
+    public List<TransactState> retrieveAllTransactState(Long buyerId, Long productId) {
+        return jpaQueryFactory
+                .select(transactLog.transactState)
+                .from(transact)
+
+                .innerJoin(transactLog)
+                .on(transact.eq(transactLog.transact))
+
+                .where(transact.buyer.id.eq(buyerId),
+                        transact.product.id.eq(productId))
+
+                .fetch();
+    }
+
+    public TransactState retrieveLastTransactState(Long buyerId, Long productId) {
+        return jpaQueryFactory
+                .select(transactLog.transactState)
+                .from(transact)
+
+                .innerJoin(transactLog)
+                .on(transact.eq(transactLog.transact))
+
+                .where(transact.buyer.id.eq(buyerId),
+                        transact.product.id.eq(productId),
+                        transactLog.id.in(lastTransactLogId()))
+
                 .fetchOne();
     }
 
-    private static JPQLQuery<Long> maxPurchaseId(Long buyerId, Long productId) {
+    private static JPQLQuery<Long> lastTransactLogId() {
         return JPAExpressions
-                .select(transact.id.max())
-                .from(transact)
-                .where(transact.buyer.id.eq(buyerId),
-                        transact.product.id.eq(productId));
+                .select(transactLog.id.max())
+                .from(transactLog)
+                .groupBy(transactLog.transact);
     }
 
-    public boolean isPurchaseAlready(Long buyerId, Long productId) {
-        Long transactId = jpaQueryFactory
-                .select(transact.id)
-                .from(transact)
-                .where(transact.buyer.id.eq(buyerId),
-                        transact.product.id.eq(productId))
-                .fetchFirst();
-
-        return Objects.nonNull(transactId);
-    }
-
-    public Set<TransactState> retrieveProductTransactDetails(Product product) {
+    public Set<TransactState> retrieveDistinctProductTransactStates(Product product) {
         List<TransactState> transactStates = jpaQueryFactory
-                .selectDistinct(transact.transactState)
+                .selectDistinct(transactLog.transactState)
                 .from(transact)
-                .where(transact.id.in(lastBuyerPurchaseId(product)))
+
+                .innerJoin(transactLog)
+                .on(transact.eq(transactLog.transact))
+
+                .where(transact.product.eq(product),
+                        transactLog.id.in(lastTransactLogId()))
+
                 .fetch();
 
         return EnumSet.copyOf(transactStates);
     }
 
-    private static JPQLQuery<Long> lastBuyerPurchaseId(Product product) {
-        return JPAExpressions
-                .select(transact.id.max())
-                .from(transact)
-                .groupBy(transact.buyer)
-                .where(transact.product.eq(product));
-    }
+
 }

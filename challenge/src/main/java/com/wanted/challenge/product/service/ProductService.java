@@ -16,7 +16,9 @@ import com.wanted.challenge.product.response.PurchaseInfo;
 import com.wanted.challenge.product.response.PurchaseProductResponse;
 import com.wanted.challenge.product.response.ReserveProductResponse;
 import com.wanted.challenge.transact.entity.Transact;
+import com.wanted.challenge.transact.entity.TransactLog;
 import com.wanted.challenge.transact.model.TransactState;
+import com.wanted.challenge.transact.repository.TransactLogRepository;
 import com.wanted.challenge.transact.repository.TransactRepository;
 import java.util.Collections;
 import java.util.Comparator;
@@ -40,6 +42,7 @@ public class ProductService {
     private final AccountRepository accountRepository;
     private final ProductRepository productRepository;
     private final TransactRepository transactRepository;
+    private final TransactLogRepository transactLogRepository;
 
     @Transactional
     public Long register(String name, Price price, Quantity quantity, Long sellerId) {
@@ -63,7 +66,7 @@ public class ProductService {
         product.purchase();
 
         Account buyer = accountRepository.getReferenceById(buyerId);
-        Transact transact = new Transact(buyer, product, TransactState.DEPOSIT);
+        Transact transact = new Transact(buyer, product);
         transactRepository.save(transact);
     }
 
@@ -74,7 +77,9 @@ public class ProductService {
     }
 
     private void validPurchaseAlready(Long buyerId, Long productId) {
-        if (transactRepository.isPurchaseAlready(buyerId, productId)) {
+        Optional<Transact> optTransact = transactRepository.findByBuyerIdAndProductId(buyerId, productId);
+
+        if (optTransact.isPresent()) {
             throw new CustomException(ExceptionStatus.PURCHASE_ALREADY);
         }
     }
@@ -104,33 +109,35 @@ public class ProductService {
     }
 
     private List<PurchaseInfo> getPurchaseInfos(Product product, Long accountId) {
+        Long productId = product.getId();
+
         if (product.getSeller().getId().equals(accountId)) {
-            return getBuyerInfos(product.getId());
+            return getAllBuyerInfo(productId);
         }
 
-        return getPurchaseDetailInfos(accountId);
+        return getAllTransactStateInfo(productId, accountId);
     }
 
-    private List<PurchaseInfo> getBuyerInfos(Long productId) {
+    private List<PurchaseInfo> getAllBuyerInfo(Long productId) {
         List<Transact> transacts = transactRepository.findByProductId(productId);
 
-        Map<Long, List<TransactState>> buyerPurchaseDetails = transacts.stream()
-                .sorted(Comparator.comparing(Transact::getId).reversed())
-                .collect(Collectors.groupingBy(purchase -> purchase.getBuyer().getId(), LinkedHashMap::new,
-                        Collectors.mapping(Transact::getTransactState, Collectors.toList())));
+        Map<Long, List<TransactState>> buyerTransactStates = transactLogRepository.findAllByTransactIn(transacts)
+                .stream()
+                .sorted(Comparator.comparing(TransactLog::getId).reversed())
+                .collect(Collectors.groupingBy(transactLog -> transactLog.getTransact().getBuyer().getId(),
+                        LinkedHashMap::new,
+                        Collectors.mapping(TransactLog::getTransactState, Collectors.toList())));
 
-        return buyerPurchaseDetails.entrySet()
+        return buyerTransactStates.entrySet()
                 .stream()
                 .map(entry -> new PurchaseBuyerResponse(entry.getKey(), entry.getValue()))
                 .map(PurchaseInfo.class::cast)
                 .toList();
     }
 
-    private List<PurchaseInfo> getPurchaseDetailInfos(Long accountId) {
-        List<Transact> transacts = transactRepository.findByBuyerId(accountId);
-
-        return transacts.stream()
-                .map(Transact::getTransactState)
+    private List<PurchaseInfo> getAllTransactStateInfo(Long productId, Long buyerId) {
+        return transactRepository.retrieveAllTransactState(buyerId, productId)
+                .stream()
                 .map(PurchaseDetailResponse::new)
                 .map(PurchaseInfo.class::cast)
                 .toList();

@@ -15,6 +15,7 @@ public enum ExceptionStatus {
     NEGATIVE_QUANTITY("수량은 음수일 수 없습니다."),
     CAN_NOT_PURCHASE("구매할 수 없습니다."),
     PURCHASE_ALREADY("이미 구매한 상품입니다."),
+    APPROVE_ALREADY("이미 승인한 거래입니다."),
     CAN_NOT_CONFIRM("구매를 확정할 수 없습니다. 구매 정보가 없거나 판매 승인되지 않았습니다.");
 
     private final String message;

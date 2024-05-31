@@ -1,6 +1,7 @@
 package com.wanted.challenge.product.entity;
 
 import com.wanted.challenge.account.entity.Account;
+import com.wanted.challenge.base.BaseEntity;
 import com.wanted.challenge.product.model.Price;
 import com.wanted.challenge.product.model.PriceConverter;
 import com.wanted.challenge.product.model.Quantity;
@@ -26,7 +27,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @Table(name = "products")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Product {
+public class Product extends BaseEntity {
 
     @Id
     @Column(name = "product_id")
