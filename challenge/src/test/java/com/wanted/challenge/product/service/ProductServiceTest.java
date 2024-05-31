@@ -80,6 +80,12 @@ class ProductServiceTest extends IntegrationTestSupport {
     @DisplayName("판매자의 구매자들 거래 내역 확인")
     void purchaseBuyerResponses() throws Exception {
 
+        // given
+        transactRepository.save(new Transact(buyer1, product, DEPOSIT));
+        transactRepository.save(new Transact(buyer1, product, APPROVE));
+
+        transactRepository.save(new Transact(buyer2, product, DEPOSIT));
+
         // when
         ProductDetailResponse productDetailResponse =
                 productService.detail(product.getId(), Optional.of(seller.getId()));
