@@ -30,15 +30,18 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class ProductService {
 
     private final AccountRepository accountRepository;
     private final ProductRepository productRepository;
     private final PurchaseRepository purchaseRepository;
 
+    @Transactional
     public Long register(String name, Price price, Quantity quantity, Long sellerId) {
         Account seller = accountRepository.getReferenceById(sellerId);
 
@@ -48,6 +51,7 @@ public class ProductService {
         return product.getId();
     }
 
+    @Transactional
     public void purchase(Long productId, Long buyerId) {
         Product product = productRepository.findProductWithUpdateLockById(productId)
                 .orElseThrow(() -> new CustomException(ExceptionStatus.NOT_FOUND));

@@ -12,15 +12,18 @@ import com.wanted.challenge.product.repository.PurchaseRepository;
 import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class PurchaseService {
 
     private final ProductRepository productRepository;
     private final PurchaseRepository purchaseRepository;
     private final AccountRepository accountRepository;
 
+    @Transactional
     public void approve(Long productId, Long buyerId, Long sellerId) {
         Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new CustomException(ExceptionStatus.NOT_FOUND));
@@ -40,6 +43,7 @@ public class PurchaseService {
         purchaseRepository.save(new Purchase(buyer, product, PurchaseDetail.APPROVE));
     }
 
+    @Transactional
     public void confirm(Long productId, Long buyerId) {
         Product product = productRepository.findProductWithUpdateLockById(productId)
                 .orElseThrow(() -> new CustomException(ExceptionStatus.NOT_FOUND));
