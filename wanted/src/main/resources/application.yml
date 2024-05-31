@@ -1,6 +1,16 @@
 server:
   port: 9000
 spring:
+  data:
+    redis:
+      lettuce:
+        pool:
+          max-active: 10
+          max-idle: 10
+          min-idle: 2
+      port: 6379
+      host: '${custom.redis.host}'
+
   transaction:
     default-timeout: '${custom.transaction.default-timeout}'
   profiles:
