@@ -9,7 +9,7 @@ import java.util.Objects;
 
 
 @AllArgsConstructor
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
 @Getter
 @Setter
 @Entity
