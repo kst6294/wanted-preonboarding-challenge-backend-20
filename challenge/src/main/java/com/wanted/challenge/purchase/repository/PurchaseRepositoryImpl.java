@@ -1,4 +1,4 @@
-package com.wanted.challenge.product.repository;
+package com.wanted.challenge.purchase.repository;
 
 import static com.wanted.challenge.product.entity.QPurchase.purchase;
 
@@ -6,7 +6,7 @@ import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.JPQLQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.wanted.challenge.product.entity.Product;
-import com.wanted.challenge.product.model.PurchaseDetail;
+import com.wanted.challenge.purchase.model.PurchaseDetail;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.Objects;

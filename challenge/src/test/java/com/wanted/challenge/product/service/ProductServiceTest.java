@@ -1,7 +1,7 @@
 package com.wanted.challenge.product.service;
 
-import static com.wanted.challenge.product.model.PurchaseDetail.APPROVE;
-import static com.wanted.challenge.product.model.PurchaseDetail.DEPOSIT;
+import static com.wanted.challenge.purchase.model.PurchaseDetail.APPROVE;
+import static com.wanted.challenge.purchase.model.PurchaseDetail.DEPOSIT;
 
 import com.wanted.challenge.IntegrationTestSupport;
 import com.wanted.challenge.account.entity.Account;
@@ -9,15 +9,15 @@ import com.wanted.challenge.account.repository.AccountRepository;
 import com.wanted.challenge.exception.CustomException;
 import com.wanted.challenge.exception.ExceptionStatus;
 import com.wanted.challenge.product.entity.Product;
-import com.wanted.challenge.product.entity.Purchase;
 import com.wanted.challenge.product.model.Price;
 import com.wanted.challenge.product.model.Quantity;
 import com.wanted.challenge.product.model.Reservation;
 import com.wanted.challenge.product.repository.ProductRepository;
-import com.wanted.challenge.product.repository.PurchaseRepository;
 import com.wanted.challenge.product.response.ProductDetailResponse;
 import com.wanted.challenge.product.response.PurchaseBuyerResponse;
 import com.wanted.challenge.product.response.PurchaseDetailResponse;
+import com.wanted.challenge.purchase.entity.Purchase;
+import com.wanted.challenge.purchase.repository.PurchaseRepository;
 import java.util.List;
 import java.util.Optional;
 import org.assertj.core.api.Assertions;

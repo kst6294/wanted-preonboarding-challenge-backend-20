@@ -1,14 +1,14 @@
-package com.wanted.challenge.product.service;
+package com.wanted.challenge.purchase.service;
 
 import com.wanted.challenge.account.entity.Account;
 import com.wanted.challenge.account.repository.AccountRepository;
 import com.wanted.challenge.exception.CustomException;
 import com.wanted.challenge.exception.ExceptionStatus;
 import com.wanted.challenge.product.entity.Product;
-import com.wanted.challenge.product.entity.Purchase;
-import com.wanted.challenge.product.model.PurchaseDetail;
 import com.wanted.challenge.product.repository.ProductRepository;
-import com.wanted.challenge.product.repository.PurchaseRepository;
+import com.wanted.challenge.purchase.entity.Purchase;
+import com.wanted.challenge.purchase.model.PurchaseDetail;
+import com.wanted.challenge.purchase.repository.PurchaseRepository;
 import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

@@ -1,7 +1,7 @@
-package com.wanted.challenge.product.repository;
+package com.wanted.challenge.purchase.repository;
 
 import com.wanted.challenge.product.entity.Product;
-import com.wanted.challenge.product.model.PurchaseDetail;
+import com.wanted.challenge.purchase.model.PurchaseDetail;
 import java.util.Set;
 
 public interface PurchaseRepositoryCustom {

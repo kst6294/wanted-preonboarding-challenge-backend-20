@@ -1,7 +1,8 @@
-package com.wanted.challenge.product.entity;
+package com.wanted.challenge.purchase.entity;
 
 import com.wanted.challenge.account.entity.Account;
-import com.wanted.challenge.product.model.PurchaseDetail;
+import com.wanted.challenge.product.entity.Product;
+import com.wanted.challenge.purchase.model.PurchaseDetail;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;

@@ -1,6 +1,6 @@
-package com.wanted.challenge.product.repository;
+package com.wanted.challenge.purchase.repository;
 
-import com.wanted.challenge.product.entity.Purchase;
+import com.wanted.challenge.purchase.entity.Purchase;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 

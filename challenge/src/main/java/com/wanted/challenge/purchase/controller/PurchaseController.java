@@ -1,9 +1,9 @@
-package com.wanted.challenge.product.controller;
+package com.wanted.challenge.purchase.controller;
 
 import com.wanted.challenge.account.model.AccountDetail;
-import com.wanted.challenge.product.request.ApproveRequest;
-import com.wanted.challenge.product.request.ConfirmRequest;
-import com.wanted.challenge.product.service.PurchaseService;
+import com.wanted.challenge.purchase.request.ApproveRequest;
+import com.wanted.challenge.purchase.request.ConfirmRequest;
+import com.wanted.challenge.purchase.service.PurchaseService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

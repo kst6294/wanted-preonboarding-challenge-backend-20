@@ -1,17 +1,18 @@
 package com.wanted.challenge.product.repository;
 
-import static com.wanted.challenge.product.model.PurchaseDetail.APPROVE;
-import static com.wanted.challenge.product.model.PurchaseDetail.DEPOSIT;
+import static com.wanted.challenge.purchase.model.PurchaseDetail.APPROVE;
+import static com.wanted.challenge.purchase.model.PurchaseDetail.DEPOSIT;
 import static org.assertj.core.groups.Tuple.tuple;
 
 import com.wanted.challenge.IntegrationTestSupport;
 import com.wanted.challenge.account.entity.Account;
 import com.wanted.challenge.account.repository.AccountRepository;
 import com.wanted.challenge.product.entity.Product;
-import com.wanted.challenge.product.entity.Purchase;
 import com.wanted.challenge.product.model.Price;
 import com.wanted.challenge.product.model.Quantity;
 import com.wanted.challenge.product.response.PurchaseProductResponse;
+import com.wanted.challenge.purchase.entity.Purchase;
+import com.wanted.challenge.purchase.repository.PurchaseRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

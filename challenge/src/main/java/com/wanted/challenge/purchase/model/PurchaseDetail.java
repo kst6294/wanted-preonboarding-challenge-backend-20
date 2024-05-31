@@ -1,4 +1,4 @@
-package com.wanted.challenge.product.model;
+package com.wanted.challenge.purchase.model;
 
 public enum PurchaseDetail {
     DEPOSIT, APPROVE, CONFIRM;
