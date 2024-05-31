@@ -36,6 +36,8 @@ ALTER TABLE `contract`
     ADD FOREIGN KEY (`buyer_id`) REFERENCES `member` (`id`);
 
 INSERT INTO `member` (`username`, `email`, `password`) VALUES ('test', 'test@test.com', '$2a$10$q9O6f3gjpOO9hVxlzK1xTOe4OhXe1FI7jJmX02.op8mdWbdlhzGCK');
+INSERT INTO `member` (`username`, `email`, `password`) VALUES ('test2', 'test2@test.com', '$2a$10$q9O6f3gjpOO9hVxlzK1xTOe4OhXe1FI7jJmX02.op8mdWbdlhzGCK');
+INSERT INTO `member` (`username`, `email`, `password`) VALUES ('test3', 'test3@test.com', '$2a$10$q9O6f3gjpOO9hVxlzK1xTOe4OhXe1FI7jJmX02.op8mdWbdlhzGCK');
 
 INSERT INTO `product` (`seller_id`, `name`, `price`, `state`) VALUES (1, 'test product', 1000, 'ON_SALE');
 INSERT INTO `product` (`seller_id`, `name`, `price`, `state`) VALUES (1, 'test product 2', 2000, 'ON_SALE');
