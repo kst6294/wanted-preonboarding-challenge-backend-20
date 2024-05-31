@@ -1,9 +1,13 @@
 package com.example.wanted.user.service;
 
+import com.example.wanted.mock.FakeJwtUtil;
 import com.example.wanted.mock.FakeUserRepository;
+import com.example.wanted.module.exception.LoginCheckFailException;
 import com.example.wanted.module.exception.ResourceAlreadyException;
+import com.example.wanted.module.exception.ResourceNotFoundException;
 import com.example.wanted.user.domain.User;
 import com.example.wanted.user.domain.UserCreate;
+import com.example.wanted.user.domain.UserLogin;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -18,8 +22,10 @@ class UserServiceTest {
 
     @BeforeEach
     void init() {
+        FakeJwtUtil fakeJwtUtil = new FakeJwtUtil();
         FakeUserRepository fakeUserRepository = new FakeUserRepository();
         this.userService = UserService.builder()
+                .jwtUtil(fakeJwtUtil)
                 .userRepository(fakeUserRepository)
                 .build();
     }
@@ -58,6 +64,97 @@ class UserServiceTest {
         assertThatThrownBy(() ->
                 userService.create(userCreate)
         ).isInstanceOf(ResourceAlreadyException.class);
+    }
+
+    @Test
+    void UserLogin으로_로그인하면_토큰이_반환된다(){
+        //given
+        User user1 = userService.create(UserCreate.builder()
+                .name("홍길동")
+                .account("test01@gmail.com")
+                .password("test123")
+                .build());
+
+        UserLogin userLogin = UserLogin.builder()
+                .account("test01@gmail.com")
+                .password("test123")
+                .build();
+
+        //when
+        String result = userService.login(userLogin);
+
+        //then
+        assertThat(result).isEqualTo("aasdfasdfasdfasdfasdfasdfasdf");
+    }
+
+    @Test
+    void 존재하지_않는_Account면_예외가_발생한다(){
+        //given
+        UserLogin userLogin = UserLogin.builder()
+                .account("test01@gmail.com")
+                .password("test123")
+                .build();
+
+        //when
+        //then
+        assertThatThrownBy(() ->
+                userService.login(userLogin)
+        ).isInstanceOf(ResourceNotFoundException.class);
+    }
+    @Test
+    void password가_틀리면_예외가_발생한다(){
+        //given
+        User user1 = userService.create(UserCreate.builder()
+                .name("홍길동")
+                .account("test01@gmail.com")
+                .password("test123")
+                .build());
+
+        UserLogin userLogin = UserLogin.builder()
+                .account("test01@gmail.com")
+                .password("test1234")
+                .build();
+
+        //when
+        //then
+        assertThatThrownBy(() ->
+                userService.login(userLogin)
+        ).isInstanceOf(LoginCheckFailException.class);
+    }
+
+    @Test
+    void UserId로_유저_정보를_가져올_수_있다(){
+        //given
+        User user1 = userService.create(UserCreate.builder()
+                .name("홍길동")
+                .account("test01@gmail.com")
+                .password("test123")
+                .build());
+
+        //when
+        User user = userService.getById(user1.getId());
+
+        //then
+        assertThat(user.getId()).isNotNull();
+        assertThat(user.getName()).isEqualTo("홍길동");
+        assertThat(user.getAccount()).isEqualTo("test01@gmail.com");
+        assertThat(user.getPassword()).isEqualTo("test123");
+    }
+
+    @Test
+    void 없는_UserId로_조회_시_예외가_발생한다(){
+        //given
+        User user1 = userService.create(UserCreate.builder()
+                .name("홍길동")
+                .account("test01@gmail.com")
+                .password("test123")
+                .build());
+
+        //when
+        //then
+        assertThatThrownBy(() ->
+                userService.getById(user1.getId() + 1)
+        ).isInstanceOf(ResourceNotFoundException.class);
     }
 
 }

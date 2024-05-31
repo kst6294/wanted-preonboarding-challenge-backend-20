@@ -66,4 +66,20 @@ public class OrderService {
 
         return orderRepository.findByUser(user).stream().map(OrderResponse::from).collect(Collectors.toList());
     }
+
+    public OrderResponse getByProductAndUser(Long userId, Long productId) {
+        User user = userRepository.findById(userId).orElseThrow(() ->
+                new ResourceNotFoundException("User", userId)
+        );
+
+        Product product = productRepository.findById(productId).orElseThrow(() ->
+                new ResourceNotFoundException("Product", productId)
+        );
+
+        Order order = orderRepository.findByProductAndUser(product,user).orElseThrow(() ->
+                new ResourceNotFoundException("Order", productId)
+        );
+
+        return OrderResponse.from(order);
+    }
 }

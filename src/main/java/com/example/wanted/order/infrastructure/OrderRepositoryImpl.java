@@ -2,6 +2,7 @@ package com.example.wanted.order.infrastructure;
 
 import com.example.wanted.order.domain.Order;
 import com.example.wanted.order.service.port.OrderRepository;
+import com.example.wanted.product.domain.Product;
 import com.example.wanted.user.domain.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -28,9 +29,16 @@ public class OrderRepositoryImpl implements OrderRepository {
     @Override
     public List<Order> findByUser(User user) {
         return orderJpaRepository
-                .findOrdersByUserId(user.getId())
+                .findByUserId(user.getId())
                 .stream()
                 .map(OrderEntity::toModel).
                 collect(Collectors.toList());
+    }
+
+    @Override
+    public Optional<Order> findByProductAndUser(Product product, User user) {
+        return orderJpaRepository
+                .findOrdersByUserIdOrProductId(product.getId(), user.getId())
+                .map(OrderEntity::toModel);
     }
 }
