@@ -45,6 +45,9 @@ public class ContractController {
         if (targetProduct == null) {
             return new ResponseBad(ProductMessage.INVALID_PRODUCT_ID).toResponse();
         }
+        if (targetProduct.getState().equals(ProductState.RESERVED)) {
+            return new ResponseBad(ProductMessage.PRODUCT_ALREADY_RESERVED).toResponse();
+        }
         if (targetProduct.getState().equals(ProductState.SALES_COMPLETED)) {
             return new ResponseBad(ProductMessage.PRODUCT_ALREADY_SOLD).toResponse();
         }

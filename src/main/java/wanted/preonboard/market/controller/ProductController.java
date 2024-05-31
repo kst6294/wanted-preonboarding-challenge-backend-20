@@ -8,6 +8,8 @@ import wanted.preonboard.market.config.CustomUser;
 import wanted.preonboard.market.domain.common.ResponseBad;
 import wanted.preonboard.market.domain.common.ResponseOk;
 import wanted.preonboard.market.domain.contract.dto.ContractResDto;
+import wanted.preonboard.market.domain.product.Product;
+import wanted.preonboard.market.domain.product.ProductState;
 import wanted.preonboard.market.domain.product.dto.ProductInsertDto;
 import wanted.preonboard.market.domain.product.dto.ProductResDto;
 import wanted.preonboard.market.domain.product.dto.ProductUpdateDto;
@@ -82,9 +84,30 @@ public class ProductController {
     }
 
     @PatchMapping("/{productId}")
-    public ResponseEntity<?> updateProductById(@PathVariable Integer productId, @RequestBody ProductUpdateDto product) {
+    public ResponseEntity<?> updateProductById(
+        @AuthenticationPrincipal CustomUser user,
+        @PathVariable Integer productId,
+        @RequestBody ProductUpdateDto product
+    ) {
         try {
-            return new ResponseOk(productService.updateProductById(productId, product)).toResponse();
+            Product targetProduct = productService.getProductById(productId);
+            if (targetProduct == null) {
+                return new ResponseBad(ProductMessage.INVALID_PRODUCT_ID).toResponse();
+            }
+            if (targetProduct.getState().equals(ProductState.SALES_COMPLETED)) {
+                return new ResponseBad(ProductMessage.PRODUCT_ALREADY_SOLD).toResponse();
+            }
+            if (targetProduct.getState().equals(ProductState.RESERVED)) {
+                return new ResponseBad(ProductMessage.PRODUCT_ALREADY_RESERVED).toResponse();
+            }
+            if (targetProduct.getSellerId().compareTo(user.getMember().getId()) != 0) {
+                return new ResponseBad(ProductMessage.PRODUCT_NOT_AUTHORIZED).toResponse();
+            }
+            if (productService.updateProductById(productId, product)) {
+                return new ResponseOk(ProductMessage.UPDATED_SUCCESSFULLY).toResponse();
+            } else {
+                return new ResponseBad(ProductMessage.ERROR).toResponse();
+            }
         } catch (NullPointerException e) {
             return new ResponseBad(ProductMessage.INVALID_PRODUCT_ID).toResponse();
         } catch (Exception e) {

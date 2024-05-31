@@ -13,7 +13,8 @@ public enum ProductMessage {
     INVALID_PRODUCT_STATE("유효하지 않은 제품 상태입니다."),
     INVALID_PRODUCT_ID("유효하지 않은 제품 ID입니다."),
     REGISTERED_SUCCESSFULLY("제품 등록이 완료되었습니다."),
-    ;
+    PRODUCT_ALREADY_RESERVED("이미 예약된 제품입니다."),
+    UPDATED_SUCCESSFULLY("제품 수정이 완료되었습니다.");
 
     private final String message;
 
