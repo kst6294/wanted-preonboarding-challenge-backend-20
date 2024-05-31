@@ -75,3 +75,13 @@
 > page: 페이지 번호, optional
 >
 > size: 한 페이지의 데이터 개수, optional
+
+## 거래 내역
+
+### 판매 승인
+
+#### POST /purchase/approve
+
+> productId: 제품 번호
+>
+> buyerId: 구매자 번호
