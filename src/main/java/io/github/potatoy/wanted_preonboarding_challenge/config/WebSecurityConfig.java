@@ -50,9 +50,8 @@ public class WebSecurityConfig {
             authz ->
                 authz
                     // 로그인, 회원가입, 토큰 갱신을 제외한 api는 인증을 하도록 설정
-                    .requestMatchers(
-                        new AntPathRequestMatcher("/api/auth/**")
-                    ).permitAll()
+                    .requestMatchers(new AntPathRequestMatcher("/api/auth/**"))
+                    .permitAll()
                     .requestMatchers("/api/**")
                     .authenticated()
                     .anyRequest()
