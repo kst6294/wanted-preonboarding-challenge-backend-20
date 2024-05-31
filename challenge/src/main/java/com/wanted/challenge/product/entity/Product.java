@@ -3,6 +3,8 @@ package com.wanted.challenge.product.entity;
 import com.wanted.challenge.account.entity.Account;
 import com.wanted.challenge.product.model.Price;
 import com.wanted.challenge.product.model.PriceConverter;
+import com.wanted.challenge.product.model.Quantity;
+import com.wanted.challenge.product.model.QuantityConverter;
 import com.wanted.challenge.product.model.Reservation;
 import jakarta.persistence.Column;
 import jakarta.persistence.Convert;
@@ -41,6 +43,9 @@ public class Product {
     @Convert(converter = PriceConverter.class)
     private Price price;
 
+    @Convert(converter = QuantityConverter.class)
+    private Quantity quantity;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "reservation_code")
     private Reservation reservation;
@@ -50,5 +55,9 @@ public class Product {
         this.name = name;
         this.price = price;
         this.reservation = Reservation.SALE;
+    }
+
+    public void purchase() {
+        this.quantity = Quantity.minus(this.quantity);
     }
 }
