@@ -24,9 +24,6 @@ public class Item extends BaseTimeEntity {
     private Long price;
 
     @Column(nullable = false)
-    private boolean reservation_status;
-
-    @Column(nullable = false)
     private SaleStatus saleStatus;
 
     @Column(nullable = false)
@@ -37,12 +34,15 @@ public class Item extends BaseTimeEntity {
     private Member member;
 
     @Builder
-    public Item(String name, Long price, boolean reservation_status, SaleStatus saleStatus, Integer quantity, Member member) {
+    public Item(String name, Long price, SaleStatus saleStatus, Integer quantity, Member member) {
         this.name = name;
         this.price = price;
-        this.reservation_status = reservation_status;
         this.saleStatus = saleStatus;
         this.quantity = quantity;
         this.member = member;
+    }
+
+    public void decreaseQuantity(){
+        this.quantity -= 1;
     }
 }

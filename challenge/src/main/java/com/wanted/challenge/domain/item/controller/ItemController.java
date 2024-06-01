@@ -3,12 +3,15 @@ package com.wanted.challenge.domain.item.controller;
 
 import com.wanted.challenge.domain.exception.exception.MemberException;
 import com.wanted.challenge.domain.exception.info.MemberExceptionInfo;
+import com.wanted.challenge.domain.item.dto.request.ItemPurchaseRequestDTO;
 import com.wanted.challenge.domain.item.dto.request.ItemRegisterRequestDTO;
 import com.wanted.challenge.domain.item.dto.response.ItemDetailInfoResponseDTO;
+import com.wanted.challenge.domain.item.dto.response.ItemPurchaseResponseDTO;
 import com.wanted.challenge.domain.item.dto.response.ItemRegisterResponseDTO;
 import com.wanted.challenge.domain.item.dto.response.ItemResponseDTO;
 import com.wanted.challenge.domain.item.service.ItemService;
 import com.wanted.challenge.global.api.ApiResponse;
+import com.wanted.challenge.global.auth.AuthUser;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -27,13 +30,10 @@ public class ItemController {
     // 상품 등록
     @PostMapping()
     public ResponseEntity<ApiResponse<?>> registerItem(@Valid @RequestBody ItemRegisterRequestDTO itemRegisterRequestDTO,
-                                                       @SessionAttribute(name = "userId", required = false) Long userId) {
-        if (userId == null) {
-            throw new MemberException(MemberExceptionInfo.NOT_FOUND_SESSION, "세션이 만료되었거나 유효하지 않습니다.");
-        }
+                                                       @AuthUser Long userId) {
         ItemRegisterResponseDTO itemRegisterResponseDTO = itemService.registerItem(itemRegisterRequestDTO, userId);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(ApiResponse.createSuccess(itemRegisterRequestDTO, "상품 등록에 성공하였습니다."));
+        return ResponseEntity.status(HttpStatus.CREATED).body(ApiResponse.createSuccess(itemRegisterResponseDTO, "상품 등록에 성공하였습니다."));
     }
 
     // 상품 조회
@@ -50,5 +50,14 @@ public class ItemController {
         ItemDetailInfoResponseDTO detailItem = itemService.findDetailItem(id);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(ApiResponse.createSuccess(detailItem, "상품 조회를 성공했습니다."));
+    }
+
+    // 상품 구매하기
+    @PostMapping("purchase")
+    public ResponseEntity<ApiResponse<?>> purchaseItem(@Valid @RequestBody ItemPurchaseRequestDTO itemPurchaseRequestDTO,
+                                                       @AuthUser Long userId) {
+        ItemPurchaseResponseDTO itemPurchaseResponseDTO = itemService.purchaseItem(itemPurchaseRequestDTO, userId);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(ApiResponse.createSuccess(itemPurchaseResponseDTO, "아이템 구매 신청이 완료되었습니다."));
     }
 }

@@ -5,6 +5,7 @@ import com.wanted.challenge.domain.member.entity.Member;
 import com.wanted.challenge.domain.entity.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -18,7 +19,7 @@ public class TransactionHistory extends BaseTimeEntity {
     private Long id;
 
     @Column(nullable = false)
-    private boolean saleStatus;
+    private boolean saleConfirmStatus;
 
     @Column(nullable = false)
     private boolean purchaseConfirmStatus;
@@ -34,4 +35,12 @@ public class TransactionHistory extends BaseTimeEntity {
     @JoinColumn(name = "member_id", nullable = false)
     private Member member;
 
+    @Builder
+    public TransactionHistory(boolean saleConfirmStatus, boolean purchaseConfirmStatus, Long purchasePrice, Item item, Member member) {
+        this.saleConfirmStatus = saleConfirmStatus;
+        this.purchaseConfirmStatus = purchaseConfirmStatus;
+        this.purchasePrice = purchasePrice;
+        this.item = item;
+        this.member = member;
+    }
 }

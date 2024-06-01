@@ -1,5 +1,6 @@
 package com.wanted.challenge.domain.exception;
 
+import com.wanted.challenge.domain.exception.exception.ItemException;
 import com.wanted.challenge.domain.exception.exception.MemberException;
 import com.wanted.challenge.global.api.ApiResponse;
 import jakarta.servlet.http.HttpServletRequest;
@@ -23,6 +24,13 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(MemberException.class)
     public ResponseEntity<ApiResponse<?>> handleMemberException(MemberException e, HttpServletRequest request) {
+        log.error("요청 실패 - 요청 경로 : {}, 이유 : {}, 로그메시지 : {}", request.getRequestURI(), e.getException().getMessage(), e.getLog());
+
+        return ResponseEntity.status(e.getException().getStatus()).body(ApiResponse.createErrorNoContent(e.getException().getCode(), e.getException().getMessage()));
+    }
+
+    @ExceptionHandler(ItemException.class)
+    public ResponseEntity<ApiResponse<?>> handleItemException(ItemException e, HttpServletRequest request) {
         log.error("요청 실패 - 요청 경로 : {}, 이유 : {}, 로그메시지 : {}", request.getRequestURI(), e.getException().getMessage(), e.getLog());
 
         return ResponseEntity.status(e.getException().getStatus()).body(ApiResponse.createErrorNoContent(e.getException().getCode(), e.getException().getMessage()));

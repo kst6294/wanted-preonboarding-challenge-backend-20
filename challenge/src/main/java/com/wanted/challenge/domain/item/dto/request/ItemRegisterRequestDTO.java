@@ -33,7 +33,6 @@ public class ItemRegisterRequestDTO {
                 .name(name)
                 .price(price)
                 .quantity(quantity)
-                .reservation_status(false)
                 .saleStatus(SaleStatus.FOR_SALE).build();
     }
 }

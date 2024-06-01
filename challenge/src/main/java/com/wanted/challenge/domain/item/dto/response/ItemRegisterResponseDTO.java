@@ -20,8 +20,6 @@ public class ItemRegisterResponseDTO {
 
     private Long price;
 
-    private boolean reservation_status;
-
     private SaleStatus saleStatus;
 
     private Integer quantity;
@@ -31,11 +29,10 @@ public class ItemRegisterResponseDTO {
     private LocalDateTime createDate;
 
     @Builder
-    public ItemRegisterResponseDTO(Long id, String name, Long price, boolean reservation_status, SaleStatus saleStatus, Integer quantity, Long userId, LocalDateTime createDate) {
+    public ItemRegisterResponseDTO(Long id, String name, Long price,  SaleStatus saleStatus, Integer quantity, Long userId, LocalDateTime createDate) {
         this.id = id;
         this.name = name;
         this.price = price;
-        this.reservation_status = reservation_status;
         this.saleStatus = saleStatus;
         this.quantity = quantity;
         this.userId = userId;
@@ -47,7 +44,6 @@ public class ItemRegisterResponseDTO {
                 .id(item.getId())
                 .name(item.getName())
                 .price(item.getPrice())
-                .reservation_status(item.isReservation_status())
                 .saleStatus(item.getSaleStatus())
                 .quantity(item.getQuantity())
                 .userId(item.getMember().getId())
