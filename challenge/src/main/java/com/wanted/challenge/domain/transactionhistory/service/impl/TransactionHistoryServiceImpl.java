@@ -5,7 +5,8 @@ import com.wanted.challenge.domain.exception.info.MemberExceptionInfo;
 import com.wanted.challenge.domain.member.entity.Member;
 import com.wanted.challenge.domain.member.repository.MemberRepository;
 import com.wanted.challenge.domain.transactionhistory.dto.response.MyPurchaseHistoryResponseDTO;
-import com.wanted.challenge.domain.transactionhistory.dto.response.MyReservationHistoryResponseDTO;
+import com.wanted.challenge.domain.transactionhistory.dto.response.MyBuyerReservationHistoryResponseDTO;
+import com.wanted.challenge.domain.transactionhistory.dto.response.MySellerReservationHistoryResponseDTO;
 import com.wanted.challenge.domain.transactionhistory.repository.TransactionHistoryRepository;
 import com.wanted.challenge.domain.transactionhistory.service.TransactionHistoryService;
 import lombok.RequiredArgsConstructor;
@@ -37,12 +38,23 @@ public class TransactionHistoryServiceImpl implements TransactionHistoryService 
     // 내 예약기록 전부 가져오기(구매자)
     @Override
     @Transactional(readOnly = true)
-    public List<MyReservationHistoryResponseDTO> getReservationHistories(Long id) {
+    public List<MyBuyerReservationHistoryResponseDTO> getBuyerReservationHistories(Long id) {
         Member currentMember = getCurrentMember(id);
 
-        List<MyReservationHistoryResponseDTO> reservationHistoriesByMember = transactionHistoryRepository.findReservationHistoriesByMember(currentMember);
+        List<MyBuyerReservationHistoryResponseDTO> reservationHistoriesByMember = transactionHistoryRepository.findBuyerReservationHistoriesByMember(currentMember);
 
         return reservationHistoriesByMember;
+    }
+
+    // 내 예약기록 전부 가져오기(판매자)
+    @Override
+    @Transactional(readOnly = true)
+    public List<MySellerReservationHistoryResponseDTO> getSellerReservationHistories(Long id) {
+        Member currentMember = getCurrentMember(id);
+
+        List<MySellerReservationHistoryResponseDTO> sellerReservationHistoriesByMember = transactionHistoryRepository.findSellerReservationHistoriesByMember(currentMember);
+
+        return sellerReservationHistoriesByMember;
     }
 
 

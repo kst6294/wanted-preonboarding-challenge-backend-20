@@ -1,7 +1,8 @@
 package com.wanted.challenge.domain.transactionhistory.controller;
 
 import com.wanted.challenge.domain.transactionhistory.dto.response.MyPurchaseHistoryResponseDTO;
-import com.wanted.challenge.domain.transactionhistory.dto.response.MyReservationHistoryResponseDTO;
+import com.wanted.challenge.domain.transactionhistory.dto.response.MyBuyerReservationHistoryResponseDTO;
+import com.wanted.challenge.domain.transactionhistory.dto.response.MySellerReservationHistoryResponseDTO;
 import com.wanted.challenge.domain.transactionhistory.service.TransactionHistoryService;
 import com.wanted.challenge.global.api.ApiResponse;
 import com.wanted.challenge.global.auth.AuthUser;
@@ -31,11 +32,20 @@ public class TransactionHistoryController {
     }
 
     // 현재 유저의 예약기록 전부 가져오기(구매자)
-    @GetMapping("reservation")
-    public ResponseEntity<ApiResponse<?>> getReservationHistories(@AuthUser Long userId) {
+    @GetMapping("reservation/buyer")
+    public ResponseEntity<ApiResponse<?>> getBuyerReservationHistories(@AuthUser Long userId) {
 
-        List<MyReservationHistoryResponseDTO> reservationHistories = transactionHistoryService.getReservationHistories(userId);
+        List<MyBuyerReservationHistoryResponseDTO> reservationHistories = transactionHistoryService.getBuyerReservationHistories(userId);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(ApiResponse.createSuccess(reservationHistories, "예약 기록 조회에 성공했습니다.(구매자)"));
+    }
+
+    // 현재 유저의 예약기록 전부 가져오기(판매자)
+    @GetMapping("reservation/seller")
+    public ResponseEntity<ApiResponse<?>> getSellerReservationHistories(@AuthUser Long userId) {
+
+        List<MySellerReservationHistoryResponseDTO> sellerReservationHistories = transactionHistoryService.getSellerReservationHistories(userId);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(ApiResponse.createSuccess(sellerReservationHistories, "예약 기록 조회에 성공했습니다.(판매자)"));
     }
 }

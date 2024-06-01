@@ -1,7 +1,8 @@
 package com.wanted.challenge.domain.transactionhistory.service;
 
 import com.wanted.challenge.domain.transactionhistory.dto.response.MyPurchaseHistoryResponseDTO;
-import com.wanted.challenge.domain.transactionhistory.dto.response.MyReservationHistoryResponseDTO;
+import com.wanted.challenge.domain.transactionhistory.dto.response.MyBuyerReservationHistoryResponseDTO;
+import com.wanted.challenge.domain.transactionhistory.dto.response.MySellerReservationHistoryResponseDTO;
 
 import java.util.List;
 
@@ -11,6 +12,9 @@ public interface TransactionHistoryService {
     List<MyPurchaseHistoryResponseDTO> getPurchaseHistories(Long id);
 
     // 예약 기록 전부 가져오기(구매자)
-    List<MyReservationHistoryResponseDTO> getReservationHistories(Long id);
+    List<MyBuyerReservationHistoryResponseDTO> getBuyerReservationHistories(Long id);
+
+    // 예약 기록 전부 가져오기(판매자)
+    List<MySellerReservationHistoryResponseDTO> getSellerReservationHistories(Long id);
 
 }

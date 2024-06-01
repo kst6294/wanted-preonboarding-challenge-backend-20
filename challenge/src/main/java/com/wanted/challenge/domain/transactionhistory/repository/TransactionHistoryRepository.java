@@ -3,7 +3,8 @@ package com.wanted.challenge.domain.transactionhistory.repository;
 import com.wanted.challenge.domain.item.entity.Item;
 import com.wanted.challenge.domain.member.entity.Member;
 import com.wanted.challenge.domain.transactionhistory.dto.response.MyPurchaseHistoryResponseDTO;
-import com.wanted.challenge.domain.transactionhistory.dto.response.MyReservationHistoryResponseDTO;
+import com.wanted.challenge.domain.transactionhistory.dto.response.MyBuyerReservationHistoryResponseDTO;
+import com.wanted.challenge.domain.transactionhistory.dto.response.MySellerReservationHistoryResponseDTO;
 import com.wanted.challenge.domain.transactionhistory.dto.response.TransactionHistoryResponseDTO;
 import com.wanted.challenge.domain.transactionhistory.entity.TransactionHistory;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -35,9 +36,15 @@ public interface TransactionHistoryRepository extends JpaRepository<TransactionH
     List<MyPurchaseHistoryResponseDTO> findTransactionHistoriesByMember(@Param("member") Member member);
 
     // 현재 유저의 예약기록 가져오기(구매자)
-    @Query("select new com.wanted.challenge.domain.transactionhistory.dto.response.MyReservationHistoryResponseDTO" +
+    @Query("select new com.wanted.challenge.domain.transactionhistory.dto.response.MyBuyerReservationHistoryResponseDTO" +
             "(t.id, i.name, t.purchasePrice, t.createdDate, t.saleConfirmStatus, t.purchaseConfirmStatus, i.id)" +
-            "from TransactionHistory t join t.item i where t.member = :member")
-    List<MyReservationHistoryResponseDTO> findReservationHistoriesByMember(@Param("member") Member member);
+            "from TransactionHistory t join t.item i where t.member = :member and t.purchaseConfirmDate is null")
+    List<MyBuyerReservationHistoryResponseDTO> findBuyerReservationHistoriesByMember(@Param("member") Member member);
+
+    // 현재 유저의 예약기록 가져오기(판매자)
+    @Query("select new com.wanted.challenge.domain.transactionhistory.dto.response.MySellerReservationHistoryResponseDTO" +
+            "(t.id, i.name, t.purchasePrice, t.createdDate, t.saleConfirmStatus, t.purchaseConfirmStatus, t.member.email, i.id)" +
+            "from TransactionHistory t join t.item i join t.member m where i.member = :member and t.purchaseConfirmDate is null ")
+    List<MySellerReservationHistoryResponseDTO> findSellerReservationHistoriesByMember(@Param("member") Member member);
 
 }
