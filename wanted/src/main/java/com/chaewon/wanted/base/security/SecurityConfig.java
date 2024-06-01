@@ -42,8 +42,9 @@ public class SecurityConfig {
 
                 .authorizeHttpRequests(authorizeHttpRequests -> authorizeHttpRequests
                         .requestMatchers("/api/v2/admin/**").hasAuthority("ROLE_ADMIN") // 관리자 페이지 role 추가
-                        .requestMatchers("/auth/**") // 로그인, 회원가입은 열어주기
+                        .requestMatchers("/auth/**", "/api/v1/members/sign-up", "/api/v1/members/reissue") // 로그인, 회원가입, 토큰 재발급은 열어주기
                         .permitAll()
+                        .requestMatchers("/api/v1/members/**").authenticated() // 나머지 회원 관련 경로는 인증된 사용자만 접근 가능
                         .anyRequest().authenticated()
                 )
 
