@@ -46,14 +46,14 @@ public class OrderService {
     }
 
     public OrderResponse approve(Long orderId, Long userId) {
-        User buyer = userRepository.findById(userId).orElseThrow(() ->
+        User user = userRepository.findById(userId).orElseThrow(() ->
                 new ResourceNotFoundException("User", userId)
         );
 
         Order order = orderRepository.findById(orderId).orElseThrow(() ->
                 new ResourceNotFoundException("Order", orderId)
         );
-        order.approve();
+        order.approve(user);
         order = orderRepository.save(order);
 
         return OrderResponse.from(order);

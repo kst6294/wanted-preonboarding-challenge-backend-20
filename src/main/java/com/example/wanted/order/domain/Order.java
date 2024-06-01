@@ -5,8 +5,10 @@ import com.example.wanted.product.domain.Product;
 import com.example.wanted.user.domain.User;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 
 @Getter
+@Slf4j
 public class Order {
     private Long id;
     private User seller;
@@ -26,6 +28,10 @@ public class Order {
     }
 
     public static Order from(User buyer, Product product) {
+        if(product.checkSeller(buyer)) {
+            throw new IllegalArgumentException("판매자는 구매요청을 할 수 없습니다.");
+        }
+
         return Order.builder()
                 .seller(product.getSeller())
                 .buyer(buyer)
@@ -36,9 +42,14 @@ public class Order {
     }
 
     //todo: 에러처리
-    public void approve() {
+    public void approve(User user) {
+        if(!checkSeller(user)) {
+            log.warn("User {}는 Order {}의 판매자가 아닙니다.");
+            throw new IllegalArgumentException("판매자만 승인할 수 있습니다.");
+        }
+
         if (!status.equals(OrderStatus.REQUEST)) {
-            throw new ResourceNotFoundException("Product", 1L);
+            throw new IllegalStateException("상태가 주문 요청이 아닙니다.");
         }
         this.status = OrderStatus.APPROVAL;
     }
