@@ -1,6 +1,7 @@
 package com.wanted.preonboarding.domain.user.service;
 
 import com.wanted.preonboarding.domain.user.dto.request.AddUserRequest;
+import com.wanted.preonboarding.domain.user.dto.request.CheckEmailRequest;
 import com.wanted.preonboarding.domain.user.dto.request.LoginUserRequest;
 import com.wanted.preonboarding.domain.user.entity.User;
 import com.wanted.preonboarding.domain.user.repository.UserRepository;
@@ -48,5 +49,10 @@ public class UserServiceImpl implements UserService{
         HttpSession session = request.getSession();
         session.setAttribute("userId", user.getId());
         session.setMaxInactiveInterval(3600); // 1시간 이상 접속하지 않으면 자동 로그아웃
+    }
+
+    @Override
+    public boolean checkEmail(CheckEmailRequest checkEmailRequest) {
+        return !userRepository.existsByEmail(checkEmailRequest.getEmail());
     }
 }
