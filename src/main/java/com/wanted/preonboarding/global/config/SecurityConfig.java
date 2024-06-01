@@ -35,8 +35,6 @@ public class SecurityConfig {
                .addFilterBefore(sessionFilter, UsernamePasswordAuthenticationFilter.class)
                .formLogin(FormLoginConfigurer::disable)
                .logout(LogoutConfigurer::disable)
-
-
        ;
         return http.build();
     }

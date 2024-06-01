@@ -7,6 +7,6 @@ import java.util.List;
 
 public interface ProductService {
     void addProduct(Long userId, AddProductRequest addProductRequest);
-
     List<ProductResponse> getProducts();
+    ProductResponse getProduct(Long productId);
 }

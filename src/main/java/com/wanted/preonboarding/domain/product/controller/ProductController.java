@@ -35,5 +35,13 @@ public class ProductController {
                 .status(HttpStatus.CREATED)
                 .body(ApiResponse.createSuccess(productResponseList, "상품 리스트 조회가 완료되었습니다."));
     }
+    
+    @GetMapping("/{productId}")
+    public ResponseEntity<?> getProducts(@PathVariable Long productId) {
+        ProductResponse productResponse = productService.getProduct(productId);
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(ApiResponse.createSuccess(productResponse, "상품상세 조회가 완료되었습니다."));
+    }
 }
 

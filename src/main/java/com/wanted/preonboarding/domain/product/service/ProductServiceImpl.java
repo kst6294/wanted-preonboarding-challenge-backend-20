@@ -7,6 +7,7 @@ import com.wanted.preonboarding.domain.product.repository.ProductRepository;
 import com.wanted.preonboarding.domain.user.entity.User;
 import com.wanted.preonboarding.domain.user.repository.UserRepository;
 import com.wanted.preonboarding.global.exception.entity.RestApiException;
+import com.wanted.preonboarding.global.exception.errorCode.ProductErrorCode;
 import com.wanted.preonboarding.global.exception.errorCode.UserErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -30,10 +31,18 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<ProductResponse> getProducts() {
         List<Product> productList = productRepository.findAll();
         List<ProductResponse> productResponseList = new ArrayList<>();
         for(Product product : productList) productResponseList.add(ProductResponse.of(product));
         return productResponseList;
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public ProductResponse getProduct(Long productId) {
+        Product product = productRepository.findById(productId).orElseThrow(() -> new RestApiException(ProductErrorCode.Product_NOT_FOUND, "상품을 찾을 수 없습니다. 아이디: "+productId));
+        return ProductResponse.of(product);
     }
 }
