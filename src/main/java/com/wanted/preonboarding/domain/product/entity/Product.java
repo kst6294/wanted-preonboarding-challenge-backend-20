@@ -32,4 +32,7 @@ public class Product {
     @Column(nullable = false)
     @Min(0)
     private Integer quantity; // 재고
+
+    @Column(nullable = false)
+    private ProductState state;
 }
