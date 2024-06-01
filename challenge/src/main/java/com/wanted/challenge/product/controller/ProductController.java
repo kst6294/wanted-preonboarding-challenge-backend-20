@@ -5,6 +5,7 @@ import com.wanted.challenge.product.model.Price;
 import com.wanted.challenge.product.model.Quantity;
 import com.wanted.challenge.product.request.PurchaseRequest;
 import com.wanted.challenge.product.request.RegisterRequest;
+import com.wanted.challenge.product.request.UpdatePriceRequest;
 import com.wanted.challenge.product.response.ProductDetailResponse;
 import com.wanted.challenge.product.response.ProductPreviewResponse;
 import com.wanted.challenge.product.response.PurchaseProductResponse;
@@ -20,6 +21,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -98,5 +100,16 @@ public class ProductController {
                 productService.reserveProducts(accountDetail.getAccountId(), pageable);
 
         return ResponseEntity.ok(purchaseProductResponses);
+    }
+
+    @PatchMapping("/price")
+    public ResponseEntity<Void> updatePrice(@RequestBody @Valid UpdatePriceRequest updatePriceRequest,
+                                            @AuthenticationPrincipal AccountDetail accountDetail) {
+
+        productService.updatePrice(updatePriceRequest.productId(), updatePriceRequest.price(),
+                accountDetail.getAccountId());
+
+        return ResponseEntity.ok()
+                .build();
     }
 }

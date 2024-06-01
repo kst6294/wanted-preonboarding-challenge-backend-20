@@ -82,4 +82,8 @@ public class Product extends BaseEntity {
             this.reservation = Reservation.COMPLETE;
         }
     }
+
+    public void updatePrice(Price price) {
+        this.price = price;
+    }
 }

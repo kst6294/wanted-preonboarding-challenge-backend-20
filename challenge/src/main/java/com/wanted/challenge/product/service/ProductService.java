@@ -157,4 +157,15 @@ public class ProductService {
     public Page<ReserveProductResponse> reserveProducts(Long sellerId, Pageable pageable) {
         return productRepository.retrieveReserveProducts(sellerId, pageable);
     }
+
+    public void updatePrice(Long productId, int price, Long sellerId) {
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new CustomException(ExceptionStatus.NOT_FOUND));
+
+        if (!product.getSeller().getId().equals(sellerId)) {
+            throw new CustomException(ExceptionStatus.NOT_SELLER);
+        }
+
+        product.updatePrice(new Price(price));
+    }
 }
