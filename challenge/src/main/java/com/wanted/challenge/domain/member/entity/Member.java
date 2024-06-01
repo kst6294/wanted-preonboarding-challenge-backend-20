@@ -2,7 +2,7 @@ package com.wanted.challenge.domain.member.entity;
 
 import com.wanted.challenge.domain.item.entity.Item;
 import com.wanted.challenge.domain.transactionhistory.entity.TransactionHistory;
-import com.wanted.challenge.global.entity.BaseTimeEntity;
+import com.wanted.challenge.domain.entity.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -20,10 +20,10 @@ public class Member extends BaseTimeEntity {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false, unique = true, length = 50)
     private String email;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 500)
     private String password;
 
     @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)

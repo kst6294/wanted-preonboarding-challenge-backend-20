@@ -1,7 +1,7 @@
 package com.wanted.challenge.domain.item.entity;
 
 import com.wanted.challenge.domain.member.entity.Member;
-import com.wanted.challenge.global.entity.BaseTimeEntity;
+import com.wanted.challenge.domain.entity.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -17,7 +17,7 @@ public class Item extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 30)
     private String name;
 
     @Column(nullable = false)
@@ -33,7 +33,7 @@ public class Item extends BaseTimeEntity {
     private Integer quantity;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id")
+    @JoinColumn(name = "member_id", nullable = false)
     private Member member;
 
     @Builder

@@ -2,7 +2,7 @@ package com.wanted.challenge.domain.transactionhistory.entity;
 
 import com.wanted.challenge.domain.item.entity.Item;
 import com.wanted.challenge.domain.member.entity.Member;
-import com.wanted.challenge.global.entity.BaseTimeEntity;
+import com.wanted.challenge.domain.entity.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -27,11 +27,11 @@ public class TransactionHistory extends BaseTimeEntity {
     private Long purchasePrice;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "item_id")
+    @JoinColumn(name = "item_id", nullable = false)
     private Item item;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id")
+    @JoinColumn(name = "member_id", nullable = false)
     private Member member;
 
 }

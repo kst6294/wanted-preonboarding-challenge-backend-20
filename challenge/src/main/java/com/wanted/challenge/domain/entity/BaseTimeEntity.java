@@ -1,4 +1,4 @@
-package com.wanted.challenge.global.entity;
+package com.wanted.challenge.domain.entity;
 
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.MappedSuperclass;
