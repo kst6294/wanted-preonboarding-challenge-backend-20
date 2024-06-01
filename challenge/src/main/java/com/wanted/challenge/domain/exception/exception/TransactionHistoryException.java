@@ -1,6 +1,5 @@
 package com.wanted.challenge.domain.exception.exception;
 
-import com.wanted.challenge.domain.exception.info.ItemExceptionInfo;
 import com.wanted.challenge.domain.exception.info.TransactionHistoryExceptionInfo;
 import lombok.Getter;
 

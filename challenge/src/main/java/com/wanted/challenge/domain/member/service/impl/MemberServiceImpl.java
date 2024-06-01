@@ -1,5 +1,6 @@
 package com.wanted.challenge.domain.member.service.impl;
 
+import com.wanted.challenge.domain.entity.BaseTimeEntity;
 import com.wanted.challenge.domain.exception.exception.MemberException;
 import com.wanted.challenge.domain.exception.info.MemberExceptionInfo;
 import com.wanted.challenge.domain.member.dto.request.EmailRequestDTO;
@@ -18,6 +19,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.LinkedList;
 
 @Service
 @RequiredArgsConstructor
@@ -76,7 +79,6 @@ public class MemberServiceImpl implements MemberService {
         String sessionId = session.getId();
         Cookie sessionCookie = new Cookie("JSESSIONID", sessionId);
         sessionCookie.setHttpOnly(true);
-
     }
 
 }

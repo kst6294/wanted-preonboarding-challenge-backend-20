@@ -49,8 +49,13 @@ public class Item extends BaseTimeEntity {
         this.quantity -= 1;
     }
     
-    // 재고가 0인경우 상태 변경
-    public void changeSaleStatus(){
+    // 재고가 0인경우 상태 변경(예약중)
+    public void changeSaleStatusReserved(){
         this.saleStatus = SaleStatus.RESERVED;
+    }
+
+    // 재고가 0이고 구매확정이 끝나면(판매완료)
+    public void changeSaleStatusSoldOut(){
+        this.saleStatus = SaleStatus.SOLD_OUT;
     }
 }

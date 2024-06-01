@@ -114,6 +114,10 @@ public class TransactionHistoryServiceImpl implements TransactionHistoryService 
 
         // 구매 확인
         transactionHistory.confirmPurchase();
+        // 재고가 없고 모두 구매확인이 끝났다면
+        if (transactionHistory.getItem().getQuantity() <= 0 && !transactionHistoryRepository.existsByItemAndPurchaseConfirmStatusFalseAndSaleConfirmStatusFalse(transactionHistory.getItem())){
+            transactionHistory.getItem().changeSaleStatusSoldOut();
+        }
     }
 
 

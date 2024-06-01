@@ -52,4 +52,6 @@ public interface TransactionHistoryRepository extends JpaRepository<TransactionH
     @Query("select t from TransactionHistory t join fetch t.item join fetch t.item.member where t.id = :id")
     Optional<TransactionHistory> findByTransactionHistoryFetchJoinItem(@Param("id") Long id);
 
+    // 하나라도 구매승인이 안 된 것이 있는지 확인
+    boolean existsByItemAndPurchaseConfirmStatusFalseAndSaleConfirmStatusFalse(@Param("item") Item item);
 }

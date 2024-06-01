@@ -109,7 +109,7 @@ public class ItemServiceImpl implements ItemService {
         item.decreaseQuantity();
         // 재고 0이하면 상품의 상태 변경
         if (item.getQuantity() <= 0) {
-            item.changeSaleStatus();
+            item.changeSaleStatusReserved();
         }
 
         TransactionHistory transactionHistory = TransactionHistory.builder()
