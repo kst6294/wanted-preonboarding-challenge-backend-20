@@ -10,7 +10,9 @@ import com.wanted.challenge.account.repository.AccountRepository;
 import com.wanted.challenge.product.entity.Product;
 import com.wanted.challenge.product.model.Price;
 import com.wanted.challenge.product.model.Quantity;
+import com.wanted.challenge.product.model.Reservation;
 import com.wanted.challenge.product.response.PurchaseProductResponse;
+import com.wanted.challenge.product.response.ReserveProductResponse;
 import com.wanted.challenge.transact.entity.Transact;
 import com.wanted.challenge.transact.entity.TransactLog;
 import com.wanted.challenge.transact.repository.TransactLogRepository;
@@ -21,6 +23,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.test.util.ReflectionTestUtils;
 
 class ProductRepositoryTest extends IntegrationTestSupport {
 
@@ -61,5 +64,40 @@ class ProductRepositoryTest extends IntegrationTestSupport {
         Assertions.assertThat(purchaseProductResponses)
                 .extracting(PurchaseProductResponse::name, PurchaseProductResponse::transactState)
                 .containsExactly(tuple("product2", DEPOSIT), tuple("product1", APPROVE));
+    }
+
+    @Test
+    @DisplayName("예약 제품 목록")
+    void retrieveReserveProducts() throws Exception {
+
+        // given
+        Account seller = accountRepository.save(new Account("seller", "password"));
+        Account buyer = accountRepository.save(new Account("buyer", "password"));
+
+        Product product1 = new Product(seller, "product1", new Price(10_000), new Quantity(1));
+        ReflectionTestUtils.setField(product1, "reservation", Reservation.RESERVE);
+        productRepository.save(product1);
+
+        Product product2 = productRepository.save(new Product(seller, "product2", new Price(20_000), new Quantity(1)));
+        ReflectionTestUtils.setField(product2, "reservation", Reservation.RESERVE);
+        productRepository.save(product2);
+
+        Product product3 = productRepository.save(new Product(seller, "product3", new Price(30_000), new Quantity(1)));
+        productRepository.save(product3);
+
+        Transact transact1 = transactRepository.save(new Transact(buyer, product1));
+        transactLogRepository.save(new TransactLog(transact1, DEPOSIT));
+
+        Transact transact2 = transactRepository.save(new Transact(buyer, product2));
+        transactLogRepository.save(new TransactLog(transact2, DEPOSIT));
+
+        // when
+        Page<ReserveProductResponse> reserveProductResponses =
+                productRepository.retrieveReserveProducts(buyer.getId(), PageRequest.of(0, 10));
+
+        // then
+        Assertions.assertThat(reserveProductResponses)
+                .extracting(ReserveProductResponse::name)
+                .containsExactly("product2", "product1");
     }
 }
