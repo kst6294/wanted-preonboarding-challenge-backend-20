@@ -5,6 +5,7 @@ import lombok.*;
 import org.example.preonboarding.common.entity.BaseEntity;
 import org.example.preonboarding.member.model.enums.Role;
 import org.example.preonboarding.product.model.entity.Product;
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.Comment;
 import org.hibernate.annotations.DynamicUpdate;
 
@@ -37,6 +38,7 @@ public class Member extends BaseEntity {
     private String name;
 
     @Enumerated(EnumType.STRING)
+    @ColumnDefault("MEMBER")
     @Comment("권한")
     private Role role;
 
