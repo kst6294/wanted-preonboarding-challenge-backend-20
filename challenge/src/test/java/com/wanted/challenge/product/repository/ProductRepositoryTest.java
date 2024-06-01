@@ -93,7 +93,7 @@ class ProductRepositoryTest extends IntegrationTestSupport {
 
         // when
         Page<ReserveProductResponse> reserveProductResponses =
-                productRepository.retrieveReserveProducts(buyer.getId(), PageRequest.of(0, 10));
+                productRepository.retrieveReserveProducts(seller.getId(), PageRequest.of(0, 10));
 
         // then
         Assertions.assertThat(reserveProductResponses)
