@@ -1,0 +1,25 @@
+server:
+  port: 80
+
+spring:
+  datasource:
+    url: jdbc:h2:tcp://localhost/~/wanted-market
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        #show_sql: true
+        format_sql: true # sql 포매팅
+        use_sql_comments: true #sql 주석 활성화
+        type: trace # sql 파라미터를 포함한 트레이스 로그 활성화
+
+logging:
+  level:
+    root: info
+    org.hibernate.sql: debug #Hibernate SQL 로그 활성화
+    org.hibernate.type.descriptor.sql.BasicBinder: trace #Hibernate 파라미터 바인딩 로그 활성화
