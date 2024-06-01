@@ -1,6 +1,6 @@
 # ERD
 
-![image](https://github.com/kst6294/wanted-preonboarding-challenge-backend-20/assets/61442066/f6b53413-35e9-49e2-a555-4afdd5e495b5)
+![image](https://github.com/kst6294/wanted-preonboarding-challenge-backend-20/assets/61442066/e397eae7-d00a-4c35-aa49-e37e6159e388)
 https://www.erdcloud.com/d/niZoHXELKi22SdLsZ
 
 # 요구사항 구현
