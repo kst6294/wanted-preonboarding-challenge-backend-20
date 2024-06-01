@@ -186,6 +186,57 @@ class OrderServiceTest {
     }
 
     @Test
+    void 회원이_해당_제품을_구매한_적이_있으면_주문할_수_없다(){
+        //given
+        User seller = User.builder()
+                .id(1L)
+                .account("test@gmail.com")
+                .password("test1234")
+                .name("홍길동")
+                .role(Role.USER)
+                .build();
+        fakeUserRepository.save(seller);
+
+        User buyer = User.builder()
+                .id(2L)
+                .account("test12@gmail.com")
+                .password("test1234")
+                .name("세종대왕")
+                .role(Role.USER)
+                .build();
+        fakeUserRepository.save(buyer);
+
+        Product product = Product.builder()
+                .id(1L)
+                .name("아이스크림")
+                .quantity(100)
+                .price(1000)
+                .seller(seller)
+                .sellingStatus(ProductSellingStatus.SELLING)
+                .build();
+        fakeProductRepository.save(product);
+
+        Order order = Order.builder()
+                .id(1L)
+                .seller(seller)
+                .buyer(buyer)
+                .product(product)
+                .status(OrderStatus.REQUEST)
+                .build();
+        fakeOrderRepository.save(order);
+
+        OrderCreate orderCreate = OrderCreate.builder()
+                .productId(1L)
+                .build();
+
+        //when
+        //then
+        assertThatThrownBy(() ->
+                orderService.order(orderCreate, 2L)
+        ).isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
     void 제고가_없으면_주문할_수_없다(){
         //given
         User seller = User.builder()
