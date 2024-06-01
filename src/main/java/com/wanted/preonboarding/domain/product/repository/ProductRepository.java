@@ -1,8 +1,10 @@
 package com.wanted.preonboarding.domain.product.repository;
 
 import com.wanted.preonboarding.domain.product.entity.Product;
+import jakarta.persistence.LockModeType;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Lock;
 
 import java.util.List;
 import java.util.Optional;
@@ -13,5 +15,6 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     List<Product> findAll();
 
     @EntityGraph(attributePaths = {"user"})
+    @Lock(LockModeType.PESSIMISTIC_WRITE)
     Optional<Product> findById(Long id);
 }

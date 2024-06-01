@@ -5,8 +5,7 @@ import org.springframework.http.HttpStatus;
 
 @Getter
 public enum ProductErrorCode implements ErrorCode {
-    Product_NOT_FOUND(HttpStatus.BAD_REQUEST, "P001", "상품이 존재하지 않습니다")
-
+    PRODUCT_NOT_FOUND(HttpStatus.BAD_REQUEST, "P001", "상품이 존재하지 않습니다"),
     ;
 
     private HttpStatus httpStatus;

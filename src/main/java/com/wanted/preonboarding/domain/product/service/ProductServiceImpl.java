@@ -42,7 +42,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     @Transactional(readOnly = true)
     public ProductResponse getProduct(Long productId) {
-        Product product = productRepository.findById(productId).orElseThrow(() -> new RestApiException(ProductErrorCode.Product_NOT_FOUND, "상품을 찾을 수 없습니다. 아이디: "+productId));
+        Product product = productRepository.findById(productId).orElseThrow(() -> new RestApiException(ProductErrorCode.PRODUCT_NOT_FOUND, "상품을 찾을 수 없습니다. 아이디: "+productId));
         return ProductResponse.of(product);
     }
 }

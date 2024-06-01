@@ -36,4 +36,12 @@ public class Product {
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private ProductState state;
+
+    public void purchase() {
+        this.quantity--;
+    }
+
+    public void updateState(ProductState state) {
+        this.state = state;
+    }
 }
