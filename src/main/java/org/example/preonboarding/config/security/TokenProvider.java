@@ -9,6 +9,7 @@ import org.example.preonboarding.auth.repository.AuthRepository;
 import org.example.preonboarding.common.constants.Constants;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
+import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -17,7 +18,6 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Component;
 
 import java.security.Key;
-import java.time.Duration;
 import java.util.Collection;
 import java.util.Date;
 import java.util.stream.Collectors;
@@ -90,17 +90,17 @@ public class TokenProvider {
     public boolean validateToken(String token) {
         try {
             Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
-            return true;
         } catch (SecurityException | MalformedJwtException e) {
-            log.warn("잘못된 JWT 서명입니다.");
+            throw new AuthenticationCredentialsNotFoundException("잘못된 JWT 서명입니다.");
         } catch (ExpiredJwtException e) {
-            log.warn("만료된 JWT 토큰입니다.");
+            throw new JwtException("만료된 JWT 토큰입니다.");
         } catch (UnsupportedJwtException e) {
-            log.warn("지원되지 않는 JWT 토큰입니다.");
+            throw new UnsupportedJwtException("지원되지 않는 JWT 토큰입니다.");
         } catch (IllegalArgumentException e) {
-            log.warn("JWT 토큰이 잘못되었습니다.");
+            throw new IllegalArgumentException("JWT 토큰이 잘못되었습니다.");
         }
-        return false;
+
+        return true;
     }
 
     public Claims parseClaims(String token) {
