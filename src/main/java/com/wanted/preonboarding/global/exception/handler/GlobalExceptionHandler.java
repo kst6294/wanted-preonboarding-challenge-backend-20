@@ -9,6 +9,7 @@ import jakarta.validation.Path;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -35,7 +36,7 @@ public class GlobalExceptionHandler {
                 .map(fieldError -> fieldError.getField() + ", " + fieldError.getDefaultMessage())
                 .toList();
 
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ApiResponse.createError("E999", errors, e.getMessage()));
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ApiResponse.createError("E001", errors, e.getMessage()));
     }
 
     @ExceptionHandler(ConstraintViolationException.class)
@@ -46,7 +47,16 @@ public class GlobalExceptionHandler {
                 .map(constraintViolation -> extractField(constraintViolation.getPropertyPath()) + ", " + constraintViolation.getMessage())
                 .toList();
 
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ApiResponse.createError("E999", errors, e.getMessage()));
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ApiResponse.createError("E002", errors, e.getMessage()));
+    }
+
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity<ApiResponse<?>> handleHttpMessageNotReadableException(HttpMessageNotReadableException e, HttpServletRequest request) {
+        log.error("요청 실패 => 요청 경로: {}, 오류메세지: {}", request.getRequestURL(), e.getMessage());
+
+        // 사용자에게 전달할 에러 메시지를 설정
+        String errorMessage = "잘못된 요청 본문 형식입니다. 입력 데이터를 확인해주세요.";
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ApiResponse.createError("E003", errorMessage, e.getMessage()));
     }
 
     private String extractField(Path path){
