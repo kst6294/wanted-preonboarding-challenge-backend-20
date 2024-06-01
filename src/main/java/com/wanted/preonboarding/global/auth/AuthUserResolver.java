@@ -28,6 +28,7 @@ public class AuthUserResolver implements HandlerMethodArgumentResolver {
         HttpSession session = webRequest.getNativeRequest(HttpServletRequest.class).getSession();
 
         UserDetails userDetails = (UserDetails) session.getAttribute("user");
+        if(userDetails == null) return null;
         Long userId = Long.parseLong(userDetails.getUsername());
 
         return userId;

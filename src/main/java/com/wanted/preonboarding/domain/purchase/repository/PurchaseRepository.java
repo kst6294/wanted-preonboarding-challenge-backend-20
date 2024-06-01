@@ -1,4 +1,4 @@
-package com.wanted.preonboarding.domain.purchase;
+package com.wanted.preonboarding.domain.purchase.repository;
 
 import com.wanted.preonboarding.domain.product.entity.Product;
 import com.wanted.preonboarding.domain.product.entity.ProductState;

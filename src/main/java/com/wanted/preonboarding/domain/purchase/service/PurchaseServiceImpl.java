@@ -3,8 +3,7 @@ package com.wanted.preonboarding.domain.purchase.service;
 import com.wanted.preonboarding.domain.product.entity.Product;
 import com.wanted.preonboarding.domain.product.entity.ProductState;
 import com.wanted.preonboarding.domain.product.repository.ProductRepository;
-import com.wanted.preonboarding.domain.product.service.ProductService;
-import com.wanted.preonboarding.domain.purchase.PurchaseRepository;
+import com.wanted.preonboarding.domain.purchase.repository.PurchaseRepository;
 import com.wanted.preonboarding.domain.purchase.dto.request.PurchaseRequest;
 import com.wanted.preonboarding.domain.purchase.entity.Purchase;
 import com.wanted.preonboarding.domain.purchase.entity.PurchaseState;
@@ -31,7 +30,7 @@ public class PurchaseServiceImpl implements PurchaseService{
     public void purchase(Long userId, PurchaseRequest purchaseRequest) {
         // 1. 유저, 제품 객체 가져오기
         User user = userRepository.findById(userId).orElseThrow(() -> new RestApiException(UserErrorCode.USER_NOT_FOUND, "유저를 찾을 수 없습니다. 아이디: "+userId));
-        Product product = productRepository.findById(purchaseRequest.getId()).orElseThrow(() -> new RestApiException(ProductErrorCode.PRODUCT_NOT_FOUND, "상품을 조회할 수 없습니다. 아이디: "+purchaseRequest.getId()));
+        Product product = productRepository.findByIdWithLock(purchaseRequest.getId()).orElseThrow(() -> new RestApiException(ProductErrorCode.PRODUCT_NOT_FOUND, "상품을 조회할 수 없습니다. 아이디: "+purchaseRequest.getId()));
 
         // 2. 상품 소유자 / 재고 / 구매이력 확인
         if (product.getUser().getId() == user.getId()) throw new RestApiException(PurchaseErrorCode.PRODUCT_SELLER_SAME_CUSTOMER, "상품 판매자와 구매자가 동일합니다. 구매자 아이디: "+userId+" 상품 아이디: "+product.getId());

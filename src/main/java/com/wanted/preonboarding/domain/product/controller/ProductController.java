@@ -37,7 +37,8 @@ public class ProductController {
     }
     
     @GetMapping("/{productId}")
-    public ResponseEntity<?> getProducts(@PathVariable Long productId) {
+    public ResponseEntity<?> getProducts(@AuthUser Long userId, @PathVariable Long productId) {
+        System.out.println(userId);
         ProductResponse productResponse = productService.getProduct(productId);
         return ResponseEntity
                 .status(HttpStatus.CREATED)
