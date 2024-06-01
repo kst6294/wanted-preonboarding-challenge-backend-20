@@ -9,9 +9,7 @@ import com.wanted.challenge.global.auth.AuthUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -47,5 +45,21 @@ public class TransactionHistoryController {
         List<MySellerReservationHistoryResponseDTO> sellerReservationHistories = transactionHistoryService.getSellerReservationHistories(userId);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(ApiResponse.createSuccess(sellerReservationHistories, "예약 기록 조회에 성공했습니다.(판매자)"));
+    }
+
+    // 판매 승인
+    @PatchMapping("sale/{id}")
+    public ResponseEntity<ApiResponse<?>> saleConfirm(@AuthUser Long userId, @PathVariable(name = "id") Long historyId) {
+        transactionHistoryService.saleConfirm(userId, historyId);
+
+        return ResponseEntity.status(HttpStatus.OK).body(ApiResponse.createSuccessNoContent("판매 승인이 완료되었습니다."));
+    }
+
+    // 구매 승인
+    @PatchMapping("purchase/{id}")
+    public ResponseEntity<ApiResponse<?>> purChaseConfirm(@AuthUser Long userId, @PathVariable(name = "id") Long historyId) {
+        transactionHistoryService.purchaseConfirm(userId, historyId);
+
+        return ResponseEntity.status(HttpStatus.OK).body(ApiResponse.createSuccessNoContent("구매 확인이 완료되었습니다."));
     }
 }

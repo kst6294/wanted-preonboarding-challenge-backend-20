@@ -12,6 +12,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface TransactionHistoryRepository extends JpaRepository<TransactionHistory, Long> {
 
@@ -46,5 +47,9 @@ public interface TransactionHistoryRepository extends JpaRepository<TransactionH
             "(t.id, i.name, t.purchasePrice, t.createdDate, t.saleConfirmStatus, t.purchaseConfirmStatus, t.member.email, i.id)" +
             "from TransactionHistory t join t.item i join t.member m where i.member = :member and t.purchaseConfirmDate is null ")
     List<MySellerReservationHistoryResponseDTO> findSellerReservationHistoriesByMember(@Param("member") Member member);
+
+    // 거래기록 가져오기
+    @Query("select t from TransactionHistory t join fetch t.item join fetch t.item.member where t.id = :id")
+    Optional<TransactionHistory> findByTransactionHistoryFetchJoinItem(@Param("id") Long id);
 
 }

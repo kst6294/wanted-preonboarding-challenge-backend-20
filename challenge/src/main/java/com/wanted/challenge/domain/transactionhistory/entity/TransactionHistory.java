@@ -47,4 +47,15 @@ public class TransactionHistory extends BaseTimeEntity {
         this.item = item;
         this.member = member;
     }
+
+    // 판매 승인
+    public void confirmSale(){
+        this.saleConfirmStatus = true;
+    }
+
+    // 구매 확인
+    public void confirmPurchase(){
+        this.purchaseConfirmStatus = true;
+        this.purchaseConfirmDate = LocalDateTime.now();
+    }
 }

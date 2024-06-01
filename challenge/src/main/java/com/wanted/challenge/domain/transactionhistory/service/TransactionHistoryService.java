@@ -17,4 +17,10 @@ public interface TransactionHistoryService {
     // 예약 기록 전부 가져오기(판매자)
     List<MySellerReservationHistoryResponseDTO> getSellerReservationHistories(Long id);
 
+    // 판매 승인
+    void saleConfirm(Long userId, Long historyId);
+
+    // 구매 승인
+    void purchaseConfirm(Long userId, Long historyId);
+
 }

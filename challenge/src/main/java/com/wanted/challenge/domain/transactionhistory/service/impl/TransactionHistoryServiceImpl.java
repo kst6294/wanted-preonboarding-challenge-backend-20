@@ -1,12 +1,18 @@
 package com.wanted.challenge.domain.transactionhistory.service.impl;
 
+import com.wanted.challenge.domain.exception.exception.ItemException;
 import com.wanted.challenge.domain.exception.exception.MemberException;
+import com.wanted.challenge.domain.exception.exception.TransactionHistoryException;
+import com.wanted.challenge.domain.exception.info.ItemExceptionInfo;
 import com.wanted.challenge.domain.exception.info.MemberExceptionInfo;
+import com.wanted.challenge.domain.exception.info.TransactionHistoryExceptionInfo;
+import com.wanted.challenge.domain.item.repository.ItemRepository;
 import com.wanted.challenge.domain.member.entity.Member;
 import com.wanted.challenge.domain.member.repository.MemberRepository;
 import com.wanted.challenge.domain.transactionhistory.dto.response.MyPurchaseHistoryResponseDTO;
 import com.wanted.challenge.domain.transactionhistory.dto.response.MyBuyerReservationHistoryResponseDTO;
 import com.wanted.challenge.domain.transactionhistory.dto.response.MySellerReservationHistoryResponseDTO;
+import com.wanted.challenge.domain.transactionhistory.entity.TransactionHistory;
 import com.wanted.challenge.domain.transactionhistory.repository.TransactionHistoryRepository;
 import com.wanted.challenge.domain.transactionhistory.service.TransactionHistoryService;
 import lombok.RequiredArgsConstructor;
@@ -55,6 +61,59 @@ public class TransactionHistoryServiceImpl implements TransactionHistoryService 
         List<MySellerReservationHistoryResponseDTO> sellerReservationHistoriesByMember = transactionHistoryRepository.findSellerReservationHistoriesByMember(currentMember);
 
         return sellerReservationHistoriesByMember;
+    }
+
+    // 판매 승인
+    @Override
+    @Transactional
+    public void saleConfirm(Long userId, Long historyId) {
+        Member currentMember = getCurrentMember(userId);
+
+        TransactionHistory transactionHistory = transactionHistoryRepository.findByTransactionHistoryFetchJoinItem(historyId)
+                .orElseThrow(() -> new TransactionHistoryException(TransactionHistoryExceptionInfo.NOT_FOUNT_HISTORY,
+                        userId + "번 유저가 " + historyId + "번 거래기록 판매승인 시도(거래기록 없음)"));
+
+        // 아이템 판매자가 맞는지 확인
+        if (transactionHistory.getItem().getMember() != currentMember){
+            throw new TransactionHistoryException(TransactionHistoryExceptionInfo.NOT_MATCH_ITEM_SELLER, userId + "번 유저가 " + transactionHistory.getId() + "번 기록 판매승인 시도");
+        }
+
+        // 이미 승인된 경우
+        if (transactionHistory.isSaleConfirmStatus()){
+            throw new TransactionHistoryException(TransactionHistoryExceptionInfo.ALREADY_SALE_CONFIRM, userId + "번 유저가 " + transactionHistory.getId() + "번 기록 판매승인 시도");
+        }
+
+        // 판매 승인
+        transactionHistory.confirmSale();
+    }
+
+    // 구매 확인
+    @Override
+    @Transactional
+    public void purchaseConfirm(Long userId, Long historyId) {
+        Member currentMember = getCurrentMember(userId);
+
+        TransactionHistory transactionHistory = transactionHistoryRepository.findByTransactionHistoryFetchJoinItem(historyId)
+                .orElseThrow(() -> new TransactionHistoryException(TransactionHistoryExceptionInfo.NOT_FOUNT_HISTORY,
+                        userId + "번 유저가 " + historyId + "번 거래기록 구매확인 시도(거래기록 없음)"));
+
+        // 아이템 구매자가 맞는지 확인
+        if (transactionHistory.getMember() != currentMember){
+            throw new TransactionHistoryException(TransactionHistoryExceptionInfo.NOT_MATCH_ITEM_BUYER, userId + "번 유저가 " + transactionHistory.getId() + "번 기록 구매확인 시도");
+        }
+
+        // 판매 확정이 안 된 경우
+        if (!transactionHistory.isSaleConfirmStatus()){
+            throw new TransactionHistoryException(TransactionHistoryExceptionInfo.ALREADY_PURCHASE_CONFIRM, userId + "번 유저가 " + transactionHistory.getId() + "번 기록 구매확인 시도");
+        }
+
+        // 이미 구매된 경우
+        if (transactionHistory.isPurchaseConfirmStatus()){
+            throw new TransactionHistoryException(TransactionHistoryExceptionInfo.ALREADY_PURCHASE_CONFIRM, userId + "번 유저가 " + transactionHistory.getId() + "번 기록 구매확인 시도");
+        }
+
+        // 구매 확인
+        transactionHistory.confirmPurchase();
     }
 
 
