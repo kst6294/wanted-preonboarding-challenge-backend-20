@@ -1,9 +1,13 @@
 package com.wanted.preonboarding.domain.user.service;
 
 import com.wanted.preonboarding.domain.user.dto.request.AddUserRequest;
+import com.wanted.preonboarding.domain.user.dto.request.LoginUserRequest;
+import com.wanted.preonboarding.domain.user.entity.User;
 import com.wanted.preonboarding.domain.user.repository.UserRepository;
 import com.wanted.preonboarding.global.exception.entity.RestApiException;
 import com.wanted.preonboarding.global.exception.errorCode.UserErrorCode;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -30,5 +34,19 @@ public class UserServiceImpl implements UserService{
 
         // 3. 저장
         userRepository.save(request.toEntity(encryptedPassword));
+    }
+
+    @Override
+    public void login(HttpServletRequest request, LoginUserRequest loginUserRequest) {
+        // 1. 유저 확인
+        User user = userRepository.findByEmail(loginUserRequest.getEmail()).orElseThrow(() -> new RestApiException(UserErrorCode.USER_NOT_FOUND, "이메일이 ["+loginUserRequest.getEmail()+"] 인 유저가 존재하지 않습니다."));
+        
+        // 2. 비밀번호 확인
+        if (!bCryptPasswordEncoder.matches(loginUserRequest.getPassword(), user.getPassword())) throw new RestApiException(UserErrorCode.PASSWORD_MISMATCH, "비밀번호가 일치하지 않습니다.");
+        
+        // 3. 세션에 유저 로그인
+        HttpSession session = request.getSession();
+        session.setAttribute("userId", user.getId());
+        session.setMaxInactiveInterval(3600); // 1시간 이상 접속하지 않으면 자동 로그아웃
     }
 }
