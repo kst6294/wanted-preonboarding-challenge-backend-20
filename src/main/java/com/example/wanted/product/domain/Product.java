@@ -1,5 +1,6 @@
 package com.example.wanted.product.domain;
 
+import com.example.wanted.module.exception.ResourceNotFoundException;
 import com.example.wanted.user.domain.User;
 import com.example.wanted.user.infrastucture.UserEntity;
 import lombok.Builder;

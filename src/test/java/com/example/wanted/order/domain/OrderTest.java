@@ -154,7 +154,7 @@ class OrderTest {
     }
 
     @Test
-    void 판매자만_구매요청을_승인_할_수_있다(){
+    void 판매자가_아니면_주문을_승인할_수_없다(){
         //given
         User buyer = User.builder()
                 .id(1L)

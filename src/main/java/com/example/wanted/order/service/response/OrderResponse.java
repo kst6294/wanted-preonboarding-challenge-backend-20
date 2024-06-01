@@ -8,7 +8,9 @@ import com.example.wanted.user.controller.response.UserResponse;
 import com.example.wanted.user.domain.User;
 import com.example.wanted.user.service.port.UserRepository;
 import lombok.Builder;
+import lombok.Getter;
 
+@Getter
 public class OrderResponse {
     private Long id;
     private UserResponse seller;

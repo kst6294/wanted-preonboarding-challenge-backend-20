@@ -61,4 +61,8 @@ public class Order {
     public boolean checkBuyer(User user) {
         return this.buyer.getId().equals(user.getId());
     }
+
+    public boolean checkProduct(Product product) {
+        return this.product.getId().equals(product.getId());
+    }
 }

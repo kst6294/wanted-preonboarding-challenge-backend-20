@@ -7,13 +7,19 @@ import com.example.wanted.product.service.port.ProductRepository;
 import com.example.wanted.product.service.response.ProductResponse;
 import com.example.wanted.user.domain.User;
 import com.example.wanted.user.service.port.UserRepository;
+import lombok.Builder;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Slf4j
+@Builder
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class ProductService {
     private final ProductRepository productRepository;

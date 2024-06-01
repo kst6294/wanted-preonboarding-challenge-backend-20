@@ -12,5 +12,5 @@ public interface OrderRepository {
     Order save(Order order);
     Optional<Order> findById(Long id);
     List<Order> findByUser(User user);
-    Optional<Order> findByProductAndUser(Product product, User user);
+    List<Order> findByProductAndUser(Product product, User user);
 }

@@ -9,6 +9,7 @@ import com.example.wanted.product.domain.Product;
 import com.example.wanted.product.service.port.ProductRepository;
 import com.example.wanted.user.domain.User;
 import com.example.wanted.user.service.port.UserRepository;
+import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -17,17 +18,20 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Service
-@RequiredArgsConstructor
-@Transactional
+
+
 @Slf4j
+@Builder
+@Service
+@Transactional
+@RequiredArgsConstructor
 public class OrderService {
     private final OrderRepository orderRepository;
     private final ProductRepository productRepository;
     private final UserRepository userRepository;
 
     public OrderResponse order(OrderCreate orderCreate, Long userId) {
-        User buyer = userRepository.findById(userId).orElseThrow(() ->
+        User user = userRepository.findById(userId).orElseThrow(() ->
                 new ResourceNotFoundException("User", userId)
         );
 
@@ -35,13 +39,10 @@ public class OrderService {
                 new ResourceNotFoundException("Product", orderCreate.getProductId())
         );
         // 구매자 관련 오류로 수정
-        if (product.checkSeller(buyer)) {
-            throw new ResourceNotFoundException("Product", orderCreate.getProductId());
-        }
         product.deductQuantity();
         product = productRepository.save(product);
 
-        Order order = orderRepository.save(Order.from(buyer, product));
+        Order order = orderRepository.save(Order.from(user, product));
         return OrderResponse.from(order);
     }
 
@@ -59,7 +60,15 @@ public class OrderService {
         return OrderResponse.from(order);
     }
 
-    public List<OrderResponse> getByUser(Long userId) {
+    public OrderResponse getById(Long id) {
+        Order order = orderRepository.findById(id).orElseThrow(() ->
+                new ResourceNotFoundException("Order", id)
+        );
+
+        return OrderResponse.from(order);
+    }
+
+    public List<OrderResponse> getByUserId(Long userId) {
         User user = userRepository.findById(userId).orElseThrow(() ->
                 new ResourceNotFoundException("User", userId)
         );
@@ -67,7 +76,7 @@ public class OrderService {
         return orderRepository.findByUser(user).stream().map(OrderResponse::from).collect(Collectors.toList());
     }
 
-    public OrderResponse getByProductAndUser(Long userId, Long productId) {
+    public List<OrderResponse> getByProductAndUser(Long userId, Long productId) {
         User user = userRepository.findById(userId).orElseThrow(() ->
                 new ResourceNotFoundException("User", userId)
         );
@@ -76,10 +85,9 @@ public class OrderService {
                 new ResourceNotFoundException("Product", productId)
         );
 
-        Order order = orderRepository.findByProductAndUser(product,user).orElseThrow(() ->
-                new ResourceNotFoundException("Order", productId)
-        );
-
-        return OrderResponse.from(order);
+        return orderRepository
+                .findByProductAndUser(product,user).stream()
+                .map(OrderResponse::from)
+                .collect(Collectors.toList());
     }
 }

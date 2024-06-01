@@ -31,14 +31,16 @@ public class OrderRepositoryImpl implements OrderRepository {
         return orderJpaRepository
                 .findByUserId(user.getId())
                 .stream()
-                .map(OrderEntity::toModel).
-                collect(Collectors.toList());
+                .map(OrderEntity::toModel)
+                .collect(Collectors.toList());
     }
 
     @Override
-    public Optional<Order> findByProductAndUser(Product product, User user) {
+    public List<Order> findByProductAndUser(Product product, User user) {
         return orderJpaRepository
                 .findOrdersByUserIdOrProductId(product.getId(), user.getId())
-                .map(OrderEntity::toModel);
+                .stream()
+                .map(OrderEntity::toModel)
+                .collect(Collectors.toList());
     }
 }
