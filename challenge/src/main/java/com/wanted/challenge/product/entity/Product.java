@@ -2,6 +2,8 @@ package com.wanted.challenge.product.entity;
 
 import com.wanted.challenge.account.entity.Account;
 import com.wanted.challenge.base.BaseEntity;
+import com.wanted.challenge.exception.CustomException;
+import com.wanted.challenge.exception.ExceptionStatus;
 import com.wanted.challenge.product.model.Price;
 import com.wanted.challenge.product.model.PriceConverter;
 import com.wanted.challenge.product.model.Quantity;
@@ -52,11 +54,19 @@ public class Product extends BaseEntity {
     private Reservation reservation;
 
     public Product(Account seller, String name, Price price, Quantity quantity) {
+        validInitQuantity(quantity);
+
         this.seller = seller;
         this.name = name;
         this.price = price;
         this.quantity = quantity;
         this.reservation = Reservation.SALE;
+    }
+
+    private void validInitQuantity(Quantity quantity) {
+        if (quantity.value() <= 0) {
+            throw new CustomException(ExceptionStatus.INIT_QUANTITY);
+        }
     }
 
     public void purchase() {
