@@ -55,7 +55,7 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
                         product.id,
                         product.reservation,
                         product.name,
-                        product.price,
+                        transact.price,
                         transactLog.transactState
                 ))
                 .from(product)
@@ -78,6 +78,9 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
         JPAQuery<Long> countQuery = jpaQueryFactory
                 .select(product.count())
                 .from(product)
+
+                .innerJoin(transact)
+                .on(transact.product.eq(product))
 
                 .innerJoin(transactLog)
                 .on(transactLog.id.eq(lastTransactLogId()))
