@@ -35,6 +35,7 @@ public class ProductService {
                 .price(request.getPrice())
                 .description(request.getDescription())
                 .status(ProductStatusCode.ON_SALE)
+                .quantity(request.getQuantity())
                 .build();
 
         productRepository.save(product);

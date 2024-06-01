@@ -10,4 +10,6 @@ public class RegisterRequest {
     private long price;
 
     private String description;
+
+    private int quantity;
 }
