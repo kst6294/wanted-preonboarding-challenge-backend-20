@@ -1,0 +1,21 @@
+### 주문 생성(주문을 생성하면 해당 제품을 예약하는 개념)
+POST http://localhost:8080/api/orders
+Content-Type: application/json
+
+{
+  "productNumber" : "4MGFY98WRS"
+}
+
+### 판매 승인(승인이 완료되면 거래완료)
+POST http://localhost:8080/api/orders/approve/{{orderId}}
+
+### 내가 파는 제품
+GET http://localhost:8080/api/orders/my-buy-order?
+    orderSearchRequest=SELLER
+
+### 내가 사는 제품
+GET http://localhost:8080/api/orders/my-buy-order?
+    orderSearchRequest=BUYER
+
+### 구매 확정
+POST http://localhost:8080/api/orders/complete/{{orderId}}

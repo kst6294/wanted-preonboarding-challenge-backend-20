@@ -1,0 +1,18 @@
+### 제품 조회
+GET http://localhost:8080/api/products
+
+### 제품 생성
+POST http://localhost:8080/api/products
+Content-Type: application/json
+
+{
+  "productType": "UNCLASSIFIED",
+  "productSellingStatus": "SELLING",
+  "name": "productA",
+  "description": "desc",
+  "price": 1000,
+  "sellingUserId": "admin"
+}
+
+### 제품 상세 조회
+GET http://localhost:8080/api/products/{{productId}}
