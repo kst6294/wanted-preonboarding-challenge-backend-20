@@ -4,6 +4,9 @@ server:
 spring:
   application:
     name: preonboarding
+  profiles:
+    active: local
+
   datasource:
     url: jdbc:mariadb://localhost:3306/preonboarding
     driver-class-name: org.mariadb.jdbc.Driver
@@ -33,7 +36,28 @@ springdoc:
     operations-sorter: alpha
 #    path: /swagger
 
-
 jwt:
   secret: hihello123hihello123hihello123hihello123hihello123hihello123hihello123hihello123hihello123hihello123hihello123hihello123
   access-token-expiration: 1800000 # 30?(?????)
+
+---
+
+spring:
+  config.activate.on-profile: test
+
+  datasource:
+    url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+  h2:
+    console:
+      enabled: true
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
