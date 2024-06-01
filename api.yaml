@@ -1,0 +1,148 @@
+base_url: "http://localhost:5000"
+
+endpoints:
+  - name: "사용자 등록"
+    url: "/register"
+    method: "POST"
+    description: "새로운 사용자를 등록합니다."
+    request_body:
+      username: "string"
+      password: "string"
+    responses:
+      - status: 200
+        body: 
+          id: 1
+          username: "string"
+      - status: 400
+        body:
+          msg: "Username already exists"
+  
+  - name: "로그인"
+    url: "/login"
+    method: "POST"
+    description: "사용자 로그인"
+    request_body:
+      username: "string"
+      password: "string"
+    responses:
+      - status: 200
+        body:
+          access_token: "string"
+      - status: 401
+        body:
+          msg: "Bad username or password"
+
+  - name: "제품 등록"
+    url: "/product"
+    method: "POST"
+    description: "새로운 제품을 등록합니다. (로그인 필요)"
+    headers:
+      Authorization: "Bearer <JWT_TOKEN>"
+    request_body:
+      name: "string"
+      price: "number"
+    responses:
+      - status: 200
+        body:
+          id: 1
+          name: "string"
+          price: "number"
+          status: "판매중"
+          seller_id: 1
+          buyer_id: null
+
+  - name: "모든 제품 조회"
+    url: "/products"
+    method: "GET"
+    description: "등록된 모든 제품을 조회합니다."
+    responses:
+      - status: 200
+        body:
+          - id: 1
+            name: "string"
+            price: "number"
+            status: "판매중"
+            seller_id: 1
+            buyer_id: null
+          # 추가 제품들
+
+  - name: "특정 제품 조회"
+    url: "/product/<int:id>"
+    method: "GET"
+    description: "특정 제품을 조회합니다."
+    responses:
+      - status: 200
+        body:
+          id: 1
+          name: "string"
+          price: "number"
+          status: "판매중"
+          seller_id: 1
+          buyer_id: null
+
+  - name: "제품 구매"
+    url: "/product/<int:id>/buy"
+    method: "POST"
+    description: "특정 제품을 구매합니다. (로그인 필요)"
+    headers:
+      Authorization: "Bearer <JWT_TOKEN>"
+    responses:
+      - status: 200
+        body:
+          id: 1
+          name: "string"
+          price: "number"
+          status: "예약중"
+          seller_id: 1
+          buyer_id: 2
+      - status: 400
+        body:
+          msg: "Product not available for purchase"
+
+  - name: "거래 내역 조회"
+    url: "/my_transactions"
+    method: "GET"
+    description: "사용자의 거래 내역을 조회합니다. (로그인 필요)"
+    headers:
+      Authorization: "Bearer <JWT_TOKEN>"
+    responses:
+      - status: 200
+        body:
+          bought_products:
+            - id: 1
+              name: "string"
+              price: "number"
+              status: "예약중"
+              seller_id: 1
+              buyer_id: 2
+            # 추가 구매 제품들
+          reserved_products:
+            - id: 2
+              name: "string"
+              price: "number"
+              status: "예약중"
+              seller_id: 1
+              buyer_id: 2
+            # 추가 예약 제품들
+
+  - name: "판매 승인"
+    url: "/product/<int:id>/approve"
+    method: "POST"
+    description: "특정 제품의 판매를 승인합니다. (로그인 필요)"
+    headers:
+      Authorization: "Bearer <JWT_TOKEN>"
+    responses:
+      - status: 200
+        body:
+          id: 1
+          name: "string"
+          price: "number"
+          status: "완료"
+          seller_id: 1
+          buyer_id: 2
+      - status: 403
+        body:
+          msg: "Not authorized to approve this sale"
+      - status: 400
+        body:
+          msg: "Product is not in reserved state"
