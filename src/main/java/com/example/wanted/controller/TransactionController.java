@@ -34,12 +34,11 @@ public class TransactionController {
     @Tag(name = "Transaction Register", description = "Transaction Register API")
     @Operation(summary = "거래 등록", description = "거래 등록 시 사용하는 API")
     public ResponseEntity<String> orderInsert(@PathVariable Long id,
-                                              Transaction transaction, @RequestParam(value = "u_id", required = false) Long u_id,
+                                              Transaction transaction,
                                               @AuthenticationPrincipal PrincipalDetails principal) {
         System.out.println("principal.order.insert : " + principal);
         Product product = productRepository.findById(id).get();
         product.setState(State.RESERVED);
-        transaction.setSeller_id(u_id);
         transaction.setProduct(product);
         transaction.setUser(principal.getUser());//user
 

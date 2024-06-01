@@ -18,10 +18,9 @@ class TransactionTest {
         User seller = User.builder().u_id(2L).email("test2@naver.com").password("11111111").name("테스터2").role("ROLE_USER").build();
         Product product = Product.builder().user(seller).name("테스트 물건").description("테스트").price(10000).seller(seller.getName()).state(State.ONSALE).build();
         Transaction transaction = Transaction.builder()
-                .t_id(1L).seller_id(product.getUser().getU_id()).user(buyer).product(product).build();
+                .t_id(1L).user(buyer).product(product).build();
 
         Assertions.assertThat(transaction.getT_id()).isEqualTo(1L);
-        Assertions.assertThat(transaction.getSeller_id()).isEqualTo(2L);
         Assertions.assertThat(transaction.getUser()).isEqualTo(buyer);
         Assertions.assertThat(transaction.getProduct()).isEqualTo(product);
 

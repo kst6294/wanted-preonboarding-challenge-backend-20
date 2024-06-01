@@ -20,14 +20,11 @@ public class Transaction {
     @JoinColumn(name = "user_id")
     private User user;
 
-    private Long seller_id;
-
     @Builder
-    public Transaction(Long t_id, Product product, User user, Long seller_id) {
+    public Transaction(Long t_id, Product product, User user) {
         this.t_id = t_id;
         this.product = product;
         this.user = user;
-        this.seller_id = seller_id;
     }
 
 }

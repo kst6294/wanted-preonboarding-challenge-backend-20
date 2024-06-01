@@ -27,7 +27,7 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long> 
 
     @Modifying
     @Query(value = "select * from Transaction t join Product p"
-            + " where p.p_id = t.product_id and t.seller_id=:id",
+            + " where p.p_id = t.product_id and p.u_id=:id",
             nativeQuery = true)
     public List<Transaction> findBySellId(@Param("id") Long id);
 

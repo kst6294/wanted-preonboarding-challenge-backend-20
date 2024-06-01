@@ -29,12 +29,11 @@ class TransactionRepositoryTest {
         Product product = Product.builder().user(seller).name("테스트용품").description("테스트").price(10000).seller(seller.getName()).state(State.ONSALE).build();
 
         Transaction transaction = Transaction.builder()
-                .seller_id(product.getUser().getU_id()).user(buyer).product(product).build();
+                .user(buyer).product(product).build();
 
         Transaction transaction_result = transactionRepository.save(transaction);
 
         Assertions.assertThat(transaction_result.getT_id()).isEqualTo(transaction.getT_id());
-        Assertions.assertThat(transaction_result.getSeller_id()).isEqualTo(transaction.getSeller_id());
         Assertions.assertThat(transaction_result.getUser()).isEqualTo(transaction.getUser());
         Assertions.assertThat(transaction_result.getProduct()).isEqualTo(transaction.getProduct());
     }
