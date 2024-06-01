@@ -3,7 +3,6 @@ package com.wanted.market.domain.member.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.wanted.market.domain.trade.entity.Trade;
 import com.wanted.market.global.common.code.BaseStatusCode;
-import com.wanted.market.global.common.code.RoleCode;
 import com.wanted.market.global.common.entity.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.Builder;

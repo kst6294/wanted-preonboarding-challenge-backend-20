@@ -2,7 +2,7 @@ package com.wanted.market.domain.trade.response;
 
 import com.wanted.market.domain.trade.entity.Trade;
 import com.wanted.market.global.common.code.ResponseCode;
-import com.wanted.market.global.common.code.TradeStatusCode;
+import com.wanted.market.domain.trade.entity.TradeStatusCode;
 import com.wanted.market.global.common.response.BaseResponse;
 import lombok.Getter;
 

@@ -5,7 +5,7 @@ import com.wanted.market.domain.trade.response.DetailResponse;
 import com.wanted.market.domain.trade.response.ListResponse;
 import com.wanted.market.domain.trade.service.TradeService;
 import com.wanted.market.global.common.code.ResponseCode;
-import com.wanted.market.global.common.code.TradeStatusCode;
+import com.wanted.market.domain.trade.entity.TradeStatusCode;
 import com.wanted.market.global.common.response.BaseResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

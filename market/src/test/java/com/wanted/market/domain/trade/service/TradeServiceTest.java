@@ -8,9 +8,9 @@ import com.wanted.market.domain.trade.entity.Trade;
 import com.wanted.market.domain.trade.repository.TradeRepository;
 import com.wanted.market.domain.trade.request.TradeRequest;
 import com.wanted.market.global.common.code.BaseStatusCode;
-import com.wanted.market.global.common.code.ProductStatusCode;
-import com.wanted.market.global.common.code.RoleCode;
-import com.wanted.market.global.common.code.TradeStatusCode;
+import com.wanted.market.domain.product.entity.ProductStatusCode;
+import com.wanted.market.domain.member.entity.RoleCode;
+import com.wanted.market.domain.trade.entity.TradeStatusCode;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.junit.jupiter.api.Assertions;
@@ -113,8 +113,6 @@ class TradeServiceTest {
         Member seller = createMember("seller");
         Product product = createProduct(seller);
 
-        HttpServletRequest httpRequest = getHttpServletRequest(buyer);
-
         //when
         long result = tradeService.requestTrade(new TradeRequest(product.getProductNo(), 0));// 0 은 쓰레기 값
         Trade trade = tradeService.getTrade(product.getProductNo());
@@ -138,7 +136,6 @@ class TradeServiceTest {
 
         long tradeNo = createTrade(product, seller, buyer).getTradeNo();
 
-        HttpServletRequest httpRequest = getHttpServletRequest(seller);
         tradeService.acceptTrade(new TradeRequest(product.getProductNo(), tradeNo));
 
         //when

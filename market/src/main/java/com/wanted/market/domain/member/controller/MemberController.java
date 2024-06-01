@@ -5,7 +5,7 @@ import com.wanted.market.domain.member.request.JoinRequest;
 import com.wanted.market.domain.member.service.MemberService;
 import com.wanted.market.global.common.code.BaseStatusCode;
 import com.wanted.market.global.common.code.ResponseCode;
-import com.wanted.market.global.common.code.RoleCode;
+import com.wanted.market.domain.member.entity.RoleCode;
 import com.wanted.market.global.common.response.BaseResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

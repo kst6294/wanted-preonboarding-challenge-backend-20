@@ -1,6 +1,6 @@
 package com.wanted.market.domain.trade.dto;
 
-import com.wanted.market.global.common.code.TradeStatusCode;
+import com.wanted.market.domain.trade.entity.TradeStatusCode;
 import lombok.Getter;
 
 @Getter

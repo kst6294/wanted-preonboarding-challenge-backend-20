@@ -1,7 +1,7 @@
 package com.wanted.market.domain.product.response;
 
 import com.wanted.market.domain.product.entity.Product;
-import com.wanted.market.global.common.code.ProductStatusCode;
+import com.wanted.market.domain.product.entity.ProductStatusCode;
 import com.wanted.market.global.common.code.ResponseCode;
 import com.wanted.market.global.common.response.BaseResponse;
 import lombok.Getter;

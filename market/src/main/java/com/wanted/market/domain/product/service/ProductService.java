@@ -7,7 +7,7 @@ import com.wanted.market.domain.product.entity.Product;
 import com.wanted.market.domain.product.repository.ProductRepository;
 import com.wanted.market.domain.product.request.RegisterRequest;
 import com.wanted.market.global.auth.service.SessionUtils;
-import com.wanted.market.global.common.code.ProductStatusCode;
+import com.wanted.market.domain.product.entity.ProductStatusCode;
 import com.wanted.market.global.common.exception.DataNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

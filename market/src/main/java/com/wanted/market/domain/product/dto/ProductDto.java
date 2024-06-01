@@ -1,6 +1,6 @@
 package com.wanted.market.domain.product.dto;
 
-import com.wanted.market.global.common.code.ProductStatusCode;
+import com.wanted.market.domain.product.entity.ProductStatusCode;
 import lombok.Getter;
 import lombok.Setter;
 

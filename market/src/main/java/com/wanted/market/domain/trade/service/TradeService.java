@@ -9,7 +9,7 @@ import com.wanted.market.domain.trade.entity.Trade;
 import com.wanted.market.domain.trade.repository.TradeRepository;
 import com.wanted.market.domain.trade.request.TradeRequest;
 import com.wanted.market.global.auth.service.SessionUtils;
-import com.wanted.market.global.common.code.TradeStatusCode;
+import com.wanted.market.domain.trade.entity.TradeStatusCode;
 import com.wanted.market.global.common.exception.DataNotFoundException;
 import com.wanted.market.global.common.exception.NoPermissionException;
 import lombok.RequiredArgsConstructor;

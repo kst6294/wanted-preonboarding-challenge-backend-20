@@ -1,7 +1,6 @@
 package com.wanted.market.domain.product.entity;
 
 import com.wanted.market.domain.member.entity.Member;
-import com.wanted.market.global.common.code.ProductStatusCode;
 import com.wanted.market.global.common.entity.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

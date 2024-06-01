@@ -4,7 +4,7 @@ import com.wanted.market.global.auth.common.CustomAuthenticationEntryPoint;
 import com.wanted.market.global.auth.handler.CustomAccessDeniedHandler;
 import com.wanted.market.global.auth.handler.CustomLogoutHandler;
 import com.wanted.market.global.auth.handler.CustomLogoutSuccessHandler;
-import com.wanted.market.global.common.code.RoleCode;
+import com.wanted.market.domain.member.entity.RoleCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

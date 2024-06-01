@@ -2,7 +2,7 @@ package com.wanted.market.domain.trade.repository;
 
 import com.wanted.market.domain.trade.dto.TradeDto;
 import com.wanted.market.domain.trade.entity.Trade;
-import com.wanted.market.global.common.code.TradeStatusCode;
+import com.wanted.market.domain.trade.entity.TradeStatusCode;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

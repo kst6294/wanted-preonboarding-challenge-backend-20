@@ -1,4 +1,4 @@
-package com.wanted.market.global.common.code;
+package com.wanted.market.domain.member.entity;
 
 public enum RoleCode {
     ADMIN, MEMBER, GUEST

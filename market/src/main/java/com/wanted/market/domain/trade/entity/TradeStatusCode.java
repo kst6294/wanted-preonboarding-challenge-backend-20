@@ -1,4 +1,4 @@
-package com.wanted.market.global.common.code;
+package com.wanted.market.domain.trade.entity;
 
 public enum TradeStatusCode {
     REQUEST, ACCEPT, COMPLETE;

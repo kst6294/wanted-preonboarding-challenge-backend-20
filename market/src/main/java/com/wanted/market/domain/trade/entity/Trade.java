@@ -2,7 +2,6 @@ package com.wanted.market.domain.trade.entity;
 
 import com.wanted.market.domain.member.entity.Member;
 import com.wanted.market.domain.product.entity.Product;
-import com.wanted.market.global.common.code.TradeStatusCode;
 import com.wanted.market.global.common.entity.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
