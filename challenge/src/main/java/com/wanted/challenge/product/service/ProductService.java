@@ -120,14 +120,21 @@ public class ProductService {
 
     private List<PurchaseInfo> getAllBuyerInfo(Long productId) {
         List<Transact> transacts = transactRepository.findByProductId(productId);
+        Map<Long, List<TransactState>> buyerTransactStates = getBuyerTransactStates(transacts);
 
-        Map<Long, List<TransactState>> buyerTransactStates = transactLogRepository.findAllByTransactIn(transacts)
+        return getPurchaseInfos(buyerTransactStates);
+    }
+
+    private LinkedHashMap<Long, List<TransactState>> getBuyerTransactStates(List<Transact> transacts) {
+        return transactLogRepository.findAllByTransactIn(transacts)
                 .stream()
                 .sorted(Comparator.comparing(TransactLog::getId).reversed())
                 .collect(Collectors.groupingBy(transactLog -> transactLog.getTransact().getBuyer().getId(),
                         LinkedHashMap::new,
                         Collectors.mapping(TransactLog::getTransactState, Collectors.toList())));
+    }
 
+    private static List<PurchaseInfo> getPurchaseInfos(Map<Long, List<TransactState>> buyerTransactStates) {
         return buyerTransactStates.entrySet()
                 .stream()
                 .map(entry -> new PurchaseBuyerResponse(entry.getKey(), entry.getValue()))
