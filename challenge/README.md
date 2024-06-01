@@ -296,6 +296,14 @@ public class Transact extends BaseEntity {
 >
 > size: 한 페이지의 데이터 개수, optional
 
+### 제품 가격 변경
+
+#### PATCH /products/price
+
+> productId: 제품 번호
+>
+> price: 변경할 가격
+
 ## 거래 내역
 
 ### 판매 승인
