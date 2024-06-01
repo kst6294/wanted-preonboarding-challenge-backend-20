@@ -1,8 +1,8 @@
 ### 제품 조회
-GET http://localhost:8080/api/products
+GET {{host}}/api/products
 
 ### 제품 생성
-POST http://localhost:8080/api/products
+POST {{host}}/api/products
 Content-Type: application/json
 
 {
@@ -15,4 +15,4 @@ Content-Type: application/json
 }
 
 ### 제품 상세 조회
-GET http://localhost:8080/api/products/{{productId}}
+GET {{host}}/api/products/{{productId}}
