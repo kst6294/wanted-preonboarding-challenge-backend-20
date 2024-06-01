@@ -29,4 +29,8 @@ public class Product extends BaseEntity {
     @JoinColumn(name = "member_id")
     private Member member;
 
+    public void updateProductStatus(ProductStatus productStatus) {
+        this.productStatus = productStatus;
+    }
+
 }

@@ -5,7 +5,9 @@ import com.chaewon.wanted.common.ResponseDto;
 import com.chaewon.wanted.domain.member.exception.InvalidRefreshTokenException;
 import com.chaewon.wanted.domain.member.exception.MemberNotFoundException;
 import com.chaewon.wanted.domain.member.exception.MultipleLoginException;
+import com.chaewon.wanted.domain.orders.exception.SelfPurchaseException;
 import com.chaewon.wanted.domain.product.exception.ProductNotFoundException;
+import com.chaewon.wanted.domain.product.exception.ProductUnavailableException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -57,6 +59,18 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ResponseEntity<ResponseDto> handleProductNotFoundException(ProductNotFoundException e) {
         return ResponseDto.of(HttpStatus.NOT_FOUND, e.getMessage());
+    }
+
+    @ExceptionHandler(SelfPurchaseException.class)
+    @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
+    public ResponseEntity<ResponseDto> handleSelfPurchaseException(SelfPurchaseException e) {
+        return ResponseDto.of(HttpStatus.UNPROCESSABLE_ENTITY, e.getMessage());
+    }
+
+    @ExceptionHandler(ProductUnavailableException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public ResponseEntity<ResponseDto> handleProductUnavailableException(ProductUnavailableException e) {
+        return ResponseDto.of(HttpStatus.CONFLICT, e.getMessage());
     }
 
 }
