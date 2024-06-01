@@ -9,6 +9,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
@@ -26,6 +28,8 @@ public class TransactionHistory extends BaseTimeEntity {
 
     @Column(nullable = false)
     private Long purchasePrice;
+
+    private LocalDateTime purchaseConfirmDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "item_id", nullable = false)

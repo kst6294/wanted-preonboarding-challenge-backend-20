@@ -4,7 +4,8 @@ import com.wanted.challenge.domain.exception.exception.MemberException;
 import com.wanted.challenge.domain.exception.info.MemberExceptionInfo;
 import com.wanted.challenge.domain.member.entity.Member;
 import com.wanted.challenge.domain.member.repository.MemberRepository;
-import com.wanted.challenge.domain.transactionhistory.dto.response.MyTransactionHistoryResponseDTO;
+import com.wanted.challenge.domain.transactionhistory.dto.response.MyPurchaseHistoryResponseDTO;
+import com.wanted.challenge.domain.transactionhistory.dto.response.MyReservationHistoryResponseDTO;
 import com.wanted.challenge.domain.transactionhistory.repository.TransactionHistoryRepository;
 import com.wanted.challenge.domain.transactionhistory.service.TransactionHistoryService;
 import lombok.RequiredArgsConstructor;
@@ -25,13 +26,25 @@ public class TransactionHistoryServiceImpl implements TransactionHistoryService 
     // 내 구매기록 전부 가져오기
     @Override
     @Transactional(readOnly = true)
-    public List<MyTransactionHistoryResponseDTO> getPurchaseHistories(Long id) {
+    public List<MyPurchaseHistoryResponseDTO> getPurchaseHistories(Long id) {
         Member currentMember = getCurrentMember(id);
 
-        List<MyTransactionHistoryResponseDTO> transactionHistoriesByMember = transactionHistoryRepository.findTransactionHistoriesByMember(currentMember);
+        List<MyPurchaseHistoryResponseDTO> transactionHistoriesByMember = transactionHistoryRepository.findTransactionHistoriesByMember(currentMember);
 
         return transactionHistoriesByMember;
     }
+
+    // 내 예약기록 전부 가져오기(구매자)
+    @Override
+    @Transactional(readOnly = true)
+    public List<MyReservationHistoryResponseDTO> getReservationHistories(Long id) {
+        Member currentMember = getCurrentMember(id);
+
+        List<MyReservationHistoryResponseDTO> reservationHistoriesByMember = transactionHistoryRepository.findReservationHistoriesByMember(currentMember);
+
+        return reservationHistoriesByMember;
+    }
+
 
     private Member getCurrentMember(Long id) {
         return memberRepository.findById(id)

@@ -5,22 +5,28 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class MyTransactionHistoryResponseDTO {
+public class MyReservationHistoryResponseDTO {
 
     private Long id;
     private String name;
     private Long purchasePrice;
+    private LocalDateTime purchaseRequestDate;
     private boolean saleConfirmStatus;
     private boolean purchaseConfirmStatus;
+    private Long itemId;
 
     @Builder
-    public MyTransactionHistoryResponseDTO(Long id, String name, Long purchasePrice, boolean saleConfirmStatus, boolean purchaseConfirmStatus) {
+    public MyReservationHistoryResponseDTO(Long id, String name, Long purchasePrice, LocalDateTime purchaseRequestDate, boolean saleConfirmStatus, boolean purchaseConfirmStatus, Long itemId) {
         this.id = id;
         this.name = name;
         this.purchasePrice = purchasePrice;
+        this.purchaseRequestDate = purchaseRequestDate;
         this.saleConfirmStatus = saleConfirmStatus;
         this.purchaseConfirmStatus = purchaseConfirmStatus;
+        this.itemId = itemId;
     }
 }

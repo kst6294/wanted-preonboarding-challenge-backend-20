@@ -1,16 +1,14 @@
 package com.wanted.challenge.domain.transactionhistory.controller;
 
-import com.wanted.challenge.domain.item.dto.response.ItemDetailInfoResponseDTO;
-import com.wanted.challenge.domain.transactionhistory.dto.response.MyTransactionHistoryResponseDTO;
+import com.wanted.challenge.domain.transactionhistory.dto.response.MyPurchaseHistoryResponseDTO;
+import com.wanted.challenge.domain.transactionhistory.dto.response.MyReservationHistoryResponseDTO;
 import com.wanted.challenge.domain.transactionhistory.service.TransactionHistoryService;
 import com.wanted.challenge.global.api.ApiResponse;
 import com.wanted.challenge.global.auth.AuthUser;
-import com.wanted.challenge.global.auth.OptionalAuthUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -27,8 +25,17 @@ public class TransactionHistoryController {
     @GetMapping("")
     public ResponseEntity<ApiResponse<?>> getPurchaseHistories(@AuthUser Long userId) {
 
-        List<MyTransactionHistoryResponseDTO> purchaseHistories = transactionHistoryService.getPurchaseHistories(userId);
+        List<MyPurchaseHistoryResponseDTO> purchaseHistories = transactionHistoryService.getPurchaseHistories(userId);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(ApiResponse.createSuccess(purchaseHistories, "구매 기록 조회에 성공했습니다."));
+    }
+
+    // 현재 유저의 예약기록 전부 가져오기(구매자)
+    @GetMapping("reservation")
+    public ResponseEntity<ApiResponse<?>> getReservationHistories(@AuthUser Long userId) {
+
+        List<MyReservationHistoryResponseDTO> reservationHistories = transactionHistoryService.getReservationHistories(userId);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(ApiResponse.createSuccess(reservationHistories, "예약 기록 조회에 성공했습니다.(구매자)"));
     }
 }
