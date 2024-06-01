@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.boot.context.properties.bind.DefaultValue;
 
 @Entity
 @Getter
@@ -27,4 +28,8 @@ public class User {
     @Column(nullable = false)
     @Size(max = 20)
     private String nickname; // 사용자 닉네임
+
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private UserType type = UserType.DEFAULT;
 }

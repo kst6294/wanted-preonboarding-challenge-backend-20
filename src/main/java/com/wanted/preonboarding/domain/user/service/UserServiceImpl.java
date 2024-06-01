@@ -3,6 +3,7 @@ package com.wanted.preonboarding.domain.user.service;
 import com.wanted.preonboarding.domain.user.dto.request.AddUserRequest;
 import com.wanted.preonboarding.domain.user.dto.request.CheckEmailRequest;
 import com.wanted.preonboarding.domain.user.dto.request.LoginUserRequest;
+import com.wanted.preonboarding.domain.user.entity.CustomUserDetails;
 import com.wanted.preonboarding.domain.user.entity.User;
 import com.wanted.preonboarding.domain.user.repository.UserRepository;
 import com.wanted.preonboarding.global.exception.entity.RestApiException;
@@ -47,7 +48,7 @@ public class UserServiceImpl implements UserService{
         
         // 3. 세션에 유저 로그인
         HttpSession session = request.getSession();
-        session.setAttribute("userId", user.getId());
+        session.setAttribute("user", CustomUserDetails.of(user));
         session.setMaxInactiveInterval(3600); // 1시간 이상 접속하지 않으면 자동 로그아웃
     }
 
