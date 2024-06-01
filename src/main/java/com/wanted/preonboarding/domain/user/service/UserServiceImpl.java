@@ -23,17 +23,17 @@ public class UserServiceImpl implements UserService{
 
     @Override
     @Transactional
-    public void join(AddUserRequest request) {
+    public void join(AddUserRequest addUserRequest) {
         // 1. 유저 확인
-        if (userRepository.existsByEmail(request.getEmail())) {
-            throw new RestApiException(UserErrorCode.EMAIL_ALREADY_EXISTS, "이메일이 ["+request.getEmail()+"] 인 유저가 이미 존재합니다.");
+        if (userRepository.existsByEmail(addUserRequest.getEmail())) {
+            throw new RestApiException(UserErrorCode.EMAIL_ALREADY_EXISTS, "이메일이 ["+addUserRequest.getEmail()+"] 인 유저가 이미 존재합니다.");
         }
 
         // 2. 비밀번호 암호화
-        String encryptedPassword = bCryptPasswordEncoder.encode(request.getPassword());
+        String encryptedPassword = bCryptPasswordEncoder.encode(addUserRequest.getPassword());
 
         // 3. 저장
-        userRepository.save(request.toEntity(encryptedPassword));
+        userRepository.save(addUserRequest.toEntity(encryptedPassword));
     }
 
     @Override

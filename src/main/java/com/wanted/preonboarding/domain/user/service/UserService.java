@@ -5,6 +5,6 @@ import com.wanted.preonboarding.domain.user.dto.request.LoginUserRequest;
 import jakarta.servlet.http.HttpServletRequest;
 
 public interface UserService {
-    void join(AddUserRequest request);
+    void join(AddUserRequest addUserRequest);
     void login(HttpServletRequest request, LoginUserRequest loginUserRequest);
 }

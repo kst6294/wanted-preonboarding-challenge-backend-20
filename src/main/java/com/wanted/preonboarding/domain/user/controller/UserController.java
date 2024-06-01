@@ -22,8 +22,8 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping("/join")
-    public ResponseEntity<ApiResponse> join(@RequestBody @Valid AddUserRequest request) {
-        userService.join(request);
+    public ResponseEntity<ApiResponse> join(@RequestBody @Valid AddUserRequest addUserRequest) {
+        userService.join(addUserRequest);
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(ApiResponse.createSuccess("회원가입이 완료되었습니다."));
