@@ -34,5 +34,6 @@ public class Product {
     private Integer quantity; // 재고
 
     @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     private ProductState state;
 }

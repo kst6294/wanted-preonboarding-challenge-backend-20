@@ -4,6 +4,7 @@ import com.wanted.preonboarding.global.filter.CustomerSessionFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.CsrfConfigurer;
@@ -26,8 +27,10 @@ public class SecurityConfig {
                .csrf(CsrfConfigurer::disable)
                .httpBasic(HttpBasicConfigurer::disable)
                .authorizeHttpRequests(requests -> requests
-                       .requestMatchers("/user/login", "/user/join").permitAll()
-                       .anyRequest().authenticated()
+                       .requestMatchers("/user/login", "/user/join", "/user/email").permitAll()
+                       .requestMatchers(HttpMethod.GET, "/product/**").permitAll()
+                       .requestMatchers("/product/**").authenticated()
+                       .anyRequest().denyAll()
                )
                .addFilterBefore(sessionFilter, UsernamePasswordAuthenticationFilter.class)
                .formLogin(FormLoginConfigurer::disable)
