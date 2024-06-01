@@ -21,10 +21,6 @@ public class User extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private Role role;
-
     @Column(nullable = false, unique = true)
     private String email;
 
@@ -38,7 +34,7 @@ public class User extends BaseEntity {
     private List<Statements> statements = new ArrayList<>();
 
     @Builder
-    public User(Role role, String email, String password){
+    public User(String email, String password){
         this.email = email;
         this.password = password;
     }
