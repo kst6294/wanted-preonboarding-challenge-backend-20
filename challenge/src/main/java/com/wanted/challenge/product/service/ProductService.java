@@ -154,7 +154,7 @@ public class ProductService {
         return productRepository.retrievePurchaseProducts(buyerId, pageable);
     }
 
-    public Page<ReserveProductResponse> reserveProducts(Long buyerId, Pageable pageable) {
-        return productRepository.retrieveReserveProducts(buyerId, pageable);
+    public Page<ReserveProductResponse> reserveProducts(Long sellerId, Pageable pageable) {
+        return productRepository.retrieveReserveProducts(sellerId, pageable);
     }
 }

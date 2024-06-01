@@ -12,5 +12,5 @@ public interface ProductRepositoryCustom {
 
     Page<PurchaseProductResponse> retrievePurchaseProducts(Long buyerId, Pageable pageable);
 
-    Page<ReserveProductResponse> retrieveReserveProducts(Long buyerId, Pageable pageable);
+    Page<ReserveProductResponse> retrieveReserveProducts(Long sellerId, Pageable pageable);
 }

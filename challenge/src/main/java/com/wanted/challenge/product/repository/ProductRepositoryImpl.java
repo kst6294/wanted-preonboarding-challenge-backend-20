@@ -101,7 +101,7 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
                 .where(transact.product.eq(product));
     }
 
-    public Page<ReserveProductResponse> retrieveReserveProducts(Long buyerId, Pageable pageable) {
+    public Page<ReserveProductResponse> retrieveReserveProducts(Long sellerId, Pageable pageable) {
         List<ReserveProductResponse> content = jpaQueryFactory
                 .select(new QReserveProductResponse(
                         product.id,
@@ -109,7 +109,9 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
                         product.price
                 ))
                 .from(product)
-                .where(product.reservation.eq(Reservation.RESERVE))
+
+                .where(product.reservation.eq(Reservation.RESERVE),
+                        product.seller.id.eq(sellerId))
 
                 .orderBy(product.id.desc())
 
