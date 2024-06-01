@@ -228,7 +228,9 @@
 
 ![image](https://github.com/Jjd3109/wanted-preonboarding-challenge-backend-20/assets/100771092/45394090-7321-4726-abc6-ec001f46de5a)
 
-sold로 바뀜
+##### sold로 변경
+
+##### 시나리오 참조
 
 
 
