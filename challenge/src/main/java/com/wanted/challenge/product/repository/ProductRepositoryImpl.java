@@ -63,7 +63,7 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
                 .innerJoin(transact)
                 .on(transact.product.eq(product))
 
-                .innerJoin(transactLog)
+                .leftJoin(transactLog)
                 .on(transactLog.id.eq(lastTransactLogId()))
 
                 .where(transact.buyer.id.eq(buyerId))
@@ -82,7 +82,7 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
                 .innerJoin(transact)
                 .on(transact.product.eq(product))
 
-                .innerJoin(transactLog)
+                .leftJoin(transactLog)
                 .on(transactLog.id.eq(lastTransactLogId()))
 
                 .where(transact.buyer.id.eq(buyerId));
