@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <link
+            th:href="@{/css/bootstrap.min.css}"
+            href="../css/bootstrap.min.css"
+            rel="stylesheet"
+    />
+    <style>
+      .background {
+        width: 100vw;
+        height: 100vh;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+      .container {
+        max-width: 400px;
+      }
+    </style>
+</head>
+<body>
+<div class="background">
+    <div class="container">
+        <div class="py-1 text-center" style="margin-bottom: 10px">
+            <h2>원티드 마켓</h2>
+        </div>
+
+        <div th:if="${member == null}">
+            <form method="post" action="/login">
+                <div>
+                   <label>아이디</label>
+                   <input type="text" id="username" name="username" class="form-control" style="margin-bottom: 10px" />
+                </div>
+
+                <div>
+                    <label>비밀번호</label>
+                    <input type="password" id="password" name="password" class="form-control" style="margin-bottom: 10px" />
+                </div>
+
+                <p th:if="${error}" style="color:red">아이디 또는 비밀번호가 맞지 않습니다. </p>
+
+                <div>
+                    <button class="w-100 btn btn-primary btn" style="margin-bottom: 10px">로그인</button>
+                </div>
+            </form>
+
+            <div>
+                <a href="/signup" class="w-100 btn btn-primary btn" role="button" style="margin-bottom: 10px">회원가입</a>
+            </div>
+
+            <div>
+                <a href="/items" class="w-100 btn btn-primary btn" role="button">제품 목록 조회</a>
+            </div>
+        </div>
+
+        <div th:if="${member != null}">
+            <div>
+                <a href="/items" class="w-100 btn btn-primary btn" role="button" style="margin-bottom: 10px">제품 목록 조회</a>
+            </div>
+
+            <div>
+                <a href="/buyItems" class="w-100 btn btn-primary btn" role="button" style="margin-bottom: 10px">구매 제품 조회</a>
+            </div>
+
+            <div>
+                <a href="/reservationItems" class="w-100 btn btn-primary btn" role="button" style="margin-bottom: 10px">예약 제품 조회</a>
+            </div>
+
+            <div>
+                <button class="w-100 btn btn-primary btn" onclick=logout() >로그아웃</button>
+            </div>
+        <div>
+    </div>
+</div>
+<script>
+    function logout() {
+                fetch("/logout", {
+                    method: "POST",
+                    headers: {
+                         "Content-Type": "application/json"
+                    }
+                })
+                .then(res => {
+                    if(res.status === 200){
+                        window.location.href=window.location.href
+                    }else{
+                        return res.json();
+                    }
+                })
+                .then(data => alert(data.message));
+   }
+</script>
+</body>
+</html>

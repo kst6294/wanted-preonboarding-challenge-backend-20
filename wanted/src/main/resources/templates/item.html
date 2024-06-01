@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <link
+            th:href="@{/css/bootstrap.min.css}"
+            href="../css/bootstrap.min.css"
+            rel="stylesheet"
+    />
+    <style>
+      .background {
+        width: 100vw;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+      .container {
+        max-width: 1200px;
+      }
+    </style>
+</head>
+<body>
+
+<div class="background">
+    <div class="container">
+        <div align="right" style="margin-top: 20px">
+            <a href="/items" class="btn btn-primary" role="button" style="width:110px">돌아가기</a>
+        </div>
+        <h2 style="margin-top: 30px; font-weight : bold;" >제품 상세</h2>
+
+        <h4 th:text="|제품명 : ${item.name}|"></h4>
+        <h4 th:text="|가격 : ${item.price}|"></h4>
+        <h4 th:text="|수량 : ${item.count}|"></h4>
+        <h4 th:text="|예약 상태 : ${item.status.getName()}|"></h4>
+
+        <button th:if="${seller == false}" id="buy_btn" class="btn-primary btn" th:attr="itemId=${item.id}" onClick="buy()">구매하기</button>
+        <br>
+
+        <h2 style="margin-top: 30px; font-weight : bold;" >거래 내역</h2>
+        <div th:if="${buys != null}">
+            <h3 style="margin-top: 30px; font-weight : bold;" >구매 내역</h3>
+            <table class="table table-striped table-hover" style="table-layout: fixed" >
+                <thead>
+                <tr>
+                    <th>상품 이름</th>
+                    <th>가격</th>
+                    <th>판매자 ID</th>
+                    <th>진행단계</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="buy : ${buys.list}">
+                    <td th:text="${buy.name}"/>
+                    <td th:text="${buy.price}"/>
+                    <td th:text="${buy.sellerUsername}"/>
+                    <td th:text="${buy.status.getName()}"/>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div th:if="${seller == true}">
+            <h3 style="margin-top: 30px; font-weight : bold;" >판매 내역</h3>
+            <table class="table table-striped table-hover" style="table-layout: fixed" >
+                <thead>
+                <tr>
+                    <th>상품 이름</th>
+                    <th>가격</th>
+                    <th>구매자 ID</th>
+                    <th>진행단계</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="sell : ${sells.list}">
+                    <td th:text="${sell.name}"/>
+                    <td th:text="${sell.price}"/>
+                    <td th:text="${sell.buyerUsername}"/>
+                    <td th:text="${sell.status.getName()}"/>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<script>
+    function buy() {
+        var itemId = document.getElementById("buy_btn").getAttribute("itemId");
+        fetch("/order", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                itemId: itemId
+            })
+        })
+        .then(res => {
+           if(res.status === 200){
+               window.location.href="/buyItemSuccess"
+           }else{
+               return res.json();
+           }
+        })
+        .then(data => alert(data.message));
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <link
+            th:href="@{/css/bootstrap.min.css}"
+            href="../css/bootstrap.min.css"
+            rel="stylesheet"
+    />
+    <style>
+      .background {
+        width: 100vw;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+      .container {
+        max-width: 1200px;
+      }
+    </style>
+</head>
+<body>
+
+<div class="background">
+    <div class="container">
+        <div align="right" style="margin-top: 20px">
+            <a href="/" class="btn btn-primary" role="button" style="width:110px">메인페이지</a>
+        </div>
+        <h2 style="margin-top: 30px; font-weight : bold;" >구매 제품 목록</h2>
+        <table class="table table-striped table-hover" style="table-layout: fixed" >
+            <thead>
+            <tr>
+                <th>제품 이름</th>
+                <th>가격</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="item : ${items.list}">
+                <td th:text="${item.name}">이름</td>
+                <td th:text="${item.price}">가격</td>
+            </tr>
+            </tbody>
+        </table>
+        <br>
+    </div>
+</div>
+</body>
+</html>

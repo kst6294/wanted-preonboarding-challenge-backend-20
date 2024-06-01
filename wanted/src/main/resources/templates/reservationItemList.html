@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <link
+            th:href="@{/css/bootstrap.min.css}"
+            href="../css/bootstrap.min.css"
+            rel="stylesheet"
+    />
+    <style>
+      .background {
+        width: 100vw;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+      .container {
+        max-width: 1200px;
+      }
+    </style>
+</head>
+<body>
+
+<div class="background">
+    <div class="container">
+        <div align="right" style="margin-top: 20px">
+            <a href="/" class="btn btn-primary" role="button" style="width:110px">메인페이지</a>
+        </div>
+        <h2 style="margin-top: 30px; font-weight : bold;" >예약 제품 목록</h2>
+        <br>
+        <div>
+            <h3>구매 목록</h3>
+            <table class="table table-striped table-hover" style="table-layout: fixed" >
+                <thead>
+                <tr>
+                    <th>제품 이름</th>
+                    <th>가격</th>
+                    <th>상태</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="buy : ${buys.list}">
+                    <td th:text="${buy.name}"/>
+                    <td th:text="${buy.price}"/>
+                    <td th:if="${buy.status.getName() == '판매승인 대기'}" th:text="${buy.status.getName()}"/>
+                    <td th:if="${buy.status.getName() == '구매확정 대기'}">
+                        <button id="purchaseConfirmation_btn" class="btn-primary btn" th:attr="orderId=${buy.id}" onClick="purchaseConfirmation()">구매확정 하기</button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div>
+            <h3>판매 목록</h3>
+            <table class="table table-striped table-hover" style="table-layout: fixed" >
+                <thead>
+                <tr>
+                    <th>제품 이름</th>
+                    <th>가격</th>
+                    <th>상태</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="sell : ${sells.list}">
+                    <td th:text="${sell.name}"/>
+                    <td th:text="${sell.price}"/>
+                    <td th:if="${sell.status.getName() == '판매승인 대기'}">
+                        <button id="salesApproval_btn" class="btn-primary btn" th:attr="orderId=${sell.id}" onClick="salesApproval()">판매승인 하기</button>
+                    </td>
+                    <td th:if="${sell.status.getName() == '구매확정 대기'}" th:text="${sell.status.getName()}"/>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <br>
+    </div>
+</div>
+<script>
+    function salesApproval() {
+        var orderId = document.getElementById("salesApproval_btn").getAttribute("orderId");
+        fetch("/salesApproval", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                orderId: orderId
+            })
+        })
+        .then(res => {
+           if(res.status === 200){
+               window.location.href="/salesApprovalSuccess"
+           }else{
+               return res.json();
+           }
+        })
+        .then(data => alert(data.message));
+    }
+
+    function purchaseConfirmation() {
+        var orderId = document.getElementById("purchaseConfirmation_btn").getAttribute("orderId");
+        fetch("/purchaseConfirmation", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                orderId: orderId
+            })
+        })
+        .then(res => {
+           if(res.status === 200){
+               window.location.href="/purchaseConfirmationSuccess"
+           }else{
+               return res.json();
+           }
+        })
+        .then(data => alert(data.message));
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <link
+            th:href="@{/css/bootstrap.min.css}"
+            href="../css/bootstrap.min.css"
+            rel="stylesheet"
+    />
+    <style>
+      .background {
+        width: 100vw;
+        height: 100vh;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+      .container {
+        max-width: 400px;
+      }
+    </style>
+</head>
+<body>
+
+<div class="background">
+    <div class="container">
+        <div class="py-1 text-center">
+            <h2>제품 등록</h2>
+        </div>
+            <div>
+                <label>이름</label>
+                <input type="text" id="name" class="form-control" style="margin-bottom: 10px"/>
+            </div>
+
+            <div>
+                <label>가격</label>
+                <input type="number" id="price" class="form-control" style="margin-bottom: 10px"/>
+            </div>
+
+            <div>
+                <label>수량</label>
+                <input type="number" id="count" class="form-control" style="margin-bottom: 10px"/>
+            </div>
+
+            <div>
+                <button class="w-100 btn btn-primary btn-lg" onclick="add()" style="margin-bottom: 10px" >등록하기</button>
+            </div>
+
+        <div>
+            <a href="/items" class="w-100 btn btn-primary btn-lg" role="button">돌아가기</a>
+        </div>
+    </div>
+</div>
+<script>
+    function add() {
+        var name = document.getElementById("name").value;
+        var price = document.getElementById("price").value;
+        var count = document.getElementById("count").value;
+        fetch("/item", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                name: name,
+                price: price,
+                count: count
+            })
+        })
+        .then(res => {
+           if(res.status === 200){
+               window.location.href="/addItemSuccess"
+           }else{
+               return res.json();
+           }
+        })
+        .then(data => alert(data.message));
+    }
+</script>
+</body>
+</html>
+
