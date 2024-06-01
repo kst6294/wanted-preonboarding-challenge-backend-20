@@ -16,7 +16,7 @@ public class ProductServiceImpl implements ProductService{
 	public List<Object> list() {
 		// 리스트 담아서 반환
 
-//		QProduct product = QProduct.product;
+
 //
 //		List<Tuple> results = queryFactory.select(product.name, product.price, product.amount)
 //		                                  .from(product)

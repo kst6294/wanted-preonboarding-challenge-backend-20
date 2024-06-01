@@ -1,4 +1,10 @@
 
+buildscript {
+    ext {
+        queryDslVersion = "5.0.0"
+    }
+}
+
 plugins {
     id 'java'
     id 'org.springframework.boot' version '3.0.3'
@@ -25,11 +31,14 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.modelmapper:modelmapper:3.1.0'
     compileOnly 'org.projectlombok:lombok'
-    runtimeOnly 'com.mysql:mysql-connector-j'
+    runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
     // ⭐ Spring boot 3.x이상에서 QueryDsl 패키지를 정의하는 방법
+    implementation "com.querydsl:querydsl-apt:${queryDslVersion}:jakarta"
+    implementation "com.querydsl:querydsl-collections"
+    implementation "com.querydsl:querydsl-jpa:${queryDslVersion}:jakarta"
     implementation 'com.querydsl:querydsl-jpa:5.0.0:jakarta'
     annotationProcessor "com.querydsl:querydsl-apt:5.0.0:jakarta"
     annotationProcessor "jakarta.annotation:jakarta.annotation-api"
