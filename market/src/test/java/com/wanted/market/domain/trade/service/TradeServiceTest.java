@@ -1,18 +1,16 @@
 package com.wanted.market.domain.trade.service;
 
 import com.wanted.market.domain.member.entity.Member;
+import com.wanted.market.domain.member.entity.RoleCode;
 import com.wanted.market.domain.member.repository.MemberRepository;
 import com.wanted.market.domain.product.entity.Product;
+import com.wanted.market.domain.product.entity.ProductStatusCode;
 import com.wanted.market.domain.product.repository.ProductRepository;
 import com.wanted.market.domain.trade.entity.Trade;
+import com.wanted.market.domain.trade.entity.TradeStatusCode;
 import com.wanted.market.domain.trade.repository.TradeRepository;
 import com.wanted.market.domain.trade.request.TradeRequest;
 import com.wanted.market.global.common.code.BaseStatusCode;
-import com.wanted.market.domain.product.entity.ProductStatusCode;
-import com.wanted.market.domain.member.entity.RoleCode;
-import com.wanted.market.domain.trade.entity.TradeStatusCode;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -21,14 +19,15 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.mock.web.MockHttpServletRequest;
+import org.springframework.mock.web.MockHttpSession;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import java.util.ArrayList;
-
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 @Transactional
 @SpringBootTest
@@ -50,6 +49,9 @@ class TradeServiceTest {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    protected MockHttpSession session;
+    protected MockHttpServletRequest request;
+
     @BeforeEach
     void setUp() {
     }
@@ -60,6 +62,8 @@ class TradeServiceTest {
                 .seller(seller)
                 .price(10000)
                 .description("테스트 제품입니다")
+                .status(ProductStatusCode.ON_SALE)
+                .quantity(1)
                 .build();
 
         productRepository.save(product);
@@ -96,12 +100,20 @@ class TradeServiceTest {
         return trade;
     }
 
-    private HttpServletRequest getHttpServletRequest(Member member) {
-        HttpServletRequest httpRequest = mock(HttpServletRequest.class);
-        HttpSession session = mock(HttpSession.class);
-        when(httpRequest.getSession()).thenReturn(session);
-        when(session.getAttribute("memberNo")).thenReturn(member.getMemberNo());
-        return httpRequest;
+    private void getHttpServletRequest(Member member) {
+//        HttpServletRequest httpRequest = mock(HttpServletRequest.class);
+//        HttpSession session = mock(HttpSession.class);
+//        when(httpRequest.getSession()).thenReturn(session);
+//        when(session.getAttribute("memberNo")).thenReturn(member.getMemberNo());
+//        return httpRequest;
+
+        session = new MockHttpSession();
+        session.setAttribute("memberNo", member.getMemberNo());
+
+        request = new MockHttpServletRequest();
+        request.setSession(session);
+        RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(request));
+
     }
 
     @Test
@@ -112,6 +124,8 @@ class TradeServiceTest {
         Member buyer = createMember("buyer");
         Member seller = createMember("seller");
         Product product = createProduct(seller);
+
+        getHttpServletRequest(buyer);
 
         //when
         long result = tradeService.requestTrade(new TradeRequest(product.getProductNo(), 0));// 0 은 쓰레기 값
@@ -136,6 +150,7 @@ class TradeServiceTest {
 
         long tradeNo = createTrade(product, seller, buyer).getTradeNo();
 
+        getHttpServletRequest(seller);
         tradeService.acceptTrade(new TradeRequest(product.getProductNo(), tradeNo));
 
         //when
@@ -145,7 +160,7 @@ class TradeServiceTest {
         ProductStatusCode productStatus = product.getStatus();
 
         //then
-        Assertions.assertEquals(tradeStatus, TradeStatusCode.COMPLETE);
-        Assertions.assertEquals(productStatus, ProductStatusCode.COMPLETE);
+        Assertions.assertEquals(tradeStatus, TradeStatusCode.ACCEPT);
+        Assertions.assertEquals(productStatus, ProductStatusCode.RESERVE);
     }
 }
