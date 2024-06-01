@@ -62,16 +62,18 @@ class TransactServiceTest extends IntegrationTestSupport {
     void confirmAll() throws Exception {
 
         // given
-        Product newProduct = new Product(seller, "name", new Price(100), new Quantity(0));
+        Product newProduct = new Product(seller, "name", new Price(100), new Quantity(2));
         ReflectionTestUtils.setField(newProduct, "reservation", Reservation.RESERVE);
 
         productRepository.save(newProduct);
 
         Transact transact1 = transactRepository.save(new Transact(buyer1, newProduct));
+        newProduct.purchase();
         transactLogRepository.save(new TransactLog(transact1, TransactState.DEPOSIT));
         transactLogRepository.save(new TransactLog(transact1, TransactState.APPROVE));
 
         Transact transact2 = transactRepository.save(new Transact(buyer2, newProduct));
+        newProduct.purchase();
         transactLogRepository.save(new TransactLog(transact2, TransactState.DEPOSIT));
         transactLogRepository.save(new TransactLog(transact2, TransactState.APPROVE));
 

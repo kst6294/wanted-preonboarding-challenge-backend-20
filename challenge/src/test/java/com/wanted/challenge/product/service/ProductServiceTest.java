@@ -152,12 +152,14 @@ class ProductServiceTest extends IntegrationTestSupport {
     void zeroQuantity() throws Exception {
 
         // given
-        Product newProduct = productRepository.save(
-                new Product(seller, "newProduct", new Price(100), new Quantity(0)));
+        Product newProduct = new Product(seller, "newProduct", new Price(100), new Quantity(1));
+        newProduct.purchase();
+
+        Product zeroQuantityProduct = productRepository.save(newProduct);
 
         // when
         // then
-        Assertions.assertThatThrownBy(() -> productService.purchase(newProduct.getId(), buyer1.getId()))
+        Assertions.assertThatThrownBy(() -> productService.purchase(zeroQuantityProduct.getId(), buyer1.getId()))
                 .hasFieldOrPropertyWithValue("exceptionStatus", ExceptionStatus.CAN_NOT_PURCHASE);
     }
 }
