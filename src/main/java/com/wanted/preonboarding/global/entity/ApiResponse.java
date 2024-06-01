@@ -1,5 +1,8 @@
 package com.wanted.preonboarding.global.entity;
 
+import lombok.Getter;
+
+@Getter
 public class ApiResponse<T> {
 
     private static final String SUCCESS_STATUS = "success";

@@ -23,7 +23,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(RestApiException.class)
     public ResponseEntity<ApiResponse<?>> handleRestApiException(RestApiException e, HttpServletRequest request) {
-        log.error("요청 실패 => 요청 경로: {}, 이유: {}, 로그메세지: {}", request.getRequestURL(), e.getMessage(), e.getLog());
+        log.error("요청 실패 => 요청 경로: {}, 로그메세지: {}", request.getRequestURL(), e.getLog());
 
         return ResponseEntity.status(e.getErrorCode().getHttpStatus()).body(ApiResponse.createError(e.getErrorCode().getCode(), e.getErrorCode().getMessage()));
     }
