@@ -46,7 +46,7 @@ public class Product {
         if(this.quantity == 1) {
             sellingStatus = ProductSellingStatus.RESERVATION;
         } else if (this.quantity < 1) {
-            throw new IllegalArgumentException("차감할 재고 수량이 없습니다.");
+            throw new IllegalStateException("차감할 재고 수량이 없습니다.");
         }
         this.quantity -=1;
     }
@@ -56,6 +56,9 @@ public class Product {
     }
 
     public void complete() {
+        if(this.quantity != 0 || !sellingStatus.equals(ProductSellingStatus.RESERVATION)) {
+            throw new IllegalStateException("판매 완료가 가능한 생태가 아닙니다.");
+        }
         sellingStatus = ProductSellingStatus.COMPLETE;
     }
 

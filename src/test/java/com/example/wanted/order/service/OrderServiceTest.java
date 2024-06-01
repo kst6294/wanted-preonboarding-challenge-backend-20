@@ -13,6 +13,7 @@ import com.example.wanted.product.domain.ProductSellingStatus;
 import com.example.wanted.user.domain.Role;
 import com.example.wanted.user.domain.User;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -82,8 +83,52 @@ class OrderServiceTest {
         assertThat(result.getBuyer().getId()).isEqualTo(2L);
         assertThat(result.getSeller().getId()).isEqualTo(1L);
         assertThat(result.getProduct().getId()).isEqualTo(1L);
+        assertThat(result.getProduct().getQuantity()).isEqualTo(99);
         assertThat(result.getPrice()).isEqualTo(1000);
         assertThat(result.getStatus()).isEqualTo(OrderStatus.REQUEST);
+    }
+
+    @Test
+    void 주문생성_시_재고가_1개_남아있었으면_제품의_상태가_예약중으로_변경된다(){
+        //given
+        User seller = User.builder()
+                .id(1L)
+                .account("test@gmail.com")
+                .password("test1234")
+                .name("홍길동")
+                .role(Role.USER)
+                .build();
+        fakeUserRepository.save(seller);
+
+        User buyer = User.builder()
+                .id(2L)
+                .account("test12@gmail.com")
+                .password("test1234")
+                .name("세종대왕")
+                .role(Role.USER)
+                .build();
+        fakeUserRepository.save(buyer);
+
+        Product product1 = Product.builder()
+                .id(1L)
+                .name("아이스크림")
+                .quantity(1)
+                .price(1000)
+                .seller(seller)
+                .sellingStatus(ProductSellingStatus.SELLING)
+                .build();
+        fakeProductRepository.save(product1);
+
+        OrderCreate orderCreate = OrderCreate.builder()
+                .productId(1L)
+                .build();
+
+        //when
+        OrderResponse result = orderService.order(orderCreate, buyer.getId());
+
+        //then
+        assertThat(result.getProduct().getId()).isEqualTo(1L);
+        assertThat(result.getProduct().getProductSellingStatus()).isEqualTo(ProductSellingStatus.RESERVATION);
     }
 
     @Test
@@ -266,7 +311,7 @@ class OrderServiceTest {
         //then
         assertThatThrownBy(() ->
                 orderService.order(orderCreate, 1L)
-        ).isInstanceOf(IllegalArgumentException.class);
+        ).isInstanceOf(IllegalStateException.class);
     }
 
     @Test
@@ -411,7 +456,7 @@ class OrderServiceTest {
     }
 
     @Test
-    void 판매자가_아니면_승인할_수_없(){
+    void 판매자가_아니면_승인할_수_없다(){
         //given
         User buyer = User.builder()
                 .id(1L)
@@ -455,6 +500,196 @@ class OrderServiceTest {
         assertThatThrownBy(() ->
                 orderService.approve(1L, 1L)
         ).isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    void 구매자가_판매_승인된_주문을_구매확정_할_수_있다(){
+        //given
+        User buyer = User.builder()
+                .id(1L)
+                .name("홍길동")
+                .account("buy@gmail.com")
+                .password("test1234")
+                .role(Role.USER)
+                .build();
+        fakeUserRepository.save(buyer);
+
+        User seller = User.builder()
+                .id(2L)
+                .name("엄꺽정")
+                .account("seller@gmail.com")
+                .password("test1234")
+                .role(Role.USER)
+                .build();
+        fakeUserRepository.save(seller);
+
+        Product product = Product.builder()
+                .id(1L)
+                .name("로지텍G SuperLight2")
+                .price(150000)
+                .quantity(0)
+                .sellingStatus(ProductSellingStatus.RESERVATION)
+                .seller(seller)
+                .build();
+        fakeProductRepository.save(product);
+
+        Order order = Order.builder()
+                .id(1L)
+                .seller(seller)
+                .buyer(buyer)
+                .product(product)
+                .status(OrderStatus.APPROVAL)
+                .build();
+        fakeOrderRepository.save(order);
+
+        //when
+        OrderResponse result = orderService.confirmation(1L, 1L);
+
+        //then
+        assertThat(result.getStatus()).isEqualTo(OrderStatus.PURCHASE_CONFIRMATION);
+    }
+
+    @Test
+    void 구매_확정을_할_때_모든_주문이_확정되었으면_제품의_상태가_완료로_변경된다(){
+        //given
+        User buyer = User.builder()
+                .id(1L)
+                .name("홍길동")
+                .account("buy@gmail.com")
+                .password("test1234")
+                .role(Role.USER)
+                .build();
+        fakeUserRepository.save(buyer);
+
+        User seller = User.builder()
+                .id(2L)
+                .name("엄꺽정")
+                .account("seller@gmail.com")
+                .password("test1234")
+                .role(Role.USER)
+                .build();
+        fakeUserRepository.save(seller);
+
+        Product product = Product.builder()
+                .id(1L)
+                .name("로지텍G SuperLight2")
+                .price(150000)
+                .quantity(0)
+                .sellingStatus(ProductSellingStatus.RESERVATION)
+                .seller(seller)
+                .build();
+        fakeProductRepository.save(product);
+
+        Order order = Order.builder()
+                .id(1L)
+                .seller(seller)
+                .buyer(buyer)
+                .product(product)
+                .status(OrderStatus.APPROVAL)
+                .build();
+        fakeOrderRepository.save(order);
+
+        //when
+        OrderResponse result = orderService.confirmation(1L, 1L);
+
+        //then
+        assertThat(result.getStatus()).isEqualTo(OrderStatus.PURCHASE_CONFIRMATION);
+        assertThat(result.getProduct().getProductSellingStatus())
+                .isEqualTo(ProductSellingStatus.COMPLETE);
+    }
+
+    @Test
+    void 구매자가_아니면_주문_확정할_수_없다(){
+        //given
+        User buyer = User.builder()
+                .id(1L)
+                .name("홍길동")
+                .account("buy@gmail.com")
+                .password("test1234")
+                .role(Role.USER)
+                .build();
+        fakeUserRepository.save(buyer);
+
+        User seller = User.builder()
+                .id(2L)
+                .name("엄꺽정")
+                .account("seller@gmail.com")
+                .password("test1234")
+                .role(Role.USER)
+                .build();
+        fakeUserRepository.save(seller);
+
+        Product product = Product.builder()
+                .id(1L)
+                .name("로지텍G SuperLight2")
+                .price(150000)
+                .quantity(10)
+                .sellingStatus(ProductSellingStatus.SELLING)
+                .seller(seller)
+                .build();
+        fakeProductRepository.save(product);
+
+        Order order = Order.builder()
+                .id(1L)
+                .seller(seller)
+                .buyer(buyer)
+                .product(product)
+                .status(OrderStatus.APPROVAL)
+                .build();
+        fakeOrderRepository.save(order);
+
+        //when
+        //then
+        assertThatThrownBy(() ->
+                orderService.confirmation(1L, 2L)
+        ).isInstanceOf(IllegalStateException.class);
+    }
+
+    @Test
+    void 주문상태가_판매_승인_상태가_아니면_주문확정할_수_없다(){
+        //given
+        User buyer = User.builder()
+                .id(1L)
+                .name("홍길동")
+                .account("buy@gmail.com")
+                .password("test1234")
+                .role(Role.USER)
+                .build();
+        fakeUserRepository.save(buyer);
+
+        User seller = User.builder()
+                .id(2L)
+                .name("엄꺽정")
+                .account("seller@gmail.com")
+                .password("test1234")
+                .role(Role.USER)
+                .build();
+        fakeUserRepository.save(seller);
+
+        Product product = Product.builder()
+                .id(1L)
+                .name("로지텍G SuperLight2")
+                .price(150000)
+                .quantity(10)
+                .sellingStatus(ProductSellingStatus.SELLING)
+                .seller(seller)
+                .build();
+        fakeProductRepository.save(product);
+
+        Order order = Order.builder()
+                .id(1L)
+                .seller(seller)
+                .buyer(buyer)
+                .product(product)
+                .status(OrderStatus.REQUEST)
+                .build();
+        fakeOrderRepository.save(order);
+
+        //when
+        //then
+        assertThatThrownBy(() ->
+                orderService.confirmation(1L, 1L)
+        ).isInstanceOf(IllegalStateException.class);
     }
 
     @Test

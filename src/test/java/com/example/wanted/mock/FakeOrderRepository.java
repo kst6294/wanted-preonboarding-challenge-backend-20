@@ -1,6 +1,7 @@
 package com.example.wanted.mock;
 
 import com.example.wanted.order.domain.Order;
+import com.example.wanted.order.domain.OrderStatus;
 import com.example.wanted.order.service.port.OrderRepository;
 import com.example.wanted.product.domain.Product;
 import com.example.wanted.user.domain.User;
@@ -55,4 +56,13 @@ public class FakeOrderRepository implements OrderRepository {
                 .filter(item -> item.checkSeller(user) || item.checkBuyer(user))
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public List<Order> findByProductAndOrderStatusIn(Product product, List<OrderStatus> status) {
+        return data.stream()
+                .filter(item -> item.checkProduct(product))
+                .filter(item -> status.contains(item.getStatus()))
+                .collect(Collectors.toList());
+    }
+
 }

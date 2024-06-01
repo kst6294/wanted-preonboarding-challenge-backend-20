@@ -54,6 +54,19 @@ public class Order {
         this.status = OrderStatus.APPROVAL;
     }
 
+    public void complete(User user, Product product) {
+        if(!checkBuyer(user)) {
+            log.warn("User {}는 Order {}의 판매자가 아닙니다.");
+            throw new IllegalArgumentException("구매자만 승인할 수 있습니다.");
+        }
+
+        if (!status.equals(OrderStatus.APPROVAL)) {
+            throw new IllegalStateException("상태가 주문 요청이 아닙니다.");
+        }
+        this.product = product;
+        this.status = OrderStatus.PURCHASE_CONFIRMATION;
+    }
+
     public boolean checkSeller(User user) {
         return this.seller.getId().equals(user.getId());
     }

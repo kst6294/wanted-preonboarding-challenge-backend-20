@@ -3,6 +3,7 @@ package com.example.wanted.order.service;
 import com.example.wanted.module.exception.ResourceNotFoundException;
 import com.example.wanted.order.domain.Order;
 import com.example.wanted.order.domain.OrderCreate;
+import com.example.wanted.order.domain.OrderStatus;
 import com.example.wanted.order.service.port.OrderRepository;
 import com.example.wanted.order.service.response.OrderResponse;
 import com.example.wanted.product.domain.Product;
@@ -60,6 +61,32 @@ public class OrderService {
                 new ResourceNotFoundException("Order", orderId)
         );
         order.approve(user);
+        order = orderRepository.save(order);
+
+        return OrderResponse.from(order);
+    }
+
+    public OrderResponse confirmation(Long orderId, Long userId) {
+        User user = userRepository.findById(userId).orElseThrow(() ->
+                new ResourceNotFoundException("User", userId)
+        );
+
+        Order order = orderRepository.findById(orderId).orElseThrow(() ->
+                new ResourceNotFoundException("Order", orderId)
+        );
+
+        List<Order> notConfirmationOrders = orderRepository.findByProductAndOrderStatusIn(
+                order.getProduct(), OrderStatus.notConfirmationStatus()
+        );
+        Product product = order.getProduct();
+        if(notConfirmationOrders.size() == 1 &&
+                notConfirmationOrders.get(0).getId().equals(order.getId())
+        ) {
+            product.complete();
+            product = productRepository.save(product);
+        }
+
+        order.complete(user, product);
         order = orderRepository.save(order);
 
         return OrderResponse.from(order);
