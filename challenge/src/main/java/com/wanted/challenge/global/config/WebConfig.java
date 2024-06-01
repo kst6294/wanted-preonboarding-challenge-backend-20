@@ -1,6 +1,7 @@
 package com.wanted.challenge.global.config;
 
 import com.wanted.challenge.global.auth.AuthUserResolver;
+import com.wanted.challenge.global.auth.OptionalAuthUserResolver;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
@@ -12,9 +13,11 @@ import java.util.List;
 @RequiredArgsConstructor
 public class WebConfig implements WebMvcConfigurer {
     private final AuthUserResolver authUserResolver;
+    private final OptionalAuthUserResolver optionalAuthUserResolver;
 
     @Override
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
         resolvers.add(authUserResolver);
+        resolvers.add(optionalAuthUserResolver);
     }
 }

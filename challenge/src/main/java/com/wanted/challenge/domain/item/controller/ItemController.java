@@ -12,6 +12,7 @@ import com.wanted.challenge.domain.item.dto.response.ItemResponseDTO;
 import com.wanted.challenge.domain.item.service.ItemService;
 import com.wanted.challenge.global.api.ApiResponse;
 import com.wanted.challenge.global.auth.AuthUser;
+import com.wanted.challenge.global.auth.OptionalAuthUser;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -46,8 +47,9 @@ public class ItemController {
 
     // 상품 상세조회
     @GetMapping("{id}")
-    public ResponseEntity<ApiResponse<?>> findDetailItem(@PathVariable(name = "id") Long id) {
-        ItemDetailInfoResponseDTO detailItem = itemService.findDetailItem(id);
+    public ResponseEntity<ApiResponse<?>> findDetailItem(@PathVariable(name = "id") Long itemId,
+                                                         @OptionalAuthUser Long userId) {
+        ItemDetailInfoResponseDTO detailItem = itemService.findDetailItem(itemId, userId);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(ApiResponse.createSuccess(detailItem, "상품 조회를 성공했습니다."));
     }

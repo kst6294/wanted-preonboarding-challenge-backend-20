@@ -3,6 +3,8 @@ package com.wanted.challenge.domain.item.entity;
 import com.wanted.challenge.domain.member.entity.Member;
 import com.wanted.challenge.domain.entity.BaseTimeEntity;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -42,7 +44,13 @@ public class Item extends BaseTimeEntity {
         this.member = member;
     }
 
+    // 재고 감소
     public void decreaseQuantity(){
         this.quantity -= 1;
+    }
+    
+    // 재고가 0인경우 상태 변경
+    public void changeSaleStatus(){
+        this.saleStatus = SaleStatus.RESERVED;
     }
 }

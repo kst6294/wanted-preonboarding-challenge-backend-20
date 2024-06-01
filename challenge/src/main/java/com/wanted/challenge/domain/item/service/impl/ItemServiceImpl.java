@@ -15,6 +15,7 @@ import com.wanted.challenge.domain.item.repository.ItemRepository;
 import com.wanted.challenge.domain.item.service.ItemService;
 import com.wanted.challenge.domain.member.entity.Member;
 import com.wanted.challenge.domain.member.repository.MemberRepository;
+import com.wanted.challenge.domain.transactionhistory.dto.response.TransactionHistoryResponseDTO;
 import com.wanted.challenge.domain.transactionhistory.entity.TransactionHistory;
 import com.wanted.challenge.domain.transactionhistory.repository.TransactionHistoryRepository;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +23,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -57,11 +59,28 @@ public class ItemServiceImpl implements ItemService {
     // 특정 상품 조회
     @Override
     @Transactional(readOnly = true)
-    public ItemDetailInfoResponseDTO findDetailItem(Long id) {
-        Item item = itemRepository.findByIdFetchJoinMember(id)
-                .orElseThrow(() -> new ItemException(ItemExceptionInfo.NOT_FOUND_ITEM, id + "번 상품이 존재하지 않습니다."));
+    public ItemDetailInfoResponseDTO findDetailItem(Long itemId, Long userId) {
+        Item item = itemRepository.findByIdFetchJoinMember(itemId)
+                .orElseThrow(() -> new ItemException(ItemExceptionInfo.NOT_FOUND_ITEM, itemId + "번 상품이 존재하지 않습니다."));
 
-        return ItemDetailInfoResponseDTO.toDTO(item);
+        System.out.println(userId);
+
+        List<TransactionHistoryResponseDTO> transactionHistoryResponseDTOS = new ArrayList<>();
+        // 회원이라면 거래내역 조회 진행
+        if (userId != null){
+            Member currentMember = getCurrentMember(userId);
+
+            // 판매자라면 해당 상품의 거래 내역
+            if(item.getMember() == currentMember){
+                transactionHistoryResponseDTOS = transactionHistoryRepository.findTransactionHistoriesListByItem(item);
+            }
+            // 구매자라면 해당 상품의 구매 내역
+            else{
+                transactionHistoryResponseDTOS = transactionHistoryRepository.findTransactionHistoriesList(currentMember, item);
+            }
+        }
+
+        return ItemDetailInfoResponseDTO.toDTO(item, transactionHistoryResponseDTOS);
     }
 
     // 아이템 구매하기
@@ -74,7 +93,7 @@ public class ItemServiceImpl implements ItemService {
                 .orElseThrow(() -> new ItemException(ItemExceptionInfo.NOT_FOUND_ITEM, id + "번 상품이 존재하지 않습니다."));
 
         // 한 번만 구매하기 위해서
-        if (transactionHistoryRepository.existsByMemberAndItem(currentMember, item)){
+        if (transactionHistoryRepository.existsByMemberAndItem(currentMember, item)) {
             throw new ItemException(ItemExceptionInfo.ALREADY_PURCHASE_ITEM, id + "번 유저가" + item.getId() + " 구매를 재신청 했습니다.(이미 구매)");
         }
 
@@ -82,7 +101,13 @@ public class ItemServiceImpl implements ItemService {
         if (item.getQuantity() <= 0) {
             throw new ItemException(ItemExceptionInfo.NOT_ENOUGH_ITEM_QUANTITY, item.getId() + "번 상품의 재고가 부족합니다.(" + id + "번 유저 구매 실패)");
         }
+        
+        // 재고 감소
         item.decreaseQuantity();
+        // 재고 0이하면 상품의 상태 변경
+        if (item.getQuantity() <= 0) {
+            item.changeSaleStatus();
+        }
 
         TransactionHistory transactionHistory = TransactionHistory.builder()
                 .saleConfirmStatus(false)

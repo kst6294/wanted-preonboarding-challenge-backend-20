@@ -18,7 +18,7 @@ public interface ItemService {
     List<ItemResponseDTO> findAllItems();
 
     // 특정 상품 조회
-    ItemDetailInfoResponseDTO findDetailItem(Long id);
+    ItemDetailInfoResponseDTO findDetailItem(Long itemId, Long userId);
 
     // 아이템 구매
     ItemPurchaseResponseDTO purchaseItem(ItemPurchaseRequestDTO itemPurchaseRequestDTO, Long id);
