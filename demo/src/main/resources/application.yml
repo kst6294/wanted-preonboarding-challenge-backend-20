@@ -1,0 +1,7 @@
+#yml dev를 default로 설정
+spring:
+  profiles:
+    default: dev
+
+
+
