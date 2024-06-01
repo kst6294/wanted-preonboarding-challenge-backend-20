@@ -1,6 +1,7 @@
 package com.wanted.preonboarding.domain.user.dto.request;
 
 import com.wanted.preonboarding.domain.user.entity.User;
+import com.wanted.preonboarding.domain.user.entity.UserType;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -28,6 +29,7 @@ public class AddUserRequest {
                 .email(this.email)
                 .password(encryptedPassword)
                 .nickname(this.nickname)
+                .type(UserType.DEFAULT)
                 .build();
     }
 }
