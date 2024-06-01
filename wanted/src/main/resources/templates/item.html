@@ -35,7 +35,9 @@
         <h4 th:text="|수량 : ${item.count}|"></h4>
         <h4 th:text="|예약 상태 : ${item.status.getName()}|"></h4>
 
-        <button th:if="${seller == false}" id="buy_btn" class="btn-primary btn" th:attr="itemId=${item.id}" onClick="buy()">구매하기</button>
+        <div th:if="${seller == false}">
+            <button th:disabled="${isBuy}" id="buy_btn" class="btn-primary btn" th:attr="itemId=${item.id}" onClick="buy()">구매하기</button>
+        </div>
         <br>
 
         <h2 style="margin-top: 30px; font-weight : bold;" >거래 내역</h2>

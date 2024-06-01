@@ -67,6 +67,7 @@ public class ViewController {
         if(memberDetails != null){
             List<Order> buys = orderRepository.findBuyHistory(memberDetails.getId(), itemId);
             model.addAttribute("buys", new OrderResponse(buys));
+            model.addAttribute("isBuy", buys.size() > 0 ? true : false);
             model.addAttribute("seller", false);
             if(memberDetails.getId() == item.getSellerId()){
                 List<Order> sells = orderRepository.findSellHistory(memberDetails.getId(), itemId);
