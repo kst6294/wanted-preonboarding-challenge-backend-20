@@ -63,8 +63,6 @@ public class ItemServiceImpl implements ItemService {
         Item item = itemRepository.findByIdFetchJoinMember(itemId)
                 .orElseThrow(() -> new ItemException(ItemExceptionInfo.NOT_FOUND_ITEM, itemId + "번 상품이 존재하지 않습니다."));
 
-        System.out.println(userId);
-
         List<TransactionHistoryResponseDTO> transactionHistoryResponseDTOS = new ArrayList<>();
         // 회원이라면 거래내역 조회 진행
         if (userId != null){
@@ -91,6 +89,11 @@ public class ItemServiceImpl implements ItemService {
 
         Item item = itemRepository.findByIdFetchJoinMember(itemPurchaseRequestDTO.getId())
                 .orElseThrow(() -> new ItemException(ItemExceptionInfo.NOT_FOUND_ITEM, id + "번 상품이 존재하지 않습니다."));
+
+        // 본인의 상품은 구매 불가
+        if (item.getMember() == currentMember){
+            throw new ItemException(ItemExceptionInfo.DONT_PURCHASE_SELF_ITEM, id + "번 유저가" + item.getId() + "구매 신청을 실패했습니다.(본인 물건 구매)");
+        }
 
         // 한 번만 구매하기 위해서
         if (transactionHistoryRepository.existsByMemberAndItem(currentMember, item)) {
