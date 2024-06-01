@@ -1,5 +1,6 @@
 package com.wanted.challenge.account.entity;
 
+import com.wanted.challenge.base.BaseEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -14,7 +15,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @Table(name = "accounts")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Account {
+public class Account extends BaseEntity {
 
     @Id
     @Column(name = "account_id")
