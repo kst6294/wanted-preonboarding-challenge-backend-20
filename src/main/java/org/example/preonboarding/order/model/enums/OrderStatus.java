@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public enum OrderStatus {
 
-    INIT("주문생성"),
+    INIT("주문생성"), // 예약 개념
     CANCELED("주문취소"),
     PAYMENT_COMPLETED("결제완료"),
     PAYMENT_FAILED("결제실패"),

@@ -3,6 +3,8 @@ package org.example.preonboarding.common.controllerAdvices;
 import org.example.preonboarding.common.enums.ResultCode;
 import org.example.preonboarding.common.payload.ApiError;
 import org.example.preonboarding.member.exception.WithdrawException;
+import org.example.preonboarding.order.exception.NotFoundOrderException;
+import org.example.preonboarding.stock.exception.OutOfStockException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindException;
@@ -39,6 +41,39 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(SQLIntegrityConstraintViolationException.class)
     public ResponseEntity<?> bindException(SQLIntegrityConstraintViolationException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+                ApiError.builder()
+                        .resultCode(ResultCode.FAIL)
+                        .data(ex.getMessage())
+                        .build()
+        );
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<?> illegalArgumentException(IllegalArgumentException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+                ApiError.builder()
+                        .resultCode(ResultCode.FAIL)
+                        .data(ex.getMessage())
+                        .build()
+        );
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(OutOfStockException.class)
+    public ResponseEntity<?> outOfStockException(OutOfStockException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+                ApiError.builder()
+                        .resultCode(ResultCode.FAIL)
+                        .data(ex.getMessage())
+                        .build()
+        );
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(NotFoundOrderException.class)
+    public ResponseEntity<?> notFoundOrderException(NotFoundOrderException ex) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
                 ApiError.builder()
                         .resultCode(ResultCode.FAIL)

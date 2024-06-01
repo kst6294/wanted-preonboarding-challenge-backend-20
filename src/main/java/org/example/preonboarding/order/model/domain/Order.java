@@ -68,4 +68,8 @@ public class Order extends BaseEntity {
     public void approveOrder() {
         this.orderStatus = OrderStatus.APPROVED;
     }
+
+    public void completeOrder() {
+        this.orderStatus = OrderStatus.COMPLETED;
+    }
 }

@@ -6,10 +6,11 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.example.preonboarding.common.entity.BaseEntity;
+import org.example.preonboarding.stock.exception.OutOfStockException;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Table(name = "stock")
+@Table(name = "stocks")
 @Entity
 public class Stock extends BaseEntity {
 
@@ -40,9 +41,13 @@ public class Stock extends BaseEntity {
 
     public void deductQuantity(int quantity) {
         if (isQuantityLessThan(quantity)) {
-            throw new IllegalArgumentException("차감할 재고 수량이 없습니다.");
+            throw new OutOfStockException("차감할 재고 수량이 없습니다.");
         }
         this.quantity -= quantity;
+    }
+
+    public boolean isPossibleOrderQuantity() {
+        return quantity > 0;
     }
 
 }

@@ -66,4 +66,17 @@ public class Product extends BaseEntity {
         this.deletedAt = deletedAt;
         this.seller = seller;
     }
+
+    public void inSelling() {
+        this.productSellingStatus = ProductSellingStatus.SELLING;
+    }
+
+    public void soldOut() {
+        this.productSellingStatus = ProductSellingStatus.SOLD_OUT;
+    }
+
+    public void reserved() {
+        this.productSellingStatus = ProductSellingStatus.RESERVED;
+    }
+
 }
