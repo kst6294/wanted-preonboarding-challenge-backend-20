@@ -19,7 +19,7 @@ public class Product extends BaseEntity {
     @Column(name = "price")
     private int price;
 
-    @Column(name = "quantity")
+    @Column(name = "quantity") // 2차 요구사항 때 구현
     private int quantity;
 
     @Enumerated(EnumType.STRING)
