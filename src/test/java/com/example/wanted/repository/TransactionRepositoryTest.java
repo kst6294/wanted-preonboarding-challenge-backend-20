@@ -16,13 +16,13 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 @DataJpaTest
 @ExtendWith(SpringExtension.class)
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-class OrderRepositoryTest {
+class TransactionRepositoryTest {
 
     @Autowired
-    OrderRepository orderRepository;
+    TransactionRepository transactionRepository;
 
     @Test
-    @DisplayName("OrderRepository Test")
+    @DisplayName("TransactionRepositoryTest Test")
     void InsertTransaction() {
         User buyer = User.builder().email("test1@naver.com").password("11111111").name("테스터").role("ROLE_USER").build();
         User seller = User.builder().email("test2@naver.com").password("11111111").name("테스터2").role("ROLE_USER").build();
@@ -31,7 +31,7 @@ class OrderRepositoryTest {
         Transaction transaction = Transaction.builder()
                 .seller_id(product.getUser().getU_id()).user(buyer).product(product).build();
 
-        Transaction transaction_result = orderRepository.save(transaction);
+        Transaction transaction_result = transactionRepository.save(transaction);
 
         Assertions.assertThat(transaction_result.getT_id()).isEqualTo(transaction.getT_id());
         Assertions.assertThat(transaction_result.getSeller_id()).isEqualTo(transaction.getSeller_id());

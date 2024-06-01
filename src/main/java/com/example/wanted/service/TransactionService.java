@@ -1,7 +1,7 @@
 package com.example.wanted.service;
 
 import com.example.wanted.model.Transaction;
-import com.example.wanted.repository.OrderRepository;
+import com.example.wanted.repository.TransactionRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,13 +9,13 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class OrderService {
+public class TransactionService {
     @Autowired
-    private OrderRepository orderRepository;
+    private TransactionRepository transactionRepository;
 
     @Transactional
     public void insert(Transaction transaction) {
-        orderRepository.save(transaction);
+        transactionRepository.save(transaction);
     }
 
 //    public List<Transaction> list(Long id) {
@@ -23,15 +23,15 @@ public class OrderService {
 //    }
 
     public Long findByBuyerId(Long id) {
-        return orderRepository.findByBuyerId(id);
+        return transactionRepository.findByBuyerId(id);
     }
 
     public List<Transaction> purchaseList(Long id) {
-        return orderRepository.findByBuyId(id);
+        return transactionRepository.findByBuyId(id);
     }
 
     public List<Transaction> sellList(Long id) {
-        return orderRepository.findBySellId(id);
+        return transactionRepository.findBySellId(id);
     }
 
 //    public List<Transaction> allTransactions(Long id) {

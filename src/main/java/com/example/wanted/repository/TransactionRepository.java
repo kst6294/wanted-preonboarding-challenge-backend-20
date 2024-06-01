@@ -9,7 +9,7 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 
-public interface OrderRepository extends JpaRepository<Transaction, Long> {
+public interface TransactionRepository extends JpaRepository<Transaction, Long> {
 
     @Modifying
     @Query(value = "insert into transaction(seller,buyer) values(?1,?2)", nativeQuery = true)

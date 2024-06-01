@@ -12,10 +12,6 @@
         <span class="title">물품 정보</span>
         <div class="fields">
             <div class="input-field">
-            <label hidden>글번호</label>
-            <input type="hidden" id="p_id" name="p_id" value="${product.p_id }" readonly="readonly">
-            </div>
-            <div class="input-field">
             <label>물품명</label>
             <input type="text" id="name" name="name" value="${product.name }" readonly="readonly">
             </div>
@@ -35,12 +31,16 @@
             <label>설명 </label>
             <input type="text" id="description" name="description" readonly="readonly" value="${product.description }">
             </div>
+            <div class="input-field">
+            <label hidden>글번호</label>
+            <input type="hidden" id="p_id" name="p_id" value="${product.p_id }" readonly="readonly">
+            </div>
         </div>
         </div>
     <div class="details ID">
     <span></span>
     <c:if test="${principal.user.name != product.seller and product.state eq 'ONSALE'}">
-            <input type="text" id="u_id" value="${principal.user.u_id}" >
+            <input type="hidden" id="u_id" value="${product.user.u_id}" >
             <button type="button" class="btn btn-danger btn-sm" id="btnOrder">구매하기</button>
     </c:if>
     <div>
@@ -109,11 +109,12 @@
 
             $.ajax({
                 type : "post",
-                url : "/order/insert/${product.p_id }",
+                url : "/transaction/insert/${product.p_id }",
                 data : {u_id:num},
 
             }).done(function() {
                 alert("거래성공");
+                location.href = "/product/productList";
             }).fail(function() {
                 alert("거래 실패")
             })
