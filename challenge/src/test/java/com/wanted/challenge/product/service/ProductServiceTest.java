@@ -15,6 +15,7 @@ import com.wanted.challenge.product.repository.ProductRepository;
 import com.wanted.challenge.product.response.ProductDetailResponse;
 import com.wanted.challenge.product.response.PurchaseBuyerResponse;
 import com.wanted.challenge.product.response.PurchaseDetailResponse;
+import com.wanted.challenge.product.response.PurchaseProductResponse;
 import com.wanted.challenge.transact.entity.Transact;
 import com.wanted.challenge.transact.entity.TransactLog;
 import com.wanted.challenge.transact.repository.TransactLogRepository;
@@ -26,6 +27,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 
 class ProductServiceTest extends IntegrationTestSupport {
 
@@ -161,5 +164,23 @@ class ProductServiceTest extends IntegrationTestSupport {
         // then
         Assertions.assertThatThrownBy(() -> productService.purchase(zeroQuantityProduct.getId(), buyer1.getId()))
                 .hasFieldOrPropertyWithValue("exceptionStatus", ExceptionStatus.CAN_NOT_PURCHASE);
+    }
+
+    @Test
+    @DisplayName("거래 기록 조회 시 구매 당시의 가격 정보가 나타나야 한다")
+    void purchasePrice() throws Exception {
+
+        // given
+        transactRepository.save(new Transact(buyer1, product));
+        productService.updatePrice(product.getId(), 20_000, seller.getId());
+
+        // when
+        Page<PurchaseProductResponse> purchaseProductResponses =
+                productService.purchaseProducts(buyer1.getId(), PageRequest.of(0, 20));
+
+        // then
+        Assertions.assertThat(purchaseProductResponses)
+                .extracting(PurchaseProductResponse::price)
+                .containsExactly(10_000);
     }
 }
