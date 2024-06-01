@@ -12,9 +12,9 @@ https://www.erdcloud.com/d/niZoHXELKi22SdLsZ
 Spring Security를 통해 목록조회 및 상세조회만 전체 허용하고 나머지 api는 허용하지 않았습니다.
 
 ```java
-authorizeRequests.requestMatchers(HttpMethod.GET,"/products","/products/{productId:[\\d+]}")
+authorizeRequests.requestMatchers(HttpMethod.GET, "/products", "/products/{productId:[\\d+]}")
         .permitAll();
-        authorizeRequests.anyRequest()
+authorizeRequests.anyRequest()
         .authenticated();
 ```
 
@@ -56,13 +56,13 @@ public record PurchaseRequest(@NotNull Long productId) {
 ```java
 @PostMapping("/purchase")
 public ResponseEntity<Void> purchase(@RequestBody @Valid PurchaseRequest purchaseRequest,
-@AuthenticationPrincipal AccountDetail accountDetail){
+                                     @AuthenticationPrincipal AccountDetail accountDetail) {
 
-        productService.purchase(purchaseRequest.productId(),accountDetail.getAccountId());
+    productService.purchase(purchaseRequest.productId(), accountDetail.getAccountId());
 
-        return ResponseEntity.ok()
-        .build();
-        }
+    return ResponseEntity.ok()
+            .build();
+}
 ```
 
 사용자 판별은 `@AuthenticationPrincipal`을 통해 현재 로그인된 사용자의 정보를 가져옵니다.
@@ -75,9 +75,9 @@ public ResponseEntity<Void> purchase(@RequestBody @Valid PurchaseRequest purchas
 #### 비회원
 
 ```java
-if(optAccountId.isEmpty()){
-        return new ProductDetailResponse(product,Collections.emptyList());
-        }
+if (optAccountId.isEmpty()) {
+    return new ProductDetailResponse(product, Collections.emptyList());
+}
 ```
 
 제품 정보를 담되, 거래내역은 빈 리스트를 보내도록 하였습니다.
@@ -85,7 +85,7 @@ if(optAccountId.isEmpty()){
 #### 구매자
 
 ```java
-return transactRepository.retrieveAllTransactState(buyerId,productId)
+return transactRepository.retrieveAllTransactState(buyerId, productId)
         .stream()
         .map(PurchaseDetailResponse::new)
         .map(PurchaseInfo.class::cast)
@@ -97,10 +97,10 @@ return transactRepository.retrieveAllTransactState(buyerId,productId)
 #### 판매자
 
 ```java
-List<Transact> transacts=transactRepository.findByProductId(productId);
-        Map<Long, List<TransactState>>buyerTransactStates=getBuyerTransactStates(transacts);
+List<Transact> transacts = transactRepository.findByProductId(productId);
+Map<Long, List<TransactState>> buyerTransactStates = getBuyerTransactStates(transacts);
 
-        return getPurchaseInfos(buyerTransactStates);
+return getPurchaseInfos(buyerTransactStates);
 ```
 
 해당 제품 번호로 이루어진 모든 거래를 조회한 후 Map<사용자 번호, 거래내역>으로 데이터를 조회합니다.
@@ -115,13 +115,13 @@ List<Transact> transacts=transactRepository.findByProductId(productId);
 ### 거래진행중인 구매자에 대해 판매승인
 
 ```java
-List<TransactState> transactStates=transactRepository.retrieveAllTransactState(transact.getId());
+List<TransactState> transactStates = transactRepository.retrieveAllTransactState(transact.getId());
 
-        if(transactStates.contains(TransactState.APPROVE)){
-        throw new CustomException(ExceptionStatus.APPROVE_ALREADY);
-        }
+if (transactStates.contains(TransactState.APPROVE)) {
+    throw new CustomException(ExceptionStatus.APPROVE_ALREADY);
+}
 
-        transactLogRepository.save(new TransactLog(transact,TransactState.APPROVE));
+transactLogRepository.save(new TransactLog(transact,TransactState.APPROVE));
 ```
 
 사용자가 이전에 판매승인한 적이 없다면 판매승인 기록을 작성합니다.
@@ -138,11 +138,11 @@ private Quantity quantity;
 ### 다수의 구매자가 한 제품에 대해 구매 가능(한 명이 구매 가능한 수량은 단 1개뿐)
 
 ```java
-Optional<Transact> optTransact=transactRepository.findByBuyerIdAndProductId(buyerId,productId);
+Optional<Transact> optTransact = transactRepository.findByBuyerIdAndProductId(buyerId, productId);
 
-        if(optTransact.isPresent()){
-        throw new CustomException(ExceptionStatus.PURCHASE_ALREADY);
-        }
+if (optTransact.isPresent()) {
+    throw new CustomException(ExceptionStatus.PURCHASE_ALREADY);
+}
 ```
 
 거래정보가 있다면 제품을 구매할 수 없도록 했습니다.
@@ -158,11 +158,11 @@ Optional<Product> findProductWithUpdateLockById(Long productId);
 ### 구매자는 판매승인된 제품에 대해 구매확정 가능
 
 ```java
-TransactState lastTransactState=transactRepository.retrieveLastTransactState(buyerId,productId);
+TransactState lastTransactState = transactRepository.retrieveLastTransactState(buyerId, productId);
 
-        if(lastTransactState!=TransactState.APPROVE){
-        throw new CustomException(ExceptionStatus.CAN_NOT_CONFIRM);
-        }
+if (lastTransactState != TransactState.APPROVE) {
+    throw new CustomException(ExceptionStatus.CAN_NOT_CONFIRM);
+}
 ```
 
 마지막 거래기록을 가져와 판매승인되었는지 확인합니다.
@@ -177,13 +177,13 @@ TransactState lastTransactState=transactRepository.retrieveLastTransactState(buy
 #### 추가 판매 불가능, 구매확정 대기 시 예약중
 
 ```java
-public void purchase(){
-        this.quantity=Quantity.minus(this.quantity);
+public void purchase() {
+    this.quantity = Quantity.minus(this.quantity);
 
-        if(quantity.value()==0&&this.reservation==Reservation.SALE){
-        this.reservation=Reservation.RESERVE;
-        }
-        }
+    if (quantity.value() == 0 && this.reservation == Reservation.SALE) {
+        this.reservation = Reservation.RESERVE;
+    }
+}
 ```
 
 제품 판매 시 남은 수량이 0이고 제품 상태가 판매중이었을 경우 예약중으로 변경됩니다.
@@ -191,11 +191,11 @@ public void purchase(){
 #### 모든 구매자가 구매확정한 경우 완료
 
 ```java
-Set<TransactState> transactStates=transactRepository.retrieveDistinctProductTransactStates(product);
+Set<TransactState> transactStates = transactRepository.retrieveDistinctProductTransactStates(product);
 
-        if(transactStates.size()==1&&transactStates.contains(TransactState.CONFIRM)){
-        product.complete();
-        }
+if (transactStates.size() == 1 && transactStates.contains(TransactState.CONFIRM)) {
+    product.complete();
+}
 ```
 
 구매 확정 시 해당 제품에 대해 모든 마지막 거래 기록이 확정밖에 없을 경우 해당 제품은 완료 상태로 변경됩니다.
