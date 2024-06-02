@@ -2,6 +2,7 @@ package com.sunyesle.wanted_market;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sunyesle.wanted_market.dto.SigninRequest;
 import com.sunyesle.wanted_market.dto.SigninResponse;
 import com.sunyesle.wanted_market.dto.SignupRequest;
 import com.sunyesle.wanted_market.dto.SignupResponse;
@@ -54,6 +55,32 @@ class AuthAcceptanceTest {
         assertThat(signupResponse.getId()).isNotNull();
     }
 
+    @Test
+    void 로그인을_한다() throws JsonProcessingException {
+        String name = "김이름";
+        String email = "test@email.com";
+        String password = "password";
+        SignupRequest signupRequest = new SignupRequest(name, email, password);
+        회원가입_요청(signupRequest);
+        SigninRequest signinRequest = new SigninRequest(email, password);
+
+        ExtractableResponse<Response> response =
+                given()
+                        .log().all()
+                        .basePath("/api/v1/auth/signin")
+                        .body(objectMapper.writeValueAsString(signinRequest))
+                        .contentType(ContentType.JSON)
+                .when()
+                        .post()
+                .then()
+                        .log().all()
+                        .extract();
+
+        assertThat(response.statusCode()).isEqualTo(HttpStatus.OK.value());
+        SigninResponse signinResponse = response.as(SigninResponse.class);
+        assertThat(signinResponse.getToken()).isNotNull();
+    }
+
     private ExtractableResponse<Response> 회원가입_요청(SignupRequest signupRequest) throws JsonProcessingException {
         ExtractableResponse<Response> response =
                 given()
@@ -67,30 +94,5 @@ class AuthAcceptanceTest {
                         .log().all()
                         .extract();
         return response;
-    }
-
-    @Test
-    void 로그인을_한다() throws JsonProcessingException {
-        String name = "김이름";
-        String email = "test@email.com";
-        String password = "password";
-        SignupRequest signupRequest = new SignupRequest(name, email, password);
-        회원가입_요청(signupRequest);
-
-        ExtractableResponse<Response> response =
-                given()
-                        .log().all()
-                        .basePath("/api/v1/auth/signin")
-                        .body(objectMapper.writeValueAsString(signupRequest))
-                        .contentType(ContentType.JSON)
-                .when()
-                        .post()
-                .then()
-                        .log().all()
-                        .extract();
-
-        assertThat(response.statusCode()).isEqualTo(HttpStatus.OK.value());
-        SigninResponse signinResponse = response.as(SigninResponse.class);
-        assertThat(signinResponse.getToken()).isNotNull();
     }
 }

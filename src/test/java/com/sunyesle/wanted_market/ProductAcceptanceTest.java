@@ -2,9 +2,8 @@ package com.sunyesle.wanted_market;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sunyesle.wanted_market.dto.ProductDetailResponse;
-import com.sunyesle.wanted_market.dto.ProductRequest;
-import com.sunyesle.wanted_market.dto.ProductResponse;
+import com.sunyesle.wanted_market.dto.*;
+import com.sunyesle.wanted_market.repository.MemberRepository;
 import com.sunyesle.wanted_market.repository.ProductRepository;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
@@ -15,7 +14,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.List;
 
@@ -24,6 +25,16 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class ProductAcceptanceTest {
+
+    private static final String EMAIL = "test@email.com";
+    private static final String PASSWORD = "password1";
+    private String token;
+
+    @Autowired
+    MemberRepository memberRepository;
+
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
     @Autowired
     ProductRepository productRepository;
@@ -35,11 +46,16 @@ class ProductAcceptanceTest {
     private int port;
 
     @BeforeEach
-    void setUp() {
+    void setUp() throws JsonProcessingException {
         RestAssured.baseURI = "http://localhost";
         RestAssured.port = port;
 
         productRepository.deleteAll();
+        memberRepository.deleteAll();
+
+        회원가입_요청(new SignupRequest("회원명", EMAIL, PASSWORD));
+        token = 로그인_요청(new SigninRequest(EMAIL, PASSWORD));
+
     }
 
     @Test
@@ -53,21 +69,6 @@ class ProductAcceptanceTest {
         assertThat(response.statusCode()).isEqualTo(HttpStatus.CREATED.value());
         ProductResponse productResponse = response.as(ProductResponse.class);
         assertThat(productResponse.getId()).isNotNull();
-    }
-
-    private ExtractableResponse<Response> 제품_등록_요청(ProductRequest productRequest) throws JsonProcessingException {
-        ExtractableResponse<Response> response =
-                given()
-                        .log().all()
-                        .basePath("/api/v1/products")
-                        .body(objectMapper.writeValueAsString(productRequest))
-                        .contentType(ContentType.JSON)
-                .when()
-                        .post()
-                .then()
-                        .log().all()
-                        .extract();
-        return response;
     }
 
     @Test
@@ -126,5 +127,51 @@ class ProductAcceptanceTest {
         assertThat(response.statusCode()).isEqualTo(HttpStatus.OK.value());
         List<ProductDetailResponse> products = response.jsonPath().getList(".", ProductDetailResponse.class);
         assertThat(products).hasSize(2);
+    }
+
+    private void 회원가입_요청(SignupRequest signupRequest) throws JsonProcessingException {
+        given()
+                .log().all()
+                .basePath("/api/v1/auth/signup")
+                .contentType(ContentType.JSON)
+                .body(objectMapper.writeValueAsString(signupRequest))
+        .when()
+                .post()
+        .then()
+                .log().all()
+                .statusCode(HttpStatus.CREATED.value());
+    }
+
+    private String 로그인_요청(SigninRequest signinRequest) throws JsonProcessingException {
+        SigninResponse response =
+                given()
+                        .log().all()
+                        .basePath("/api/v1/auth/signin")
+                        .contentType(ContentType.JSON)
+                        .body(objectMapper.writeValueAsString(signinRequest))
+                .when()
+                        .post()
+                .then()
+                        .log().all()
+                        .statusCode(HttpStatus.OK.value())
+                        .extract().as(SigninResponse.class);
+        return response.getToken();
+    }
+
+    private ExtractableResponse<Response> 제품_등록_요청(ProductRequest productRequest) throws JsonProcessingException {
+        ExtractableResponse<Response> response =
+                given()
+                        .log().all()
+                        .basePath("/api/v1/products")
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
+                        .contentType(ContentType.JSON)
+                        .body(objectMapper.writeValueAsString(productRequest))
+                .when()
+                        .post()
+                .then()
+                        .log().all()
+                        .statusCode(HttpStatus.CREATED.value())
+                        .extract();
+        return response;
     }
 }
