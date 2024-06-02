@@ -38,7 +38,7 @@ public class ProductDto {
       this.state = product.getState();
       this.sellerUser = new UserResponse(product.getSellerUser());
       if (product.getBuyerUser() != null) {
-        this.buyerUser = getBuyerUser();
+        this.buyerUser = new UserResponse(product.getBuyerUser());
       }
     }
   }
