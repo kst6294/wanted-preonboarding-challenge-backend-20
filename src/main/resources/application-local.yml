@@ -25,3 +25,6 @@ spring:
 jwt:
   issuer: admin@email.com
   secret_key: sample-key
+
+env:
+  mode: local
