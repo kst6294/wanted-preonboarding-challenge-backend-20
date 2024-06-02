@@ -58,4 +58,15 @@ public class ProductServiceImpl implements ProductService{
         return ListProductResponseDto.builder()
                 .productDtoList(response).build();
     }
+    @Override
+    @Transactional
+    public boolean buyProduct(User user,Long productId){
+        Product product=productRepository.findById(productId).get();
+        User foundUser=userRepository.findByNameAndUserId(user.getName(), user.getUserId());
+        if(product.getState()==ProductState.AVAILABLE){
+            productRepository.modifyProductState(productId);
+            return true;
+        }
+        return false;
+    }
 }

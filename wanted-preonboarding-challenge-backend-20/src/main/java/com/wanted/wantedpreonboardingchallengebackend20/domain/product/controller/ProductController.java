@@ -45,4 +45,19 @@ public class ProductController {
     public ListProductResponseDto listProduct(){
         return productService.listProduct();
     }
+    @GetMapping("/buy/{productId}")
+    public ResponseEntity<SuccessResponseDto> buyProduct(@PathVariable Long productId){
+        User loggedInUser=user.getLoggedInUser();
+        boolean response=productService.buyProduct(loggedInUser,productId);
+        if(response){
+            return ResponseEntity.status(HttpStatus.OK)
+                    .body(SuccessResponseDto.builder().statusCode(HttpStatus.OK)
+                            .resultMessage("거래를 진행합니다.")
+                            .build());
+        }
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(SuccessResponseDto.builder().statusCode(HttpStatus.OK)
+                        .resultMessage("거래 진행 불가")
+                        .build());
+    }
 }
