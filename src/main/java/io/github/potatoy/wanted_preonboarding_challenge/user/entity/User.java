@@ -1,11 +1,15 @@
 package io.github.potatoy.wanted_preonboarding_challenge.user.entity;
 
+import io.github.potatoy.wanted_preonboarding_challenge.market.entity.Product;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import lombok.AccessLevel;
@@ -35,6 +39,12 @@ public class User implements UserDetails {
 
   @Column(name = "nickname", nullable = false)
   private String nickname;
+
+  @OneToMany(mappedBy = "sellerUser", cascade = CascadeType.ALL)
+  private List<Product> saleList = new ArrayList<>();
+
+  @OneToMany(mappedBy = "buyerUser", cascade = CascadeType.ALL)
+  private List<Product> purchaseList = new ArrayList<>();
 
   @Builder
   public User(String email, String password, String nickname) {
