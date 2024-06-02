@@ -11,6 +11,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -39,33 +40,58 @@ public class ProductRepositoryTest {
     void saveProductSuccess() throws Exception {
 
         // given
-        Product product = new Product();
+        // 등록된 제품은 제품명, 가격, 예약상태가 포함
+
+        Product product = new Product(10000,"제품1",ProductStatus.SALES);
+
         // when
-        Product save = productRepository.save(product);
+        Product savedProduct = productRepository.save(product);
 
         // then
-        assertThat(save.getId()).isEqualTo(product.getId());
+        assertThat(savedProduct.getId()).isEqualTo(product.getId());
+        assertThat(savedProduct.getName()).isEqualTo(product.getName());
+        assertThat(savedProduct.getPrice()).isEqualTo(product.getPrice());
+
     }
 
     @Test
     @DisplayName("제품 목록 조회")
-    void findAllProduct() throws Exception {
+    void findAllProducts() throws Exception {
         // given
-        List<Product> saveProducts = getProducts();
+        List<Product> saveProducts = productList();
         // when
         List<Product> products = productRepository.findAll();
         // then
         assertThat(saveProducts.size()).isEqualTo(products.size());
     }
 
-    private List<Product> getProducts() {
+    private List<Product> productList() {
         List<Product> products= new ArrayList<>();
         for (int i = 0; i < 5; i++) {
             Product save = productRepository.save(new Product(10000, "goods" + i, ProductStatus.SALES));
             products.add(save);
         }
-
         return products;
+    }
+
+    @Test
+    @DisplayName("제품 상세페이지 조회 성공")
+    void findProduct() throws Exception {
+        // given
+        Product product = new Product(10000, "토끼슬리퍼", ProductStatus.SALES);
+
+        Product savedProduct = productRepository.save(product);
+
+        // when
+        Optional<Product> foundProduct = productRepository.findById(product.getId());
+
+        // then
+        assertThat(foundProduct).isPresent();
+        assertThat(foundProduct.get().getId()).isEqualTo(savedProduct.getId());
+        assertThat(foundProduct.get().getName()).isEqualTo(savedProduct.getName());
+        assertThat(foundProduct.get().getPrice()).isEqualTo(savedProduct.getPrice());
+
+
     }
 
 

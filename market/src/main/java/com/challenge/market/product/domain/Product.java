@@ -1,7 +1,9 @@
 package com.challenge.market.product.domain;
 
 import com.challenge.market.product.domain.constant.ProductStatus;
+import com.challenge.market.product.dto.ProductResponse;
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -9,6 +11,7 @@ import lombok.NoArgsConstructor;
 @Table
 @Getter
 @NoArgsConstructor
+@Builder
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,5 +27,21 @@ public class Product {
         this.price = price;
         this.name = name;
         this.productStatus = productStatus;
+    }
+
+    public Product(Long id, int price, String name, ProductStatus productStatus) {
+        this.id = id;
+        this.price = price;
+        this.name = name;
+        this.productStatus = productStatus;
+    }
+
+    public static ProductResponse of(Product product){
+        return ProductResponse.builder()
+                .id(product.id)
+                .name(product.name)
+                .price(product.price)
+                .productStatus(product.productStatus)
+                .build();
     }
 }
