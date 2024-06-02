@@ -2,6 +2,7 @@ package com.chaewon.wanted.domain.product.entity;
 
 import com.chaewon.wanted.common.BaseEntity;
 import com.chaewon.wanted.domain.member.entity.Member;
+import com.chaewon.wanted.domain.orders.exception.NotEnoughQuantityException;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,7 +20,7 @@ public class Product extends BaseEntity {
     @Column(name = "price")
     private int price;
 
-    @Column(name = "quantity") // 2차 요구사항 때 구현
+    @Column(name = "quantity")
     private int quantity;
 
     @Enumerated(EnumType.STRING)
@@ -33,4 +34,26 @@ public class Product extends BaseEntity {
         this.productStatus = productStatus;
     }
 
+    public void updateProductStatusOnOrderCreation(long orderCount) {
+        if (this.quantity == orderCount) {
+            this.updateProductStatus(ProductStatus.예약중);
+        } else {
+            this.updateProductStatus(ProductStatus.판매중);
+        }
+    }
+
+    public void updateProductStatusOnOrders(boolean allOrdersConfirmed, boolean isQuantityAvailable, boolean hasPending) {
+        if (allOrdersConfirmed && !isQuantityAvailable) {
+            this.updateProductStatus(ProductStatus.완료);
+        } else if (isQuantityAvailable || hasPending) {
+            this.updateProductStatus(hasPending ? ProductStatus.예약중 : ProductStatus.판매중);
+        }
+    }
+
+    public void decreaseQuantity(int amount) {
+        if (this.quantity < amount) {
+            throw new NotEnoughQuantityException("현재 남은 수량이 없습니다.");
+        }
+        this.quantity -= amount;
+    }
 }

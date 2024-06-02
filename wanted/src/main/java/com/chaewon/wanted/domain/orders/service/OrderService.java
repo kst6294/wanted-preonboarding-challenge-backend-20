@@ -11,4 +11,5 @@ public interface OrderService {
     Page<BuyerPurchaseHistoryResponseDto> getMyPurchasesConditional(String username, String orderStatus, Pageable pageable);
     Page<SalesApprovalListResponseDto> findMySales(String email, Pageable pageable);
     void approveOrder(String email, Long orderId);
+    void confirmPurchase(String email, Long orderId);
 }

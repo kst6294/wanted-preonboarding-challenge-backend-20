@@ -11,7 +11,6 @@ import com.chaewon.wanted.domain.orders.exception.*;
 import com.chaewon.wanted.domain.orders.repository.OrderRepository;
 import com.chaewon.wanted.domain.orders.dto.response.SalesApprovalListResponseDto;
 import com.chaewon.wanted.domain.product.entity.Product;
-import com.chaewon.wanted.domain.product.entity.ProductStatus;
 import com.chaewon.wanted.domain.product.exception.NoProductsForSaleException;
 import com.chaewon.wanted.domain.product.exception.ProductNotFoundException;
 import com.chaewon.wanted.domain.product.exception.ProductUnavailableException;
@@ -39,10 +38,11 @@ public class OrderServiceImpl implements OrderService {
 
         validateOrderRequest(buyer, product);
 
-        product.updateProductStatus(ProductStatus.예약중);
         Orders order = OrderRequestDto.from(orderRequestDto, buyer, seller, product);
-
         orderRepository.save(order);
+
+        long orderCount = orderRepository.countByProductAndOrderStatusNot(product, OrderStatus.거래확정);
+        product.updateProductStatusOnOrderCreation(orderCount);
     }
 
     @Override
@@ -79,12 +79,45 @@ public class OrderServiceImpl implements OrderService {
             throw new UnauthorizedException("판매자만 거래를 승인 할 수 있습니다.");
         }
 
-        if (order.getOrderStatus() == OrderStatus.거래완료) {
-            throw new DuplicateApprovalException("이미 거래 완료한 제품입니다.");
+        if (order.getOrderStatus() == OrderStatus.판매승인) {
+            throw new DuplicateApprovalException("이미 판매 승인이 된 제품입니다.");
         }
 
-        order.updateOrderStatus(OrderStatus.거래완료);
-        order.getProduct().updateProductStatus(ProductStatus.완료);
+        order.updateOrderStatus(OrderStatus.판매승인);
+    }
+
+    @Override
+    @Transactional
+    public void confirmPurchase(String email, Long orderId) {
+        Orders order = getByOrder(orderId);
+
+        if (!order.getBuyer().getEmail().equals(email)) {
+            throw new OrderAccessException("이 주문에 대한 접근 권한이 없습니다.");
+        }
+
+        if (!order.getOrderStatus().equals(OrderStatus.판매승인)) {
+            if (order.getOrderStatus().equals(OrderStatus.거래확정)) {
+                throw new OrderAlreadyConfirmedException("이미 거래 확정된 제품입니다.");
+            }
+            throw new OrderStatusNotApprovedException("주문 상태가 판매승인이 아닙니다.");
+        }
+
+        Product product = order.getProduct();
+        product.decreaseQuantity(1);
+
+        order.updateOrderStatus(OrderStatus.거래확정);
+        updateProductStatus(product);
+    }
+
+    private void updateProductStatus(Product product) {
+        // 모든 주문이 거래확정 상태인지 확인
+        boolean allOrdersConfirmed = orderRepository.countByProductAndOrderStatus(product, OrderStatus.거래확정) == orderRepository.countByProduct(product);
+        // 제품의 남은 수량 확인
+        boolean isQuantityAvailable = product.getQuantity() > 0;
+
+        // 대기중인 주문이 있거나, 남은 수량이 있을 경우
+        boolean hasPending = orderRepository.existsByProductAndOrderStatus(product, OrderStatus.판매승인) || orderRepository.existsByProductAndOrderStatus(product, OrderStatus.거래확정);
+        product.updateProductStatusOnOrders(allOrdersConfirmed, isQuantityAvailable, hasPending);
     }
 
     private void validateOrderRequest(Member buyer, Product product) {
@@ -92,8 +125,15 @@ public class OrderServiceImpl implements OrderService {
             throw new SelfPurchaseException("판매자는 자신의 제품을 구매할 수 없습니다.");
         }
 
-        if (product.getProductStatus() != ProductStatus.판매중) {
-            throw new ProductUnavailableException("현재 다른 사용자와 거래 중이거나 이미 완료된 제품입니다.");
+        // 현재 제품에 대한 거래 요청 수
+        long pendingOrderCount = orderRepository.countByProductAndOrderStatusNot(product, OrderStatus.거래확정);
+        // 제품의 총 수량과 거래 요청 수를 비교
+        if (product.getQuantity() - pendingOrderCount <= 0) {
+            throw new ProductUnavailableException("현재 구매 가능한 제품 수량이 없거나 모두 거래 진행 중입니다.");
+        }
+
+        if (orderRepository.existsByBuyerAndProduct(buyer, product)) {
+            throw new DuplicatePurchaseException("이미 구매한 제품은 중복 구매할 수 없습니다.");
         }
     }
 
@@ -113,7 +153,7 @@ public class OrderServiceImpl implements OrderService {
 
     private Product getByProduct(Long productId) {
         return productRepository.findById(productId)
-                .orElseThrow(() -> new ProductNotFoundException("해당 제품을 찾을 수 없습니다. 제툼 ID: " + productId));
+                .orElseThrow(() -> new ProductNotFoundException("해당 제품을 찾을 수 없습니다. 제품 ID: " + productId));
     }
 
     public Orders getByOrder(Long orderId) {

@@ -104,4 +104,34 @@ public class GlobalExceptionHandler {
         return ResponseDto.of(HttpStatus.UNAUTHORIZED, e.getMessage());
     }
 
+    @ExceptionHandler(DuplicatePurchaseException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public ResponseEntity<ResponseDto> handleDuplicatePurchaseException(DuplicatePurchaseException e) {
+        return ResponseDto.of(HttpStatus.CONFLICT, e.getMessage());
+    }
+
+    @ExceptionHandler(OrderStatusNotApprovedException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public ResponseEntity<ResponseDto> handleOrderStatusNotApprovedException(OrderStatusNotApprovedException e) {
+        return ResponseDto.of(HttpStatus.CONFLICT, e.getMessage());
+    }
+
+    @ExceptionHandler(OrderAccessException.class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    public ResponseEntity<ResponseDto> handleOrderAccessException(OrderAccessException e) {
+        return ResponseDto.of(HttpStatus.UNAUTHORIZED, e.getMessage());
+    }
+
+    @ExceptionHandler(NotEnoughQuantityException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<ResponseDto> handleNotEnoughQuantityException(NotEnoughQuantityException e) {
+        return ResponseDto.of(HttpStatus.BAD_REQUEST, e.getMessage());
+    }
+
+    @ExceptionHandler(OrderAlreadyConfirmedException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public ResponseEntity<ResponseDto> handleOrderAlreadyConfirmedException(OrderAlreadyConfirmedException e) {
+        return ResponseDto.of(HttpStatus.CONFLICT, e.getMessage());
+    }
 }
+

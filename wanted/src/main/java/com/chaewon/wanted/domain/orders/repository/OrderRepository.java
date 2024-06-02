@@ -1,7 +1,9 @@
 package com.chaewon.wanted.domain.orders.repository;
 
+import com.chaewon.wanted.domain.member.entity.Member;
 import com.chaewon.wanted.domain.orders.entity.OrderStatus;
 import com.chaewon.wanted.domain.orders.entity.Orders;
+import com.chaewon.wanted.domain.product.entity.Product;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -23,5 +25,14 @@ public interface OrderRepository extends JpaRepository<Orders,Long> {
     @Query("SELECT o FROM Orders o JOIN FETCH o.seller JOIN FETCH o.product WHERE o.id = :orderId")
     Optional<Orders> findByIdWithSellerAndProduct(@Param("orderId") Long orderId);
 
+    boolean existsByBuyerAndProduct(Member buyer, Product product);
+
+    boolean existsByProductAndOrderStatus(Product product, OrderStatus orderStatus);
+
+    long countByProductAndOrderStatusNot(Product product, OrderStatus orderStatus);
+
+    long countByProductAndOrderStatus(Product product, OrderStatus orderStatus);
+
+    long countByProduct(Product product);
 }
 

@@ -49,7 +49,14 @@ public class OrderController {
     public ResponseEntity<ResponseDto> approveOrder(@AuthenticationPrincipal User user,
                                                      @PathVariable(name = "orderId") Long orderId) {
         orderService.approveOrder(user.getUsername(), orderId);
-        return ResponseDto.of(HttpStatus.OK, "판매 승인 처리 되었습니다.");
+        return ResponseDto.of(HttpStatus.OK, "판매자의 승인 여부가 반영 되었습니다.");
+    }
+
+    @PatchMapping("/{orderId}/confirm")
+    public ResponseEntity<ResponseDto> confirmPurchase(@AuthenticationPrincipal User user,
+                                                    @PathVariable(name = "orderId") Long orderId) {
+        orderService.confirmPurchase(user.getUsername(), orderId);
+        return ResponseDto.of(HttpStatus.OK, "구매 확정 처리 되었습니다.");
     }
 
 }

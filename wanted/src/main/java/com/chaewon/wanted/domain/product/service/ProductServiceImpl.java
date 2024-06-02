@@ -43,7 +43,7 @@ public class ProductServiceImpl implements ProductService {
     public ProductDetailResponseDto getProductDetails(Long productId) {
         return productRepository.findById(productId)
                 .map(ProductDetailResponseDto::from)
-                .orElseThrow(() -> new ProductNotFoundException("해당 제품을 찾을 수 없습니다. 제툼 ID: " + productId));
+                .orElseThrow(() -> new ProductNotFoundException("해당 제품을 찾을 수 없습니다. 제품 ID: " + productId));
     }
 
     private Member getByEmail(String email) {
