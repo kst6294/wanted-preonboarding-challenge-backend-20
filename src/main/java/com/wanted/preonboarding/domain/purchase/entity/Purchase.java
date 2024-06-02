@@ -35,4 +35,8 @@ public class Purchase {
 
     @Enumerated(EnumType.STRING)
     private PurchaseState state; // 상태
+
+    public void updateState(PurchaseState state) {
+        this.state = state;
+    }
 }

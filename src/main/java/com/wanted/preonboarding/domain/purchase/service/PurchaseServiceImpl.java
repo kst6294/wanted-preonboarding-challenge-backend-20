@@ -53,4 +53,20 @@ public class PurchaseServiceImpl implements PurchaseService{
 
         productRepository.save(product);
     }
+
+    @Override
+    @Transactional
+    public void accept(Long userId, PurchaseRequest purchaseRequest) {
+        // 1. 유저, 제품 객체 가져오기
+        User user = userRepository.findById(userId).orElseThrow(() -> new RestApiException(UserErrorCode.USER_NOT_FOUND, "유저를 찾을 수 없습니다. 아이디: "+userId));
+        Purchase purchase = purchaseRepository.findByIdWithLock(purchaseRequest.getId()).orElseThrow(() -> new RestApiException(PurchaseErrorCode.PURCHASE_NOT_FOUND, "구매이력을 조회할 수 없습니다. 아이디: "+purchaseRequest.getId()));
+
+        // 2. 상품 판매자 / 상태
+        if (purchase.getProduct().getUser().getId() != user.getId()) throw new RestApiException(PurchaseErrorCode.SELLER_MISMATCH, "상품 판매자와 로그인 유저가 일치하지 않습니다. 로그인 아이디: "+userId+" 판매자 아이디: "+purchase.getProduct().getUser().getId());
+        else if (!purchase.getState().equals(PurchaseState.PENDING)) throw new RestApiException(PurchaseErrorCode.ALREADY_APPROVED_PURCHASE, "이미 판매 승인한 주문입니다. 주문 아이디: "+purchaseRequest.getId());
+
+        // 3. 상태 변경
+        purchase.updateState(PurchaseState.ACCEPT_SALE);
+        purchaseRepository.save(purchase);
+    }
 }

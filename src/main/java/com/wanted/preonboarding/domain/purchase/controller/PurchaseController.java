@@ -9,10 +9,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/purchase")
@@ -27,6 +24,14 @@ public class PurchaseController {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(ApiResponse.createSuccess("상품 구매가 완료되었습니다."));
+    }
+
+    @PostMapping("/accept")
+    public ResponseEntity<?> accept(@AuthUser Long userId, @RequestBody @Valid PurchaseRequest purchaseRequest) {
+        purchaseService.accept(userId, purchaseRequest);
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(ApiResponse.createSuccess("주문 판매승인이 완료되었습니다."));
     }
 
 }
