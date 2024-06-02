@@ -1,49 +1,35 @@
 package com.sunyesle.wanted_market;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sunyesle.wanted_market.dto.SigninRequest;
 import com.sunyesle.wanted_market.dto.SigninResponse;
 import com.sunyesle.wanted_market.dto.SignupRequest;
 import com.sunyesle.wanted_market.dto.SignupResponse;
 import com.sunyesle.wanted_market.repository.MemberRepository;
-import io.restassured.RestAssured;
-import io.restassured.http.ContentType;
+import com.sunyesle.wanted_market.support.AcceptanceTest;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.web.server.LocalServerPort;
-import org.springframework.http.HttpStatus;
 
+import static com.sunyesle.wanted_market.support.AuthSteps.로그인_요청;
 import static com.sunyesle.wanted_market.support.AuthSteps.회원가입_요청;
-import static io.restassured.RestAssured.given;
 import static org.assertj.core.api.Assertions.assertThat;
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-class AuthAcceptanceTest {
+class AuthAcceptanceTest extends AcceptanceTest {
 
     @Autowired
     private MemberRepository memberRepository;
 
-    @Autowired
-    private ObjectMapper objectMapper;
-
-    @LocalServerPort
-    private int port;
-
     @BeforeEach
-    void setUp() {
-        RestAssured.baseURI = "http://localhost";
-        RestAssured.port = port;
-
+    public void setUp() {
+        super.setUp();
         memberRepository.deleteAll();
     }
 
     @Test
-    void 회원가입을_한다() throws JsonProcessingException {
+    void 회원가입을_한다() {
         String name = "김이름";
         String email = "test@email.com";
         String password = "password";
@@ -56,7 +42,7 @@ class AuthAcceptanceTest {
     }
 
     @Test
-    void 로그인을_한다() throws JsonProcessingException {
+    void 로그인을_한다() {
         String name = "김이름";
         String email = "test@email.com";
         String password = "password";
@@ -64,19 +50,8 @@ class AuthAcceptanceTest {
         회원가입_요청(signupRequest);
         SigninRequest signinRequest = new SigninRequest(email, password);
 
-        ExtractableResponse<Response> response =
-                given()
-                        .log().all()
-                        .basePath("/api/v1/auth/signin")
-                        .body(objectMapper.writeValueAsString(signinRequest))
-                        .contentType(ContentType.JSON)
-                .when()
-                        .post()
-                .then()
-                        .log().all()
-                        .extract();
+        ExtractableResponse<Response> response = 로그인_요청(signinRequest);
 
-        assertThat(response.statusCode()).isEqualTo(HttpStatus.OK.value());
         SigninResponse signinResponse = response.as(SigninResponse.class);
         assertThat(signinResponse.getToken()).isNotNull();
     }

@@ -1,17 +1,14 @@
 package com.sunyesle.wanted_market;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.sunyesle.wanted_market.dto.*;
 import com.sunyesle.wanted_market.repository.MemberRepository;
 import com.sunyesle.wanted_market.repository.ProductRepository;
-import io.restassured.RestAssured;
+import com.sunyesle.wanted_market.support.AcceptanceTest;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
 
 import java.util.List;
@@ -22,9 +19,7 @@ import static com.sunyesle.wanted_market.support.ProductSteps.제품_등록_요�
 import static io.restassured.RestAssured.given;
 import static org.assertj.core.api.Assertions.assertThat;
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-class ProductAcceptanceTest {
-
+class ProductAcceptanceTest extends AcceptanceTest {
     private static final String EMAIL = "test@email.com";
     private static final String PASSWORD = "password1";
     private String token;
@@ -35,14 +30,9 @@ class ProductAcceptanceTest {
     @Autowired
     ProductRepository productRepository;
 
-    @LocalServerPort
-    private int port;
-
     @BeforeEach
-    void setUp() throws JsonProcessingException {
-        RestAssured.baseURI = "http://localhost";
-        RestAssured.port = port;
-
+    public void setUp() {
+        super.setUp();
         productRepository.deleteAll();
         memberRepository.deleteAll();
 
@@ -51,7 +41,7 @@ class ProductAcceptanceTest {
     }
 
     @Test
-    void 제품을_등록한다() throws JsonProcessingException {
+    void 제품을_등록한다() {
         String name = "스위치";
         Integer price = 300000;
         ProductRequest productRequest = new ProductRequest(name, price);
@@ -63,7 +53,7 @@ class ProductAcceptanceTest {
     }
 
     @Test
-    void 제품을_조회한다() throws JsonProcessingException {
+    void 제품을_조회한다() {
         String name = "스위치";
         Integer price = 300000;
         ProductRequest productRequest = new ProductRequest(name, price);
@@ -84,7 +74,7 @@ class ProductAcceptanceTest {
     }
 
     @Test
-    void 존재하지_않는_제품을_조회할_경우_제품조회에_실패한다() throws JsonProcessingException {
+    void 존재하지_않는_제품을_조회할_경우_제품조회에_실패한다() {
         ExtractableResponse<Response> response =
                 given()
                         .log().all()
@@ -99,7 +89,7 @@ class ProductAcceptanceTest {
     }
 
     @Test
-    void 제품_목록을_조회한다() throws JsonProcessingException {
+    void 제품_목록을_조회한다() {
         ProductRequest productRequest1 = new ProductRequest("스위치", 300000);
         ProductRequest productRequest2 = new ProductRequest("당근", 1000);
         제품_등록_요청(token, productRequest1);
