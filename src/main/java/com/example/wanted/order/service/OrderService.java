@@ -40,11 +40,12 @@ public class OrderService {
                 new ResourceNotFoundException("Product", orderCreate.getProductId())
         );
 
+        //주문 이력 환인
         List<Order> checkOrder = orderRepository.findByProductAndUser(product, user);
         if(!checkOrder.isEmpty()) {
             throw new IllegalArgumentException("주문 이력이 있습니다.");
         }
-        // 구매자 관련 오류로 수정
+
         product.deductQuantity();
         product = productRepository.save(product);
 

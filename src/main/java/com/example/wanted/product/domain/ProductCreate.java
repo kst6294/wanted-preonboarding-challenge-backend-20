@@ -1,6 +1,7 @@
 package com.example.wanted.product.domain;
 
 import com.example.wanted.user.infrastucture.UserEntity;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
@@ -19,7 +20,10 @@ public class ProductCreate {
     private int quantity;
 
     @Builder
-    public ProductCreate(String name, int price, int quantity) {
+    public ProductCreate(
+            @JsonProperty("name") String name,
+            @JsonProperty("price") int price,
+            @JsonProperty("quantity") int quantity) {
         this.name = name;
         this.price = price;
         this.quantity = quantity;

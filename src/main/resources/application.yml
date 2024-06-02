@@ -6,8 +6,7 @@ spring:
 
   jwt:
     secret-key: wantedTestdateasdfkjklawjerlkjdklsjflqiojejoahoifdfaasdfdasfeawrqwerasdfewqreafdsf
-    access-token-expire: 432000
-    refresh-token-expire: 120960000
+    access-token-expire: 120960000
 
   datasource:
     driver-class-name: org.h2.Driver
@@ -29,16 +28,15 @@ spring:
     cors:
       allowed-origins: "*"
 
-#springdoc:
-#  version: '@project.version@'
-#  api-docs:
-#    path: /api-docs
-#  default-consumes-media-type: application/json
-#  default-produces-media-type: application/json
-#  swagger-ui:
-#    operations-sorter: alpha
-#    tags-sorter: alpha
-#    path: /swagger-ui.html
-#    disable-swagger-default-url: true
-#    display-query-params-without-oauth2: true
-#    doc-expansion: none
+springdoc:
+  swagger-ui:
+    path: /index.html
+    groups-order: DESC
+    operationsSorter: method
+    disable-swagger-default-url: true
+    display-request-duration: true
+    defaultModelsExpandDepth: -1
+  default-consumes-media-type: application/json
+  default-produces-media-type: application/json
+  paths-to-match:
+    - /**

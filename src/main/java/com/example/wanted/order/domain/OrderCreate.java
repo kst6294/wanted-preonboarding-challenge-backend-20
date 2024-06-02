@@ -1,5 +1,6 @@
 package com.example.wanted.order.domain;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
@@ -12,7 +13,8 @@ public class OrderCreate {
     long productId;
 
     @Builder
-    public OrderCreate(long productId) {
+    public OrderCreate(
+            @JsonProperty("productId") long productId) {
         this.productId = productId;
     }
 }

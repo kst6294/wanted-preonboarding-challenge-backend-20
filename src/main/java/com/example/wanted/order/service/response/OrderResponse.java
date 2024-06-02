@@ -16,7 +16,8 @@ public class OrderResponse {
     private UserResponse seller;
     private UserResponse buyer;
     private int price;
-    private ProductResponse product;
+    private Long productId;
+    private String productName;
     private OrderStatus status;
 
     @Builder
@@ -25,7 +26,8 @@ public class OrderResponse {
         this.seller = seller;
         this.buyer = buyer;
         this.price = price;
-        this.product = product;
+        this.productId = product.getId();
+        this.productName = product.getName();
         this.status = status;
     }
 
