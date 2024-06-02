@@ -19,8 +19,9 @@ public class ProductService {
 
     private final ProductRepository productRepository;
 
-    public ProductResponse save(ProductRequest request) {
+    public ProductResponse save(ProductRequest request, Long memberId) {
         Product product = Product.builder()
+                .memberId(memberId)
                 .name(request.getName())
                 .price(request.getPrice())
                 .status(ProductStatus.AVAILABLE).build();
