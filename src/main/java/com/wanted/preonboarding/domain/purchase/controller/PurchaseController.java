@@ -34,4 +34,12 @@ public class PurchaseController {
                 .body(ApiResponse.createSuccess("주문 판매승인이 완료되었습니다."));
     }
 
+
+    @PostMapping("/confirm")
+    public ResponseEntity<?> confirm(@AuthUser Long userId, @RequestBody @Valid PurchaseRequest purchaseRequest) {
+        purchaseService.confirm(userId, purchaseRequest);
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(ApiResponse.createSuccess("주문 구매확정이 완료되었습니다."));
+    }
 }

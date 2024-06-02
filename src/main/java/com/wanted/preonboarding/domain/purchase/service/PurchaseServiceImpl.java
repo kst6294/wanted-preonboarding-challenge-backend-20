@@ -69,4 +69,27 @@ public class PurchaseServiceImpl implements PurchaseService{
         purchase.updateState(PurchaseState.ACCEPT_SALE);
         purchaseRepository.save(purchase);
     }
+
+    @Override
+    @Transactional
+    public void confirm(Long userId, PurchaseRequest purchaseRequest) {
+        // 1. 유저, 제품 객체 가져오기
+        User user = userRepository.findById(userId).orElseThrow(() -> new RestApiException(UserErrorCode.USER_NOT_FOUND, "유저를 찾을 수 없습니다. 아이디: "+userId));
+        Purchase purchase = purchaseRepository.findByIdWithLock(purchaseRequest.getId()).orElseThrow(() -> new RestApiException(PurchaseErrorCode.PURCHASE_NOT_FOUND, "구매이력을 조회할 수 없습니다. 아이디: "+purchaseRequest.getId()));
+
+        // 2. 상품 구매자 / 상태
+        if (purchase.getUser().getId() != user.getId()) throw new RestApiException(PurchaseErrorCode.CUSTOMER_MISMATCH, "상품 구매자와 로그인 유저가 일치하지 않습니다. 로그인 아이디: "+userId+" 판매자 아이디: "+purchase.getProduct().getUser().getId());
+        else if (!purchase.getState().equals(PurchaseState.ACCEPT_SALE)) throw new RestApiException(PurchaseErrorCode.STATE_NOTE_ACCEPT, "주문확정 가능한 상태가 아닙니다. 주문 아이디: "+purchaseRequest.getId()+" 현재 상태: "+purchase.getState());
+
+        // 3. 상태 변경
+        purchase.updateState(PurchaseState.CONFIRM_PURCHASE);
+        purchaseRepository.save(purchase);
+
+        // 4. 상품 상태 변경
+        // 현재 예약 상태이면서 모든 상품의 상태가 판매승인이라면
+        if (purchase.getProduct().getState().equals(ProductState.RESERVATION) && !purchaseRepository.existsByProductAndStateNot(purchase.getProduct(), PurchaseState.CONFIRM_PURCHASE)) {
+            purchase.getProduct().updateState(ProductState.COMPLETE);
+            productRepository.save(purchase.getProduct());
+        }
+    }
 }

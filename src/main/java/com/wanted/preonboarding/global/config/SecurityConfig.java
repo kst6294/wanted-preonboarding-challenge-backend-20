@@ -30,7 +30,7 @@ public class SecurityConfig {
                        .requestMatchers("/user/login", "/user/join", "/user/email").permitAll()
                        .requestMatchers(HttpMethod.GET, "/product/**").permitAll()
                        .requestMatchers("/product/**").authenticated()
-                       .requestMatchers(HttpMethod.POST, "/purchase", "/purchase/accept").authenticated()
+                       .requestMatchers(HttpMethod.POST, "/purchase", "/purchase/accept", "/purchase/confirm").authenticated()
                        .anyRequest().denyAll()
                )
                .addFilterBefore(sessionFilter, UsernamePasswordAuthenticationFilter.class)
