@@ -3,7 +3,7 @@ package com.wanted.demo.domain.user.controller;
 import com.wanted.demo.domain.user.dto.request.LoginRequestDTO;
 import com.wanted.demo.domain.user.dto.request.SignUpRequestDTO;
 import com.wanted.demo.domain.user.service.UserService;
-import com.wanted.demo.global.response.ApiResponse;
+import com.wanted.demo.global.util.response.ApiResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

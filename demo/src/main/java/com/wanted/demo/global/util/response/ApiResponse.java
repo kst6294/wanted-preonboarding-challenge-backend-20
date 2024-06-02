@@ -1,4 +1,4 @@
-package com.wanted.demo.global.response;
+package com.wanted.demo.global.util.response;
 
 import lombok.Getter;
 

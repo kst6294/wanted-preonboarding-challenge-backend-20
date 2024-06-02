@@ -38,6 +38,7 @@ public class UserService {
     }
 
     //로그인
+    @Transactional
     public void login(LoginRequestDTO loginRequestDTO, HttpServletRequest request){
         //이메일 없음
         User user = userRepository.findByUser(loginRequestDTO.getEmail())
@@ -50,7 +51,6 @@ public class UserService {
 
         //로그인 로직
         addSessionAndCookie(request,user);
-
     }
 
 

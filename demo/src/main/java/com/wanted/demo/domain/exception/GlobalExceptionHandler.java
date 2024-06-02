@@ -1,7 +1,7 @@
 package com.wanted.demo.domain.exception;
 
 import com.wanted.demo.domain.exception.exception.UserException;
-import com.wanted.demo.global.response.ApiResponse;
+import com.wanted.demo.global.util.response.ApiResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
