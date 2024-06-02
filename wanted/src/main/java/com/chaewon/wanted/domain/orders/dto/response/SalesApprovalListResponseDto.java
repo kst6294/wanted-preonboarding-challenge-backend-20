@@ -1,8 +1,8 @@
 package com.chaewon.wanted.domain.orders.dto.response;
 
 import com.chaewon.wanted.domain.member.entity.Member;
-import com.chaewon.wanted.domain.product.entity.Product;
-import com.chaewon.wanted.domain.product.entity.ProductStatus;
+import com.chaewon.wanted.domain.orders.entity.OrderStatus;
+import com.chaewon.wanted.domain.orders.entity.Orders;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,15 +15,15 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class SalesApprovalListResponseDto {
 
-    private Long productId;
-    private int price;
-    private ProductStatus productStatus;
+    private Long orderId;
+    private int orderPrice;
+    private OrderStatus orderStatus;
 
-    public static SalesApprovalListResponseDto from(Product product, Member member) {
+    public static SalesApprovalListResponseDto from(Orders orders, Member member) {
         return SalesApprovalListResponseDto.builder()
-                .productId(product.getId())
-                .price(product.getPrice())
-                .productStatus(product.getProductStatus())
+                .orderId(orders.getId())
+                .orderPrice(orders.getOrderPrice())
+                .orderStatus(orders.getOrderStatus())
                 .build();
     }
 }

@@ -67,7 +67,7 @@ public class OrderServiceImpl implements OrderService {
             throw new NoProductsForSaleException("거래 중인 제품이 없습니다.");
         }
 
-        return orders.map(order -> SalesApprovalListResponseDto.from(order.getProduct(), order.getSeller()));
+        return orders.map(order -> SalesApprovalListResponseDto.from(order, order.getSeller()));
     }
 
     @Override
