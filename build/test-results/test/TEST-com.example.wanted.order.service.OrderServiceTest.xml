@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.example.wanted.order.service.OrderServiceTest" tests="24" skipped="0" failures="0" errors="0" timestamp="2024-06-02T05:54:16" hostname="gimmunjin-ui-MacBookPro.local" time="0.025">
+  <properties/>
+  <testcase name="userId로_주문_리스트를_조회할_수_있다()" classname="com.example.wanted.order.service.OrderServiceTest" time="0.006"/>
+  <testcase name="존재하지_않는_제품은_주문을_생성할_수_없다()" classname="com.example.wanted.order.service.OrderServiceTest" time="0.002"/>
+  <testcase name="비회원은_자신의_주문_리스트를_조회할_수_없다()" classname="com.example.wanted.order.service.OrderServiceTest" time="0.001"/>
+  <testcase name="존재하지_않는_주문Id로는_조회할_수_없다()" classname="com.example.wanted.order.service.OrderServiceTest" time="0.001"/>
+  <testcase name="판매자는_주문을_승인할_수_있다()" classname="com.example.wanted.order.service.OrderServiceTest" time="0.001"/>
+  <testcase name="Id로_주문을_조회할_수_있다()" classname="com.example.wanted.order.service.OrderServiceTest" time="0.0"/>
+  <testcase name="OrderCreate로_order를_생성할_수_있다()" classname="com.example.wanted.order.service.OrderServiceTest" time="0.002"/>
+  <testcase name="없는_주문은_승인할_수_없다()" classname="com.example.wanted.order.service.OrderServiceTest" time="0.001"/>
+  <testcase name="회원이_아니면_주문을_생성할_수_없다()" classname="com.example.wanted.order.service.OrderServiceTest" time="0.001"/>
+  <testcase name="주문상태가_판매_승인_상태가_아니면_주문확정할_수_없다()" classname="com.example.wanted.order.service.OrderServiceTest" time="0.001"/>
+  <testcase name="userId와_productId로_주문을_조회할_수_있다()" classname="com.example.wanted.order.service.OrderServiceTest" time="0.001"/>
+  <testcase name="제고가_없으면_주문할_수_없다()" classname="com.example.wanted.order.service.OrderServiceTest" time="0.001"/>
+  <testcase name="제품의_거래내역이_없으면_빈_값이_조회된다()" classname="com.example.wanted.order.service.OrderServiceTest" time="0.0"/>
+  <testcase name="구매자가_판매_승인된_주문을_구매확정_할_수_있다()" classname="com.example.wanted.order.service.OrderServiceTest" time="0.0"/>
+  <testcase name="판매자가_아니면_승인할_수_없다()" classname="com.example.wanted.order.service.OrderServiceTest" time="0.0"/>
+  <testcase name="구매_확정을_할_때_모든_주문이_확정되었으면_제품의_상태가_완료로_변경된다()" classname="com.example.wanted.order.service.OrderServiceTest" time="0.0"/>
+  <testcase name="userId와_productId로_조회할_때_없는_제품은_주문을_조회할_수_없다()" classname="com.example.wanted.order.service.OrderServiceTest" time="0.001"/>
+  <testcase name="주문생성_시_재고가_1개_남아있었으면_제품의_상태가_예약중으로_변경된다()" classname="com.example.wanted.order.service.OrderServiceTest" time="0.0"/>
+  <testcase name="회원이_해당_제품을_구매한_적이_있으면_주문할_수_없다()" classname="com.example.wanted.order.service.OrderServiceTest" time="0.001"/>
+  <testcase name="회원이_아니면_승인할_수_없다()" classname="com.example.wanted.order.service.OrderServiceTest" time="0.0"/>
+  <testcase name="주문이_구매요청_상태가_아니면_승인할_수_없다()" classname="com.example.wanted.order.service.OrderServiceTest" time="0.0"/>
+  <testcase name="회원이_아니면_userId와_productId로_주문을_조회할_수_없다()" classname="com.example.wanted.order.service.OrderServiceTest" time="0.0"/>
+  <testcase name="구매자가_아니면_주문_확정할_수_없다()" classname="com.example.wanted.order.service.OrderServiceTest" time="0.0"/>
+  <testcase name="판매자는_주문을_생성할_수_없다()" classname="com.example.wanted.order.service.OrderServiceTest" time="0.0"/>
+  <system-out><![CDATA[14:54:16.802 [Test worker] WARN com.example.wanted.order.domain.Order -- User {}는 Order {}의 판매자가 아닙니다.
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -8,6 +8,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -56,8 +57,22 @@ public class SecurityConfig {
                 .sessionManagement((sessionManagement) ->
                         sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests((authorizeRequests) -> authorizeRequests
-                        .requestMatchers("/","/api/v0/users/sing-up","/api/v0/users/sing-in"
+                        .requestMatchers("/",
+                                "/api/v0/users/sing-up",
+                                "/api/v0/users/sing-in",
+                                "/swagger-ui/index.html",
+                                "/swagger-ui-custom.html",
+                                "/v3/api-docs/**",
+                                "/swagger-ui.html",
+                                "/swagger-ui/**"
                                 ).permitAll()
+                        .requestMatchers(HttpMethod.GET,
+                                "/api/v0/products",
+                                "/api/v0/products/*"
+                                ).permitAll()
+                        .requestMatchers(HttpMethod.POST,
+                                "/api/v0/products"
+                        ).permitAll()
                         .anyRequest().authenticated()
                 )
                 .exceptionHandling((exceptionHandling) ->{

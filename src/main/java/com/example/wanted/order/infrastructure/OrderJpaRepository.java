@@ -15,6 +15,6 @@ public interface OrderJpaRepository extends JpaRepository<OrderEntity, Long> {
     @Query("SELECT o FROM OrderEntity o WHERE (o.seller.id = :userId OR o.buyer.id = :userId) AND (o.product.id = :productId)")
     List<OrderEntity> findByUserIdOrProductId(@Param("userId") Long userId, @Param("productId") Long productId);
 
-    List<OrderEntity> findByProductAndOrderStatusIn(Product product, List<OrderStatus> status);
+    List<OrderEntity> findByProductAndStatusIn(Product product, List<OrderStatus> status);
 
 }

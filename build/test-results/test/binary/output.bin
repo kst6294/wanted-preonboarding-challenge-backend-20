@@ -1,0 +1,2 @@
+{14:54:16.775 [Test worker] WARN com.example.wanted.order.domain.Order -- User {}는 Order {}의 판매자가 아닙니다.
+{14:54:16.802 [Test worker] WARN com.example.wanted.order.domain.Order -- User {}는 Order {}의 판매자가 아닙니다.

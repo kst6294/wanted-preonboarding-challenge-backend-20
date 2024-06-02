@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.example.wanted.order.domain.OrderTest" tests="9" skipped="0" failures="0" errors="0" timestamp="2024-06-02T05:54:16" hostname="gimmunjin-ui-MacBookPro.local" time="0.077">
+  <properties/>
+  <testcase name="구매자가_아니면_false를_반환한다()" classname="com.example.wanted.order.domain.OrderTest" time="0.064"/>
+  <testcase name="주문승인_시_주문_상태가_구매_요청이_아니면_예외가_발생한다()" classname="com.example.wanted.order.domain.OrderTest" time="0.002"/>
+  <testcase name="OrderCreate로_회원은_상품을_주문할_수_있다()" classname="com.example.wanted.order.domain.OrderTest" time="0.002"/>
+  <testcase name="판매자는_자신의_제품에_구매요청을_생성할_수_없습니다()" classname="com.example.wanted.order.domain.OrderTest" time="0.001"/>
+  <testcase name="주문을_승인할_수_있다()" classname="com.example.wanted.order.domain.OrderTest" time="0.0"/>
+  <testcase name="판매자가_아니면_주문을_승인할_수_없다()" classname="com.example.wanted.order.domain.OrderTest" time="0.002"/>
+  <testcase name="판매자이면_true를_반환한다()" classname="com.example.wanted.order.domain.OrderTest" time="0.0"/>
+  <testcase name="판매자가_아니면_false를_반환한다()" classname="com.example.wanted.order.domain.OrderTest" time="0.001"/>
+  <testcase name="구매자이면_true를_반환한다()" classname="com.example.wanted.order.domain.OrderTest" time="0.0"/>
+  <system-out><![CDATA[14:54:16.775 [Test worker] WARN com.example.wanted.order.domain.Order -- User {}는 Order {}의 판매자가 아닙니다.
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -1,9 +1,15 @@
 package com.example.wanted.product.controller;
 
+import com.example.wanted.order.service.response.OrderResponse;
 import com.example.wanted.product.domain.ProductCreate;
 import com.example.wanted.product.service.ProductService;
 import com.example.wanted.product.service.response.ProductResponse;
 import com.example.wanted.user.domain.UserCreate;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -17,10 +23,13 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v0/products")
 @RequiredArgsConstructor
+@Tag(name = "Product", description = "Product API")
 public class ProductController {
     private final ProductService productService;
 
     @PostMapping("")
+    @Operation(summary = "제품 등록", description = "판매할 제품을 등록합니다")
+    @ApiResponse(responseCode = "200", description = "제품 등록 성공", content = @Content(schema = @Schema(implementation = ProductResponse.class)))
     public ResponseEntity<Long> create(
             @RequestBody ProductCreate request,
             Principal principal
@@ -32,6 +41,8 @@ public class ProductController {
     }
 
     @GetMapping("/{id}")
+    @Operation(summary = "제품 상세 조회", description = "Product Id로 제품 상세 정보를 조회합니다")
+    @ApiResponse(responseCode = "200", description = "조회 성공", content = @Content(schema = @Schema(implementation = ProductResponse.class)))
     public ResponseEntity<ProductResponse> getById(
             @PathVariable("id") long id
     ) {
@@ -41,6 +52,8 @@ public class ProductController {
     }
 
     @GetMapping("")
+    @Operation(summary = "제품 리스트 조회", description = "모든 제품들을 조회합니다")
+    @ApiResponse(responseCode = "200", description = "조회 성공", content = @Content(schema = @Schema(implementation = ProductResponse.class)))
     public ResponseEntity<List<ProductResponse>> getList() {
         return ResponseEntity
                 .ok()

@@ -5,24 +5,25 @@ spring:
       on-profile: prod # 기본 환경을 dev로
 
   jwt:
-    secret-key: testtesttesttest
+    secret-key: wantedTestdateasdfkjklawjerlkjdklsjflqiojejoahoifdfaasdfdasfeawrqwerasdfewqreafdsf
     access-token-expire: 432000
     refresh-token-expire: 120960000
 
-#  datasource:
-#    url: jdbc:mysql://localhost:3306/PlanITtest?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
-#    username: root
-#    password: 1543
-#    driver-class-name: com.mysql.cj.jdbc.Driver
-#  jpa:
-#    hibernate.ddl-auto: create
-#    properties:
-#      hibernate:
-#        format_sql: true
-#  data:
-#    redis:
-#      host: 127.0.0.1
-#      port: 6379
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:~/mem-data
+    username: sa
+    password:
+
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: create
 
   mvc:
     cors:

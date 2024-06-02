@@ -36,6 +36,7 @@ public class ProductService {
         return product.getId();
     }
 
+    @Transactional(readOnly = true)
     public ProductResponse getById(long id) {
         Product product = productRepository.findById(id).orElseThrow(() ->
                 new ResourceNotFoundException("Product", id)
@@ -44,6 +45,7 @@ public class ProductService {
         return ProductResponse.from(product);
     }
 
+    @Transactional(readOnly = true)
     public List<ProductResponse> getList() {
         List<Product> products = productRepository.find();
 

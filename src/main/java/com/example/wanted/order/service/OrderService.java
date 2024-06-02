@@ -92,6 +92,7 @@ public class OrderService {
         return OrderResponse.from(order);
     }
 
+    @Transactional(readOnly = true)
     public OrderResponse getById(Long id) {
         Order order = orderRepository.findById(id).orElseThrow(() ->
                 new ResourceNotFoundException("Order", id)
@@ -100,6 +101,7 @@ public class OrderService {
         return OrderResponse.from(order);
     }
 
+    @Transactional(readOnly = true)
     public List<OrderResponse> getByUserId(Long userId) {
         User user = userRepository.findById(userId).orElseThrow(() ->
                 new ResourceNotFoundException("User", userId)
@@ -108,7 +110,8 @@ public class OrderService {
         return orderRepository.findByUser(user).stream().map(OrderResponse::from).collect(Collectors.toList());
     }
 
-    public List<OrderResponse> getByProductAndUser(Long userId, Long productId) {
+    @Transactional(readOnly = true)
+    public List<OrderResponse> getByUserIdAndProductId(Long userId, Long productId) {
         User user = userRepository.findById(userId).orElseThrow(() ->
                 new ResourceNotFoundException("User", userId)
         );

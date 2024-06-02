@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.example.wanted.product.domain.ProductTest" tests="9" skipped="0" failures="0" errors="0" timestamp="2024-06-02T05:54:16" hostname="gimmunjin-ui-MacBookPro.local" time="0.004">
+  <properties/>
+  <testcase name="ProductCreate로_제품을_등록할_수_있다()" classname="com.example.wanted.product.domain.ProductTest" time="0.001"/>
+  <testcase name="예약중이_아니면_판매_완료할_수_없다()" classname="com.example.wanted.product.domain.ProductTest" time="0.0"/>
+  <testcase name="user가_판매자가_아니면_true를_반환한다()" classname="com.example.wanted.product.domain.ProductTest" time="0.0"/>
+  <testcase name="재고가_없으면_재고를_감소시킬_수_없다()" classname="com.example.wanted.product.domain.ProductTest" time="0.0"/>
+  <testcase name="Product의_재고가_1개_남았었으면_판매_상태를_예약중으로_변경한다()" classname="com.example.wanted.product.domain.ProductTest" time="0.0"/>
+  <testcase name="user가_판매자이면_true를_반환한다()" classname="com.example.wanted.product.domain.ProductTest" time="0.0"/>
+  <testcase name="재고가_남아있으면_판매_완료할_수_없다()" classname="com.example.wanted.product.domain.ProductTest" time="0.0"/>
+  <testcase name="판매_완료_상태로_변경할_수_있다()" classname="com.example.wanted.product.domain.ProductTest" time="0.001"/>
+  <testcase name="Product의_재고를_감소시킬_수_있다()" classname="com.example.wanted.product.domain.ProductTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

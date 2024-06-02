@@ -48,7 +48,7 @@ public class OrderRepositoryImpl implements OrderRepository {
     @Override
     public List<Order> findByProductAndOrderStatusIn(Product product, List<OrderStatus> status) {
         return orderJpaRepository
-                .findByProductAndOrderStatusIn(product, status)
+                .findByProductAndStatusIn(product, status)
                 .stream()
                 .map(OrderEntity::toModel)
                 .collect(Collectors.toList());

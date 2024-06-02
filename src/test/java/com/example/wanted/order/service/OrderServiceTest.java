@@ -13,7 +13,6 @@ import com.example.wanted.product.domain.ProductSellingStatus;
 import com.example.wanted.user.domain.Role;
 import com.example.wanted.user.domain.User;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -1074,7 +1073,7 @@ class OrderServiceTest {
         fakeOrderRepository.save(order2);
 
         //when
-        List<OrderResponse> result = orderService.getByProductAndUser(2L,1L);
+        List<OrderResponse> result = orderService.getByUserIdAndProductId(2L,1L);
 
         //then
         assertThat(result).hasSize(1);
@@ -1150,7 +1149,7 @@ class OrderServiceTest {
         //when
         //then
         assertThatThrownBy(() ->
-                orderService.getByProductAndUser(3L,1L)
+                orderService.getByUserIdAndProductId(3L,1L)
         ).isInstanceOf(ResourceNotFoundException.class);
     }
 
@@ -1218,7 +1217,7 @@ class OrderServiceTest {
         //when
         //then
         assertThatThrownBy(() ->
-                orderService.getByProductAndUser(2L,3L)
+                orderService.getByUserIdAndProductId(2L,3L)
         ).isInstanceOf(ResourceNotFoundException.class);
     }
 
@@ -1274,7 +1273,7 @@ class OrderServiceTest {
         fakeOrderRepository.save(order1);
 
         //when
-        List<OrderResponse> result = orderService.getByProductAndUser(2L,2L);
+        List<OrderResponse> result = orderService.getByUserIdAndProductId(2L,2L);
 
         //then
         assertThat(result).hasSize(0);
