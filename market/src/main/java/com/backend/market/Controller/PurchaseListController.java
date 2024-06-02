@@ -1,10 +1,12 @@
 package com.backend.market.Controller;
 
+import com.backend.market.Common.auth.UserDetailsImpl;
 import com.backend.market.DAO.Entity.PurchaseList;
 import com.backend.market.Request.ProductReq;
 import com.backend.market.Service.purchaseList.PurchaseListService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -16,21 +18,23 @@ import java.util.Objects;
 public class PurchaseListController {
     private PurchaseListService purchaseListService;
 
-    @PostMapping("/add/{buy_id}")
-    public ResponseEntity<?> createPurchaseList(@PathVariable Long buy_id, @RequestBody ProductReq productReq){
+    @PostMapping("/add")
+    public ResponseEntity<?> createPurchaseList(@AuthenticationPrincipal UserDetailsImpl userDetails
+            , @RequestBody ProductReq productReq){
 
-        if(Objects.equals(productReq.getMember().getUserId(), buy_id))
+        if(Objects.equals(productReq.getMember().getUserId(), userDetails.getMember().getUserId()))
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"구입 권한이 없습니다.");
 
-        purchaseListService.addPurchasList(productReq,buy_id);
+        purchaseListService.addPurchasList(productReq,userDetails);
 
         return new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
     }
 
     @GetMapping("list/{member_id}")
-    public ResponseEntity<?> getPurchaseList(@PathVariable Long member_id, @RequestBody ProductReq productReq)
+    public ResponseEntity<?> getPurchaseList(@PathVariable Long member_id, @RequestBody ProductReq productReq
+    , @AuthenticationPrincipal UserDetailsImpl userDetails)
     {
-        List<PurchaseList> lists = this.purchaseListService.getTransHistory(productReq,member_id);
+        List<PurchaseList> lists = this.purchaseListService.getTransHistory(productReq,member_id,userDetails);
 
         if(lists.isEmpty())
         {

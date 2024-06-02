@@ -16,8 +16,13 @@ public class Member {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long userId;
 
+    @Column(nullable = false, length = 30, updatable = false, unique = true)
+    String logInId;
+
+    @Column(nullable = false)
     String name;
 
+    @Column(nullable = false, length = 20)
     String password;
 
     //제품과 연결, 회원이 사라지면 해당 제품도 다같이 삭제

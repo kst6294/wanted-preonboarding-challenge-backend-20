@@ -1,13 +1,20 @@
 package com.backend.market.Service.Product;
 
+import com.backend.market.Common.auth.UserDetailsImpl;
+import com.backend.market.DAO.Entity.Member;
 import com.backend.market.DAO.Entity.Product;
 import com.backend.market.DAO.Entity.PurchaseList;
 import com.backend.market.DAO.Entity.Status;
+import com.backend.market.Repository.MemberRepository;
+import com.backend.market.Repository.ProductRepository;
 import com.backend.market.Request.ProductReq;
+import com.backend.market.Service.purchaseList.PurchaseListService;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.metamodel.internal.MemberResolver;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,16 +22,19 @@ import java.util.Optional;
 @Service
 public class ProductService {
 
+    private final MemberRepository memberRepository;
     private final ProductRepository productRepository;
+    private final PurchaseListService purchaseListService;
 
     public List<Product> getList()
     {
         return this.productRepository.findAll();
     }
 
-    //TODO: 판매자와 구매자는 제품의 상세정보를 조회하면 당사자간의 이전 거래내역을 볼 수 있다.
-    public Product getProduct(Long id)throws Exception
+    public Product getProduct(Long id,UserDetailsImpl userDetails)throws Exception
     {
+        Member member = isExistUser(userDetails);
+
         Optional<Product> product = this.productRepository.findById(id);
         if(product.isPresent())
         {
@@ -36,21 +46,26 @@ public class ProductService {
 
     }
 
-    public Product addProduct(ProductReq productReq)
+    public Product addProduct(ProductReq productReq, UserDetailsImpl userDetails)
     {
         Product product = new Product();
+        Member member = isExistUser(userDetails);
+        if(member == null ) return null;
         product.setProduct_name(productReq.getProduct_name());
         product.setStatus(Status.sale);
         product.setPrice(productReq.getPrice());
         product.setQuantity(productReq.getQuantity());
-        product.setMember(productReq.getMember());
+        product.setMember(member);
         product.setCreaeDate(LocalDate.now());
 
         return this.productRepository.save(product);
     }
 
-    public boolean updateStatus(ProductReq productReq)
+    public boolean updateStatus(ProductReq productReq, UserDetailsImpl userDetails)
     {
+        Member member = isExistUser(userDetails);
+        if(member == null) return false;
+
         Optional<Product> product = productRepository.findById(productReq.getProduct_id());
 
         if(product.isPresent()) {
@@ -67,27 +82,37 @@ public class ProductService {
         return false;
     }
 
-    //판매승인이 되면 거래내역 등록
-    public void addPurchasList(ProductReq productReq, Long buy_id)
+    //판매승인
+    public void permitSaleForProduct(ProductReq productReq, UserDetailsImpl userDetails)
     {
-        PurchaseList purchaseList = new PurchaseList();
-        //등록한 판매자의 아이디
-        Long id = productReq.getMember().getUserId();
+        //제품 상태 변경 : 예약 -> 완료
+        productReq.setStatus(Status.complete);
+        updateStatus(productReq,userDetails);
 
-        purchaseList.setProduct_id(productReq.getProduct_id());
-        purchaseList.setBuyer_id(buy_id);
-        purchaseList.setSeller_id(id);
-        purchaseList.setCreaeDate(LocalDate.now());
-
+        //거래내역 상태 변경
+        purchaseListService.updateOrderStatus(productReq);
     }
 
-    public List<Product> getBoughtList(Long id)
+
+    public List<Product> getBoughtList(Long id, UserDetailsImpl userDetails)
     {
+        Member member = isExistUser(userDetails);
+        if(member == null) return null;
+
         return this.productRepository.findAllCompleteById(id);
     }
 
-    public List<Product> getReservationsList(Long id)
+    public List<Product> getReservationsList(Long id , UserDetailsImpl userDetails)
     {
+        Member member = isExistUser(userDetails);
+        if(member == null) return null;
         return this.productRepository.findAllReservationById(id);
+    }
+
+    private Member isExistUser(UserDetailsImpl userDetails)
+    {
+        Long userId = userDetails.getUser().getUserId();
+        Optional<Member> findMember = memberRepository.findById(userId);
+        return findMember.orElse(null);
     }
 }

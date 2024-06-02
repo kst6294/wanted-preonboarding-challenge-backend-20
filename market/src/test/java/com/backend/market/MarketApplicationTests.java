@@ -1,17 +1,13 @@
 package com.backend.market;
 
 import com.backend.market.DAO.Entity.Member;
-import com.backend.market.DAO.Entity.Product;
-import com.backend.market.DAO.Entity.Status;
-import com.backend.market.Request.ProductReq;
-import com.backend.market.Service.Member.MemberRepository;
-import com.backend.market.Service.Product.ProductRepository;
+import com.backend.market.Repository.MemberRepository;
+import com.backend.market.Repository.ProductRepository;
 import com.backend.market.Service.Product.ProductService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.time.LocalDate;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

@@ -1,4 +1,4 @@
-package com.backend.market.Service.Product;
+package com.backend.market.Repository;
 
 import com.backend.market.DAO.Entity.Product;
 import org.springframework.data.jpa.repository.JpaRepository;

@@ -18,12 +18,13 @@ public class PurchaseList {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
-    Long buyer_id;
+    Long buyerId;
 
-    Long seller_id;
+    Long sellerId;
 
     Long product_id;
 
-    LocalDate creaeDate;
+    OrderStatus orderStatus;
 
+    LocalDate creaeDate;
 }
