@@ -18,6 +18,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
 
+import static com.sunyesle.wanted_market.support.AuthSteps.회원가입_요청;
 import static io.restassured.RestAssured.given;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -50,7 +51,6 @@ class AuthAcceptanceTest {
 
         ExtractableResponse<Response> response = 회원가입_요청(signupRequest);
 
-        assertThat(response.statusCode()).isEqualTo(HttpStatus.CREATED.value());
         SignupResponse signupResponse =  response.as(SignupResponse.class);
         assertThat(signupResponse.getId()).isNotNull();
     }
@@ -79,20 +79,5 @@ class AuthAcceptanceTest {
         assertThat(response.statusCode()).isEqualTo(HttpStatus.OK.value());
         SigninResponse signinResponse = response.as(SigninResponse.class);
         assertThat(signinResponse.getToken()).isNotNull();
-    }
-
-    private ExtractableResponse<Response> 회원가입_요청(SignupRequest signupRequest) throws JsonProcessingException {
-        ExtractableResponse<Response> response =
-                given()
-                        .log().all()
-                        .basePath("/api/v1/auth/signup")
-                        .body(objectMapper.writeValueAsString(signupRequest))
-                        .contentType(ContentType.JSON)
-                .when()
-                        .post()
-                .then()
-                        .log().all()
-                        .extract();
-        return response;
     }
 }

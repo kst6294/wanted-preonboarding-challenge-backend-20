@@ -1,0 +1,51 @@
+package com.sunyesle.wanted_market.support;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sunyesle.wanted_market.dto.SigninRequest;
+import com.sunyesle.wanted_market.dto.SignupRequest;
+import io.restassured.http.ContentType;
+import io.restassured.response.ExtractableResponse;
+import io.restassured.response.Response;
+import org.springframework.http.HttpStatus;
+
+import static io.restassured.RestAssured.given;
+
+public class AuthSteps {
+
+    public static ExtractableResponse<Response> 회원가입_요청(SignupRequest signupRequest) throws JsonProcessingException {
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        ExtractableResponse<Response> response =
+                given()
+                        .log().all()
+                        .basePath("/api/v1/auth/signup")
+                        .contentType(ContentType.JSON)
+                        .body(objectMapper.writeValueAsString(signupRequest))
+                .when()
+                        .post()
+                .then()
+                        .log().all()
+                        .statusCode(HttpStatus.CREATED.value())
+                        .extract();
+        return response;
+    }
+
+    public static ExtractableResponse<Response> 로그인_요청(SigninRequest signinRequest) throws JsonProcessingException {
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        ExtractableResponse<Response>  response =
+                given()
+                        .log().all()
+                        .basePath("/api/v1/auth/signin")
+                        .contentType(ContentType.JSON)
+                        .body(objectMapper.writeValueAsString(signinRequest))
+                .when()
+                        .post()
+                .then()
+                        .log().all()
+                        .statusCode(HttpStatus.OK.value())
+                        .extract();
+        return response;
+    }
+}
