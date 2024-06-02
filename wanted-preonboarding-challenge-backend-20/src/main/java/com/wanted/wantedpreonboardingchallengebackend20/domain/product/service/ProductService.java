@@ -9,4 +9,5 @@ public interface ProductService {
     RegistProductResponseDto registProduct(User user, RegistProductRequestDto requestDto);
     ListProductResponseDto listProduct();
     boolean buyProduct(User user,Long productId);
+    boolean sellProduct(User user,Long productId);
 }

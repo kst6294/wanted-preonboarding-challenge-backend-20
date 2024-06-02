@@ -60,4 +60,19 @@ public class ProductController {
                         .resultMessage("거래 진행 불가")
                         .build());
     }
+    @GetMapping("/sell/{productId}")
+    public ResponseEntity<SuccessResponseDto> sellProduct(@PathVariable Long productId){
+        User loggedInUser=user.getLoggedInUser();
+        boolean response= productService.sellProduct(loggedInUser,productId);
+        if(response){
+            return ResponseEntity.status(HttpStatus.OK)
+                    .body(SuccessResponseDto.builder().statusCode(HttpStatus.OK)
+                            .resultMessage("판매 완료")
+                            .build());
+        }
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(SuccessResponseDto.builder().statusCode(HttpStatus.OK)
+                        .resultMessage("판매 불가")
+                        .build());
+    }
 }

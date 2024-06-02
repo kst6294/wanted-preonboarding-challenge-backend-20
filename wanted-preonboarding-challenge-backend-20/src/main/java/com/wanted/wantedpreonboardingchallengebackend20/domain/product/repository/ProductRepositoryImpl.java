@@ -18,4 +18,11 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom{
                 .where(product.id.eq(productId))
                 .execute();
     }
+    @Override
+    public void sellProduct(Long productId){
+        queryFactory.update(product)
+                .set(product.state,ProductState.SOLD)
+                .where(product.id.eq(productId))
+                .execute();
+    }
 }

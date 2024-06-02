@@ -2,4 +2,5 @@ package com.wanted.wantedpreonboardingchallengebackend20.domain.product.reposito
 
 public interface ProductRepositoryCustom {
     void modifyProductState(Long productId);
+    void sellProduct(Long productId);
 }

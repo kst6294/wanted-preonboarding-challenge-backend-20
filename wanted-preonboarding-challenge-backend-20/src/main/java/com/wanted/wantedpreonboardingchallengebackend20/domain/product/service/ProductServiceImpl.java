@@ -69,4 +69,16 @@ public class ProductServiceImpl implements ProductService{
         }
         return false;
     }
+    @Override
+    @Transactional
+    public boolean sellProduct(User user,Long productId){
+        Product product=productRepository.findById(productId).get();
+        User seller=userRepository.findByNameAndUserId(product.getUser().getName(),product.getUser().getUserId());
+        User foundUser=userRepository.findByNameAndUserId(user.getName(), user.getUserId());
+        if (seller.getId() == foundUser.getId() && product.getState() == ProductState.PROCESSING) {
+            productRepository.sellProduct(productId);
+            return true;
+        }
+        return false;
+    }
 }
