@@ -28,4 +28,7 @@ public interface PurchaseRepository extends JpaRepository<Purchase, Long> {
 
     @EntityGraph(attributePaths = {"user", "product"})
     Optional<Purchase> findByProductAndUser(Product product, User user);
+
+    @EntityGraph(attributePaths = {"user", "product"})
+    List<Purchase> findAllByUser(User user);
 }

@@ -10,4 +10,5 @@ public interface ProductService {
     void addProduct(Long userId, AddProductRequest addProductRequest);
     List<ProductResponse> getProducts();
     ProductDetailResponse getProduct(Long userId, Long productId);
+    List<ProductResponse> getPurchasedProducts(Long userId);
 }

@@ -29,4 +29,15 @@ public class ProductResponse {
                 .build();
     }
 
+    public static ProductResponse of(Product product, Integer price) {
+        return ProductResponse.builder()
+                .id(product.getId())
+                .seller(UserResponse.of(product.getUser()))
+                .name(product.getName())
+                .price(price)
+                .quantity(product.getQuantity())
+                .state(product.getState())
+                .build();
+    }
+
 }
