@@ -1,6 +1,7 @@
 package com.wanted.preonboarding.domain.product.controller;
 
 import com.wanted.preonboarding.domain.product.dto.request.AddProductRequest;
+import com.wanted.preonboarding.domain.product.dto.response.ProductDetailResponse;
 import com.wanted.preonboarding.domain.product.dto.response.ProductResponse;
 import com.wanted.preonboarding.domain.product.service.ProductService;
 import com.wanted.preonboarding.global.auth.AuthUser;
@@ -38,11 +39,10 @@ public class ProductController {
     
     @GetMapping("/{productId}")
     public ResponseEntity<?> getProducts(@AuthUser Long userId, @PathVariable Long productId) {
-        System.out.println(userId);
-        ProductResponse productResponse = productService.getProduct(productId);
+        ProductDetailResponse productDetailResponse = productService.getProduct(userId, productId);
         return ResponseEntity
                 .status(HttpStatus.CREATED)
-                .body(ApiResponse.createSuccess(productResponse, "상품상세 조회가 완료되었습니다."));
+                .body(ApiResponse.createSuccess(productDetailResponse, "상품상세 조회가 완료되었습니다."));
     }
 }
 

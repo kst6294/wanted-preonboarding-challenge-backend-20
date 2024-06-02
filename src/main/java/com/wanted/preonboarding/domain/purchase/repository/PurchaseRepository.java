@@ -11,6 +11,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Lock;
 import org.springframework.data.jpa.repository.Query;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface PurchaseRepository extends JpaRepository<Purchase, Long> {
@@ -21,4 +22,10 @@ public interface PurchaseRepository extends JpaRepository<Purchase, Long> {
     Optional<Purchase> findByIdWithLock(Long id);
 
     boolean existsByProductAndStateNot(Product product, PurchaseState purchaseState);
+
+    @EntityGraph(attributePaths = {"user", "product"})
+    List<Purchase> findAllByProduct(Product product);
+
+    @EntityGraph(attributePaths = {"user", "product"})
+    Optional<Purchase> findByProductAndUser(Product product, User user);
 }
