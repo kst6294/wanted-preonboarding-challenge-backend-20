@@ -19,10 +19,14 @@ public class RegisterRequestDto {
     @Min(value = 1, message = "가격은 0보다 커야 합니다.")
     private int price;
 
+    @Min(value = 1, message = "수량은 0보다 커야 합니다.")
+    private int quentity;
+
     public static Product from(RegisterRequestDto registrationDto, Member member) {
         return Product.builder()
                 .name(registrationDto.getName())
                 .price(registrationDto.getPrice())
+                .quantity(registrationDto.getQuentity())
                 .productStatus(ProductStatus.판매중)
                 .member(member)
                 .build();
