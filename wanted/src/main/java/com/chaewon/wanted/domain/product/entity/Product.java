@@ -25,9 +25,9 @@ public class Product extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private ProductStatus productStatus;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
-    private Member member;
+    private Member member; // 판매자
 
     public void updateProductStatus(ProductStatus productStatus) {
         this.productStatus = productStatus;

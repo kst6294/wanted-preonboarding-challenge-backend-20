@@ -42,7 +42,7 @@ public class SecurityConfig {
 
                 .authorizeHttpRequests(authorizeHttpRequests -> authorizeHttpRequests
                         .requestMatchers("/api/v2/admin/**").hasAuthority("ROLE_ADMIN")
-                        .requestMatchers("/auth/**", "/api/v1/members/sign-up", "/api/v1/members/reissue", "/api/v1/products/**")
+                        .requestMatchers("/auth/**", "/api/v1/members/sign-up", "/api/v1/members/reissue", "/api/v1/productsList/**")
                         .permitAll()
                         .requestMatchers("/api/v1/**").authenticated()
                         .anyRequest().authenticated()

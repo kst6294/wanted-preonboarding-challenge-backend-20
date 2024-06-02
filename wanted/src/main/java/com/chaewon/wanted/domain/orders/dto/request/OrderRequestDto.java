@@ -1,4 +1,4 @@
-package com.chaewon.wanted.domain.orders.dto;
+package com.chaewon.wanted.domain.orders.dto.request;
 
 import com.chaewon.wanted.domain.member.entity.Member;
 import com.chaewon.wanted.domain.orders.entity.OrderStatus;
@@ -24,13 +24,14 @@ public class OrderRequestDto {
     @Min(value = 1, message = "가격은 0보다 커야 합니다.")
     private int orderPrice;
 
-    public static Orders from(OrderRequestDto dto, Member member, Product product) {
+    public static Orders from(OrderRequestDto dto, Member buyer, Member seller, Product product) {
         return Orders.builder()
                 .orderPrice(dto.getOrderPrice())
                 .orderStatus(OrderStatus.거래시작)
-                .member(member)
+                .buyer(buyer)
+                .seller(seller)
                 .product(product)
                 .build();
     }
-
 }
+

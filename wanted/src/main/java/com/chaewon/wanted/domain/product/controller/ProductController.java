@@ -19,27 +19,26 @@ import org.springframework.web.bind.annotation.*;
 
 
 @RestController
-@RequestMapping("/api/v1/products")
+@RequestMapping("/api/v1")
 @RequiredArgsConstructor
 public class ProductController {
 
     private final ProductService productService;
 
-    @PostMapping("/register")
+    @PostMapping("/products")
     public ResponseEntity<ResponseDto> registerProduct(@AuthenticationPrincipal User user,
                                                        @Valid @RequestBody RegisterRequestDto registerRequestDto) {
         productService.registerProduct(user.getUsername(), registerRequestDto);
         return ResponseDto.of(HttpStatus.OK, "제품등록을 완료했습니다.");
     }
 
-    @GetMapping
+    @GetMapping("/productsList")
     public ResponseEntity<PageResponse<ProductResponseDto>> listProducts(@PageableDefault(size = 5) Pageable pageable) {
         Page<ProductResponseDto> products = productService.listProducts(pageable);
-        PageResponse<ProductResponseDto> response = new PageResponse<>(products);
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(new PageResponse<>(products));
     }
 
-    @GetMapping("/{productId}")
+    @GetMapping("/productsList/{productId}")
     public ResponseEntity<ProductDetailResponseDto> getProductDetails(@PathVariable(name = "productId") Long productId) {
         ProductDetailResponseDto productDetails = productService.getProductDetails(productId);
         return ResponseEntity.ok(productDetails);

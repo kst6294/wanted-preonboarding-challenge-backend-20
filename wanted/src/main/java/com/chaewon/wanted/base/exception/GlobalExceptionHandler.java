@@ -5,7 +5,8 @@ import com.chaewon.wanted.common.ResponseDto;
 import com.chaewon.wanted.domain.member.exception.InvalidRefreshTokenException;
 import com.chaewon.wanted.domain.member.exception.MemberNotFoundException;
 import com.chaewon.wanted.domain.member.exception.MultipleLoginException;
-import com.chaewon.wanted.domain.orders.exception.SelfPurchaseException;
+import com.chaewon.wanted.domain.orders.exception.*;
+import com.chaewon.wanted.domain.product.exception.NoProductsForSaleException;
 import com.chaewon.wanted.domain.product.exception.ProductNotFoundException;
 import com.chaewon.wanted.domain.product.exception.ProductUnavailableException;
 import org.springframework.http.HttpStatus;
@@ -34,9 +35,9 @@ public class GlobalExceptionHandler {
         return ResponseDto.of(HttpStatus.BAD_REQUEST, errorMessage);
     }
     @ExceptionHandler(InvalidRefreshTokenException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseStatus(HttpStatus.FORBIDDEN)
     public ResponseEntity<ResponseDto> handleInvalidRefreshTokenException(InvalidRefreshTokenException e) {
-        return ResponseDto.of(HttpStatus.BAD_REQUEST, e.getMessage());
+        return ResponseDto.of(HttpStatus.FORBIDDEN, e.getMessage());
     }
 
     @ExceptionHandler(InvalidTokenException.class)
@@ -71,6 +72,36 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.CONFLICT)
     public ResponseEntity<ResponseDto> handleProductUnavailableException(ProductUnavailableException e) {
         return ResponseDto.of(HttpStatus.CONFLICT, e.getMessage());
+    }
+
+    @ExceptionHandler(NoOrderException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public ResponseEntity<ResponseDto> handleNoOrderException(NoOrderException e) {
+        return ResponseDto.of(HttpStatus.CONFLICT, e.getMessage());
+    }
+
+    @ExceptionHandler(NoProductsForSaleException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ResponseEntity<ResponseDto> handleNoProductsForSaleException(NoProductsForSaleException e) {
+        return ResponseDto.of(HttpStatus.NOT_FOUND, e.getMessage());
+    }
+
+    @ExceptionHandler(OrderNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ResponseEntity<ResponseDto> handleOrderNotFoundException(OrderNotFoundException e) {
+        return ResponseDto.of(HttpStatus.NOT_FOUND, e.getMessage());
+    }
+
+    @ExceptionHandler(DuplicateApprovalException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public ResponseEntity<ResponseDto> handleDuplicateApprovalException(DuplicateApprovalException e) {
+        return ResponseDto.of(HttpStatus.CONFLICT, e.getMessage());
+    }
+
+    @ExceptionHandler(UnauthorizedException.class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    public ResponseEntity<ResponseDto> handleUnauthorizedException(UnauthorizedException e) {
+        return ResponseDto.of(HttpStatus.UNAUTHORIZED, e.getMessage());
     }
 
 }
