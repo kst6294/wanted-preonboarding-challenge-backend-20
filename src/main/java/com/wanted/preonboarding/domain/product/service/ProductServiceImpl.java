@@ -2,10 +2,14 @@ package com.wanted.preonboarding.domain.product.service;
 
 import com.wanted.preonboarding.domain.product.dto.request.AddProductRequest;
 import com.wanted.preonboarding.domain.product.dto.response.ProductDetailResponse;
+import com.wanted.preonboarding.domain.product.dto.response.ProductReservationResponse;
 import com.wanted.preonboarding.domain.product.dto.response.ProductResponse;
 import com.wanted.preonboarding.domain.product.entity.Product;
+import com.wanted.preonboarding.domain.product.entity.ProductState;
 import com.wanted.preonboarding.domain.product.repository.ProductRepository;
+import com.wanted.preonboarding.domain.purchase.dto.response.PurchaseProductResponse;
 import com.wanted.preonboarding.domain.purchase.entity.Purchase;
+import com.wanted.preonboarding.domain.purchase.entity.PurchaseState;
 import com.wanted.preonboarding.domain.purchase.repository.PurchaseRepository;
 import com.wanted.preonboarding.domain.user.entity.User;
 import com.wanted.preonboarding.domain.user.repository.UserRepository;
@@ -62,11 +66,24 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<ProductResponse> getPurchasedProducts(Long userId) {
+    public List<PurchaseProductResponse> getPurchasedProducts(Long userId) {
         User user = userRepository.findById(userId).orElseThrow(() -> new RestApiException(UserErrorCode.USER_NOT_FOUND, "유저를 찾을 수 없습니다. 아이디: "+userId));
         List<Purchase> purchaseList = purchaseRepository.findAllByUser(user);
-        List<ProductResponse> productResponseList = new ArrayList<>();
-        for(Purchase purchase : purchaseList) productResponseList.add(ProductResponse.of(purchase.getProduct(), purchase.getPrice()));
+        List<PurchaseProductResponse> productResponseList = new ArrayList<>();
+        for(Purchase purchase : purchaseList) productResponseList.add(PurchaseProductResponse.of(purchase));
         return productResponseList;
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public ProductReservationResponse getReservatedProducts(Long userId) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new RestApiException(UserErrorCode.USER_NOT_FOUND, "유저를 찾을 수 없습니다. 아이디: "+userId));
+        // 현재 사용자가 판매중이면서 예약중인 용품
+        List<Product> productList = productRepository.findAllByUserAndState(user, ProductState.RESERVATION);
+
+        // 현재 사용자가 구매중이면서 예약중인 용품
+        List<Purchase> purchaseList = purchaseRepository.findAllByUserAndStateNot(user, PurchaseState.CONFIRM_PURCHASE);
+
+        return ProductReservationResponse.of(productList, purchaseList);
     }
 }

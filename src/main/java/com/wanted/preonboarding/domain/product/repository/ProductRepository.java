@@ -1,6 +1,8 @@
 package com.wanted.preonboarding.domain.product.repository;
 
 import com.wanted.preonboarding.domain.product.entity.Product;
+import com.wanted.preonboarding.domain.product.entity.ProductState;
+import com.wanted.preonboarding.domain.user.entity.User;
 import jakarta.persistence.LockModeType;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -23,5 +25,6 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     @EntityGraph(attributePaths = {"user"})
     Optional<Product> findById(Long id);
 
-
+    @EntityGraph(attributePaths = {"user"})
+    List<Product> findAllByUserAndState(User user, ProductState productState);
 }

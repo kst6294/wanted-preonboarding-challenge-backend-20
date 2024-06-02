@@ -2,8 +2,10 @@ package com.wanted.preonboarding.domain.product.controller;
 
 import com.wanted.preonboarding.domain.product.dto.request.AddProductRequest;
 import com.wanted.preonboarding.domain.product.dto.response.ProductDetailResponse;
+import com.wanted.preonboarding.domain.product.dto.response.ProductReservationResponse;
 import com.wanted.preonboarding.domain.product.dto.response.ProductResponse;
 import com.wanted.preonboarding.domain.product.service.ProductService;
+import com.wanted.preonboarding.domain.purchase.dto.response.PurchaseProductResponse;
 import com.wanted.preonboarding.global.auth.AuthUser;
 import com.wanted.preonboarding.global.entity.ApiResponse;
 import jakarta.validation.Valid;
@@ -47,10 +49,18 @@ public class ProductController {
     
     @GetMapping("/purchase")
     public ResponseEntity<?> getPurchasedProducts(@AuthUser Long userId) {
-        List<ProductResponse> productResponseList = productService.getPurchasedProducts(userId);
+        List<PurchaseProductResponse> productResponseList = productService.getPurchasedProducts(userId);
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(ApiResponse.createSuccess(productResponseList, "상품구매 리스트 조회가 완료되었습니다."));
+    }
+
+    @GetMapping("/reservation")
+    public ResponseEntity<?> getReservatedProducts(@AuthUser Long userId) {
+        ProductReservationResponse productResponseList = productService.getReservatedProducts(userId);
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(ApiResponse.createSuccess(productResponseList, "상품 예약 리스트 조회가 완료되었습니다."));
     }
 }
 

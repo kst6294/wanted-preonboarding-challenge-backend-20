@@ -28,7 +28,7 @@ public class SecurityConfig {
                .httpBasic(HttpBasicConfigurer::disable)
                .authorizeHttpRequests(requests -> requests
                        .requestMatchers("/user/login", "/user/join", "/user/email").permitAll()
-                       .requestMatchers(HttpMethod.GET, "/product/purchase").authenticated()
+                       .requestMatchers(HttpMethod.GET, "/product/purchase", "/product/reservation").authenticated()
                        .requestMatchers(HttpMethod.GET, "/product/**").permitAll()
                        .requestMatchers("/product/**").authenticated()
                        .requestMatchers(HttpMethod.POST, "/purchase", "/purchase/accept", "/purchase/confirm").authenticated()

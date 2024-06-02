@@ -31,4 +31,9 @@ public interface PurchaseRepository extends JpaRepository<Purchase, Long> {
 
     @EntityGraph(attributePaths = {"user", "product"})
     List<Purchase> findAllByUser(User user);
+
+    List<Purchase> findAllByUserAndState(User user, PurchaseState state);
+
+    @EntityGraph(attributePaths = {"user", "product", "product.user"})
+    List<Purchase> findAllByUserAndStateNot(User user, PurchaseState purchaseState);
 }
