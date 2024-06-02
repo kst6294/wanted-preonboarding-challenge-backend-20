@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,5 +26,12 @@ public class MarketApiController {
 
     Product product = marketService.saveProduct(request);
     return ResponseEntity.status(HttpStatus.CREATED).body(new ProductResponse(product));
+  }
+
+  @PostMapping("/products/{productId}/reserve") // 상품 예약 등록
+  public ResponseEntity<ProductDto.ProductResponse> reserveProduct(@PathVariable Long productId) {
+    Product product = marketService.reserveProduct(productId);
+
+    return ResponseEntity.status(HttpStatus.OK).body(new ProductResponse(product));
   }
 }

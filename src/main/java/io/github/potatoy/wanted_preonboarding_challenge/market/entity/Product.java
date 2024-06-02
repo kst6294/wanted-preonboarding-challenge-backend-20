@@ -60,4 +60,17 @@ public class Product {
     this.price = price;
     this.state = State.SALE;
   }
+
+  /**
+   * 구매자에 대한 정보를 업데이트
+   *
+   * @param buyerUser 구매할 유저
+   * @return Product
+   */
+  public Product updateBuyerUser(User buyerUser) {
+    this.buyerUser = buyerUser;
+    this.state = State.RESERVATION;
+
+    return this;
+  }
 }
