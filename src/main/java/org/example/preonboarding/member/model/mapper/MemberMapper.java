@@ -1,7 +1,6 @@
 package org.example.preonboarding.member.model.mapper;
 
 
-
 import org.example.preonboarding.member.model.entity.Member;
 import org.example.preonboarding.member.model.payload.request.SignupRequest;
 import org.example.preonboarding.member.model.payload.response.MemberResponse;
@@ -19,7 +18,9 @@ public interface MemberMapper {
 
     @Mapping(target = "password", source = "password", qualifiedByName = "passwordEncoding")
     Member toMember(SignupRequest memberRequest);
+
     SignupResponse toSignupResponse(Member member);
+
     MemberResponse toMemberResponse(Member member);
 
     @Named("passwordEncoding")
