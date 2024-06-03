@@ -7,12 +7,16 @@ import wanted.challenge.goods.dto.request.GoodsRequestDto;
 import wanted.challenge.goods.dto.response.GoodsResponseDto;
 import wanted.challenge.goods.dto.response.GoodsResponseDto.GoodsDetail;
 import wanted.challenge.goods.entity.Goods;
+import wanted.challenge.goods.entity.GoodsStatus;
+import wanted.challenge.mypage.dto.response.MyPageResponseDto;
 import wanted.challenge.mypage.entity.Orders;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static wanted.challenge.goods.dto.response.GoodsResponseDto.*;
+import static wanted.challenge.mypage.mapper.MyPageMapper.toOrderStatusResponse;
+import static wanted.challenge.mypage.mapper.MyPageMapper.toOrderStatusTime;
 
 @Slf4j
 @Component
@@ -40,27 +44,18 @@ public class GoodsMapper {
     }
 
     public GoodsList toGoodsItem(Goods goods) {
-        GoodsList goodsList = new GoodsList();
-        goodsList.setGoodsId(goods.getGoodsId());
-        goodsList.setGoodsName(goods.getGoodsName());
-        goodsList.setGoodsPrice(goods.getGoodsPrice());
-        goodsList.setReservedStatus(goods.getReservedStatus());
-        goodsList.setQuantity(goods.getQuantity());
-        return goodsList;
+        return new GoodsList(
+                goods.getGoodsId(),
+                goods.getGoodsName(),
+                goods.getGoodsPrice(),
+                toGoodsStatus(goods.getReservedStatus()),
+                goods.getQuantity()
+        );
 
     }
 
     public GoodsDetail toGoodsDetail(Goods goods, List<Orders> ordersList) {
-        GoodsDetail goodsDetail = new GoodsDetail();
-        goodsDetail.setGoodsId(goods.getGoodsId());
-        goodsDetail.setGoodsName(goods.getGoodsName());
-        goodsDetail.setGoodsPrice(goods.getGoodsPrice());
-        goodsDetail.setReservedStatus(goods.getReservedStatus());
-        goodsDetail.setQuantity(goods.getQuantity());
-        goodsDetail.setCreatedAt(goods.getCreatedAt());
-        log.info(goodsDetail.getGoodsName());
-        List<GoodsDetail.Trade> tradeList = new ArrayList<>();
-        log.info("거래내역의 수: " + ordersList.size());
+        List<MyPageResponseDto.Trade> tradeList = new ArrayList<>();
         if(!ordersList.isEmpty()) {
             log.info("거래내역이 있습니다.");
             // 거래내역이 있는지 확인
@@ -68,42 +63,45 @@ public class GoodsMapper {
                 tradeList.add(toTradeResponse(trade));
             }
         }
-        goodsDetail.setTradeList(tradeList);
-        return goodsDetail;
+        return new GoodsDetail(
+                goods.getGoodsId(),
+                goods.getGoodsName(),
+                goods.getGoodsPrice(),
+                toGoodsStatus(goods.getReservedStatus()),
+                goods.getQuantity(),
+                goods.getCreatedAt(),
+                tradeList
+        );
     }
     public UpdateGoods toUpdateGoods(Goods goods) {
-        UpdateGoods updateGoods = new UpdateGoods();
-        updateGoods.setGoodsId(goods.getGoodsId());
-        updateGoods.setGoodsName(goods.getGoodsName());
-        updateGoods.setGoodsPrice(goods.getGoodsPrice());
-        updateGoods.setReservedStatus(goods.getReservedStatus());
-        updateGoods.setQuantity(goods.getQuantity());
-        updateGoods.setCreatedAt(goods.getCreatedAt());
-        return updateGoods;
+        return new UpdateGoods(
+                goods.getGoodsId(),
+                goods.getGoodsName(),
+                goods.getGoodsPrice(),
+                toGoodsStatus(goods.getReservedStatus()),
+                goods.getQuantity(),
+                goods.getCreatedAt()
+        );
     }
 
-    private GoodsDetail.Trade toTradeResponse(Orders trade) {
-        GoodsDetail.Trade tradeResponse = new GoodsDetail.Trade();
-        tradeResponse.setOrderId(trade.getOrderId());
-        tradeResponse.setTradeStatus(trade.getOrderStatus());
-        switch (trade.getOrderStatus()) {
-            case "order":
-                tradeResponse.setTradeStatus("승인대기");
-                tradeResponse.setTradeAt(trade.getOrderDate());
-                break;
-            case "comfirm":
-                tradeResponse.setTradeStatus("확정대기");
-                tradeResponse.setTradeAt(trade.getConfirmDate());
-                break;
-            case "finish":
-                tradeResponse.setTradeStatus("완료");
-                tradeResponse.setTradeAt(trade.getFinishDate());
-                break;
-        }
-        log.info("거래금액: " + trade.getOrderPrice());
-        tradeResponse.setTradePrice(trade.getOrderPrice());
-        tradeResponse.setQuantity(trade.getQuantity());
-        return tradeResponse;
+    // 한 제품의 거래내역
+    private MyPageResponseDto.Trade toTradeResponse(Orders trade) {
+
+        return new MyPageResponseDto.Trade(
+                trade.getOrderId(),
+                toOrderStatusTime(trade.getOrderStatus(), trade),
+                toOrderStatusResponse(trade.getOrderStatus()),
+                trade.getGoods().getGoodsPrice(),
+                trade.getQuantity()
+                );
     }
 
+    public static GoodsResponseDto.GoodsStatus toGoodsStatus(GoodsStatus status) {
+        return switch (status) {
+            case sale -> GoodsResponseDto.GoodsStatus.판매중;
+            case reserved -> GoodsResponseDto.GoodsStatus.예약중;
+            case sold -> GoodsResponseDto.GoodsStatus.판매완료;
+            default -> throw new IllegalArgumentException("올바르지 않은 상품 상태입니다.");
+        };
+    }
 }
