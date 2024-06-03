@@ -1,0 +1,27 @@
+spring:
+  application:
+    name: market
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/test_db
+    username: test_user
+    password: test_password
+    hikari:
+      minimum-idle: 20
+      maximum-pool-size: 20
+      max-lifetime: 21600000
+      connection-timeout: 10000
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      password:
+      connect-timeout:
+  jpa:
+    generate-ddl: true
+    show-sql: true
+    hibernate:
+      ddl-auto: create-drop
+mybatis:
+  mapper-locations: classpath:mapper/**/*.xml
+  type-aliases-package: classpath:main/java/com/wanted/market

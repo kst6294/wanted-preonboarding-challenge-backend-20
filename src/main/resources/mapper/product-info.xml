@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.wanted.market.product.ui.dao.ProductInfoDao">
+    <select id="findAll" parameterType="com.wanted.market.common.http.dto.request.PageRequest" resultType="com.wanted.market.product.ui.dto.response.ProductInfoResponse">
+        select *
+        from PRODUCT
+    </select>
+</mapper>
