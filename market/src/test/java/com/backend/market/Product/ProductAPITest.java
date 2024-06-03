@@ -51,6 +51,7 @@ public class ProductAPITest {
 
     @Test
     void testProductFindAllAPI() throws Exception {
+
         //모든 상품목록 조회
         List<Product> lists = this.productService.getList();
         assertEquals(3,lists.size());
