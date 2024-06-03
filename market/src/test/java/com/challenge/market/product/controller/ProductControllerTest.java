@@ -1,5 +1,6 @@
 package com.challenge.market.product.controller;
 
+import com.challenge.market.product.domain.Product;
 import com.challenge.market.product.dto.ProductResponse;
 import com.challenge.market.product.service.ProductService;
 import org.assertj.core.api.Assertions;
@@ -20,6 +21,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -86,15 +88,43 @@ public class ProductControllerTest {
     void testFindProductDetailFail() throws Exception {
         // given
         // 요청 url
-        String url= "/products/{id}";
+        String url= "/products/999";
 
         // when
+        final ResultActions actions = mockMvc.perform(get(url));
+
+        // then
+        actions.andExpect(status().isBadRequest());
+    }
+
+    @Test
+    @DisplayName("제품 상세 페이지 조회 성공")
+    void testFindProductDetailSuccess() throws Exception {
+        // given
+        // 요청 url
+        doReturn(Product.builder().name("product1").build())
+                .when(productService).get(1L);
+
+        String url= "/products/1";
+
+        // when
+        final ResultActions actions = mockMvc.perform(get(url));
+
+        // then
+        actions.andExpect(status().isOk());
+    }
+
+    @Test
+    @DisplayName("상세페이지 조회 실패. 조회한 ID가 없음")
+    void fail() throws Exception {
+        // given
+        doThrow(NoSuchElementException.class).when(productService).get(-1L);
+        // when
+        String url = "/products/-1";
         ResultActions actions = mockMvc.perform(get(url));
 
         // then
         actions.andExpect(status().isBadRequest());
 
     }
-
-
 }

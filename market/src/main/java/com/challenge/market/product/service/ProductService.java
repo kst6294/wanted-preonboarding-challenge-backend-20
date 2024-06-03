@@ -5,19 +5,24 @@ import com.challenge.market.product.dto.ProductResponse;
 import com.challenge.market.product.exception.ProductRegistrationFailedException;
 import com.challenge.market.product.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 @Service
+@Slf4j
+@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class ProductService {
 
     private final ProductRepository productRepository;
 
+    @Transactional(readOnly = false)
     public void add(Product product){
 
         try{
@@ -31,15 +36,14 @@ public class ProductService {
 
     public Product get(long id) {
         return productRepository.findById(id)
-                .orElseThrow(NoSuchElementException::new);
+                .orElseThrow(()-> new NoSuchElementException("Product not found " + id ));
     }
 
-    public List<ProductResponse> findAll() {
-        return productRepository.findAll()
-                .stream()
-                .map(Product::of)
+        public List<ProductResponse> findAll() {
+            return productRepository.findAll()
+                    .stream()
+                    .map(Product::of)
                 .collect(Collectors.toList());
-
     }
 
 }

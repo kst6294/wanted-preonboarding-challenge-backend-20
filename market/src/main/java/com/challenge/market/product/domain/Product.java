@@ -38,10 +38,10 @@ public class Product {
 
     public static ProductResponse of(Product product){
         return ProductResponse.builder()
-                .id(product.id)
-                .name(product.name)
-                .price(product.price)
-                .productStatus(product.productStatus)
+                .id(product.getId())
+                .name(product.getName())
+                .price(product.getPrice())
+                .productStatus(product.getProductStatus())
                 .build();
     }
 }
