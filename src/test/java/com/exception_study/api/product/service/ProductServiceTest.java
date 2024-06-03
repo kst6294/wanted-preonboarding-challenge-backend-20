@@ -33,7 +33,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.when;
 
-@DisplayName("비즈니스로직 - 상품 등록과 조회")
+@DisplayName("비즈니스 로직 - 상품 등록과 조회")
 @SpringBootTest
 @ActiveProfiles("test")
 public class ProductServiceTest {

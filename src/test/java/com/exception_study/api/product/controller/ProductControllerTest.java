@@ -8,7 +8,6 @@ import com.exception_study.api.user_account.dto.UserAccountDto;
 import com.exception_study.api.user_account.dto.request.RegisterRequest;
 import com.exception_study.global.exception.ErrorCode;
 import com.exception_study.global.exception.StudyApplicationException;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
