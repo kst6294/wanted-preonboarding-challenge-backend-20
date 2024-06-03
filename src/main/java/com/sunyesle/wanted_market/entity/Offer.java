@@ -22,4 +22,8 @@ public class Offer {
 
     @Enumerated(EnumType.STRING)
     private OfferStatus status;
+
+    public void setStatus(OfferStatus status) {
+        this.status = status;
+    }
 }

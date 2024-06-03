@@ -22,4 +22,8 @@ public class Product {
 
     @Enumerated(EnumType.STRING)
     private ProductStatus status;
+
+    public void setStatus(ProductStatus status) {
+        this.status = status;
+    }
 }

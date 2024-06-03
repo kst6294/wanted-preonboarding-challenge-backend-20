@@ -8,10 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/offers")
@@ -23,5 +20,11 @@ public class OfferController {
     public ResponseEntity<OfferResponse> offer(@AuthenticationPrincipal CustomUserDetails member, @RequestBody OfferRequest offerRequest){
         OfferResponse response = offerService.offer(member.getId(), offerRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    }
+
+    @PutMapping("/{id}/accept")
+    public ResponseEntity<OfferResponse> accept(@AuthenticationPrincipal CustomUserDetails member, @PathVariable Long id){
+        OfferResponse response = offerService.accept(member.getId(), id);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 }
