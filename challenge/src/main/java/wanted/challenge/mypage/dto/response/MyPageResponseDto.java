@@ -17,54 +17,43 @@ public class MyPageResponseDto {
     // 구매중인 제품 상세조회21
 
 
-    @Getter
-    @Setter
-    @NoArgsConstructor
-    public static class orderListItemInfo {
-        private Long orderId;
-        private String goodsName;
-        private String orderStatus;
-        private int quantity;
+    public record orderListItemInfo(
+            Long orderId,
+            String goodsName,
+            String orderStatus,
+            int quantity
+    ) {
     }
 
-    @Getter
-    @Setter
-    @NoArgsConstructor
-    public static class sellOrderDetail {
-        private Long orderId;
-        private Long goodsId;
-        private String goodsName;
-        private String goodsStatus;
-
-        private Long buyerId;
-        private String buyerName;
-
-        private String orderStatus;
-        private int quantity;
-        private int orderPrice;
-        private LocalDateTime orderDate;
-        private LocalDateTime confirmDate;
-        private LocalDateTime finishDate;
+    public record sellOrderDetail(
+            Long orderId,
+            Long goodsId,
+            String goodsName,
+            String goodsStatus,
+            Long buyerId,
+            String buyerName,
+            String orderStatus,
+            int quantity,
+            int orderPrice,
+            LocalDateTime orderDate,
+            LocalDateTime confirmDate,
+            LocalDateTime finishDate
+    ) {
     }
 
-
-    @Getter
-    @Setter
-    @NoArgsConstructor
-    public static class buyOrderDetail {
-        private Long orderId;
-        private Long goodsId;
-        private String goodsName;
-        private String goodsStatus;
-
-        private Long sellerId;
-        private String sellerName;
-
-        private String orderStatus;
-        private int quantity;
-        private int orderPrice;
-        private LocalDateTime orderDate;
-        private LocalDateTime confirmDate;
-        private LocalDateTime finishDate;
+    public record buyOrderDetail(
+            Long orderId,
+            Long goodsId,
+            String goodsName,
+            String goodsStatus,
+            Long sellerId,
+            String sellerName,
+            String orderStatus,
+            int quantity,
+            int orderPrice,
+            LocalDateTime orderDate,
+            LocalDateTime confirmDate,
+            LocalDateTime finishDate
+    ) {
     }
 }
