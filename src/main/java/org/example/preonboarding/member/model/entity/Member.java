@@ -45,7 +45,7 @@ public class Member extends BaseEntity {
     @Comment("탈퇴일시")
     private LocalDateTime deletedAt;
 
-    @OneToMany(mappedBy = "seller", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "seller", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Product> products;
 
 }
