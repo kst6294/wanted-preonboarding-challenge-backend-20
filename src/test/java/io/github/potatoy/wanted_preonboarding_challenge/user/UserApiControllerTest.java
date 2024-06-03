@@ -6,6 +6,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.potatoy.wanted_preonboarding_challenge.user.dto.AddUserRequest;
+import io.github.potatoy.wanted_preonboarding_challenge.user.entity.UserRepository;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +25,12 @@ class UserApiControllerTest {
 
   @Autowired protected MockMvc mockMvc;
   @Autowired protected ObjectMapper objectMapper; // JSON 직렬화, 역직렬화를 위한 클래스
+  @Autowired UserRepository userRepository;
+
+  @BeforeEach
+  public void mockMvcSetup() {
+    userRepository.deleteAll();
+  }
 
   @DisplayName("addUser: 새로운 유저 추가에 성공")
   @Test
