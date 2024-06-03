@@ -6,7 +6,7 @@
 ##### 회원
 
 |제목|HTTP Method|URL|파라미터|반환형태|
-|------|---|---|---|---|
+|---|---|---|---|---|
 |회원가입|POST|/member|MemberSignDto dto|ResponseEntity<Long>|
 
 ##### 제품
