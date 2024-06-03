@@ -5,29 +5,29 @@
 
 ##### 회원
 
-|제목|HTTP|URL|파라미터|반환형태|
+|제목|HTTP|URL|파라미터 타입|반환형태|
 |---|---|---|---|---|
-|회원가입|POST|/member|MemberSignDto dto|ResponseEntity<Long>|
+|회원가입|POST|/member|MemberSignDto|ResponseEntity<Long>|
 
 ##### 제품
 
-|제목|HTTP|URL|파라미터|반환형태|
+|제목|HTTP|URL|파라미터 타입|반환형태|
 |------|---|---|---|---|
-|제품등록|POST|/item|MemberDetails memberDetails, ItemAddDto dto|ResponseEntity<Long>|
+|제품등록|POST|/item|MemberDetails, ItemAddDto|ResponseEntity<Long>|
 
 ##### 주문
 
-|제목|HTTP|URL|파라미터|반환형태|
+|제목|HTTP|URL|파라미터 타입|반환형태|
 |------|---|---|---|---|
-|주문하기|POST|/member|MemberDetails memberDetails, OrderAddDto dto|ResponseEntity<Long>|
-|판매승인|POST|/salesApproval|OrderSalesApprovalDto dto|ResponseEntity|
-|구매확정|POST|/purchaseConfirmation|OrderPurchaseConfirmationDto dto|ResponseEntity|
+|주문하기|POST|/member|MemberDetails ,OrderAddDto|ResponseEntity<Long>|
+|판매승인|POST|/salesApproval|OrderSalesApprovalDto|ResponseEntity|
+|구매확정|POST|/purchaseConfirmation|OrderPurchaseConfirmationDto|ResponseEntity|
 
 ##### 화면
 
-|제목|HTTP|URL|파라미터|반환형태|
+|제목|HTTP|URL|파라미터 타입|반환형태|
 |------|---|---|---|---|
-|제품목록|GET|/items|MemberDetails memberDetails|ResponseEntity<Long>|String|
-|제품상세|GET|/item/{id}|MemberDetails memberDetails, Long itemId|ResponseEntity<Long>|String|
-|구매상품목록|GET|/buyItems|MemberDetails memberDetails|ResponseEntity|String|
-|예약상품목록|GET|/reservationItems|MemberDetails memberDetails|ResponseEntity|String|
+|제품목록|GET|/items|MemberDetails memberDetails|String|
+|제품상세|GET|/item/{id}|MemberDetails, Long|String<Long>|
+|구매상품목록|GET|/buyItems|MemberDetails|String|
+|예약상품목록|GET|/reservationItems|MemberDetails|String|
