@@ -77,9 +77,9 @@ public class MyPageMapper {
 
     public static MyPageResponseDto.OrderStatus toOrderStatusResponse(OrderStatus orderStatus) {
         return switch (orderStatus) {
-            case order -> MyPageResponseDto.OrderStatus.승인대기;
-            case confirm -> MyPageResponseDto.OrderStatus.판매승인;
-            case finish -> MyPageResponseDto.OrderStatus.구매확정;
+            case ORDER -> MyPageResponseDto.OrderStatus.승인대기;
+            case CONFIRM -> MyPageResponseDto.OrderStatus.판매승인;
+            case FINISH -> MyPageResponseDto.OrderStatus.구매확정;
             default -> throw new IllegalArgumentException("주문 상태 오류");
         };
     }
@@ -87,9 +87,9 @@ public class MyPageMapper {
     // 주문 상태에 따른 시간 반환
     public static LocalDateTime toOrderStatusTime(OrderStatus orderStatus, Orders order) {
         return switch (orderStatus) {
-            case order -> order.getOrderDate();
-            case confirm -> order.getConfirmDate();
-            case finish -> order.getFinishDate();
+            case ORDER -> order.getOrderDate();
+            case CONFIRM -> order.getConfirmDate();
+            case FINISH -> order.getFinishDate();
             default -> throw new IllegalArgumentException("주문 상태 오류");
         };
     }

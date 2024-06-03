@@ -4,8 +4,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 import wanted.challenge.goods.entity.Goods;
+import wanted.challenge.goods.entity.GoodsStatus;
 import wanted.challenge.goods.repository.GoodsRepository;
 import wanted.challenge.mypage.entity.Member;
+import wanted.challenge.mypage.entity.OrderStatus;
 import wanted.challenge.mypage.entity.Orders;
 import wanted.challenge.mypage.repository.MemberRepository;
 import wanted.challenge.mypage.repository.OrderRepository;
@@ -34,19 +36,19 @@ public class DataLoader implements CommandLineRunner {
         memberRepository.save(member2);
 
         // 더미 Goods 데이터
-        Goods goods1 = new Goods("Laptop", 1500, "Available", 10);
+        Goods goods1 = new Goods("Laptop", 1500, GoodsStatus.SALE, 10);
         goods1.setSeller(member1);
         goodsRepository.save(goods1);
 
-        Goods goods2 = new Goods("Smartphone", 800, "Reserved", 20);
+        Goods goods2 = new Goods("Smartphone", 800, GoodsStatus.RESERVED, 20);
         goods2.setSeller(member2);
         goodsRepository.save(goods2);
 
-        Goods goods3 = new Goods("Tablet", 600, "Available", 15);
+        Goods goods3 = new Goods("Tablet", 600, GoodsStatus.SALE, 15);
         goods3.setSeller(member1);
         goodsRepository.save(goods3);
 // 더미 Orders 데이터
-        Orders order1 = new Orders("Laptop", 1500, 1, "finish");
+        Orders order1 = new Orders("Laptop", 1500, 1, OrderStatus.ORDER);
         order1.setGoods(goods1);
         order1.setBuyer(member2);
         order1.setOrderDate(LocalDateTime.now());
@@ -54,7 +56,7 @@ public class DataLoader implements CommandLineRunner {
         order1.setFinishDate(LocalDateTime.now().plusDays(2));
         orderRepository.save(order1);
 
-        Orders order2 = new Orders("Smartphone", 800, 2, "order");
+        Orders order2 = new Orders("Smartphone", 800, 2, OrderStatus.ORDER);
         order2.setGoods(goods2);
         order2.setBuyer(member1);
         order2.setOrderDate(LocalDateTime.now());

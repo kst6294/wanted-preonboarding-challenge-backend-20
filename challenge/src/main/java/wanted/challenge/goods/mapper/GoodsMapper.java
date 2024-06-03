@@ -98,9 +98,9 @@ public class GoodsMapper {
 
     public static GoodsResponseDto.GoodsStatus toGoodsStatus(GoodsStatus status) {
         return switch (status) {
-            case sale -> GoodsResponseDto.GoodsStatus.판매중;
-            case reserved -> GoodsResponseDto.GoodsStatus.예약중;
-            case sold -> GoodsResponseDto.GoodsStatus.판매완료;
+            case SALE -> GoodsResponseDto.GoodsStatus.판매중;
+            case RESERVED -> GoodsResponseDto.GoodsStatus.예약중;
+            case SOLD -> GoodsResponseDto.GoodsStatus.판매완료;
             default -> throw new IllegalArgumentException("올바르지 않은 상품 상태입니다.");
         };
     }

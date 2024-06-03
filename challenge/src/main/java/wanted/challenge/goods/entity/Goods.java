@@ -26,7 +26,7 @@ public class Goods {
 
     private int goodsPrice;
 
-    private GoodsStatus reservedStatus = GoodsStatus.sale;
+    private GoodsStatus reservedStatus = GoodsStatus.SALE;
 
     private int quantity;
     @Column(nullable = false, updatable = false)
