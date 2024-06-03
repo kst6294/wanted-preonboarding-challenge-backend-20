@@ -56,7 +56,7 @@ public class MyPageService {
             //없는 회원 예외 처리
             throw new Exception("해당 회원이 존재하지 않습니다.");
         }
-        return mapper.orderToBuyOrderDetail(order.get(), member.get(), order.get().getGoods());
+        return mapper.orderToBuyOrderDetail(order.get(), order.get().getGoods());
     }
 
     // 판매승인

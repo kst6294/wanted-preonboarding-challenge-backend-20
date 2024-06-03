@@ -23,51 +23,48 @@ public class MyPageMapper {
 
 
     public MyPageResponseDto.orderListItemInfo orderToOrderInfo(Orders order){
-        MyPageResponseDto.orderListItemInfo orderListItemInfo = new MyPageResponseDto.orderListItemInfo();
-        orderListItemInfo.setOrderId(order.getOrderId());
-        orderListItemInfo.setGoodsName(order.getGoodsName());
-        orderListItemInfo.setOrderStatus(order.getOrderStatus());
-        orderListItemInfo.setQuantity(order.getQuantity());
-        return orderListItemInfo;
+        return new MyPageResponseDto.orderListItemInfo(
+                order.getOrderId(),
+                order.getGoodsName(),
+                order.getOrderStatus(),
+                order.getQuantity()
+        );
     }
 
 
     public MyPageResponseDto.sellOrderDetail orderToSellOrderDetail(Orders order , Member buyer, Goods goods){
-        MyPageResponseDto.sellOrderDetail sellOrderDetail = new MyPageResponseDto.sellOrderDetail();
-        sellOrderDetail.setOrderId(order.getOrderId());
-        sellOrderDetail.setGoodsId(goods.getGoodsId());
-        sellOrderDetail.setGoodsName(goods.getGoodsName());
-        sellOrderDetail.setGoodsStatus(goods.getReservedStatus());
 
-        sellOrderDetail.setBuyerId(buyer.getMemberId());
-        sellOrderDetail.setBuyerName(buyer.getName());
-
-        sellOrderDetail.setOrderStatus(order.getOrderStatus());
-        sellOrderDetail.setQuantity(order.getQuantity());
-        sellOrderDetail.setOrderPrice(order.getOrderPrice());
-        sellOrderDetail.setOrderDate(order.getOrderDate());
-        sellOrderDetail.setConfirmDate(order.getConfirmDate());
-        sellOrderDetail.setFinishDate(order.getFinishDate());
-        return sellOrderDetail;
+        return new MyPageResponseDto.sellOrderDetail(
+                order.getOrderId(),
+                goods.getGoodsId(),
+                goods.getGoodsName(),
+                goods.getReservedStatus(),
+                buyer.getMemberId(),
+                buyer.getName(),
+                order.getOrderStatus(),
+                order.getQuantity(),
+                order.getOrderPrice(),
+                order.getOrderDate(),
+                order.getConfirmDate(),
+                order.getFinishDate()
+        );
     }
 
-    public MyPageResponseDto.buyOrderDetail orderToBuyOrderDetail(Orders order , Member buyer, Goods goods){
-        MyPageResponseDto.buyOrderDetail buyOrderDetail = new MyPageResponseDto.buyOrderDetail();
-        buyOrderDetail.setOrderId(order.getOrderId());
-        buyOrderDetail.setGoodsId(goods.getGoodsId());
-        buyOrderDetail.setGoodsName(goods.getGoodsName());
-        buyOrderDetail.setGoodsStatus(goods.getReservedStatus());
-
-        buyOrderDetail.setSellerId(goods.getSeller().getMemberId());
-        buyOrderDetail.setSellerName(goods.getSeller().getName());
-
-        buyOrderDetail.setOrderStatus(order.getOrderStatus());
-        buyOrderDetail.setQuantity(order.getQuantity());
-        buyOrderDetail.setOrderPrice(order.getOrderPrice());
-        buyOrderDetail.setOrderDate(order.getOrderDate());
-        buyOrderDetail.setConfirmDate(order.getConfirmDate());
-        buyOrderDetail.setFinishDate(order.getFinishDate());
-        return buyOrderDetail;
+    public MyPageResponseDto.buyOrderDetail orderToBuyOrderDetail(Orders order, Goods goods){
+        return new MyPageResponseDto.buyOrderDetail(
+                order.getOrderId(),
+                goods.getGoodsId(),
+                goods.getGoodsName(),
+                goods.getReservedStatus(),
+                goods.getSeller().getMemberId(),
+                goods.getSeller().getName(),
+                order.getOrderStatus(),
+                order.getQuantity(),
+                order.getOrderPrice(),
+                order.getOrderDate(),
+                order.getConfirmDate(),
+                order.getFinishDate()
+        );
     }
 
 }
