@@ -16,10 +16,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-/**
- * TODO: 2개의 주문이 예약중인 상태(quantity == 0)일 떄 만약 둘중 하나의 주문이라도 체결되면 판매가 완료 되는 현상을 해결해야함.
- * TODO: 아마 주문을 마감하기 전에, 해당 Product에 대한 주문(ProductOrder)가 있을 경우에 status를 변경하지 않도록 하는 로직이 필요
- */
 @Transactional
 @RequiredArgsConstructor
 @Service
@@ -38,7 +34,7 @@ public class ProductOrderService {
                 () -> new StudyApplicationException(ErrorCode.PRODUCT_NOT_FOUND)
         );
 
-        ProductOrder orderCheck = productOrderRepository.findByIdAndBuyer(productId, buyer);
+        ProductOrder orderCheck = productOrderRepository.findByProduct_IdAndBuyer(productId, buyer);
         if (orderCheck != null) {
             throw new StudyApplicationException(ErrorCode.PRODUCT_ALREADY_RESERVED);
         }
@@ -58,7 +54,7 @@ public class ProductOrderService {
                 () -> new StudyApplicationException(ErrorCode.USER_NOT_FOUND)
         );
         ProductOrder productOrder = productOrderRepository.findById(id).orElseThrow(
-                () -> new StudyApplicationException(ErrorCode.PRODUCT_NOT_FOUND)
+                () -> new StudyApplicationException(ErrorCode.PRODUCT_ORDER_NOT_FOUND)
         );
         if(!productOrder.getSeller().equals(seller)){
             throw new StudyApplicationException(ErrorCode.INVALID_PERMISSION);

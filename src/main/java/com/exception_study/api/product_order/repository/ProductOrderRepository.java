@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface ProductOrderRepository extends JpaRepository<ProductOrder,Long> {
 
-    ProductOrder findByIdAndBuyer(Long id, UserAccount user);
+    ProductOrder findByProduct_IdAndBuyer(Long id, UserAccount user);
 
     @Query("select o from ProductOrder o where o.buyerStatus = '완료' and o.buyer.userId = :userId")
     List<ProductOrder> findAllByBuyer(@Param("userId") String userId);
