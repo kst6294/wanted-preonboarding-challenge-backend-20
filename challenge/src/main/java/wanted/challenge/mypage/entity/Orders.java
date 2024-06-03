@@ -25,7 +25,7 @@ public class Orders {
 
     private int quantity;
 
-    private OrderStatus orderStatus;
+    private OrderStatus orderStatus = OrderStatus.ORDER;
 
     private LocalDateTime orderDate = LocalDateTime.now();
 
@@ -33,11 +33,11 @@ public class Orders {
 
     private LocalDateTime finishDate;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "buyer_id")
     private Member buyer;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "goods_id")
     private Goods goods;
 
