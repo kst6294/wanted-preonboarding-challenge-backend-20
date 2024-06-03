@@ -5,7 +5,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
-import wanted.challenge.aop.api.ApiResponse;
 import wanted.challenge.goods.dto.request.GoodsRequestDto;
 import wanted.challenge.goods.dto.response.GoodsResponseDto;
 import wanted.challenge.goods.entity.Goods;
@@ -24,49 +23,42 @@ public class GoodsController {
     private final GoodsMapper mapper;
 
     @GetMapping
-    public ApiResponse<List<GoodsResponseDto.GoodsList>> getGoodsList() {
-        List<GoodsResponseDto.GoodsList> goodsList = mapper.toGoodsList(goodsService.getGoodsList());
-        return ApiResponse.success(goodsList);
+    public List<GoodsResponseDto.GoodsList> getGoodsList() {
+        return mapper.toGoodsList(goodsService.getGoodsList());
     }
 
     @GetMapping("/{goods_id}")
-    public ApiResponse<GoodsResponseDto.GoodsDetail> getGoodsDetail(
-            @RequestHeader(name = "memberId", required = false) Long memberId,
+    public GoodsResponseDto.GoodsDetail getGoodsDetail(
+            @RequestHeader(name = "memberId", required = false ) Long memberId,
             @PathVariable("goods_id") Long goodsId) {
-        GoodsResponseDto.GoodsDetail goodsDetail = goodsService.getGoodsDetail(goodsId, memberId);
-        return ApiResponse.success(goodsDetail);
+        return goodsService.getGoodsDetail(goodsId, memberId);
     }
 
     @PostMapping
-    public ApiResponse<String> createGoods(
+    public String createGoods(
             @RequestHeader("memberId") Long memberId,
             @RequestBody GoodsRequestDto.CreateGoods createGoods) {
-        goodsService.createGoods(memberId, mapper.toGoods(createGoods));
-        return ApiResponse.success();
+        return goodsService.createGoods(memberId, mapper.toGoods(createGoods));
     }
 
     @PatchMapping("/{goods_id}")
-    public ApiResponse<GoodsResponseDto.UpdateGoods> updateGoods(
+    public GoodsResponseDto.UpdateGoods updateGoods(
             @RequestHeader("memberId") Long memberId,
             @RequestBody GoodsRequestDto.CreateGoods editedGoods) {
-        GoodsResponseDto.UpdateGoods updateGoods = mapper.toUpdateGoods(goodsService.updateGoods(memberId, mapper.toGoods(editedGoods)));
-        return ApiResponse.success(updateGoods);
-
+        return mapper.toUpdateGoods(goodsService.updateGoods(memberId, mapper.toGoods(editedGoods)));
     }
 
 
     @DeleteMapping("/{goods_id}")
-    public ApiResponse<String> deleteGoods() {
-        goodsService.deleteGoods();
-        return ApiResponse.success();
+    public String deleteGoods() {
+        return goodsService.deleteGoods();
     }
 
     @PostMapping("/{goods_id}/order")
-    public ApiResponse<GoodsResponseDto.GoodsOrder> orderGoods(
+    public GoodsResponseDto.GoodsOrder orderGoods(
             @RequestHeader("memberId") Long memberId,
             @PathVariable("goods_id") Long goodsId,
             @RequestBody int quantity) {
-        GoodsResponseDto.GoodsOrder goodsOrder = new GoodsResponseDto.GoodsOrder();
-        return ApiResponse.success(goodsOrder);
+        return new GoodsResponseDto.GoodsOrder();
     }
 }
