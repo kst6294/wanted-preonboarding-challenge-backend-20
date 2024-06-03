@@ -73,4 +73,24 @@ public class Product {
 
     return this;
   }
+
+  /**
+   * User 객체가 판매자 객체와 동일한지 확인
+   *
+   * @param user User 객체
+   * @return boolean
+   */
+  public boolean isSellerEquals(User user) {
+    return this.sellerUser.equals(user);
+  }
+
+  /**
+   * User 객체가 구매자 객체와 동일한지 확인
+   *
+   * @param user User 객체
+   * @return boolean
+   */
+  public boolean isBuyerEquals(User user) {
+    return user.equals(this.buyerUser);
+  }
 }

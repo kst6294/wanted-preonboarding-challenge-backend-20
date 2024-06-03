@@ -3,10 +3,13 @@ package io.github.potatoy.wanted_preonboarding_challenge.market;
 import io.github.potatoy.wanted_preonboarding_challenge.market.dto.ProductDto;
 import io.github.potatoy.wanted_preonboarding_challenge.market.dto.ProductDto.ProductResponse;
 import io.github.potatoy.wanted_preonboarding_challenge.market.entity.Product;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -33,5 +36,22 @@ public class MarketApiController {
     Product product = marketService.reserveProduct(productId);
 
     return ResponseEntity.status(HttpStatus.OK).body(new ProductResponse(product));
+  }
+
+  @GetMapping("/products/transactions") // 거래 내역
+  public ResponseEntity<List<ProductDto.ProductResponse>> getProducts(
+      ProductDto.TransactionsRequest request) {
+    List<ProductDto.ProductResponse> response = new ArrayList<>();
+
+    if (request.getProductId() == null) {
+      // TODO: 본인에 대한 전체 리스트 조회
+    }
+
+    List<Product> products = marketService.getSellerBuyerRecord(request);
+    for (Product product : products) {
+      response.add(new ProductResponse(product));
+    }
+
+    return ResponseEntity.status(HttpStatus.OK).body(response);
   }
 }
