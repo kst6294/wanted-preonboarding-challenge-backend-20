@@ -8,7 +8,9 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,6 +44,7 @@ public class Product extends BaseEntity {
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
     private List<Statements> statements = new ArrayList<>();
 
+
     @Builder
     public Product(String name, Long price, Long quantity, State state, User user) {
         this.name = name;
@@ -49,6 +52,14 @@ public class Product extends BaseEntity {
         this.quantity = quantity;
         this.state = state;
         this.user = user;
+    }
+
+    public void decreaseQuantity(){
+        this.quantity -= 1;
+    }
+
+    public void updateStatus(){
+        this.state = State.RESERVATION;
     }
 
 }
