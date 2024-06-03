@@ -1,73 +1,61 @@
 package wanted.challenge.goods.dto.response;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+
+import wanted.challenge.mypage.dto.response.MyPageResponseDto;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 public class GoodsResponseDto {
 
-    @Getter
-    @Setter
-    @NoArgsConstructor
-    public static class GoodsList {
-        private Long goodsId;
-        private String goodsName;
-        private int goodsPrice;
-        private String reservedStatus;
-        private int quantity;
-    }
+    public enum GoodsStatus {
+        판매중, 예약중, 판매완료;
 
-    @Getter
-    @Setter
-    @NoArgsConstructor
-    public static class GoodsDetail {
-        private Long goodsId;
-        private String goodsName;
-        private int goodsPrice;
-        private String reservedStatus;
-        private int quantity;
-
-        private LocalDateTime createdAt;
-        private List<Trade> tradeList;
-
-        @NoArgsConstructor
-        @Setter
-        @Getter
-        public static class Trade {
-            private Long orderId;
-            //거래일자
-            private LocalDateTime tradeAt;
-            private String tradeStatus;
-            // 구매한 금액
-            private int tradePrice;
-            //수량
-            private int quantity;
-
+        public static GoodsStatus of(String reservedStatus) {
+            try {
+                return GoodsStatus.valueOf(reservedStatus);
+            } catch (IllegalArgumentException e) {
+                throw new IllegalArgumentException("잘못된 reservedStatus: " + reservedStatus, e);
+            }
         }
     }
 
-    @Getter
-    @Setter
-    @NoArgsConstructor
-    public static class UpdateGoods {
-        private Long goodsId;
-        private String goodsName;
-        private int goodsPrice;
-        private String reservedStatus;
-        private int quantity;
-
-        private LocalDateTime createdAt;
+    public record GoodsList(
+            Long goodsId,
+            String goodsName,
+            int goodsPrice,
+            GoodsStatus reservedStatus,
+            int quantity
+    ) {
     }
 
-    @Getter
-    @Setter
-    @NoArgsConstructor
-    public static class GoodsOrder {
-        private int orderId;
+    public record GoodsDetail(
+            Long goodsId,
+            String goodsName,
+            int goodsPrice,
+            GoodsStatus reservedStatus,
+            int quantity,
+            LocalDateTime createdAt,
+            List<MyPageResponseDto.Trade> tradeList
+    ) {
+
+    }
+
+
+
+    public record UpdateGoods(
+            Long goodsId,
+            String goodsName,
+            int goodsPrice,
+            GoodsStatus reservedStatus,
+            int quantity,
+            LocalDateTime createdAt
+    ) {
+    }
+
+    public record GoodsOrder(
+            Long orderId
+    ) {
     }
 }

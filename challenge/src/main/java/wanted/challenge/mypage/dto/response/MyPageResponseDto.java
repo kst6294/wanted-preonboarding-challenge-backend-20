@@ -1,26 +1,43 @@
 package wanted.challenge.mypage.dto.response;
 
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import wanted.challenge.goods.dto.response.GoodsResponseDto;
 
 import java.time.LocalDateTime;
-import java.util.List;
+
+import static wanted.challenge.goods.dto.response.GoodsResponseDto.*;
 
 public class MyPageResponseDto {
 
-    // 판매한 제품 리스트
-    // 판매중인 제품 상세조회
+    public enum OrderStatus {
+        승인대기, 판매승인, 구매확정;
 
-    // 구매한 제품 리스트
-    // 구매중인 제품 상세조회21
+        public static OrderStatus of(String orderStatus) {
+            try {
+                return OrderStatus.valueOf(orderStatus);
+            } catch (IllegalArgumentException e) {
+                throw new IllegalArgumentException("잘못된 orderStatus: " + orderStatus, e);
+            }
+        }
+    }
 
+    public record Trade(
+            Long orderId,
+            LocalDateTime tradeAt,
+            OrderStatus tradeStatus,
+            int tradePrice,
+            int quantity
+    ) {
+        //확장성을 위해 생성자 추가
+        public Trade(Long orderId, LocalDateTime tradeAt, String tradeStatus, int tradePrice, int quantity) {
+            this(orderId, tradeAt, OrderStatus.of(tradeStatus), tradePrice, quantity);
+        }
+    }
 
     public record orderListItemInfo(
             Long orderId,
             String goodsName,
-            String orderStatus,
+            OrderStatus orderStatus,
             int quantity
     ) {
     }
@@ -29,10 +46,10 @@ public class MyPageResponseDto {
             Long orderId,
             Long goodsId,
             String goodsName,
-            String goodsStatus,
+            GoodsStatus goodsStatus,
             Long buyerId,
             String buyerName,
-            String orderStatus,
+            OrderStatus orderStatus,
             int quantity,
             int orderPrice,
             LocalDateTime orderDate,
@@ -45,10 +62,10 @@ public class MyPageResponseDto {
             Long orderId,
             Long goodsId,
             String goodsName,
-            String goodsStatus,
+            GoodsStatus goodsStatus,
             Long sellerId,
             String sellerName,
-            String orderStatus,
+            OrderStatus orderStatus,
             int quantity,
             int orderPrice,
             LocalDateTime orderDate,
