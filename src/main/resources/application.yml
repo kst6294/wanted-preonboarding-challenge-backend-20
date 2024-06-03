@@ -1,11 +1,17 @@
-server:
-  port: 8080
-
 spring:
   application:
     name: preonboarding
   profiles:
-    active: local
+    default: local
+
+server:
+  port: 8080
+
+---
+spring:
+  config:
+    activate:
+      on-profile: local
 
   datasource:
     url: jdbc:mariadb://localhost:3306/preonboarding
@@ -43,16 +49,10 @@ jwt:
 ---
 
 spring:
-  config.activate.on-profile: test
+  config:
+    activate:
+      on-profile: test
 
-  datasource:
-    url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
-    driver-class-name: org.h2.Driver
-    username: sa
-    password:
-  h2:
-    console:
-      enabled: true
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
     hibernate:
