@@ -25,7 +25,7 @@ public class Orders {
 
     private int quantity;
 
-    private String orderStatus;
+    private OrderStatus orderStatus;
 
     private LocalDateTime orderDate = LocalDateTime.now();
 
@@ -42,7 +42,7 @@ public class Orders {
     private Goods goods;
 
 
-    public Orders(String goodsName, int orderPrice, int quantity, String orderStatus) {
+    public Orders(String goodsName, int orderPrice, int quantity, OrderStatus orderStatus) {
         this.goodsName = goodsName;
         this.orderPrice = orderPrice;
         this.quantity = quantity;
@@ -68,6 +68,7 @@ public class Orders {
     public Member getSeller() {
         return this.goods.getSeller();
     }
+
     public Long getSellerId() {
         return this.goods.getSeller().getMemberId();
     }

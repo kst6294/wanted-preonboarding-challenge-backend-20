@@ -26,7 +26,7 @@ public class Goods {
 
     private int goodsPrice;
 
-    private String reservedStatus = "sale";
+    private GoodsStatus reservedStatus = GoodsStatus.sale;
 
     private int quantity;
     @Column(nullable = false, updatable = false)
@@ -40,7 +40,7 @@ public class Goods {
     @OneToMany(mappedBy = "goods")
     private List<Orders> orderList = new ArrayList<>();
 
-    public Goods(String goodsName, int goodsPrice, String reservedStatus, int quantity) {
+    public Goods(String goodsName, int goodsPrice, GoodsStatus reservedStatus, int quantity) {
         this.goodsName = goodsName;
         this.goodsPrice = goodsPrice;
         this.reservedStatus = reservedStatus;
