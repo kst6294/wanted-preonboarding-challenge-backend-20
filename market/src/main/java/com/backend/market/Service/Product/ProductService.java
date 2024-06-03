@@ -1,12 +1,10 @@
 package com.backend.market.Service.Product;
 
 import com.backend.market.Common.auth.UserDetailsImpl;
-import com.backend.market.DAO.Entity.Member;
-import com.backend.market.DAO.Entity.Product;
-import com.backend.market.DAO.Entity.PurchaseList;
-import com.backend.market.DAO.Entity.Status;
+import com.backend.market.DAO.Entity.*;
 import com.backend.market.Repository.MemberRepository;
 import com.backend.market.Repository.ProductRepository;
+import com.backend.market.Repository.PurchaseListRepository;
 import com.backend.market.Request.ProductReq;
 import com.backend.market.Service.purchaseList.PurchaseListService;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +22,7 @@ public class ProductService {
 
     private final MemberRepository memberRepository;
     private final ProductRepository productRepository;
-    private final PurchaseListService purchaseListService;
+    private final PurchaseListRepository purchaseListRepository;
 
     public List<Product> getList()
     {
@@ -90,7 +88,7 @@ public class ProductService {
         updateStatus(productReq,userDetails);
 
         //거래내역 상태 변경
-        purchaseListService.updateOrderStatus(productReq);
+        updateOrderStatus(productReq);
     }
 
 
@@ -114,5 +112,15 @@ public class ProductService {
         Long userId = userDetails.getUser().getUserId();
         Optional<Member> findMember = memberRepository.findById(userId);
         return findMember.orElse(null);
+    }
+    private void updateOrderStatus(ProductReq productReq)
+    {
+        Optional<PurchaseList> findList = this.purchaseListRepository.findByProductId(productReq.getProduct_id());
+        if(findList.isPresent())
+        {
+            PurchaseList purchaseList = findList.get();
+            purchaseList.setOrderStatus(OrderStatus.complete);
+            this.purchaseListRepository.save(purchaseList);
+        }
     }
 }

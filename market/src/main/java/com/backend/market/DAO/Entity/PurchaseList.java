@@ -22,7 +22,7 @@ public class PurchaseList {
 
     Long sellerId;
 
-    Long product_id;
+    Long productId;
 
     OrderStatus orderStatus;
 

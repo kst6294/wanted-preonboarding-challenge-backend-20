@@ -1,11 +1,9 @@
 package com.backend.market.Service.purchaseList;
 
 import com.backend.market.Common.auth.UserDetailsImpl;
-import com.backend.market.DAO.Entity.Member;
-import com.backend.market.DAO.Entity.OrderStatus;
-import com.backend.market.DAO.Entity.PurchaseList;
-import com.backend.market.DAO.Entity.Status;
+import com.backend.market.DAO.Entity.*;
 import com.backend.market.Repository.MemberRepository;
+import com.backend.market.Repository.ProductRepository;
 import com.backend.market.Repository.PurchaseListRepository;
 import com.backend.market.Request.ProductReq;
 import com.backend.market.Service.Product.ProductService;
@@ -25,7 +23,7 @@ public class PurchaseListService {
 
     private final PurchaseListRepository purchaseListRepository;
     private final MemberRepository memberRepository;
-    private final ProductService productService;
+    private final ProductRepository productRepository;
 
     //구매하기 버튼 눌렀을 시
     public void addPurchasList(ProductReq productReq, UserDetailsImpl userDetails)
@@ -39,14 +37,14 @@ public class PurchaseListService {
         }
 
         //제품 상태 변경 : 판매 -> 예약
-        productReq.setStatus(Status.reservation);
-        productService.updateStatus(productReq,userDetails);
+
+        updateProductStatus(productReq);
 
         PurchaseList purchaseList = new PurchaseList();
         //등록한 판매자의 아이디
         Long id = productReq.getMember().getUserId();
 
-        purchaseList.setProduct_id(productReq.getProduct_id());
+        purchaseList.setProductId(productReq.getProduct_id());
         purchaseList.setBuyerId(member.getUserId());
         purchaseList.setOrderStatus(OrderStatus.reservation);
         purchaseList.setSellerId(id);
@@ -69,16 +67,17 @@ public class PurchaseListService {
         }
     }
 
-    public void updateOrderStatus(ProductReq productReq)
+    private void updateProductStatus(ProductReq productReq)
     {
-        Optional<PurchaseList> findList = this.purchaseListRepository.findByProductId(productReq.getProduct_id());
-        if(findList.isPresent())
-        {
-            PurchaseList purchaseList = findList.get();
-            purchaseList.setOrderStatus(OrderStatus.complete);
-            this.purchaseListRepository.save(purchaseList);
-        }
+        productReq.setStatus(Status.reservation);
+
+        Optional<Product> product = productRepository.findById(productReq.getProduct_id());
+        if(product.isEmpty()) return;
+        Product p = product.get();
+        p.setStatus(productReq.getStatus());
+        this.productRepository.save(p);
     }
+
 
     private Member isExistUser(UserDetailsImpl userDetails){
         Long userId = userDetails.getUser().getUserId();
