@@ -1,7 +1,10 @@
 package com.wanted.market.product.domain;
 
+import com.wanted.market.common.exception.InvalidRequestException;
 import com.wanted.market.order.domain.Order;
 import com.wanted.market.product.domain.vo.Status;
+import com.wanted.market.product.exception.DuplicateOrderException;
+import com.wanted.market.product.exception.OutDatedProductVersionException;
 import jakarta.persistence.*;
 
 /**
@@ -57,8 +60,7 @@ import jakarta.persistence.*;
  *     <b>"판매자가 재고를 변경하고자 하는 경우에는 재고관리서비스의 lock을 (해당 Product의 stock 레코드에 락을 획득하는 방식으로) 먼저 획득해야 한다.</b>
  * </ol>
  *
- * @see #order(Long, Integer, DuplicateBuyerChecker, StockManager)
- * @see #refreshStatus(StockManager, OnGoingReservationChecker)
+ * @see #order(Long, Integer, DuplicateBuyerChecker)
  */
 @Entity
 @Table(name = "PRODUCT", indexes = {@Index(name = "seller_id_idx", columnList = "sellerId")})
@@ -84,22 +86,23 @@ public class Product {
     }
 
     /**
-     * Product를 저장한 뒤 {@link #open(StockManager)}를 호출하여 재고를 등록해주어야 합니다.
+     * 준비상태의 상품을 등록합니다.
+     * {@link #open(StockRegister)}를 호출하여 재고를 등록해주어야 판매가능합니다.
      *
      * @param sellerId 판매자 id
      * @param name     상품 이름
      * @param price    상품 가격
      * @param quantity 상품 수량
      */
-    public Product(Long sellerId, String name, Integer price, Integer quantity) {
+    public Product(Long sellerId, String name, Integer price, Integer quantity) throws InvalidRequestException {
         if (sellerId == null || sellerId < 0)
-            throw new IllegalArgumentException("SellerId cannot be negative");
+            throw new InvalidRequestException("SellerId cannot be negative");
         if (name == null || name.isBlank())
-            throw new IllegalArgumentException("Name cannot be null or empty");
+            throw new InvalidRequestException("Name cannot be null or empty");
         if (price == null || price < 0)
-            throw new IllegalArgumentException("Price cannot be negative");
+            throw new InvalidRequestException("Price cannot be negative");
         if (quantity == null || quantity <= 0)
-            throw new IllegalArgumentException("Quantity cannot be zero or negative");
+            throw new InvalidRequestException("Quantity cannot be zero or negative");
         this.sellerId = sellerId;
         this.name = name;
         this.price = price;
@@ -107,32 +110,65 @@ public class Product {
         this.status = Status.PREPARING;
     }
 
-    public void open(StockManager stockManager) {
-        stockManager.register(this.id, this.quantity);
+    /**
+     * 상품 등록과 동시에 재고를 등록해서 판매가능상태의 상품을 게시합니다.
+     *
+     * @param sellerId      판매자 id
+     * @param name          상품 이름
+     * @param price         상품 가격
+     * @param quantity      상품 수량
+     * @param stockRegister 재고 등록 서비스
+     */
+    public Product(Long sellerId, String name, Integer price, Integer quantity, StockRegister stockRegister) throws InvalidRequestException {
+        if (sellerId == null || sellerId < 0)
+            throw new InvalidRequestException("SellerId cannot be negative");
+        if (name == null || name.isBlank())
+            throw new InvalidRequestException("Name cannot be null or empty");
+        if (price == null || price < 0)
+            throw new InvalidRequestException("Price cannot be negative");
+        if (quantity == null || quantity <= 0)
+            throw new InvalidRequestException("Quantity cannot be zero or negative");
+        this.sellerId = sellerId;
+        this.name = name;
+        this.price = price;
+        this.quantity = quantity;
+        this.open(stockRegister);
     }
 
-    public Order order(Long buyerId, Integer version, DuplicateBuyerChecker duplicateBuyerChecker, StockManager stockManager) {
+    /**
+     * 재고를 등록해서 상품의 판매를 게시합니다.
+     *
+     * @param stockRegister 재고 등록 서비스
+     */
+    public void open(StockRegister stockRegister) {
+        stockRegister.register(this.id, this.quantity);
+        this.status = Status.ON_SALE;
+    }
+
+    /**
+     * 신규 주문
+     *
+     * @param buyerId               구매자 id
+     * @param version               구매자가 보고 있는 상품정보의 버전
+     * @param duplicateBuyerChecker 중복구매를 확인하기 위한 인터페이스
+     * @return 신규 주문(Order)
+     * @throws OutDatedProductVersionException 클라이언트가 보고 있는 상품의 정보에 변동이 있는 경우
+     */
+    public Order order(Long buyerId, Integer version, DuplicateBuyerChecker duplicateBuyerChecker) throws InvalidRequestException, OutDatedProductVersionException {
         if (sellerId.equals(buyerId))
-            throw new IllegalArgumentException("Seller can't reserve his/her own product");
+            throw new InvalidRequestException("Seller can't reserve his/her own product");
         if (!this.version.equals(version))
-            throw new IllegalArgumentException("Invalid version");
+            throw new OutDatedProductVersionException();
         if (duplicateBuyerChecker.check(buyerId, this.id))
-            throw new IllegalArgumentException("Buyer already has this product");
-        if (!stockManager.isAvailable(this.id))
-            throw new IllegalArgumentException("Out of stock");
-        if (stockManager.decrement(this.id) == 0)
-            this.status = Status.RESERVED;
+            throw new DuplicateOrderException("Buyer already has this product");
         return new Order(buyerId, this.id, this.price);
     }
 
-    public void refreshStatus(StockManager stockManager, OnGoingReservationChecker onGoingReservationChecker) {
-        Integer stock = stockManager.count(this.id);
-        if (stock > 0)
-            this.status = Status.ON_SALE;
-        if (stock <= 0 && onGoingReservationChecker.exists(this.id)) {
-            this.status = Status.RESERVED;
-        } else if (stock <= 0 && !onGoingReservationChecker.exists(this.id)) {
-            this.status = Status.SOLD;
-        }
+    public void reserved() {
+        this.status = Status.RESERVED;
+    }
+
+    public void sold() {
+        this.status = Status.SOLD;
     }
 }

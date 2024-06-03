@@ -1,7 +1,7 @@
 package com.wanted.market.order.domain.vo;
 
 public enum Status {
-    ON_GOING("예약중"), CONFIRMED("구매확정");
+    REQUESTED("구매요청"), CONFIRMED("진행중"), FINISHED("구매확정");
 
     private final String value;
 

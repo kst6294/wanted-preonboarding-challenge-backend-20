@@ -1,11 +1,11 @@
-package com.wanted.market.product.domain;
+package com.wanted.market.stock.service;
 
 public interface StockManager {
     boolean isAvailable(Long productId);
 
     Integer count(Long productId);
 
-    Integer register(Long productId, Integer quantity);
+    Integer set(Long productId, Integer quantity);
 
     Integer increment(Long productId);
 
