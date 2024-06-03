@@ -4,11 +4,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import wanted.challenge.mypage.dto.response.MyPageResponseDto;
 import wanted.challenge.mypage.entity.Member;
+import wanted.challenge.mypage.entity.OrderStatus;
 import wanted.challenge.mypage.entity.Orders;
 import wanted.challenge.mypage.mapper.MyPageMapper;
 import wanted.challenge.mypage.repository.MemberRepository;
 import wanted.challenge.mypage.repository.OrderRepository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -56,41 +58,42 @@ public class MyPageService {
             //없는 회원 예외 처리
             throw new Exception("해당 회원이 존재하지 않습니다.");
         }
-        return mapper.orderToBuyOrderDetail(order.get(), member.get(), order.get().getGoods());
+        return mapper.orderToBuyOrderDetail(order.get(), order.get().getGoods());
     }
 
     // 판매승인
     public void sellConfirm(Long sellerId, Long orderId) {
+        Orders order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 주문을 찾을 수 없습니다."));
         // 판매자와 주문이 일치하는지 확인
-        Optional<Orders> order = orderRepository.findById(orderId);
-        if (order.isPresent() && order.get().getGoods().getSeller().getMemberId().equals(sellerId)) {
-            //order의 상태가 order인 경우만 comfirm으로 변경
-            if (!order.get().getOrderStatus().equals("order")) {
-                throw new IllegalArgumentException("주문 상태가 order가 아닙니다.");
-            }
-            order.get().setOrderStatus("comfirm");
-            orderRepository.save(order.get());
-            return;
+        if (!order.getGoods().getSeller().getMemberId().equals(sellerId)) {
+            throw new IllegalArgumentException("해당 주문과 판매자가 일치하지 않습니다.");
         }
-        // 판매자와 주문이 일치하지 않는다면 예외 처리
-        throw new IllegalArgumentException("해당 주문과 판매자가 일치하지 않습니다.");
-
+        if (OrderStatus.ORDER != order.getOrderStatus()) {
+            throw new IllegalArgumentException("주문 상태가 ORDER가 아닙니다.");
+        }
+        // 판매 승인 시간 설정, 상태 변경
+        order.setConfirmDate(LocalDateTime.now());
+        order.setOrderStatus(OrderStatus.CONFIRM);
+        orderRepository.save(order);
     }
+
 
     // 구매 확정
     public void buyFinish(Long buyerId, Long orderId) {
+        Orders order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 주문을 찾을 수 없습니다."));
+
         // 구매자와 주문이 일치하는지 확인
-        Optional<Orders> order = orderRepository.findById(orderId);
-        if (order.isPresent() && order.get().getBuyer().getMemberId().equals(buyerId)) {
-            //order의 상태가 comfirm인 경우만 finish로 변경
-            if (!order.get().getOrderStatus().equals("comfirm")) {
-                throw new IllegalArgumentException("주문 상태가 comfirm이 아닙니다.");
-            }
-            order.get().setOrderStatus("finish");
-            orderRepository.save(order.get());
-            return;
+        if (!order.getBuyer().getMemberId().equals(buyerId)) {
+            throw new IllegalArgumentException("해당 주문과 판매자가 일치하지 않습니다.");
         }
-        // 구매자와 주문이 일치하지 않는다면 예외 처리
-        throw new IllegalArgumentException("해당 주문과 구매자가 일치하지 않습니다.");
+        if (OrderStatus.CONFIRM != order.getOrderStatus()) {
+            throw new IllegalArgumentException("주문 상태가 CONFIRM이 아닙니다.");
+        }
+        // 구매 확정 시간 설정, 상태 변경
+        order.setFinishDate(LocalDateTime.now());
+        order.setOrderStatus(OrderStatus.FINISH);
+        orderRepository.save(order);
     }
 }
