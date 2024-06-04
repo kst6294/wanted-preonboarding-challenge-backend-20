@@ -1,5 +1,6 @@
 package com.wanted.market.member.domain;
 
+import com.wanted.market.member.domain.vo.MemberInfo;
 import jakarta.persistence.*;
 
 @Entity
@@ -25,7 +26,18 @@ public class Member {
         this.password = passwordEncoder.encode(rawPassword);
     }
 
-    public boolean matches(String rawPassword, PasswordEncoder passwordEncoder) {
+    public MemberInfo login(String rawPassword, PasswordEncoder passwordEncoder) {
+        if (matches(rawPassword, passwordEncoder)) {
+            return getMemberInfo();
+        }
+        return null;
+    }
+
+    private MemberInfo getMemberInfo() {
+        return new MemberInfo(this.id, this.username);
+    }
+
+    private boolean matches(String rawPassword, PasswordEncoder passwordEncoder) {
         return passwordEncoder.matches(rawPassword, this.password);
     }
 }
