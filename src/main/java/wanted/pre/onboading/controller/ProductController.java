@@ -31,6 +31,7 @@ public class ProductController {
         if (session.getAttribute("user") == null) {
             return "로그인이 필요합니다.";
         } else {
+            product.setStatus(ProductStatus.판매중);
             productService.saveProduct(product);
             return "제품이 등록되었습니다.";
         }
