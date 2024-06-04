@@ -159,7 +159,7 @@ public class Product {
             throw new InvalidRequestException("Seller can't reserve his/her own product");
         if (!this.version.equals(version))
             throw new OutDatedProductVersionException();
-        if (duplicateBuyerChecker.check(buyerId, this.id))
+        if (duplicateBuyerChecker.check(this.id, buyerId))
             throw new DuplicateOrderException("Buyer already has this product");
         return new Order(buyerId, this.id, this.price);
     }
@@ -170,5 +170,9 @@ public class Product {
 
     public void sold() {
         this.status = Status.SOLD;
+    }
+
+    public Long getId() {
+        return id;
     }
 }
