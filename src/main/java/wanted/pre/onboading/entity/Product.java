@@ -13,7 +13,8 @@ public class Product {
     private Integer productId;
     private String productName;
     private double price;
-    private String status;
+    private ProductStatus status;
+
 
     public Integer getProductId() {
         return productId;
@@ -39,11 +40,12 @@ public class Product {
         this.price = price;
     }
 
-    public String getStatus() {
+    public ProductStatus getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(ProductStatus status) {
         this.status = status;
     }
+
 }
