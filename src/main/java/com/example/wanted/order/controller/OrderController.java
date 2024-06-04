@@ -11,6 +11,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -38,7 +39,7 @@ public class OrderController {
                     )
 
             ))
-    public ResponseEntity<OrderResponse> order(OrderCreate orderCreate, Principal principal) {
+    public ResponseEntity<OrderResponse> order(@Valid @RequestBody OrderCreate orderCreate, Principal principal) {
         Long userId = Long.parseLong(principal.getName());
         return ResponseEntity
                 .ok()

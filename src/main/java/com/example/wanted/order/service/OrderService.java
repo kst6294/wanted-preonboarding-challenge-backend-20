@@ -31,7 +31,7 @@ public class OrderService {
     private final ProductRepository productRepository;
     private final UserRepository userRepository;
 
-    public OrderResponse order(OrderCreate orderCreate, Long userId) {
+    public synchronized OrderResponse order(OrderCreate orderCreate, Long userId) {
         User user = userRepository.findById(userId).orElseThrow(() ->
                 new ResourceNotFoundException("User", userId)
         );
@@ -53,7 +53,7 @@ public class OrderService {
         return OrderResponse.from(order);
     }
 
-    public OrderResponse approve(Long orderId, Long userId) {
+    public synchronized OrderResponse approve(Long orderId, Long userId) {
         User user = userRepository.findById(userId).orElseThrow(() ->
                 new ResourceNotFoundException("User", userId)
         );
@@ -67,7 +67,7 @@ public class OrderService {
         return OrderResponse.from(order);
     }
 
-    public OrderResponse confirmation(Long orderId, Long userId) {
+    public synchronized OrderResponse confirmation(Long orderId, Long userId) {
         User user = userRepository.findById(userId).orElseThrow(() ->
                 new ResourceNotFoundException("User", userId)
         );

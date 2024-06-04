@@ -12,6 +12,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -40,7 +41,7 @@ public class ProductController {
                         value = "{ \"id\": 1, \"seller\": { \"id\": 1, \"account\": \"test2\", \"name\": \"홍길동\" }, \"name\": \"돼지바\", \"price\": 1000, \"quantity\": 10, \"productSellingStatus\": \"SELLING\" }"
                 )))
     public ResponseEntity<Long> create(
-            @RequestBody ProductCreate request,
+            @Valid @RequestBody ProductCreate request,
             Principal principal
     ) {
         Long id = Long.parseLong(principal.getName());

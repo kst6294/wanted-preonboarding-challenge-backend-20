@@ -12,6 +12,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -33,7 +34,7 @@ public class UserController {
     @ApiResponse(responseCode = "200", description = "회원가입 성공")
     @PostMapping("/sing-up")
     public ResponseEntity<Long> create(
-            @RequestBody UserCreate request
+            @Valid @RequestBody UserCreate request
     ) {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
@@ -54,7 +55,7 @@ public class UserController {
                     )
             ))
     public ResponseEntity<TokenResponse> login(
-            @RequestBody UserLogin request
+            @Valid @RequestBody UserLogin request
     ) {
         return ResponseEntity
                 .ok()
