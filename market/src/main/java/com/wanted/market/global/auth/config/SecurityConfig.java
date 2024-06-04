@@ -1,10 +1,10 @@
 package com.wanted.market.global.auth.config;
 
+import com.wanted.market.domain.member.entity.RoleCode;
 import com.wanted.market.global.auth.common.CustomAuthenticationEntryPoint;
 import com.wanted.market.global.auth.handler.CustomAccessDeniedHandler;
 import com.wanted.market.global.auth.handler.CustomLogoutHandler;
 import com.wanted.market.global.auth.handler.CustomLogoutSuccessHandler;
-import com.wanted.market.domain.member.entity.RoleCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -41,7 +41,7 @@ public class SecurityConfig {
                         .requestMatchers("/product/register").hasAnyAuthority(String.valueOf(RoleCode.MEMBER))
                         .requestMatchers("/product/**").permitAll()
                         .requestMatchers("/trade/**").permitAll()
-//                        .requestMatchers("/trade/**").hasAnyAuthority(String.valueOf(RoleCode.MEMBER))
+                        .requestMatchers("/trade/**").hasAnyAuthority(String.valueOf(RoleCode.MEMBER))
                         .anyRequest().authenticated());
 
         http.logout(logout -> logout

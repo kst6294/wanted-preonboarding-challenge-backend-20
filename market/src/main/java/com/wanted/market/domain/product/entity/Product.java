@@ -14,8 +14,6 @@ import lombok.Getter;
 @AllArgsConstructor
 public class Product extends BaseTimeEntity {
 
-    private final int SOLD_OUT = 0;
-
     @Id
     @GeneratedValue
     @Column(name = "product_number")
@@ -41,14 +39,14 @@ public class Product extends BaseTimeEntity {
 
     public void changeStatus() {
 
-        if (quantity == SOLD_OUT) {
+        if (quantity == 0) {
             this.status = ProductStatusCode.COMPLETE;
             return;
         }
 
         quantity -= 1;
 
-        if (quantity == SOLD_OUT) {
+        if (quantity == 0) {
             this.status = ProductStatusCode.RESERVE;
         } else {
             this.status = ProductStatusCode.ON_SALE;

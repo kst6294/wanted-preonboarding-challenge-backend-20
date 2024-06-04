@@ -18,7 +18,7 @@ public class ProductController {
 
     private final ProductService productService;
 
-    @PostMapping("/reigster")
+    @PostMapping("/register")
     public BaseResponse register(@RequestBody @Valid RegisterRequest request, BindingResult bindingResult) {
 
         if(bindingResult.hasErrors()) {
