@@ -35,16 +35,16 @@ public class GoodsMapper {
     /**
      * 응답 mapper
      */
-    public List<GoodsList> toGoodsList(List<Goods> goodsList) {
-        List<GoodsList> list = new ArrayList<>();
+    public List<GoodsListItem> toGoodsList(List<Goods> goodsList) {
+        List<GoodsListItem> list = new ArrayList<>();
         for (Goods goods : goodsList) {
             list.add(toGoodsItem(goods));
         }
-        return  list;
+        return list;
     }
 
-    public GoodsList toGoodsItem(Goods goods) {
-        return new GoodsList(
+    public GoodsListItem toGoodsItem(Goods goods) {
+        return new GoodsListItem(
                 goods.getGoodsId(),
                 goods.getGoodsName(),
                 goods.getGoodsPrice(),
@@ -56,7 +56,7 @@ public class GoodsMapper {
 
     public GoodsDetail toGoodsDetail(Goods goods, List<Orders> ordersList) {
         List<MyPageResponseDto.Trade> tradeList = new ArrayList<>();
-        if(!ordersList.isEmpty()) {
+        if (!ordersList.isEmpty()) {
             log.info("거래내역이 있습니다.");
             // 거래내역이 있는지 확인
             for (Orders trade : ordersList) {
@@ -73,6 +73,7 @@ public class GoodsMapper {
                 tradeList
         );
     }
+
     public UpdateGoods toUpdateGoods(Goods goods) {
         return new UpdateGoods(
                 goods.getGoodsId(),
@@ -93,7 +94,7 @@ public class GoodsMapper {
                 toOrderStatusResponse(trade.getOrderStatus()),
                 trade.getGoods().getGoodsPrice(),
                 trade.getQuantity()
-                );
+        );
     }
 
     public static GoodsResponseDto.GoodsStatus toGoodsStatus(GoodsStatus status) {

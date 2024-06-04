@@ -24,8 +24,8 @@ public class GoodsController {
     private final GoodsMapper mapper;
 
     @GetMapping
-    public ApiResponse<List<GoodsResponseDto.GoodsList>> getGoodsList() {
-        List<GoodsResponseDto.GoodsList> goodsList = mapper.toGoodsList(goodsService.getGoodsList());
+    public ApiResponse<List<GoodsResponseDto.GoodsListItem>> getGoodsList() {
+        List<GoodsResponseDto.GoodsListItem> goodsList = mapper.toGoodsList(goodsService.getGoodsList());
         return ApiResponse.success(goodsList);
     }
 
@@ -66,6 +66,10 @@ public class GoodsController {
             @RequestHeader("memberId") Long memberId,
             @PathVariable("goods_id") Long goodsId,
             @RequestBody int quantity) {
+        // 회원이 아니면 구매불가
+        if (memberId == null) {
+            return ApiResponse.fail("로그인 후 이용해주세요.");
+        }
         /**
          * TODO: 상품 주문
          */

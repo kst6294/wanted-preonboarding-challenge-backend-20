@@ -2,10 +2,12 @@ package wanted.challenge.goods.dto.response;
 
 
 
+import com.fasterxml.jackson.annotation.JsonEnumDefaultValue;
 import wanted.challenge.mypage.dto.response.MyPageResponseDto;
 
 import java.time.LocalDateTime;
 import java.util.List;
+
 
 public class GoodsResponseDto {
 
@@ -21,7 +23,7 @@ public class GoodsResponseDto {
         }
     }
 
-    public record GoodsList(
+    public record GoodsListItem(
             Long goodsId,
             String goodsName,
             int goodsPrice,
