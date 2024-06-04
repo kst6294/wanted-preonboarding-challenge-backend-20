@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
+import javax.naming.AuthenticationException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -21,15 +22,16 @@ import java.util.Map;
 @Slf4j
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(Exception.class)
-    protected ResponseEntity<Object> handleException(final Exception e) {
-        Map<String, Object> result = new HashMap<>();
-        ResponseEntity<Object> ret = null;
+    @ExceptionHandler(RuntimeException.class)
+    protected ResponseEntity<Object> handleRuntimeException(final RuntimeException e) {
 
-        if (e instanceof LoginCheckFailException) {
-        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+    }
 
-        return ret;
+    @ExceptionHandler(AuthenticationException.class)
+    protected ResponseEntity<Object> handleAuthenticationException(final AuthenticationException e) {
+
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.getMessage());
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
