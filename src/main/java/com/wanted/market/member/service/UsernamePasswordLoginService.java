@@ -35,6 +35,9 @@ public class UsernamePasswordLoginService implements LoginService<UsernamePasswo
         try {
             Member findMember = repository.findByUsernameOrThrow(username);
             info = findMember.login(password, passwordEncoder);
+            if (info == null) {
+                throw new AuthenticationException("bad credential");
+            }
         } catch (NotFoundException e) {
             throw new AuthenticationException("no such user", e);
         }
