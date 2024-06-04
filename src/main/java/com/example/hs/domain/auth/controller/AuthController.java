@@ -1,8 +1,11 @@
 package com.example.hs.domain.auth.controller;
 
 import com.example.hs.domain.auth.dto.MemberDto;
+import com.example.hs.domain.auth.dto.MemberSignInRequest;
 import com.example.hs.domain.auth.dto.MemberSignUpRequest;
 import com.example.hs.domain.auth.service.MemberService;
+import com.example.hs.global.token.dto.TokenDto;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,7 +20,12 @@ public class AuthController {
   private final MemberService memberService;
 
   @PostMapping("/sign-up")
-  public ResponseEntity<MemberDto> signUp(@RequestBody MemberSignUpRequest singUpRequest) {
+  public ResponseEntity<MemberDto> signUp(@Valid @RequestBody MemberSignUpRequest singUpRequest) {
     return ResponseEntity.ok(memberService.signUp(singUpRequest));
+  }
+
+  @PostMapping("/sign-in")
+  public ResponseEntity<TokenDto> signIn(@Valid @RequestBody MemberSignInRequest signInRequest) {
+    return ResponseEntity.ok(memberService.signIn(signInRequest.getUsername(), signInRequest.getPassword()));
   }
 }
