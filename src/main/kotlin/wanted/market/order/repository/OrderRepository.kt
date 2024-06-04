@@ -12,7 +12,8 @@ interface OrderRepository : JpaRepository<Order, Long> {
     //n+1 문제 해결하기
     fun findByBuyerIdAndOrderStatus(buyerId: Long, orderStatus: OrderStatus) : List<Order>
 
-    fun findByBuyerIdAndProductId(buyerId: Long, productId: Long) : Optional<Order>
     fun findBySellerIdAndOrderStatus(sellerId: Long, orderStatus: OrderStatus): List<Order>
+
+    fun findByBuyerIdOrSellerIdAndProductId(buyerId: Long, sellerId: Long, productId: Long): List<Order>
 
 }

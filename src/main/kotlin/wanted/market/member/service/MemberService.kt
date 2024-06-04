@@ -19,18 +19,17 @@ class MemberService(
         joinMember(saveMemberRequest)
     }
 
-    private fun joinMember(saveMemberRequest: SaveMemberRequest): Member {
+    private fun joinMember(saveMemberRequest: SaveMemberRequest) {
         val member = Member(
             name = saveMemberRequest.name,
             email = saveMemberRequest.email
         )
         memberRepository.save(member)
-        return member
     }
 
     private fun checkDuplication(email: String) {
         val existMember = memberRepository.findByEmail(email)
-        if (existMember != null) {
+        if (existMember.isPresent) {
             throw MemberException(ErrorCode.DUPLICATE_EMAIL)
         }
     }
@@ -40,6 +39,4 @@ class MemberService(
             .orElseThrow{ MemberException(ErrorCode.MEMBER_NOT_FOUND) }
         return member
     }
-
-
 }

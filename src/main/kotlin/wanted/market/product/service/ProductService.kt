@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import wanted.market.common.exception.ErrorCode
 import wanted.market.member.service.MemberService
-import wanted.market.order.OrderException
 import wanted.market.order.entity.OrderStatus
 import wanted.market.order.repository.OrderRepository
 import wanted.market.product.dto.ProductDetailResponse
@@ -13,7 +12,6 @@ import wanted.market.product.dto.ProductResponse
 import wanted.market.product.exception.ProductException
 import wanted.market.product.dto.SaveProductRequest
 import wanted.market.product.entity.Product
-import wanted.market.product.entity.ProductStatus
 import wanted.market.product.repository.ProductRepository
 
 @Service
@@ -27,14 +25,13 @@ class ProductService(@Autowired private val productRepository: ProductRepository
             .map { product-> ProductResponse.from(product)}
     }
 
-    //상품 상세 조회 : 거래 내역도 조회되어야 함.
     fun findProductDetails(memberId: Long, productId: Long): ProductDetailResponse {
         val product = findProductById(productId)
-        val order = orderRepository.findByBuyerIdAndProductId(memberId, productId)
-            .orElseThrow{OrderException(ErrorCode.ORDER_NOT_FOUND)}
-        return ProductDetailResponse.from(product, order, product.seller)
-
-        //내가 구매자인 경우와 판매자인 경우 거래 내역 불러오기
+        val orders = orderRepository.findByBuyerIdOrSellerIdAndProductId(memberId, memberId, productId)
+        if (orders.isEmpty()) {
+            return ProductDetailResponse.from(product, null, product.seller)
+        }
+        return ProductDetailResponse.from(product, orders.get(0), product.seller)
 
     }
 

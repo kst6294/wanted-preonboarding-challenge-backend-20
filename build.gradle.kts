@@ -43,11 +43,20 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
-	compileOnly("org.projectlombok:lombok")
 	runtimeOnly("com.h2database:h2")
-	annotationProcessor("org.projectlombok:lombok")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+
+	//kotest
+	implementation(kotlin("stdlib"))
+	testImplementation("io.kotest:kotest-runner-junit5:5.3.2")
+	testImplementation("io.kotest:kotest-assertions-core:5.3.2")
+	testImplementation("io.kotest:kotest-framework-engine:5.3.2")
+
+	testImplementation("io.mockk:mockk:1.9.3")
+	testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
+
+
 }
 
 tasks.withType<KotlinCompile> {
@@ -57,6 +66,10 @@ tasks.withType<KotlinCompile> {
 	}
 }
 
-tasks.withType<Test> {
+tasks.withType<Test>().configureEach {
+	useJUnitPlatform()
+}
+
+tasks.test {
 	useJUnitPlatform()
 }

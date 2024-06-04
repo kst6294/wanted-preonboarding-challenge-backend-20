@@ -40,8 +40,4 @@ class OrderService(@Autowired private val memberService: MemberService,
         order.completeDate = LocalDateTime.now()
         order.product.productStatus = ProductStatus.SOLD
     }
-
-    @Transactional
-    fun findOrder(memberId: Long, productId: Long) {
-    }
 }

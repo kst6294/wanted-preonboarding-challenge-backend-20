@@ -10,12 +10,20 @@ data class ProductDetailResponse(val name: String,
                            val orderHistory: OrderHistory
 ){
     companion object {
-        fun from(product: Product, order: Order, seller: Member): ProductDetailResponse {
+        fun from(product: Product, order: Order?, seller: Member): ProductDetailResponse {
+            if (order != null) {
+                return ProductDetailResponse(
+                    product.priceName,
+                    product.price,
+                    product.productStatus.value,
+                    OrderHistory.from(order, seller))
+            }
             return ProductDetailResponse(
                 product.priceName,
                 product.price,
                 product.productStatus.value,
-                OrderHistory.from(order, seller))
+                OrderHistory())
+
         }
     }
 }
