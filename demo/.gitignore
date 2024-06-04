@@ -35,3 +35,7 @@ out/
 
 ### VS Code ###
 .vscode/
+
+### Database ###
+/src/main/resources/application.yml
+/src/main/resources/application-dev.yml
