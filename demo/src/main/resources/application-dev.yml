@@ -21,7 +21,7 @@ spring:
     properties:
       hibernate:
         format_sql: true
-        #show_sql: true -> System.out.print 방식
+        show_sql: true
 
 
 

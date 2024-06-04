@@ -9,6 +9,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -36,6 +38,8 @@ public class Statements extends BaseEntity {
     @JoinColumn(name = "product_id",nullable = false)
     private Product product;
 
+
+
     @Builder
     public Statements(Long price, boolean purchaseStatus, boolean sellStatus, User user, Product product){
         this.price = price;
@@ -43,6 +47,10 @@ public class Statements extends BaseEntity {
         this.sellStatus = sellStatus;
         this.user = user;
         this.product = product;
+    }
+
+    public void setSellStatus(boolean sellStatus){
+        this.sellStatus = sellStatus;
     }
 
 
