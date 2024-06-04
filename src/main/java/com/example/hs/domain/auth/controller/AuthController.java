@@ -1,5 +1,6 @@
 package com.example.hs.domain.auth.controller;
 
+import com.example.hs.domain.auth.dto.LogoutResponse;
 import com.example.hs.domain.auth.dto.MemberDto;
 import com.example.hs.domain.auth.dto.MemberSignInRequest;
 import com.example.hs.domain.auth.dto.MemberSignUpRequest;
@@ -10,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -27,5 +29,10 @@ public class AuthController {
   @PostMapping("/sign-in")
   public ResponseEntity<TokenDto> signIn(@Valid @RequestBody MemberSignInRequest signInRequest) {
     return ResponseEntity.ok(memberService.signIn(signInRequest.getUsername(), signInRequest.getPassword()));
+  }
+
+  @PostMapping("/logout")
+  public ResponseEntity<LogoutResponse> logOut(@RequestHeader("Authorization") String accessToken) {
+    return ResponseEntity.ok(memberService.logout(accessToken));
   }
 }

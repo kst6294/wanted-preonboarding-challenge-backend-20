@@ -1,11 +1,15 @@
 package com.example.hs.domain.auth.service;
 
 import static com.example.hs.global.exception.ErrorCode.ALREADY_EXISTS_LOGIN_ID;
+import static com.example.hs.global.exception.ErrorCode.ALREADY_LOGOUT;
+import static com.example.hs.global.exception.ErrorCode.INVALID_ACCESS_TOKEN;
 import static com.example.hs.global.exception.ErrorCode.NOT_AUTHENTICATE_EMAIL;
 import static com.example.hs.global.exception.ErrorCode.NOT_EQUAL_PASSWORD;
 import static com.example.hs.global.exception.ErrorCode.NOT_FOUND_MEMBER_LOGIN_ID;
 import static com.example.hs.global.exception.ErrorCode.NOT_MATCH_PASSWORD;
+import static com.example.hs.global.token.constant.TokenConstant.BEARER_TYPE;
 
+import com.example.hs.domain.auth.dto.LogoutResponse;
 import com.example.hs.domain.auth.dto.MemberDto;
 import com.example.hs.domain.auth.dto.MemberSignUpRequest;
 import com.example.hs.domain.auth.entity.Member;
@@ -83,6 +87,26 @@ public class MemberService {
     tokenRepository.saveRefreshToken(authentication.getName(), refreshToken);
 
     return TokenDto.tokenDtoBuild(accessToken, refreshToken);
+  }
+
+  public LogoutResponse logout(String accessToken) {
+    if (accessToken.startsWith(BEARER_TYPE)) {
+      accessToken = accessToken.substring(BEARER_TYPE.length());
+    }
+    Authentication authentication = tokenProvider.getAuthentication(accessToken);
+    if(!tokenProvider.validateToken(accessToken)) {
+      throw new CustomException(INVALID_ACCESS_TOKEN);
+    }
+    String loginId = authentication.getName();
+    String refreshToken = tokenRepository.getRefreshToken(loginId);
+    if (refreshToken == null) {
+      throw new CustomException(ALREADY_LOGOUT);
+    }
+
+    tokenRepository.saveInValidAccessToken(loginId, accessToken);
+    tokenRepository.deleteRefreshToken(loginId);
+
+    return new LogoutResponse(loginId, "로그아웃 되었습니다.");
   }
 
   private Member validationMember(String loginId, String password) {

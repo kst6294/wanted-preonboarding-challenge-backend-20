@@ -23,6 +23,9 @@ public enum ErrorCode {
   NOT_AUTHENTICATE_EMAIL(400, "회원가입 인증이 되지 않았습니다. 인증 후 사용 가능합니다."),
   NOT_MATCH_PASSWORD(400, "비밀번호가 틀렸습니다."),
 
+  // 로그아웃 관련
+  ALREADY_LOGOUT(400, "이미 로그아웃 한 사용자입니다."),
+
   // 인증 관련
   UN_AUTHORIZATION(401, "인증이 되지 않았습니다."),
   NOT_MATCH_AUTHORIZATION(403, "접근 권한이 올바르지 않습니다."),
@@ -31,6 +34,7 @@ public enum ErrorCode {
   JWT_EXPIRED(401, "JWT가 만료되었습니다"),
   JWT_TOKEN_WRONG_TYPE(403,"JWT 토큰 형식에 문제가 생겼습니다"),
   JWT_TOKEN_MALFORMED(403, "토큰이 변조가 되었습니다"),
+  NOT_FOUND_TOKEN(400, "토큰이 존재하지 않습니다."),
   INVALID_ACCESS_TOKEN(400, "유효하지 않은 Access Token 값입니다."),
   NO_ROLE_TOKEN(400, "권한 정보가 없는 토큰입니다.");
 
