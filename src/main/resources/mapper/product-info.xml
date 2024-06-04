@@ -3,8 +3,41 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.wanted.market.product.ui.dao.ProductInfoDao">
-    <select id="findAll" parameterType="com.wanted.market.common.http.dto.request.PageRequest" resultType="com.wanted.market.product.ui.dto.response.ProductInfoResponse">
-        select *
-        from PRODUCT
+    <select id="findAll"
+            parameterType="com.wanted.market.product.ui.dto.request.QueryRequest"
+            resultType="com.wanted.market.product.ui.dto.response.ProductInfoResponse">
+        select p.id, p.name, p.price, p.status, p.version
+        from product p
+        <where>
+            <if test="sellerId != null">
+                p.seller_id = #{sellerId}
+            </if>
+            <if test="status != null">
+                p.status = #{status}
+            </if>
+        </where>
+        limit #{offset}
+        , #{pageSize}
+    </select>
+    <select id="count"
+            parameterType="com.wanted.market.product.ui.dto.request.QueryRequest"
+            resultType="Long">
+        select count(1)
+        from product p
+        <where>
+            <if test="sellerId != null">
+                p.seller_id = #{sellerId}
+            </if>
+            <if test="status != null">
+                p.status = #{status}
+            </if>
+        </where>
+    </select>
+    <select id="findById"
+            parameterType="Long"
+            resultType="com.wanted.market.product.ui.dto.response.ProductInfoResponse">
+        select p.id, p.name, p.price, p.status, p.version
+        from product p
+        where p.id = #{id}
     </select>
 </mapper>

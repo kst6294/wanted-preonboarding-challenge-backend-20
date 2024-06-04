@@ -17,11 +17,11 @@ public abstract class LoginMember {
         this.isAuthenticated = true;
     }
 
-    protected Long getId() {
+    public Long getId() {
         return id;
     }
 
-    protected String getUsername() {
+    public String getUsername() {
         return username;
     }
 
