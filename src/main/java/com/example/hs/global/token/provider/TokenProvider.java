@@ -3,6 +3,7 @@ package com.example.hs.global.token.provider;
 import static com.example.hs.global.exception.ErrorCode.JWT_EXPIRED;
 import static com.example.hs.global.exception.ErrorCode.JWT_TOKEN_MALFORMED;
 import static com.example.hs.global.exception.ErrorCode.JWT_TOKEN_WRONG_TYPE;
+import static com.example.hs.global.exception.ErrorCode.NOT_FOUND_TOKEN;
 import static com.example.hs.global.exception.ErrorCode.NO_ROLE_TOKEN;
 import static com.example.hs.global.token.constant.TokenConstant.ACCESS_TOKEN_EXPIRE_TIME;
 import static com.example.hs.global.token.constant.TokenConstant.AUTHORITIES_KEY;
@@ -82,7 +83,7 @@ public class TokenProvider {
     Claims claims = parseClaims(token);
 
     if (claims.get(AUTHORITIES_KEY) == null) {
-      throw new RuntimeException("토큰이 존재하지 않습니다.");
+      throw new JwtException(NOT_FOUND_TOKEN);
     }
 
     // 클레임에서 권한 정보 가져오기
