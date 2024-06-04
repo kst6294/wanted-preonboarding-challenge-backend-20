@@ -1,6 +1,9 @@
 package com.wanted.market.stock.service;
 
-public interface StockManager {
+import com.wanted.market.order.domain.StockRequester;
+import com.wanted.market.product.domain.StockRegister;
+
+public interface StockManager extends StockRequester, StockRegister {
     boolean isAvailable(Long productId);
 
     Integer count(Long productId);
