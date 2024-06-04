@@ -8,7 +8,7 @@ import com.wanted.market.product.domain.DuplicateBuyerChecker;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "ORDERS", indexes = {@Index(name = "buyer_id_idx", columnList = "buyerId"), @Index(name = "product_id_idx", columnList = "productId")}, uniqueConstraints = {@UniqueConstraint(columnNames = {"buyerId", "productId"})})
+@Table(name = "ORDERS", indexes = {@Index(name = "buyer_id_idx", columnList = "buyerId"), @Index(name = "product_id_idx", columnList = "productId")}, uniqueConstraints = {@UniqueConstraint(name = "unique_buyer_id_and_product_id", columnNames = {"buyerId", "productId"})})
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -74,5 +74,9 @@ public class Order {
         if (!this.buyerId.equals(buyerId))
             throw new UnauthorizedRequestException("buyerId must be equal to this.buyerId");
         this.status = Status.FINISHED;
+    }
+
+    public Long getId() {
+        return id;
     }
 }
