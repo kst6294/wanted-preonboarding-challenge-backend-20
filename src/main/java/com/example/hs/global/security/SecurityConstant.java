@@ -8,7 +8,8 @@ public class SecurityConstant {
       "/v2/api-docs",
       "/webjars/**",
       "/h2-console/**",
-      "/auth/**",
+      "/auth/sign-up",
+      "/auth/sign-in",
       "/mails/**"
   };
 }
