@@ -1,5 +1,6 @@
 package io.github.potatoy.wanted_preonboarding_challenge.market;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -98,5 +99,27 @@ class MarketApiControllerTest {
     result
         .andExpect(status().isOk())
         .andExpect(jsonPath("$.buyerUser.userId").value(buyerUser.getId()));
+  }
+
+  @DisplayName("getProducts(): 거래자간의 거래 기록 조회 성공")
+  @WithMockUser(username = "user1@mail.com")
+  @Test
+  public void successBetweenTraders() throws Exception {
+    final String url = "/api/market/products/transactions?productId={productId}";
+    final User user1 = testUserUtil.createTestUser("user1@mail.com", "test", null);
+    final User user2 = testUserUtil.createTestUser("user2@mail.com", "test", null);
+    testUserUtil.createTestUser("user3@mail.com", "test", null);
+    final Product product = testMarketUtil.createProduct(user1, "product", 20_000L, user2);
+
+    ResultActions result =
+        mockMvc.perform(
+            get(url.replace("{productId}", product.getId() + ""))
+                .contentType(MediaType.APPLICATION_JSON_VALUE));
+
+    result
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$[0].id").value(product.getId()))
+        .andExpect(jsonPath("$[0].sellerUser.userId").value(user1.getId()))
+        .andExpect(jsonPath("$[0].buyerUser.userId").value(user2.getId()));
   }
 }
