@@ -22,6 +22,18 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: create-drop
+    defer-datasource-initialization: true
+  sql:
+    init:
+      mode: always
+      data-locations: classpath:/db/init/**
 mybatis:
   mapper-locations: classpath:mapper/**/*.xml
   type-aliases-package: classpath:main/java/com/wanted/market
+logging:
+  level:
+    com:
+      debug
+    org:
+      mybatis:
+        debug

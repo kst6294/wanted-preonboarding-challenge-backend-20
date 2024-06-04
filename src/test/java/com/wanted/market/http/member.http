@@ -1,0 +1,29 @@
+###
+POST http://localhost:8080/login
+Content-Type: application/json
+
+{
+  "username": "donghar",
+  "password": "donghar_password"
+}
+
+###
+POST http://localhost:8080/login
+Content-Type: application/json
+
+{
+  "username": "donghar2",
+  "password": "donghar_password"
+}
+
+###
+POST http://localhost:8080/login
+Content-Type: application/json
+
+{
+  "username": "donghar3",
+  "password": "donghar_password"
+}
+
+###
+POST http://localhost:8080/logout
