@@ -9,6 +9,6 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     Optional<Member> findByUsername(String username);
 
     default Member findByUsernameOrThrow(String username) throws NotFoundException {
-        return findByUsername(username).orElseThrow(() -> new NotFoundException());
+        return findByUsername(username).orElseThrow(() -> new NotFoundException("no such member"));
     }
 }
