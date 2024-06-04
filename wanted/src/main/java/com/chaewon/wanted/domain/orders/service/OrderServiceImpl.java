@@ -38,7 +38,7 @@ public class OrderServiceImpl implements OrderService {
 
         validateOrderRequest(buyer, product);
 
-        Orders order = OrderRequestDto.from(orderRequestDto, buyer, seller, product);
+        Orders order = orderRequestDto.toEntity(buyer, seller, product);
         orderRepository.save(order);
 
         long orderCount = orderRepository.countByProductAndOrderStatusNot(product, OrderStatus.거래확정);
@@ -108,6 +108,7 @@ public class OrderServiceImpl implements OrderService {
         order.updateOrderStatus(OrderStatus.거래확정);
         updateProductStatus(product);
     }
+
 
     private void updateProductStatus(Product product) {
         // 모든 주문이 거래확정 상태인지 확인

@@ -26,7 +26,7 @@ public class ProductServiceImpl implements ProductService {
     @Transactional
     public void registerProduct(String email, RegisterRequestDto registrationDto) {
         Member member = getByEmail(email);
-        Product product = RegisterRequestDto.from(registrationDto, member);
+        Product product = registrationDto.toEntity(registrationDto, member);
         productRepository.save(product);
     }
 

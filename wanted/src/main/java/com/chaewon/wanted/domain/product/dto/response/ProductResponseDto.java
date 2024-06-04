@@ -15,14 +15,14 @@ import lombok.experimental.SuperBuilder;
 public class ProductResponseDto {
     private String name;
     private int price;
-    private int quentity;
+    private int quantity;
     private ProductStatus productStatus;
 
     public static ProductResponseDto from(Product product) {
         return ProductResponseDto.builder()
                 .name(product.getName())
                 .price(product.getPrice())
-                .quentity(product.getQuantity())
+                .quantity(product.getQuantity())
                 .productStatus(product.getProductStatus())
                 .build();
     }

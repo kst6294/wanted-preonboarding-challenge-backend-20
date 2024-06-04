@@ -16,7 +16,7 @@ public class ProductDetailResponseDto {
     private Long id;
     private String name;
     private int price;
-    private int quentity;
+    private int quantity;
     private ProductStatus productStatus;
 
     public static ProductDetailResponseDto from(Product product) {
@@ -24,7 +24,7 @@ public class ProductDetailResponseDto {
                 .id(product.getId())
                 .name(product.getName())
                 .price(product.getPrice())
-                .quentity(product.getQuantity())
+                .quantity(product.getQuantity())
                 .productStatus(product.getProductStatus())
                 .build();
     }

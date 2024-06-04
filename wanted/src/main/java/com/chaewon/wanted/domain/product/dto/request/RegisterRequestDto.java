@@ -22,7 +22,7 @@ public class RegisterRequestDto {
     @Min(value = 1, message = "수량은 0보다 커야 합니다.")
     private int quantity;
 
-    public static Product from(RegisterRequestDto registrationDto, Member member) {
+    public Product toEntity(RegisterRequestDto registrationDto, Member member) {
         return Product.builder()
                 .name(registrationDto.getName())
                 .price(registrationDto.getPrice())

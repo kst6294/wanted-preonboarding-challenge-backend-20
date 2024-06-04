@@ -20,7 +20,7 @@ public class OrderRequestDto {
     @NotNull(message = "제품 아이디는 필수입니다.")
     private Long productId;
 
-    public static Orders from(OrderRequestDto dto, Member buyer, Member seller, Product product) {
+    public Orders toEntity(Member buyer, Member seller, Product product) {
         return Orders.builder()
                 .orderPrice(product.getPrice())
                 .orderStatus(OrderStatus.거래시작)
