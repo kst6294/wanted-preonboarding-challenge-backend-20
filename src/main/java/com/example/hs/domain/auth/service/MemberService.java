@@ -3,10 +3,13 @@ package com.example.hs.domain.auth.service;
 import static com.example.hs.global.exception.ErrorCode.ALREADY_EXISTS_LOGIN_ID;
 import static com.example.hs.global.exception.ErrorCode.ALREADY_LOGOUT;
 import static com.example.hs.global.exception.ErrorCode.INVALID_ACCESS_TOKEN;
+import static com.example.hs.global.exception.ErrorCode.INVALID_REFRESH_TOKEN;
+import static com.example.hs.global.exception.ErrorCode.INVALID_TOKEN_REISSUE_REQUEST;
 import static com.example.hs.global.exception.ErrorCode.NOT_AUTHENTICATE_EMAIL;
 import static com.example.hs.global.exception.ErrorCode.NOT_EQUAL_PASSWORD;
 import static com.example.hs.global.exception.ErrorCode.NOT_FOUND_MEMBER_LOGIN_ID;
 import static com.example.hs.global.exception.ErrorCode.NOT_MATCH_PASSWORD;
+import static com.example.hs.global.exception.ErrorCode.NOT_MATCH_TOKEN_USER;
 import static com.example.hs.global.token.constant.TokenConstant.BEARER_TYPE;
 
 import com.example.hs.domain.auth.dto.LogoutResponse;
@@ -107,6 +110,37 @@ public class MemberService {
     tokenRepository.deleteRefreshToken(loginId);
 
     return new LogoutResponse(loginId, "로그아웃 되었습니다.");
+  }
+
+  public TokenDto reIssue(String oldAccessToken, String oldRefreshToken) {
+    if (!oldRefreshToken.startsWith(BEARER_TYPE)) {
+      throw new CustomException(INVALID_TOKEN_REISSUE_REQUEST);
+    }
+
+    oldRefreshToken = oldRefreshToken.substring(BEARER_TYPE.length());
+
+    if (!tokenProvider.validateToken(oldRefreshToken)) {
+      throw new CustomException(INVALID_REFRESH_TOKEN);
+    }
+
+    Authentication authentication = tokenProvider.getAuthentication(oldRefreshToken);
+    String loginId = authentication.getName();
+    if (!tokenProvider.getUsername(oldRefreshToken).equals(loginId)) {
+      throw new CustomException(NOT_MATCH_TOKEN_USER);
+    }
+
+    if (oldRefreshToken == null) {
+      new CustomException(ALREADY_LOGOUT);
+    }
+
+    tokenRepository.saveInValidAccessToken(authentication.getName(), oldAccessToken);
+
+    String accessToken = tokenProvider.generateAccessToken(authentication.getName(), authentication);
+    String refreshToken = tokenProvider.generateRefreshToken(authentication.getName(), authentication);
+
+    tokenRepository.saveRefreshToken(authentication.getName(), refreshToken);
+
+    return TokenDto.tokenDtoBuild(accessToken, refreshToken);
   }
 
   private Member validationMember(String loginId, String password) {

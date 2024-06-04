@@ -4,6 +4,7 @@ import com.example.hs.domain.auth.dto.LogoutResponse;
 import com.example.hs.domain.auth.dto.MemberDto;
 import com.example.hs.domain.auth.dto.MemberSignInRequest;
 import com.example.hs.domain.auth.dto.MemberSignUpRequest;
+import com.example.hs.domain.auth.dto.ReIssueRequest;
 import com.example.hs.domain.auth.service.MemberService;
 import com.example.hs.global.token.dto.TokenDto;
 import jakarta.validation.Valid;
@@ -34,5 +35,10 @@ public class AuthController {
   @PostMapping("/logout")
   public ResponseEntity<LogoutResponse> logOut(@RequestHeader("Authorization") String accessToken) {
     return ResponseEntity.ok(memberService.logout(accessToken));
+  }
+
+  @PostMapping("/re-issue")
+  public ResponseEntity<TokenDto> reIssue(@RequestHeader("Authorization") String refreshToken, @Valid @RequestBody ReIssueRequest request) {
+    return ResponseEntity.ok(memberService.reIssue(request.getOldAccessToken(), refreshToken));
   }
 }

@@ -26,6 +26,9 @@ public enum ErrorCode {
   // 로그아웃 관련
   ALREADY_LOGOUT(400, "이미 로그아웃 한 사용자입니다."),
 
+  // 토큰 재발급 관련
+  INVALID_TOKEN_REISSUE_REQUEST(400, "올바르지 않은 재발급 요청입니다."),
+
   // 인증 관련
   UN_AUTHORIZATION(401, "인증이 되지 않았습니다."),
   NOT_MATCH_AUTHORIZATION(403, "접근 권한이 올바르지 않습니다."),
@@ -36,6 +39,8 @@ public enum ErrorCode {
   JWT_TOKEN_MALFORMED(403, "토큰이 변조가 되었습니다"),
   NOT_FOUND_TOKEN(400, "토큰이 존재하지 않습니다."),
   INVALID_ACCESS_TOKEN(400, "유효하지 않은 Access Token 값입니다."),
+  INVALID_REFRESH_TOKEN(400, "유효하지 않은 Refresh Token 값입니다."),
+  NOT_MATCH_TOKEN_USER(400, "토큰의 사용자가 아닙니다."),
   NO_ROLE_TOKEN(400, "권한 정보가 없는 토큰입니다.");
 
   private int httpCode;
