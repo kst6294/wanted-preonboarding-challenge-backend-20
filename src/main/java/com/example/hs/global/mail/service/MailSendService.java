@@ -5,6 +5,8 @@ import static com.example.hs.global.mail.MailConstant.EXPIRED_TIME_MENTION;
 import static com.example.hs.global.mail.MailConstant.MAIL_DOMAIN;
 import static com.example.hs.global.mail.MailConstant.MAIL_TEXT;
 import static com.example.hs.global.mail.MailConstant.MAIL_TITLE_FOR_CERTIFIED;
+import static com.example.hs.global.mail.MailConstant.OVER_TIME;
+import static com.example.hs.global.mail.MailConstant.RESEND_COMPLETE;
 
 import com.example.hs.global.mail.CertifiedNumberGenerator;
 import com.example.hs.global.redis.auth.CertifiedNumberAuthRepository;
@@ -26,13 +28,32 @@ public class MailSendService {
   private final CertifiedNumberGenerator numberGenerator;
   private final CertifiedNumberAuthRepository certifiedNumberAuthRepository;
 
+  public String emailAuthResend(String email) throws NoSuchAlgorithmException, MessagingException {
+    if (certifiedNumberAuthRepository.hasKeyForEmailAuth(email)) {
+      throw new RuntimeException("유효한 메일이 존재하므로 재전송은 생략합니다. 링크 유효시간이 지나면 다시 눌러주세요.");
+    }
+
+    String certificationNumber = numberGenerator.createCertificationNumber(6);
+    String subject = MAIL_TITLE_FOR_CERTIFIED;
+    String link = String.format(EMAIL_AUTH, MAIL_DOMAIN, email, certificationNumber);
+    String expiredTimeMention = String.format(EXPIRED_TIME_MENTION, mailExpiredTime());
+    String ifOverTime = String.format(OVER_TIME, MAIL_DOMAIN, email);
+    String text = MAIL_TEXT + link + expiredTimeMention + ifOverTime;
+    certifiedNumberAuthRepository.saveCertificationNumber(email, certificationNumber);
+
+    sendMail(email, subject, text);
+
+    return RESEND_COMPLETE;
+  }
   public void emailAuth(String email) throws NoSuchAlgorithmException, MessagingException {
     String certificationNumber = numberGenerator.createCertificationNumber(6);
     String subject = MAIL_TITLE_FOR_CERTIFIED;
     String link = String.format(EMAIL_AUTH, MAIL_DOMAIN, email, certificationNumber);
     String expiredTimeMention = String.format(EXPIRED_TIME_MENTION, mailExpiredTime());
-    String text = MAIL_TEXT + link + expiredTimeMention;
+    String ifOverTime = String.format(OVER_TIME, MAIL_DOMAIN, email);
+    String text = MAIL_TEXT + link + expiredTimeMention + ifOverTime;
     certifiedNumberAuthRepository.saveCertificationNumber(email, certificationNumber);
+
     sendMail(email, subject, text);
   }
   @Async
