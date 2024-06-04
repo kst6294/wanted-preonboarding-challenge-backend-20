@@ -1,0 +1,34 @@
+###
+GET http://localhost:8080/products?pageNumber=4&pageSize=5
+
+###
+GET http://localhost:8080/products/19
+
+###
+GET http://localhost:8080/products?sellerId=2&pageNumber=1&pageSize=5
+
+###
+POST http://localhost:8080/products
+Content-Type: application/json
+
+{
+  "name": "something",
+  "price": 10000,
+  "quantity": 50
+}
+
+###
+POST http://localhost:8080/products/19/orders
+Content-Type: application/json
+
+{
+  "version": 0
+}
+
+###
+POST http://localhost:8080/products/19/orders
+Content-Type: application/json
+
+{
+  "version": 1
+}
