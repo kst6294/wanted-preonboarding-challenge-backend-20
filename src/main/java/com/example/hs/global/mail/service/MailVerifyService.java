@@ -1,9 +1,14 @@
 package com.example.hs.global.mail.service;
 
+import static com.example.hs.global.exception.ErrorCode.INVALID_CERTIFIED_NUMBER;
+import static com.example.hs.global.exception.ErrorCode.NOT_FOUND_MEMBER_LOGIN_ID;
+
 import com.example.hs.domain.auth.dto.MemberDto;
 import com.example.hs.domain.auth.entity.Member;
 import com.example.hs.domain.auth.repository.MemberRepository;
 import com.example.hs.domain.auth.type.Authority;
+import com.example.hs.global.exception.CustomException;
+import com.example.hs.global.exception.ErrorCode;
 import com.example.hs.global.redis.auth.CertifiedNumberAuthRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -16,11 +21,12 @@ public class MailVerifyService {
 
   public MemberDto verifyEmail(String email, String certificationNumber) {
     if (!isVerifyForEmailAuth(email, certificationNumber)) {
-      throw new RuntimeException("유효하지 않은 인증 숫자입니다.");
+      throw new CustomException(INVALID_CERTIFIED_NUMBER);
     }
     certifiedNumberAuthRepository.removeCertificationNumber(email);
 
-    Member member = memberRepository.findByLoginId(email);
+    Member member = memberRepository.findByLoginId(email)
+        .orElseThrow(() -> new CustomException(NOT_FOUND_MEMBER_LOGIN_ID));
     member.setAuthority(Authority.ROLE_MEMBER);
 
     return MemberDto.fromEntity(memberRepository.save(member), "이메일 인증이 완료되었습니다. 로그인 가능합니다.");
