@@ -38,10 +38,9 @@ public class SecurityConfig {
                         .requestMatchers("/login").permitAll()
                         .requestMatchers("/logout").permitAll()
                         .requestMatchers("/member/join").permitAll()
-                        .requestMatchers("/product/register").hasAnyAuthority(String.valueOf(RoleCode.MEMBER))
+                        .requestMatchers("/product/register").hasAnyAuthority("ROLE_" + RoleCode.MEMBER)
                         .requestMatchers("/product/**").permitAll()
-                        .requestMatchers("/trade/**").permitAll()
-                        .requestMatchers("/trade/**").hasAnyAuthority(String.valueOf(RoleCode.MEMBER))
+                        .requestMatchers("/trade/**").hasAnyAuthority("ROLE_" +RoleCode.MEMBER)
                         .anyRequest().authenticated());
 
         http.logout(logout -> logout
@@ -53,6 +52,9 @@ public class SecurityConfig {
         http.exceptionHandling(handler -> handler
                 .accessDeniedHandler(accessDeniedHandler)
                 .authenticationEntryPoint(authenticationEntryPoint));
+
+        http.securityContext(securityContext -> securityContext
+                .requireExplicitSave(false));
 
         return http.build();
     }
