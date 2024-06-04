@@ -13,8 +13,8 @@ public enum ErrorCode {
     PRODUCT_NOT_FOUND(HttpStatus.NOT_FOUND,"Product not founded"),
     PRODUCT_SOLD_OUT(HttpStatus.CONFLICT,"Product sold out"),
     PRODUCT_ALREADY_RESERVED(HttpStatus.CONFLICT,"Already reserved product"),
-    PRODUCT_ORDER_ALREADY_CONFIRMED(HttpStatus.CONFLICT,"Already confirmed order"),
-    PRODUCT_ORDER_NOT_FOUND(HttpStatus.NOT_FOUND,"ORDER not founded"),
+    PRODUCT_ORDER_STATUS_ABNORMAL(HttpStatus.CONFLICT,"Product order already reserved or not approved"),
+    PRODUCT_ORDER_NOT_FOUND(HttpStatus.NOT_FOUND,"Product order not founded"),
     INVALID_PASSWORD(HttpStatus.UNAUTHORIZED, "Invalid password"),
     INVALID_PERMISSION(HttpStatus.UNAUTHORIZED, "User has invalid permission"),
     DATABASE_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "Database error occurs");

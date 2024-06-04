@@ -56,7 +56,7 @@ public class ProductOrderService {
         ProductOrder productOrder = productOrderRepository.findById(id).orElseThrow(
                 () -> new StudyApplicationException(ErrorCode.PRODUCT_ORDER_NOT_FOUND)
         );
-        if(!productOrder.getSeller().equals(seller)){
+        if (!productOrder.getSeller().equals(seller)) {
             throw new StudyApplicationException(ErrorCode.INVALID_PERMISSION);
         }
         Product product = productOrder.getProduct();
@@ -67,8 +67,8 @@ public class ProductOrderService {
             product.setStatus("예약중");
         } else if (current_quantity < 1) {
             throw new StudyApplicationException(ErrorCode.PRODUCT_SOLD_OUT);
-        }else{
-            product.setQuantity(current_quantity -1);
+        } else {
+            product.setQuantity(current_quantity - 1);
         }
         productOrder.setSellerStatus("예약중");
         productOrder.setBuyerStatus("예약중");
@@ -81,29 +81,30 @@ public class ProductOrderService {
         ProductOrder productOrder = productOrderRepository.findById(id).orElseThrow(
                 () -> new StudyApplicationException(ErrorCode.PRODUCT_NOT_FOUND)
         );
-        if(!productOrder.getBuyer().equals(buyer)){
+        if (!productOrder.getBuyer().equals(buyer)) {
             throw new StudyApplicationException(ErrorCode.INVALID_PERMISSION);
         }
-        if(productOrder.getSellerStatus().equals("완료")){
-            throw new StudyApplicationException(ErrorCode.PRODUCT_ORDER_ALREADY_CONFIRMED);
-        }
-        Product product = productOrder.getProduct();
-        int current_quantity = product.getQuantity();
-        productOrder.setSellerStatus("완료");
-        productOrder.setBuyerStatus("완료");
-        if(current_quantity == 0){
-            boolean flag = false;
-            List<ProductOrder> orders = productOrderRepository.findAllByProductName(product.getName());
-            for (ProductOrder order : orders) {
-                String sellerStatus = order.getSellerStatus();
-                if (sellerStatus.equals("예약중")) {
-                    flag = true;
-                    break;
+        if((productOrder.getBuyerStatus().equals("예약중") && productOrder.getSellerStatus().equals("예약중"))) {
+            Product product = productOrder.getProduct();
+            int current_quantity = product.getQuantity();
+            productOrder.setSellerStatus("완료");
+            productOrder.setBuyerStatus("완료");
+            if (current_quantity == 0) {
+                boolean flag = false;
+                List<ProductOrder> orders = productOrderRepository.findAllByProductName(product.getName());
+                for (ProductOrder order : orders) {
+                    String sellerStatus = order.getSellerStatus();
+                    if (sellerStatus.equals("예약중")) {
+                        flag = true;
+                        break;
+                    }
+                }
+                if (!flag) {
+                    product.setStatus("완료");
                 }
             }
-            if(!flag){
-                product.setStatus("완료");
-            }
+        } else {
+            throw new StudyApplicationException(ErrorCode.PRODUCT_ORDER_STATUS_ABNORMAL);
         }
     }
 
