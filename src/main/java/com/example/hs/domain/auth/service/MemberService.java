@@ -32,20 +32,20 @@ public class MemberService {
 
     String encPassword = passwordEncoder.encode(request.getPassword());
 
+    try {
+      mailSendService.emailAuth(request.getUsername());
+    } catch (MessagingException e) {
+      throw new RuntimeException(e);
+    } catch (NoSuchAlgorithmException e) {
+      throw new RuntimeException(e);
+    }
+
     Member saveMember = memberRepository.save(Member.builder()
         .loginId(request.getUsername())
         .password(encPassword)
         .name(request.getName())
         .authority(Authority.ROLE_NOT_YET_MEMBER)
         .build());
-
-    try {
-      mailSendService.emailAuth(saveMember.getLoginId());
-    } catch (MessagingException e) {
-      throw new RuntimeException(e);
-    } catch (NoSuchAlgorithmException e) {
-      throw new RuntimeException(e);
-    }
 
     return MemberDto.fromEntity(saveMember, "이메일 인증 후 로그인이 가능합니다.");
   }
