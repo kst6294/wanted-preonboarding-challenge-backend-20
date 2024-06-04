@@ -44,12 +44,16 @@ public class MarketApiController {
     List<ProductDto.ProductResponse> response = new ArrayList<>();
 
     if (request.getProductId() == null) {
-      // TODO: 본인에 대한 전체 리스트 조회
-    }
+      List<Product> products = marketService.getMyRecord();
 
-    List<Product> products = marketService.getSellerBuyerRecord(request);
-    for (Product product : products) {
-      response.add(new ProductResponse(product));
+      for (Product product : products) {
+        response.add(new ProductResponse(product));
+      }
+    } else {
+      List<Product> products = marketService.getSellerBuyerRecord(request);
+      for (Product product : products) {
+        response.add(new ProductResponse(product));
+      }
     }
 
     return ResponseEntity.status(HttpStatus.OK).body(response);

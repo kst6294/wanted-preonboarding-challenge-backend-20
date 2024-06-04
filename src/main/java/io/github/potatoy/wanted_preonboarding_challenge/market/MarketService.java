@@ -9,6 +9,7 @@ import io.github.potatoy.wanted_preonboarding_challenge.market.exception.Product
 import io.github.potatoy.wanted_preonboarding_challenge.market.util.ProductUtil;
 import io.github.potatoy.wanted_preonboarding_challenge.security.SecurityUtil;
 import io.github.potatoy.wanted_preonboarding_challenge.user.entity.User;
+import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
@@ -86,5 +87,15 @@ public class MarketService {
             product.getBuyerUser(), product.getSellerUser()));
 
     return result.stream().toList();
+  }
+
+  public List<Product> getMyRecord() {
+    User user = securityUtil.getCurrentUser();
+    List<Product> products = new ArrayList<>();
+
+    products.addAll(user.getSaleList());
+    products.addAll(user.getPurchaseList());
+
+    return products;
   }
 }
