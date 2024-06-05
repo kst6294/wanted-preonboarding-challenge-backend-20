@@ -142,4 +142,24 @@ class MarketApiControllerTest {
         .andExpect(jsonPath("$[1].id").value(product2.getId()))
         .andExpect(jsonPath("$[1].buyerUser.userId").value(user1.getId()));
   }
+
+  @DisplayName("approveSale(): 판매 승인 처리")
+  @WithMockUser(username = "user1@mail.com")
+  @Test
+  public void successApproveSale() throws Exception {
+    final String url = "/api/market/products/{productId}/purchase";
+    final User user1 = testUserUtil.createTestUser("user1@mail.com", "test", null);
+    final User user2 = testUserUtil.createTestUser("user2@mail.com", "test", null);
+    final Product product = testMarketUtil.createProduct(user1, "product", 20_000L, user2);
+
+    ResultActions result =
+        mockMvc.perform(
+            post(url.replace("{productId}", product.getId() + ""))
+                .contentType(MediaType.APPLICATION_JSON_VALUE));
+
+    result
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$.id").value(product.getId()))
+        .andExpect(jsonPath("$.state").value("COMPLETE"));
+  }
 }
