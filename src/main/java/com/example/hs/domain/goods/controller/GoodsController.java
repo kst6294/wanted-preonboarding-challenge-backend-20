@@ -8,6 +8,7 @@ import jakarta.validation.Valid;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -41,4 +42,10 @@ public class GoodsController {
   public ResponseEntity<GoodsDto> updateGoods(@PathVariable long goodsId, @Valid @RequestBody GoodsEditRequest request) {
     return ResponseEntity.ok(goodsService.updateGoods(goodsId, request));
   }
+
+  @DeleteMapping("/{goodsId}")
+  public ResponseEntity<String> deleteGoods(@PathVariable long goodsId) {
+    return ResponseEntity.ok(goodsService.deleteGoods(goodsId));
+  }
+
 }

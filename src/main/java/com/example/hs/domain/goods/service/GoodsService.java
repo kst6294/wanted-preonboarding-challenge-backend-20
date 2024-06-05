@@ -72,4 +72,12 @@ public class GoodsService {
 
     return GoodsDto.fromEntity(goods);
   }
+
+  @Transactional
+  public String deleteGoods(long goodsId) {
+    Goods goods = goodsRepository.findById(goodsId)
+        .orElseThrow(() -> new CustomException(NOT_FOUND_GOODS));
+    goodsRepository.delete(goods);
+    return String.format("%s 상품이 삭제되었습니다.", goods.getGoodsName());
+  }
 }
