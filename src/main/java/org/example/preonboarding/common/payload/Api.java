@@ -15,7 +15,6 @@ public class Api<T> {
     @NonNull
     private final String message;
     private final LocalDateTime timestamp = LocalDateTime.now();
-    @NonNull
     private final T data;
 
     public static class ApiBuilder<T> {

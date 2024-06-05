@@ -61,3 +61,7 @@ spring:
     properties:
       hibernate:
         format_sql: true
+
+jwt:
+  secret: hihello123hihello123hihello123hihello123hihello123hihello123hihello123hihello123hihello123hihello123hihello123hihello123
+  access-token-expiration: 1800000 # 30?(?????)
