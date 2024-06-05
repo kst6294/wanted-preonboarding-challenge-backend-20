@@ -162,4 +162,43 @@ class MarketApiControllerTest {
         .andExpect(jsonPath("$.id").value(product.getId()))
         .andExpect(jsonPath("$.state").value("COMPLETE"));
   }
+
+  @DisplayName("getAllProducts(): 상품 목록 조회")
+  @Test
+  public void successGetAllProducts() throws Exception {
+    final String url = "/api/market/products";
+    final User user1 = testUserUtil.createTestUser("user1@mail.com", "test", null);
+    final User user2 = testUserUtil.createTestUser("user2@mail.com", "test", null);
+    final Product product1 = testMarketUtil.createProduct(user1, "product1", 20_000L, user2);
+    final Product product2 = testMarketUtil.createProduct(user2, "product2", 30_000L, null);
+
+    ResultActions result = mockMvc.perform(get(url).contentType(MediaType.APPLICATION_JSON_VALUE));
+
+    result
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$[0].id").value(product1.getId()))
+        .andExpect(jsonPath("$[0].name").value(product1.getName()))
+        .andExpect(jsonPath("$[1].id").value(product2.getId()))
+        .andExpect(jsonPath("$[1].name").value(product2.getName()));
+  }
+
+  @DisplayName("getProduct(): 특정 상품 상세 조회")
+  @Test
+  public void successGetProduct() throws Exception {
+    final String url = "/api/market/products/{productId}";
+    final User user = testUserUtil.createTestUser("user@mail.com", "test", null);
+    final Product product = testMarketUtil.createProduct(user, "product1", 20_000L, null);
+
+    ResultActions result =
+        mockMvc.perform(
+            get(url.replace("{productId}", product.getId() + ""))
+                .contentType(MediaType.APPLICATION_JSON_VALUE));
+
+    result
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$.id").value(product.getId()))
+        .andExpect(jsonPath("$.name").value(product.getName()))
+        .andExpect(jsonPath("$.price").value(product.getPrice()))
+        .andExpect(jsonPath("$.sellerUser.email").value(user.getEmail()));
+  }
 }
