@@ -18,6 +18,15 @@ spring:
         show_sql: true
         format_sql: true
     open-in-view: false
+    defer-datasource-initialization: true
 jwt:
   expiration-time: 3600000 # 1 hour
   secret: dwFLZLb2JrcNMwAzEtrFXYjAX+LYJ70UlX/tSL8Is7Q=
+springdoc:
+  bearer:
+    enabled: on
+    tokens:
+      - name: 사용자1
+        token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNzE3NTE1MDgzfQ.nh6UruDkHFOQPz-CEJ_WzRFDUua21um--OtnI5ajTEk
+      - name: 사용자2
+        token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIiwiaWF0IjoxNzE3NTE1MTE2fQ.9qcVGjkG2pcnKO_w_44nsnG9kCxDOmmC1j8W1FbMDzw
