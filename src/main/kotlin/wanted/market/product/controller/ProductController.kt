@@ -25,7 +25,6 @@ class ProductController(@Autowired private val productService: ProductService) {
 
     @GetMapping("/{productId}")
     fun findProductDetails(@RequestParam memberId: Long, @PathVariable productId: Long): ResponseEntity<ProductDetailResponse> {
-        //TODO : 거래 내역 없을 수도 있음
         return ResponseEntity.ok().body(productService.findProductDetails(memberId, productId))
     }
 
