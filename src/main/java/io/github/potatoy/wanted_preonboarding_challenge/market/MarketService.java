@@ -3,6 +3,7 @@ package io.github.potatoy.wanted_preonboarding_challenge.market;
 import io.github.potatoy.wanted_preonboarding_challenge.error.exception.BadRequestException;
 import io.github.potatoy.wanted_preonboarding_challenge.error.exception.ForbiddenException;
 import io.github.potatoy.wanted_preonboarding_challenge.market.dto.ProductDto;
+import io.github.potatoy.wanted_preonboarding_challenge.market.dto.ProductDto.ProductIdParams;
 import io.github.potatoy.wanted_preonboarding_challenge.market.entity.Product;
 import io.github.potatoy.wanted_preonboarding_challenge.market.entity.ProductRepository;
 import io.github.potatoy.wanted_preonboarding_challenge.market.entity.State;
@@ -63,7 +64,7 @@ public class MarketService {
     return product;
   }
 
-  public List<Product> getSellerBuyerRecord(ProductDto.TransactionsRequest dto) {
+  public List<Product> getSellerBuyerRecord(ProductIdParams dto) {
     User user = securityUtil.getCurrentUser();
     Product product = productUtil.findById(dto.getProductId());
 

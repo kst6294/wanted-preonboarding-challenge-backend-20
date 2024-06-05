@@ -1,6 +1,7 @@
 package io.github.potatoy.wanted_preonboarding_challenge.market;
 
 import io.github.potatoy.wanted_preonboarding_challenge.market.dto.ProductDto;
+import io.github.potatoy.wanted_preonboarding_challenge.market.dto.ProductDto.ProductIdParams;
 import io.github.potatoy.wanted_preonboarding_challenge.market.dto.ProductDto.ProductResponse;
 import io.github.potatoy.wanted_preonboarding_challenge.market.entity.Product;
 import java.util.ArrayList;
@@ -39,8 +40,7 @@ public class MarketApiController {
   }
 
   @GetMapping("/products/transactions") // 거래 내역
-  public ResponseEntity<List<ProductDto.ProductResponse>> getProducts(
-      ProductDto.TransactionsRequest request) {
+  public ResponseEntity<List<ProductDto.ProductResponse>> getProducts(ProductIdParams request) {
     List<ProductDto.ProductResponse> response = new ArrayList<>();
 
     if (request.getProductId() == null) {

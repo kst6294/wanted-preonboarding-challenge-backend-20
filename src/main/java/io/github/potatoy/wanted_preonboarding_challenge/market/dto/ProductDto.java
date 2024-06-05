@@ -20,7 +20,7 @@ public class ProductDto {
 
   @Getter
   @Setter
-  public static class TransactionsRequest {
+  public static class ProductIdParams {
 
     private Long productId;
   }
