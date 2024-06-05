@@ -1,6 +1,7 @@
 package com.example.hs.domain.goods.entity;
 
 import com.example.hs.domain.base.BaseEntity;
+import com.example.hs.domain.goods.dto.GoodsEditRequest;
 import com.example.hs.domain.goods.type.GoodsStatus;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -34,4 +35,13 @@ public class Goods extends BaseEntity {
   @Setter
   @Enumerated(EnumType.STRING)
   private GoodsStatus goodsStatus;
+
+
+  public void updateGoods(GoodsEditRequest request) {
+    this.goodsName = request.getGoodsName();
+    this.description = request.getDescription();
+    this.price = request.getPrice();
+    this.quantity = request.getQuantity();
+    this.goodsStatus = request.getGoodsStatus();
+  }
 }

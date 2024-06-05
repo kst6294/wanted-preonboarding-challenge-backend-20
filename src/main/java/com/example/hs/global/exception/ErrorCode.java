@@ -44,7 +44,12 @@ public enum ErrorCode {
   NO_ROLE_TOKEN(400, "권한 정보가 없는 토큰입니다."),
 
   // 상품 관련
-  NOT_FOUND_GOODS(400, "상품을 찾지 못했습니다.");
+  NOT_FOUND_GOODS(400, "상품을 찾지 못했습니다."),
+  INVALID_MIN_QUANTITY_AT_FIRST(400, "상품 등록시에 최소 수량은 1입니다."),
+  INVALID_GOODS_STATUS_AT_FIRST(400, "상품 등록시 판매 중인 상태만 등록 가능합니다."),
+  CHECK_IF_SOLD_OUT_GOODS(400, "판매가 완료된 상품인지 확인하고 변경해주세요."),
+  CHECK_GOODS_PRICE_ZERO(400, "상품 금액이 0원인지 확인하세요.");
+
 
   private int httpCode;
   private String description;
