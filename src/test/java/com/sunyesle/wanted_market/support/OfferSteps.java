@@ -1,6 +1,5 @@
 package com.sunyesle.wanted_market.support;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sunyesle.wanted_market.dto.OfferRequest;
 import io.restassured.http.ContentType;
@@ -8,7 +7,6 @@ import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
 import lombok.SneakyThrows;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 
 import static io.restassured.RestAssured.given;
 
@@ -28,7 +26,6 @@ public class OfferSteps {
                 .post()
         .then()
                 .log().all()
-                .statusCode(HttpStatus.CREATED.value())
                 .extract();
     }
 }

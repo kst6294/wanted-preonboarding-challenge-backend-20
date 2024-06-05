@@ -73,6 +73,16 @@ class OfferAcceptanceTest extends AcceptanceTest {
     }
 
     @Test
+    void 제품을_중복으로_예약할_경우_실패한다() {
+        OfferRequest offerRequest = new OfferRequest(savedProductId);
+
+        제품_예약_요청(offerRequest, buyerToken);
+        ExtractableResponse<Response> response = 제품_예약_요청(offerRequest, buyerToken);
+
+        assertThat(response.statusCode()).isEqualTo(HttpStatus.BAD_REQUEST.value());
+    }
+
+    @Test
     void 제품_예약_요청을_승인한다() {
         OfferRequest offerRequest = new OfferRequest(savedProductId);
         Long offerId = 제품_예약_요청(offerRequest, buyerToken).as(OfferResponse.class).getId();

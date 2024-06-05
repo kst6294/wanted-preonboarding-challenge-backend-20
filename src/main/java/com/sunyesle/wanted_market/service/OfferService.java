@@ -24,6 +24,9 @@ public class OfferService {
     public OfferResponse offer(Long memberId, OfferRequest offerRequest) {
         Product product = productRepository.findById(offerRequest.getProductId()).orElseThrow(() -> new ErrorCodeException(OfferErrorCode.OFFER_NOT_FOUND));
         product.setStatus(ProductStatus.RESERVED);
+        if (offerRepository.existsByProductIdAndBuyerIdAndStatus(product.getId(), memberId, OfferStatus.OPEN)) {
+            throw new ErrorCodeException(OfferErrorCode.DUPLICATE_OFFER);
+        }
 
         Offer offer = Offer.builder()
                 .productId(product.getId())
