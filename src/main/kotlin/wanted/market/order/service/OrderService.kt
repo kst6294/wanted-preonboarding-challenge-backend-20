@@ -27,8 +27,6 @@ class OrderService(@Autowired private val memberService: MemberService,
 
     @Transactional
     fun approveOrder(sellerId: Long, orderId: Long) {
-
-        //TODO : 페치 조인으로 쿼리 개수 줄이기
         val order = orderRepository.findById(orderId)
             .orElseThrow { OrderException(ErrorCode.ORDER_NOT_FOUND)}
 

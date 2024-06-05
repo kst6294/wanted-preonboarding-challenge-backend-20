@@ -18,20 +18,20 @@ import java.util.*
 import wanted.market.order.entity.OrderStatus
 
 class OrderServiceTest: BehaviorSpec({
-    var memberService = mockk<MemberService>(relaxed = true)
-    var productService = mockk<ProductService>(relaxed = true)
-    var orderRepository = mockk<OrderRepository>(relaxed = true)
-    var orderService = OrderService(memberService, productService, orderRepository)
+    val memberService = mockk<MemberService>(relaxed = true)
+    val productService = mockk<ProductService>(relaxed = true)
+    val orderRepository = mockk<OrderRepository>(relaxed = true)
+    val orderService = OrderService(memberService, productService, orderRepository)
 
     val buyerId = 1L
     val sellerId = 2L
     val productId = 1L
     val orderId = 1L
 
-    var buyer = Member("Buyer", "buyer@example.com", buyerId)
-    var seller = Member("Seller", "seller@example.com", sellerId)
-    var product = Product("Product", 1000, seller)
-    var order = Order(buyer, seller, product, orderId)
+    val buyer = Member("Buyer", "buyer@example.com", buyerId)
+    val seller = Member("Seller", "seller@example.com", sellerId)
+    val product = Product("Product", 1000, seller)
+    val order = Order(buyer, seller, product, orderId)
 
 
     given("올바른 memberId/productId가 주어졌을 때"){

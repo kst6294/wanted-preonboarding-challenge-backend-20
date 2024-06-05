@@ -6,8 +6,6 @@ import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 import io.mockk.every
 import io.mockk.mockk
-import io.mockk.verify
-import org.mockito.Mockito.verify
 import wanted.market.common.exception.ErrorCode
 import wanted.market.member.dto.SaveMemberRequest
 import wanted.market.member.entity.Member
