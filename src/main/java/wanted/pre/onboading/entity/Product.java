@@ -1,9 +1,9 @@
 package wanted.pre.onboading.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Product {
@@ -14,7 +14,16 @@ public class Product {
     private String productName;
     private double price;
     private ProductStatus status;
+    private int quantity;
 
+    @ManyToOne
+    private User buyer;
+
+    @ManyToOne
+    private User seller;
+
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    private List<Purchase> purchases = new ArrayList<>();
 
     public Integer getProductId() {
         return productId;
@@ -48,4 +57,35 @@ public class Product {
         this.status = status;
     }
 
+    public User getBuyer() {
+        return buyer;
+    }
+
+    public void setBuyer(User buyer) {
+        this.buyer = buyer;
+    }
+
+    public User getSeller() {
+        return seller;
+    }
+
+    public void setSeller(User seller) {
+        this.seller = seller;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public List<Purchase> getPurchases() {
+        return purchases;
+    }
+
+    public void setPurchases(List<Purchase> purchases) {
+        this.purchases = purchases;
+    }
 }
