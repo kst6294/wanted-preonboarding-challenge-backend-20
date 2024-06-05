@@ -41,7 +41,10 @@ public enum ErrorCode {
   INVALID_ACCESS_TOKEN(400, "유효하지 않은 Access Token 값입니다."),
   INVALID_REFRESH_TOKEN(400, "유효하지 않은 Refresh Token 값입니다."),
   NOT_MATCH_TOKEN_USER(400, "토큰의 사용자가 아닙니다."),
-  NO_ROLE_TOKEN(400, "권한 정보가 없는 토큰입니다.");
+  NO_ROLE_TOKEN(400, "권한 정보가 없는 토큰입니다."),
+
+  // 상품 관련
+  NOT_FOUND_GOODS(400, "상품을 찾지 못했습니다.");
 
   private int httpCode;
   private String description;
