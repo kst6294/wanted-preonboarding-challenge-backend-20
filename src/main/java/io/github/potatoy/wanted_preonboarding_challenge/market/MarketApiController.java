@@ -58,4 +58,11 @@ public class MarketApiController {
 
     return ResponseEntity.status(HttpStatus.OK).body(response);
   }
+
+  @PostMapping("/products/{productId}/purchase")
+  public ResponseEntity<ProductResponse> approveSale(@PathVariable Long productId) { // 판매 승인
+    Product product = marketService.approveSale(productId);
+
+    return ResponseEntity.status(HttpStatus.OK).body(new ProductResponse(product));
+  }
 }

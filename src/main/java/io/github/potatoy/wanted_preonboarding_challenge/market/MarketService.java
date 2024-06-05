@@ -5,6 +5,7 @@ import io.github.potatoy.wanted_preonboarding_challenge.error.exception.Forbidde
 import io.github.potatoy.wanted_preonboarding_challenge.market.dto.ProductDto;
 import io.github.potatoy.wanted_preonboarding_challenge.market.entity.Product;
 import io.github.potatoy.wanted_preonboarding_challenge.market.entity.ProductRepository;
+import io.github.potatoy.wanted_preonboarding_challenge.market.entity.State;
 import io.github.potatoy.wanted_preonboarding_challenge.market.exception.ProductUpdateFailException;
 import io.github.potatoy.wanted_preonboarding_challenge.market.util.ProductUtil;
 import io.github.potatoy.wanted_preonboarding_challenge.security.SecurityUtil;
@@ -97,5 +98,29 @@ public class MarketService {
     products.addAll(user.getPurchaseList());
 
     return products;
+  }
+
+  public Product approveSale(Long productId) {
+    User user = securityUtil.getCurrentUser();
+    Product product = productUtil.findById(productId);
+
+    if (!product.isSellerEquals(user)) {
+      log.warn(
+          "approveSale: You do not have permission to access the product. userId={}, productId={}",
+          user.getId(),
+          product.getId());
+      throw new ForbiddenException("You do not have permission to access the product.");
+    }
+
+    if (product.getState() != State.RESERVATION) {
+      log.warn(
+          "approveSale: Product information cannot be changed. userId={}, productId={}",
+          user.getId(),
+          product.getId());
+      throw new ProductUpdateFailException("Product information cannot be changed.");
+    }
+    product.setSoldOut();
+
+    return product;
   }
 }

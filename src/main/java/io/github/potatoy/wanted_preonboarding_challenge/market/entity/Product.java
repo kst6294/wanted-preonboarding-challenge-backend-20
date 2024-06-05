@@ -93,4 +93,15 @@ public class Product {
   public boolean isBuyerEquals(User user) {
     return user.equals(this.buyerUser);
   }
+
+  /**
+   * 구매 완료 처리
+   *
+   * @return Product
+   */
+  public Product setSoldOut() {
+    this.state = State.COMPLETE;
+
+    return this;
+  }
 }
