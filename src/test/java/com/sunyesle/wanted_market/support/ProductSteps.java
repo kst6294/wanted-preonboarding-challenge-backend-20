@@ -28,7 +28,6 @@ public class ProductSteps {
                         .post()
                 .then()
                         .log().all()
-                        .statusCode(HttpStatus.CREATED.value())
                         .extract();
         return response;
     }

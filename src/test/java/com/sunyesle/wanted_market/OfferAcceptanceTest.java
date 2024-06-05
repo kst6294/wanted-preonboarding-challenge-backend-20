@@ -1,7 +1,5 @@
 package com.sunyesle.wanted_market;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sunyesle.wanted_market.dto.*;
 import com.sunyesle.wanted_market.enums.OfferStatus;
 import com.sunyesle.wanted_market.repository.MemberRepository;
@@ -14,19 +12,16 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 
 import static com.sunyesle.wanted_market.support.AuthSteps.로그인_요청;
 import static com.sunyesle.wanted_market.support.AuthSteps.회원가입_요청;
+import static com.sunyesle.wanted_market.support.CommonSupporter.*;
 import static com.sunyesle.wanted_market.support.OfferSteps.제품_예약_요청;
 import static com.sunyesle.wanted_market.support.ProductSteps.제품_등록_요청;
 import static io.restassured.RestAssured.given;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class OfferAcceptanceTest extends AcceptanceTest {
-
-    @Autowired
-    ObjectMapper objectMapper;
 
     @Autowired
     MemberRepository memberRepository;
@@ -62,11 +57,12 @@ class OfferAcceptanceTest extends AcceptanceTest {
     }
 
     @Test
-    void 제품을_예약한다() throws JsonProcessingException {
+    void 제품을_예약한다() {
         OfferRequest offerRequest = new OfferRequest(savedProductId);
 
         ExtractableResponse<Response> response = 제품_예약_요청(offerRequest, buyerToken);
 
+        등록에_성공한다(response);
         OfferResponse offerResponse = response.as(OfferResponse.class);
         assertThat(offerResponse.getId()).isNotNull();
         assertThat(offerResponse.getStatus()).isEqualTo(OfferStatus.OPEN);
@@ -79,7 +75,7 @@ class OfferAcceptanceTest extends AcceptanceTest {
         제품_예약_요청(offerRequest, buyerToken);
         ExtractableResponse<Response> response = 제품_예약_요청(offerRequest, buyerToken);
 
-        assertThat(response.statusCode()).isEqualTo(HttpStatus.BAD_REQUEST.value());
+        잘못된_요청으로_인해_요청에_실패한다(response);
     }
 
     @Test
@@ -92,13 +88,13 @@ class OfferAcceptanceTest extends AcceptanceTest {
                         .log().all()
                         .basePath("/api/v1/offers/" + offerId + "/accept")
                         .header(HttpHeaders.AUTHORIZATION, "Bearer " + sellerToken)
-                        .when()
+                .when()
                         .put()
-                        .then()
+                .then()
                         .log().all()
-                        .statusCode(HttpStatus.OK.value())
                         .extract();
 
+        수정에_성공한다(response);
         OfferResponse offerResponse = response.as(OfferResponse.class);
         assertThat(offerResponse.getId()).isNotNull();
         assertThat(offerResponse.getStatus()).isEqualTo(OfferStatus.ACCEPTED);
@@ -118,9 +114,9 @@ class OfferAcceptanceTest extends AcceptanceTest {
                         .put()
                 .then()
                         .log().all()
-                        .statusCode(HttpStatus.OK.value())
                         .extract();
 
+        수정에_성공한다(response);
         OfferResponse offerResponse = response.as(OfferResponse.class);
         assertThat(offerResponse.getId()).isNotNull();
         assertThat(offerResponse.getStatus()).isEqualTo(OfferStatus.DECLINED);

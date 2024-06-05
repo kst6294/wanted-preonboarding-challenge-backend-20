@@ -1,6 +1,5 @@
 package com.sunyesle.wanted_market;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sunyesle.wanted_market.dto.SigninRequest;
 import com.sunyesle.wanted_market.dto.SigninResponse;
 import com.sunyesle.wanted_market.dto.SignupRequest;
@@ -15,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import static com.sunyesle.wanted_market.support.AuthSteps.로그인_요청;
 import static com.sunyesle.wanted_market.support.AuthSteps.회원가입_요청;
+import static com.sunyesle.wanted_market.support.CommonSupporter.등록에_성공한다;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class AuthAcceptanceTest extends AcceptanceTest {
@@ -37,6 +37,7 @@ class AuthAcceptanceTest extends AcceptanceTest {
 
         ExtractableResponse<Response> response = 회원가입_요청(signupRequest);
 
+        등록에_성공한다(response);
         SignupResponse signupResponse =  response.as(SignupResponse.class);
         assertThat(signupResponse.getId()).isNotNull();
     }
@@ -53,6 +54,6 @@ class AuthAcceptanceTest extends AcceptanceTest {
         ExtractableResponse<Response> response = 로그인_요청(signinRequest);
 
         SigninResponse signinResponse = response.as(SigninResponse.class);
-        assertThat(signinResponse.getToken()).isNotNull();
+        assertThat(signinResponse.getToken()).isNotBlank();
     }
 }

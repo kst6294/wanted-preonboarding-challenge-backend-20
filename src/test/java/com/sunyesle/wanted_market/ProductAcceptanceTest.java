@@ -9,12 +9,12 @@ import io.restassured.response.Response;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 
 import java.util.List;
 
 import static com.sunyesle.wanted_market.support.AuthSteps.로그인_요청;
 import static com.sunyesle.wanted_market.support.AuthSteps.회원가입_요청;
+import static com.sunyesle.wanted_market.support.CommonSupporter.*;
 import static com.sunyesle.wanted_market.support.ProductSteps.제품_등록_요청;
 import static io.restassured.RestAssured.given;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -48,6 +48,7 @@ class ProductAcceptanceTest extends AcceptanceTest {
 
         ExtractableResponse<Response> response = 제품_등록_요청(token, productRequest);
 
+        등록에_성공한다(response);
         ProductResponse productResponse = response.as(ProductResponse.class);
         assertThat(productResponse.getId()).isNotNull();
     }
@@ -70,7 +71,7 @@ class ProductAcceptanceTest extends AcceptanceTest {
                         .log().all()
                         .extract();
 
-        assertThat(response.statusCode()).isEqualTo(HttpStatus.OK.value());
+        조회에_성공한다(response);
     }
 
     @Test
@@ -85,7 +86,7 @@ class ProductAcceptanceTest extends AcceptanceTest {
                         .log().all()
                         .extract();
 
-        assertThat(response.statusCode()).isEqualTo(HttpStatus.NOT_FOUND.value());
+        찾을_수_없는_정보로_인해_요청에_실패한다(response);
     }
 
     @Test
@@ -105,7 +106,7 @@ class ProductAcceptanceTest extends AcceptanceTest {
                         .log().all()
                         .extract();
 
-        assertThat(response.statusCode()).isEqualTo(HttpStatus.OK.value());
+        조회에_성공한다(response);
         List<ProductDetailResponse> products = response.jsonPath().getList(".", ProductDetailResponse.class);
         assertThat(products).hasSize(2);
     }

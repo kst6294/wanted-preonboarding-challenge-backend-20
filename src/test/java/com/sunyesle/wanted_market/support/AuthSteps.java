@@ -27,7 +27,6 @@ public class AuthSteps {
                         .post()
                 .then()
                         .log().all()
-                        .statusCode(HttpStatus.CREATED.value())
                         .extract();
         return response;
     }
@@ -36,7 +35,7 @@ public class AuthSteps {
     public static ExtractableResponse<Response> 로그인_요청(SigninRequest signinRequest) {
         ObjectMapper objectMapper = new ObjectMapper();
 
-        ExtractableResponse<Response>  response =
+        ExtractableResponse<Response> response =
                 given()
                         .log().all()
                         .basePath("/api/v1/auth/signin")
