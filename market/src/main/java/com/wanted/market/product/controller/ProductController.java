@@ -4,6 +4,8 @@ import com.wanted.market.product.dto.ProductRequestDto;
 import com.wanted.market.product.dto.ProductResponseDto;
 import com.wanted.market.product.service.ProductService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PostAuthorize;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -20,7 +22,7 @@ public class ProductController {
     }
 
     /* 제품 등록 */
-    @PostMapping("/regist")
+    @PostMapping
     public ResponseEntity<ProductResponseDto> registProduct(@Valid @RequestBody ProductRequestDto productRequestDto) {
         ProductResponseDto productResponseDto = productService.registProduct(productRequestDto);
         return ResponseEntity.ok(productResponseDto);

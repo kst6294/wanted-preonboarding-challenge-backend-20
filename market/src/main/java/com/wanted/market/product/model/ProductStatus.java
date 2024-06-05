@@ -7,18 +7,10 @@ public enum ProductStatus {
     RESERVED("예약중"),
     COMPLETED("완료");
 
-    private final String description;
+    private final String status;
 
-    ProductStatus(String description) {
-        this.description = description;
+    ProductStatus(String status) {
+        this.status = status;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    @JsonValue
-    public String toValue() {
-        return name();
-    }
 }
