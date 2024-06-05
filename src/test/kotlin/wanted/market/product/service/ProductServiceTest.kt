@@ -87,6 +87,38 @@ class ProductServiceTest: BehaviorSpec({
 
             }
         }
+
+    }
+    given("판매 중인 상품 조회 테스트"){
+
+        When("만약 판매중 상품 id가 주어지지 않는다면"){
+            then("Exception을 던진다."){
+            }
+        }
+    }
+
+    given("내가 구매한 상품 조회 테스트"){
+
+        When("주어진 인풋이 올바르다면"){
+            then("상품의 구매자와 memberId가 일치한다."){
+            }
+        }
+    }
+
+    given("내가 판매한 상품 조회 테스트"){
+
+        When("주어진 인풋이 올바르다면"){
+            then("상품의 판매자와 memberId가 일치한다."){
+            }
+        }
+    }
+
+    given("내가 예약한 상품 조회 테스트"){
+
+        When("주어진 인풋이 올바르다면"){
+            then("상품의 판매자와 memberId가 일치한다."){
+            }
+        }
     }
 
 
