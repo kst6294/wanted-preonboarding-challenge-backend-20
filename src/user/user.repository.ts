@@ -17,8 +17,13 @@ export class UserRepository {
     return user;
   }
 
-  async createUser(email: string, hashedPassword: string): Promise<User> {
+  async createUser(
+    email: string,
+    hashedPassword: string,
+    name: string,
+  ): Promise<User> {
     const newUser = new User();
+    newUser.name = name;
     newUser.email = email;
     newUser.password = hashedPassword;
     return await this.userRepository.save(newUser);

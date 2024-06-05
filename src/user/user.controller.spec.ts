@@ -23,8 +23,6 @@ describe('UserController', () => {
   let controller: UserController;
   let service: UserService;
 
-  const mockUser = new MockUserRepository().mockUser;
-
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [UserController],
@@ -41,7 +39,11 @@ describe('UserController', () => {
 
   describe('signUp', () => {
     it('올바른 parameters로 user를 생성한다.', async () => {
-      const userDto: UserDto = { email: 'test@test.com', password: 'password' };
+      const userDto: UserDto = {
+        email: 'test@test.com',
+        password: 'password',
+        name: '홍길동',
+      };
       const mockResponse = {
         status: jest.fn().mockReturnThis(),
         json: jest.fn(),
@@ -59,7 +61,11 @@ describe('UserController', () => {
 
   describe('signIn', () => {
     it('올바른 parameters로 호출되고 cookie가 설정된다.', async () => {
-      const userDto: UserDto = { email: 'test@test.com', password: 'password' };
+      const userDto: UserDto = {
+        email: 'test@test.com',
+        password: 'password',
+        name: '홍길동',
+      };
       const mockToken = 'mockToken';
       const mockResponse = {
         status: jest.fn().mockReturnThis(),

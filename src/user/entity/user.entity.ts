@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Product } from 'src/product/entity/product.entity';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity('user')
 export class User {
@@ -6,8 +7,14 @@ export class User {
   userId: number;
 
   @Column({ type: 'varchar' })
+  name: string;
+
+  @Column({ type: 'varchar' })
   email: string;
 
   @Column({ type: 'varchar' })
   password: string;
+
+  @OneToMany(() => Product, (product) => product.userId)
+  product: Product[];
 }

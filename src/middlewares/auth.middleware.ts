@@ -1,6 +1,7 @@
 import {
   Injectable,
   NestMiddleware,
+  NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
@@ -31,6 +32,12 @@ export class AuthMiddleware implements NestMiddleware<Request, Response> {
         secret: process.env.JWT_SECRET,
       });
       const user = await this.userRepository.findUserByPk(userId);
+      if (user) {
+        res.locals.user = user;
+        next();
+      } else {
+        throw new NotFoundException('회원 정보가 없습니다.');
+      }
     } catch (error) {
       res.clearCookie('authorization');
       next(error);

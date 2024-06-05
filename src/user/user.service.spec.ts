@@ -8,8 +8,10 @@ import * as jwt from 'jsonwebtoken';
 export class MockUserRepository {
   readonly mockUser: User = {
     userId: 1,
+    name: '홍길동',
     email: 'test@test.com',
-    password: 'testpassward',
+    password: 'testpassword',
+    product: [],
   };
   validateUser = jest.fn();
   createUser = jest.fn();
@@ -49,8 +51,12 @@ describe('UserService', () => {
 
   describe('signUp', () => {
     it('exUser가 없을 경우 newUser를 생성', async () => {
-      const newUser = { email: 'test@test.com', password: 'password' };
-      const mockHashedPassword = 'hashedPassword';
+      const newUser = {
+        email: 'test@test.com',
+        password: 'password',
+        name: '홍길동',
+      };
+      const mockHashedPassword = 'hashedpassword';
       (repository.validateUser as jest.Mock).mockResolvedValue(null);
       (repository.createUser as jest.Mock).mockResolvedValue({
         ...newUser,
@@ -65,6 +71,7 @@ describe('UserService', () => {
       expect(repository.createUser).toHaveBeenCalledWith(
         newUser.email,
         mockHashedPassword,
+        newUser.name,
       );
     });
   });
