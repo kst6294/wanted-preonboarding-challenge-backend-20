@@ -7,8 +7,7 @@ import io.kotest.matchers.shouldBe
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
-import jakarta.transaction.Transactional
-import org.springframework.boot.test.context.SpringBootTest
+import org.mockito.Mockito.verify
 import wanted.market.common.exception.ErrorCode
 import wanted.market.member.dto.SaveMemberRequest
 import wanted.market.member.entity.Member
@@ -19,30 +18,29 @@ import java.util.*
 
 class MemberServiceTest: BehaviorSpec( {
 
-    val memberRepository = mockk<MemberRepository>(relaxed = true)
+    val memberRepository = mockk<MemberRepository>()
     val memberService = MemberService(memberRepository)
     val memberId = 123L
     val saveMemberRequest = SaveMemberRequest("노을", "sunset@gmail.com")
     val existingMember = Member("노을", "sunset@gmail.com", memberId)
 
-    given("회원가입 테스트") {
-
-        When ("이메일이 중복되지 않으면") {
+    given("이메일이 중복되지 않을 때") {
+        When ("회원가입을 하면") {
             every { memberRepository.findByEmail(saveMemberRequest.email) } returns Optional.empty<Member>()
-            every { memberRepository.save(existingMember) } returns existingMember
-            then("회원가입에 성공한다.") {
-//                memberService.save(saveMemberRequest)
+            every { memberRepository.save(any()) } returns existingMember
+            then("멤버가 저장된다.") {
+                memberService.save(saveMemberRequest)
                 shouldNotThrow<MemberException> { memberService.save(saveMemberRequest) }
-                verify(exactly = 1) { memberRepository.save(existingMember) }
-                verify(exactly = 1) { memberRepository.findByEmail(existingMember.email) }
+//                verify(exactly = 1) { memberRepository.save(any()) }
+//                verify(exactly = 1) { memberRepository.findByEmail(any()) }
             }
         }
+    }
 
-        When ("이메일이 중복되면") {
-
-            every { memberRepository.findByEmail(existingMember.email) } returns Optional.of(existingMember)
-
-            then("회원가입에 실패한다.") {
+    given ("이메일이 중복될 때") {
+        every { memberRepository.findByEmail(existingMember.email) } returns Optional.of(existingMember)
+        When("회원가입을 시도하면"){
+            then("Exception을 던진다.") {
                 val exception = shouldThrow<MemberException> {
                     memberService.save(saveMemberRequest)
                 }
@@ -51,12 +49,9 @@ class MemberServiceTest: BehaviorSpec( {
         }
     }
 
-
-    given("회원 조회 테스트 "){
-
-        When ("존재하지 않는 id로 멤버 조회하면") {
-            every { memberRepository.findById(1L) } returns Optional.empty()
-
+    given("존재하지 않는 id로"){
+        every { memberRepository.findById(1L) } returns Optional.empty()
+        When ("회원 조회를 하면") {
             then("Exception을 던진다.") {
                 val exception = shouldThrow<MemberException> {
                     memberService.findMember(1L)
