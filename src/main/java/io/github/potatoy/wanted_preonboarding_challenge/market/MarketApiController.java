@@ -24,6 +24,25 @@ public class MarketApiController {
 
   private final MarketService marketService;
 
+  @GetMapping("/products")
+  public ResponseEntity<List<ProductDto.ProductTitleResponse>> getAllProducts() {
+    List<Product> products = marketService.getAllProducts();
+
+    List<ProductDto.ProductTitleResponse> responses = new ArrayList<>();
+    for (Product product : products) {
+      responses.add(new ProductDto.ProductTitleResponse(product));
+    }
+
+    return ResponseEntity.status(HttpStatus.OK).body(responses);
+  }
+
+  @GetMapping("/products/{productId}")
+  public ResponseEntity<ProductDto.ProductResponse> getProduct(@PathVariable Long productId) {
+    Product product = marketService.getProduct(productId);
+
+    return ResponseEntity.status(HttpStatus.OK).body(new ProductDto.ProductResponse(product));
+  }
+
   @PostMapping("/products") // 새로운 상품 등록
   public ResponseEntity<ProductDto.ProductResponse> registrationProduct(
       @Validated @RequestBody ProductDto.RegisterRequest request) {

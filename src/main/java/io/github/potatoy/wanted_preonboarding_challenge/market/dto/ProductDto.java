@@ -49,4 +49,25 @@ public class ProductDto {
       }
     }
   }
+
+  @Getter
+  @Setter
+  public static class ProductTitleResponse {
+
+    private Long id;
+    private String name;
+    private Long price;
+    private LocalDateTime createdAt;
+    private State state;
+    private UserResponse sellerUser;
+
+    public ProductTitleResponse(Product product) {
+      this.id = product.getId();
+      this.name = product.getName();
+      this.price = product.getPrice();
+      this.createdAt = product.getCreatedAt();
+      this.state = product.getState();
+      this.sellerUser = new UserResponse(product.getSellerUser());
+    }
+  }
 }

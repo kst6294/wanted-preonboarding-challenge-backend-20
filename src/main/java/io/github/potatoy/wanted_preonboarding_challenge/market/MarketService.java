@@ -28,6 +28,14 @@ public class MarketService {
   private final SecurityUtil securityUtil;
   private final ProductUtil productUtil;
 
+  public List<Product> getAllProducts() {
+    return productRepository.findAll();
+  }
+
+  public Product getProduct(Long productId) {
+    return productUtil.findById(productId);
+  }
+
   public Product saveProduct(ProductDto.RegisterRequest dto) {
     User user = securityUtil.getCurrentUser();
 
