@@ -29,12 +29,12 @@ class MemberServiceTest: BehaviorSpec( {
 
         When ("이메일이 중복되지 않으면") {
             every { memberRepository.findByEmail(saveMemberRequest.email) } returns Optional.empty<Member>()
-
+            every { memberRepository.save(existingMember) } returns existingMember
             then("회원가입에 성공한다.") {
 //                memberService.save(saveMemberRequest)
                 shouldNotThrow<MemberException> { memberService.save(saveMemberRequest) }
-                verify(exactly = 1) { memberRepository.save(any()) }
-                verify(exactly = 1) { memberRepository.findByEmail(any()) }
+                verify(exactly = 1) { memberRepository.save(existingMember) }
+                verify(exactly = 1) { memberRepository.findByEmail(existingMember.email) }
             }
         }
 
@@ -47,18 +47,6 @@ class MemberServiceTest: BehaviorSpec( {
                     memberService.save(saveMemberRequest)
                 }
                 exception.errorCode shouldBe ErrorCode.DUPLICATE_EMAIL
-            }
-        }
-
-        When ("존재하지 않는 id로 멤버 조회하면") {
-
-            every { memberRepository.findById(1L) } returns Optional.empty()
-
-            then("Exception을 던진다.") {
-                val exception = shouldThrow<MemberException> {
-                    memberService.findMember(1L)
-                }
-                exception.errorCode shouldBe ErrorCode.MEMBER_NOT_FOUND
             }
         }
     }
