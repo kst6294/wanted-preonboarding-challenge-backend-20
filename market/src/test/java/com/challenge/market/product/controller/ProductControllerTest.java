@@ -120,7 +120,7 @@ public class ProductControllerTest {
         // given
         doThrow(NoSuchElementException.class).when(productService).get(-1L);
         // when
-        String url = "/products/-1";
+        String url = "/products/-1";    
         ResultActions actions = mockMvc.perform(get(url));
 
         // then
