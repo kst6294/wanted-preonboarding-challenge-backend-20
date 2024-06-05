@@ -21,6 +21,8 @@ public class OfferService {
 
     public OfferResponse offer(Long memberId, OfferRequest offerRequest) {
         Product product = productRepository.findById(offerRequest.getProductId()).orElseThrow(RuntimeException::new);
+        product.setStatus(ProductStatus.RESERVED);
+
         Offer offer = Offer.builder()
                 .productId(product.getId())
                 .sellerId(product.getMemberId())
@@ -34,12 +36,25 @@ public class OfferService {
     public OfferResponse accept(Long memberId, Long offerId) {
         Offer offer = offerRepository.findById(offerId).orElseThrow(RuntimeException::new);
         if(!offer.getSellerId().equals(memberId)){
-            throw new RuntimeException("요청 승인 권한이 없습니다.");
+            throw new RuntimeException("요청 접근 권한이 없습니다.");
         }
         offer.setStatus(OfferStatus.ACCEPTED);
 
         Product product = productRepository.findById(offer.getProductId()).orElseThrow(RuntimeException::new);
         product.setStatus(ProductStatus.COMPLETED);
+
+        return new OfferResponse(offer.getId(), offer.getStatus());
+    }
+
+    public OfferResponse decline(Long memberId, Long offerId) {
+        Offer offer = offerRepository.findById(offerId).orElseThrow(RuntimeException::new);
+        if(!offer.getSellerId().equals(memberId)){
+            throw new RuntimeException("요청 접근 권한이 없습니다.");
+        }
+        offer.setStatus(OfferStatus.DECLINED);
+
+        Product product = productRepository.findById(offer.getProductId()).orElseThrow(RuntimeException::new);
+        product.setStatus(ProductStatus.AVAILABLE);
 
         return new OfferResponse(offer.getId(), offer.getStatus());
     }

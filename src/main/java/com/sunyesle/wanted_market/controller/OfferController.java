@@ -27,4 +27,10 @@ public class OfferController {
         OfferResponse response = offerService.accept(member.getId(), id);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
+
+    @PutMapping("/{id}/decline")
+    public ResponseEntity<OfferResponse> decline(@AuthenticationPrincipal CustomUserDetails member, @PathVariable Long id){
+        OfferResponse response = offerService.decline(member.getId(), id);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
 }

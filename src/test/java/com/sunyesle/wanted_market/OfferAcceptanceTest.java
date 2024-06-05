@@ -82,6 +82,28 @@ class OfferAcceptanceTest extends AcceptanceTest {
                         .log().all()
                         .basePath("/api/v1/offers/" + offerId + "/accept")
                         .header(HttpHeaders.AUTHORIZATION, "Bearer " + sellerToken)
+                        .when()
+                        .put()
+                        .then()
+                        .log().all()
+                        .statusCode(HttpStatus.OK.value())
+                        .extract();
+
+        OfferResponse offerResponse = response.as(OfferResponse.class);
+        assertThat(offerResponse.getId()).isNotNull();
+        assertThat(offerResponse.getStatus()).isEqualTo(OfferStatus.ACCEPTED);
+    }
+
+    @Test
+    void 제품_예약_요청을_거절한다() {
+        OfferRequest offerRequest = new OfferRequest(savedProductId);
+        Long offerId = 제품_예약_요청(offerRequest, buyerToken).as(OfferResponse.class).getId();
+
+        ExtractableResponse<Response> response =
+                given()
+                        .log().all()
+                        .basePath("/api/v1/offers/" + offerId + "/decline")
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + sellerToken)
                 .when()
                         .put()
                 .then()
@@ -91,6 +113,6 @@ class OfferAcceptanceTest extends AcceptanceTest {
 
         OfferResponse offerResponse = response.as(OfferResponse.class);
         assertThat(offerResponse.getId()).isNotNull();
-        assertThat(offerResponse.getStatus()).isEqualTo(OfferStatus.ACCEPTED);
+        assertThat(offerResponse.getStatus()).isEqualTo(OfferStatus.DECLINED);
     }
 }
