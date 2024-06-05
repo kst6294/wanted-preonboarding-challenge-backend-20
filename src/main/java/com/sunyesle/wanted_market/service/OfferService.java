@@ -6,6 +6,8 @@ import com.sunyesle.wanted_market.entity.Offer;
 import com.sunyesle.wanted_market.entity.Product;
 import com.sunyesle.wanted_market.enums.OfferStatus;
 import com.sunyesle.wanted_market.enums.ProductStatus;
+import com.sunyesle.wanted_market.exception.ErrorCodeException;
+import com.sunyesle.wanted_market.exception.OfferErrorCode;
 import com.sunyesle.wanted_market.repository.OfferRepository;
 import com.sunyesle.wanted_market.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +22,7 @@ public class OfferService {
     private final OfferRepository offerRepository;
 
     public OfferResponse offer(Long memberId, OfferRequest offerRequest) {
-        Product product = productRepository.findById(offerRequest.getProductId()).orElseThrow(RuntimeException::new);
+        Product product = productRepository.findById(offerRequest.getProductId()).orElseThrow(() -> new ErrorCodeException(OfferErrorCode.OFFER_NOT_FOUND));
         product.setStatus(ProductStatus.RESERVED);
 
         Offer offer = Offer.builder()
@@ -34,22 +36,22 @@ public class OfferService {
     }
 
     public OfferResponse accept(Long memberId, Long offerId) {
-        Offer offer = offerRepository.findById(offerId).orElseThrow(RuntimeException::new);
+        Offer offer = offerRepository.findById(offerId).orElseThrow(() -> new ErrorCodeException(OfferErrorCode.OFFER_NOT_FOUND));
         if(!offer.getSellerId().equals(memberId)){
-            throw new RuntimeException("요청 접근 권한이 없습니다.");
+            throw new ErrorCodeException(OfferErrorCode.NOT_OFFER_OFFEREE);
         }
         offer.setStatus(OfferStatus.ACCEPTED);
 
-        Product product = productRepository.findById(offer.getProductId()).orElseThrow(RuntimeException::new);
+        Product product = productRepository.findById(offer.getProductId()).orElseThrow(() -> new ErrorCodeException(OfferErrorCode.OFFER_NOT_FOUND));
         product.setStatus(ProductStatus.COMPLETED);
 
         return new OfferResponse(offer.getId(), offer.getStatus());
     }
 
     public OfferResponse decline(Long memberId, Long offerId) {
-        Offer offer = offerRepository.findById(offerId).orElseThrow(RuntimeException::new);
+        Offer offer = offerRepository.findById(offerId).orElseThrow(() -> new ErrorCodeException(OfferErrorCode.OFFER_NOT_FOUND));
         if(!offer.getSellerId().equals(memberId)){
-            throw new RuntimeException("요청 접근 권한이 없습니다.");
+            throw new ErrorCodeException(OfferErrorCode.NOT_OFFER_OFFEREE);
         }
         offer.setStatus(OfferStatus.DECLINED);
 
