@@ -29,21 +29,21 @@ public class OrderService {
     private final OrderFindRepository orderFindRepository;
 
     @Transactional
-    public OrderDto createOrder(Long memberId, Long productId) {
-        Member seller = memberService.findById(memberId);
+    public OrderDto createOrder(String username, Long productId) {
+        Member buyer = memberService.findByUsername(username);
         Product findProduct = productService.findById(productId);
 
         if(findProduct.getStatus() == ProductStatus.SALE) {
-            Order order = new Order(OrderStatus.RESERVATION, seller, findProduct.getSeller());
+            Order order = new Order(OrderStatus.RESERVATION, buyer, findProduct.getSeller());
             findProduct.changeStatus(ProductStatus.RESERVATION);
             orderRepository.save(order);
-            seller.addOrder(order);
+            buyer.addOrder(order);
             OrderItem orderItem = OrderItem.builder().price(findProduct.getPrice())
                     .product(findProduct)
                     .build();
            order.addOrderItem(orderItem);
             return new OrderDto(order.getId(),
-                    seller.getId(),
+                    buyer.getId(),
                     findProduct.getSeller().getId(),
                     findProduct.getId(),
                     findProduct.getPrice(),
@@ -55,9 +55,9 @@ public class OrderService {
     }
 
     @Transactional
-    public void orderConfirm(Long buyerId, Long oderId) {
+    public void orderConfirm(String username, Long oderId) {
         Order findOrder = orderRepository.findById(oderId).orElse(null);
-        if (findOrder.getBuyer().getId().equals(buyerId)) {
+        if (findOrder.getSeller().getUsername().equals(username)) {
             findOrder.confirm();
         }
 
@@ -79,14 +79,14 @@ public class OrderService {
         return orderRepository.findById(orderId).orElse(null);
     }
 
-    public List<OrderDto> findAllBySellerId(Long sellerId) {
-        return orderFindRepository.findAllBySellerId(sellerId);
+    public List<OrderDto> findAllBySellerEmail(String email) {
+        return orderFindRepository.findAllBySellerEmail(email);
     }
-    public List<OrderDto> findAllByBuyerId(Long buyerId) {
-        return orderFindRepository.findAllByBuyerId(buyerId);
+    public List<OrderDto> findAllByBuyerEmail(String email) {
+        return orderFindRepository.findAllByBuyerEmail(email);
     }
 
-    public ResponseOrder findResponseById(Long orderId, Long memberId) {
+    public ResponseOrder findResponseById(Long orderId, String username) {
         Order order = orderRepository.findById(orderId).orElse(null);
         return ResponseOrder.builder()
                 .orderId(order.getId())
@@ -95,8 +95,9 @@ public class OrderService {
                 .orderStatus(order.getOrderStatus())
                 .productName(order.getOrderItem().getProduct().getProductName())
                 .productId(order.getOrderItem().getProduct().getId())
-                .isSeller(memberId.equals(order.getSeller().getId()))
+                .isSeller(username.equals(order.getSeller().getUsername()))
                 .orderDateTime(order.getCreateDate())
                 .build();
     }
+
 }

@@ -23,7 +23,7 @@ public class OrderFindRepositoryImpl implements OrderFindRepository{
     }
 
     @Override
-    public List<OrderDto> findAllBySellerId(Long sellerId) {
+    public List<OrderDto> findAllBySellerEmail(String username) {
         QMember seller = new QMember("seller");
         return queryFactory
                 .select(new QOrderDto(order.id.as("orderId"),
@@ -38,12 +38,12 @@ public class OrderFindRepositoryImpl implements OrderFindRepository{
                 .leftJoin(order.orderItem, orderItem)
                 .leftJoin(orderItem.product, product)
                 .leftJoin(product.seller, seller)
-                .where(order.seller.id.eq(sellerId))
+                .where(order.seller.username.eq(username))
                 .fetch();
     }
 
     @Override
-    public List<OrderDto> findAllByBuyerId(Long buyerId) {
+    public List<OrderDto> findAllByBuyerEmail(String username) {
         QMember seller = new QMember("seller");
         return queryFactory
                 .select(new QOrderDto(order.id.as("orderId"),
@@ -58,7 +58,7 @@ public class OrderFindRepositoryImpl implements OrderFindRepository{
                 .leftJoin(order.orderItem, orderItem)
                 .leftJoin(orderItem.product, product)
                 .leftJoin(product.seller, seller)
-                .where(order.buyer.id.eq(buyerId))
+                .where(order.buyer.username.eq(username))
                 .fetch();
     }
 }

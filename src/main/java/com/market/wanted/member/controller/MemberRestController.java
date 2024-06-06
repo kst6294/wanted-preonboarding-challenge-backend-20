@@ -1,9 +1,11 @@
 package com.market.wanted.member.controller;
 
+import com.market.wanted.member.dto.SignupRequest;
+import com.market.wanted.member.dto.SignupResponse;
 import com.market.wanted.member.service.MemberService;
-import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @Slf4j
@@ -14,19 +16,12 @@ public class MemberRestController {
 
     private final MemberService memberService;
 
-    @PostMapping("/login")
-    public String login(HttpSession session) {
-        session.setAttribute("memberId", 1L);
-        log.info("login");
-        return "Ok";
+    @PostMapping("/signup")
+    public ResponseEntity<SignupResponse> joinMember(@RequestBody SignupRequest request) {
+        memberService.joinMember(request);
+        return ResponseEntity.ok().body(new SignupResponse("회원 가입 성공"));
     }
 
-    @PostMapping("/login2")
-    public String login2(HttpSession session) {
-        session.setAttribute("memberId", 2L);
-        log.info("login2");
-        return "Ok";
-    }
 
 
 

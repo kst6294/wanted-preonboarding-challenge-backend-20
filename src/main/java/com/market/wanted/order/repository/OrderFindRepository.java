@@ -6,6 +6,6 @@ import com.market.wanted.order.entity.Order;
 import java.util.List;
 
 public interface OrderFindRepository {
-    List<OrderDto> findAllBySellerId(Long sellerId);
-    List<OrderDto> findAllByBuyerId(Long buyerId);
+    List<OrderDto> findAllBySellerEmail(String email);
+    List<OrderDto> findAllByBuyerEmail(String email);
 }

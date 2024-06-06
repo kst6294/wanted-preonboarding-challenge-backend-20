@@ -27,7 +27,7 @@ public class ProductController {
 
 
     @GetMapping
-    public ResponseEntity<List<ProductDto>> productList(HttpSession session) {
+    public ResponseEntity<List<ProductDto>> productList() {
         List<ProductDto> productDtos = productService.findAll();
         return ResponseEntity.ok(productDtos);
     }

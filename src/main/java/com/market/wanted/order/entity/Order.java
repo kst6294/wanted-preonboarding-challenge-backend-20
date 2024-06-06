@@ -34,7 +34,7 @@ public class Order extends BaseEntity {
     @OneToOne(mappedBy = "order", cascade = CascadeType.ALL)
     private OrderItem orderItem;
 
-    public Order(OrderStatus orderStatus, Member seller, Member buyer) {
+    public Order(OrderStatus orderStatus, Member buyer, Member seller) {
         this.orderStatus = orderStatus;
         this.seller = seller;
         this.buyer = buyer;

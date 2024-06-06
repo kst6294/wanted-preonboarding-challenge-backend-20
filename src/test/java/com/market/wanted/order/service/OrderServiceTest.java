@@ -44,7 +44,7 @@ class OrderServiceTest {
         Product product = new Product("itemA", 1000, buyer);
         productRepository.save(product);
         //when
-        OrderDto order = orderService.createOrder(seller.getId(), product.getId());
+        OrderDto order = orderService.createOrder(seller.getUsername(), product.getId());
 
         //then
         assertThat(order.getBuyerId()).isEqualTo(buyer.getId());
@@ -60,9 +60,9 @@ class OrderServiceTest {
         memberRepository.save(buyer);
         Product product = new Product("itemA", 1000, buyer);
         productRepository.save(product);
-        OrderDto orderDto = orderService.createOrder(seller.getId(), product.getId());
+        OrderDto orderDto = orderService.createOrder(seller.getUsername(), product.getId());
 
-        orderService.orderConfirm(buyer.getId(), orderDto.getOrderId());
+        orderService.orderConfirm(seller.getUsername(), orderDto.getOrderId());
 
         Order order = orderService.findById(orderDto.getOrderId());
 

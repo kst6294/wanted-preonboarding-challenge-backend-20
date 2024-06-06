@@ -9,6 +9,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @EnableJpaAuditing
 @SpringBootApplication
@@ -17,6 +18,7 @@ public class WantedApplication implements CommandLineRunner {
 
 	private final MemberRepository memberRepository;
 	private final ProductRepository productRepository;
+	private final PasswordEncoder passwordEncoder;
 
 	public static void main(String[] args) {
 		SpringApplication.run(WantedApplication.class, args);
@@ -24,8 +26,8 @@ public class WantedApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		Member seller = new Member("1234", "seller", "seller@test.com");
-		Member buyer = new Member("1234", "buyer", "buyer@test.com");
+		Member seller = new Member(passwordEncoder.encode("1234"), "seller", "seller@test.com");
+		Member buyer = new Member(passwordEncoder.encode("1234"), "buyer", "buyer@test.com");
 		memberRepository.save(seller);
 		memberRepository.save(buyer);
 		Product product1 = new Product("itemA", 1000, buyer);
