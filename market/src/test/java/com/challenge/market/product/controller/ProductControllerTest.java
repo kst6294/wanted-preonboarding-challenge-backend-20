@@ -38,10 +38,22 @@ public class ProductControllerTest {
     @Mock
     ProductService productService;
 
+
+
     @BeforeEach
     public void init(){
         // Spring context 를 로드하지 않으므로 속도가 빨라 단일 컨트롤러에 직접 주입한다.
         mockMvc = MockMvcBuilders.standaloneSetup(productController).build();
+    }
+
+    @Test
+    @DisplayName("제품 컨트롤러가 null이 아님 ")
+    void testProductControllerIsNotNull() throws Exception {
+        // given
+        assertThat(productController).isNotNull();
+        // when
+        // then
+
     }
 
 

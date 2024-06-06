@@ -10,6 +10,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -23,15 +24,22 @@ public class MemberServiceTest {
     @Mock
     MemberRepository memberRepository;
 
+    /**
+     * 회원 가입 성공 테스트
+     *
+     * @throws Exception
+     */
     @Test
     @DisplayName("회원 가입 성공")
     void testMemberJoin() throws Exception {
+        Member member = singUpRequest();
 
         // given
-        Member member = createMember();
-        doReturn(createMember()).when(memberRepository).save(any(Member.class));
+        doReturn(member).when(memberRepository).save(any(Member.class));
+
         // when
         Member signUpMember = memberService.signUp(member);
+
         // then
         assertThat(signUpMember.getId()).isEqualTo(member.getId());
         assertThat(signUpMember.getName()).isEqualTo(member.getName());
@@ -40,7 +48,7 @@ public class MemberServiceTest {
 
     }
 
-    private Member createMember(){
+    private Member singUpRequest(){
         return Member.builder().name("회원1").build();
     }
 
