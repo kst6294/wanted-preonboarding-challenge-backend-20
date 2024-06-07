@@ -70,4 +70,32 @@ public class OfferSteps {
                         .extract();
         return response;
     }
+
+    public static ExtractableResponse<Response> 요청_조회_요청(String token) {
+        ExtractableResponse<Response> response =
+                given()
+                        .log().all()
+                        .basePath("/api/v1/offers")
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
+                .when()
+                        .get()
+                .then()
+                        .log().all()
+                        .extract();
+        return response;
+    }
+
+    public static ExtractableResponse<Response> 받은요청_조회_요청(String token) {
+        ExtractableResponse<Response> response =
+                given()
+                        .log().all()
+                        .basePath("/api/v1/offers/received")
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
+                .when()
+                        .get()
+                .then()
+                        .log().all()
+                        .extract();
+        return response;
+    }
 }

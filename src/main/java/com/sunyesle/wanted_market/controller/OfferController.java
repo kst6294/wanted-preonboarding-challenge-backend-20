@@ -1,6 +1,7 @@
 package com.sunyesle.wanted_market.controller;
 
 import com.sunyesle.wanted_market.dto.CreateOfferRequest;
+import com.sunyesle.wanted_market.dto.OfferDetailResponse;
 import com.sunyesle.wanted_market.dto.OfferResponse;
 import com.sunyesle.wanted_market.security.CustomUserDetails;
 import com.sunyesle.wanted_market.service.OfferService;
@@ -9,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/offers")
@@ -37,6 +40,18 @@ public class OfferController {
     @PutMapping("/{id}/confirm")
     public ResponseEntity<OfferResponse> confirm(@AuthenticationPrincipal CustomUserDetails member, @PathVariable Long id){
         OfferResponse response = offerService.confirm(member.getId(), id);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<OfferDetailResponse>> offers(@AuthenticationPrincipal CustomUserDetails member){
+        List<OfferDetailResponse> response = offerService.getOffers(member.getId());
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+
+    @GetMapping("/received")
+    public ResponseEntity<List<OfferDetailResponse>> receivedOffers(@AuthenticationPrincipal CustomUserDetails member){
+        List<OfferDetailResponse> response = offerService.getRecivedOffers(member.getId());
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 }

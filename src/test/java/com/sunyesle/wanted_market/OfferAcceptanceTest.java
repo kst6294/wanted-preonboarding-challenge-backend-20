@@ -13,6 +13,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.List;
+
 import static com.sunyesle.wanted_market.support.AuthSteps.로그인_요청;
 import static com.sunyesle.wanted_market.support.AuthSteps.회원가입_요청;
 import static com.sunyesle.wanted_market.support.CommonSupporter.*;
@@ -128,5 +130,27 @@ class OfferAcceptanceTest extends AcceptanceTest {
         assertThat(offerResponse.getStatus()).isEqualTo(OfferStatus.DECLINED);
         ExtractableResponse<Response> 제품_조회_결과 = 제품_조회_요청(offerResponse.getId());
         제품_상태가_변경된다(제품_조회_결과, ProductStatus.AVAILABLE);
+    }
+
+    @Test
+    void 내_요청목록을_조회한다() {
+        CreateOfferRequest createOfferRequest = new CreateOfferRequest(savedProductId, 2);
+        구매_요청(createOfferRequest, buyerToken);
+
+        ExtractableResponse<Response> response = 요청_조회_요청(buyerToken);
+
+        List<OfferDetailResponse> products = response.jsonPath().getList(".", OfferDetailResponse.class);
+        assertThat(products).hasSize(1);
+    }
+
+    @Test
+    void 내가_받은_요청목록을_조회한다() {
+        CreateOfferRequest createOfferRequest = new CreateOfferRequest(savedProductId, 2);
+        구매_요청(createOfferRequest, buyerToken);
+
+        ExtractableResponse<Response> response = 받은요청_조회_요청(sellerToken);
+
+        List<OfferDetailResponse> products = response.jsonPath().getList(".", OfferDetailResponse.class);
+        assertThat(products).hasSize(1);
     }
 }

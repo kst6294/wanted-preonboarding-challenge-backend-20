@@ -10,4 +10,8 @@ public interface OfferRepository extends JpaRepository<Offer, Long> {
     boolean existsByProductIdAndBuyerIdAndStatus(Long productId, Long buyerId, OfferStatus offerStatus);
 
     List<Offer> findByProductIdAndStatus(Long productId, OfferStatus offerStatus);
+
+    List<Offer> findByBuyerId(Long memberId);
+
+    List<Offer> findBySellerId(Long memberId);
 }

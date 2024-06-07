@@ -1,6 +1,7 @@
 package com.sunyesle.wanted_market.service;
 
 import com.sunyesle.wanted_market.dto.CreateOfferRequest;
+import com.sunyesle.wanted_market.dto.OfferDetailResponse;
 import com.sunyesle.wanted_market.dto.OfferResponse;
 import com.sunyesle.wanted_market.entity.Offer;
 import com.sunyesle.wanted_market.entity.Product;
@@ -92,5 +93,15 @@ public class OfferService {
         }
 
         return new OfferResponse(offer.getId(), offer.getStatus());
+    }
+
+    public List<OfferDetailResponse> getOffers(Long memberId) {
+        List<Offer> offers = offerRepository.findByBuyerId(memberId);
+        return offers.stream().map(OfferDetailResponse::of).toList();
+    }
+
+    public List<OfferDetailResponse> getRecivedOffers(Long memberId) {
+        List<Offer> offers = offerRepository.findBySellerId(memberId);
+        return offers.stream().map(OfferDetailResponse::of).toList();
     }
 }
