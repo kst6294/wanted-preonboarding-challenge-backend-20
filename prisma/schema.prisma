@@ -1,0 +1,62 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int           @id @default(autoincrement())
+  email     String        @unique
+  name      String
+  products  Product[]     @relation("ProductOwner")
+  purchases Transaction[] @relation("Buyer")
+  sales     Transaction[] @relation("Seller")
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+}
+
+enum ProductStatus {
+  AVAILABLE // 판매중
+  RESERVED // 예약중
+  SOLD // 완료
+}
+
+model Product {
+  id           Int           @id @default(autoincrement())
+  name         String // 제품명
+  price        Float // 가격
+  status       ProductStatus @default(AVAILABLE) // 예약상태
+  ownerId      Int
+  owner        User          @relation(name: "ProductOwner", fields: [ownerId], references: [id])
+  transactions Transaction[]
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+}
+
+enum TransactionStatus {
+  PENDING // 거래대기 
+  APPROVED // 거래완료
+  REJECTED // 거래거절
+}
+
+model Transaction {
+  id        Int               @id @default(autoincrement())
+  productId Int
+  product   Product           @relation(fields: [productId], references: [id])
+  buyerId   Int
+  buyer     User              @relation(name: "Buyer", fields: [buyerId], references: [id])
+  sellerId  Int
+  seller    User              @relation(name: "Seller", fields: [sellerId], references: [id])
+  status    TransactionStatus @default(PENDING)
+  createdAt DateTime          @default(now())
+  updatedAt DateTime          @updatedAt
+}
