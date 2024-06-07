@@ -14,6 +14,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 @Transactional
@@ -49,8 +51,6 @@ public class OfferService {
         offer.setStatus(OfferStatus.ACCEPTED);
 
         Product product = productRepository.findById(offer.getProductId()).orElseThrow(() -> new ErrorCodeException(ProductErrorCode.PRODUCT_NOT_FOUND));
-        boolean hasNoOtherOpenOffers = !offerRepository.existsByProductIdAndStatusAndIdNot(product.getId(), OfferStatus.OPEN, offerId);
-        product.accept(hasNoOtherOpenOffers);
 
         return new OfferResponse(offer.getId(), offer.getStatus());
     }
@@ -64,6 +64,23 @@ public class OfferService {
 
         Product product = productRepository.findById(offer.getProductId()).orElseThrow(() -> new ErrorCodeException(ProductErrorCode.PRODUCT_NOT_FOUND));
         product.decline(offer.getQuantity());
+
+        return new OfferResponse(offer.getId(), offer.getStatus());
+    }
+
+    public OfferResponse confirm(Long memberId, Long offerId) {
+        Offer offer = offerRepository.findById(offerId).orElseThrow(() -> new ErrorCodeException(OfferErrorCode.OFFER_NOT_FOUND));
+        if (!offer.getBuyerId().equals(memberId)) {
+            throw new ErrorCodeException(OfferErrorCode.NOT_OFFER_OFFEROR);
+        }
+        offer.setStatus(OfferStatus.CONFIRMED);
+
+        Product product = productRepository.findById(offer.getProductId()).orElseThrow(() -> new ErrorCodeException(ProductErrorCode.PRODUCT_NOT_FOUND));
+        List<Offer> confirmedOfferList = offerRepository.findByProductIdAndStatus(product.getId(), OfferStatus.CONFIRMED);
+        Integer confirmedQuantity = confirmedOfferList.stream().mapToInt(Offer::getQuantity).sum();
+        if(confirmedQuantity + offer.getQuantity() >= product.getQuantity()){
+            product.complete();
+        }
 
         return new OfferResponse(offer.getId(), offer.getStatus());
     }

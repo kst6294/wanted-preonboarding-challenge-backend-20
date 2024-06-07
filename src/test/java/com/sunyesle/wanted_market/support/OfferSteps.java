@@ -56,4 +56,18 @@ public class OfferSteps {
                         .extract();
         return response;
     }
+
+    public static ExtractableResponse<Response> 구매_확정처리_요청(Long offerId, String token) {
+        ExtractableResponse<Response> response =
+                given()
+                        .log().all()
+                        .basePath("/api/v1/offers/" + offerId + "/confirm")
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
+                .when()
+                        .put()
+                .then()
+                        .log().all()
+                        .extract();
+        return response;
+    }
 }

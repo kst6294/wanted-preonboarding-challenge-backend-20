@@ -33,4 +33,10 @@ public class OfferController {
         OfferResponse response = offerService.decline(member.getId(), id);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
+
+    @PutMapping("/{id}/confirm")
+    public ResponseEntity<OfferResponse> confirm(@AuthenticationPrincipal CustomUserDetails member, @PathVariable Long id){
+        OfferResponse response = offerService.confirm(member.getId(), id);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
 }

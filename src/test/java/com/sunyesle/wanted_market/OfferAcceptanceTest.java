@@ -103,11 +103,12 @@ class OfferAcceptanceTest extends AcceptanceTest {
     }
 
     @Test
-    void 모든_제품이_판매되면_제품상태가_COMPLETED로_변경된다() {
+    void 모든_제품이_구매확정되면_제품상태가_COMPLETED로_변경된다() {
         CreateOfferRequest createOfferRequest = new CreateOfferRequest(savedProductId, 2);
         Long offerId = 구매_요청(createOfferRequest, buyerToken).as(OfferResponse.class).getId();
+        구매_승인처리_요청(offerId, sellerToken);
 
-        ExtractableResponse<Response> response = 구매_승인처리_요청(offerId, sellerToken);
+        ExtractableResponse<Response> response = 구매_확정처리_요청(offerId, buyerToken);
 
         수정에_성공한다(response);
         OfferResponse offerResponse = response.as(OfferResponse.class);

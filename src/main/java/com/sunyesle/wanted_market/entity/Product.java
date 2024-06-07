@@ -40,14 +40,12 @@ public class Product {
         this.availableQuantity = newAvailableQuantity;
     }
 
-    public void accept(boolean hasNoOtherOpenOffers) {
-        if (availableQuantity == 0 && hasNoOtherOpenOffers) {
-            this.status = ProductStatus.COMPLETED;
-        }
-    }
-
     public void decline(Integer quantity) {
         this.availableQuantity = this.availableQuantity + quantity;
         this.status = ProductStatus.AVAILABLE;
+    }
+
+    public void complete() {
+        this.status = ProductStatus.COMPLETED;
     }
 }
