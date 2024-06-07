@@ -4,8 +4,6 @@ import com.wanted.market.product.dto.ProductRequestDto;
 import com.wanted.market.product.dto.ProductResponseDto;
 import com.wanted.market.product.service.ProductService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PostAuthorize;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;

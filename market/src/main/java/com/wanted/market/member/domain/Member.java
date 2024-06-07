@@ -1,16 +1,18 @@
 package com.wanted.market.member.domain;
 
-
 import com.wanted.market.member.model.MemberRole;
+import com.wanted.market.order.domain.Order;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Getter
 @NoArgsConstructor
 @Builder
 public class Member {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "member_id")

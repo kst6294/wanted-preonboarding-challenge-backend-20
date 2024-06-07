@@ -1,8 +1,8 @@
 package com.wanted.market.member.model;
 
 public enum MemberRole {
-    ROLE_BUYER("buyer"),
-    ROLE_SELLER("seller");
+    BUYER("buyer"),
+    SELLER("seller");
 
     private final String status;
 

@@ -1,8 +1,12 @@
 package com.wanted.market.product.dto;
 
+import com.wanted.market.member.domain.Member;
+import com.wanted.market.order.domain.Order;
 import com.wanted.market.product.domain.Product;
 import com.wanted.market.product.model.ProductStatus;
 import lombok.*;
+
+import java.util.List;
 
 @Getter
 @Setter
@@ -17,14 +21,17 @@ public class ProductResponseDto {
 
     private Integer price;
 
-    private ProductStatus status;
+    private Integer quantity;
+
+    private String status;
 
     public static ProductResponseDto createFromEntity(Product product) {
         return ProductResponseDto.builder()
                 .id(product.getId())
                 .name(product.getName())
                 .price(product.getPrice())
-                .status(ProductStatus.ON_SALE)
+                .quantity(product.getQuantity())
+                .status(product.getStatus().toString())
                 .build();
     }
 }

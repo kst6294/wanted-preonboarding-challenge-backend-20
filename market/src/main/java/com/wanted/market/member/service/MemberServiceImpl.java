@@ -23,10 +23,9 @@ public class MemberServiceImpl implements MemberService{
 
     @Override
     public MemberResponseDto join(MemberRequestDto memberRequestDto) {
-        log.info("memberServiceimp={}", memberRequestDto.getRole());
         // 1. 중복 이메일 확인
         if(memberRepository.existsByEmail(memberRequestDto.getEmail())){
-            throw new RuntimeException();
+            throw new RuntimeException("이미 가입되어있는 이메일입니다.");
         }
 
         // 2. 비밀번호 암호화

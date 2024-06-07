@@ -61,9 +61,10 @@ public class SecurityConfig {
         //경로별 인가 작업
         http
               .authorizeHttpRequests(auth -> auth
-                      .antMatchers(HttpMethod.POST, "/products").hasRole("ROLE_SELLER")
+                      .antMatchers(HttpMethod.POST, "/products").hasAuthority("SELLER")
                       .antMatchers(HttpMethod.GET, "/products").permitAll()
                       .antMatchers(HttpMethod.GET, "/products/*").permitAll()
+                      .antMatchers(HttpMethod.POST, "/orders").hasAuthority("BUYER")
                       .anyRequest().permitAll()
               );
 
