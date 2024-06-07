@@ -18,9 +18,10 @@ public class Transaction {
     private Long id;
 
     private String buyerName;
-    private ProductStatus status;
+    private boolean status;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "product_id")
     private Product product;
+
 }

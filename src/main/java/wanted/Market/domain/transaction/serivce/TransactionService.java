@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import wanted.Market.domain.product.entity.Product;
 import wanted.Market.domain.product.entity.ProductStatus;
 import wanted.Market.domain.product.service.ProductService;
+import wanted.Market.domain.transaction.dto.TransactionDto;
 import wanted.Market.domain.transaction.entity.Transaction;
 import wanted.Market.domain.transaction.repository.TransactionRepository;
 import wanted.Market.global.exception.AppException;
@@ -13,6 +14,7 @@ import wanted.Market.global.exception.ErrorCode.ProductErrorCode;
 import wanted.Market.global.exception.ErrorCode.TransactionErrorCode;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -22,24 +24,39 @@ public class TransactionService {
     private final ProductService productService;
 
     //내가 구매한 정보 조회
-    public List<Transaction> getMyTransaction(String username){
-        return transactionRepository.findByBuyerNameAndStatus(username, ProductStatus.COMPLETED).orElseThrow(() ->
-            new AppException(TransactionErrorCode.INVALID_TRANSACTION));
+    public List<TransactionDto> getMyTransaction(String username){
+        List<Transaction> transactions = transactionRepository.findByBuyerNameAndStatus(username, true)
+            .orElseThrow(() -> new AppException(TransactionErrorCode.INVALID_TRANSACTION));
+        return transactions.stream()
+            .map(TransactionDto::fromEntity)
+            .collect(Collectors.toList());
     }
 
     //구매자 기준으로 예약 중인 거래 내역 조회
-    public List<Transaction> getBuyerTransaction(String username){
-        return transactionRepository.findByBuyerNameAndStatus(username, ProductStatus.RESERVED).orElseThrow(() ->
-            new AppException(TransactionErrorCode.INVALID_TRANSACTION));
+    public List<TransactionDto> getBuyerTransaction(String username){
+        List<Transaction> transactions = transactionRepository.findByBuyerNameAndStatus(username, false)
+            .orElseThrow(() -> new AppException(TransactionErrorCode.INVALID_TRANSACTION));
+        return transactions.stream()
+            .map(TransactionDto::fromEntity)
+            .collect(Collectors.toList());
     }
+
     //판매자 기준으로 예약 중인 거래 내역 조회
-    public List<Transaction> getSellerTransaction(String username){
-        return transactionRepository.findByProductSellerIdentifierAndStatus(username, ProductStatus.RESERVED).orElseThrow(() ->
-            new AppException(TransactionErrorCode.INVALID_TRANSACTION));
+    public List<TransactionDto> getSellerTransaction(String username){
+        List<Transaction> transactions = transactionRepository.findByProductSellerIdentifierAndStatus(username, false)
+            .orElseThrow(() -> new AppException(TransactionErrorCode.INVALID_TRANSACTION));
+        return transactions.stream()
+            .map(TransactionDto::fromEntity)
+            .collect(Collectors.toList());
     }
-    public List<Transaction> getTransactionsByProductId(long productId){
-        return transactionRepository.findByProductId(productId).orElseThrow(() ->
-            new AppException(TransactionErrorCode.INVALID_TRANSACTION));
+
+    //제품에 대한 거래 내역 조회
+    public List<TransactionDto> getTransactionsByProductId(long productId){
+        List<Transaction> transactions = transactionRepository.findByProductId(productId)
+            .orElseThrow(() -> new AppException(TransactionErrorCode.INVALID_TRANSACTION));
+        return transactions.stream()
+            .map(TransactionDto::fromEntity)
+            .collect(Collectors.toList());
     }
     @Transactional
     public Transaction approveTransaction(String username, long transactionId){
@@ -52,7 +69,7 @@ public class TransactionService {
         }
 
         // 거래의 상태를 완료로 변경
-        transaction.setStatus(ProductStatus.COMPLETED);
+        transaction.setStatus(true);
         transactionRepository.save(transaction);
 
         // 제품 상태를 완료로 변경

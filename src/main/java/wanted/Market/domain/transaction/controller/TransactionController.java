@@ -37,7 +37,7 @@ public class TransactionController {
     }
 
     //제품에 대한 거래 내역
-    @GetMapping("/{productid}")
+    @GetMapping("/{productId}")
     public ResponseEntity<ResponseDto<?>> getTransactionsByProductId(@PathVariable long productId){
         return ResponseEntity.status(200).body(ResponseDto.of("제품의 거래 내역 조회 성공", transactionService.getTransactionsByProductId(productId)));
     }

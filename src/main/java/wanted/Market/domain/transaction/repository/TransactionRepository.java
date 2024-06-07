@@ -12,10 +12,10 @@ import java.util.Optional;
 public interface TransactionRepository extends JpaRepository<Transaction, Long> {
 
     //구매자 이름으로 현재 예약 중인 거래 내역 검색
-    Optional<List<Transaction>> findByBuyerNameAndStatus(String buyerName, ProductStatus status);
+    Optional<List<Transaction>> findByBuyerNameAndStatus(String buyerName, boolean status);
 
     //판매자 이름으로 현재 예약 중인 거래 내역 검색
-    Optional<List<Transaction>> findByProductSellerIdentifierAndStatus(String sellerName, ProductStatus status);
+    Optional<List<Transaction>> findByProductSellerIdentifierAndStatus(String sellerName, boolean status);
 
     //상세 제품 조회에 대한 거래 내역 검색
     Optional<List<Transaction>> findByProductId(long productId);

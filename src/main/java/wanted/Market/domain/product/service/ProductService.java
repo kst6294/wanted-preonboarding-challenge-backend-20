@@ -65,6 +65,7 @@ public class ProductService {
         Transaction transaction = Transaction.builder()
             .buyerName(username)
             .product(product)
+            .status(false)
             .build();
         transactionRepository.save(transaction);
 
