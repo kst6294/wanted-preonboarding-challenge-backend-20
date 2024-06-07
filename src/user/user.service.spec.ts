@@ -12,6 +12,7 @@ export class MockUserRepository {
     email: 'test@test.com',
     password: 'testpassword',
     product: [],
+    order: [],
   };
   validateUser = jest.fn();
   createUser = jest.fn();

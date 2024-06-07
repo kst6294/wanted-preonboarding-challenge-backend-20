@@ -10,6 +10,8 @@ class MockProductService {
   findAllProducts = jest.fn();
   findProductDetail = jest.fn();
   createProduct = jest.fn();
+  approveProductSale = jest.fn();
+  findTransactionHistory = jest.fn();
 }
 
 describe('ProductController', () => {
@@ -38,21 +40,44 @@ describe('ProductController', () => {
         status: jest.fn().mockReturnThis(),
         json: jest.fn(),
       };
-      (service.findAllProducts as jest.Mock).mockResolvedValue([
-        { mockProduct },
-      ]);
+      (service.findAllProducts as jest.Mock).mockResolvedValue([mockProduct]);
 
       await controller.getAllProducts(res as Response);
       expect(res.status).toHaveBeenCalledWith(HttpStatus.OK);
-      expect(res.json).toHaveBeenCalledWith([{ mockProduct }]);
+      expect(res.json).toHaveBeenCalledWith([mockProduct]);
     });
   });
 
   describe('getProduct', () => {
-    it('productId에 해당하는 제품을 상세 조회 후 return', async () => {
+    it('productId에 해당하는 제품을 상세 조회 후 return (사용자 정보가 있는 경우)', async () => {
       const res: Partial<Response> = {
         status: jest.fn().mockReturnThis(),
         json: jest.fn(),
+        locals: {
+          user: {
+            userId: 1,
+          },
+        },
+      };
+      const productId = 1;
+      (service.findProductDetail as jest.Mock).mockResolvedValue(mockProduct);
+      (service.findTransactionHistory as jest.Mock).mockResolvedValue([
+        { mockProduct },
+      ]);
+
+      await controller.getProduct(productId, res as Response);
+      expect(res.status).toHaveBeenCalledWith(HttpStatus.OK);
+      expect(res.json).toHaveBeenCalledWith({
+        product: mockProduct,
+        transactionHistory: [{ mockProduct }],
+      });
+    });
+
+    it('productId에 해당하는 제품을 상세 조회 후 return (사용자 정보가 없는 경우)', async () => {
+      const res: Partial<Response> = {
+        status: jest.fn().mockReturnThis(),
+        json: jest.fn(),
+        locals: {},
       };
       const productId = 1;
       (service.findProductDetail as jest.Mock).mockResolvedValue(mockProduct);
@@ -81,7 +106,27 @@ describe('ProductController', () => {
 
       await controller.createProduct(req.body, res as Response);
       expect(res.status).toHaveBeenCalledWith(HttpStatus.OK);
-      expect(res.json).toHaveBeenCalledWith({ message: '상품 등록 완료' });
+      expect(res.json).toHaveBeenCalledWith({ message: '제품 등록 완료' });
+    });
+  });
+
+  describe('approveProductSale', () => {
+    it('제품 판매 승인', async () => {
+      const res: Partial<Response> = {
+        locals: {
+          user: {
+            userId: 1,
+          },
+        },
+        status: jest.fn().mockReturnThis(),
+        json: jest.fn(),
+      };
+      const productId = 1;
+      (service.approveProductSale as jest.Mock).mockResolvedValue(undefined);
+
+      await controller.approveProductSale(productId, res as Response);
+      expect(res.status).toHaveBeenCalledWith(HttpStatus.OK);
+      expect(res.json).toHaveBeenCalledWith({ message: '제품 판매 승인 완료' });
     });
   });
 });

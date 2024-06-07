@@ -26,6 +26,7 @@ export class OrderRepository {
     return await this.orderRepository
       .createQueryBuilder('order')
       .select(['userId'])
+      .where('order.productId = :productId', { productId })
       .getRawOne();
   }
 }

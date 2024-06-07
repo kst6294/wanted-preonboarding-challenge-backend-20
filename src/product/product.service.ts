@@ -7,14 +7,10 @@ import {
 import { ProductRepository } from './product.repository';
 import { Product } from './entity/product.entity';
 import { ProductDto } from './dto/product.dto';
-import { OrderRepository } from 'src/order/order.repository';
 
 @Injectable()
 export class ProductService {
-  constructor(
-    private readonly productRepository: ProductRepository,
-    private readonly orderRepository: OrderRepository,
-  ) {}
+  constructor(private readonly productRepository: ProductRepository) {}
 
   // 제품 목록 조회
   async findAllProducts(): Promise<Product[]> {
