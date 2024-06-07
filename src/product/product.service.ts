@@ -2,14 +2,19 @@ import {
   Injectable,
   InternalServerErrorException,
   NotFoundException,
+  UnauthorizedException,
 } from '@nestjs/common';
 import { ProductRepository } from './product.repository';
 import { Product } from './entity/product.entity';
 import { ProductDto } from './dto/product.dto';
+import { OrderRepository } from 'src/order/order.repository';
 
 @Injectable()
 export class ProductService {
-  constructor(private readonly productRepository: ProductRepository) {}
+  constructor(
+    private readonly productRepository: ProductRepository,
+    private readonly orderRepository: OrderRepository,
+  ) {}
 
   // 제품 목록 조회
   async findAllProducts(): Promise<Product[]> {
@@ -35,8 +40,28 @@ export class ProductService {
       productDto,
     );
     if (!product) {
-      return null;
+      throw new InternalServerErrorException('제품 올리기 실패');
     }
     return product;
+  }
+
+  // 제품 판매 승인
+  async approveProductSale(userId: number, productId: number): Promise<void> {
+    const product = await this.findProductDetail(productId);
+    if (product.userId !== userId) {
+      throw new UnauthorizedException('제품 판매 승인 권한이 없습니다.');
+    }
+    await this.productRepository.approveProductSale(productId);
+  }
+
+  // 거래내역
+  async findTransactionHistory(
+    userId: number,
+    sellerId: number,
+  ): Promise<Product[]> {
+    return await this.productRepository.findTransactionHistory(
+      userId,
+      sellerId,
+    );
   }
 }

@@ -14,6 +14,8 @@ import { APP_FILTER } from '@nestjs/core';
 import { ProductModule } from './product/product.module';
 import { AuthMiddleware } from './middlewares/auth.middleware';
 import { JwtService } from '@nestjs/jwt';
+import { OrderModule } from './order/order.module';
+import { SignInMiddleware } from './middlewares/signIn.middleware';
 
 @Module({
   imports: [
@@ -37,6 +39,7 @@ import { JwtService } from '@nestjs/jwt';
     }),
     UserModule,
     ProductModule,
+    OrderModule,
   ],
   controllers: [AppController],
   providers: [
@@ -47,8 +50,19 @@ import { JwtService } from '@nestjs/jwt';
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
+    consumer.apply(AuthMiddleware).forRoutes(
+      // product
+      { path: 'product', method: RequestMethod.POST },
+      { path: 'product/:productId', method: RequestMethod.PUT },
+      // order
+      { path: 'order/:productId', method: RequestMethod.POST },
+      { path: 'order/purchasedList', method: RequestMethod.GET },
+      { path: 'order/reservedList', method: RequestMethod.GET },
+      { path: 'order/:productId', method: RequestMethod.PUT },
+    );
+
     consumer
-      .apply(AuthMiddleware)
-      .forRoutes({ path: 'product', method: RequestMethod.POST });
+      .apply(SignInMiddleware)
+      .forRoutes({ path: 'product/:productId', method: RequestMethod.GET });
   }
 }

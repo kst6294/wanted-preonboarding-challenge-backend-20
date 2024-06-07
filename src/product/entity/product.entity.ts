@@ -1,3 +1,4 @@
+import { Order } from 'src/order/entity/order.entity';
 import { User } from 'src/user/entity/user.entity';
 import {
   Column,
@@ -5,9 +6,11 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { ProductStatus } from '../enum/productStatus.enum';
 
 @Entity('product')
 export class Product {
@@ -20,8 +23,12 @@ export class Product {
   @Column({ type: 'bigint' })
   productPrice: number;
 
-  @Column({ type: 'varchar', default: '판매중' })
-  productStatus: string;
+  @Column({
+    type: 'enum',
+    enum: ProductStatus,
+    default: ProductStatus.SALE,
+  })
+  productStatus: ProductStatus;
 
   @CreateDateColumn({ type: 'timestamp' })
   productCreatedAt: Date;
@@ -29,7 +36,11 @@ export class Product {
   @UpdateDateColumn({ type: 'timestamp' })
   productUpdateAt: Date;
 
+  // 판매자 userId
   @ManyToOne(() => User, (user) => user.product)
   @JoinColumn({ name: 'userId' })
   userId: number;
+
+  @OneToMany(() => Order, (order) => order.productId)
+  order: Order[];
 }
