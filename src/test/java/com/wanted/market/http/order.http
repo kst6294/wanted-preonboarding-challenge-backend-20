@@ -1,5 +1,8 @@
 ###
-POST http://localhost:8080/orders/2/confirm
+POST http://localhost:8080/orders/1/confirm
 
 ###
 POST http://localhost:8080/orders/3/finish
+
+###
+GET http://localhost:8080/orders/my?pageNumber=1&pageSize=5&status=FINISHED
