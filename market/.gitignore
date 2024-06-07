@@ -35,3 +35,8 @@ out/
 
 ### VS Code ###
 .vscode/
+
+### Environment Variables ###
+/src/main/resources/application-test.yml
+/src/main/resources/application-dev.yml
+

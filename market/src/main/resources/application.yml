@@ -1,0 +1,28 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://${DB_URL}/${DB_NAME}?serverTimezone=Asia/Seoul
+    username: ${DB_USER}
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+  #        format_sql: true
+  #        highlight_sql: true # ANSI 코드에 색을 나타낸다
+  #        use_sql_comments: true # SQL 내부에 /* */ 주석 추가
+
+  driver:
+    path: chromedriver
+  jwt:
+    secret: ${JWT_KEY}
+    token:
+      access-expiration-time: 10000000    #  5분
+      refresh-expiration-time: 604800000   # 7일
+
+  data:
+    redis:
+      host: ${REDIS_HOST}
+      port: ${REDIS_PORT}
