@@ -53,7 +53,7 @@ class OfferAcceptanceTest extends AcceptanceTest {
         회원가입_요청(new SignupRequest("구매자", buyerEmail, buyerPassword));
         buyerToken = 로그인_요청(new SigninRequest(buyerEmail, buyerPassword)).as(SigninResponse.class).getToken();
 
-        savedProductId = 제품_등록_요청(sellerToken, new ProductRequest("스위치", 300000)).as(ProductResponse.class).getId();
+        savedProductId = 제품_등록_요청(sellerToken, new ProductRequest("스위치", 300000, 2)).as(ProductResponse.class).getId();
     }
 
     @Test

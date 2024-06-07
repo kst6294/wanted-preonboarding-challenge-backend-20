@@ -44,7 +44,8 @@ class ProductAcceptanceTest extends AcceptanceTest {
     void 제품을_등록한다() {
         String name = "스위치";
         Integer price = 300000;
-        ProductRequest productRequest = new ProductRequest(name, price);
+        Integer quantity = 2;
+        ProductRequest productRequest = new ProductRequest(name, price, quantity);
 
         ExtractableResponse<Response> response = 제품_등록_요청(token, productRequest);
 
@@ -55,9 +56,7 @@ class ProductAcceptanceTest extends AcceptanceTest {
 
     @Test
     void 제품을_조회한다() {
-        String name = "스위치";
-        Integer price = 300000;
-        ProductRequest productRequest = new ProductRequest(name, price);
+        ProductRequest productRequest = new ProductRequest("스위치", 300000, 2);
         ExtractableResponse<Response> productResponse = 제품_등록_요청(token, productRequest);
         ProductResponse savedProductInfo = productResponse.as(ProductResponse.class);
 
@@ -91,8 +90,8 @@ class ProductAcceptanceTest extends AcceptanceTest {
 
     @Test
     void 제품_목록을_조회한다() {
-        ProductRequest productRequest1 = new ProductRequest("스위치", 300000);
-        ProductRequest productRequest2 = new ProductRequest("당근", 1000);
+        ProductRequest productRequest1 = new ProductRequest("스위치", 300000, 2);
+        ProductRequest productRequest2 = new ProductRequest("당근", 1000, 10);
         제품_등록_요청(token, productRequest1);
         제품_등록_요청(token, productRequest2);
 

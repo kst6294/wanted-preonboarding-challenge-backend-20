@@ -20,10 +20,13 @@ public class Product {
 
     private Integer price;
 
+    private Integer quantity;
+
     @Enumerated(EnumType.STRING)
     private ProductStatus status;
 
     public void setStatus(ProductStatus status) {
         this.status = status;
     }
+
 }
