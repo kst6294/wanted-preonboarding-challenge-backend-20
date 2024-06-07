@@ -19,8 +19,9 @@ public class RegisterProductService {
     }
 
     public Long register(Command cmd) throws InvalidRequestException {
-        Product newProduct = new Product(cmd.sellerId(), cmd.name(), cmd.price(), cmd.quantity(), stockRegister);
+        Product newProduct = new Product(cmd.sellerId(), cmd.name(), cmd.price(), cmd.quantity());
         productRepository.saveAndFlush(newProduct);
+        newProduct.open(stockRegister);
         return newProduct.getId();
     }
 

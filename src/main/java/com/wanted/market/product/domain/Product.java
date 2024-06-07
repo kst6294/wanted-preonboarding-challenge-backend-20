@@ -111,31 +111,6 @@ public class Product {
     }
 
     /**
-     * 상품 등록과 동시에 재고를 등록해서 판매가능상태의 상품을 게시합니다.
-     *
-     * @param sellerId      판매자 id
-     * @param name          상품 이름
-     * @param price         상품 가격
-     * @param quantity      상품 수량
-     * @param stockRegister 재고 등록 서비스
-     */
-    public Product(Long sellerId, String name, Integer price, Integer quantity, StockRegister stockRegister) throws InvalidRequestException {
-        if (sellerId == null || sellerId < 0)
-            throw new InvalidRequestException("SellerId cannot be negative");
-        if (name == null || name.isBlank())
-            throw new InvalidRequestException("Name cannot be null or empty");
-        if (price == null || price < 0)
-            throw new InvalidRequestException("Price cannot be negative");
-        if (quantity == null || quantity <= 0)
-            throw new InvalidRequestException("Quantity cannot be zero or negative");
-        this.sellerId = sellerId;
-        this.name = name;
-        this.price = price;
-        this.quantity = quantity;
-        this.open(stockRegister);
-    }
-
-    /**
      * 재고를 등록해서 상품의 판매를 게시합니다.
      *
      * @param stockRegister 재고 등록 서비스
@@ -168,11 +143,17 @@ public class Product {
         this.status = Status.RESERVED;
     }
 
-    public void sold() {
-        this.status = Status.SOLD;
+    public void sold() throws InvalidRequestException {
+        if(this.status == Status.RESERVED)
+            this.status = Status.SOLD;
+        throw new InvalidRequestException("Product status must be reserved");
     }
 
     public Long getId() {
         return id;
+    }
+
+    public boolean isReserved() {
+        return this.status == Status.RESERVED;
     }
 }
