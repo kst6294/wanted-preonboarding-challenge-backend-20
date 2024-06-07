@@ -1,8 +1,7 @@
-## 과제 풀이 링크
-
-https://www.notion.so/Wanted-pre-onboarding-challenge-back-end-20-8c4abf19c63e41cfb0cd43d49306fb41?pvs=4
+# [과제 풀이 링크](https://www.notion.so/Wanted-pre-onboarding-challenge-back-end-20-8c4abf19c63e41cfb0cd43d49306fb41?pvs=4)
 
 ---
+
 ## 원티드 프리온보딩 챌린지 백엔드 20 사전과제
 
 
