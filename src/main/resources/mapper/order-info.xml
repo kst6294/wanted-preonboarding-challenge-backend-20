@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.wanted.market.order.ui.dao.OrderInfoDao">
+    <select id="findAll"
+            parameterType="com.wanted.market.order.ui.dto.request.QueryRequest"
+            resultType="com.wanted.market.order.ui.dto.response.SimpleOrderInfoResponse">
+        SELECT
+        o.id, o.buyer_id as buyerId, o.product_id as productId, o.price, o.status,
+        m.username as buyerName,
+        p.name as productName
+        FROM orders o
+        LEFT JOIN product p ON o.product_id = p.id
+        LEFT JOIN member m ON o.buyer_id = m.id
+        <where>
+            <if test="buyerId != null">
+                o.buyer_id = #{buyerId}
+            </if>
+            <if test="status != null">
+                AND o.status = #{status}
+            </if>
+        </where>
+        LIMIT #{offset}
+        , #{pageSize}
+    </select>
+    <select id="count"
+            parameterType="com.wanted.market.order.ui.dto.request.QueryRequest"
+            resultType="java.lang.Long">
+        SELECT count(1)
+        FROM orders o
+        LEFT JOIN product p ON o.product_id = p.id
+        LEFT JOIN member m ON o.buyer_id = m.id
+        <where>
+            <if test="buyerId != null">
+                o.buyer_id = #{buyerId}
+            </if>
+            <if test="status != null">
+                AND o.status = #{status}
+            </if>
+        </where>
+    </select>
+</mapper>

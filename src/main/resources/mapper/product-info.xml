@@ -54,7 +54,7 @@
                 AND o.status = 'REQUESTED'
             </if>
         </where>
-        limit #{offset}
+        LIMIT #{offset}
         , #{pageSize}
     </select>
     <select id="countWithOrders"
