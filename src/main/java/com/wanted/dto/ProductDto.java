@@ -38,4 +38,5 @@ public class ProductDto {
         this.status = product.getStatus().name();
     }
 
+
 }

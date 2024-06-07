@@ -1,5 +1,6 @@
 package com.wanted.controller;
 
+import com.wanted.dto.ListDto;
 import com.wanted.dto.OrderDto;
 import com.wanted.dto.ProductDto;
 import com.wanted.service.ProductService;
@@ -44,6 +45,15 @@ public class ProductController {
         OrderDto orderDto = productService.purchaseProduct(product_id, count, price, session);
 
         return ResponseEntity.ok(orderDto);
+    }
+
+    /* 제품 상세 정보 조회 */
+    @GetMapping("/datail/product")
+    public ResponseEntity<?> detailProduct(){
+
+         ListDto listDtos = productService.detailProduct();
+
+        return ResponseEntity.ok(listDtos);
     }
 
 

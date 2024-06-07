@@ -1,8 +1,6 @@
 package com.wanted.service;
 
-import com.wanted.dto.MemberDto;
-import com.wanted.dto.OrderDto;
-import com.wanted.dto.ProductDto;
+import com.wanted.dto.*;
 import com.wanted.entity.Member;
 import com.wanted.entity.Order;
 import com.wanted.entity.OrderProduct;
@@ -88,5 +86,18 @@ public class ProductService {
         orderRepository.save(order);
 
         return new OrderDto(order.getId(), findProduct.getId(), order.getStatus().name(), order.getOrderDate(), count, price, orderProduct.getTotalPrice());
+    }
+
+    /* 제품 상세 정보 조회 */
+    public ListDto detailProduct() {
+        ListDto listDto = new ListDto();
+
+        List<SellDto> sellDtos = productRepository.findAllSellDtos();
+        List<PurchaseDto> purchaseDtos = orderRepository.findAllPurchaseDtos();
+
+        listDto.addSellDtos(sellDtos);
+        listDto.addPurchaseDtos(purchaseDtos);
+
+        return listDto;
     }
 }
