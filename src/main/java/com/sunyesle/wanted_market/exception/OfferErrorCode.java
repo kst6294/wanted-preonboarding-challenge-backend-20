@@ -8,7 +8,8 @@ public enum OfferErrorCode implements ErrorCode {
     OFFER_NOT_FOUND(HttpStatus.NOT_FOUND, "요청이 존재하지 않습니다."),
     NOT_OFFER_OFFEROR(HttpStatus.FORBIDDEN, "요청 제안자가 아닙니다."),
     NOT_OFFER_OFFEREE(HttpStatus.FORBIDDEN, "요청 수신자가 아닙니다."),
-    DUPLICATE_OFFER(HttpStatus.BAD_REQUEST, "중복된 요청이 존재합니다.")
+    DUPLICATE_OFFER(HttpStatus.BAD_REQUEST, "중복된 요청이 존재합니다."),
+    INVALID_OFFER_STATUS(HttpStatus.BAD_REQUEST, "유효하지 않은 요청입니다."),
     ;
 
     private final HttpStatus httpStatus;

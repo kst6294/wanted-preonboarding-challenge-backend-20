@@ -48,6 +48,9 @@ public class OfferService {
         if (!offer.getSellerId().equals(memberId)) {
             throw new ErrorCodeException(OfferErrorCode.NOT_OFFER_OFFEREE);
         }
+        if (offer.getStatus() != OfferStatus.OPEN) {
+            throw new ErrorCodeException(OfferErrorCode.INVALID_OFFER_STATUS);
+        }
         offer.setStatus(OfferStatus.ACCEPTED);
 
         Product product = productRepository.findById(offer.getProductId()).orElseThrow(() -> new ErrorCodeException(ProductErrorCode.PRODUCT_NOT_FOUND));
@@ -59,6 +62,9 @@ public class OfferService {
         Offer offer = offerRepository.findById(offerId).orElseThrow(() -> new ErrorCodeException(OfferErrorCode.OFFER_NOT_FOUND));
         if (!offer.getSellerId().equals(memberId)) {
             throw new ErrorCodeException(OfferErrorCode.NOT_OFFER_OFFEREE);
+        }
+        if (offer.getStatus() != OfferStatus.OPEN) {
+            throw new ErrorCodeException(OfferErrorCode.INVALID_OFFER_STATUS);
         }
         offer.setStatus(OfferStatus.DECLINED);
 
@@ -72,6 +78,9 @@ public class OfferService {
         Offer offer = offerRepository.findById(offerId).orElseThrow(() -> new ErrorCodeException(OfferErrorCode.OFFER_NOT_FOUND));
         if (!offer.getBuyerId().equals(memberId)) {
             throw new ErrorCodeException(OfferErrorCode.NOT_OFFER_OFFEROR);
+        }
+        if (offer.getStatus() != OfferStatus.ACCEPTED) {
+            throw new ErrorCodeException(OfferErrorCode.INVALID_OFFER_STATUS);
         }
         offer.setStatus(OfferStatus.CONFIRMED);
 
