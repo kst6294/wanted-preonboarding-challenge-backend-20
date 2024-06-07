@@ -71,9 +71,11 @@ public class Order {
      *
      * @param buyerId 주문자 id
      */
-    public void finish(Long buyerId) throws UnauthorizedRequestException {
+    public void finish(Long buyerId) throws UnauthorizedRequestException, InvalidRequestException {
         if (!this.buyerId.equals(buyerId))
             throw new UnauthorizedRequestException("Only buyer can finish order");
+        if(!this.status.equals(Status.CONFIRMED))
+            throw new InvalidRequestException("Order has to be confirm before finish");
         this.status = Status.FINISHED;
     }
 

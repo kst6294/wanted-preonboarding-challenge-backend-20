@@ -53,6 +53,8 @@ public class OrderController {
             return ResponseEntity.notFound().build();
         } catch (UnauthorizedRequestException e) {
             throw e;
+        } catch (InvalidRequestException e) {
+            return ResponseEntity.badRequest().body(ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, e.getMessage()));
         }
         return ResponseEntity.ok(new ApiResponse<>("success", null));
     }
