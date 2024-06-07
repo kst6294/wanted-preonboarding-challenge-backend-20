@@ -1,6 +1,7 @@
 package com.wantedmarket.Item.controller;
 
 import com.wantedmarket.Item.dto.ItemDto;
+import com.wantedmarket.Item.facade.ItemFacade;
 import com.wantedmarket.Item.service.ItemService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +23,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ItemController {
 
-    private final ItemService itemService;
+    private final ItemFacade itemFacade;
 
     @PostMapping("")
     @PreAuthorize("hasRole('USER')")
@@ -30,19 +31,35 @@ public class ItemController {
             @AuthenticationPrincipal UserDetails userDetails,
             @RequestBody ItemDto.Request itemDto
     ) {
-        return ResponseEntity.ok(itemService.addItem(userDetails.getUsername(), itemDto));
+        return ResponseEntity.ok(itemFacade.addItem(userDetails.getUsername(), itemDto));
     }
 
     @GetMapping("/list")
     public ResponseEntity<List<ItemDto.Response>> getItems(
     ) {
-        return ResponseEntity.ok(itemService.getItems());
+        return ResponseEntity.ok(itemFacade.getItems());
     }
 
     @GetMapping("/detail/{itemId}")
     public ResponseEntity<ItemDto.Response> getItemDetail(
             @PathVariable(value = "itemId") Long id
     ) {
-        return ResponseEntity.ok(itemService.getItemDetail(id));
+        return ResponseEntity.ok(itemFacade.getItemDetail(id));
+    }
+
+    @GetMapping("/purchased")
+    @PreAuthorize("hasRole('USER')")
+    public ResponseEntity<List<ItemDto.Response>> getPurchasedItem(
+            @AuthenticationPrincipal UserDetails userDetails
+    ) {
+        return ResponseEntity.ok(itemFacade.getPurchasedItem(userDetails.getUsername()));
+    }
+
+    @GetMapping("/reserved")
+    @PreAuthorize("hasRole('USER')")
+    public ResponseEntity<List<ItemDto.Response>> getReservedItem(
+            @AuthenticationPrincipal UserDetails userDetails
+    ) {
+        return ResponseEntity.ok(itemFacade.getReservedItem(userDetails.getUsername()));
     }
 }
