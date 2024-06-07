@@ -7,13 +7,13 @@ import com.challenge.market.member.service.MemberService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -30,10 +30,12 @@ public class MemberController {
      * @return SignUpResponse
      */
     @PostMapping
-    public ResponseEntity<SignUpResponse> signUp(@Valid @ModelAttribute SignUpRequest signUpRequest){
+    public ResponseEntity<SignUpResponse> signUp(@Valid @RequestBody SignUpRequest signUpRequest){
         // 유효성 검사
-        Member member = memberService.signUp(signUpRequest.toMember());
-        return ResponseEntity.ok(SignUpResponse.of(member));
+        Member member = memberService.signUp(Member.toMember(signUpRequest));
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        return new ResponseEntity<SignUpResponse>(SignUpResponse.of(member),headers,HttpStatus.OK);
 
     }
 

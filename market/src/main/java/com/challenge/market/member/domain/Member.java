@@ -1,5 +1,6 @@
 package com.challenge.market.member.domain;
 
+import com.challenge.market.member.dto.SignUpRequest;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -24,4 +25,11 @@ public class Member {
         this.name = name;
         this.pw = pw;
     }
+
+    public static Member toMember(SignUpRequest signUpRequest){
+        return Member.builder().name(signUpRequest.getName())
+                .pw(signUpRequest.getName())
+                .build();
+
+    } 
 }

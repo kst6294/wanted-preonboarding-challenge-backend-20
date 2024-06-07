@@ -20,16 +20,6 @@ public class SignUpRequest {
     private String pw;
 
 
-    /**
-     * Request 객체를 Member 로 변환
-     * @return Member.class
-     */
-    public Member toMember(){
-        return Member.builder()
-                .name(this.getName())
-                .pw(this.getPw())
-                .build();
-    }
 
 
 }

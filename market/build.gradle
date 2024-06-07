@@ -26,6 +26,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-validation' // 추가해도 무방합니다.
+    implementation 'com.google.code.gson:gson:2.10.1'
 
 
     compileOnly 'org.projectlombok:lombok'
