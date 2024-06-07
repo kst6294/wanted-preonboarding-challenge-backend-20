@@ -1,22 +1,38 @@
 package com.wanted.market.product.ui.dao;
 
 import com.wanted.market.common.exception.NotFoundException;
-import com.wanted.market.common.http.dto.request.PageRequest;
-import com.wanted.market.product.ui.dto.response.ProductInfoResponse;
+import com.wanted.market.product.ui.dto.request.QueryMineRequest;
+import com.wanted.market.product.ui.dto.request.QueryRequest;
+import com.wanted.market.product.ui.dto.response.DetailProductInfoResponse;
+import com.wanted.market.product.ui.dto.response.SimpleProductInfoResponse;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
 @Mapper
 public interface ProductInfoDao {
-    List<ProductInfoResponse> findAll(PageRequest pageRequest);
+    List<SimpleProductInfoResponse> findAll(QueryRequest request);
 
-    Long count(PageRequest pageRequest);
+    List<DetailProductInfoResponse> findAllWithOrders(QueryMineRequest request);
 
-    ProductInfoResponse findById(Long id);
+    Long count(QueryRequest request);
 
-    default ProductInfoResponse findByIdOrThrow(Long id) throws NotFoundException {
-        ProductInfoResponse findProductInfo = findById(id);
+    Long countWithOrders(QueryMineRequest request);
+
+    SimpleProductInfoResponse findById(Long id);
+
+    DetailProductInfoResponse findByIdWithOrders(@Param("id") Long id, @Param("userId") Long userId);
+
+    default SimpleProductInfoResponse findByIdOrThrow(Long id) throws NotFoundException {
+        SimpleProductInfoResponse findProductInfo = findById(id);
+        if (findProductInfo == null)
+            throw new NotFoundException("no such product");
+        return findProductInfo;
+    }
+
+    default DetailProductInfoResponse findWithOrdersByIdOrThrow(Long id, Long userId) throws NotFoundException {
+        DetailProductInfoResponse findProductInfo = findByIdWithOrders(id, userId);
         if (findProductInfo == null)
             throw new NotFoundException("no such product");
         return findProductInfo;

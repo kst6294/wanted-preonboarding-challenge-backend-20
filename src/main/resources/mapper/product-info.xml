@@ -5,39 +5,116 @@
 <mapper namespace="com.wanted.market.product.ui.dao.ProductInfoDao">
     <select id="findAll"
             parameterType="com.wanted.market.product.ui.dto.request.QueryRequest"
-            resultType="com.wanted.market.product.ui.dto.response.ProductInfoResponse">
-        select p.id, p.name, p.price, p.status, p.version
-        from product p
+            resultType="com.wanted.market.product.ui.dto.response.SimpleProductInfoResponse">
+        SELECT p.id, p.name, p.price, p.status, p.version
+        FROM product p
         <where>
             <if test="sellerId != null">
                 p.seller_id = #{sellerId}
             </if>
             <if test="status != null">
-                p.status = #{status}
+                AND p.status = #{status}
+            </if>
+        </where>
+        LIMIT #{offset}
+        , #{pageSize}
+    </select>
+    <select id="count"
+            parameterType="com.wanted.market.product.ui.dto.request.QueryRequest"
+            resultType="java.lang.Long">
+        SELECT count(1)
+        FROM product p
+        <where>
+            <if test="sellerId != null">
+                p.seller_id = #{sellerId}
+            </if>
+            <if test="status != null">
+                AND p.status = #{status}
+            </if>
+        </where>
+    </select>
+    <select id="findAllWithOrders"
+            parameterType="com.wanted.market.product.ui.dto.request.QueryMineRequest"
+            resultMap="DetailProductInfoResponseMap">
+        SELECT
+        p.id, p.name, p.price, p.status, p.version,
+        o.id as order_id, o.buyer_id, o.price as order_price, o.status as order_status,
+        m.username as buyer_name
+        FROM product p
+        LEFT JOIN orders o ON p.id = o.product_id
+        LEFT JOIN member m ON o.buyer_id = m.id
+        <where>
+            <if test="sellerId != null">
+                p.seller_id = #{sellerId}
+            </if>
+            <if test="status != null">
+                AND p.status = #{status}
+            </if>
+            <if test="hasOrder == true">
+                AND o.status = 'REQUESTED'
             </if>
         </where>
         limit #{offset}
         , #{pageSize}
     </select>
-    <select id="count"
-            parameterType="com.wanted.market.product.ui.dto.request.QueryRequest"
-            resultType="Long">
-        select count(1)
-        from product p
+    <select id="countWithOrders"
+            parameterType="com.wanted.market.product.ui.dto.request.QueryMineRequest"
+            resultType="java.lang.Long">
+        SELECT count(1)
+        FROM product p
+        LEFT JOIN orders o ON p.id = o.product_id
+        LEFT JOIN member m ON o.buyer_id = m.id
         <where>
             <if test="sellerId != null">
                 p.seller_id = #{sellerId}
             </if>
             <if test="status != null">
-                p.status = #{status}
+                AND p.status = #{status}
+            </if>
+            <if test="hasOrder == true">
+                AND o.status = 'REQUESTED'
             </if>
         </where>
     </select>
     <select id="findById"
             parameterType="Long"
-            resultType="com.wanted.market.product.ui.dto.response.ProductInfoResponse">
-        select p.id, p.name, p.price, p.status, p.version
-        from product p
-        where p.id = #{id}
+            resultType="com.wanted.market.product.ui.dto.response.SimpleProductInfoResponse">
+        SELECT p.id, p.name, p.price, p.status, p.version
+        FROM product p
+        <where>
+            p.id = #{id}
+        </where>
     </select>
+    <select id="findByIdWithOrders"
+            parameterType="Long"
+            resultMap="DetailProductInfoResponseMap">
+        SELECT
+        p.id, p.name, p.price, p.status, p.version,
+        o.id as order_id, o.buyer_id, o.price as order_price, o.status as order_status,
+        m.username as buyer_name
+        FROM product p
+        LEFT JOIN orders o ON p.id = o.product_id
+        LEFT JOIN member m ON o.buyer_id = m.id
+        <where>
+            p.id = #{id}
+            <if test="userId != null">
+                AND (p.seller_id = #{userId} OR o.buyer_id = #{userId})
+            </if>
+        </where>
+    </select>
+    <resultMap id="DetailProductInfoResponseMap"
+               type="com.wanted.market.product.ui.dto.response.DetailProductInfoResponse">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="price" column="price"/>
+        <result property="status" column="status"/>
+        <result property="version" column="version"/>
+        <collection property="orders" ofType="com.wanted.market.product.ui.dto.response.OrderInfo">
+            <id property="id" column="order_id"/>
+            <result property="buyerId" column="buyer_id"/>
+            <result property="buyerName" column="buyer_name"/>
+            <result property="price" column="order_price"/>
+            <result property="status" column="order_status"/>
+        </collection>
+    </resultMap>
 </mapper>
