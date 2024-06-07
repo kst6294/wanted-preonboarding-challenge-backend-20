@@ -9,21 +9,35 @@ import com.wanted.market.common.http.dto.response.ApiResponse;
 import com.wanted.market.order.exception.OutOfStockException;
 import com.wanted.market.order.service.ConfirmOrderService;
 import com.wanted.market.order.service.FinishOrderService;
+import com.wanted.market.order.service.QueryOrderService;
+import com.wanted.market.order.ui.dto.request.QueryRequest;
+import com.wanted.market.order.ui.dto.response.OrderInfosResponse;
+import com.wanted.market.order.ui.dto.response.SimpleOrderInfoResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class OrderController {
+    private final QueryOrderService queryOrderService;
     private final ConfirmOrderService confirmOrderService;
     private final FinishOrderService finishOrderService;
 
-    public OrderController(ConfirmOrderService confirmOrderService, FinishOrderService finishOrderService) {
+    public OrderController(QueryOrderService queryOrderService, ConfirmOrderService confirmOrderService, FinishOrderService finishOrderService) {
+        this.queryOrderService = queryOrderService;
         this.confirmOrderService = confirmOrderService;
         this.finishOrderService = finishOrderService;
+    }
+
+    @GetMapping("/orders/my")
+    public ResponseEntity getMyOrders(@LoginMember SessionLoginMember loginMember, QueryRequest request) {
+        request.setBuyerId(loginMember.getId());
+        OrderInfosResponse<SimpleOrderInfoResponse> result = queryOrderService.findAll(request);
+        return ResponseEntity.ok(new ApiResponse("success", result));
     }
 
     @PostMapping("/orders/{id}/confirm")

@@ -1,12 +1,14 @@
 package com.wanted.market.order.ui.dao;
 
-import com.wanted.market.common.http.dto.request.PageRequest;
-import com.wanted.market.order.ui.dto.response.OrderInfoResponse;
+import com.wanted.market.order.ui.dto.request.QueryRequest;
+import com.wanted.market.order.ui.dto.response.SimpleOrderInfoResponse;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 
 @Mapper
 public interface OrderInfoDao {
-    List<OrderInfoResponse> findAll(PageRequest pageRequest);
+    List<SimpleOrderInfoResponse> findAll(QueryRequest request);
+
+    Long count(QueryRequest request);
 }

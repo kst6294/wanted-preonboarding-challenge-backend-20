@@ -75,9 +75,7 @@ public class ProductController {
      */
     @GetMapping("/products/my")
     public ResponseEntity getMyProducts(@LoginMember SessionLoginMember loginMember, QueryMineRequest request) {
-        if (loginMember != null && loginMember.isAuthenticated()) {
-            request.setSellerId(loginMember.getId());
-        }
+        request.setSellerId(loginMember.getId());
         ProductInfosResponse<DetailProductInfoResponse> result = queryProductService.findAllWithOrders(request);
         return ResponseEntity.ok(new ApiResponse<>("success", result));
     }
