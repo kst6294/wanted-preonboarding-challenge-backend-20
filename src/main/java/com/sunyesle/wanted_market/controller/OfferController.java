@@ -1,6 +1,6 @@
 package com.sunyesle.wanted_market.controller;
 
-import com.sunyesle.wanted_market.dto.OfferRequest;
+import com.sunyesle.wanted_market.dto.CreateOfferRequest;
 import com.sunyesle.wanted_market.dto.OfferResponse;
 import com.sunyesle.wanted_market.security.CustomUserDetails;
 import com.sunyesle.wanted_market.service.OfferService;
@@ -17,8 +17,8 @@ public class OfferController {
     private final OfferService offerService;
 
     @PostMapping
-    public ResponseEntity<OfferResponse> offer(@AuthenticationPrincipal CustomUserDetails member, @RequestBody OfferRequest offerRequest){
-        OfferResponse response = offerService.offer(member.getId(), offerRequest);
+    public ResponseEntity<OfferResponse> offer(@AuthenticationPrincipal CustomUserDetails member, @RequestBody CreateOfferRequest request) {
+        OfferResponse response = offerService.offer(member.getId(), request);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 

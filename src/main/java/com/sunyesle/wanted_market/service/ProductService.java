@@ -27,6 +27,7 @@ public class ProductService {
                 .name(request.getName())
                 .price(request.getPrice())
                 .quantity(request.getQuantity())
+                .availableQuantity(request.getQuantity())
                 .status(ProductStatus.AVAILABLE).build();
         productRepository.save(product);
         return new ProductResponse(product.getId());

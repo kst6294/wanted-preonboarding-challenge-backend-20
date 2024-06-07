@@ -2,6 +2,7 @@ package com.sunyesle.wanted_market;
 
 import com.sunyesle.wanted_market.dto.*;
 import com.sunyesle.wanted_market.enums.OfferStatus;
+import com.sunyesle.wanted_market.enums.ProductStatus;
 import com.sunyesle.wanted_market.repository.MemberRepository;
 import com.sunyesle.wanted_market.repository.OfferRepository;
 import com.sunyesle.wanted_market.repository.ProductRepository;
@@ -11,14 +12,12 @@ import io.restassured.response.Response;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 
 import static com.sunyesle.wanted_market.support.AuthSteps.로그인_요청;
 import static com.sunyesle.wanted_market.support.AuthSteps.회원가입_요청;
 import static com.sunyesle.wanted_market.support.CommonSupporter.*;
-import static com.sunyesle.wanted_market.support.OfferSteps.제품_예약_요청;
-import static com.sunyesle.wanted_market.support.ProductSteps.제품_등록_요청;
-import static io.restassured.RestAssured.given;
+import static com.sunyesle.wanted_market.support.OfferSteps.*;
+import static com.sunyesle.wanted_market.support.ProductSteps.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class OfferAcceptanceTest extends AcceptanceTest {
@@ -57,68 +56,76 @@ class OfferAcceptanceTest extends AcceptanceTest {
     }
 
     @Test
-    void 제품을_예약한다() {
-        OfferRequest offerRequest = new OfferRequest(savedProductId);
+    void 제품구매를_요청한다() {
+        CreateOfferRequest createOfferRequest = new CreateOfferRequest(savedProductId, 1);
 
-        ExtractableResponse<Response> response = 제품_예약_요청(offerRequest, buyerToken);
+        ExtractableResponse<Response> response = 구매_요청(createOfferRequest, buyerToken);
 
         등록에_성공한다(response);
         OfferResponse offerResponse = response.as(OfferResponse.class);
-        assertThat(offerResponse.getId()).isNotNull();
-        assertThat(offerResponse.getStatus()).isEqualTo(OfferStatus.OPEN);
+        ExtractableResponse<Response> 제품_조회_결과 = 제품_조회_요청(offerResponse.getId());
+        제품_구매가능_수량이_변경된다(제품_조회_결과, 1);
+    }
+
+    @Test
+    void 모든_제품이_구매요청되면_제품상태가_RESERVED로_변경된다() {
+        CreateOfferRequest createOfferRequest = new CreateOfferRequest(savedProductId, 2);
+
+        ExtractableResponse<Response> response = 구매_요청(createOfferRequest, buyerToken);
+
+        등록에_성공한다(response);
+        OfferResponse offerResponse = response.as(OfferResponse.class);
+        ExtractableResponse<Response> 제품_조회_결과 = 제품_조회_요청(offerResponse.getId());
+        제품_구매가능_수량이_변경된다(제품_조회_결과, 0);
+        제품_상태가_변경된다(제품_조회_결과, ProductStatus.RESERVED);
     }
 
     @Test
     void 제품을_중복으로_예약할_경우_실패한다() {
-        OfferRequest offerRequest = new OfferRequest(savedProductId);
+        CreateOfferRequest createOfferRequest = new CreateOfferRequest(savedProductId, 1);
 
-        제품_예약_요청(offerRequest, buyerToken);
-        ExtractableResponse<Response> response = 제품_예약_요청(offerRequest, buyerToken);
+        구매_요청(createOfferRequest, buyerToken);
+        ExtractableResponse<Response> response = 구매_요청(createOfferRequest, buyerToken);
 
         잘못된_요청으로_인해_요청에_실패한다(response);
     }
 
     @Test
     void 제품_예약_요청을_승인한다() {
-        OfferRequest offerRequest = new OfferRequest(savedProductId);
-        Long offerId = 제품_예약_요청(offerRequest, buyerToken).as(OfferResponse.class).getId();
+        CreateOfferRequest createOfferRequest = new CreateOfferRequest(savedProductId, 1);
+        Long offerId = 구매_요청(createOfferRequest, buyerToken).as(OfferResponse.class).getId();
 
-        ExtractableResponse<Response> response =
-                given()
-                        .log().all()
-                        .basePath("/api/v1/offers/" + offerId + "/accept")
-                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + sellerToken)
-                .when()
-                        .put()
-                .then()
-                        .log().all()
-                        .extract();
+        ExtractableResponse<Response> response = 구매_승인처리_요청(offerId, sellerToken);
 
         수정에_성공한다(response);
         OfferResponse offerResponse = response.as(OfferResponse.class);
-        assertThat(offerResponse.getId()).isNotNull();
         assertThat(offerResponse.getStatus()).isEqualTo(OfferStatus.ACCEPTED);
     }
 
     @Test
-    void 제품_예약_요청을_거절한다() {
-        OfferRequest offerRequest = new OfferRequest(savedProductId);
-        Long offerId = 제품_예약_요청(offerRequest, buyerToken).as(OfferResponse.class).getId();
+    void 모든_제품이_판매되면_제품상태가_COMPLETED로_변경된다() {
+        CreateOfferRequest createOfferRequest = new CreateOfferRequest(savedProductId, 2);
+        Long offerId = 구매_요청(createOfferRequest, buyerToken).as(OfferResponse.class).getId();
 
-        ExtractableResponse<Response> response =
-                given()
-                        .log().all()
-                        .basePath("/api/v1/offers/" + offerId + "/decline")
-                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + sellerToken)
-                .when()
-                        .put()
-                .then()
-                        .log().all()
-                        .extract();
+        ExtractableResponse<Response> response = 구매_승인처리_요청(offerId, sellerToken);
 
         수정에_성공한다(response);
         OfferResponse offerResponse = response.as(OfferResponse.class);
-        assertThat(offerResponse.getId()).isNotNull();
+        ExtractableResponse<Response> 제품_조회_결과 = 제품_조회_요청(offerResponse.getId());
+        제품_상태가_변경된다(제품_조회_결과, ProductStatus.COMPLETED);
+    }
+
+    @Test
+    void 제품_예약_요청을_거절한다() {
+        CreateOfferRequest createOfferRequest = new CreateOfferRequest(savedProductId, 2);
+        Long offerId = 구매_요청(createOfferRequest, buyerToken).as(OfferResponse.class).getId();
+
+        ExtractableResponse<Response> response = 구매_거절처리_요청(offerId, sellerToken);
+
+        수정에_성공한다(response);
+        OfferResponse offerResponse = response.as(OfferResponse.class);
         assertThat(offerResponse.getStatus()).isEqualTo(OfferStatus.DECLINED);
+        ExtractableResponse<Response> 제품_조회_결과 = 제품_조회_요청(offerResponse.getId());
+        제품_상태가_변경된다(제품_조회_결과, ProductStatus.AVAILABLE);
     }
 }

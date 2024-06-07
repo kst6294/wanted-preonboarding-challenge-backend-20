@@ -16,6 +16,7 @@ import static com.sunyesle.wanted_market.support.AuthSteps.로그인_요청;
 import static com.sunyesle.wanted_market.support.AuthSteps.회원가입_요청;
 import static com.sunyesle.wanted_market.support.CommonSupporter.*;
 import static com.sunyesle.wanted_market.support.ProductSteps.제품_등록_요청;
+import static com.sunyesle.wanted_market.support.ProductSteps.제품_조회_요청;
 import static io.restassured.RestAssured.given;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -60,15 +61,7 @@ class ProductAcceptanceTest extends AcceptanceTest {
         ExtractableResponse<Response> productResponse = 제품_등록_요청(token, productRequest);
         ProductResponse savedProductInfo = productResponse.as(ProductResponse.class);
 
-        ExtractableResponse<Response> response =
-                given()
-                        .log().all()
-                        .basePath("/api/v1/products/" + savedProductInfo.getId())
-                .when()
-                        .get()
-                .then()
-                        .log().all()
-                        .extract();
+        ExtractableResponse<Response> response = 제품_조회_요청(savedProductInfo.getId());
 
         조회에_성공한다(response);
     }

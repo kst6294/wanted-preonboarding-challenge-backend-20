@@ -1,13 +1,13 @@
 package com.sunyesle.wanted_market.service;
 
-import com.sunyesle.wanted_market.dto.OfferRequest;
+import com.sunyesle.wanted_market.dto.CreateOfferRequest;
 import com.sunyesle.wanted_market.dto.OfferResponse;
 import com.sunyesle.wanted_market.entity.Offer;
 import com.sunyesle.wanted_market.entity.Product;
 import com.sunyesle.wanted_market.enums.OfferStatus;
-import com.sunyesle.wanted_market.enums.ProductStatus;
 import com.sunyesle.wanted_market.exception.ErrorCodeException;
 import com.sunyesle.wanted_market.exception.OfferErrorCode;
+import com.sunyesle.wanted_market.exception.ProductErrorCode;
 import com.sunyesle.wanted_market.repository.OfferRepository;
 import com.sunyesle.wanted_market.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
@@ -21,45 +21,48 @@ public class OfferService {
     private final ProductRepository productRepository;
     private final OfferRepository offerRepository;
 
-    public OfferResponse offer(Long memberId, OfferRequest offerRequest) {
-        Product product = productRepository.findById(offerRequest.getProductId()).orElseThrow(() -> new ErrorCodeException(OfferErrorCode.OFFER_NOT_FOUND));
-        product.setStatus(ProductStatus.RESERVED);
+    public OfferResponse offer(Long memberId, CreateOfferRequest request) {
+        Product product = productRepository.findById(request.getProductId()).orElseThrow(() -> new ErrorCodeException(OfferErrorCode.OFFER_NOT_FOUND));
         if (offerRepository.existsByProductIdAndBuyerIdAndStatus(product.getId(), memberId, OfferStatus.OPEN)) {
             throw new ErrorCodeException(OfferErrorCode.DUPLICATE_OFFER);
         }
+        product.buy(request.getQuantity());
 
         Offer offer = Offer.builder()
                 .productId(product.getId())
                 .sellerId(product.getMemberId())
                 .buyerId(memberId)
+                .quantity(request.getQuantity())
                 .status(OfferStatus.OPEN)
                 .build();
         offerRepository.save(offer);
+
         return new OfferResponse(offer.getId(), offer.getStatus());
     }
 
     public OfferResponse accept(Long memberId, Long offerId) {
         Offer offer = offerRepository.findById(offerId).orElseThrow(() -> new ErrorCodeException(OfferErrorCode.OFFER_NOT_FOUND));
-        if(!offer.getSellerId().equals(memberId)){
+        if (!offer.getSellerId().equals(memberId)) {
             throw new ErrorCodeException(OfferErrorCode.NOT_OFFER_OFFEREE);
         }
         offer.setStatus(OfferStatus.ACCEPTED);
 
-        Product product = productRepository.findById(offer.getProductId()).orElseThrow(() -> new ErrorCodeException(OfferErrorCode.OFFER_NOT_FOUND));
-        product.setStatus(ProductStatus.COMPLETED);
+        Product product = productRepository.findById(offer.getProductId()).orElseThrow(() -> new ErrorCodeException(ProductErrorCode.PRODUCT_NOT_FOUND));
+        boolean hasNoOtherOpenOffers = !offerRepository.existsByProductIdAndStatusAndIdNot(product.getId(), OfferStatus.OPEN, offerId);
+        product.accept(hasNoOtherOpenOffers);
 
         return new OfferResponse(offer.getId(), offer.getStatus());
     }
 
     public OfferResponse decline(Long memberId, Long offerId) {
         Offer offer = offerRepository.findById(offerId).orElseThrow(() -> new ErrorCodeException(OfferErrorCode.OFFER_NOT_FOUND));
-        if(!offer.getSellerId().equals(memberId)){
+        if (!offer.getSellerId().equals(memberId)) {
             throw new ErrorCodeException(OfferErrorCode.NOT_OFFER_OFFEREE);
         }
         offer.setStatus(OfferStatus.DECLINED);
 
-        Product product = productRepository.findById(offer.getProductId()).orElseThrow(RuntimeException::new);
-        product.setStatus(ProductStatus.AVAILABLE);
+        Product product = productRepository.findById(offer.getProductId()).orElseThrow(() -> new ErrorCodeException(ProductErrorCode.PRODUCT_NOT_FOUND));
+        product.decline(offer.getQuantity());
 
         return new OfferResponse(offer.getId(), offer.getStatus());
     }
