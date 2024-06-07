@@ -57,3 +57,19 @@
 3. 과제를 진행해주세요.
 4. 소스코드를 Push 하고 PR을 올려주세요. 
 5. 요구사항에 대해서 궁금한 점이나 이해가 안되는 부분이 있다면 이슈를 남겨주시거나, 편하게 연락주세요 - kst6294@gmail.com
+
+
+### User Flow
+```mermaid
+sequenceDiagram
+    participant U as 사용자
+    participant P as 제품
+    participant T as 거래
+
+    U->>P: 제품 선택
+    U->>T: 구매 시작
+    P->>T: 제품 예약 (상태 변경)
+    T->>U: 구매자에게 확인 전송
+    U->>T: 결제 완료
+    T->>P: 제품 상태 업데이트 (판매 완료)
+    T->>U: 판매자에게 거래 완료 알림
