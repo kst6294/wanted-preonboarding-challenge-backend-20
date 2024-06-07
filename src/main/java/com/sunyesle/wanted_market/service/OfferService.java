@@ -32,6 +32,7 @@ public class OfferService {
                 .productId(product.getId())
                 .sellerId(product.getMemberId())
                 .buyerId(memberId)
+                .price(product.getPrice())
                 .quantity(request.getQuantity())
                 .status(OfferStatus.OPEN)
                 .build();

@@ -20,6 +20,8 @@ public class Offer {
 
     private Long buyerId;
 
+    private Integer price;
+
     private Integer quantity;
 
     @Enumerated(EnumType.STRING)
