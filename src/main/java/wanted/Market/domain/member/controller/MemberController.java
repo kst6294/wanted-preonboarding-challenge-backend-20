@@ -15,7 +15,7 @@ public class MemberController {
     private final MemberService memberService;
 
     @PostMapping("/join")
-    public ResponseEntity<ResponseDto<String>> join(@RequestBody MemberJoinRequest dto){
+    public ResponseEntity<ResponseDto<?>> join(@RequestBody MemberJoinRequest dto){
         memberService.join(dto.getUsername(), dto.getPassword());
         return ResponseEntity.status(200).body(ResponseDto.of("성공",null));
     }
