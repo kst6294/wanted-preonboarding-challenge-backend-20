@@ -26,4 +26,13 @@ Content-Type: application/json
 }
 
 ###
+POST http://localhost:8080/login
+Content-Type: application/json
+
+{
+  "username": "donghar4",
+  "password": "donghar_password"
+}
+
+###
 POST http://localhost:8080/logout

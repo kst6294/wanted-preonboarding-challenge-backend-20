@@ -14,7 +14,7 @@ Content-Type: application/json
 {
   "name": "something",
   "price": 10000,
-  "quantity": 50
+  "quantity": 2
 }
 
 ###
@@ -26,7 +26,7 @@ Content-Type: application/json
 }
 
 ###
-POST http://localhost:8080/products/19/orders
+POST http://localhost:8080/products/20/orders
 Content-Type: application/json
 
 {
