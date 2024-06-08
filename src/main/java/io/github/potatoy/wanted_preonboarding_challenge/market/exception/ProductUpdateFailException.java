@@ -4,7 +4,7 @@ import io.github.potatoy.wanted_preonboarding_challenge.error.exception.Conflict
 
 public class ProductUpdateFailException extends ConflictException {
 
-  public ProductUpdateFailException(String message) {
-    super(message);
+  public ProductUpdateFailException() {
+    super("PRODUCT_UPDATE_FAIL");
   }
 }

@@ -56,14 +56,14 @@ public class MarketService {
           "reserveProduct: Attempting to make a reservation for your own product. userId={}, productId={}",
           user.getId(),
           product.getId());
-      throw new BadRequestException("Attempting to make a reservation for your own product.");
+      throw new BadRequestException();
     }
     if (product.getBuyerUser() != null) { // 이미 예약자가 있다면 예외 발생
       log.warn(
           "reserveProduct: There is already a reservation. userId={}, productId={}",
           user.getId(),
           product.getId());
-      throw new ProductUpdateFailException("There is already a reservation.");
+      throw new ProductUpdateFailException();
     }
 
     product.updateBuyerUser(user);
@@ -78,13 +78,13 @@ public class MarketService {
 
     if (product.getBuyerUser() == null) { // 예약자 정보가 없는 경우 예외 발생
       log.warn("getSellerBuyerRecord: Reservation information does not exist.");
-      throw new BadRequestException("Reservation information does not exist.");
+      throw new BadRequestException();
     }
 
     // 양쪽 모두 해당되지 않는다면 예외 처리
     if (!product.isSellerEquals(user) && !product.isBuyerEquals(user)) {
       log.warn("getSellerBuyerRecord: Product information is not accessible.");
-      throw new ForbiddenException("Product information is not accessible.");
+      throw new ForbiddenException();
     }
 
     Set<Product> result = new LinkedHashSet<>();
@@ -118,7 +118,7 @@ public class MarketService {
           "approveSale: You do not have permission to access the product. userId={}, productId={}",
           user.getId(),
           product.getId());
-      throw new ForbiddenException("You do not have permission to access the product.");
+      throw new ForbiddenException();
     }
 
     if (product.getState() != State.RESERVATION) {
@@ -126,7 +126,7 @@ public class MarketService {
           "approveSale: Product information cannot be changed. userId={}, productId={}",
           user.getId(),
           product.getId());
-      throw new ProductUpdateFailException("Product information cannot be changed.");
+      throw new ProductUpdateFailException();
     }
     product.setSoldOut();
 

@@ -20,7 +20,7 @@ public class ProductUtil {
         .orElseThrow(
             () -> {
               log.warn("ProductUtil: Product id not found. productId={}", productId);
-              return new NotFoundProductException("Product id not found.");
+              return new NotFoundProductException();
             });
   }
 }

@@ -2,7 +2,11 @@ package io.github.potatoy.wanted_preonboarding_challenge.error.exception;
 
 public class ConflictException extends RuntimeException {
 
-  public ConflictException(String message) {
-    super(message);
+  public ConflictException() {
+    super("CONFLICT");
+  }
+
+  public ConflictException(String code) {
+    super(code);
   }
 }

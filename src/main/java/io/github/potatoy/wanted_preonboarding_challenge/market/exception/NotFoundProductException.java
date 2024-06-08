@@ -4,7 +4,7 @@ import io.github.potatoy.wanted_preonboarding_challenge.error.exception.NotFound
 
 public class NotFoundProductException extends NotFoundException {
 
-  public NotFoundProductException(String message) {
-    super(message);
+  public NotFoundProductException() {
+    super("NOT_FOUND_PRODUCT");
   }
 }
