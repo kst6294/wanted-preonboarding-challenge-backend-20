@@ -72,12 +72,14 @@ public class TransactionHistoryServiceImpl implements TransactionHistoryService 
 
         // 아이템 판매자가 맞는지 확인
         if (transactionHistory.getItem().getMember() != currentMember){
-            throw new TransactionHistoryException(TransactionHistoryExceptionInfo.NOT_MATCH_ITEM_SELLER, userId + "번 유저가 " + transactionHistory.getId() + "번 기록 판매승인 시도");
+            throw new TransactionHistoryException(TransactionHistoryExceptionInfo.NOT_MATCH_ITEM_SELLER,
+                    userId + "번 유저가 " + transactionHistory.getId() + "번 기록 판매승인 시도(판매자 불일치)");
         }
 
         // 이미 승인된 경우
         if (transactionHistory.isSaleConfirmStatus()){
-            throw new TransactionHistoryException(TransactionHistoryExceptionInfo.ALREADY_SALE_CONFIRM, userId + "번 유저가 " + transactionHistory.getId() + "번 기록 판매승인 시도");
+            throw new TransactionHistoryException(TransactionHistoryExceptionInfo.ALREADY_SALE_CONFIRM,
+                    userId + "번 유저가 " + transactionHistory.getId() + "번 기록 판매승인 시도(중복 승인)");
         }
 
         // 판매 승인
@@ -96,17 +98,20 @@ public class TransactionHistoryServiceImpl implements TransactionHistoryService 
 
         // 아이템 구매자가 맞는지 확인
         if (transactionHistory.getMember() != currentMember){
-            throw new TransactionHistoryException(TransactionHistoryExceptionInfo.NOT_MATCH_ITEM_BUYER, userId + "번 유저가 " + transactionHistory.getId() + "번 기록 구매확인 시도");
+            throw new TransactionHistoryException(TransactionHistoryExceptionInfo.NOT_MATCH_ITEM_BUYER,
+                    userId + "번 유저가 " + transactionHistory.getId() + "번 기록 구매확인 시도(구매자 불일치)");
         }
 
         // 판매 확정이 안 된 경우
         if (!transactionHistory.isSaleConfirmStatus()){
-            throw new TransactionHistoryException(TransactionHistoryExceptionInfo.ALREADY_PURCHASE_CONFIRM, userId + "번 유저가 " + transactionHistory.getId() + "번 기록 구매확인 시도");
+            throw new TransactionHistoryException(TransactionHistoryExceptionInfo.NOT_SALE_CONFIRM,
+                    userId + "번 유저가 " + transactionHistory.getId() + "번 기록 구매확인 시도(판매확정 미진행)");
         }
 
         // 이미 구매된 경우
         if (transactionHistory.isPurchaseConfirmStatus()){
-            throw new TransactionHistoryException(TransactionHistoryExceptionInfo.ALREADY_PURCHASE_CONFIRM, userId + "번 유저가 " + transactionHistory.getId() + "번 기록 구매확인 시도");
+            throw new TransactionHistoryException(TransactionHistoryExceptionInfo.ALREADY_PURCHASE_CONFIRM,
+                    userId + "번 유저가 " + transactionHistory.getId() + "번 기록 구매확인 시도(중복 승인)");
         }
 
         // 구매 확인
