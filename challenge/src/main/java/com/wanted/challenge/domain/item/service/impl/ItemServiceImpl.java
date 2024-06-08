@@ -52,7 +52,6 @@ public class ItemServiceImpl implements ItemService {
     @Override
     @Transactional(readOnly = true)
     public List<ItemResponseDTO> findAllItems() {
-
         return itemRepository.findAllItems();
     }
 
@@ -88,7 +87,7 @@ public class ItemServiceImpl implements ItemService {
         Member currentMember = getCurrentMember(id);
 
         Item item = itemRepository.findByIdFetchJoinMember(itemPurchaseRequestDTO.getId())
-                .orElseThrow(() -> new ItemException(ItemExceptionInfo.NOT_FOUND_ITEM, currentMember.getId() + "번 유저가 " +id + "번 상품 구매 시도(상품 존재하지 않음.)"));
+                .orElseThrow(() -> new ItemException(ItemExceptionInfo.NOT_FOUND_ITEM, currentMember.getId() + "번 유저가 " +id + "번 상품 구매 시도.(상품 존재하지 않음)"));
 
         // 본인의 상품은 구매 불가
         if (item.getMember() == currentMember){
@@ -97,7 +96,7 @@ public class ItemServiceImpl implements ItemService {
 
         // 한 번만 구매하기 위해서
         if (transactionHistoryRepository.existsByMemberAndItem(currentMember, item)) {
-            throw new ItemException(ItemExceptionInfo.ALREADY_PURCHASE_ITEM, currentMember.getId() + "번 유저가" + item.getId() + " 구매를 재신청 했습니다.(이미 구매)");
+            throw new ItemException(ItemExceptionInfo.ALREADY_PURCHASE_ITEM, currentMember.getId() + "번 유저가" + item.getId() + " 구매를 재신청 했습니다.(중복 구매)");
         }
 
         // 재고 확인
