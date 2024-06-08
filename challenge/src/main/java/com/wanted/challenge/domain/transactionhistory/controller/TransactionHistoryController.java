@@ -1,7 +1,7 @@
 package com.wanted.challenge.domain.transactionhistory.controller;
 
-import com.wanted.challenge.domain.transactionhistory.dto.response.MyPurchaseHistoryResponseDTO;
 import com.wanted.challenge.domain.transactionhistory.dto.response.MyBuyerReservationHistoryResponseDTO;
+import com.wanted.challenge.domain.transactionhistory.dto.response.MyPurchaseHistoryResponseDTO;
 import com.wanted.challenge.domain.transactionhistory.dto.response.MySellerReservationHistoryResponseDTO;
 import com.wanted.challenge.domain.transactionhistory.service.TransactionHistoryService;
 import com.wanted.challenge.global.api.ApiResponse;

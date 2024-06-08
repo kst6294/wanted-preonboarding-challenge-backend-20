@@ -1,8 +1,8 @@
 package com.wanted.challenge.domain.member.entity;
 
+import com.wanted.challenge.domain.entity.BaseTimeEntity;
 import com.wanted.challenge.domain.item.entity.Item;
 import com.wanted.challenge.domain.transactionhistory.entity.TransactionHistory;
-import com.wanted.challenge.domain.entity.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;

@@ -1,10 +1,8 @@
 package com.wanted.challenge.domain.item.entity;
 
-import com.wanted.challenge.domain.member.entity.Member;
 import com.wanted.challenge.domain.entity.BaseTimeEntity;
+import com.wanted.challenge.domain.member.entity.Member;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;

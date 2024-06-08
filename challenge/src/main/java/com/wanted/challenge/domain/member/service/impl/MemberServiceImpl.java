@@ -1,6 +1,5 @@
 package com.wanted.challenge.domain.member.service.impl;
 
-import com.wanted.challenge.domain.entity.BaseTimeEntity;
 import com.wanted.challenge.domain.exception.exception.MemberException;
 import com.wanted.challenge.domain.exception.info.MemberExceptionInfo;
 import com.wanted.challenge.domain.member.dto.request.EmailRequestDTO;
@@ -20,16 +19,14 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.LinkedList;
-
 @Service
 @RequiredArgsConstructor
 @Slf4j
 public class MemberServiceImpl implements MemberService {
-    
+
     private final MemberRepository memberRepository;
     private final BCryptPasswordEncoder encoder;
-    
+
     // 이메일 중복확인
     @Override
     @Transactional(readOnly = true)
@@ -44,8 +41,8 @@ public class MemberServiceImpl implements MemberService {
     @Transactional
     public void signUp(SignUpRequestDTO signUpRequestDTO) {
 
-        if(memberRepository.existsByEmail(signUpRequestDTO.getEmail())){
-            throw new MemberException(MemberExceptionInfo.EXISTS_MEMBER, "이미 존재하는 회원입니다.");
+        if (memberRepository.existsByEmail(signUpRequestDTO.getEmail())) {
+            throw new MemberException(MemberExceptionInfo.EXISTS_MEMBER, "이미 존재하는 이메일입니다.");
         }
 
         Member member = signUpRequestDTO.toEntity(encoder.encode(signUpRequestDTO.getPassword()));
@@ -60,25 +57,23 @@ public class MemberServiceImpl implements MemberService {
         Member member = memberRepository.findByMember(loginRequestDTO.getEmail())
                 .orElseThrow(() -> new MemberException(MemberExceptionInfo.NOT_EXISTS_MEMBER, loginRequestDTO.getEmail() + " 이메일로 로그인 시도(없는 이메일)"));
 
-        if (!encoder.matches(loginRequestDTO.getPassword(), member.getPassword())){
-            throw new MemberException(MemberExceptionInfo.NOT_MATCH_PASSWORD, loginRequestDTO.getEmail() + " 이메일로 로그인 시도(틀린 비밀번호)");
+        if (!encoder.matches(loginRequestDTO.getPassword(), member.getPassword())) {
+            throw new MemberException(MemberExceptionInfo.NOT_MATCH_PASSWORD, loginRequestDTO.getEmail() +
+                    " 이메일로 로그인 시도(틀린 비밀번호 : " + loginRequestDTO.getPassword() + ")");
         }
 
-        addSessionAndCookie(request, response, member);
+        addSession(request, member);
 
         return LoginResponseDTO.toDTO(member);
     }
 
-    // 세션 생성 및 쿠키에 저장
-    private void addSessionAndCookie(HttpServletRequest request, HttpServletResponse response, Member member){
+    // 세션 생성
+    private void addSession(HttpServletRequest request, Member member) {
 
         HttpSession session = request.getSession();
         session.setAttribute("userId", member.getId());
         session.setMaxInactiveInterval(1800); // 30분
 
-        String sessionId = session.getId();
-        Cookie sessionCookie = new Cookie("JSESSIONID", sessionId);
-        sessionCookie.setHttpOnly(true);
     }
 
 }

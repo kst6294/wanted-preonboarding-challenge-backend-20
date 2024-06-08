@@ -1,6 +1,5 @@
 package com.wanted.challenge.domain.member.dto.response;
 
-import com.wanted.challenge.domain.member.dto.request.LoginRequestDTO;
 import com.wanted.challenge.domain.member.entity.Member;
 import lombok.AccessLevel;
 import lombok.Builder;

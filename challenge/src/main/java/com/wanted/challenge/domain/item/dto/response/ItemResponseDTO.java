@@ -1,6 +1,5 @@
 package com.wanted.challenge.domain.item.dto.response;
 
-import com.wanted.challenge.domain.item.entity.Item;
 import com.wanted.challenge.domain.item.entity.SaleStatus;
 import lombok.AccessLevel;
 import lombok.Builder;

@@ -2,8 +2,8 @@ package com.wanted.challenge.domain.transactionhistory.repository;
 
 import com.wanted.challenge.domain.item.entity.Item;
 import com.wanted.challenge.domain.member.entity.Member;
-import com.wanted.challenge.domain.transactionhistory.dto.response.MyPurchaseHistoryResponseDTO;
 import com.wanted.challenge.domain.transactionhistory.dto.response.MyBuyerReservationHistoryResponseDTO;
+import com.wanted.challenge.domain.transactionhistory.dto.response.MyPurchaseHistoryResponseDTO;
 import com.wanted.challenge.domain.transactionhistory.dto.response.MySellerReservationHistoryResponseDTO;
 import com.wanted.challenge.domain.transactionhistory.dto.response.TransactionHistoryResponseDTO;
 import com.wanted.challenge.domain.transactionhistory.entity.TransactionHistory;

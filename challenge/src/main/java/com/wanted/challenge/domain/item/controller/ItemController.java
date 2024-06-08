@@ -1,8 +1,6 @@
 package com.wanted.challenge.domain.item.controller;
 
 
-import com.wanted.challenge.domain.exception.exception.MemberException;
-import com.wanted.challenge.domain.exception.info.MemberExceptionInfo;
 import com.wanted.challenge.domain.item.dto.request.ItemPurchaseRequestDTO;
 import com.wanted.challenge.domain.item.dto.request.ItemRegisterRequestDTO;
 import com.wanted.challenge.domain.item.dto.response.ItemDetailInfoResponseDTO;

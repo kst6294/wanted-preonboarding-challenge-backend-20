@@ -1,6 +1,5 @@
 package com.wanted.challenge.domain.item.dto.response;
 
-import com.wanted.challenge.domain.item.entity.Item;
 import com.wanted.challenge.domain.transactionhistory.entity.TransactionHistory;
 import lombok.AccessLevel;
 import lombok.Builder;

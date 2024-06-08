@@ -5,14 +5,12 @@ import com.wanted.challenge.domain.exception.exception.MemberException;
 import com.wanted.challenge.domain.exception.exception.TransactionHistoryException;
 import com.wanted.challenge.global.api.ApiResponse;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.transaction.TransactionalException;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.Path;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.TransactionException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -27,21 +25,21 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(MemberException.class)
     public ResponseEntity<ApiResponse<?>> handleMemberException(MemberException e, HttpServletRequest request) {
-        log.error("요청 실패 - 요청 경로 : {}, 이유 : {}, 로그메시지 : {}", request.getRequestURI(), e.getException().getMessage(), e.getLog());
+        log.warn("요청 실패 - 요청 경로 : {}, 이유 : {}, 로그메시지 : {}", request.getRequestURI(), e.getException().getMessage(), e.getLog());
 
         return ResponseEntity.status(e.getException().getStatus()).body(ApiResponse.createErrorNoContent(e.getException().getCode(), e.getException().getMessage()));
     }
 
     @ExceptionHandler(ItemException.class)
     public ResponseEntity<ApiResponse<?>> handleItemException(ItemException e, HttpServletRequest request) {
-        log.error("요청 실패 - 요청 경로 : {}, 이유 : {}, 로그메시지 : {}", request.getRequestURI(), e.getException().getMessage(), e.getLog());
+        log.warn("요청 실패 - 요청 경로 : {}, 이유 : {}, 로그메시지 : {}", request.getRequestURI(), e.getException().getMessage(), e.getLog());
 
         return ResponseEntity.status(e.getException().getStatus()).body(ApiResponse.createErrorNoContent(e.getException().getCode(), e.getException().getMessage()));
     }
 
     @ExceptionHandler(TransactionHistoryException.class)
     public ResponseEntity<ApiResponse<?>> handleTransactionHistoryException(TransactionHistoryException e, HttpServletRequest request) {
-        log.error("요청 실패 - 요청 경로 : {}, 이유 : {}, 로그메시지 : {}", request.getRequestURI(), e.getException().getMessage(), e.getLog());
+        log.warn("요청 실패 - 요청 경로 : {}, 이유 : {}, 로그메시지 : {}", request.getRequestURI(), e.getException().getMessage(), e.getLog());
 
         return ResponseEntity.status(e.getException().getStatus()).body(ApiResponse.createErrorNoContent(e.getException().getCode(), e.getException().getMessage()));
     }

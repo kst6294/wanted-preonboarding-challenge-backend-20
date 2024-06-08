@@ -1,16 +1,13 @@
 package com.wanted.challenge.domain.transactionhistory.service.impl;
 
-import com.wanted.challenge.domain.exception.exception.ItemException;
 import com.wanted.challenge.domain.exception.exception.MemberException;
 import com.wanted.challenge.domain.exception.exception.TransactionHistoryException;
-import com.wanted.challenge.domain.exception.info.ItemExceptionInfo;
 import com.wanted.challenge.domain.exception.info.MemberExceptionInfo;
 import com.wanted.challenge.domain.exception.info.TransactionHistoryExceptionInfo;
-import com.wanted.challenge.domain.item.repository.ItemRepository;
 import com.wanted.challenge.domain.member.entity.Member;
 import com.wanted.challenge.domain.member.repository.MemberRepository;
-import com.wanted.challenge.domain.transactionhistory.dto.response.MyPurchaseHistoryResponseDTO;
 import com.wanted.challenge.domain.transactionhistory.dto.response.MyBuyerReservationHistoryResponseDTO;
+import com.wanted.challenge.domain.transactionhistory.dto.response.MyPurchaseHistoryResponseDTO;
 import com.wanted.challenge.domain.transactionhistory.dto.response.MySellerReservationHistoryResponseDTO;
 import com.wanted.challenge.domain.transactionhistory.entity.TransactionHistory;
 import com.wanted.challenge.domain.transactionhistory.repository.TransactionHistoryRepository;
