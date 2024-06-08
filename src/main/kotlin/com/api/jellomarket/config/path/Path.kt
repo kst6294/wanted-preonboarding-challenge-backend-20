@@ -7,7 +7,6 @@ const val USER_SIGN_UP = "$ROOT$VER1/user/signUp"
 const val USER_SIGN_IN = "$ROOT$VER1/user/signIn"
 
 const val PRODUCT = "$ROOT$VER1/product"
-
-
 const val PRODUCT_LIST = "$ROOT$VER1/product/list"
 const val PRODUCT_DETAIL = "$ROOT$VER1/product/{productId}"
+const val PRODUCT_PURCHASE = "$ROOT$VER1/product/purchase/{productId}"

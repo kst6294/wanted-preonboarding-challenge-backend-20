@@ -27,11 +27,11 @@ class ProductService(
         for (product in productList) {
             resultList.add(
                 ProductListDTO(
-                    id = product.id!!,
+                    id = product.productId!!,
                     name = product.name,
                     price = product.price,
                     state = product.state,
-                    stock = product.stock!!,
+                    stock = product.stock,
                     imageUrl = product.imageUrl?:"",
                     sellerId = product.sellerId!!,
                     createdAt = product.createdAt!!,
@@ -53,11 +53,11 @@ class ProductService(
         }
         val product = productOptional.get()
         return ProductDetailDTO(
-            id = product.id!!,
+            id = product.productId!!,
             name = product.name,
             price = product.price,
             state = product.state.toString(),
-            stock = product.stock!!,
+            stock = product.stock,
             description = product.description?:"",
             imageUrl = product.imageUrl?:"",
             sellerId = product.sellerId!!,

@@ -27,13 +27,13 @@ public class QProduct extends EntityPathBase<Product> {
 
     public final StringPath description = createString("description");
 
-    public final NumberPath<Long> id = createNumber("id", Long.class);
-
     public final StringPath imageUrl = createString("imageUrl");
 
     public final StringPath name = createString("name");
 
     public final NumberPath<Integer> price = createNumber("price", Integer.class);
+
+    public final NumberPath<Long> productId = createNumber("productId", Long.class);
 
     public final NumberPath<Long> sellerId = createNumber("sellerId", Long.class);
 

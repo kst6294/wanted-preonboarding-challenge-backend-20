@@ -9,7 +9,7 @@ class Product (
     @Id
     @Column(name = "product_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    var id: Long? = null,
+    var productId: Long? = null,
 
     var name: String,
 
@@ -17,7 +17,7 @@ class Product (
 
     var state: ProductState,
 
-    var stock: Int? = null,
+    var stock: Int,
 
     var description: String? = null,
 
