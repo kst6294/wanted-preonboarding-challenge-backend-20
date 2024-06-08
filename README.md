@@ -1,5 +1,28 @@
 ## 원티드 프리온보딩 챌린지 백엔드 20 사전과제
 
+### API
+
+| 도메인    | 기능     | 권한   | method | uri                     | body                                                                  | response                                                                                                                                                                                                                                                                                                      |
+|--------|--------|------|--------|-------------------------|-----------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Member | 회원가입   | -    | POST   | /member/register        | {<br/>&emsp;username : "username"<br/>&emsp;password:"password"<br/>} | {<br/>&emsp;token : "JwtToken"<br/>}                                                                                                                                                                                                                                                                          |
+|        | 로그인    | -    | POST   | /member/authenticate    | {<br/>&emsp;username : "username"<br/>&emsp;password:"password"<br/>} | {<br/>&emsp;token : "JwtToken"<br/>}                                                                                                                                                                                                                                                                          |
+| Item   | 등록     | USER | POST   | /item                   | {<br/>&emsp;itemName : "itemName"<br/>&emsp;price:"price"<br/>}       | {<br/>&emsp;id : "1L"<br/>&emsp;itemName : "itemName"<br/>&emsp;price:"price"<br/>&emsp;itemStatus : "ON_SALE"<br/>&emsp;"sellerName": "taewon"<br/>}                                                                                                                                                         |
+|        | 목록조회   | -    | GET    | /item/list              |                                                                       | [<br/>&emsp;{<br/>&emsp;&emsp;id : "1L"<br/>&emsp;&emsp;itemName : "itemName"<br/>&emsp;&emsp;price:"price"<br/>&emsp;&emsp;itemStatus : "ON_SALE"<br/>&emsp;&emsp;"sellerName": "taewon"<br/>&emsp;}<br/>&emsp;...<br/>]                                                                                     |
+|        | 상세조회   | -    | GET    | /item/detail/{itemId}   |                                                                       | {<br/>&emsp;id : "1L"<br/>&emsp;itemName : "itemName"<br/>&emsp;price:"price"<br/>&emsp;itemStatus : "ON_SALE"<br/>&emsp;"sellerName": "taewon"<br/>}                                                                                                                                                         |
+|        | 구매용품조회 | USER | GET    | /item/purchased         |                                                                       | [<br/>&emsp;{<br/>&emsp;&emsp;id : "1L"<br/>&emsp;&emsp;itemName : "itemName"<br/>&emsp;&emsp;price:"price"<br/>&emsp;&emsp;itemStatus : "ON_SALE"<br/>&emsp;&emsp;"sellerName": "taewon"<br/>&emsp;}<br/>&emsp;...<br/>]                                                                                     |
+|        | 예약용품조회 | USER | GET    | /item/reserved          |                                                                       | [<br/>&emsp;{<br/>&emsp;&emsp;id : "1L"<br/>&emsp;&emsp;itemName : "itemName"<br/>&emsp;&emsp;price:"price"<br/>&emsp;&emsp;itemStatus : "ON_SALE"<br/>&emsp;&emsp;"sellerName": "taewon"<br/>&emsp;}<br/>&emsp;...<br/>]                                                                                     |
+| Deal   | 구매     | USER | POST   | /deal/purchase/{itemId} |                                                                       | {<br/>&emsp;"id": 3,<br/>&emsp;"buyerName": "taewon2",<br/>&emsp;"item": {<br/>&emsp;&emsp;"itemName": "삼각김밥",<br/>&emsp;&emsp;"price": 1000,<br/>&emsp;&emsp;"id": 1,<br/>&emsp;&emsp;"status": "RESERVED",<br/>&emsp;&emsp;"sellerName": "taewon"<br/>&emsp;},<br/>&emsp;"dealStatus": "PENDING"<br/>}      |
+|        | 거래내역조회 | USER | GET    | /deal/transaction       |                                                                       | [{<br/>&emsp;"id": 3,<br/>&emsp;"buyerName": "taewon2",<br/>&emsp;"item": {<br/>&emsp;&emsp;"itemName": "삼각김밥",<br/>&emsp;&emsp;"price": 1000,<br/>&emsp;&emsp;"id": 1,<br/>&emsp;&emsp;"status": "RESERVED",<br/>&emsp;&emsp;"sellerName": "taewon"<br/>&emsp;},<br/>&emsp;"dealStatus": "PENDING"<br/>}...] |
+|        | 판매승인   | USER | PATCH  | /deal/approve/{dealId}  |||
+
+
+### ERD
+
+![img.png](img.png)
+
+### 진행사항
+1단계 API 작성 완료
+2단계 및 테스트코트 작성 예정
 
 ### 설명
 사용자간 거래가 가능한 Wanted Market API를 생성해야합니다. 요구사항에 맞춰 진행해주세요. 
