@@ -1,0 +1,25 @@
+spring:
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/bear
+    username: root
+    password: 19288291
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jackson:
+    property-naming-strategy: SNAKE_CASE
+
+  jwt:
+    key: beargames
+    live:
+      atk: 3600
+      rtk: 604800
+
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
+
+  data:
+    redis:
+      host: 127.0.0.1
+      port: 6379
