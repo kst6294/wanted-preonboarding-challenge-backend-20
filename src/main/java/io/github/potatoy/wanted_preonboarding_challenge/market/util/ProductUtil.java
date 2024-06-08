@@ -2,7 +2,7 @@ package io.github.potatoy.wanted_preonboarding_challenge.market.util;
 
 import io.github.potatoy.wanted_preonboarding_challenge.market.entity.Product;
 import io.github.potatoy.wanted_preonboarding_challenge.market.entity.ProductRepository;
-import io.github.potatoy.wanted_preonboarding_challenge.market.exception.NotFoundProductException;
+import io.github.potatoy.wanted_preonboarding_challenge.market.exception.ProductNotFoundException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -20,7 +20,7 @@ public class ProductUtil {
         .orElseThrow(
             () -> {
               log.warn("ProductUtil: Product id not found. productId={}", productId);
-              return new NotFoundProductException();
+              return new ProductNotFoundException();
             });
   }
 }
