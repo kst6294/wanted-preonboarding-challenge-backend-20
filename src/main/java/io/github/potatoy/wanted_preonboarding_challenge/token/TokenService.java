@@ -67,7 +67,6 @@ public class TokenService {
     String accessToken = tokenProvider.generateToken(user, ACCESS_TOKEN_DURATION);
 
     UserResponse userResponse = new UserResponse(user.getId(), user.getEmail(), user.getNickname());
-    log.error("hi");
     return new AuthenticateDto.Response(accessToken, refreshToken, userResponse);
   }
 }
