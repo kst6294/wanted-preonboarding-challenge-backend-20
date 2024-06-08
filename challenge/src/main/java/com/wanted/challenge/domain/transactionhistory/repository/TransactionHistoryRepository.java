@@ -7,7 +7,9 @@ import com.wanted.challenge.domain.transactionhistory.dto.response.MyPurchaseHis
 import com.wanted.challenge.domain.transactionhistory.dto.response.MySellerReservationHistoryResponseDTO;
 import com.wanted.challenge.domain.transactionhistory.dto.response.TransactionHistoryResponseDTO;
 import com.wanted.challenge.domain.transactionhistory.entity.TransactionHistory;
+import jakarta.persistence.LockModeType;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Lock;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -49,6 +51,7 @@ public interface TransactionHistoryRepository extends JpaRepository<TransactionH
     List<MySellerReservationHistoryResponseDTO> findSellerReservationHistoriesByMember(@Param("member") Member member);
 
     // 거래기록 가져오기
+    @Lock(LockModeType.PESSIMISTIC_WRITE)
     @Query("select t from TransactionHistory t join fetch t.item join fetch t.item.member where t.id = :id")
     Optional<TransactionHistory> findByTransactionHistoryFetchJoinItem(@Param("id") Long id);
 
