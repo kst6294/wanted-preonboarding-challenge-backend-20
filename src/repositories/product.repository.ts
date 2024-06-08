@@ -29,15 +29,12 @@ export default class ProductRepository {
           ON p.id = t.product_id
       `;
 
-      conditions.push("t.status = ?");
-      values.push("완료");
-
       if (dao.isBought) {
-        conditions.push("t.buyer_id = ?");
-        values.push(dao.userID);
-
         conditions.push("p.status = ?");
         values.push("완료");
+
+        conditions.push("t.buyer_id = ?");
+        values.push(dao.userID);
       }
 
       if (dao.isReserved) {
@@ -70,7 +67,8 @@ export default class ProductRepository {
         p.seller_id AS sellerID,
         t.buyer_id AS buyerID,
         p.name,
-        p.price,
+        p.price AS productPrice,
+        t.price AS transactionPrice,
         p.amount,
         p.status AS productStatus,
         t.status AS transactionStatus
@@ -96,7 +94,7 @@ export default class ProductRepository {
         id AS productID,
         seller_id AS sellerID,
         name,
-        price,
+        price AS productPrice,
         amount,
         status AS productStatus
       FROM
