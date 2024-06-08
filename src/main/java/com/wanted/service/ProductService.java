@@ -5,8 +5,8 @@ import com.wanted.entity.Member;
 import com.wanted.entity.Order;
 import com.wanted.entity.OrderProduct;
 import com.wanted.entity.Product;
-import com.wanted.exception.MemberException;
-import com.wanted.exception.ProductException;
+import com.wanted.exception.MemberNotFoundException;
+import com.wanted.exception.ProductNotFoundException;
 import com.wanted.exception.SessionNotFoundException;
 import com.wanted.repository.MemberRepository;
 import com.wanted.repository.OrderProductRepository;
@@ -41,7 +41,7 @@ public class ProductService {
         }
 
         Member findMember = memberRepository.findById(memberDto.getMember_id())
-                .orElseThrow(()-> new MemberException("없는 회원 입니다."));
+                .orElseThrow(()-> new MemberNotFoundException("없는 회원 입니다."));
 
         Product product = Product.createProduct(productDto.getName(), productDto.getPrice(), productDto.getStock_quantity(), findMember);
 
@@ -74,10 +74,10 @@ public class ProductService {
         }
 
         Member findMember = memberRepository.findById(memberDto.getMember_id())
-                .orElseThrow(() -> new MemberException("없는 회원 입니다."));
+                .orElseThrow(() -> new MemberNotFoundException("없는 회원 입니다."));
 
         Product findProduct = productRepository.findById(productId)
-                .orElseThrow(() -> new ProductException("없는 제품 입니다."));
+                .orElseThrow(() -> new ProductNotFoundException("없는 제품 입니다."));
 
         OrderProduct orderProduct = OrderProduct.createOrderProduct(findProduct, count, price);
         orderProductRepository.save(orderProduct);
@@ -97,6 +97,7 @@ public class ProductService {
 
         listDto.addSellDtos(sellDtos);
         listDto.addPurchaseDtos(purchaseDtos);
+
 
         return listDto;
     }

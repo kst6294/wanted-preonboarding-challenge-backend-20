@@ -19,8 +19,15 @@ public class ApiGlobalException {
         return stringWriter.toString();
     }
 
-    @ExceptionHandler(MemberException.class)
-    public ResponseEntity<ErrorResponse> handlerMemberException(MemberException ex){
+    @ExceptionHandler(MemberNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handlerMemberException(MemberNotFoundException ex){
+        String stackTrace = getStackTraceAsString(ex);
+        ErrorResponse errorResponse = new ErrorResponse(ex.getMessage(), HttpStatus.BAD_REQUEST.value(), stackTrace);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
+    }
+
+    @ExceptionHandler(InvalidCredentialsException.class)
+    public ResponseEntity<ErrorResponse> handlerInvalidCredentialsException(InvalidCredentialsException ex){
         String stackTrace = getStackTraceAsString(ex);
         ErrorResponse errorResponse = new ErrorResponse(ex.getMessage(), HttpStatus.BAD_REQUEST.value(), stackTrace);
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
@@ -40,8 +47,8 @@ public class ApiGlobalException {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
     }
 
-    @ExceptionHandler(ProductException.class)
-    public ResponseEntity<ErrorResponse> handlerProductException(ProductException ex){
+    @ExceptionHandler(ProductNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handlerProductException(ProductNotFoundException ex){
         String stackTrace = getStackTraceAsString(ex);
         ErrorResponse errorResponse = new ErrorResponse(ex.getMessage(), HttpStatus.BAD_REQUEST.value(), stackTrace);
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);

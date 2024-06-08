@@ -1,6 +1,5 @@
 package com.wanted.repository;
 
-import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.wanted.dto.QSellDto;
 import com.wanted.dto.SellDto;
@@ -34,6 +33,8 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom{
                 .join(product.member, member)
                 .fetch();
     }
+
+
 
 
 }
