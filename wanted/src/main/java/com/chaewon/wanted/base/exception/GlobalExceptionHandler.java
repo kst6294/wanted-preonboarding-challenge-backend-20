@@ -6,6 +6,7 @@ import com.chaewon.wanted.domain.member.exception.InvalidRefreshTokenException;
 import com.chaewon.wanted.domain.member.exception.MemberNotFoundException;
 import com.chaewon.wanted.domain.member.exception.MultipleLoginException;
 import com.chaewon.wanted.domain.orders.exception.*;
+import com.chaewon.wanted.domain.product.exception.DuplicatePriceException;
 import com.chaewon.wanted.domain.product.exception.NoProductsForSaleException;
 import com.chaewon.wanted.domain.product.exception.ProductNotFoundException;
 import com.chaewon.wanted.domain.product.exception.ProductUnavailableException;
@@ -133,5 +134,12 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ResponseDto> handleOrderAlreadyConfirmedException(OrderAlreadyConfirmedException e) {
         return ResponseDto.of(HttpStatus.CONFLICT, e.getMessage());
     }
+
+    @ExceptionHandler(DuplicatePriceException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public ResponseEntity<ResponseDto> handleDuplicatePriceException(DuplicatePriceException e) {
+        return ResponseDto.of(HttpStatus.CONFLICT, e.getMessage());
+    }
+
 }
 

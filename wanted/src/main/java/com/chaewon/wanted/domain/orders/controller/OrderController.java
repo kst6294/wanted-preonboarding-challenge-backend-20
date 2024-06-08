@@ -22,6 +22,14 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class OrderController {
     private final OrderService orderService;
+    /*
+    TODO : 구매 요청과 판매자의 가격 변동이 거의 동시에 이루어지는 경우
+    만약 구매 요청을 하는 시점과 판매자가 제품 가격을 변경하는 시점이 동시에 일어난다면, 실제로 어떤 가격이 주문에 적용될까?
+    -> 구매자가 주문을 생성할 때 이미 보고 있는 가격으로 주문이 이루어지도록
+    -> 트랜잭션 격리 수준을 활용하여
+    -> 동시에 일어나면 구매자는 구매 시점에 이미 그 가격을 보고 구매한 거니까
+    -> orderPrice는 변동되면 x / price는 변동 o
+     */
 
     @PostMapping
     public ResponseEntity<ResponseDto> createOrder(@AuthenticationPrincipal User user,

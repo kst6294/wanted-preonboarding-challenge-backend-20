@@ -2,6 +2,7 @@ package com.chaewon.wanted.domain.product.controller;
 
 import com.chaewon.wanted.common.PageResponse;
 import com.chaewon.wanted.common.ResponseDto;
+import com.chaewon.wanted.domain.product.dto.request.ModifyRequestDto;
 import com.chaewon.wanted.domain.product.dto.response.ProductDetailResponseDto;
 import com.chaewon.wanted.domain.product.dto.response.ProductResponseDto;
 import com.chaewon.wanted.domain.product.dto.request.RegisterRequestDto;
@@ -29,6 +30,14 @@ public class ProductController {
                                                        @Valid @RequestBody RegisterRequestDto registerRequestDto) {
         productService.registerProduct(user.getUsername(), registerRequestDto);
         return ResponseDto.of(HttpStatus.OK, "제품등록을 완료했습니다.");
+    }
+
+    @PatchMapping("/products/{productId}")
+    public ResponseEntity<ResponseDto> modifyProduct(@AuthenticationPrincipal User user,
+                                                       @PathVariable(name = "productId") Long productId,
+                                                       @Valid @RequestBody ModifyRequestDto modifyRequestDto) {
+        productService.modifyProduct(user.getUsername(), productId, modifyRequestDto);
+        return ResponseDto.of(HttpStatus.OK, "제품수정을 완료했습니다.");
     }
 
     @GetMapping("/productsList")
