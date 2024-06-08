@@ -1,0 +1,23 @@
+server:
+    port: 8080
+
+---
+
+spring:
+    datasource:
+        jdbc-url: jdbc:mysql://localhost:3306/wanted-preonboarding-challenge-backend-20
+        username: root
+        password: root
+        driver-class-name: com.mysql.cj.jdbc.Driver
+
+    jpa:
+        hibernate:
+            ddl-auto: none
+        show-sql: true
+        properties:
+            hibernate:
+                dialect: org.hibernate.dialect.MySQL8Dialect
+
+    jwt:
+        secret-key: 08d9f6bd6f2f76186106617f85c808c8646707145c91c5054007c5e24925945f
+        expiration: 100000

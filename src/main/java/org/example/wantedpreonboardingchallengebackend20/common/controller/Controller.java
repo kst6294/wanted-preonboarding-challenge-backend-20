@@ -1,6 +1,6 @@
-package org.example.wantedpreonboardingchallengebackend20.controller;
+package org.example.wantedpreonboardingchallengebackend20.common.controller;
 
-import org.example.wantedpreonboardingchallengebackend20.model.CommonResponse;
+import org.example.wantedpreonboardingchallengebackend20.common.model.CommonResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

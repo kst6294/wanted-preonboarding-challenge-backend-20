@@ -1,4 +1,4 @@
-package org.example.wantedpreonboardingchallengebackend20.model;
+package org.example.wantedpreonboardingchallengebackend20.common.model;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
