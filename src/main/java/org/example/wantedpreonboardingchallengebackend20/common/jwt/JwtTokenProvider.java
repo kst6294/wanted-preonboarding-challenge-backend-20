@@ -6,7 +6,6 @@ import jakarta.annotation.PostConstruct;
 import org.example.wantedpreonboardingchallengebackend20.common.model.JwtToken;
 import org.example.wantedpreonboardingchallengebackend20.member.entity.Member;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
 import java.util.Base64;
@@ -45,7 +44,7 @@ public class JwtTokenProvider {
                 .getAccessToken();
     }
 
-    public Authentication getAuthentication (String token) {
+    public String getAuthentication (String token) {
         Jwts.parser().build().parseClaimsJws(token);
         return null;
     }

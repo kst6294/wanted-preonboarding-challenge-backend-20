@@ -1,6 +1,6 @@
 package org.example.wantedpreonboardingchallengebackend20.member.entity;
 
-import org.example.wantedpreonboardingchallengebackend20.member.model.request.MemberReqeust;
+import org.example.wantedpreonboardingchallengebackend20.member.model.request.JoinReqeust;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,19 +22,15 @@ public class Member {
     @Column
     private String password;
 
-    public Member(MemberReqeust memberReqeust) {
-        this.name = memberReqeust.name();
-        this.nickName = memberReqeust.nickName();
-        this.email = memberReqeust.email();
-        encryptPassword(memberReqeust.password());
-    }
-
     public Member(String email, String password) {
         this.email = email;
-        encryptPassword(password);
+        this.password = password;
     }
 
-    private void encryptPassword(String password) {
-        this.password = password.substring(0, 3) + "****" + password.substring(password.length() - 3);
+    public Member(JoinReqeust request) {
+        this.name = request.getName();
+        this.nickName = request.getNickName();
+        this.email = request.getEmail();
+        this.password = request.getPassword();
     }
 }
