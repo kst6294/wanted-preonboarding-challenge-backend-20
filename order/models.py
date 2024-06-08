@@ -15,6 +15,9 @@ class Order(models.Model):
     product_name = models.CharField(verbose_name = '모델명', max_length=150)
     price = models.DecimalField(verbose_name='가격', max_digits=6, decimal_places=2)
     reservation_status = models.CharField(max_length=3, choices=Status.choices, default=Status.Sale)
-    buyer = models.ForeignKey(Member, on_delete = models.SET_NULL, related_name='buyer', null=True, blank=True)
+    quantity = models.IntegerField(verbose_name="수량")
+    # buyer = models.ForeignKey(Member, on_delete = models.SET_NULL, related_name='buyer', null=True, blank=True)
+    
+    buyer = models.ManyToManyField(Member, related_name='buyer')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
