@@ -6,13 +6,14 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import wanted.market.global.dto.Authority;
+import wanted.market.global.entity.BaseEntity;
 
 import java.time.LocalDateTime;
 
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Member {
+public class Member extends BaseEntity {
 
     @Id
     @GeneratedValue
@@ -26,13 +27,10 @@ public class Member {
     @Enumerated(EnumType.STRING)
     private Authority authority;
 
-    private LocalDateTime createdAt;
-
     @Builder
-    private Member(String email, String password, Authority authority, LocalDateTime createdAt) {
+    private Member(String email, String password, Authority authority) {
         this.email = email;
         this.password = password;
         this.authority = authority;
-        this.createdAt = LocalDateTime.now();
     }
 }

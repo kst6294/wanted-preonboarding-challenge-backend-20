@@ -15,6 +15,7 @@ public enum CommonErrorCode implements ErrorCode {
     NOT_FOUND(HttpStatus.NOT_FOUND, "요청한 메서드를 찾을 수 없습니다."),
     BAD_DTO_REQUEST(HttpStatus.BAD_REQUEST, "잘못된 DTO 객체 바인딩 요청입니다."),
     INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "서버 에러가 발생했습니다."),
+    USER_NOT_FOUND(HttpStatus.NOT_FOUND, "유저를 조회할 수 없습니다."),
     DATA_NOT_FOUND(HttpStatus.NOT_FOUND, "데이터를 조회할 수 없습니다."),
     DUPLICATED_DATA(HttpStatus.BAD_REQUEST, "중복된 데이터 저장 시도입니다.")
     ;

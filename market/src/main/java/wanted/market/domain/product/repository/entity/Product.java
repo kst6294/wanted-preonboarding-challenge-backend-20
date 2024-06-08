@@ -2,8 +2,9 @@ package wanted.market.domain.product.repository.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-
-import java.time.LocalDateTime;
+import wanted.market.domain.member.repository.entity.Member;
+import wanted.market.domain.product.service.dto.response.ProductDetailResponse;
+import wanted.market.global.entity.BaseEntity;
 
 import static wanted.market.domain.product.repository.entity.ReservationStatus.RESERVATION;
 import static wanted.market.domain.product.repository.entity.ReservationStatus.SALE;
@@ -12,13 +13,17 @@ import static wanted.market.domain.product.repository.entity.ReservationStatus.S
 @Entity
 @ToString
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Product {
+public class Product extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;
+
+    @JoinColumn(name="member_id")
+    @ManyToOne(fetch = FetchType.EAGER)
+    private Member member;
 
     private int price;
 
@@ -29,16 +34,14 @@ public class Product {
 
     private String content;
 
-    private LocalDateTime createdAt;
-
     @Builder
-    private Product(String name, int price, ReservationStatus reservationStatus, int quantity, String content, LocalDateTime createdAt) {
+    private Product(String name, Member member, int price, ReservationStatus reservationStatus, int quantity, String content) {
         this.name = name;
+        this.member = member;
         this.price = price;
         this.reservationStatus = reservationStatus;
         this.quantity = quantity;
         this.content = content;
-        this.createdAt = createdAt;
     }
 
     public void bringBackQuantity() {
@@ -50,5 +53,4 @@ public class Product {
         if (this.quantity == 1) this.reservationStatus = RESERVATION;
         this.quantity = quantity-1;
     }
-
 }

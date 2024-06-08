@@ -27,7 +27,7 @@ public class MemberJoinServiceRequest {
                 .email(email)
                 .password(passwordEncoder.encode(password))
                 .authority(ROLE_USER)
-                .createdAt(LocalDateTime.now())
+//                .createdAt(LocalDateTime.now())
                 .build();
     }
 }

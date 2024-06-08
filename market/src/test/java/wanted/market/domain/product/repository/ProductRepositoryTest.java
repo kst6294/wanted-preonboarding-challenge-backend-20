@@ -1,6 +1,7 @@
 package wanted.market.domain.product.repository;
 
 import org.assertj.core.groups.Tuple;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,9 +10,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.test.context.ActiveProfiles;
+import wanted.market.domain.member.repository.MemberRepository;
+import wanted.market.domain.member.repository.entity.Member;
 import wanted.market.domain.product.repository.entity.Product;
+import wanted.market.global.dto.Authority;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,13 +22,29 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import static org.assertj.core.groups.Tuple.*;
 import static wanted.market.domain.product.repository.entity.ReservationStatus.*;
+import static wanted.market.global.dto.Authority.*;
 
 @DataJpaTest
 @ActiveProfiles("test")
 class ProductRepositoryTest {
 
+
     @Autowired
     private ProductRepository productRepository;
+
+    @Autowired
+    private MemberRepository memberRepository;
+
+    private static Member member;
+
+    @BeforeEach
+    void setUp() {
+        member = memberRepository.save(Member.builder()
+                .email("test@test.com")
+                .authority(ROLE_USER)
+                .password("1234")
+                .build());
+    }
 
     @Test
     @DisplayName("제품정보를 입력하고 제품을 등록한다.")
@@ -40,7 +59,6 @@ class ProductRepositoryTest {
         assertThat(save.getName()).isEqualTo(product.getName());
         assertThat(save.getPrice()).isEqualTo(product.getPrice());
         assertThat(save.getReservationStatus()).isEqualTo(product.getReservationStatus());
-        assertThat(save.getCreatedAt()).isEqualTo(product.getCreatedAt());
     }
 
     @Test
@@ -55,7 +73,6 @@ class ProductRepositoryTest {
 
         int page = 0; // page 위치에 있는 값은 0부터 시작한다.
         int pageLimit = 3; // 한페이지에 보여줄 글 개수
-
 
         // when
         Page<Product> products = productRepository.findAll(PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.DESC, "id")));
@@ -83,7 +100,6 @@ class ProductRepositoryTest {
         assertThat(byId.get().getName()).isEqualTo(product.getName());
         assertThat(byId.get().getPrice()).isEqualTo(product.getPrice());
         assertThat(byId.get().getReservationStatus()).isEqualTo(product.getReservationStatus());
-        assertThat(byId.get().getCreatedAt()).isEqualTo(product.getCreatedAt());
     }
 
     @Test
@@ -142,11 +158,11 @@ class ProductRepositoryTest {
     private static Product createProduct(String name, int price, int quantity) {
         return Product.builder()
                 .name(name)
+                .member(member)
                 .price(price)
                 .reservationStatus(SALE)
                 .quantity(quantity)
                 .content("판매중입니다.")
-                .createdAt(LocalDateTime.now())
                 .build();
     }
 

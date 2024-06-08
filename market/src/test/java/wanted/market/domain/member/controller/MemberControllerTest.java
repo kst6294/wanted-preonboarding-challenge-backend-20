@@ -9,6 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
+import wanted.market.domain.ControllerTestSupport;
 import wanted.market.domain.member.controller.dto.request.MemberJoinRequest;
 import wanted.market.domain.member.controller.dto.request.MemberLoginRequest;
 import wanted.market.domain.member.repository.MemberRepository;
