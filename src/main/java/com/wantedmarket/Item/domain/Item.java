@@ -47,4 +47,8 @@ public class Item extends BaseEntity {
     public void reserve() {
         this.itemStatus = RESERVED;
     }
+
+    public void complete() {
+        this.itemStatus = COMPLETED;
+    }
 }
