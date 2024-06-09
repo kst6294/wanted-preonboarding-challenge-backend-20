@@ -26,6 +26,9 @@ public class Product {
 
     private Integer stock;
 
+    @Enumerated(EnumType.STRING)
+    private ProductStatus status;
+
     public Product(Long memberId, String name, Integer price, Integer stock) {
         this.memberId = memberId;
         this.name = name;
@@ -34,9 +37,6 @@ public class Product {
         this.stock = stock;
         this.status = ProductStatus.AVAILABLE;
     }
-
-    @Enumerated(EnumType.STRING)
-    private ProductStatus status;
 
     public void offer() {
         if (this.status != ProductStatus.AVAILABLE) {
