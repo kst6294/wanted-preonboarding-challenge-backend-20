@@ -28,7 +28,7 @@ public class ItemController {
 
     // 상품 등록
     @PostMapping()
-    public ResponseEntity<ApiResponse<?>> registerItem(@Valid @RequestBody ItemRegisterRequestDTO itemRegisterRequestDTO,
+    public ResponseEntity<ApiResponse<ItemRegisterResponseDTO>> registerItem(@Valid @RequestBody ItemRegisterRequestDTO itemRegisterRequestDTO,
                                                        @AuthUser Long userId) {
         ItemRegisterResponseDTO itemRegisterResponseDTO = itemService.registerItem(itemRegisterRequestDTO, userId);
 
@@ -37,7 +37,7 @@ public class ItemController {
 
     // 상품 조회
     @GetMapping()
-    public ResponseEntity<ApiResponse<?>> findAllItems() {
+    public ResponseEntity<ApiResponse<List<ItemResponseDTO>>> findAllItems() {
         List<ItemResponseDTO> allItems = itemService.findAllItems();
 
         return ResponseEntity.status(HttpStatus.CREATED).body(ApiResponse.createSuccess(allItems, "상품 조회를 성공했습니다."));
@@ -45,7 +45,7 @@ public class ItemController {
 
     // 상품 상세조회
     @GetMapping("{id}")
-    public ResponseEntity<ApiResponse<?>> findDetailItem(@PathVariable(name = "id") Long itemId,
+    public ResponseEntity<ApiResponse<ItemDetailInfoResponseDTO>> findDetailItem(@PathVariable(name = "id") Long itemId,
                                                          @OptionalAuthUser Long userId) {
         ItemDetailInfoResponseDTO detailItem = itemService.findDetailItem(itemId, userId);
 
@@ -54,7 +54,7 @@ public class ItemController {
 
     // 상품 구매하기
     @PostMapping("purchase")
-    public ResponseEntity<ApiResponse<?>> purchaseItem(@Valid @RequestBody ItemPurchaseRequestDTO itemPurchaseRequestDTO,
+    public ResponseEntity<ApiResponse<ItemPurchaseResponseDTO>> purchaseItem(@Valid @RequestBody ItemPurchaseRequestDTO itemPurchaseRequestDTO,
                                                        @AuthUser Long userId) {
         ItemPurchaseResponseDTO itemPurchaseResponseDTO = itemService.purchaseItem(itemPurchaseRequestDTO, userId);
 

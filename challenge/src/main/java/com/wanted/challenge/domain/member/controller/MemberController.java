@@ -26,7 +26,7 @@ public class MemberController {
 
     // 이메일 중복확인
     @PostMapping("email-check")
-    public ResponseEntity<ApiResponse<?>> emailCheck(@Valid @RequestBody EmailRequestDTO emailRequestDTO){
+    public ResponseEntity<ApiResponse<Boolean>> emailCheck(@Valid @RequestBody EmailRequestDTO emailRequestDTO){
         boolean result = memberService.emailCheck(emailRequestDTO);
 
         return ResponseEntity.status(HttpStatus.OK).body(ApiResponse.createSuccess(result, "이메일 중복 체크(true = 사용 불가, false = 사용 가능)"));
@@ -34,7 +34,7 @@ public class MemberController {
 
     // 회원가입
     @PostMapping()
-    public ResponseEntity<ApiResponse<?>> signUp(@Valid @RequestBody SignUpRequestDTO signUpRequestDTO){
+    public ResponseEntity<ApiResponse<Void>> signUp(@Valid @RequestBody SignUpRequestDTO signUpRequestDTO){
         memberService.signUp(signUpRequestDTO);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(ApiResponse.createSuccessNoContent("회원가입이 완료되었습니다."));
@@ -42,7 +42,7 @@ public class MemberController {
 
     // 로그인
     @PostMapping("login")
-    public ResponseEntity<ApiResponse<?>> login(@Valid @RequestBody LoginRequestDTO loginRequestDTO, HttpServletRequest request, HttpServletResponse response){
+    public ResponseEntity<ApiResponse<LoginResponseDTO>> login(@Valid @RequestBody LoginRequestDTO loginRequestDTO, HttpServletRequest request, HttpServletResponse response){
         LoginResponseDTO responseDTO = memberService.login(loginRequestDTO, request, response);
 
         return ResponseEntity.status(HttpStatus.OK).body(ApiResponse.createSuccess(responseDTO, "로그인 성공."));

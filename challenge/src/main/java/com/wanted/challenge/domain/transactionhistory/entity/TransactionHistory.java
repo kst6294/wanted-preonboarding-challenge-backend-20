@@ -14,6 +14,9 @@ import java.time.LocalDateTime;
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
+@Table(name = "transaction_history", uniqueConstraints = {
+        @UniqueConstraint(columnNames = {"member_id", "item_id"})
+})
 public class TransactionHistory extends BaseTimeEntity {
 
     @Id

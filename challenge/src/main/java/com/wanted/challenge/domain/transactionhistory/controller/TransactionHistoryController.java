@@ -22,7 +22,7 @@ public class TransactionHistoryController {
 
     // 현재 유저의 구매기록 가져오기
     @GetMapping("")
-    public ResponseEntity<ApiResponse<?>> getPurchaseHistories(@AuthUser Long userId) {
+    public ResponseEntity<ApiResponse<List<MyPurchaseHistoryResponseDTO>>> getPurchaseHistories(@AuthUser Long userId) {
 
         List<MyPurchaseHistoryResponseDTO> purchaseHistories = transactionHistoryService.getPurchaseHistories(userId);
 
@@ -31,7 +31,7 @@ public class TransactionHistoryController {
 
     // 현재 유저의 예약기록 전부 가져오기(구매자)
     @GetMapping("reservation/buyer")
-    public ResponseEntity<ApiResponse<?>> getBuyerReservationHistories(@AuthUser Long userId) {
+    public ResponseEntity<ApiResponse<List<MyBuyerReservationHistoryResponseDTO>>> getBuyerReservationHistories(@AuthUser Long userId) {
 
         List<MyBuyerReservationHistoryResponseDTO> reservationHistories = transactionHistoryService.getBuyerReservationHistories(userId);
 
@@ -40,7 +40,7 @@ public class TransactionHistoryController {
 
     // 현재 유저의 예약기록 전부 가져오기(판매자)
     @GetMapping("reservation/seller")
-    public ResponseEntity<ApiResponse<?>> getSellerReservationHistories(@AuthUser Long userId) {
+    public ResponseEntity<ApiResponse<List<MySellerReservationHistoryResponseDTO>>> getSellerReservationHistories(@AuthUser Long userId) {
 
         List<MySellerReservationHistoryResponseDTO> sellerReservationHistories = transactionHistoryService.getSellerReservationHistories(userId);
 
@@ -49,7 +49,7 @@ public class TransactionHistoryController {
 
     // 판매 승인
     @PatchMapping("sale/{id}")
-    public ResponseEntity<ApiResponse<?>> saleConfirm(@AuthUser Long userId, @PathVariable(name = "id") Long historyId) {
+    public ResponseEntity<ApiResponse<Void>> saleConfirm(@AuthUser Long userId, @PathVariable(name = "id") Long historyId) {
         transactionHistoryService.saleConfirm(userId, historyId);
 
         return ResponseEntity.status(HttpStatus.OK).body(ApiResponse.createSuccessNoContent("판매 승인이 완료되었습니다."));
@@ -57,7 +57,7 @@ public class TransactionHistoryController {
 
     // 구매 승인
     @PatchMapping("purchase/{id}")
-    public ResponseEntity<ApiResponse<?>> purChaseConfirm(@AuthUser Long userId, @PathVariable(name = "id") Long historyId) {
+    public ResponseEntity<ApiResponse<Void>> purChaseConfirm(@AuthUser Long userId, @PathVariable(name = "id") Long historyId) {
         transactionHistoryService.purchaseConfirm(userId, historyId);
 
         return ResponseEntity.status(HttpStatus.OK).body(ApiResponse.createSuccessNoContent("구매 확인이 완료되었습니다."));
