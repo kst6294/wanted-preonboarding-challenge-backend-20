@@ -8,9 +8,9 @@ open class ResponseCustom(
     open val errorDetail: ErrorDetail? = null
 ) {
     data class Success(
+        override val data: Any? = null,
         override val message: String = "success",
-        override val data: Any? = null
-    ) : ResponseCustom()
+        ) : ResponseCustom()
 
     data class Error(
         override val message: String = "fail",

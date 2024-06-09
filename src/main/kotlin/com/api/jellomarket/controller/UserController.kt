@@ -1,5 +1,6 @@
 package com.api.jellomarket.controller
 
+import com.api.jellomarket.config.ResponseCustom
 import com.api.jellomarket.config.path.*
 import com.api.jellomarket.dto.user.UserSignInRequestDTO
 import com.api.jellomarket.dto.user.UserSignUpRequestDTO
@@ -15,16 +16,16 @@ class UserController(
     val userService: UserService
 ) {
     @PostMapping(USER_SIGN_UP)
-    fun saveUser(@Validated @RequestBody request: UserSignUpRequestDTO): ResponseEntity<String> {
+    fun saveUser(@Validated @RequestBody request: UserSignUpRequestDTO): ResponseEntity<ResponseCustom> {
         val savedUser = userService.saveUser(request)
         val welcomeMessage = "Welcome to Jello Market, ${savedUser.name}!"
-        return ResponseEntity.ok(welcomeMessage)
+        return ResponseEntity.ok(ResponseCustom.Success(welcomeMessage))
     }
 
     @PostMapping(USER_SIGN_IN)
-    fun signIn(@Validated @RequestBody request: UserSignInRequestDTO): ResponseEntity<String> {
+    fun signIn(@Validated @RequestBody request: UserSignInRequestDTO): ResponseEntity<ResponseCustom> {
         val savedUser = userService.signInUser(request)
-        val welcomeMessage = "Welcome to Jello Market, ${savedUser.name}!"
-        return ResponseEntity.ok(welcomeMessage)
+        val welcomeMessage = "Hello, ${savedUser.name}!"
+        return ResponseEntity.ok(ResponseCustom.Success(welcomeMessage))
     }
 }

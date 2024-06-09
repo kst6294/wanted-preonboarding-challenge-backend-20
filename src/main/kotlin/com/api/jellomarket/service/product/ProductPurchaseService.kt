@@ -5,6 +5,7 @@ import com.api.jellomarket.domain.order.OrderRepository
 import com.api.jellomarket.domain.product.ProductRepository
 import com.api.jellomarket.domain.user.User
 import com.api.jellomarket.dto.product.ProductPurchaseRequestDTO
+import com.api.jellomarket.dto.product.ProductPurchaseResponseDTO
 import com.api.jellomarket.enums.error.ErrorCodeCustom
 import com.api.jellomarket.enums.order.OrderStatus
 import com.api.jellomarket.exception.BusinessException
@@ -22,7 +23,7 @@ class ProductPurchaseService(
 ) {
 
     @Transactional
-    fun purchaseProduct(user: User, productId: Long, productPurchaseRequestDTO: ProductPurchaseRequestDTO): Order {
+    fun purchaseProduct(user: User, productId: Long, productPurchaseRequestDTO: ProductPurchaseRequestDTO): ProductPurchaseResponseDTO {
         var newOrderStatus = OrderStatus.NEW_ORDER
         // validation
         val product = ProductPurchaseValidation(productRepository).validateProductPurchase(user, productId)
@@ -51,6 +52,11 @@ class ProductPurchaseService(
             )
         )
         productRepository.save(product)
-        return newOrder
+        val res = ProductPurchaseResponseDTO(
+            orderId = newOrder.orderId!!,
+            status = newOrder.status,
+            orderDate = newOrder.createdAt,
+        )
+        return res
     }
 }
