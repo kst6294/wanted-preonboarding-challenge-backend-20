@@ -17,6 +17,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 class ProductControllerTest extends ControllerTestWithSecuritySupport {
 
+    // security 적용 버전으로 작성해봄
+
     @Test
     @DisplayName("로그인 후 제품 create")
     @WithMockUser(username = "admin", password = "admin", roles = "MEMBER")
