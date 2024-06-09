@@ -57,7 +57,7 @@ public class JwtTokenProvider {
                 .before(new Date());
     }
 
-    public boolean getExpiration() {
-        return false;
+    public void getExpiration(String token) {
+//        Jwts.parser().build().parseClaimsJws(token)
     }
 }
