@@ -19,6 +19,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.naming.AuthenticationException;
 import java.security.Principal;
 
 @Slf4j
@@ -35,7 +36,7 @@ public class UserController {
     @PostMapping("/sing-up")
     public ResponseEntity<Long> create(
             @Valid @RequestBody UserCreate request
-    ) {
+    ) throws AuthenticationException {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(userService.create(request).getId());

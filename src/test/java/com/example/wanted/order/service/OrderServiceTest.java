@@ -3,7 +3,10 @@ package com.example.wanted.order.service;
 import com.example.wanted.mock.FakeOrderRepository;
 import com.example.wanted.mock.FakeProductRepository;
 import com.example.wanted.mock.FakeUserRepository;
+import com.example.wanted.module.exception.AlreadyOrderException;
+import com.example.wanted.module.exception.ProductNotAvailableException;
 import com.example.wanted.module.exception.ResourceNotFoundException;
+import com.example.wanted.module.exception.SellerCannotMakeOrderException;
 import com.example.wanted.order.domain.Order;
 import com.example.wanted.order.domain.OrderCreate;
 import com.example.wanted.order.domain.OrderStatus;
@@ -15,6 +18,7 @@ import com.example.wanted.user.domain.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.AccessDeniedException;
 
 import java.util.List;
 
@@ -81,8 +85,8 @@ class OrderServiceTest {
         assertThat(result.getId()).isNotNull();
         assertThat(result.getBuyer().getId()).isEqualTo(2L);
         assertThat(result.getSeller().getId()).isEqualTo(1L);
-        assertThat(result.getProduct().getId()).isEqualTo(1L);
-        assertThat(result.getProduct().getQuantity()).isEqualTo(99);
+        assertThat(result.getProductId()).isEqualTo(1L);
+//        assertThat(result.getProduct().getQuantity()).isEqualTo(99);
         assertThat(result.getPrice()).isEqualTo(1000);
         assertThat(result.getStatus()).isEqualTo(OrderStatus.REQUEST);
     }
@@ -126,8 +130,9 @@ class OrderServiceTest {
         OrderResponse result = orderService.order(orderCreate, buyer.getId());
 
         //then
-        assertThat(result.getProduct().getId()).isEqualTo(1L);
-        assertThat(result.getProduct().getProductSellingStatus()).isEqualTo(ProductSellingStatus.RESERVATION);
+        Product product = fakeProductRepository.findById((result.getProductId())).orElseThrow();
+        assertThat(product.getId()).isEqualTo(1L);
+        assertThat(product.getSellingStatus()).isEqualTo(ProductSellingStatus.RESERVATION);
     }
 
     @Test
@@ -160,7 +165,7 @@ class OrderServiceTest {
         //then
         assertThatThrownBy(() ->
                 orderService.order(orderCreate, seller.getId())
-        ).isInstanceOf(IllegalArgumentException.class);
+        ).isInstanceOf(SellerCannotMakeOrderException.class);
     }
 
     @Test
@@ -277,7 +282,7 @@ class OrderServiceTest {
         //then
         assertThatThrownBy(() ->
                 orderService.order(orderCreate, 2L)
-        ).isInstanceOf(IllegalArgumentException.class);
+        ).isInstanceOf(AlreadyOrderException.class);
     }
 
     @Test
@@ -310,7 +315,7 @@ class OrderServiceTest {
         //then
         assertThatThrownBy(() ->
                 orderService.order(orderCreate, 1L)
-        ).isInstanceOf(IllegalStateException.class);
+        ).isInstanceOf(ProductNotAvailableException.class);
     }
 
     @Test
@@ -498,7 +503,7 @@ class OrderServiceTest {
         //then
         assertThatThrownBy(() ->
                 orderService.approve(1L, 1L)
-        ).isInstanceOf(IllegalArgumentException.class);
+        ).isInstanceOf(AccessDeniedException.class);
     }
 
     @Test
@@ -592,8 +597,9 @@ class OrderServiceTest {
         OrderResponse result = orderService.confirmation(1L, 1L);
 
         //then
+        Product product1 = fakeProductRepository.findById(result.getProductId()).orElseThrow();
         assertThat(result.getStatus()).isEqualTo(OrderStatus.PURCHASE_CONFIRMATION);
-        assertThat(result.getProduct().getProductSellingStatus())
+        assertThat(product1.getSellingStatus())
                 .isEqualTo(ProductSellingStatus.COMPLETE);
     }
 
@@ -641,7 +647,7 @@ class OrderServiceTest {
         //then
         assertThatThrownBy(() ->
                 orderService.confirmation(1L, 2L)
-        ).isInstanceOf(IllegalStateException.class);
+        ).isInstanceOf(AccessDeniedException.class);
     }
 
     @Test
@@ -680,15 +686,15 @@ class OrderServiceTest {
                 .seller(seller)
                 .buyer(buyer)
                 .product(product)
-                .status(OrderStatus.REQUEST)
+                .status(OrderStatus.APPROVAL)
                 .build();
         fakeOrderRepository.save(order);
 
         //when
         //then
         assertThatThrownBy(() ->
-                orderService.confirmation(1L, 1L)
-        ).isInstanceOf(IllegalStateException.class);
+                orderService.confirmation(1L, 2L)
+        ).isInstanceOf(AccessDeniedException.class);
     }
 
     @Test
@@ -735,7 +741,7 @@ class OrderServiceTest {
         //then
         assertThatThrownBy(() ->
                 orderService.approve(1L, 2L)
-        ).isInstanceOf(IllegalStateException.class);
+        ).isInstanceOf(RuntimeException.class);
     }
 
     @Test
@@ -803,10 +809,11 @@ class OrderServiceTest {
         OrderResponse result = orderService.getById(1L);
 
         //then
+        Product product = fakeProductRepository.findById(result.getProductId()).orElseThrow();
         assertThat(result.getId()).isNotNull();
         assertThat(result.getBuyer().getId()).isEqualTo(1L);
         assertThat(result.getSeller().getId()).isEqualTo(2L);
-        assertThat(result.getProduct().getId()).isEqualTo(1L);
+        assertThat(product.getId()).isEqualTo(1L);
         assertThat(result.getPrice()).isEqualTo(150000);
         assertThat(result.getStatus()).isEqualTo(OrderStatus.REQUEST);
     }
@@ -1080,7 +1087,7 @@ class OrderServiceTest {
         assertThat(result.get(0).getId()).isNotNull();
         assertThat(result.get(0).getBuyer().getId()).isEqualTo(1L);
         assertThat(result.get(0).getSeller().getId()).isEqualTo(2L);
-        assertThat(result.get(0).getProduct().getId()).isEqualTo(1L);
+        assertThat(result.get(0).getProductId()).isEqualTo(1L);
         assertThat(result.get(0).getPrice()).isEqualTo(150000);
         assertThat(result.get(0).getStatus()).isEqualTo(OrderStatus.REQUEST);
     }

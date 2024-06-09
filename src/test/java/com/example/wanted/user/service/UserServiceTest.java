@@ -2,16 +2,17 @@ package com.example.wanted.user.service;
 
 import com.example.wanted.mock.FakeJwtUtil;
 import com.example.wanted.mock.FakeUserRepository;
-import com.example.wanted.module.exception.LoginCheckFailException;
+import com.example.wanted.module.exception.InvalidCredentialsException;
 import com.example.wanted.module.exception.ResourceAlreadyException;
 import com.example.wanted.module.exception.ResourceNotFoundException;
 import com.example.wanted.user.domain.User;
 import com.example.wanted.user.domain.UserCreate;
 import com.example.wanted.user.domain.UserLogin;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import javax.naming.AuthenticationException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -31,7 +32,7 @@ class UserServiceTest {
     }
 
     @Test
-    void User는_UserCreate_객체로_생성할_수_있다(){
+    void User는_UserCreate_객체로_생성할_수_있다() throws AuthenticationException {
         //given
         UserCreate userCreate = UserCreate.builder()
                 .name("홍길동")
@@ -50,7 +51,7 @@ class UserServiceTest {
     }
 
     @Test
-    void Account가_이미_존재하면_예외가_발생한다(){
+    void Account가_이미_존재하면_예외가_발생한다() throws AuthenticationException {
         //given
         UserCreate userCreate = UserCreate.builder()
                 .name("홍길동")
@@ -67,7 +68,7 @@ class UserServiceTest {
     }
 
     @Test
-    void UserLogin으로_로그인하면_토큰이_반환된다(){
+    void UserLogin으로_로그인하면_토큰이_반환된다() throws AuthenticationException {
         //given
         User user1 = userService.create(UserCreate.builder()
                 .name("홍길동")
@@ -99,10 +100,10 @@ class UserServiceTest {
         //then
         assertThatThrownBy(() ->
                 userService.login(userLogin)
-        ).isInstanceOf(ResourceNotFoundException.class);
+        ).isInstanceOf(InvalidCredentialsException.class);
     }
     @Test
-    void password가_틀리면_예외가_발생한다(){
+    void password가_틀리면_예외가_발생한다() throws AuthenticationException {
         //given
         User user1 = userService.create(UserCreate.builder()
                 .name("홍길동")
@@ -119,11 +120,11 @@ class UserServiceTest {
         //then
         assertThatThrownBy(() ->
                 userService.login(userLogin)
-        ).isInstanceOf(LoginCheckFailException.class);
+        ).isInstanceOf(InvalidCredentialsException.class);
     }
 
     @Test
-    void UserId로_유저_정보를_가져올_수_있다(){
+    void UserId로_유저_정보를_가져올_수_있다() throws AuthenticationException {
         //given
         User user1 = userService.create(UserCreate.builder()
                 .name("홍길동")
@@ -142,7 +143,7 @@ class UserServiceTest {
     }
 
     @Test
-    void 없는_UserId로_조회_시_예외가_발생한다(){
+    void 없는_UserId로_조회_시_예외가_발생한다() throws AuthenticationException {
         //given
         User user1 = userService.create(UserCreate.builder()
                 .name("홍길동")

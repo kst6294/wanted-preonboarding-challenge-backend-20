@@ -1,12 +1,16 @@
 package com.example.wanted.order.domain;
 
+import com.example.wanted.module.exception.InvalidOrderStatusException;
+import com.example.wanted.module.exception.OrderConfirmationNotAllowedException;
 import com.example.wanted.module.exception.ResourceNotFoundException;
+import com.example.wanted.module.exception.SellerCannotMakeOrderException;
 import com.example.wanted.product.domain.Product;
 import com.example.wanted.product.domain.ProductSellingStatus;
 import com.example.wanted.user.domain.Role;
 import com.example.wanted.user.domain.User;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.security.access.AccessDeniedException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -78,7 +82,7 @@ class OrderTest {
         //when
         //then
         assertThatThrownBy(() -> Order.from(seller, product)
-        ).isInstanceOf(IllegalArgumentException.class);
+        ).isInstanceOf(SellerCannotMakeOrderException.class);
     }
 
     @Test
@@ -150,7 +154,7 @@ class OrderTest {
         //when
         //then
         assertThatThrownBy(() -> order.approve(seller)
-        ).isInstanceOf(IllegalStateException.class);
+        ).isInstanceOf(InvalidOrderStatusException.class);
     }
 
     @Test
@@ -185,7 +189,7 @@ class OrderTest {
         //when
         //then
         assertThatThrownBy(() -> order.approve(buyer)
-        ).isInstanceOf(IllegalArgumentException.class);
+        ).isInstanceOf(AccessDeniedException.class);
     }
 
     @Test

@@ -1,5 +1,6 @@
 package com.example.wanted.product.domain;
 
+import com.example.wanted.module.exception.ProductNotAvailableException;
 import com.example.wanted.module.exception.ResourceNotFoundException;
 import com.example.wanted.user.domain.Role;
 import com.example.wanted.user.domain.User;
@@ -127,7 +128,7 @@ class ProductTest {
         //then
         assertThatThrownBy(() ->
                 product.deductQuantity()
-        ).isInstanceOf(IllegalStateException.class);
+        ).isInstanceOf(ProductNotAvailableException.class);
     }
 
     @Test
@@ -253,7 +254,7 @@ class ProductTest {
         //then
         assertThatThrownBy(() ->
                 product.complete()
-        ).isInstanceOf(IllegalStateException.class);
+        ).isInstanceOf(ProductNotAvailableException.class);
     }
 
     @Test
@@ -286,7 +287,7 @@ class ProductTest {
         //then
         assertThatThrownBy(() ->
                 product.complete()
-        ).isInstanceOf(IllegalStateException.class);
+        ).isInstanceOf(ProductNotAvailableException.class);
     }
 
 }

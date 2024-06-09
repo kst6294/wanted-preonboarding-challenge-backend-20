@@ -1,9 +1,8 @@
 package com.example.wanted.user.service;
 
+import com.example.wanted.module.exception.InvalidCredentialsException;
 import com.example.wanted.module.exception.ResourceAlreadyException;
-import com.example.wanted.module.exception.LoginCheckFailException;
 import com.example.wanted.module.exception.ResourceNotFoundException;
-import com.example.wanted.module.jwt.JwtUtilImpl;
 import com.example.wanted.user.domain.User;
 import com.example.wanted.user.domain.UserCreate;
 import com.example.wanted.user.domain.UserLogin;
@@ -38,11 +37,11 @@ public class UserService {
 
     public String login(UserLogin request) {
         User user = userRepository.findByAccount(request.getAccount()).orElseThrow(() ->
-                new ResourceNotFoundException("User", request.getAccount())
+            new InvalidCredentialsException("계정혹은 패스워드가 잘못되었습니다.")
         );
 
         if (!user.getPassword().equals(request.getPassword())) {
-            throw new LoginCheckFailException();
+            throw new InvalidCredentialsException("계정혹은 패스워드가 잘못되었습니다.");
         }
 
         return jwtUtil.createAccessToken(user);

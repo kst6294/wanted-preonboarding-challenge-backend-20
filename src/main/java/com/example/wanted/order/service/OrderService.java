@@ -1,5 +1,6 @@
 package com.example.wanted.order.service;
 
+import com.example.wanted.module.exception.AlreadyOrderException;
 import com.example.wanted.module.exception.ResourceNotFoundException;
 import com.example.wanted.order.domain.Order;
 import com.example.wanted.order.domain.OrderCreate;
@@ -7,6 +8,7 @@ import com.example.wanted.order.domain.OrderStatus;
 import com.example.wanted.order.service.port.OrderRepository;
 import com.example.wanted.order.service.response.OrderResponse;
 import com.example.wanted.product.domain.Product;
+import com.example.wanted.product.domain.ProductSellingStatus;
 import com.example.wanted.product.service.port.ProductRepository;
 import com.example.wanted.user.domain.User;
 import com.example.wanted.user.service.port.UserRepository;
@@ -43,7 +45,7 @@ public class OrderService {
         //주문 이력 환인
         List<Order> checkOrder = orderRepository.findByProductAndUser(product, user);
         if(!checkOrder.isEmpty()) {
-            throw new IllegalArgumentException("주문 이력이 있습니다.");
+            throw new AlreadyOrderException("주문 이력이 있습니다.");
         }
 
         product.deductQuantity();
@@ -76,12 +78,13 @@ public class OrderService {
                 new ResourceNotFoundException("Order", orderId)
         );
 
-        List<Order> notConfirmationOrders = orderRepository.findByProductAndOrderStatusIn(
+        List<Order> notConfirmedOrders = orderRepository.findByProductAndOrderStatusIn(
                 order.getProduct(), OrderStatus.notConfirmationStatus()
         );
         Product product = order.getProduct();
-        if(notConfirmationOrders.size() == 1 &&
-                notConfirmationOrders.get(0).getId().equals(order.getId())
+        if(
+                isOnlyCurrentOrderNotConfirmed(order, notConfirmedOrders) &&
+                product.getSellingStatus().equals(ProductSellingStatus.RESERVATION)
         ) {
             product.complete();
             product = productRepository.save(product);
@@ -91,6 +94,11 @@ public class OrderService {
         order = orderRepository.save(order);
 
         return OrderResponse.from(order);
+    }
+
+    private boolean isOnlyCurrentOrderNotConfirmed(Order order, List<Order> notConfirmedOrders) {
+        return notConfirmedOrders.size() == 1 &&
+                notConfirmedOrders.get(0).getId().equals(order.getId());
     }
 
     @Transactional(readOnly = true)
@@ -108,7 +116,11 @@ public class OrderService {
                 new ResourceNotFoundException("User", userId)
         );
 
-        return orderRepository.findByUser(user).stream().map(OrderResponse::from).collect(Collectors.toList());
+        return orderRepository
+                .findByUser(user)
+                .stream()
+                .map(OrderResponse::from)
+                .collect(Collectors.toList());
     }
 
     @Transactional(readOnly = true)
