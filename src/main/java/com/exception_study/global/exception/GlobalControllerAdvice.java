@@ -14,7 +14,13 @@ public class GlobalControllerAdvice {
 
     @ExceptionHandler(StudyApplicationException.class)
     public ResponseEntity<?> errorHandler(StudyApplicationException e){
-        log.error("Error occurs {}", e.toString());
+        StackTraceElement[] stackTrace = e.getStackTrace();
+        if(stackTrace.length>0){
+            StackTraceElement element = stackTrace[0];
+            log.error("Error occurs in {}, cause {}",element.getClassName(),e.getMessage());
+        }else{
+            log.error("Error occurs {}",e.getMessage());
+        }
         return ResponseEntity.status(e.getErrorCode().getStatus())
                 .body(ResponseDto.error(e.getErrorCode().name()));
     }

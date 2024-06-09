@@ -31,7 +31,7 @@ public class WebSecurityConfig {
                 .httpBasic(AbstractHttpConfigurer::disable)
                 .headers(headers ->
                         headers
-                                .frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin) //swagger
+                                .frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin)
                 )
                 .sessionManagement((sessionManagement)
                         -> sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

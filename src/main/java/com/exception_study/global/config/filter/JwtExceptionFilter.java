@@ -17,6 +17,11 @@ import java.io.IOException;
 @RequiredArgsConstructor
 @Component
 public class JwtExceptionFilter extends OncePerRequestFilter {
+    /**
+     * switch문 case를 실제 예외 클래스를 비교하는 것으로 변경할 것 고려
+     * 현재는 .getClass활용 시 좀 복잡한 코드로 작성될걸 우려해서 고민해서 적용해봐야할듯 함
+     */
+
     @Override
     protected void doFilterInternal(
             @Nonnull HttpServletRequest request,

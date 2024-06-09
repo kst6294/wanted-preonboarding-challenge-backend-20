@@ -33,7 +33,7 @@ public class ProductService {
 
     public void register(RegisterRequest dto, String userId) {
         UserAccount userAccount = userAccountRepository.findById(userId).orElseThrow(
-                () -> new StudyApplicationException(ErrorCode.USER_NOT_FOUND)
+                () -> new StudyApplicationException(ErrorCode.USER_NOT_FOUND,String.format("user id is %s",userId))
         );
         Product product = Product.of(dto.getName(), dto.getPrice(),dto.getQuantity(),userAccount);
         productRepository.save(product);
@@ -42,7 +42,7 @@ public class ProductService {
     @Transactional(readOnly = true)
     public ProductDto getDetails(Long id) {
         Product product = productRepository.findById(id).orElseThrow(
-                () -> new StudyApplicationException(ErrorCode.PRODUCT_NOT_FOUND)
+                () -> new StudyApplicationException(ErrorCode.PRODUCT_NOT_FOUND,String.format("product id is %d",id))
         );
         return ProductDto.from(product);
     }
@@ -50,10 +50,10 @@ public class ProductService {
     @Transactional(readOnly = true)
     public DetailsWithHistoryResponse getDetails(Long id, String userId) {
         UserAccount userAccount = userAccountRepository.findById(userId).orElseThrow(
-                () -> new StudyApplicationException(ErrorCode.USER_NOT_FOUND)
+                () -> new StudyApplicationException(ErrorCode.USER_NOT_FOUND,String.format("user id is %s",userId))
         );
         Product product = productRepository.findById(id).orElseThrow(
-                () -> new StudyApplicationException(ErrorCode.PRODUCT_NOT_FOUND)
+                () -> new StudyApplicationException(ErrorCode.PRODUCT_NOT_FOUND,String.format("product id is %d",id))
         );
 
         List<ProductOrderDto> history = productOrderRepository.findTransaction_History(product.getSeller().getUserId(),userAccount.getUserId())

@@ -41,15 +41,9 @@ public class TokenProvider {
         try {
             //token을 키를 사용해서 디코딩
             claims = Jwts.parser().setSigningKey(SECURITY_KEY).parseClaimsJws(token).getBody();
-        } catch (SignatureException e) {
-            log.info("SignatureException log:{}", e.getMessage());
-            throw new JwtException("SignatureException");
-        } catch (MalformedJwtException e) {
-            log.info("MalformedJwtException log:{}", e.getMessage());
-            throw new JwtException("MalformedJwtException");
-        } catch (ExpiredJwtException e) {
-            log.info("ExpiredJwtException log:{}", e.getMessage());
-            throw new JwtException("ExpiredJwtException");
+        } catch (JwtException e) {
+            log.info("JwtException log:{}",e.getMessage());
+            throw e;
         } catch (IllegalArgumentException e) {
             log.info("IllegalArgumentException log:{}", e.getMessage());
             throw new JwtException("IllegalArgumentException");

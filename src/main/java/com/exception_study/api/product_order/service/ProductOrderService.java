@@ -28,10 +28,10 @@ public class ProductOrderService {
 
     public ProductOrderDto reserve(Long productId, String userId) {
         UserAccount buyer = userAccountRepository.findById(userId).orElseThrow(
-                () -> new StudyApplicationException(ErrorCode.USER_NOT_FOUND)
+                () -> new StudyApplicationException(ErrorCode.USER_NOT_FOUND, String.format("user id is %s", userId))
         );
         Product product = productRepository.findById(productId).orElseThrow(
-                () -> new StudyApplicationException(ErrorCode.PRODUCT_NOT_FOUND)
+                () -> new StudyApplicationException(ErrorCode.PRODUCT_NOT_FOUND, String.format("product id is %d", productId))
         );
 
         ProductOrder orderCheck = productOrderRepository.findByProduct_IdAndBuyer(productId, buyer);
@@ -51,10 +51,10 @@ public class ProductOrderService {
 
     public void approve(Long id, String userId) {
         UserAccount seller = userAccountRepository.findById(userId).orElseThrow(
-                () -> new StudyApplicationException(ErrorCode.USER_NOT_FOUND)
+                () -> new StudyApplicationException(ErrorCode.USER_NOT_FOUND, String.format("user id is %s", userId))
         );
         ProductOrder productOrder = productOrderRepository.findById(id).orElseThrow(
-                () -> new StudyApplicationException(ErrorCode.PRODUCT_ORDER_NOT_FOUND)
+                () -> new StudyApplicationException(ErrorCode.PRODUCT_ORDER_NOT_FOUND, String.format("product order id is %d", id))
         );
         if (!productOrder.getSeller().equals(seller)) {
             throw new StudyApplicationException(ErrorCode.INVALID_PERMISSION);
@@ -76,15 +76,15 @@ public class ProductOrderService {
 
     public void confirm(Long id, String userId) {
         UserAccount buyer = userAccountRepository.findById(userId).orElseThrow(
-                () -> new StudyApplicationException(ErrorCode.USER_NOT_FOUND)
+                () -> new StudyApplicationException(ErrorCode.USER_NOT_FOUND, String.format("user id is %s", userId))
         );
         ProductOrder productOrder = productOrderRepository.findById(id).orElseThrow(
-                () -> new StudyApplicationException(ErrorCode.PRODUCT_NOT_FOUND)
+                () -> new StudyApplicationException(ErrorCode.PRODUCT_ORDER_NOT_FOUND, String.format("product order id is %d", id))
         );
         if (!productOrder.getBuyer().equals(buyer)) {
             throw new StudyApplicationException(ErrorCode.INVALID_PERMISSION);
         }
-        if((productOrder.getBuyerStatus().equals("예약중") && productOrder.getSellerStatus().equals("예약중"))) {
+        if ((productOrder.getBuyerStatus().equals("예약중") && productOrder.getSellerStatus().equals("예약중"))) {
             Product product = productOrder.getProduct();
             int current_quantity = product.getQuantity();
             productOrder.setSellerStatus("완료");
