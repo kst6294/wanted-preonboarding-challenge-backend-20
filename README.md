@@ -2,4 +2,4 @@
 
 
 ### 1단계 완료 
-[View HTML](https://beargame123.github.io/wanted-preonboarding-challenge-backend-20/index.html)
+[API 문서보기](https://beargame123.github.io/abc/index.html)
