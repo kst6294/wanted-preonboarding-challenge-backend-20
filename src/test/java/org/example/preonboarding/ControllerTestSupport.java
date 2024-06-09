@@ -1,6 +1,7 @@
 package org.example.preonboarding;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.example.preonboarding.member.service.MemberService;
 import org.example.preonboarding.member.util.MemberUtil;
 import org.example.preonboarding.order.controller.OrderController;
 import org.example.preonboarding.order.service.OrderService;
@@ -36,6 +37,9 @@ public abstract class ControllerTestSupport {
 
     @MockBean
     protected ProductService productService;
+
+    @MockBean
+    protected MemberService memberService;
 
     protected String asJsonString(Object obj) throws Exception {
         ObjectMapper objectMapper = new ObjectMapper();

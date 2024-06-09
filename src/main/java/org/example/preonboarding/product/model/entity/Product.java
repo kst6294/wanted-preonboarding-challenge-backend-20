@@ -51,7 +51,7 @@ public class Product extends BaseEntity {
     @Comment("제품 삭제일시")
     private LocalDateTime deletedAt;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "selling_user_id")
     private Member seller;
 

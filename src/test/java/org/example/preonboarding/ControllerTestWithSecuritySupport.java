@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.example.preonboarding.config.security.CustomAuthenticationManager;
 import org.example.preonboarding.config.security.SecurityConfig;
 import org.example.preonboarding.config.security.TokenProvider;
+import org.example.preonboarding.member.controller.MemberController;
 import org.example.preonboarding.member.service.MemberService;
 import org.example.preonboarding.member.util.MemberUtil;
 import org.example.preonboarding.order.controller.OrderController;
@@ -22,6 +23,7 @@ import org.springframework.test.web.servlet.MockMvc;
 @WebMvcTest(controllers = {
         OrderController.class,
         ProductController.class,
+        MemberController.class,
 }
 )
 public abstract class ControllerTestWithSecuritySupport {
