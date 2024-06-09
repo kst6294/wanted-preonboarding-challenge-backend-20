@@ -10,6 +10,17 @@ public final class ProductPurchaseValidation {
         super();
     }
     
+    /**
+     * 상품 구매 유효성 검사
+     * @param user
+     * @param productId
+     * @return Product
+     * @throws BusinessException
+     * 가입 유저 확인
+     * 상품 존재 확인
+     * 상품 상태 확인
+     * 상품 가격 변동 확인
+     */
     @org.jetbrains.annotations.NotNull()
     public final com.api.jellomarket.domain.product.Product validateProductPurchase(@org.jetbrains.annotations.Nullable()
     com.api.jellomarket.domain.user.User user, long productId) {

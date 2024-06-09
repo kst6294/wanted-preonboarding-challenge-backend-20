@@ -26,6 +26,6 @@ class Order(
     val createdAt: String,
 
     @Column(name = "updated_at")
-    val updatedAt: String?
+    val updatedAt: String? = null
 ) {
 }

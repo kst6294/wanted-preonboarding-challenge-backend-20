@@ -7,6 +7,7 @@ import com.api.jellomarket.dto.product.ProductCreateRequestDTO
 import com.api.jellomarket.dto.product.ProductDetailDTO
 import com.api.jellomarket.dto.product.ProductListDTO
 import com.api.jellomarket.enums.product.ProductState
+import com.api.jellomarket.utils.JelloUtils
 import com.api.jellomarket.validation.ProductValidation
 import org.springframework.stereotype.Service
 import java.time.Instant
@@ -81,7 +82,7 @@ class ProductService(
             description = request.description,
             imageUrl = request.imageUrl,
             sellerId = user?.userId!!,
-            createdAt = Instant.now().atZone(ZoneId.of("Asia/Seoul")).format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")),
+            createdAt = JelloUtils().getCurrentDateTime(),
         )
         val savedProduct = productRepository.save(product)
         return savedProduct.name
