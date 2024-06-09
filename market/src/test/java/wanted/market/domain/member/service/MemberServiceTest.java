@@ -1,9 +1,6 @@
 package wanted.market.domain.member.service;
 
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.DynamicTest;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestFactory;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
@@ -31,6 +28,11 @@ class MemberServiceTest {
 
     @Autowired
     private MemberRepository memberRepository;
+
+    @AfterEach
+    void tearDown() {
+        memberRepository.deleteAllInBatch();
+    }
 
     @Test
     @DisplayName("회원가입을 시도한 이메일이 중복된 이메일인지 확인한다.")

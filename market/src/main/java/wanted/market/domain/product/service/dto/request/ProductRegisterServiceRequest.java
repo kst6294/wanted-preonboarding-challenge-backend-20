@@ -38,7 +38,8 @@ public class ProductRegisterServiceRequest {
                 .member(member)
                 .price(price)
                 .reservationStatus(reservationStatus)
-                .quantity(quantity)
+                .remainQuantity(quantity)
+                .completeQuantity(0)
                 .content(content)
                 .build();
     }

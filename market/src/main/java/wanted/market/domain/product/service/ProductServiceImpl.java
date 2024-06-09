@@ -39,7 +39,7 @@ public class ProductServiceImpl implements ProductService {
     public List<ProductListResponse> findProductList(int page) {
         Page<Product> products = productRepository.findAll(PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.DESC, "id")));
         return products.stream()
-                .map(product -> new ProductListResponse(product.getName(), product.getPrice(), product.getReservationStatus()))
+                .map(ProductListResponse::of)
                 .collect(Collectors.toList());
     }
 
@@ -49,5 +49,17 @@ public class ProductServiceImpl implements ProductService {
                 .orElseThrow(() -> new RestApiException(CommonErrorCode.DATA_NOT_FOUND));
 
         return ProductDetailResponse.of(product);
+    }
+
+    @Override
+    public List<ProductListResponse> findProductWithMember(String email) {
+        Member member = memberRepository.findMemberByEmail(email)
+                .orElseThrow(() -> new RestApiException(CommonErrorCode.USER_NOT_FOUND));
+
+        List<Product> products = productRepository.findAllByMember(member);
+
+        return products.stream()
+                .map(ProductListResponse::of)
+                .collect(Collectors.toList());
     }
 }

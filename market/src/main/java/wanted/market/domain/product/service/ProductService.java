@@ -12,4 +12,6 @@ public interface ProductService {
     List<ProductListResponse> findProductList(int page);
 
     ProductDetailResponse findProductDetail(Long id);
+
+    List<ProductListResponse> findProductWithMember(String email);
 }

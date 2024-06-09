@@ -6,13 +6,13 @@ import org.springframework.http.HttpStatus;
 
 @Data
 public class ErrorResultDto {
-    private HttpStatus httpStatus;
+    private HttpStatus status;
     private int code;
     private String message;
 
     @Builder
-    public ErrorResultDto(HttpStatus httpStatus, int code, String message){
-        this.httpStatus = httpStatus;
+    public ErrorResultDto(HttpStatus status, int code, String message){
+        this.status = status;
         this.code = code;
         this.message = message;
     }

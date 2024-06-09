@@ -2,6 +2,7 @@ package wanted.market.domain;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -9,6 +10,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.transaction.annotation.Transactional;
 import wanted.market.domain.member.controller.MemberController;
 import wanted.market.domain.member.repository.MemberRepository;
 import wanted.market.domain.member.repository.entity.Member;
@@ -19,8 +21,11 @@ import wanted.market.domain.member.service.dto.response.MemberLoginResponse;
 import wanted.market.domain.product.controller.ProductController;
 import wanted.market.domain.product.repository.ProductRepository;
 import wanted.market.domain.product.service.ProductService;
+import wanted.market.domain.transcation.repository.TransactionRepository;
+import wanted.market.domain.transcation.service.TransactionService;
 
 @ActiveProfiles("test")
+@Transactional
 @AutoConfigureMockMvc
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
 public abstract class ControllerTestSupport {
@@ -38,11 +43,20 @@ public abstract class ControllerTestSupport {
     protected ProductRepository productRepository;
 
     @Autowired
+    protected TransactionService transactionService;
+
+    @Autowired
+    protected TransactionRepository transactionRepository;
+
+    @Autowired
     protected MemberService memberService;
 
+
     protected String email;
+    protected String email2;
 
     protected String accessToken;
+    protected String accessToken2;
 
     @BeforeEach
     void setUp() {
@@ -52,16 +66,27 @@ public abstract class ControllerTestSupport {
                 .password("password")
                 .build());
 
+        memberService.join(MemberJoinServiceRequest.builder()
+                .email("testuser2@example.com")
+                .password("password")
+                .build());
+
         accessToken = memberService.login(MemberLoginServiceRequest.builder()
                 .email("testuser@example.com")
                 .password("password")
                 .build()).getAccessToken();
 
+        accessToken2 = memberService.login(MemberLoginServiceRequest.builder()
+                .email("testuser2@example.com")
+                .password("password")
+                .build()).getAccessToken();
+
         email = "testuser@example.com";
+        email2 = "testuser2@example.com";;
     }
 
     @AfterEach
     void tearDown() {
-        productRepository.deleteAllInBatch();
+//        productRepository.deleteAllInBatch();
     }
 }

@@ -9,6 +9,8 @@ import wanted.market.domain.ControllerTestSupport;
 
 import wanted.market.domain.product.controller.dto.request.ProductRegisterRequest;
 import wanted.market.domain.product.repository.entity.Product;
+import wanted.market.domain.transcation.service.dto.request.TransactionCreateServiceRequest;
+import wanted.market.domain.transcation.service.dto.response.TransactionCreateResponse;
 
 import java.util.List;
 
@@ -72,6 +74,26 @@ class ProductControllerTest extends ControllerTestSupport {
         mockMvc.perform(
                         get("/api/v1/product/detail")
                                 .queryParam("productId", Long.toString(id))
+                ).andDo(print())
+                .andExpect(jsonPath("$.code").value("200"))
+                .andExpect(jsonPath("$.status").value("OK"))
+                .andExpect(jsonPath("$.message").value("OK"));
+    }
+
+    @Test
+    @DisplayName("상대방이 등록한 역대 제품 정보를 조회한다.")
+    void findProductWithMember() throws Exception {
+        // given
+        ProductRegisterRequest request = createProductRegisterRequest("라면", 1000, 1);
+        ProductRegisterRequest request2 = createProductRegisterRequest("커피", 3000, 1);
+        productService.register(request.toService(email));
+        productService.register(request2.toService(email));
+
+        // when & then
+        mockMvc.perform(
+                        get("/api/v1/product/member-list")
+                                .header("Authorization", "Bearer " + accessToken)
+                                .queryParam("email", email)
                 ).andDo(print())
                 .andExpect(jsonPath("$.code").value("200"))
                 .andExpect(jsonPath("$.status").value("OK"))

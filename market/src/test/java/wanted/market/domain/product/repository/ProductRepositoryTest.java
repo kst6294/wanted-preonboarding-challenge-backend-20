@@ -1,6 +1,5 @@
 package wanted.market.domain.product.repository;
 
-import org.assertj.core.groups.Tuple;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -13,7 +12,6 @@ import org.springframework.test.context.ActiveProfiles;
 import wanted.market.domain.member.repository.MemberRepository;
 import wanted.market.domain.member.repository.entity.Member;
 import wanted.market.domain.product.repository.entity.Product;
-import wanted.market.global.dto.Authority;
 
 import java.util.List;
 import java.util.Optional;
@@ -107,7 +105,7 @@ class ProductRepositoryTest {
     void updateProductReservationStatus() {
         // given
         Product product = productRepository.save(createProduct("라면", 1000, 1));
-        product.updateReservationStatusAndQuantity();
+        product.updateReservationStatus();
 
         // when
         Optional<Product> byId = productRepository.findById(product.getId());
@@ -115,15 +113,14 @@ class ProductRepositoryTest {
         // then
         assertThat(byId).isPresent();
         assertThat(byId.get().getReservationStatus()).isEqualTo(RESERVATION);
-        assertThat(byId.get().getQuantity()).isEqualTo(0);
     }
 
     @Test
-    @DisplayName("한 구매자가 구매요청을 한 경우, 해당 제품의 수량이 더 남아있으면 수량을 차감하고, 예약상태는 '판매중' 으로 유지한다.")
+    @DisplayName("한 구매자가 구매요청을 한 경우, 해당 제품의 수량이 더 남아있으면 예약상태는 '판매중' 으로 유지한다.")
     void maintainProductReservationStatus() {
         // given
         Product product = productRepository.save(createProduct("라면", 1000, 2));
-        product.updateReservationStatusAndQuantity();
+        product.updateReservationStatus();
 
         // when
         Optional<Product> byId = productRepository.findById(product.getId());
@@ -132,16 +129,15 @@ class ProductRepositoryTest {
 
         // then
         assertThat(byId).isPresent();
-        assertThat(byId.get().getQuantity()).isGreaterThan(0);
         assertThat(byId.get().getReservationStatus()).isEqualTo(SALE);
     }
 
     @Test
-    @DisplayName("거래가 취소되는 경우, 해당 수량이 다시 반환되어야 하고, 만약 제품의 예약상태가 '예약중' 인 경우 '판매중' 으로 변경된다.")
+    @DisplayName("거래가 취소되는 경우, 만약 제품의 예약상태가 '예약중' 인 경우 '판매중' 으로 변경된다.")
     void bringBackQuantity() {
         // given
         Product product = productRepository.save(createProduct("라면", 1000, 1));
-        product.updateReservationStatusAndQuantity();
+        product.updateReservationStatus();
 
         Optional<Product> byId1 = productRepository.findById(product.getId());
         byId1.get().bringBackQuantity();
@@ -151,7 +147,6 @@ class ProductRepositoryTest {
 
         // then
         assertThat(byId2).isPresent();
-        assertThat(byId2.get().getQuantity()).isGreaterThan(0);
         assertThat(byId2.get().getReservationStatus()).isEqualTo(SALE);
     }
 
@@ -161,7 +156,8 @@ class ProductRepositoryTest {
                 .member(member)
                 .price(price)
                 .reservationStatus(SALE)
-                .quantity(quantity)
+                .remainQuantity(quantity)
+                .completeQuantity(0)
                 .content("판매중입니다.")
                 .build();
     }

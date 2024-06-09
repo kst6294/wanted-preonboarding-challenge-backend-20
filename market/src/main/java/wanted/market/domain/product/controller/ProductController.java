@@ -1,5 +1,6 @@
 package wanted.market.domain.product.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,7 +21,7 @@ public class ProductController {
     private final ProductService productService;
 
     @PostMapping("/register")
-    public ApiResponse<Long> registerProduct(@RequestBody ProductRegisterRequest request, @AuthenticationPrincipal UserDetails userDetail) {
+    public ApiResponse<Long> registerProduct(@Valid @RequestBody ProductRegisterRequest request, @AuthenticationPrincipal UserDetails userDetail) {
         return ApiResponse.ok(productService.register(request.toService(userDetail.getUsername())));
     }
 
@@ -32,5 +33,10 @@ public class ProductController {
     @GetMapping("/detail")
     public ApiResponse<ProductDetailResponse> findProductDetail(@RequestParam("productId") Long productId) {
         return ApiResponse.ok(productService.findProductDetail(productId));
+    }
+
+    @GetMapping("/member-list")
+    public ApiResponse<List<ProductListResponse>> findProductWithMember(@RequestParam("email") String email) {
+        return ApiResponse.ok(productService.findProductWithMember(email));
     }
 }

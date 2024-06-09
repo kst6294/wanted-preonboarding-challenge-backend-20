@@ -45,11 +45,11 @@ public class MemberServiceImpl implements MemberService{
     @Override
     public MemberLoginResponse login(MemberLoginServiceRequest request) {
         Member loginMember = memberRepository.findMemberByEmail(request.getEmail()).orElseThrow(
-                () -> new RestApiException(CommonErrorCode.DATA_NOT_FOUND));
+                () -> new RestApiException(CommonErrorCode.USER_NOT_FOUND));
 
         // 유저가 입력한 비밀번호와 DB에 저장된 해시된 비밀번호를 비교
         if (!passwordEncoder.matches(request.getPassword(), loginMember.getPassword())) {
-            throw new RestApiException(CommonErrorCode.DATA_NOT_FOUND);
+            throw new RestApiException(CommonErrorCode.USER_NOT_FOUND);
         }
 
         // 로그인할 때 입력한 이메일과 비밀번호로 인증용 토큰 생성

@@ -4,6 +4,7 @@ import lombok.Builder;
 import lombok.Getter;
 import wanted.market.domain.product.repository.entity.ReservationStatus;
 import wanted.market.domain.product.service.dto.request.ProductRegisterServiceRequest;
+import jakarta.validation.constraints.Positive;
 
 import static wanted.market.domain.product.repository.entity.ReservationStatus.*;
 
@@ -11,10 +12,12 @@ import static wanted.market.domain.product.repository.entity.ReservationStatus.*
 public class ProductRegisterRequest {
     private String name;
 
+    @Positive(message = "상품 가격은 양수여야 합니다.")
     private int price;
 
     private ReservationStatus reservationStatus;
 
+    @Positive(message = "상품 수량은 0보다 커야 합니다.")
     private int quantity;
 
     private String content;

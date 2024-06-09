@@ -1,13 +1,11 @@
 package wanted.market.domain.product.service;
 
 import org.assertj.core.groups.Tuple;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.transaction.annotation.Transactional;
 import wanted.market.domain.member.repository.MemberRepository;
 import wanted.market.domain.member.repository.entity.Member;
 import wanted.market.domain.product.repository.ProductRepository;
@@ -15,6 +13,8 @@ import wanted.market.domain.product.repository.entity.Product;
 import wanted.market.domain.product.service.dto.request.ProductRegisterServiceRequest;
 import wanted.market.domain.product.service.dto.response.ProductDetailResponse;
 import wanted.market.domain.product.service.dto.response.ProductListResponse;
+import wanted.market.domain.transcation.service.dto.response.TransactionCreateResponse;
+import wanted.market.domain.transcation.service.dto.response.TransactionListResponse;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -24,8 +24,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.groups.Tuple.*;
 
 import static wanted.market.domain.product.repository.entity.ReservationStatus.SALE;
+import static wanted.market.domain.transcation.repository.entity.TransactionStatus.TRADING;
 import static wanted.market.global.dto.Authority.ROLE_USER;
 
+@Transactional
 @SpringBootTest
 @ActiveProfiles("test")
 class ProductServiceTest {
@@ -53,6 +55,7 @@ class ProductServiceTest {
     @AfterEach
     void tearDown() {
         productRepository.deleteAllInBatch();
+        memberRepository.deleteAllInBatch();
     }
 
     @Test
@@ -117,6 +120,27 @@ class ProductServiceTest {
         assertThat(response.getPrice()).isEqualTo(product.getPrice());
     }
 
+    @Test
+    @DisplayName("상대방이 등록한 역대 제품 정보를 조회한다.")
+    void findProductWithMember() {
+        // given
+        Product product = productRepository.save(createProduct("라면", 1000, 1));
+        Product product2 = productRepository.save(createProduct("커피", 4000, 1));
+
+        // when
+        List<ProductListResponse> products = productService.findProductWithMember(member.getEmail());
+
+
+        // then
+        assertThat(products).hasSize(2)
+                .extracting("name", "price", "reservationStatus")
+                .containsExactlyInAnyOrder(
+                        tuple("라면", 1000, SALE),
+                        tuple("커피", 4000, SALE)
+                );
+    }
+
+
     private static ProductRegisterServiceRequest createProductRequest() {
         return ProductRegisterServiceRequest.builder()
                 .name("라면")
@@ -134,7 +158,7 @@ class ProductServiceTest {
                 .member(member)
                 .price(price)
                 .reservationStatus(SALE)
-                .quantity(quantity)
+                .remainQuantity(quantity)
                 .content("판매중입니다.")
                 .build();
     }

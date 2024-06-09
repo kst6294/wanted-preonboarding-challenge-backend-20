@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
@@ -20,13 +21,13 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(RestApiException.class)
     public ResponseEntity<ErrorResultDto> handleCustomException(RestApiException e) {
         ErrorCode errorCode = e.getErrorCode();
-        return ResponseEntity.status(errorCode.getHttpStatus()).body(makeResponseBody(errorCode));
+        return ResponseEntity.status(errorCode.getStatus()).body(makeResponseBody(errorCode));
     }
 
     @Override
     protected ResponseEntity<Object> handleExceptionInternal(Exception ex, Object body, HttpHeaders headers, HttpStatusCode statusCode, WebRequest request) {
         ErrorCode errorCode = makeErrorCode(ex);
-        return ResponseEntity.status(errorCode.getHttpStatus()).body(makeResponseBody(errorCode));
+        return ResponseEntity.status(errorCode.getStatus()).body(makeResponseBody(errorCode));
     }
 
     private ErrorCode makeErrorCode(Exception ex) {
@@ -38,11 +39,13 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
             return CommonErrorCode.NOT_FOUND;
         } else if (ex instanceof HttpMessageNotReadableException) {
             return CommonErrorCode.BAD_REQUEST;
+        } else if (ex instanceof MethodArgumentNotValidException) {
+            return CommonErrorCode.INVALID_INPUT_DATE;
         }
         return CommonErrorCode.INTERNAL_SERVER_ERROR;
     }
 
     private ErrorResultDto makeResponseBody(ErrorCode errorCode) {
-        return new ErrorResultDto(errorCode.getHttpStatus(), errorCode.getHttpStatus().value(), errorCode.getMessage());
+        return new ErrorResultDto(errorCode.getStatus(), errorCode.getStatus().value(), errorCode.getMessage());
     }
 }
