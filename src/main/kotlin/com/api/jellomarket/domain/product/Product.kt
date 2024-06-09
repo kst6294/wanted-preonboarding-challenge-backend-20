@@ -24,8 +24,6 @@ class Product (
     @Column(name = "image_url")
     var imageUrl: String? = null,
 
-    var category: String? = null,
-
     @Column(name = "seller_id")
     var sellerId: Long? = null,
 

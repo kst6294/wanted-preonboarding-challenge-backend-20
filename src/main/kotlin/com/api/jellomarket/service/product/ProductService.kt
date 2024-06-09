@@ -80,7 +80,6 @@ class ProductService(
             stock = request.stock,
             description = request.description,
             imageUrl = request.imageUrl,
-            category = request.category,
             sellerId = user?.userId!!,
             createdAt = Instant.now().atZone(ZoneId.of("Asia/Seoul")).format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")),
         )

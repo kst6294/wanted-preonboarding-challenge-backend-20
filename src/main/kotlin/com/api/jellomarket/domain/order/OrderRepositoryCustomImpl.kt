@@ -15,6 +15,6 @@ class OrderRepositoryCustomImpl(
         return queryFactory.select(QOrder.order)
             .from(QOrder.order)
             .where(QOrder.order.status.eq(orderStatus))
-            .fetchCount()
+            .fetch().size.toLong()
     }
 }

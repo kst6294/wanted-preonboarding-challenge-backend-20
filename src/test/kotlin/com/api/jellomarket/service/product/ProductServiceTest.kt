@@ -40,7 +40,6 @@ class ProductServiceTest @Autowired constructor(
                     state = ProductState.ON_SALE,
                     stock = 10,
                     imageUrl = "test",
-                    category = "test",
                     sellerId = 1,
                     createdAt = "2021-10-10"
                 ),
@@ -50,7 +49,6 @@ class ProductServiceTest @Autowired constructor(
                     state = ProductState.ON_SALE,
                     stock = 20,
                     imageUrl = "test",
-                    category = "test",
                     sellerId = 2,
                     createdAt = "2021-10-10"
                 ),
@@ -60,7 +58,6 @@ class ProductServiceTest @Autowired constructor(
                     state = ProductState.ON_SALE,
                     stock = 30,
                     imageUrl = "test",
-                    category = "test",
                     sellerId = 3,
                     createdAt = "2021-10-10"
                 )
@@ -117,14 +114,13 @@ class ProductServiceTest @Autowired constructor(
                 state = ProductState.ON_SALE,
                 stock = 10,
                 imageUrl = "test",
-                category = "test",
                 sellerId = 1,
                 createdAt = "2021-10-10"
             )
         ) // 상품 1개 저장
 
         // when
-        val productDetail = productService.getProductDetail(product.id!!)
+        val productDetail = productService.getProductDetail(product.productId!!)
 
         // then
         assertEquals("test1", productDetail.name)

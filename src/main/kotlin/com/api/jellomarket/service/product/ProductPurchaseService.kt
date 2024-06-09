@@ -28,7 +28,7 @@ class ProductPurchaseService(
         val product = ProductPurchaseValidation(productRepository).validateProductPurchase(user, productId)
         if (product.stock <= 0) {
             // 모두 구매확정인지 확인
-            val isAllPurchaseDecided = orderRepository.countByOrderStatus(OrderStatus.PURCHASE_DECIDED)?:0
+            val isAllPurchaseDecided = orderRepository.countByOrderStatus(OrderStatus.PURCHASE_DECIDED)
             if (isAllPurchaseDecided <= 0) {
                 throw BusinessException.of(ErrorCodeCustom.SOLD_OUT)
             } else {

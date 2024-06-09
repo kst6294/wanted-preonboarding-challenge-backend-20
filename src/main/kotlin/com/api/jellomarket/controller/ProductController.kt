@@ -38,6 +38,6 @@ class ProductController(
     @PostMapping(PRODUCT_PURCHASE)
     fun purchaseProduct(@LoginUser user: User, @PathVariable productId: Long, @RequestBody request: ProductPurchaseRequestDTO): Boolean {
         val purchaseProductName = productPurchaseService.purchaseProduct(user, productId, request)
-        return purchaseProductName
+        return true
     }
 }

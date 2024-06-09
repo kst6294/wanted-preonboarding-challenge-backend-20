@@ -19,8 +19,6 @@ public class QProduct extends EntityPathBase<Product> {
 
     public static final QProduct product = new QProduct("product");
 
-    public final StringPath category = createString("category");
-
     public final StringPath createdAt = createString("createdAt");
 
     public final StringPath deletedAt = createString("deletedAt");
