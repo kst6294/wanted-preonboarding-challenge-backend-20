@@ -1,6 +1,8 @@
 package com.sunyesle.wanted_market.entity;
 
 import com.sunyesle.wanted_market.enums.OfferStatus;
+import com.sunyesle.wanted_market.exception.ErrorCodeException;
+import com.sunyesle.wanted_market.exception.OfferErrorCode;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -36,7 +38,39 @@ public class Offer {
         this.status = OfferStatus.OPEN;
     }
 
-    public void setStatus(OfferStatus status) {
-        this.status = status;
+    public void accept(Long memberId) {
+        validateSeller(memberId);
+        validateStatus(OfferStatus.OPEN);
+        this.status = OfferStatus.ACCEPTED;
+    }
+
+    public void decline(Long memberId) {
+        validateSeller(memberId);
+        validateStatus(OfferStatus.OPEN);
+        this.status = OfferStatus.DECLINED;
+    }
+
+    public void confirm(Long memberId) {
+        validateBuyer(memberId);
+        validateStatus(OfferStatus.ACCEPTED);
+        this.status = OfferStatus.CONFIRMED;
+    }
+
+    private void validateSeller(Long memberId) {
+        if (!memberId.equals(this.sellerId)) {
+            throw new ErrorCodeException(OfferErrorCode.NOT_OFFER_OFFEREE);
+        }
+    }
+
+    private void validateBuyer(Long memberId) {
+        if (!memberId.equals(this.buyerId)) {
+            throw new ErrorCodeException(OfferErrorCode.NOT_OFFER_OFFEROR);
+        }
+    }
+
+    private void validateStatus(OfferStatus offerStatus) {
+        if (this.status != offerStatus) {
+            throw new ErrorCodeException(OfferErrorCode.INVALID_OFFER_STATUS);
+        }
     }
 }
