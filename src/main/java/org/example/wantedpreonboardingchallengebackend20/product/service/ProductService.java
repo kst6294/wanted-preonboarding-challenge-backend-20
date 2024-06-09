@@ -2,7 +2,6 @@ package org.example.wantedpreonboardingchallengebackend20.product.service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.example.wantedpreonboardingchallengebackend20.product.entity.Product;
-import org.example.wantedpreonboardingchallengebackend20.product.model.request.ProductRequest;
 import org.example.wantedpreonboardingchallengebackend20.product.repository.ProductRepository;
 import org.springframework.stereotype.Service;
 
