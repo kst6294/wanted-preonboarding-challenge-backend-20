@@ -4,7 +4,6 @@ import com.sunyesle.wanted_market.dto.ProductDetailResponse;
 import com.sunyesle.wanted_market.dto.ProductRequest;
 import com.sunyesle.wanted_market.dto.ProductResponse;
 import com.sunyesle.wanted_market.entity.Product;
-import com.sunyesle.wanted_market.enums.ProductStatus;
 import com.sunyesle.wanted_market.exception.ErrorCodeException;
 import com.sunyesle.wanted_market.exception.ProductErrorCode;
 import com.sunyesle.wanted_market.repository.ProductRepository;
@@ -18,17 +17,10 @@ import java.util.List;
 @Transactional
 @RequiredArgsConstructor
 public class ProductService {
-
     private final ProductRepository productRepository;
 
     public ProductResponse save(ProductRequest request, Long memberId) {
-        Product product = Product.builder()
-                .memberId(memberId)
-                .name(request.getName())
-                .price(request.getPrice())
-                .quantity(request.getQuantity())
-                .availableQuantity(request.getQuantity())
-                .status(ProductStatus.AVAILABLE).build();
+        Product product = new Product(memberId, request.getName(), request.getPrice(), request.getQuantity());
         productRepository.save(product);
         return new ProductResponse(product.getId());
     }

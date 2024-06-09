@@ -2,13 +2,13 @@ package com.sunyesle.wanted_market.entity;
 
 import com.sunyesle.wanted_market.enums.OfferStatus;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
-@Builder
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor
 public class Offer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,6 +26,15 @@ public class Offer {
 
     @Enumerated(EnumType.STRING)
     private OfferStatus status;
+
+    public Offer(Long productId, Long sellerId, Long buyerId, Integer price, Integer quantity) {
+        this.productId = productId;
+        this.sellerId = sellerId;
+        this.buyerId = buyerId;
+        this.price = price;
+        this.quantity = quantity;
+        this.status = OfferStatus.OPEN;
+    }
 
     public void setStatus(OfferStatus status) {
         this.status = status;

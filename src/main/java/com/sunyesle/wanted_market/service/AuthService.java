@@ -5,7 +5,6 @@ import com.sunyesle.wanted_market.dto.SigninResponse;
 import com.sunyesle.wanted_market.dto.SignupRequest;
 import com.sunyesle.wanted_market.dto.SignupResponse;
 import com.sunyesle.wanted_market.entity.Member;
-import com.sunyesle.wanted_market.enums.Role;
 import com.sunyesle.wanted_market.exception.ErrorCodeException;
 import com.sunyesle.wanted_market.exception.MemberErrorCode;
 import com.sunyesle.wanted_market.repository.MemberRepository;
@@ -24,12 +23,7 @@ public class AuthService {
     private final JwtTokenProvider jwtTokenProvider;
 
     public SignupResponse signup(SignupRequest request) {
-        Member member = Member.builder()
-                .name(request.getName())
-                .email(request.getEmail())
-                .password(passwordEncoder.encode(request.getPassword()))
-                .role(Role.USER)
-                .build();
+        Member member = new Member(request.getName(), request.getEmail(), request.getPassword(), passwordEncoder);
         memberRepository.save(member);
         return new SignupResponse(member.getId(), member.getName(), member.getEmail());
     }

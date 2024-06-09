@@ -4,13 +4,13 @@ import com.sunyesle.wanted_market.enums.ProductStatus;
 import com.sunyesle.wanted_market.exception.ErrorCodeException;
 import com.sunyesle.wanted_market.exception.ProductErrorCode;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
-@Builder
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,6 +25,15 @@ public class Product {
     private Integer quantity;
 
     private Integer availableQuantity;
+
+    public Product(Long memberId, String name, Integer price, Integer quantity) {
+        this.memberId = memberId;
+        this.name = name;
+        this.price = price;
+        this.quantity = quantity;
+        this.availableQuantity = quantity;
+        this.status = ProductStatus.AVAILABLE;
+    }
 
     @Enumerated(EnumType.STRING)
     private ProductStatus status;

@@ -31,14 +31,7 @@ public class OfferService {
         }
         product.buy(request.getQuantity());
 
-        Offer offer = Offer.builder()
-                .productId(product.getId())
-                .sellerId(product.getMemberId())
-                .buyerId(memberId)
-                .price(product.getPrice())
-                .quantity(request.getQuantity())
-                .status(OfferStatus.OPEN)
-                .build();
+        Offer offer = new Offer(product.getId(), product.getMemberId(), memberId, product.getPrice(), request.getQuantity());
         offerRepository.save(offer);
 
         return new OfferResponse(offer.getId(), offer.getStatus());

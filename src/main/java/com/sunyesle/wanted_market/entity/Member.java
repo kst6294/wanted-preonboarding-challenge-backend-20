@@ -2,10 +2,13 @@ package com.sunyesle.wanted_market.entity;
 
 import com.sunyesle.wanted_market.enums.Role;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Getter
-@Builder
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
@@ -23,4 +26,11 @@ public class Member {
 
     @Enumerated(EnumType.STRING)
     private Role role;
+
+    public Member(String name, String email, String password, PasswordEncoder passwordEncoder) {
+        this.name = name;
+        this.email = email;
+        this.password = passwordEncoder.encode(password);
+        this.role = Role.USER;
+    }
 }
