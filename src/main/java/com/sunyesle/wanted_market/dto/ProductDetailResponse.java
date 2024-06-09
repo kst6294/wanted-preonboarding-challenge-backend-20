@@ -10,17 +10,17 @@ public class ProductDetailResponse {
     private final Long id;
     private final String name;
     private final Integer price;
-    private final Integer quantity;
-    private final Integer availableQuantity;
+    private final Integer reservedStock;
+    private final Integer stock;
     private final ProductStatus status;
 
     @Builder
-    private ProductDetailResponse(Long id, String name, Integer price, Integer quantity, Integer availableQuantity, ProductStatus status) {
+    private ProductDetailResponse(Long id, String name, Integer price, Integer reservedStock, Integer stock, ProductStatus status) {
         this.id = id;
         this.name = name;
         this.price = price;
-        this.quantity = quantity;
-        this.availableQuantity = availableQuantity;
+        this.reservedStock = reservedStock;
+        this.stock = stock;
         this.status = status;
     }
 
@@ -29,8 +29,8 @@ public class ProductDetailResponse {
                 .id(product.getId())
                 .name(product.getName())
                 .price(product.getPrice())
-                .quantity(product.getQuantity())
-                .availableQuantity(product.getAvailableQuantity())
+                .reservedStock(product.getReservedStock())
+                .stock(product.getStock())
                 .status(product.getStatus()).build();
     }
 }

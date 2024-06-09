@@ -58,19 +58,7 @@ class OfferAcceptanceTest extends AcceptanceTest {
     }
 
     @Test
-    void 제품구매를_요청한다() {
-        CreateOfferRequest createOfferRequest = new CreateOfferRequest(savedProductId, 1);
-
-        ExtractableResponse<Response> response = 구매_요청(createOfferRequest, buyerToken);
-
-        등록에_성공한다(response);
-        OfferResponse offerResponse = response.as(OfferResponse.class);
-        ExtractableResponse<Response> 제품_조회_결과 = 제품_조회_요청(offerResponse.getId());
-        제품_구매가능_수량이_변경된다(제품_조회_결과, 1);
-    }
-
-    @Test
-    void 모든_제품이_구매요청되면_제품상태가_RESERVED로_변경된다() {
+    void 구매를_요청한다() {
         CreateOfferRequest createOfferRequest = new CreateOfferRequest(savedProductId, 2);
 
         ExtractableResponse<Response> response = 구매_요청(createOfferRequest, buyerToken);
@@ -78,12 +66,13 @@ class OfferAcceptanceTest extends AcceptanceTest {
         등록에_성공한다(response);
         OfferResponse offerResponse = response.as(OfferResponse.class);
         ExtractableResponse<Response> 제품_조회_결과 = 제품_조회_요청(offerResponse.getId());
-        제품_구매가능_수량이_변경된다(제품_조회_결과, 0);
-        제품_상태가_변경된다(제품_조회_결과, ProductStatus.RESERVED);
+        제품_예약된_수량이_변경된다(제품_조회_결과, 0);
+        제품_구매가능_수량이_변경된다(제품_조회_결과, 2);
+        제품_상태가_변경된다(제품_조회_결과, ProductStatus.AVAILABLE);
     }
 
     @Test
-    void 제품을_중복으로_예약할_경우_실패한다() {
+    void 중복으로_구매를_요청할_경우_실패한다() {
         CreateOfferRequest createOfferRequest = new CreateOfferRequest(savedProductId, 1);
 
         구매_요청(createOfferRequest, buyerToken);
@@ -93,8 +82,8 @@ class OfferAcceptanceTest extends AcceptanceTest {
     }
 
     @Test
-    void 제품_예약_요청을_승인한다() {
-        CreateOfferRequest createOfferRequest = new CreateOfferRequest(savedProductId, 1);
+    void 구매요청을_승인한다() {
+        CreateOfferRequest createOfferRequest = new CreateOfferRequest(savedProductId, 2);
         Long offerId = 구매_요청(createOfferRequest, buyerToken).as(OfferResponse.class).getId();
 
         ExtractableResponse<Response> response = 구매_승인처리_요청(offerId, sellerToken);
@@ -102,24 +91,14 @@ class OfferAcceptanceTest extends AcceptanceTest {
         수정에_성공한다(response);
         OfferResponse offerResponse = response.as(OfferResponse.class);
         assertThat(offerResponse.getStatus()).isEqualTo(OfferStatus.ACCEPTED);
-    }
-
-    @Test
-    void 모든_제품이_구매확정되면_제품상태가_COMPLETED로_변경된다() {
-        CreateOfferRequest createOfferRequest = new CreateOfferRequest(savedProductId, 2);
-        Long offerId = 구매_요청(createOfferRequest, buyerToken).as(OfferResponse.class).getId();
-        구매_승인처리_요청(offerId, sellerToken);
-
-        ExtractableResponse<Response> response = 구매_확정처리_요청(offerId, buyerToken);
-
-        수정에_성공한다(response);
-        OfferResponse offerResponse = response.as(OfferResponse.class);
         ExtractableResponse<Response> 제품_조회_결과 = 제품_조회_요청(offerResponse.getId());
-        제품_상태가_변경된다(제품_조회_결과, ProductStatus.COMPLETED);
+        제품_예약된_수량이_변경된다(제품_조회_결과, 2);
+        제품_구매가능_수량이_변경된다(제품_조회_결과, 0);
+        제품_상태가_변경된다(제품_조회_결과, ProductStatus.RESERVED);
     }
 
     @Test
-    void 제품_예약_요청을_거절한다() {
+    void 구매요청을_거절한다() {
         CreateOfferRequest createOfferRequest = new CreateOfferRequest(savedProductId, 2);
         Long offerId = 구매_요청(createOfferRequest, buyerToken).as(OfferResponse.class).getId();
 
@@ -129,7 +108,25 @@ class OfferAcceptanceTest extends AcceptanceTest {
         OfferResponse offerResponse = response.as(OfferResponse.class);
         assertThat(offerResponse.getStatus()).isEqualTo(OfferStatus.DECLINED);
         ExtractableResponse<Response> 제품_조회_결과 = 제품_조회_요청(offerResponse.getId());
+        제품_예약된_수량이_변경된다(제품_조회_결과, 0);
+        제품_구매가능_수량이_변경된다(제품_조회_결과, 2);
         제품_상태가_변경된다(제품_조회_결과, ProductStatus.AVAILABLE);
+    }
+
+    @Test
+    void 구매요청을_확정한다() {
+        CreateOfferRequest createOfferRequest = new CreateOfferRequest(savedProductId, 2);
+        Long offerId = 구매_요청(createOfferRequest, buyerToken).as(OfferResponse.class).getId();
+        구매_승인처리_요청(offerId, sellerToken);
+
+        ExtractableResponse<Response> response = 구매_확정처리_요청(offerId, buyerToken);
+
+        수정에_성공한다(response);
+        OfferResponse offerResponse = response.as(OfferResponse.class);
+        ExtractableResponse<Response> 제품_조회_결과 = 제품_조회_요청(offerResponse.getId());
+        제품_예약된_수량이_변경된다(제품_조회_결과, 0);
+        제품_구매가능_수량이_변경된다(제품_조회_결과, 0);
+        제품_상태가_변경된다(제품_조회_결과, ProductStatus.COMPLETED);
     }
 
     @Test

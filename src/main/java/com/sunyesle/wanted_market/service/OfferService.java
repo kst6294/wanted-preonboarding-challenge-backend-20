@@ -29,7 +29,7 @@ public class OfferService {
         if (offerRepository.existsByProductIdAndBuyerIdAndStatus(product.getId(), memberId, OfferStatus.OPEN)) {
             throw new ErrorCodeException(OfferErrorCode.DUPLICATE_OFFER);
         }
-        product.buy(request.getQuantity());
+        product.offer();
 
         Offer offer = new Offer(product.getId(), product.getMemberId(), memberId, product.getPrice(), request.getQuantity());
         offerRepository.save(offer);
@@ -48,6 +48,7 @@ public class OfferService {
         offer.setStatus(OfferStatus.ACCEPTED);
 
         Product product = productRepository.findById(offer.getProductId()).orElseThrow(() -> new ErrorCodeException(ProductErrorCode.PRODUCT_NOT_FOUND));
+        product.reserve(offer.getQuantity());
 
         return new OfferResponse(offer.getId(), offer.getStatus());
     }
@@ -63,7 +64,6 @@ public class OfferService {
         offer.setStatus(OfferStatus.DECLINED);
 
         Product product = productRepository.findById(offer.getProductId()).orElseThrow(() -> new ErrorCodeException(ProductErrorCode.PRODUCT_NOT_FOUND));
-        product.decline(offer.getQuantity());
 
         return new OfferResponse(offer.getId(), offer.getStatus());
     }
@@ -79,11 +79,7 @@ public class OfferService {
         offer.setStatus(OfferStatus.CONFIRMED);
 
         Product product = productRepository.findById(offer.getProductId()).orElseThrow(() -> new ErrorCodeException(ProductErrorCode.PRODUCT_NOT_FOUND));
-        List<Offer> confirmedOfferList = offerRepository.findByProductIdAndStatus(product.getId(), OfferStatus.CONFIRMED);
-        Integer confirmedQuantity = confirmedOfferList.stream().mapToInt(Offer::getQuantity).sum();
-        if(confirmedQuantity + offer.getQuantity() >= product.getQuantity()){
-            product.complete();
-        }
+        product.purchase(offer.getQuantity());
 
         return new OfferResponse(offer.getId(), offer.getStatus());
     }

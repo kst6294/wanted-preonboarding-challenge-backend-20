@@ -22,39 +22,50 @@ public class Product {
 
     private Integer price;
 
-    private Integer quantity;
+    private Integer reservedStock;
 
-    private Integer availableQuantity;
+    private Integer stock;
 
-    public Product(Long memberId, String name, Integer price, Integer quantity) {
+    public Product(Long memberId, String name, Integer price, Integer stock) {
         this.memberId = memberId;
         this.name = name;
         this.price = price;
-        this.quantity = quantity;
-        this.availableQuantity = quantity;
+        this.reservedStock = 0;
+        this.stock = stock;
         this.status = ProductStatus.AVAILABLE;
     }
 
     @Enumerated(EnumType.STRING)
     private ProductStatus status;
 
-    public void buy(Integer quantity) {
-        int newAvailableQuantity = this.availableQuantity - quantity;
-        if (newAvailableQuantity < 0) {
+    public void offer() {
+        if (this.status != ProductStatus.AVAILABLE) {
+            throw new ErrorCodeException(ProductErrorCode.INVALID_PRODUCT_STATUS);
+        }
+    }
+
+    public void reserve(Integer quantity) {
+        int tempReservedStock = this.reservedStock + quantity;
+        if (this.stock < tempReservedStock) {
             throw new ErrorCodeException(ProductErrorCode.OUT_OF_STOCK);
         }
-        if (newAvailableQuantity == 0) {
-            this.status = ProductStatus.RESERVED;
+        this.reservedStock += quantity;
+        this.stock -= quantity;
+        updateStatus();
+    }
+
+    public void purchase(Integer quantity) {
+        this.reservedStock -= quantity;
+        updateStatus();
+    }
+
+    private void updateStatus() {
+        if (this.stock == 0 && this.reservedStock == 0) {
+            this.status = ProductStatus.COMPLETED; // 재고와 예약된 재고가 모두 0인 경우
+        } else if (this.stock == 0) {
+            this.status = ProductStatus.RESERVED; // 재고는 0이지만 예약된 재고가 있는 경우
+        } else {
+            this.status = ProductStatus.AVAILABLE; // 재고가 있는 경우
         }
-        this.availableQuantity = newAvailableQuantity;
-    }
-
-    public void decline(Integer quantity) {
-        this.availableQuantity = this.availableQuantity + quantity;
-        this.status = ProductStatus.AVAILABLE;
-    }
-
-    public void complete() {
-        this.status = ProductStatus.COMPLETED;
     }
 }

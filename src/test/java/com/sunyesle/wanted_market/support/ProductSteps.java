@@ -47,9 +47,14 @@ public class ProductSteps {
         return response;
     }
 
+    public static void 제품_예약된_수량이_변경된다(ExtractableResponse<Response> 제품_조회_결과, Integer quantity) {
+        ProductDetailResponse response = 제품_조회_결과.as(ProductDetailResponse.class);
+        assertThat(response.getReservedStock()).isEqualTo(quantity);
+    }
+
     public static void 제품_구매가능_수량이_변경된다(ExtractableResponse<Response> 제품_조회_결과, Integer quantity) {
         ProductDetailResponse response = 제품_조회_결과.as(ProductDetailResponse.class);
-        assertThat(response.getAvailableQuantity()).isEqualTo(quantity);
+        assertThat(response.getStock()).isEqualTo(quantity);
     }
 
     public static void 제품_상태가_변경된다(ExtractableResponse<Response> 제품_조회_결과, ProductStatus productStatus) {
