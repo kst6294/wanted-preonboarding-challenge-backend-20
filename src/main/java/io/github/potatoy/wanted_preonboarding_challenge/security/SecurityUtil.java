@@ -2,6 +2,7 @@ package io.github.potatoy.wanted_preonboarding_challenge.security;
 
 import io.github.potatoy.wanted_preonboarding_challenge.user.entity.User;
 import io.github.potatoy.wanted_preonboarding_challenge.user.entity.UserRepository;
+import io.github.potatoy.wanted_preonboarding_challenge.user.exception.UserNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -17,7 +18,10 @@ public class SecurityUtil {
   public User getCurrentUser() {
     Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
     UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-    User user = userRepository.findByEmail(userDetails.getUsername()).get();
+    User user =
+        userRepository
+            .findByEmail(userDetails.getUsername())
+            .orElseThrow(UserNotFoundException::new);
 
     return user;
   }

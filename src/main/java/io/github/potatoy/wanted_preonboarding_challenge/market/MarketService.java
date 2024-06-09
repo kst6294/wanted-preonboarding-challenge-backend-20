@@ -1,12 +1,12 @@
 package io.github.potatoy.wanted_preonboarding_challenge.market;
 
-import io.github.potatoy.wanted_preonboarding_challenge.error.exception.BadRequestException;
-import io.github.potatoy.wanted_preonboarding_challenge.error.exception.ForbiddenException;
 import io.github.potatoy.wanted_preonboarding_challenge.market.dto.ProductDto;
 import io.github.potatoy.wanted_preonboarding_challenge.market.dto.ProductDto.ProductIdParams;
 import io.github.potatoy.wanted_preonboarding_challenge.market.entity.Product;
 import io.github.potatoy.wanted_preonboarding_challenge.market.entity.ProductRepository;
 import io.github.potatoy.wanted_preonboarding_challenge.market.entity.State;
+import io.github.potatoy.wanted_preonboarding_challenge.market.exception.ProductForbiddenException;
+import io.github.potatoy.wanted_preonboarding_challenge.market.exception.ProductNotBuyerException;
 import io.github.potatoy.wanted_preonboarding_challenge.market.exception.ProductUpdateFailException;
 import io.github.potatoy.wanted_preonboarding_challenge.market.util.ProductUtil;
 import io.github.potatoy.wanted_preonboarding_challenge.security.SecurityUtil;
@@ -56,7 +56,7 @@ public class MarketService {
           "reserveProduct: Attempting to make a reservation for your own product. userId={}, productId={}",
           user.getId(),
           product.getId());
-      throw new BadRequestException();
+      throw new ProductUpdateFailException();
     }
     if (product.getBuyerUser() != null) { // 이미 예약자가 있다면 예외 발생
       log.warn(
@@ -78,13 +78,13 @@ public class MarketService {
 
     if (product.getBuyerUser() == null) { // 예약자 정보가 없는 경우 예외 발생
       log.warn("getSellerBuyerRecord: Reservation information does not exist.");
-      throw new BadRequestException();
+      throw new ProductNotBuyerException();
     }
 
     // 양쪽 모두 해당되지 않는다면 예외 처리
     if (!product.isSellerEquals(user) && !product.isBuyerEquals(user)) {
       log.warn("getSellerBuyerRecord: Product information is not accessible.");
-      throw new ForbiddenException();
+      throw new ProductForbiddenException();
     }
 
     Set<Product> result = new LinkedHashSet<>();
@@ -118,7 +118,7 @@ public class MarketService {
           "approveSale: You do not have permission to access the product. userId={}, productId={}",
           user.getId(),
           product.getId());
-      throw new ForbiddenException();
+      throw new ProductForbiddenException();
     }
 
     if (product.getState() != State.RESERVATION) {

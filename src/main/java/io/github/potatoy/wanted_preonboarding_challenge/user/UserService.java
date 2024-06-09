@@ -3,6 +3,7 @@ package io.github.potatoy.wanted_preonboarding_challenge.user;
 import io.github.potatoy.wanted_preonboarding_challenge.user.dto.AddUserRequest;
 import io.github.potatoy.wanted_preonboarding_challenge.user.entity.User;
 import io.github.potatoy.wanted_preonboarding_challenge.user.entity.UserRepository;
+import io.github.potatoy.wanted_preonboarding_challenge.user.exception.UserNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -42,14 +43,10 @@ public class UserService {
   }
 
   public User findById(Long userId) {
-    return userRepository
-        .findById(userId)
-        .orElseThrow(() -> new IllegalArgumentException("Unexpected user"));
+    return userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
   }
 
   public User findByEmail(String email) {
-    return userRepository
-        .findByEmail(email)
-        .orElseThrow(() -> new IllegalArgumentException("Unexpected user"));
+    return userRepository.findByEmail(email).orElseThrow(UserNotFoundException::new);
   }
 }

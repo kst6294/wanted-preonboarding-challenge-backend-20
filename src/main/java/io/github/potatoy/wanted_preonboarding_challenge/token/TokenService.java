@@ -3,6 +3,7 @@ package io.github.potatoy.wanted_preonboarding_challenge.token;
 import io.github.potatoy.wanted_preonboarding_challenge.config.jwt.TokenProvider;
 import io.github.potatoy.wanted_preonboarding_challenge.token.dto.AuthenticateDto;
 import io.github.potatoy.wanted_preonboarding_challenge.token.dto.TokenDto;
+import io.github.potatoy.wanted_preonboarding_challenge.token.exception.InvalidTokenException;
 import io.github.potatoy.wanted_preonboarding_challenge.user.UserService;
 import io.github.potatoy.wanted_preonboarding_challenge.user.dto.UserResponse;
 import io.github.potatoy.wanted_preonboarding_challenge.user.entity.User;
@@ -36,7 +37,7 @@ public class TokenService {
   public String createNewAccessToken(TokenDto.Request dto) {
     // 토큰 유효성 검사에 실패하면 예외 발생
     if (!tokenProvider.validToken(dto.getRefreshToken().toString())) {
-      throw new IllegalArgumentException("Unexpected token");
+      throw new InvalidTokenException();
     }
 
     Long userId = tokenProvider.getUserId(dto.getRefreshToken());

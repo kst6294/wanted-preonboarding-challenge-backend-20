@@ -5,4 +5,8 @@ public class BadRequestException extends RuntimeException {
   public BadRequestException() {
     super("BAD_REQUEST");
   }
+
+  public BadRequestException(String code) {
+    super(code);
+  }
 }
