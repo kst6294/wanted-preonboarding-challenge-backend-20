@@ -10,6 +10,8 @@ import org.example.wantedpreonboardingchallengebackend20.member.repository.Membe
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 
+import java.util.Objects;
+
 @Slf4j
 @Service
 public class MemberService {
@@ -48,6 +50,7 @@ public class MemberService {
     }
 
     public CommonResponse<Object> logoutMember(HttpHeaders headers, String str) {
+        jwtTokenProvider.getExpiration(Objects.requireNonNull(headers.get("Authorization")).toString());
         return CommonResponse.builder().result(true).build();
     }
 }
