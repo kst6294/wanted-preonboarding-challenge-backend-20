@@ -1,4 +1,4 @@
-# [과제 풀이 링크](https://www.notion.so/Wanted-pre-onboarding-challenge-back-end-20-8c4abf19c63e41cfb0cd43d49306fb41?pvs=4)
+## [과제 풀이 링크](https://ivy-october-fe6.notion.site/Wanted-pre-onboarding-challenge-back-end-20-8c4abf19c63e41cfb0cd43d49306fb41?pvs=4)
 
 ---
 
