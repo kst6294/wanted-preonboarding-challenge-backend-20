@@ -3,12 +3,12 @@ package com.wanted.market.order.service;
 import com.wanted.market.common.exception.InvalidRequestException;
 import com.wanted.market.common.exception.NotFoundException;
 import com.wanted.market.common.exception.UnauthorizedRequestException;
+import com.wanted.market.global.event.Events;
 import com.wanted.market.order.domain.Order;
 import com.wanted.market.order.domain.OrderRepository;
 import com.wanted.market.order.domain.StockRequester;
 import com.wanted.market.order.event.OrderConfirmedEvent;
 import com.wanted.market.order.exception.OutOfStockException;
-import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,12 +17,10 @@ import org.springframework.transaction.annotation.Transactional;
 public class ConfirmOrderService {
     private final OrderRepository orderRepository;
     private final StockRequester stockRequester;
-    private final ApplicationEventPublisher eventPublisher;
 
-    public ConfirmOrderService(OrderRepository orderRepository, StockRequester stockRequester, ApplicationEventPublisher eventPublisher) {
+    public ConfirmOrderService(OrderRepository orderRepository, StockRequester stockRequester) {
         this.orderRepository = orderRepository;
         this.stockRequester = stockRequester;
-        this.eventPublisher = eventPublisher;
     }
 
     /**
@@ -38,7 +36,7 @@ public class ConfirmOrderService {
     public void confirm(Command cmd) throws NotFoundException, UnauthorizedRequestException, OutOfStockException, InvalidRequestException {
         Order findOrder = orderRepository.findByIdOrThrow(cmd.id());
         Integer leftStock = findOrder.confirm(cmd.userId(), (productId, sellerId) -> orderRepository.findSellerIdByProductId(productId) == sellerId, stockRequester);
-        eventPublisher.publishEvent(new OrderConfirmedEvent(findOrder.getId(), findOrder.getProductId(), leftStock));
+        Events.publish(new OrderConfirmedEvent(findOrder.getId(), findOrder.getProductId(), leftStock));
     }
 
     public record Command(
