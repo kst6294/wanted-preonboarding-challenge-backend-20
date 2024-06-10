@@ -1,6 +1,7 @@
 package org.example.wantedmarket.service;
 
 import lombok.RequiredArgsConstructor;
+import org.example.wantedmarket.dto.user.CustomUserDetails;
 import org.example.wantedmarket.model.User;
 import org.example.wantedmarket.repository.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
