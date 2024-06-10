@@ -12,4 +12,8 @@ public class ProductDetailResponseDto {
     public ProductDetailResponseDto(ProductInfoDto product){
         this.product = product;
     }
+
+    public static ProductDetailResponseDto of(ProductInfoDto product){
+        return ProductDetailResponseDto.builder().product(product).build();
+    }
 }

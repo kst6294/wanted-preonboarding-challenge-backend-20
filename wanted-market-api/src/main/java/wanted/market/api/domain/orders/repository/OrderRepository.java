@@ -9,10 +9,10 @@ import java.util.List;
 
 public interface OrderRepository extends JpaRepository<Order, Long> {
     @EntityGraph(attributePaths = {"product"})
-    List<Order> findAllByUserId(Long userId);
+    List<Order> findAllByUserIdAndStatus(Long userId, OrderStatus status);
     @EntityGraph(attributePaths = {"product"})
-    List<Order> findAllByProductUserId(Long userId);
+    List<Order> findAllByProductUserIdAndStatus(Long userId, OrderStatus status);
     @EntityGraph(attributePaths = {"product"})
-    List<Order> findAllByUserIdAndProductUserIdAndStatus(Long userId, Long targetUserId, OrderStatus status);
+    List<Order> findAllByUserIdAndProductUserIdAndStatus(Long userId, Long productUserId, OrderStatus status);
 
 }

@@ -9,7 +9,11 @@ public class RegisterProductResponseDto {
     private final Long productId;
 
     @Builder
-    public RegisterProductResponseDto(Long productId){
+    private RegisterProductResponseDto(Long productId){
         this.productId = productId;
+    }
+
+    public static RegisterProductResponseDto of(Long productId){
+        return RegisterProductResponseDto.builder().productId(productId).build();
     }
 }

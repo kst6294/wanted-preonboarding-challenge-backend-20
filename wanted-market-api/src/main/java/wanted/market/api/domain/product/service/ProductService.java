@@ -43,57 +43,46 @@ public class ProductService {
 
     public RegisterProductResponseDto registerProduct(HttpServletRequest request, RegisterProductRequestDto requestDto) throws WantedException {
         User user = userService.getUser(request);
-        Product product = Product.builder()
-                .name(requestDto.getProductName())
-                .price(requestDto.getPrice())
-                .count(requestDto.getCount())
-                .user(user)
-                .build();
+        Product product = Product.of(requestDto.getProductName(), requestDto.getPrice(), requestDto.getCount(), user);
         productRepository.save(product);
-        return RegisterProductResponseDto.builder().productId(product.getId()).build();
+        return RegisterProductResponseDto.of(product.getId());
     }
 
     public ProductDetailResponseDto searchProductDetail(Long productId) {
         Product product = productRepository.findById(productId).orElseThrow(() -> new WantedException(ExceptionDomain.PRODUCT, ExceptionMessage.IS_NOT_EXIST));
 
-
-        return ProductDetailResponseDto.builder()
-                .product(ProductInfoDto.fromProductAndUser(product, UserInfoDto.fromProduct(product)))
-                .build();
+        UserInfoDto userInfoDto = UserInfoDto.from(product);
+        return ProductDetailResponseDto.of(ProductInfoDto.from(product, userInfoDto));
     }
 
-    public ProductPageResponseDto searchProductList(int page, String status) {
-        if (page < 0) page = DEFAULT_PAGE_NUMBER;
+    public ProductPageResponseDto searchProductList(Pageable pageable, String status) {
         ProductStatus productStatus = ProductStatus.addDefaultValueOf(status.toUpperCase());
-        Pageable pageable = PageRequest.of(page-1, DEFAULT_PAGE_SIZE, Sort.by(Sort.Order.desc(DEFAULT_ORDER_CRITERIA)));
+        pageable = PageRequest.of(pageable.getPageNumber(), DEFAULT_PAGE_SIZE, Sort.by(Sort.Order.desc(DEFAULT_ORDER_CRITERIA)));
         Page<Product> products = productRepository.findAllByStatus(productStatus, pageable);
 
         PageInfoDto pageInfoDto = PageInfoDto.fromPage(products);
         List<ProductInfoDto> productInfoDtos = products.stream()
                 .map(product ->
-                        ProductInfoDto.fromProductAndUser(product, UserInfoDto.fromProduct(product))
+                        ProductInfoDto.from(product, UserInfoDto.from(product))
                 ).toList();
 
-        return ProductPageResponseDto.builder()
-                .page(pageInfoDto)
-                .products(productInfoDtos)
-                .build();
+        return ProductPageResponseDto.of(pageInfoDto, productInfoDtos);
     }
 
     @Transactional
     public ModifiedProductResponseDto modifyProduct(HttpServletRequest request, ModifiedProductRequestDto requestDto) {
         User user = userService.getUser(request);
         Product product = productRepository.findById(requestDto.getProductId()).orElseThrow(() -> new WantedException(ExceptionDomain.PRODUCT, ExceptionMessage.IS_NOT_EXIST));
-        if (!product.getUser().equals(user)) throw new WantedException(ExceptionDomain.USER, ExceptionMessage.IS_NOT_OWNER);
-        if(!product.getStatus().equals(ProductStatus.SALE)) throw new WantedException(ExceptionDomain.PRODUCT, ExceptionMessage.IS_NOT_ON_SALE);
+        if (!product.getUser().equals(user)) {
+            throw new WantedException(ExceptionDomain.USER, ExceptionMessage.IS_NOT_OWNER);
+        }
+        if (!product.getStatus().equals(ProductStatus.SALE)) {
+            throw new WantedException(ExceptionDomain.PRODUCT, ExceptionMessage.IS_NOT_ON_SALE);
+        }
         long beforePrice = product.getPrice();
         long afterPrice = requestDto.getPrice();
         product.modifiedPrice(afterPrice);
         log.info(logBuilder.modifiedPriceLog(product.getId(), beforePrice, afterPrice));
-        return ModifiedProductResponseDto.builder()
-                .productId(product.getId())
-                .beforePrice(beforePrice)
-                .afterPrice(afterPrice)
-                .build();
+        return ModifiedProductResponseDto.of(product.getId(), beforePrice, afterPrice);
     }
 }

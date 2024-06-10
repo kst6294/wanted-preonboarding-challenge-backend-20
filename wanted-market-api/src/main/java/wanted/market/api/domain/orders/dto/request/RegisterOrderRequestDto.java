@@ -8,4 +8,5 @@ import lombok.NoArgsConstructor;
 public class RegisterOrderRequestDto {
     private Long productId;
     private Long price;
+    private Long count;
 }

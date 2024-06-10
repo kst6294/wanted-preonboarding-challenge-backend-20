@@ -19,4 +19,10 @@ public class ProductPageResponseDto {
         this.page = page;
         this.products = products;
     }
+    public static ProductPageResponseDto of(PageInfoDto page, List<ProductInfoDto> products){
+        return ProductPageResponseDto.builder()
+                .page(page)
+                .products(products)
+                .build();
+    }
 }

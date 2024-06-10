@@ -25,7 +25,7 @@ public class ProductInfoDto {
         this.seller = user;
     }
 
-    public static ProductInfoDto fromProductAndUser(Product product, UserInfoDto user){
+    public static ProductInfoDto from(Product product, UserInfoDto user){
         return ProductInfoDto.builder()
                 .id(product.getId())
                 .name(product.getName())

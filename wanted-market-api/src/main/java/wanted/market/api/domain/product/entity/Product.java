@@ -31,7 +31,7 @@ public class Product {
     @Column
     private LocalDateTime registerTime;
     @ManyToOne
-    @JoinColumn(name = "seller_id")
+    @JoinColumn(name = "user_id")
     private User user;
 
 
@@ -45,9 +45,21 @@ public class Product {
         this.registerTime = LocalDateTime.now();
     }
 
+    public static Product of(String name, Long price, Long count, User user){
+        return Product.builder()
+                .name(name)
+                .price(price)
+                .count(count)
+                .user(user)
+                .build();
+    }
     public void modifiedPrice(Long price) {this.price = price;}
 
     public void reserve() {this.status = ProductStatus.RESERVED;}
 
     public void complete() { this.status = ProductStatus.COMPLETED;}
+
+    public Long findUserId(){
+        return this.user.getId();
+    }
 }

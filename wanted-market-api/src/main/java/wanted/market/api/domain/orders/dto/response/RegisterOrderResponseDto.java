@@ -11,7 +11,11 @@ public class RegisterOrderResponseDto {
     private Long orderId;
 
     @Builder
-    public RegisterOrderResponseDto(Long orderId) {
+    private RegisterOrderResponseDto(Long orderId) {
         this.orderId = orderId;
+    }
+
+    public static RegisterOrderResponseDto of(Long orderId){
+        return RegisterOrderResponseDto.builder().orderId(orderId).build();
     }
 }

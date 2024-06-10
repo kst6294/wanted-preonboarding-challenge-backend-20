@@ -15,7 +15,7 @@ public class UserInfoDto {
         this.id = id;
         this.nickname = nickname;
     }
-    public static UserInfoDto fromProduct(Product product){
+    public static UserInfoDto from(Product product){
         return UserInfoDto.builder()
                 .id(product.getUser().getId())
                 .nickname(product.getUser().getNickname())

@@ -25,7 +25,6 @@ import wanted.market.api.global.response.enums.ExceptionMessage;
 import wanted.market.api.global.response.exception.WantedException;
 
 import java.util.List;
-import java.util.UnknownFormatConversionException;
 
 @Service
 @RequiredArgsConstructor
@@ -38,60 +37,64 @@ public class OrderService {
     @Transactional
     public RegisterOrderResponseDto orderProduct(HttpServletRequest request, RegisterOrderRequestDto requestDto) {
         User user = userService.getUser(request);
-        Product product = productRepository.findById(requestDto.getProductId()).orElseThrow(()->new WantedException(ExceptionDomain.ORDER, ExceptionMessage.IS_NOT_EXIST));
-        if(user.getId().equals(product.getUser().getId())) throw new WantedException(ExceptionDomain.ORDER, ExceptionMessage.CANNOT_ORDER_OWN_PRODUCT);
-        if(!product.getStatus().equals(ProductStatus.SALE)) throw new WantedException(ExceptionDomain.ORDER, ExceptionMessage.HAS_SOLD_OUT);
-        if(!requestDto.getPrice().equals(product.getPrice())) throw new WantedException(ExceptionDomain.ORDER, ExceptionMessage.PRICE_HAS_CHANGED);
-        Order order = Order.builder()
-                .user(user)
-                .product(product)
-                .price(product.getPrice())
-                .build();
+        Product product = productRepository.findById(requestDto.getProductId()).orElseThrow(() -> new WantedException(ExceptionDomain.ORDER, ExceptionMessage.IS_NOT_EXIST));
+        if (user.getId().equals(product.findUserId())) {
+            throw new WantedException(ExceptionDomain.ORDER, ExceptionMessage.CANNOT_ORDER_OWN_PRODUCT);
+        }
+        if (!product.getStatus().equals(ProductStatus.SALE)) {
+            throw new WantedException(ExceptionDomain.ORDER, ExceptionMessage.HAS_SOLD_OUT);
+        }
+        if (!requestDto.getPrice().equals(product.getPrice())) {
+            throw new WantedException(ExceptionDomain.ORDER, ExceptionMessage.PRICE_HAS_CHANGED);
+        }
+        Order order = Order.from(product, user, requestDto.getPrice(), requestDto.getCount());
         orderRepository.save(order);
         product.reserve();
-        return RegisterOrderResponseDto.builder()
-                .orderId(order.getId())
-                .build();
+        return RegisterOrderResponseDto.of(order.getId());
     }
 
     public OrderListResponseDto searchBuyOrderList(HttpServletRequest request, Long targetUserId, String status) {
         User user = userService.getUser(request);
         OrderStatus orderStatus = OrderStatus.addDefaultValueOf(status.toUpperCase());
         List<Order> orders;
-        if(targetUserId==null) orders = orderRepository.findAllByUserId(user.getId());
+        if (targetUserId == null) orders = orderRepository.findAllByUserIdAndStatus(user.getId(), orderStatus);
         else orders = orderRepository.findAllByUserIdAndProductUserIdAndStatus(user.getId(), targetUserId, orderStatus);
-
         List<OrderInfoDto> orderInfoDtos = orders.stream()
                 .map(order ->
-                        OrderInfoDto.fromOrderAndDtos(order,ProductInfoDto.fromProductAndUser(order.getProduct(),  UserInfoDto.fromProduct(order.getProduct())))
+                        OrderInfoDto.from(order, ProductInfoDto.from(order.getProduct(), UserInfoDto.from(order.getProduct()))
+                        )
                 ).toList();
 
-        return OrderListResponseDto.builder().orderInfo(orderInfoDtos).build();
+        return OrderListResponseDto.of(orderInfoDtos);
     }
 
     public OrderListResponseDto searchSellOrderList(HttpServletRequest request, Long targetUserId, String status) {
         User user = userService.getUser(request);
         OrderStatus orderStatus = OrderStatus.addDefaultValueOf(status.toUpperCase());
         List<Order> orders;
-        if(targetUserId==null) orders = orderRepository.findAllByProductUserId(user.getId());
-        else orders = orderRepository.findAllByUserIdAndProductUserIdAndStatus(targetUserId, user.getId(), orderStatus);
+        if (targetUserId == null) {orders = orderRepository.findAllByProductUserIdAndStatus(user.getId(), orderStatus);}
+        else {orders = orderRepository.findAllByUserIdAndProductUserIdAndStatus(targetUserId, user.getId(), orderStatus);}
         List<OrderInfoDto> orderInfoDtos = orders.stream()
                 .map(order ->
-                        OrderInfoDto.fromOrderAndDtos(order,ProductInfoDto.fromProductAndUser(order.getProduct(),  UserInfoDto.fromProduct(order.getProduct())))
+                        OrderInfoDto.from(order, ProductInfoDto.from(order.getProduct(), UserInfoDto.from(order.getProduct())))
                 ).toList();
 
-        return OrderListResponseDto.builder().orderInfo(orderInfoDtos).build();
+        return OrderListResponseDto.of(orderInfoDtos);
     }
 
     @Transactional
     public ApproveOrderResponseDto approveOrder(HttpServletRequest request, ApproveOrderRequestDto requestDto) {
         User user = userService.getUser(request);
-        Order order = orderRepository.findById(requestDto.getOrderId()).orElseThrow(()->new WantedException(ExceptionDomain.ORDER, ExceptionMessage.IS_NOT_EXIST));
+        Order order = orderRepository.findById(requestDto.getOrderId()).orElseThrow(() -> new WantedException(ExceptionDomain.ORDER, ExceptionMessage.IS_NOT_EXIST));
         Product product = order.getProduct();
-        if(!user.getId().equals(product.getUser().getId())) throw new WantedException(ExceptionDomain.ORDER, ExceptionMessage.IS_NOT_OWNER);
-        if(!order.getStatus().equals(OrderStatus.RESERVED)) throw new WantedException(ExceptionDomain.ORDER, ExceptionMessage.IS_NOT_RESERVED);
+        if (!user.getId().equals(product.getUser().getId())) {
+            throw new WantedException(ExceptionDomain.ORDER, ExceptionMessage.IS_NOT_OWNER);
+        }
+        if (!order.getStatus().equals(OrderStatus.RESERVED)) {
+            throw new WantedException(ExceptionDomain.ORDER, ExceptionMessage.IS_NOT_RESERVED);
+        }
         order.approve();
         product.complete();
-        return ApproveOrderResponseDto.builder().orderId(order.getId()).build();
+        return ApproveOrderResponseDto.of(order.getId());
     }
 }

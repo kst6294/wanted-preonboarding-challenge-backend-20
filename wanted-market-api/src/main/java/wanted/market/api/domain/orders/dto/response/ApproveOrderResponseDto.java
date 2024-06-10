@@ -11,7 +11,11 @@ public class ApproveOrderResponseDto {
     private Long orderId;
 
     @Builder
-    public ApproveOrderResponseDto(Long orderId) {
+    private ApproveOrderResponseDto(Long orderId) {
         this.orderId = orderId;
+    }
+
+    public static ApproveOrderResponseDto of(Long orderId){
+        return ApproveOrderResponseDto.builder().orderId(orderId).build();
     }
 }

@@ -41,15 +41,22 @@ public class Order {
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
     @Builder
-    public Order(Product product, User user, Long price) {
+    private Order(Product product, User user, Long price, Long count) {
         this.product = product;
         this.user = user;
         this.price = price;
-        this.count = 1L;
+        this.count = count;
         this.orderTime = LocalDateTime.now();
         this.status = OrderStatus.RESERVED;
     }
-
+    public static Order from(Product product, User user, Long price, Long count){
+        return Order.builder()
+                .product(product)
+                .user(user)
+                .price(price)
+                .count(count)
+                .build();
+    }
     public void approve() {
         this.status = OrderStatus.APPROVED;
     }

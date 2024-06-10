@@ -18,4 +18,12 @@ public class ModifiedProductResponseDto {
         this.beforePrice = beforePrice;
         this.afterPrice = afterPrice;
     }
+
+    public static ModifiedProductResponseDto of(Long productId, Long beforePrice, Long afterPrice){
+        return ModifiedProductResponseDto.builder()
+                .productId(productId)
+                .beforePrice(beforePrice)
+                .afterPrice(afterPrice)
+                .build();
+    }
 }
