@@ -1,4 +1,4 @@
-package org.example.wantedpreonboardingchallengebackend20.product.service;
+package org.example.wantedpreonboardingchallengebackend20.order.service;
 
 import org.springframework.stereotype.Service;
 
