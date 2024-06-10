@@ -20,9 +20,7 @@ import com.example.hs.domain.goods.type.GoodsStatus;
 import com.example.hs.global.exception.CustomException;
 import com.example.hs.global.security.userdetails.CustomUserDetails;
 import java.util.List;
-import java.util.Optional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
