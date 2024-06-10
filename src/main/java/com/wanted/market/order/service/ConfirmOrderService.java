@@ -10,6 +10,8 @@ import com.wanted.market.order.exception.OutOfStockException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Objects;
+
 @Service
 @Transactional
 public class ConfirmOrderService {
@@ -33,7 +35,7 @@ public class ConfirmOrderService {
      */
     public void confirm(Command cmd) throws NotFoundException, UnauthorizedRequestException, OutOfStockException, InvalidRequestException {
         Order findOrder = orderRepository.findByIdOrThrow(cmd.id());
-        findOrder.confirm(cmd.userId(), (productId, sellerId) -> orderRepository.findSellerIdByProductId(productId) == sellerId, stockRequester);
+        findOrder.confirm(cmd.userId(), (productId, sellerId) -> Objects.equals(orderRepository.findSellerIdByProductId(productId), sellerId), stockRequester);
     }
 
     public record Command(
