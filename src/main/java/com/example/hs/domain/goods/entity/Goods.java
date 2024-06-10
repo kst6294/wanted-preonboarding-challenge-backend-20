@@ -33,6 +33,7 @@ public class Goods extends BaseEntity {
   private String goodsName;
   private String description;
   private int price;
+  @Setter
   private int quantity;
 
   @Setter
