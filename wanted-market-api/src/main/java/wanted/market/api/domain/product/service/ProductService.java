@@ -41,7 +41,7 @@ public class ProductService {
     private final UserService userService;
     private final ProductRepository productRepository;
 
-    public RegisterProductResponseDto registerProduct(HttpServletRequest request, RegisterProductRequestDto requestDto) throws WantedException {
+    public RegisterProductResponseDto registerProduct(HttpServletRequest request, RegisterProductRequestDto requestDto) {
         User user = userService.getUser(request);
         Product product = Product.of(requestDto.getProductName(), requestDto.getPrice(), requestDto.getCount(), user);
         productRepository.save(product);
@@ -73,7 +73,7 @@ public class ProductService {
         User user = userService.getUser(request);
         Product product = productRepository.findById(requestDto.getProductId()).orElseThrow(() -> new WantedException(ExceptionDomain.PRODUCT, ExceptionMessage.IS_NOT_EXIST));
         if (!product.getUser().equals(user)) {
-            throw new WantedException(ExceptionDomain.USER, ExceptionMessage.IS_NOT_OWNER);
+            throw new WantedException(ExceptionDomain.PRODUCT, ExceptionMessage.IS_NOT_OWNER);
         }
         if (!product.getStatus().equals(ProductStatus.SALE)) {
             throw new WantedException(ExceptionDomain.PRODUCT, ExceptionMessage.IS_NOT_ON_SALE);

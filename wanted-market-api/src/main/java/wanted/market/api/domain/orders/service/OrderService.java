@@ -35,7 +35,7 @@ public class OrderService {
     @Transactional
     public RegisterOrderResponseDto orderProduct(HttpServletRequest request, RegisterOrderRequestDto requestDto) {
         User user = userService.getUser(request);
-        Product product = productRepository.findById(requestDto.getProductId()).orElseThrow(() -> new WantedException(ExceptionDomain.ORDER, ExceptionMessage.IS_NOT_EXIST));
+        Product product = productRepository.findById(requestDto.getProductId()).orElseThrow(() -> new WantedException(ExceptionDomain.PRODUCT, ExceptionMessage.IS_NOT_EXIST));
         if (user.getId().equals(product.findUserId())) {
             throw new WantedException(ExceptionDomain.ORDER, ExceptionMessage.CANNOT_ORDER_OWN_PRODUCT);
         }
