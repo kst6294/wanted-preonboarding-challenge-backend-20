@@ -2,7 +2,10 @@ package com.wanted.market.order.domain;
 
 import com.wanted.market.common.exception.InvalidRequestException;
 import com.wanted.market.common.exception.UnauthorizedRequestException;
+import com.wanted.market.global.event.Events;
 import com.wanted.market.order.domain.vo.Status;
+import com.wanted.market.order.event.OrderConfirmedEvent;
+import com.wanted.market.order.event.OrderFinishedEvent;
 import com.wanted.market.order.exception.OutOfStockException;
 import jakarta.persistence.*;
 
@@ -56,14 +59,14 @@ public class Order {
      * @throws UnauthorizedRequestException 현재 접속중인 사용자의 id가 상품의 판매자의 id와 일치하지 않는 경우
      * @throws OutOfStockException          재고가 없는 경우
      */
-    public Integer confirm(Long loginMemberId, SellerChecker sellerChecker, StockRequester stockRequester) throws UnauthorizedRequestException, OutOfStockException, InvalidRequestException {
-        if(this.status != Status.REQUESTED)
+    public void confirm(Long loginMemberId, SellerChecker sellerChecker, StockRequester stockRequester) throws UnauthorizedRequestException, OutOfStockException, InvalidRequestException {
+        if (this.status != Status.REQUESTED)
             throw new InvalidRequestException("Order has already been confirmed");
         if (!sellerChecker.check(this.productId, loginMemberId))
             throw new UnauthorizedRequestException("Only seller can confirm order");
         Integer leftStock = stockRequester.request(this.productId);
         this.status = Status.CONFIRMED;
-        return leftStock;
+        Events.publish(new OrderConfirmedEvent(this.id, this.productId, leftStock));
     }
 
     /**
@@ -74,9 +77,10 @@ public class Order {
     public void finish(Long buyerId) throws UnauthorizedRequestException, InvalidRequestException {
         if (!this.buyerId.equals(buyerId))
             throw new UnauthorizedRequestException("Only buyer can finish order");
-        if(!this.status.equals(Status.CONFIRMED))
+        if (!this.status.equals(Status.CONFIRMED))
             throw new InvalidRequestException("Order has to be confirm before finish");
         this.status = Status.FINISHED;
+        Events.publish(new OrderFinishedEvent(this.id, this.productId));
     }
 
     public Long getId() {

@@ -3,11 +3,9 @@ package com.wanted.market.order.service;
 import com.wanted.market.common.exception.InvalidRequestException;
 import com.wanted.market.common.exception.NotFoundException;
 import com.wanted.market.common.exception.UnauthorizedRequestException;
-import com.wanted.market.global.event.Events;
 import com.wanted.market.order.domain.Order;
 import com.wanted.market.order.domain.OrderRepository;
 import com.wanted.market.order.domain.StockRequester;
-import com.wanted.market.order.event.OrderConfirmedEvent;
 import com.wanted.market.order.exception.OutOfStockException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,8 +33,7 @@ public class ConfirmOrderService {
      */
     public void confirm(Command cmd) throws NotFoundException, UnauthorizedRequestException, OutOfStockException, InvalidRequestException {
         Order findOrder = orderRepository.findByIdOrThrow(cmd.id());
-        Integer leftStock = findOrder.confirm(cmd.userId(), (productId, sellerId) -> orderRepository.findSellerIdByProductId(productId) == sellerId, stockRequester);
-        Events.publish(new OrderConfirmedEvent(findOrder.getId(), findOrder.getProductId(), leftStock));
+        findOrder.confirm(cmd.userId(), (productId, sellerId) -> orderRepository.findSellerIdByProductId(productId) == sellerId, stockRequester);
     }
 
     public record Command(
