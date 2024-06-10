@@ -8,11 +8,22 @@ import { ProductRepositoryInterface } from 'src/products/interfaces/product.repo
 export class ProductRepository implements ProductRepositoryInterface {
   constructor(private prisma: PrismaService) {}
 
+  async findById(productId: number): Promise<Product | null> {
+    return this.prisma.product.findUnique({
+      where: {
+        id: productId,
+      },
+    });
+  }
+
   async findAll(): Promise<Product[]> {
     return this.prisma.product.findMany();
   }
 
-  async create(createProductDto: CreateProductDto, userId: number): Promise<void> {
+  async create(
+    createProductDto: CreateProductDto,
+    userId: number,
+  ): Promise<void> {
     await this.prisma.product.create({
       data: {
         ...createProductDto,

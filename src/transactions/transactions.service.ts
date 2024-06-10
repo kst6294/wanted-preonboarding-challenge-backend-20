@@ -1,26 +1,33 @@
-import { Injectable } from '@nestjs/common';
-import { CreateTransactionDto } from './dto/create-transaction.dto';
-import { UpdateTransactionDto } from './dto/update-transaction.dto';
+import { ConflictException, Inject, Injectable } from '@nestjs/common';
+import { TransactionRepositoryInterface } from './interfaces/transaction.repository.interface';
+import { TransactionServiceInterface } from './interfaces/transaction.service.interface';
 
 @Injectable()
-export class TransactionsService {
-  create(createTransactionDto: CreateTransactionDto) {
-    return 'This action adds a new transaction';
+export class TransactionsService implements TransactionServiceInterface {
+  constructor(
+    @Inject('TRANSACTION_REPOSITORY_INTERFACE')
+    private readonly transactionRepository: TransactionRepositoryInterface,
+  ) {}
+
+  async checkAlreadyBought(
+    productId: number,
+    buyerId: number,
+    sellerId: number,
+  ) {
+    const product = await this.transactionRepository.findByBuyerIdAndSellerId(
+      productId,
+      buyerId,
+      sellerId,
+    );
+
+    if (product) {
+      throw new ConflictException('이미 구매한 상품입니다.');
+    }
+
+    return true;
   }
 
-  findAll() {
-    return `This action returns all transactions`;
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} transaction`;
-  }
-
-  update(id: number, updateTransactionDto: UpdateTransactionDto) {
-    return `This action updates a #${id} transaction`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} transaction`;
+  async create(createTransacitonInfo: any) {
+    return await this.transactionRepository.create(createTransacitonInfo);
   }
 }

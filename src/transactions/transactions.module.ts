@@ -1,9 +1,22 @@
 import { Module } from '@nestjs/common';
 import { TransactionsService } from './transactions.service';
 import { TransactionsController } from './transactions.controller';
+import { TransactionRepository } from 'src/repositories/transaction.repository';
+import { PrismaService } from 'prisma/prisma.service';
+import { ProductsService } from 'src/products/products.service';
+import { ProductRepository } from 'src/repositories/product.repository';
 
 @Module({
   controllers: [TransactionsController],
-  providers: [TransactionsService],
+  providers: [
+    { provide: 'PRODUCT_SERVICE_INTERFACE', useClass: ProductsService },
+    { provide: 'TRANSACTION_SERVICE_INTERFACE', useClass: TransactionsService },
+    { provide: 'PRODUCT_REPOSITORY_INTERFACE', useClass: ProductRepository },
+    {
+      provide: 'TRANSACTION_REPOSITORY_INTERFACE',
+      useClass: TransactionRepository,
+    },
+    PrismaService,
+  ],
 })
 export class TransactionsModule {}

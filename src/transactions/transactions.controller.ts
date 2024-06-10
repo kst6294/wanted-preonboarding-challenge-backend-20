@@ -1,45 +1,51 @@
 import {
   Controller,
-  Get,
   Post,
   Body,
-  Patch,
   Param,
-  Delete,
+  UseGuards,
+  Req,
+  Inject,
+  ParseIntPipe,
 } from '@nestjs/common';
-import { TransactionsService } from './transactions.service';
 import { CreateTransactionDto } from './dto/create-transaction.dto';
-import { UpdateTransactionDto } from './dto/update-transaction.dto';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { TransactionServiceInterface } from './interfaces/transaction.service.interface';
+import { ProductServiceInterface } from 'src/products/interfaces/product.service.interface';
 
 @Controller('transactions')
 export class TransactionsController {
-  constructor(private readonly transactionsService: TransactionsService) {}
+  constructor(
+    @Inject('TRANSACTION_SERVICE_INTERFACE')
+    private readonly transactionsService: TransactionServiceInterface,
+    @Inject('PRODUCT_SERVICE_INTERFACE')
+    private readonly productService: ProductServiceInterface,
+  ) {}
 
-  @Post()
-  create(@Body() createTransactionDto: CreateTransactionDto) {
-    return this.transactionsService.create(createTransactionDto);
-  }
+  @UseGuards(JwtAuthGuard)
+  @Post('/:productId')
+  async buy(
+    @Param('productId', ParseIntPipe) productId: number,
+    @Body() createTransactionDto: CreateTransactionDto,
+    @Req() req: any,
+  ): Promise<void> {
+    const buyerId = req.user.userId;
+    const sellerId = createTransactionDto.sellerId;
 
-  @Get()
-  findAll() {
-    return this.transactionsService.findAll();
-  }
+    const createTransacitonInfo = {
+      ...createTransactionDto,
+      productId,
+      buyerId,
+    };
+    // !! 이미 구매한 상품인지
+    await this.transactionsService.checkAlreadyBought(
+      productId,
+      buyerId,
+      sellerId,
+    );
+    // !! 품절 상태인지 확인
+    await this.productService.checkSoldOut(productId);
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.transactionsService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(
-    @Param('id') id: string,
-    @Body() updateTransactionDto: UpdateTransactionDto,
-  ) {
-    return this.transactionsService.update(+id, updateTransactionDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.transactionsService.remove(+id);
+    return await this.transactionsService.create(createTransacitonInfo);
   }
 }
