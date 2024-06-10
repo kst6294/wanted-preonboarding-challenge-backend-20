@@ -17,6 +17,7 @@ model User {
   id        Int           @id @default(autoincrement())
   email     String        @unique
   name      String
+  password  String        @default("")
   products  Product[]     @relation("ProductOwner")
   purchases Transaction[] @relation("Buyer")
   sales     Transaction[] @relation("Seller")

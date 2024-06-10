@@ -6,12 +6,16 @@ import { ProductRepository } from 'src/repositories/product.repository';
 
 @Module({
   controllers: [ProductsController],
-  providers: [{
-    provide: 'PRODUCT_SERVICE_INTERFACE',
-    useClass: ProductsService
-  },{
-    provide: 'PRODUCT_REPOSITORY_INTERFACE',
-    useClass: ProductRepository
-  },PrismaService],
+  providers: [
+    {
+      provide: 'PRODUCT_SERVICE_INTERFACE',
+      useClass: ProductsService,
+    },
+    {
+      provide: 'PRODUCT_REPOSITORY_INTERFACE',
+      useClass: ProductRepository,
+    },
+    PrismaService,
+  ],
 })
 export class ProductsModule {}

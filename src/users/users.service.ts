@@ -1,26 +1,36 @@
-import { Injectable } from '@nestjs/common';
-import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
-
+import { ConflictException, Inject, Injectable } from '@nestjs/common';
+import { User } from '@prisma/client';
+import { UsersServiceInterface } from './interfaces/users.service.interface';
+import { UsersRepositoryInterface } from './interfaces/users.repository.interface';
+import * as bcrypt from 'bcrypt';
 @Injectable()
-export class UsersService {
-  create(createUserDto: CreateUserDto) {
-    return 'This action adds a new user';
+export class UsersService implements UsersServiceInterface {
+  constructor(
+    @Inject('USERS_REPOSITORY_INTERFACE')
+    private readonly userRepository: UsersRepositoryInterface,
+  ) {}
+
+  async findOne(email: string): Promise<User | null> {
+    return this.userRepository.findOne(email);
   }
 
-  findAll() {
-    return `This action returns all users`;
-  }
+  async create(email: string, name: string, password: string): Promise<User> {
+    const user = await this.userRepository.findOne(email);
 
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
-  }
+    if (user) {
+      throw new ConflictException('이미 등록된 이메일 입니다.');
+    }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
-  }
+    const salt = await bcrypt.genSalt(10);
 
-  remove(id: number) {
-    return `This action removes a #${id} user`;
+    const hashedPassword = await bcrypt.hash(password, salt);
+
+    const createUserBody = {
+      email,
+      name,
+      password: hashedPassword,
+    };
+
+    return this.userRepository.create(createUserBody);
   }
 }
