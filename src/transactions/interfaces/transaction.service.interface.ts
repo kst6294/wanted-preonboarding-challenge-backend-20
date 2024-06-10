@@ -1,4 +1,6 @@
 export interface TransactionServiceInterface {
+  confirm(transactionId: number): Promise<void>;
+  checkIsPending(transactionId: number, buyerId: number): Promise<any>;
   checkAlreadyBought(
     productId: number,
     buyerId: number,
