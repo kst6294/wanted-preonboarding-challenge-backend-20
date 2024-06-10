@@ -1,6 +1,7 @@
 package org.example.wantedmarket.config;
 
 import lombok.RequiredArgsConstructor;
+import org.example.wantedmarket.jwt.JwtFilter;
 import org.example.wantedmarket.jwt.JwtUtil;
 import org.example.wantedmarket.jwt.LoginFilter;
 import org.springframework.context.annotation.Bean;
@@ -54,6 +55,10 @@ public class SecurityConfig {
                         .requestMatchers("/","/login","/api/user/login","/api/user/join").permitAll()
                         .requestMatchers("/admin").hasRole("ADMIN")
                         .anyRequest().authenticated());
+
+        // JwtFilter 등록
+        http
+                .addFilterBefore(new JwtFilter(jwtUtil), LoginFilter.class);
 
         // 커스텀 로그인 필터 등록
         http
