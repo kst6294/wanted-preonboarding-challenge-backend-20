@@ -9,7 +9,6 @@ import com.wanted.market.order.event.OrderFinishedEvent;
 import com.wanted.market.product.domain.Product;
 import com.wanted.market.product.domain.ProductRepository;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.event.TransactionalEventListener;
@@ -23,12 +22,10 @@ import org.springframework.transaction.event.TransactionalEventListener;
 public class UpdateStatusService {
     private final ProductRepository productRepository;
     private final OrderRepository orderRepository;
-    private final PlatformTransactionManager transactionManager;
 
-    public UpdateStatusService(ProductRepository productRepository, OrderRepository orderRepository, PlatformTransactionManager transactionManager) {
+    public UpdateStatusService(ProductRepository productRepository, OrderRepository orderRepository) {
         this.productRepository = productRepository;
         this.orderRepository = orderRepository;
-        this.transactionManager = transactionManager;
     }
 
     @TransactionalEventListener
@@ -43,8 +40,8 @@ public class UpdateStatusService {
     @TransactionalEventListener
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void toSold(OrderFinishedEvent event) throws NotFoundException, InvalidRequestException {
-        Product findProduct = productRepository.findByIdOrThrow(event.productId());
-        if (findProduct.isReserved() && !orderRepository.existsByProductIdAndStatus(findProduct.getId(), Status.CONFIRMED)) {
+        if (!orderRepository.existsByProductIdAndStatus(event.productId(), Status.CONFIRMED)) {
+            Product findProduct = productRepository.findByIdOrThrow(event.productId());
             findProduct.sold();
         }
     }
