@@ -20,4 +20,4 @@ spring:
 
     jwt:
         key: 08d9f6bd6f2f76186106617f85c808c8646707145c91c5054007c5e24925945f
-        expiration: 100000
+        expiration: 3600000
