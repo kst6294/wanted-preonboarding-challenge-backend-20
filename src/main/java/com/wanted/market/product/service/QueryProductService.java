@@ -1,8 +1,8 @@
 package com.wanted.market.product.service;
 
 import com.wanted.market.common.exception.NotFoundException;
-import com.wanted.market.common.http.dto.request.PageRequest;
 import com.wanted.market.common.http.dto.response.PageInfo;
+import com.wanted.market.global.util.PageUtils;
 import com.wanted.market.product.ui.dao.ProductInfoDao;
 import com.wanted.market.product.ui.dto.request.QueryMineRequest;
 import com.wanted.market.product.ui.dto.request.QueryRequest;
@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.function.Function;
 
 @Service
 @Transactional(readOnly = true)
@@ -26,13 +25,13 @@ public class QueryProductService {
 
     public ProductInfosResponse<SimpleProductInfoResponse> findAll(QueryRequest request) {
         List<SimpleProductInfoResponse> content = productDao.findAll(request);
-        PageInfo pageInfo = getPageInfo(productDao::count, request);
+        PageInfo pageInfo = PageUtils.getPageInfo(productDao::count, request);
         return new ProductInfosResponse<>(content, pageInfo);
     }
 
     public ProductInfosResponse<DetailProductInfoResponse> findAllWithOrders(QueryMineRequest request) {
         List<DetailProductInfoResponse> content = productDao.findAllWithOrders(request);
-        PageInfo pageInfo = getPageInfo(productDao::countWithOrders, request);
+        PageInfo pageInfo = PageUtils.getPageInfo(productDao::countWithOrders, request);
         return new ProductInfosResponse<>(content, pageInfo);
     }
 
@@ -42,15 +41,5 @@ public class QueryProductService {
             return DetailProductInfoResponse.createWithEmptyOrders(info);
         }
         return productDao.findWithOrdersByIdOrThrow(id, userId);
-    }
-
-    private <T extends PageRequest> PageInfo getPageInfo(Function<T, Long> countQuery, T request) {
-        Integer pageNumber = request.getPageNumber();
-        Integer pageSize = request.getPageSize();
-        Long totalElements = countQuery.apply(request);
-        Integer totalPages = (int) Math.ceil((double) totalElements / (double) pageSize);
-        boolean isFirst = pageNumber <= 1;
-        boolean isLast = pageNumber >= totalPages;
-        return new PageInfo(pageNumber, pageSize, totalPages, totalElements, isFirst, isLast);
     }
 }
