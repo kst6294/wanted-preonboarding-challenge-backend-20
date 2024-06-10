@@ -1,4 +1,5 @@
 spring:
+
   datasource:
     driver-class-name: org.h2.Driver
     url: jdbc:h2:mem:db
@@ -19,6 +20,9 @@ spring:
         format_sql: true
         show_sql: true
     defer-datasource-initialization: true
+
+  jwt:
+    secret: nwiniefddeubvbvbvmxqowfkeklllefkjunviznwmpepqqoeoqweriocpvmllseznqewvnmp
 
   sql:
     init:
