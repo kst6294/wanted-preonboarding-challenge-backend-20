@@ -11,7 +11,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 @RestControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(UnauthorizedRequestException.class)
-    public ResponseEntity handleUnauthorizedRequestException(UnauthorizedRequestException e) {
+    public ResponseEntity<?> handleUnauthorizedRequestException(UnauthorizedRequestException e) {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                 .body(ProblemDetail.forStatusAndDetail(HttpStatus.UNAUTHORIZED, e.getMessage()));
     }

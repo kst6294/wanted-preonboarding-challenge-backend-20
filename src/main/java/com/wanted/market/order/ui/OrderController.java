@@ -34,14 +34,14 @@ public class OrderController {
     }
 
     @GetMapping("/orders/my")
-    public ResponseEntity getMyOrders(@LoginMember SessionLoginMember loginMember, QueryRequest request) {
+    public ResponseEntity<?> getMyOrders(@LoginMember SessionLoginMember loginMember, QueryRequest request) {
         request.setBuyerId(loginMember.getId());
         OrderInfosResponse<SimpleOrderInfoResponse> result = queryOrderService.findAll(request);
         return ResponseEntity.ok(new ApiResponse("success", result));
     }
 
     @PostMapping("/orders/{id}/confirm")
-    public ResponseEntity confirmOrder(@LoginMember SessionLoginMember loginMember, @PathVariable Long id) throws UnauthorizedRequestException {
+    public ResponseEntity<?> confirmOrder(@LoginMember SessionLoginMember loginMember, @PathVariable Long id) throws UnauthorizedRequestException {
         try {
             ConfirmOrderService.Command cmd = new ConfirmOrderService.Command(id, loginMember.getId());
             confirmOrderService.confirm(cmd);
@@ -59,7 +59,7 @@ public class OrderController {
     }
 
     @PostMapping("/orders/{id}/finish")
-    public ResponseEntity finishOrder(@LoginMember SessionLoginMember loginMember, @PathVariable Long id) throws UnauthorizedRequestException {
+    public ResponseEntity<?> finishOrder(@LoginMember SessionLoginMember loginMember, @PathVariable Long id) throws UnauthorizedRequestException {
         try {
             FinishOrderService.Command cmd = new FinishOrderService.Command(id, loginMember.getId());
             finishOrderService.finish(cmd);

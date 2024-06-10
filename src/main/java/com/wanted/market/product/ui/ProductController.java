@@ -36,13 +36,13 @@ public class ProductController {
     }
 
     @GetMapping("/products")
-    public ResponseEntity getProducts(@LoginMember(required = false) SessionLoginMember loginMember, QueryRequest request) {
+    public ResponseEntity<?> getProducts(@LoginMember(required = false) SessionLoginMember loginMember, QueryRequest request) {
         ProductInfosResponse<SimpleProductInfoResponse> result = queryProductService.findAll(request);
         return ResponseEntity.ok(new ApiResponse<>("success", result));
     }
 
     @GetMapping("/products/{id}")
-    public ResponseEntity getProduct(@LoginMember(required = false) SessionLoginMember loginMember, @PathVariable Long id) {
+    public ResponseEntity<?> getProduct(@LoginMember(required = false) SessionLoginMember loginMember, @PathVariable Long id) {
         DetailProductInfoResponse result;
         try {
             result = queryProductService.findById(id, loginMember.getId());
@@ -74,14 +74,14 @@ public class ProductController {
      * </p>
      */
     @GetMapping("/products/my")
-    public ResponseEntity getMyProducts(@LoginMember SessionLoginMember loginMember, QueryMineRequest request) {
+    public ResponseEntity<?> getMyProducts(@LoginMember SessionLoginMember loginMember, QueryMineRequest request) {
         request.setSellerId(loginMember.getId());
         ProductInfosResponse<DetailProductInfoResponse> result = queryProductService.findAllWithOrders(request);
         return ResponseEntity.ok(new ApiResponse<>("success", result));
     }
 
     @PostMapping("/products")
-    public ResponseEntity postProduct(@LoginMember SessionLoginMember loginMember, @RequestBody RegisterRequest request) {
+    public ResponseEntity<?> postProduct(@LoginMember SessionLoginMember loginMember, @RequestBody RegisterRequest request) {
         Long newProductId;
         try {
             RegisterProductService.Command cmd =
@@ -96,7 +96,7 @@ public class ProductController {
     }
 
     @PostMapping("/products/{id}/orders")
-    public ResponseEntity postOrder(@LoginMember SessionLoginMember loginMember, @PathVariable Long id, @RequestBody PlaceOrderRequest request) {
+    public ResponseEntity<?> postOrder(@LoginMember SessionLoginMember loginMember, @PathVariable Long id, @RequestBody PlaceOrderRequest request) {
         Long newOrderId;
         try {
             PlaceOrderService.Command cmd = new PlaceOrderService.Command(id, request.version(), loginMember.getId());

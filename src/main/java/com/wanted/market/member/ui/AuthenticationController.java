@@ -25,7 +25,7 @@ public class AuthenticationController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity login(@RequestBody LoginRequest request, HttpServletRequest httpServletRequest) {
+    public ResponseEntity<?> login(@RequestBody LoginRequest request, HttpServletRequest httpServletRequest) {
         UsernamePasswordLoginService.UsernamePasswordLoginCommand cmd =
                 new UsernamePasswordLoginService.UsernamePasswordLoginCommand(request.username(), request.password());
         LoginMember login = null;
@@ -40,7 +40,7 @@ public class AuthenticationController {
     }
 
     @PostMapping("/logout")
-    public ResponseEntity logout(HttpServletRequest httpServletRequest) {
+    public ResponseEntity<?> logout(HttpServletRequest httpServletRequest) {
         HttpSession session = httpServletRequest.getSession(false);
         if (session != null) {
             session.invalidate();
