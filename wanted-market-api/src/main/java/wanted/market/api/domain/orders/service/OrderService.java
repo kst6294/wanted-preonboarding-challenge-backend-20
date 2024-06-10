@@ -13,11 +13,9 @@ import wanted.market.api.domain.orders.dto.response.RegisterOrderResponseDto;
 import wanted.market.api.domain.orders.entity.Order;
 import wanted.market.api.domain.orders.enums.OrderStatus;
 import wanted.market.api.domain.orders.repository.OrderRepository;
-import wanted.market.api.domain.product.dto.internal.ProductInfoDto;
 import wanted.market.api.domain.product.entity.Product;
 import wanted.market.api.domain.product.enums.ProductStatus;
 import wanted.market.api.domain.product.repository.ProductRepository;
-import wanted.market.api.domain.user.dto.internal.UserInfoDto;
 import wanted.market.api.domain.user.entity.User;
 import wanted.market.api.domain.user.service.UserService;
 import wanted.market.api.global.response.enums.ExceptionDomain;
@@ -47,7 +45,7 @@ public class OrderService {
         if (!requestDto.getPrice().equals(product.getPrice())) {
             throw new WantedException(ExceptionDomain.ORDER, ExceptionMessage.PRICE_HAS_CHANGED);
         }
-        Order order = Order.from(product, user, requestDto.getPrice(), requestDto.getCount());
+        Order order = Order.of(product, user, requestDto.getPrice(), requestDto.getCount());
         orderRepository.save(order);
         product.reserve();
         return RegisterOrderResponseDto.of(order.getId());
@@ -60,11 +58,8 @@ public class OrderService {
         if (targetUserId == null) orders = orderRepository.findAllByUserIdAndStatus(user.getId(), orderStatus);
         else orders = orderRepository.findAllByUserIdAndProductUserIdAndStatus(user.getId(), targetUserId, orderStatus);
         List<OrderInfoDto> orderInfoDtos = orders.stream()
-                .map(order ->
-                        OrderInfoDto.from(order, ProductInfoDto.from(order.getProduct(), UserInfoDto.from(order.getProduct()))
-                        )
-                ).toList();
-
+                .map(OrderInfoDto::from)
+                .toList();
         return OrderListResponseDto.of(orderInfoDtos);
     }
 
@@ -75,10 +70,8 @@ public class OrderService {
         if (targetUserId == null) {orders = orderRepository.findAllByProductUserIdAndStatus(user.getId(), orderStatus);}
         else {orders = orderRepository.findAllByUserIdAndProductUserIdAndStatus(targetUserId, user.getId(), orderStatus);}
         List<OrderInfoDto> orderInfoDtos = orders.stream()
-                .map(order ->
-                        OrderInfoDto.from(order, ProductInfoDto.from(order.getProduct(), UserInfoDto.from(order.getProduct())))
-                ).toList();
-
+                .map(OrderInfoDto::from)
+                .toList();
         return OrderListResponseDto.of(orderInfoDtos);
     }
 

@@ -49,7 +49,7 @@ public class Order {
         this.orderTime = LocalDateTime.now();
         this.status = OrderStatus.RESERVED;
     }
-    public static Order from(Product product, User user, Long price, Long count){
+    public static Order of(Product product, User user, Long price, Long count){
         return Order.builder()
                 .product(product)
                 .user(user)

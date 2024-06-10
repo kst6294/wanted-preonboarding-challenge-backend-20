@@ -29,15 +29,14 @@ public class OrderInfoDto {
         this.status = status;
         this.product = product;
     }
-
-    public static OrderInfoDto from(Order order, ProductInfoDto product) {
+    public static OrderInfoDto from(Order order) {
         return OrderInfoDto.builder()
                 .id(order.getId())
                 .price(order.getPrice())
                 .orderTime(order.getOrderTime())
                 .count(order.getCount())
                 .status(order.getStatus().getStatus())
-                .product(product)
+                .product(ProductInfoDto.from(order.getProduct()))
                 .build();
     }
 }

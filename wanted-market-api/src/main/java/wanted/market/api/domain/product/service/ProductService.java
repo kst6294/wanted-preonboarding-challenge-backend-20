@@ -52,7 +52,7 @@ public class ProductService {
         Product product = productRepository.findById(productId).orElseThrow(() -> new WantedException(ExceptionDomain.PRODUCT, ExceptionMessage.IS_NOT_EXIST));
 
         UserInfoDto userInfoDto = UserInfoDto.from(product);
-        return ProductDetailResponseDto.of(ProductInfoDto.from(product, userInfoDto));
+        return ProductDetailResponseDto.of(ProductInfoDto.from(product));
     }
 
     public ProductPageResponseDto searchProductList(Pageable pageable, String status) {
@@ -62,9 +62,8 @@ public class ProductService {
 
         PageInfoDto pageInfoDto = PageInfoDto.fromPage(products);
         List<ProductInfoDto> productInfoDtos = products.stream()
-                .map(product ->
-                        ProductInfoDto.from(product, UserInfoDto.from(product))
-                ).toList();
+                .map(ProductInfoDto::from)
+                .toList();
 
         return ProductPageResponseDto.of(pageInfoDto, productInfoDtos);
     }

@@ -25,14 +25,14 @@ public class ProductInfoDto {
         this.seller = user;
     }
 
-    public static ProductInfoDto from(Product product, UserInfoDto user){
+    public static ProductInfoDto from(Product product){
         return ProductInfoDto.builder()
                 .id(product.getId())
                 .name(product.getName())
                 .price(product.getPrice())
                 .count(product.getCount())
                 .status(product.getStatus().getStatus())
-                .user(user)
+                .user(UserInfoDto.from(product))
                 .build();
     }
 }
