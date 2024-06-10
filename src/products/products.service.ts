@@ -16,6 +16,15 @@ export class ProductsService implements ProductServiceInterface {
     private readonly productRepository: ProductRepositoryInterface,
   ) {}
 
+  async findOne(productId: number) {
+    const product = await this.productRepository.findById(productId);
+
+    if (!product) {
+      throw new NotFoundException('상품이 존재하지 않습니다.');
+    }
+    return product;
+  }
+
   async checkSoldOut(productId: number) {
     const product = await this.productRepository.findById(productId);
 
