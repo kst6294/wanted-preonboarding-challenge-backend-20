@@ -31,8 +31,9 @@ public class GoodsController {
   }
 
   @GetMapping("/{goodsId}")
-  public ResponseEntity<GoodsDto> getGoodsDetail(@PathVariable long goodsId) {
-    return ResponseEntity.ok(goodsService.getGoodsDetail(goodsId));
+  public ResponseEntity<GoodsDto> getGoodsDetail(@PathVariable long goodsId,
+      @AuthenticationPrincipal CustomUserDetails member) {
+    return ResponseEntity.ok(goodsService.getGoodsDetail(goodsId, member));
   }
 
   @PostMapping()

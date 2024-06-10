@@ -12,14 +12,19 @@ import static com.example.hs.global.exception.ErrorCode.NOT_MATCH_SELLER;
 import com.example.hs.domain.auth.entity.Member;
 import com.example.hs.domain.auth.repository.MemberRepository;
 import com.example.hs.domain.goods.dto.GoodsDto;
+import com.example.hs.domain.goods.dto.GoodsDtoForBuyer;
+import com.example.hs.domain.goods.dto.GoodsDtoForSeller;
 import com.example.hs.domain.goods.dto.GoodsEditRequest;
 import com.example.hs.domain.goods.dto.GoodsRequest;
 import com.example.hs.domain.goods.entity.Goods;
 import com.example.hs.domain.goods.repository.GoodsRepository;
 import com.example.hs.domain.goods.type.GoodsStatus;
+import com.example.hs.domain.transaction.entity.Transaction;
+import com.example.hs.domain.transaction.repository.TransactionRepository;
 import com.example.hs.global.exception.CustomException;
 import com.example.hs.global.security.userdetails.CustomUserDetails;
 import java.util.List;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,14 +34,35 @@ import org.springframework.transaction.annotation.Transactional;
 public class GoodsService {
   private final GoodsRepository goodsRepository;
   private final MemberRepository memberRepository;
+  private final TransactionRepository transactionRepository;
 
   public List<GoodsDto> getAll() {
     return GoodsDto.fromEntity(goodsRepository.findAll());
   }
 
-  public GoodsDto getGoodsDetail(long goodsId) {
-    return GoodsDto.fromEntity(goodsRepository.findById(goodsId)
-        .orElseThrow(() -> new CustomException(NOT_FOUND_GOODS)));
+  @Transactional
+  public GoodsDto getGoodsDetail(long goodsId, CustomUserDetails member) {
+    Goods goods = goodsRepository.findByIdWithLock(goodsId)
+        .orElseThrow(() -> new CustomException(NOT_FOUND_GOODS));
+
+    if (member == null) {
+      return GoodsDto.fromEntity(goods);
+    }
+
+    if (member.getId() == goods.getSeller().getId()) {
+      List<Transaction> transactions = transactionRepository.findByGoods(goods);
+      return GoodsDtoForSeller.fromEntity(goods, transactions);
+    } else {
+      Member buyer = memberRepository.findById(member.getId())
+          .orElseThrow(() -> new CustomException(NOT_FOUND_MEMBER));
+
+      Optional<Transaction> transactionOpt = transactionRepository.findByGoodsAndBuyer(goods, buyer);
+      if (transactionOpt.isPresent()) {
+        return GoodsDtoForBuyer.fromEntity(goods, transactionOpt.get());
+      } else {
+        return GoodsDto.fromEntity(goods);
+      }
+    }
   }
 
   @Transactional
