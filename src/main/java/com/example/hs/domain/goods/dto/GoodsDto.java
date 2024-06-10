@@ -2,15 +2,12 @@ package com.example.hs.domain.goods.dto;
 
 import com.example.hs.domain.goods.entity.Goods;
 import com.example.hs.domain.goods.type.GoodsStatus;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Getter
 @Builder
@@ -23,6 +20,8 @@ public class GoodsDto {
   private int price;
   private int quantity;
   private GoodsStatus goodsStatus;
+  private long sellerId;
+
 
   public static List<GoodsDto> fromEntity(List<Goods> goods) {
     if (goods == null) {
@@ -45,6 +44,7 @@ public class GoodsDto {
         .price(goods.getPrice())
         .quantity(goods.getQuantity())
         .goodsStatus(goods.getGoodsStatus())
+        .sellerId(goods.getSeller().getId())
         .build();
   }
 }

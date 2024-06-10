@@ -11,8 +11,11 @@ import static com.example.hs.global.token.constant.TokenConstant.BEARER_TYPE;
 import static com.example.hs.global.token.constant.TokenConstant.REFRESH_TOKEN_EXPIRE_TIME;
 import static com.example.hs.global.token.constant.TokenConstant.key;
 
+import com.example.hs.domain.auth.type.Authority;
 import com.example.hs.global.exception.CustomException;
 import com.example.hs.global.exception.JwtException;
+import com.example.hs.global.security.userdetails.CustomUserDetails;
+import com.example.hs.global.security.userdetails.MemberUserDetailsDomain;
 import com.example.hs.global.token.repository.TokenRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -48,8 +51,9 @@ public class TokenProvider {
         .collect(Collectors.joining(","));
 
     long now = (new Date()).getTime();
-
+    CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
     return Jwts.builder()
+        .setId(String.valueOf(customUserDetails.getId()))
         .setSubject(userId)       // payload "sub": "name"
         .claim(AUTHORITIES_KEY, authorities)
         .setIssuedAt(new Date(now))      // payload "iat" : "현재 시간
@@ -64,8 +68,9 @@ public class TokenProvider {
         .collect(Collectors.joining(","));
 
     long now = (new Date()).getTime();
-
+    CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
     return Jwts.builder()
+        .setId(String.valueOf(customUserDetails.getId()))
         .setSubject(userId)
         .claim(AUTHORITIES_KEY, authorities)
         .setIssuedAt(new Date(now))
@@ -92,9 +97,14 @@ public class TokenProvider {
             .map(SimpleGrantedAuthority::new)
             .collect(Collectors.toList());
 
-    // UserDetails 객체를 만들어서 Authentication 리턴
-    UserDetails principal = new User(claims.getSubject(), "", authorities);
+    long id = Long.parseLong(claims.getId());
+    String loginId = claims.getSubject(); // or claims.get("loginId", String.class);
+    String password = ""; // Password is not used in this context but required for constructor
+    Authority authority = Authority.valueOf(claims.get("auth").toString());
+    MemberUserDetailsDomain userDetailsDomain = new MemberUserDetailsDomain(id, loginId, password, authority);
 
+    // UserDetails 객체를 만들어서 Authentication 리턴
+    CustomUserDetails principal = new CustomUserDetails(userDetailsDomain);
     return new UsernamePasswordAuthenticationToken(principal, "", authorities);
   }
   public String getUsername(String token) {

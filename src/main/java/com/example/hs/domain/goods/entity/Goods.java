@@ -1,5 +1,6 @@
 package com.example.hs.domain.goods.entity;
 
+import com.example.hs.domain.auth.entity.Member;
 import com.example.hs.domain.base.BaseEntity;
 import com.example.hs.domain.goods.dto.GoodsEditRequest;
 import com.example.hs.domain.goods.type.GoodsStatus;
@@ -9,6 +10,8 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -36,6 +39,9 @@ public class Goods extends BaseEntity {
   @Enumerated(EnumType.STRING)
   private GoodsStatus goodsStatus;
 
+  @ManyToOne
+  @JoinColumn(name = "seller_id")
+  private Member seller;
 
   public void updateGoods(GoodsEditRequest request) {
     this.goodsName = request.getGoodsName();

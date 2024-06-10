@@ -4,10 +4,12 @@ import com.example.hs.domain.goods.dto.GoodsDto;
 import com.example.hs.domain.goods.dto.GoodsEditRequest;
 import com.example.hs.domain.goods.dto.GoodsRequest;
 import com.example.hs.domain.goods.service.GoodsService;
+import com.example.hs.global.security.userdetails.CustomUserDetails;
 import jakarta.validation.Valid;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -34,18 +36,21 @@ public class GoodsController {
   }
 
   @PostMapping()
-  public ResponseEntity<GoodsDto> postGoods(@Valid @RequestBody GoodsRequest goodsRequest) {
-    return ResponseEntity.ok(goodsService.postGoods(goodsRequest));
+  public ResponseEntity<GoodsDto> postGoods(@Valid @RequestBody GoodsRequest goodsRequest,
+      @AuthenticationPrincipal CustomUserDetails member) {
+    return ResponseEntity.ok(goodsService.postGoods(goodsRequest, member));
   }
 
   @PutMapping("/{goodsId}")
-  public ResponseEntity<GoodsDto> updateGoods(@PathVariable long goodsId, @Valid @RequestBody GoodsEditRequest request) {
-    return ResponseEntity.ok(goodsService.updateGoods(goodsId, request));
+  public ResponseEntity<GoodsDto> updateGoods(@PathVariable long goodsId, @Valid @RequestBody GoodsEditRequest request,
+      @AuthenticationPrincipal CustomUserDetails member) {
+    return ResponseEntity.ok(goodsService.updateGoods(goodsId, request, member));
   }
 
   @DeleteMapping("/{goodsId}")
-  public ResponseEntity<String> deleteGoods(@PathVariable long goodsId) {
-    return ResponseEntity.ok(goodsService.deleteGoods(goodsId));
+  public ResponseEntity<String> deleteGoods(@PathVariable long goodsId,
+      @AuthenticationPrincipal CustomUserDetails member) {
+    return ResponseEntity.ok(goodsService.deleteGoods(goodsId, member));
   }
 
 }

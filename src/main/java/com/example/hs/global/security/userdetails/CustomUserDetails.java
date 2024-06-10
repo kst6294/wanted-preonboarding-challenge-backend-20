@@ -48,4 +48,8 @@ public class CustomUserDetails implements UserDetails {
   public boolean isEnabled() {
     return true;
   }
+
+  public long getId() {
+    return memberUserDetailsDomain.id();
+  }
 }
