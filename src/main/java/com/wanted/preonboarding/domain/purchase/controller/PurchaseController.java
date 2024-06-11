@@ -12,7 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/purchase")
+@RequestMapping("/api/v1/purchase")
 @RequiredArgsConstructor
 public class PurchaseController {
 
