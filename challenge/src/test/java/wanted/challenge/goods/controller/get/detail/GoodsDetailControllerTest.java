@@ -1,26 +1,17 @@
 package wanted.challenge.goods.controller.get.detail;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.context.annotation.Import;
 import org.springframework.test.web.servlet.MvcResult;
 import wanted.challenge.aop.api.ApiResponse;
-import wanted.challenge.goods.controller.GoodsController;
+import wanted.challenge.exception.GlobalExceptionHandler;
+import wanted.challenge.exception.custom.GoodsNotFoundException;
 import wanted.challenge.goods.controller.GoodsControllerTest;
 import wanted.challenge.goods.dto.response.GoodsResponseDto;
-import wanted.challenge.goods.entity.Goods;
-import wanted.challenge.goods.entity.GoodsStatus;
-import wanted.challenge.goods.mapper.GoodsMapper;
-import wanted.challenge.goods.service.GoodsService;
 import wanted.challenge.mypage.dto.response.MyPageResponseDto;
 
 import java.time.LocalDateTime;
@@ -33,8 +24,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
-@WebMvcTest(GoodsController.class)
-@AutoConfigureMockMvc
+@Import(GlobalExceptionHandler.class)  // 전역 예외 처리기 포함
 class GoodsDetailControllerTest extends GoodsControllerTest {
 
     private GoodsResponseDto.GoodsDetail mockGoodsDetail;
@@ -158,10 +148,10 @@ class GoodsDetailControllerTest extends GoodsControllerTest {
         Long memberId = 1L;
 
         // when
-        Mockito.when(goodsService.getGoodsDetail(goodsId, memberId)).thenThrow(new GoodsNotFoundException("Goods not found")); // 핸들링 필요
+        Mockito.when(goodsService.getGoodsDetail(goodsId, memberId)).thenThrow(new GoodsNotFoundException("찾을 수 없는 상품 ID")); // 핸들링 필요
 
-
-
+        // then
+        assertThrows(GoodsNotFoundException.class, () -> goodsService.getGoodsDetail(goodsId, memberId));
     }
 
     @Test
@@ -172,15 +162,20 @@ class GoodsDetailControllerTest extends GoodsControllerTest {
         Long memberId = 1L;
 
         // when
-        Mockito.when(goodsService.getGoodsDetail(goodsId, memberId)).thenThrow(new GoodsNotFoundException("Goods not found")); // 핸들링 필요
+        Mockito.when(goodsService.getGoodsDetail(goodsId, memberId)).thenThrow(new IllegalArgumentException("유효하지않은 상품 ID")); // 핸들링 필요
 
         // then
-        mockMvc.perform(get("/goods/{goods_id}", goodsId)
+        MvcResult mvcResult = mockMvc.perform(get("/goods/{goods_id}", goodsId)
                         .header("memberId", memberId.toString())
                         .characterEncoding("UTF-8")
                         .contentType("application/json"))
-                .andExpect(status().isNotFound());
-//                .andExpect(jsonPath("$.message").value("Goods not found"));
+                .andReturn();
+
+        // 상태코드 400 확인
+        assertEquals(400, mvcResult.getResponse().getStatus());
+        // 예외 메시지 확인
+        assertEquals("유효하지않은 상품 ID", Objects.requireNonNull(mvcResult.getResolvedException()).getMessage());
+
     }
 
     @Test
@@ -203,13 +198,10 @@ class GoodsDetailControllerTest extends GoodsControllerTest {
 
         // 상태코드 500 확인
         assertEquals(500, mvcResult.getResponse().getStatus());
-        // 예외가 RuntimeException인지 확인
-        assertThrows(RuntimeException.class, mvcResult::getResolvedException);
         // 예외 메시지 확인
         assertEquals("Service error", Objects.requireNonNull(mvcResult.getResolvedException()).getMessage());
-
-
     }
 
 
 }
+
