@@ -1,5 +1,6 @@
 package market.market.global.security.jwt.repository;
 
+import io.jsonwebtoken.Jwts;
 import market.market.domain.user.domain.User;
 import market.market.global.error.ErrorCode;
 import market.market.global.error.exeception.CustomException;
@@ -7,7 +8,6 @@ import market.market.global.security.jwt.dto.TokenResponse;
 import market.market.global.security.jwt.entity.RefreshToken;
 import market.market.global.security.principle.AuthDetailsService;
 import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.HttpServletRequest;

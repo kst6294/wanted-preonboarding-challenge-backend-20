@@ -1,0 +1,15 @@
+
+x
+java:S1874F"0Remove this use of "signWith"; it is deprecated.(Åóı€ıÿÿÿÿ8¯±‘º€2J$c4b4a95b-7aca-45e9-83a7-4733cb9f8a6a
+‚
+java:S1874F":Remove this use of "SignatureAlgorithm"; it is deprecated.(Åóı€ıÿÿÿÿ8¯±‘º€2J$1f7a3223-87b3-4854-9905-72bd3043422c
+‚
+java:S1874F":Remove this use of "SignatureAlgorithm"; it is deprecated.(Åóı€ıÿÿÿÿ8¯±‘º€2J$2a4c4227-2897-4b2d-8c19-a6e943b8276f
+u
+java:S1874G"2Remove this use of "setSubject"; it is deprecated.(õ•Úá8¯±‘º€2J$091f6212-fd9a-4c79-9cf5-06e148ce3e3f
+{
+java:S1874I"3Remove this use of "setIssuedAt"; it is deprecated.(Ô£µïûÿÿÿÿ8°±‘º€2J$092e036c-f1fe-4560-9340-512519c45a44
+x
+java:S1874J"5Remove this use of "setExpiration"; it is deprecated.(‡¿È‚8°±‘º€2J$dd27aeb5-8222-4ed8-b643-100bbe0618b0
+R
+java:S1874e"5Remove this use of "setSigningKey"; it is deprecated.(Æ˜–8ƒ§˜º€2

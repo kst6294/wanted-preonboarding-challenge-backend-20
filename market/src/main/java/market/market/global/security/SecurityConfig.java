@@ -47,7 +47,7 @@ public class SecurityConfig {
         http
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .csrf(AbstractHttpConfigurer::disable)
-                .formLogin(Customizer.withDefaults())
+                .formLogin(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorizeRequest ->
                         authorizeRequest
                                 .requestMatchers(
@@ -71,16 +71,21 @@ public class SecurityConfig {
                                 ).permitAll()
 
                                 .requestMatchers(
-                                        AntPathRequestMatcher.antMatcher("/user/login/**")
+                                        AntPathRequestMatcher.antMatcher(HttpMethod.POST, "/user/signup/**")
                                 ).permitAll()
 
                                 .requestMatchers(
-                                        AntPathRequestMatcher.antMatcher("/product/detail/**")
+                                        AntPathRequestMatcher.antMatcher(HttpMethod.POST, "/user/login/**")
                                 ).permitAll()
 
                                 .requestMatchers(
-                                        AntPathRequestMatcher.antMatcher("/product/list/**")
+                                        AntPathRequestMatcher.antMatcher(HttpMethod.GET, "/product/detail/**")
                                 ).permitAll()
+
+                                .requestMatchers(
+                                        AntPathRequestMatcher.antMatcher(HttpMethod.GET,"/product/list/**")
+                                ).permitAll()
+
                                 .anyRequest().authenticated()
                 )
                 .addFilterBefore(new JwtAuthenticationFilter(jwtProvider),

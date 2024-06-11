@@ -16,6 +16,10 @@ repositories {
 }
 
 dependencies {
+
+    // javax
+    implementation 'javax.xml.bind:jaxb-api:2.3.1'
+
     // webClient
     implementation 'org.springframework.boot:spring-boot-starter-webflux'
 
@@ -23,7 +27,7 @@ dependencies {
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
 
     // validation
-    implementation 'org.springframework.boot:spring-boot-starter-validation:2.7.3'
+    implementation 'org.springframework.boot:spring-boot-starter-validation:3.3.0'
 
     // jwt
     implementation 'io.jsonwebtoken:jjwt:0.9.1'
