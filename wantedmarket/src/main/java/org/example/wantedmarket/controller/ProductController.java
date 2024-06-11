@@ -10,6 +10,7 @@ import org.example.wantedmarket.model.User;
 import org.example.wantedmarket.repository.UserRepository;
 import org.example.wantedmarket.service.ProductService;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,11 +27,10 @@ public class ProductController {
 
     /* 제품 등록 */
     @PostMapping
-    public ProductCreateDto.Response registerProduct(@RequestBody ProductCreateDto.Request request) {
+    public ProductCreateDto.Response registerProduct(@AuthenticationPrincipal CustomUserDetails customUserDetails, @RequestBody ProductCreateDto.Request request) {
         log.info("제품 등록 api");
 
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String username = authentication.getName();
+        String username = customUserDetails.getUsername();
         Long userId = userRepository.findByUsername(username).getId();
 
         return productService.saveProduct(userId, request);
@@ -50,8 +50,15 @@ public class ProductController {
     *  비회원 가능
     */
     @GetMapping("/{productId}")
-    public ProductDetailDto getDetailProduct(@PathVariable Long productId) {
+    public ProductDetailDto getDetailProduct(@AuthenticationPrincipal CustomUserDetails customUserDetails, @PathVariable Long productId) {
         log.info("제품 상세 조회 api");
+
+        System.out.println("customDetail: " + customUserDetails);
+        if (customUserDetails != null) {
+            String username = customUserDetails.getUsername();
+            Long userId = userRepository.findByUsername(username).getId();
+            return productService.findDetailProductWithTransaction(userId, productId);
+        }
 
         return productService.findDetailProduct(productId);
     }

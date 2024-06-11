@@ -1,5 +1,6 @@
 package org.example.wantedmarket.dto.user;
 
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.example.wantedmarket.model.User;
 import org.springframework.security.core.GrantedAuthority;
