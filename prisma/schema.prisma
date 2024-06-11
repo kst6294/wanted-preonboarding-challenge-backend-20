@@ -33,16 +33,27 @@ enum ProductStatus {
 }
 
 model Product {
-  id           Int           @id @default(autoincrement())
-  name         String // 제품명
-  price        Float // 가격
-  status       ProductStatus @default(AVAILABLE) // 예약상태
-  ownerId      Int
-  owner        User          @relation(name: "ProductOwner", fields: [ownerId], references: [id])
-  transactions Transaction[]
-  createdAt    DateTime      @default(now())
-  updatedAt    DateTime      @updatedAt
-  deletedAt    DateTime?
+  id              Int               @id @default(autoincrement())
+  name            String // 제품명
+  price           Float // 가격
+  status          ProductStatus     @default(AVAILABLE) // 예약상태
+  ownerId         Int
+  owner           User              @relation(name: "ProductOwner", fields: [ownerId], references: [id])
+  transactions    Transaction[]
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+  deletedAt       DateTime?
+  ProductQuantity ProductQuantity[]
+}
+
+model ProductQuantity {
+  id        Int       @id @default(autoincrement())
+  productId Int
+  quantity  Int       @default(0)
+  product   Product   @relation(fields: [productId], references: [id])
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
 }
 
 enum TransactionStatus {

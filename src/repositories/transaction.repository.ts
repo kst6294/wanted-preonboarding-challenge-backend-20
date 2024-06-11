@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { ProductStatus, TransactionStatus } from '@prisma/client';
+import { ProductStatus, Transaction, TransactionStatus } from '@prisma/client';
 import { PrismaService } from 'prisma/prisma.service';
 import { GetTransactionsDTO } from 'src/transactions/dto/get-transactions.dto';
 import {
@@ -24,7 +24,7 @@ export class TransactionRepository implements TransactionRepositoryInterface {
   async findByTransactionIdAndBuyerId(
     transactionId: number,
     buyerId: number,
-  ): Promise<any> {
+  ): Promise<Transaction | null> {
     return await this.prisma.transaction.findUnique({
       where: {
         id: transactionId,
@@ -37,7 +37,7 @@ export class TransactionRepository implements TransactionRepositoryInterface {
     productId: number,
     buyerId: number,
     sellerId: number,
-  ): Promise<any> {
+  ): Promise<Transaction | null> {
     return await this.prisma.transaction.findFirst({
       where: {
         productId,
