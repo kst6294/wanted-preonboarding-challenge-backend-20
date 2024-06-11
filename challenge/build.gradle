@@ -22,15 +22,22 @@ repositories {
 }
 
 dependencies {
+	//jpa
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	//web
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+
+	//validation
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+	//lombok
 	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
 //	developmentOnly 'org.springframework.boot:spring-boot-docker-compose'
 	runtimeOnly 'com.h2database:h2'
-	annotationProcessor 'org.projectlombok:lombok'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
+	//test
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	//test  jackson-datatype-jsr310
 	implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'
 	implementation 'com.fasterxml.jackson.core:jackson-databind'
