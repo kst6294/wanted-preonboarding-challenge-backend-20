@@ -29,15 +29,22 @@ public class MarketService {
   private final ProductUtil productUtil;
 
   public List<Product> getAllProducts() {
+    User user = securityUtil.getCurrentUser();
+    log.info("getProduct: View all products. userId={}", user.getId());
+
     return productRepository.findAll();
   }
 
   public Product getProduct(Long productId) {
+    User user = securityUtil.getCurrentUser();
+    log.info("getProduct: Product inquiry. userId={}, productId={}", user.getId(), productId);
+
     return productUtil.findById(productId);
   }
 
   public Product saveProduct(ProductDto.RegisterRequest dto) {
     User user = securityUtil.getCurrentUser();
+    log.info("saveProduct: Save the product. userId={}", user.getId());
 
     Product product =
         Product.builder().name(dto.getName()).price(dto.getPrice()).sellerUser(user).build();
@@ -49,6 +56,8 @@ public class MarketService {
 
   public Product reserveProduct(Long productId) {
     User user = securityUtil.getCurrentUser();
+    log.info(
+        "reserveProduct: Reserve the product. userId={}, productId={}", user.getId(), productId);
     Product product = productUtil.findById(productId);
 
     if (product.getSellerUser().equals(user)) { // 본인 상품에 예약 요청시 예외 발생
@@ -74,6 +83,10 @@ public class MarketService {
 
   public List<Product> getSellerBuyerRecord(ProductIdParams dto) {
     User user = securityUtil.getCurrentUser();
+    log.info(
+        "getSellerBuyerRecord: Check transaction history between traders. userId={}, productId={}",
+        user.getId(),
+        dto.getProductId());
     Product product = productUtil.findById(dto.getProductId());
 
     if (product.getBuyerUser() == null) { // 예약자 정보가 없는 경우 예외 발생
@@ -101,6 +114,8 @@ public class MarketService {
 
   public List<Product> getMyRecord() {
     User user = securityUtil.getCurrentUser();
+    log.info("getMyRecord: Check my records. userId={}", user.getId());
+
     List<Product> products = new ArrayList<>();
 
     products.addAll(user.getSaleList());
@@ -111,6 +126,7 @@ public class MarketService {
 
   public Product approveSale(Long productId) {
     User user = securityUtil.getCurrentUser();
+    log.info("approveSale: Approved for sale. userId={}, productId={}", user.getId(), productId);
     Product product = productUtil.findById(productId);
 
     if (!product.isSellerEquals(user)) {

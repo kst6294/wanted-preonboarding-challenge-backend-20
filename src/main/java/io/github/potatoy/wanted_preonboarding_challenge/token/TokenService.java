@@ -35,6 +35,7 @@ public class TokenService {
    * @return Access Token
    */
   public String createNewAccessToken(TokenDto.Request dto) {
+    log.info("createNewAccessToken: Attempting to create a token.");
     // 토큰 유효성 검사에 실패하면 예외 발생
     if (!tokenProvider.validToken(dto.getRefreshToken().toString())) {
       throw new InvalidTokenException();
@@ -53,6 +54,7 @@ public class TokenService {
    * @return AuthenticateDto.Response
    */
   public AuthenticateDto.Response createNewTokenSet(AuthenticateDto.Request dto) {
+    log.info("createNewTokenSet: Attempting to create a token.");
     // 유저의 이메일과 패스워드를 통해 유저를 확인
     UsernamePasswordAuthenticationToken authenticationToken =
         new UsernamePasswordAuthenticationToken(dto.getEmail(), dto.getPassword());
@@ -62,6 +64,7 @@ public class TokenService {
     // 정상적으로 수행될 경우 user 객체 생성
     UserDetails userDetails = (UserDetails) authentication.getPrincipal();
     User user = userService.findByEmail(userDetails.getUsername());
+    log.info("createNewTokenSet: Requesting user. userId={}", user.getId());
 
     // Token 생성
     String refreshToken = tokenProvider.generateToken(user, REFRESH_TOKEN_DURATION);

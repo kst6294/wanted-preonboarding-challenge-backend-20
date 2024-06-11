@@ -23,6 +23,7 @@ public class UserService {
    * @return User 객체
    */
   public User signup(AddUserRequest dto) {
+    log.info("signup: Request to create an account. email={}", dto.getEmail());
     BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
     User user =
@@ -43,10 +44,12 @@ public class UserService {
   }
 
   public User findById(Long userId) {
+    log.info("findById: userId={}", userId);
     return userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
   }
 
   public User findByEmail(String email) {
+    log.info("findByEmail: email={}", email);
     return userRepository.findByEmail(email).orElseThrow(UserNotFoundException::new);
   }
 }
