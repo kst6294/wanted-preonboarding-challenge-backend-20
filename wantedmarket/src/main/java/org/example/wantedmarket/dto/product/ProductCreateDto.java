@@ -26,13 +26,13 @@ public class ProductCreateDto {
     @AllArgsConstructor
     public static class Response {
 
-        private Long id;
+        private Long productId;
         private String name;
         private Integer price;
 
         public static ProductCreateDto.Response from(Product product) {
             return Response.builder()
-                    .id(product.getId())
+                    .productId(product.getId())
                     .name(product.getName())
                     .price(product.getPrice())
                     .build();

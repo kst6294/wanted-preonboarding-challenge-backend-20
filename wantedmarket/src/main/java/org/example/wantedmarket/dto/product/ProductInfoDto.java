@@ -11,7 +11,7 @@ import org.example.wantedmarket.status.ProductStatus;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ProductInfoDto {
-    private Long id;
+    private Long productId;
     private String name;
     private Integer price;
     private ProductStatus status;

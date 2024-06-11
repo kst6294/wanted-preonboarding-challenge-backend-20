@@ -3,6 +3,9 @@ package org.example.wantedmarket.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.example.wantedmarket.dto.order.OrderCreateDto;
+import org.example.wantedmarket.dto.order.OrderInfoDto;
+import org.example.wantedmarket.error.CustomException;
+import org.example.wantedmarket.error.ErrorCode;
 import org.example.wantedmarket.model.Order;
 import org.example.wantedmarket.model.Product;
 import org.example.wantedmarket.model.User;
@@ -27,19 +30,21 @@ public class OrderService {
     @Transactional
     public OrderCreateDto.Response orderProduct(Long userId, OrderCreateDto.Request request) {
         User buyer = userRepository.findById(userId).orElseThrow(
-                () ->  new RuntimeException("해당 사용자(구매자)가 존재하지 않습니다."));
+                () ->  new CustomException(ErrorCode.USER_NOT_FOUND));
 
         Product product = productRepository.findById(request.getProductId()).orElseThrow(
-                () ->  new RuntimeException("해당 제품이 존재하지 않습니다."));
-
-        if (product.getStatus() == ProductStatus.COMPLETED) {
-            throw new RuntimeException("해당 제품은 판매 완료되었습니다.");
-        }
-
-        // todo : 본인이 등록한 제품 주문 x
+                () ->  new CustomException(ErrorCode.PRODUCT_NOT_FOUND));
 
         User seller = userRepository.findById(product.getSeller().getId()).orElseThrow(
-                () ->  new RuntimeException("해당 사용자(판매자)가 존재하지 않습니다."));
+                () ->  new CustomException(ErrorCode.USER_NOT_FOUND));
+
+        if (product.getStatus() == ProductStatus.COMPLETED) {
+            throw new CustomException(ErrorCode.PRODUCT_SOLD_OUT);
+        }
+
+        if (product.getSeller().getId() == userId) {
+            throw new CustomException(ErrorCode.ORDER_MY_PRODUCT_NOT_ALLOWED);
+        }
 
         // 주문 진행중
         Order newOrder = orderRepository.save(Order.builder()
@@ -52,25 +57,29 @@ public class OrderService {
         // 상품 예약중
         product.modifyStatus(ProductStatus.IN_RESERVATION);
 
-        // todo: 주문 정보 돌려주기
         return OrderCreateDto.Response.from(newOrder);
     }
 
     @Transactional
-    public void approveProductOrder(Long orderId) {
+    public OrderInfoDto approveProductOrder(Long userId, Long orderId) {
         Order order = orderRepository.findById(orderId).orElseThrow(
-                () ->  new RuntimeException("해당 주문이 존재하지 않습니다."));
+                () ->  new CustomException(ErrorCode.ORDER_NOT_FOUND));
 
         Product product = order.getProduct();
 
         if (order.getStatus() == OrderStatus.COMPLETED) {
-            throw new RuntimeException("이미 완료된 주문입니다.");
+            throw new CustomException(ErrorCode.ORDER_COMPLETED);
         }
 
-        // todo : 판매자가 아닌 사람 승인 x
+        if (order.getSeller().getId() != userId) {
+            throw new CustomException(ErrorCode.USER_NOT_SELLER);
+        }
 
+        // 주문과 제품 상태 변경
         order.modifyStatus(OrderStatus.COMPLETED);
         product.modifyStatus(ProductStatus.COMPLETED);
+
+        return new OrderInfoDto(orderId, order.getProduct().getId(), order.getSeller().getId(), order.getBuyer().getId(), order.getStatus());
     }
 
 }

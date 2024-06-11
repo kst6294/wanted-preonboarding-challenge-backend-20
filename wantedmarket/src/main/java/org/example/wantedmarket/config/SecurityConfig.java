@@ -6,6 +6,7 @@ import org.example.wantedmarket.jwt.JwtUtil;
 import org.example.wantedmarket.jwt.LoginFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -53,6 +54,8 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests((auth) -> auth
                         .requestMatchers("/","/login","/api/user/login","/api/user/join").permitAll()
+                        .requestMatchers(HttpMethod.GET,"/api/product").permitAll()
+                        .requestMatchers(HttpMethod.GET,"/api/product/{productId}").permitAll()
                         .requestMatchers("/admin").hasRole("ADMIN")
                         .anyRequest().authenticated());
 
@@ -67,7 +70,6 @@ public class SecurityConfig {
         // 세션 설정 : jwt를 통한 인증, 인가를 위해 stateless 상태로 설정
         http
                 .sessionManagement((session) -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
-
 
         return http.build();
     }

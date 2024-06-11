@@ -2,9 +2,12 @@ package org.example.wantedmarket.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.example.wantedmarket.dto.order.OrderInfoDto;
 import org.example.wantedmarket.dto.product.ProductCreateDto;
 import org.example.wantedmarket.dto.product.ProductDetailDto;
 import org.example.wantedmarket.dto.product.ProductInfoDto;
+import org.example.wantedmarket.error.CustomException;
+import org.example.wantedmarket.error.ErrorCode;
 import org.example.wantedmarket.model.Order;
 import org.example.wantedmarket.model.Product;
 import org.example.wantedmarket.model.User;
@@ -33,7 +36,7 @@ public class ProductService {
     @Transactional
     public ProductCreateDto.Response saveProduct(Long userId, ProductCreateDto.Request request) {
         User seller = userRepository.findById(userId).orElseThrow(
-                () ->  new RuntimeException("해당 사용자가 존재하지 않습니다."));
+                () -> new CustomException(ErrorCode.USER_NOT_FOUND));
 
         Product newProduct = productRepository.save(Product.builder()
                         .name(request.getName())
@@ -61,14 +64,42 @@ public class ProductService {
     @Transactional(readOnly = true)
     public ProductDetailDto findDetailProduct(Long productId) {
         Product findProduct = productRepository.findById(productId).orElseThrow(
-                () ->  new RuntimeException("해당 제품이 존재하지 않습니다."));
+                () ->  new CustomException(ErrorCode.PRODUCT_NOT_FOUND));
 
         return ProductDetailDto.builder()
-                .id(findProduct.getId())
+                .productId(findProduct.getId())
                 .name(findProduct.getName())
                 .price(findProduct.getPrice())
                 .status(findProduct.getStatus())
                 .sellerId(findProduct.getSeller().getId())
+                .build();
+    }
+
+    /* 제품 상세 조회 with 거래내역 */
+    @Transactional(readOnly = true)
+    public ProductDetailDto findDetailProductWithTransaction(Long userId, Long productId) {
+        Product findProduct = productRepository.findById(productId).orElseThrow(
+                () ->   new CustomException(ErrorCode.PRODUCT_NOT_FOUND));
+
+        List<OrderInfoDto> transactionList = new ArrayList<>();
+        if (findProduct.getSeller().getId() == userId) {
+            transactionList = orderRepository.findAllBySellerId(userId).stream()
+                    .map(order -> new OrderInfoDto(
+                            order.getId(),
+                            order.getProduct().getId(),
+                            order.getSeller().getId(),
+                            order.getBuyer().getId(),
+                            order.getStatus()
+                    )).collect(Collectors.toList());
+        }
+
+        return ProductDetailDto.builder()
+                .productId(findProduct.getId())
+                .name(findProduct.getName())
+                .price(findProduct.getPrice())
+                .status(findProduct.getStatus())
+                .sellerId(findProduct.getSeller().getId())
+                .transactionList(transactionList)
                 .build();
     }
 
@@ -80,7 +111,7 @@ public class ProductService {
 
         for (Order order : orders) {
             ProductInfoDto productInfoDto = new ProductInfoDto();
-            productInfoDto.setId(order.getProduct().getId());
+            productInfoDto.setProductId(order.getProduct().getId());
             productInfoDto.setName(order.getProduct().getName());
             productInfoDto.setPrice(order.getProduct().getPrice());
             productInfoDto.setStatus(order.getProduct().getStatus());
@@ -93,12 +124,12 @@ public class ProductService {
     /* 예약중인 제품 목록 조회 */
     @Transactional(readOnly = true)
     public List<ProductInfoDto> findReservedProductList(Long userId) {
-        List<Order> orders = orderRepository.findAllByBuyerIdAndStatus(userId, OrderStatus.IN_PROGRESS);
+        List<Order> orders = orderRepository.findAllByBuyerIdOrSellerIdAndStatus(userId, userId, OrderStatus.IN_PROGRESS);
         List<ProductInfoDto> productInfoDtoList = new ArrayList<>();
 
         for (Order order : orders) {
             ProductInfoDto productInfoDto = new ProductInfoDto();
-            productInfoDto.setId(order.getProduct().getId());
+            productInfoDto.setProductId(order.getProduct().getId());
             productInfoDto.setName(order.getProduct().getName());
             productInfoDto.setPrice(order.getProduct().getPrice());
             productInfoDto.setStatus(order.getProduct().getStatus());

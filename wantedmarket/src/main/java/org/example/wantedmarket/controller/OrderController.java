@@ -3,7 +3,11 @@ package org.example.wantedmarket.controller;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.example.wantedmarket.dto.order.OrderCreateDto;
+import org.example.wantedmarket.dto.order.OrderInfoDto;
+import org.example.wantedmarket.repository.UserRepository;
 import org.example.wantedmarket.service.OrderService;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 @Slf4j
@@ -13,17 +17,30 @@ import org.springframework.web.bind.annotation.*;
 public class OrderController {
 
     private final OrderService orderService;
+    private final UserRepository userRepository;
 
     /* 제품 주문 */
     @PostMapping
-    public OrderCreateDto.Response orderProduct(Long userId, @RequestBody OrderCreateDto.Request request) {
+    public OrderCreateDto.Response orderProduct(@RequestBody OrderCreateDto.Request request) {
+        log.info("제품 주문 api");
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+        Long userId = userRepository.findByUsername(username).getId();
+
         return orderService.orderProduct(userId, request);
     }
 
     /* 판매 승인 */
     @PatchMapping("/{orderId}/approval")
-    public void approveProductOrder(@PathVariable Long orderId) {
-        orderService.approveProductOrder(orderId);
+    public OrderInfoDto approveProductOrder(@PathVariable Long orderId) {
+        log.info("판매 승인 api");
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+        Long userId = userRepository.findByUsername(username).getId();
+
+        return orderService.approveProductOrder(userId, orderId);
     }
 
 }
