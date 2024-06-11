@@ -52,14 +52,20 @@ public enum ErrorCode {
   INVALID_MIN_QUANTITY_AT_FIRST(400, "상품 등록시에 최소 수량은 1입니다."),
   INVALID_GOODS_STATUS_AT_FIRST(400, "상품 등록시 판매 중인 상태만 등록 가능합니다."),
   NOT_MATCH_SELLER(400, "상품의 판매자가 아닙니다."),
+  ALREADY_PURCHASED(400, "이미 구매한 상품은 구매할 수 없습니다."),
+  CHECK_IF_SOLD_OUT_GOODS(400, "판매가 완료된 상품인지 확인하고 변경해주세요."),
+  CHECK_GOODS_PRICE_ZERO(400, "상품 금액이 0원인지 확인하세요."),
+
+  // 거래 관련
   NOT_SALES(400, "판매중인 상품이 아닙니다."),
   CAN_NOT_BUY_IF_SELLER(400, "판매자는 구매할 수 없습니다."),
   NOT_MATCH_PRICE(400, "현재 판매하고있는 가격이 아닙니다"),
   SOLD_OUT_ERROR(400, "해당 수량을 구매할 수 없습니다."),
-  ALREADY_PURCHASED(400, "이미 구매한 상품은 구매할 수 없습니다."),
-  CHECK_IF_SOLD_OUT_GOODS(400, "판매가 완료된 상품인지 확인하고 변경해주세요."),
-  CHECK_GOODS_PRICE_ZERO(400, "상품 금액이 0원인지 확인하세요.");
-
+  NOT_FOUND_TRANSACTION(400, "거래를 찾지 못했습니다"),
+  NOT_CORRECT_TRANSACTION_STATUS(400, "올바른 거래 상태가 아닙니다."),
+  NOT_MATCH_BUYER(400, "상품의 구매자가 아닙니다"),
+  CAN_NOT_CONFIRM(400, "판매자가 승인한 거래가 아니므로 확정지을 수 없습니다."),
+  ALREADY_CONFIRM_PURCHASE(400, "이미 거래가 완료된 거래입니다.");
 
   private int httpCode;
   private String description;
