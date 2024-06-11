@@ -1,4 +1,4 @@
-package org.example.wantedpreonboardingchallengebackend20;
+package io.taylor.wantedpreonboardingchallengebackend20;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
