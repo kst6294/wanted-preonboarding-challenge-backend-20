@@ -50,7 +50,7 @@ public class GoodsService {
     }
 
     if (member.getId() == goods.getSeller().getId()) {
-      List<Transaction> transactions = transactionRepository.findByGoods(goods);
+      List<Transaction> transactions = transactionRepository.findAllByGoods(goods);
       return GoodsDtoForSeller.fromEntity(goods, transactions);
     } else {
       Member buyer = memberRepository.findById(member.getId())

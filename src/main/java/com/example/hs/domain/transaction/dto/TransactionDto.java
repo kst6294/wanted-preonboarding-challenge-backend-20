@@ -3,6 +3,8 @@ package com.example.hs.domain.transaction.dto;
 import com.example.hs.domain.transaction.entity.Transaction;
 import com.example.hs.domain.transaction.type.TransactionStatus;
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -20,6 +22,12 @@ public class TransactionDto {
   private int priceAtPurchase;
   private TransactionStatus transactionStatus;
   private int quantity;
+
+  public static List<TransactionDto> fromEntity(List<Transaction> transactionList) {
+    return transactionList.stream()
+        .map(TransactionDto::fromEntity)
+        .collect(Collectors.toList());
+  }
 
   public static TransactionDto fromEntity(Transaction transaction) {
     return TransactionDto.builder()
