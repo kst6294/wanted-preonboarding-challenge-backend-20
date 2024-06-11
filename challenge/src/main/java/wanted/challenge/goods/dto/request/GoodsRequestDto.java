@@ -16,4 +16,10 @@ public class GoodsRequestDto {
             @NotNull(message = "수량을 입력해주세요")
             Integer quantity){
     }
+
+    public record OrderGoods (
+            @Min(value = 1, message = "최소 1개 이상부터 주문 가능합니다.")
+            @NotNull(message = "수량을 입력해주세요")
+            Integer quantity){
+    }
 }

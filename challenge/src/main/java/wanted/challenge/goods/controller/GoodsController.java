@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import wanted.challenge.aop.api.ApiResponse;
+import wanted.challenge.exception.custom.UnauthorizedAccessException;
 import wanted.challenge.goods.dto.request.GoodsRequestDto;
 import wanted.challenge.goods.dto.response.GoodsResponseDto;
 import wanted.challenge.goods.mapper.GoodsMapper;
@@ -65,18 +66,18 @@ public class GoodsController {
 
     @PostMapping("/{goods_id}/order")
     public ApiResponse<GoodsResponseDto.GoodsOrder> orderGoods(
-            @RequestHeader("memberId") Long memberId,
+            @RequestHeader(name = "memberId", required = false) Long memberId,
             @PathVariable("goods_id") Long goodsId,
-            @RequestBody int quantity) {
+            @Valid @RequestBody GoodsRequestDto.OrderGoods orderGoods) {
         // 회원이 아니면 구매불가
         if (memberId == null) {
-            return ApiResponse.fail("로그인 후 이용해주세요.");
+            throw new UnauthorizedAccessException("로그인 후 이용해주세요.");
         }
         /**
          * TODO: 상품 주문
          */
         GoodsResponseDto.GoodsOrder goodsOrder = new GoodsResponseDto.GoodsOrder(
-                goodsService.orderGoods(memberId, goodsId, quantity)
+                goodsService.orderGoods(memberId, goodsId, orderGoods.quantity())
         );
         return ApiResponse.success(goodsOrder);
     }
