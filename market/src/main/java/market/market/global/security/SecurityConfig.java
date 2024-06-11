@@ -70,6 +70,17 @@ public class SecurityConfig {
                                         AntPathRequestMatcher.antMatcher("/h2-console/**")
                                 ).permitAll()
 
+                                .requestMatchers(
+                                        AntPathRequestMatcher.antMatcher("/user/login/**")
+                                ).permitAll()
+
+                                .requestMatchers(
+                                        AntPathRequestMatcher.antMatcher("/product/detail/**")
+                                ).permitAll()
+
+                                .requestMatchers(
+                                        AntPathRequestMatcher.antMatcher("/product/list/**")
+                                ).permitAll()
                                 .anyRequest().authenticated()
                 )
                 .addFilterBefore(new JwtAuthenticationFilter(jwtProvider),
