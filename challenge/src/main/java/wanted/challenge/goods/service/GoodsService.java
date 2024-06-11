@@ -14,7 +14,6 @@ import wanted.challenge.mypage.entity.Orders;
 import wanted.challenge.mypage.repository.MemberRepository;
 import wanted.challenge.mypage.repository.OrderRepository;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -26,11 +25,10 @@ public class GoodsService {
     private final OrderRepository orderRepository;
     private final GoodsMapper mapper;
 
-    public String createGoods(Long sellerId, Goods goods) {
+    public Goods createGoods(Long sellerId, Goods goods) {
         Member seller = memberRepository.findById(sellerId).orElseThrow(() -> new IllegalArgumentException("해당 판매자가 존재하지 않습니다."));
         goods.setSeller(seller);
-        goodsRepository.save(goods);
-        return "상품등록완료";
+        return goodsRepository.save(goods);
     }
 
     public List<Goods> getGoodsList() {

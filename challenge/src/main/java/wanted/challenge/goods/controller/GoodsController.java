@@ -1,17 +1,17 @@
 package wanted.challenge.goods.controller;
 
-import lombok.Getter;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import wanted.challenge.aop.api.ApiResponse;
 import wanted.challenge.goods.dto.request.GoodsRequestDto;
 import wanted.challenge.goods.dto.response.GoodsResponseDto;
-import wanted.challenge.goods.entity.Goods;
 import wanted.challenge.goods.mapper.GoodsMapper;
 import wanted.challenge.goods.service.GoodsService;
 
+import java.net.URI;
 import java.util.List;
 
 @Slf4j
@@ -38,11 +38,13 @@ public class GoodsController {
     }
 
     @PostMapping
-    public ApiResponse<String> createGoods(
+    public ResponseEntity<Long> createGoods(
             @RequestHeader("memberId") Long memberId,
-            @RequestBody GoodsRequestDto.CreateGoods createGoods) {
-        goodsService.createGoods(memberId, mapper.toGoods(createGoods));
-        return ApiResponse.success();
+            @Valid @RequestBody GoodsRequestDto.CreateGoods createGoods) {
+
+        Long goodsId = goodsService.createGoods(memberId, mapper.toGoods(createGoods)).getGoodsId();
+        URI uri = URI.create("/goods/" + goodsId);
+        return ResponseEntity.created(uri).body(goodsId);
     }
 
     @PatchMapping("/{goods_id}")
