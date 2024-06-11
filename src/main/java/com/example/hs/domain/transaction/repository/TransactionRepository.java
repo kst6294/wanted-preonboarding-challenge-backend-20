@@ -17,4 +17,7 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long> 
   List<Transaction> findAllByGoodsAndTransactionStatus(Goods goods, TransactionStatus transactionStatus);
 
   Optional<Transaction> findByGoodsAndBuyer(Goods goods, Member buyer);
+
+  List<Transaction> findAllByBuyer(Member buyer);
+  List<Transaction> findAllByBuyerAndTransactionStatus(Member buyer, TransactionStatus transactionStatus);
 }
