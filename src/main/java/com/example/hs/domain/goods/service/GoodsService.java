@@ -1,6 +1,6 @@
 package com.example.hs.domain.goods.service;
 
-import static com.example.hs.domain.goods.type.GoodsStatus.SOLD_OUT;
+import static com.example.hs.domain.goods.type.GoodsStatus.SALE;
 import static com.example.hs.global.exception.ErrorCode.CHECK_GOODS_PRICE_ZERO;
 import static com.example.hs.global.exception.ErrorCode.CHECK_IF_SOLD_OUT_GOODS;
 import static com.example.hs.global.exception.ErrorCode.INVALID_GOODS_STATUS_AT_FIRST;
@@ -67,7 +67,7 @@ public class GoodsService {
 
   @Transactional
   public GoodsDto postGoods(GoodsRequest goodsRequest, CustomUserDetails member) {
-    if (goodsRequest.getQuantity() == 0) {
+    if (goodsRequest.getAvailableQuantity() == 0) {
       throw new CustomException(INVALID_MIN_QUANTITY_AT_FIRST);
     }
 
@@ -82,7 +82,7 @@ public class GoodsService {
         .goodsName(goodsRequest.getGoodsName())
         .description(goodsRequest.getDescription())
         .price(goodsRequest.getPrice())
-        .quantity(goodsRequest.getQuantity())
+        .availableQuantity(goodsRequest.getAvailableQuantity())
         .goodsStatus(goodsRequest.getGoodsStatus())
         .seller(seller)
         .build());
@@ -93,15 +93,14 @@ public class GoodsService {
   @Transactional
   public GoodsDto updateGoods(long goodsId,
       GoodsEditRequest goodsEditRequest, CustomUserDetails member) {
-    Goods goods = goodsRepository.findById(goodsId)
+    Goods goods = goodsRepository.findByIdWithLock(goodsId)
         .orElseThrow(() -> new CustomException(NOT_FOUND_GOODS));
 
     if (member.getId() != goods.getSeller().getId()) {
       throw new CustomException(NOT_MATCH_SELLER);
     }
 
-    if ((goodsEditRequest.getQuantity() == 0 && goodsEditRequest.getGoodsStatus() != SOLD_OUT)
-        || (goodsEditRequest.getGoodsStatus() == SOLD_OUT && goodsEditRequest.getQuantity() != 0)) {
+    if ((goodsEditRequest.getAvailableQuantity() == 0 && goodsEditRequest.getGoodsStatus() == SALE)) {
       throw new CustomException(CHECK_IF_SOLD_OUT_GOODS);
     }
 

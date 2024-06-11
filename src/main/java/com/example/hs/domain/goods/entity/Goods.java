@@ -34,7 +34,9 @@ public class Goods extends BaseEntity {
   private String description;
   private int price;
   @Setter
-  private int quantity;
+  private int totalTransactionQuantity;
+  private int availableQuantity;
+  private int reservedQuantity; // availableQuantity안에서 예약되어있음
 
   @Setter
   @Enumerated(EnumType.STRING)
@@ -48,7 +50,43 @@ public class Goods extends BaseEntity {
     this.goodsName = request.getGoodsName();
     this.description = request.getDescription();
     this.price = request.getPrice();
-    this.quantity = request.getQuantity();
+    this.availableQuantity = request.getAvailableQuantity();
     this.goodsStatus = request.getGoodsStatus();
+  }
+
+
+  public void purchaseByBuyer(int changeAmount) {
+    this.reservedQuantity += changeAmount;
+    if (this.reservedQuantity == this.availableQuantity) {
+      this.goodsStatus = GoodsStatus.RESERVED;
+    }
+  }
+
+  public void refusalOfSaleBySeller(int changeAmount) {
+    this.reservedQuantity -= changeAmount;
+    if (this.goodsStatus == GoodsStatus.RESERVED && this.availableQuantity > 0) {
+      this.goodsStatus = GoodsStatus.SALE;
+    }
+  }
+
+  public void approvalOfSaleBySeller(int changeAmount) {
+    this.reservedQuantity -= changeAmount;
+  }
+
+  public void confirmPurchaseByBuyer(int changeAmount) {
+    this.availableQuantity -= changeAmount;
+    this.totalTransactionQuantity += changeAmount;
+
+    if (this.reservedQuantity == 0 && this.availableQuantity == 0) {
+      this.goodsStatus = GoodsStatus.SOLD_OUT;
+    }
+  }
+
+  public void cancelPurchaseByBuyer(int changeAmount) {
+    // TODO 거래내역이 있을 경우 거래 취소
+
+    if (this.availableQuantity -this.reservedQuantity > 0) {
+      this.goodsStatus = GoodsStatus.SALE;
+    }
   }
 }

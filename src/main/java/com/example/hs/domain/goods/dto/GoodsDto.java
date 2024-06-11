@@ -18,7 +18,7 @@ public class GoodsDto {
   private String goodsName;
   private String description;
   private int price;
-  private int quantity;
+  private int availableQuantity;
   private GoodsStatus goodsStatus;
   private long sellerId;
 
@@ -42,7 +42,7 @@ public class GoodsDto {
         .goodsName(goods.getGoodsName())
         .description(goods.getDescription())
         .price(goods.getPrice())
-        .quantity(goods.getQuantity())
+        .availableQuantity(goods.getAvailableQuantity())
         .goodsStatus(goods.getGoodsStatus())
         .sellerId(goods.getSeller().getId())
         .build();

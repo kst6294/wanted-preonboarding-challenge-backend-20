@@ -17,6 +17,9 @@ import lombok.experimental.SuperBuilder;
 public class GoodsDtoForSeller extends GoodsDto{
   private List<TransactionDto> transactions;
 
+  private int totalTransactionQuantity;
+  private int reservedQuantity; // availableQuantity안에서 예약되어있음
+
   public static GoodsDtoForSeller fromEntity(Goods goods, List<Transaction> transactions) {
     List<TransactionDto> transactionDtos = transactions.stream()
         .map(TransactionDto::fromEntity)
@@ -27,9 +30,11 @@ public class GoodsDtoForSeller extends GoodsDto{
         .goodsName(goods.getGoodsName())
         .description(goods.getDescription())
         .price(goods.getPrice())
-        .quantity(goods.getQuantity())
+        .availableQuantity(goods.getAvailableQuantity())
         .goodsStatus(goods.getGoodsStatus())
         .sellerId(goods.getSeller().getId())
+        .totalTransactionQuantity(goods.getTotalTransactionQuantity())
+        .reservedQuantity(goods.getReservedQuantity())
         .transactions(transactionDtos)
         .build();
   }

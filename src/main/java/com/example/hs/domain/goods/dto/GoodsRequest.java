@@ -22,9 +22,9 @@ public class GoodsRequest {
   private String description;
   @NotNull(message = "상품 가격은 필수 입니다.")
   private int price;
-  @NotNull(message = "상품 갯수는 필수이고 최소 1개 이상이여야 합니다.")
+  @NotNull(message = "상품 판매 가능 갯수는 필수이고 최소 1개 이상이여야 합니다.")
   @Min(1)
-  private int quantity;
+  private int availableQuantity;
   @NotNull(message = "상품 상태는 필수 입니다.")
   @JsonDeserialize(using = GoodsStatusDeserializer.class)
   private GoodsStatus goodsStatus;

@@ -3,6 +3,7 @@ package com.example.hs.domain.goods.dto;
 import com.example.hs.domain.goods.entity.Goods;
 import com.example.hs.domain.transaction.dto.TransactionDto;
 import com.example.hs.domain.transaction.entity.Transaction;
+import com.example.hs.domain.transaction.type.TransactionStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,7 +23,7 @@ public class GoodsDtoForBuyer extends GoodsDto{
         .goodsName(goods.getGoodsName())
         .description(goods.getDescription())
         .price(goods.getPrice())
-        .quantity(goods.getQuantity())
+        .availableQuantity(goods.getAvailableQuantity())
         .goodsStatus(goods.getGoodsStatus())
         .sellerId(goods.getSeller().getId())
         .transaction(TransactionDto.fromEntity(transaction))
