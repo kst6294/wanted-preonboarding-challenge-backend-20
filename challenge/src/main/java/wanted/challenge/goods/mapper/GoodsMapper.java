@@ -2,7 +2,6 @@ package wanted.challenge.goods.mapper;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 import wanted.challenge.goods.dto.request.GoodsRequestDto;
 import wanted.challenge.goods.dto.response.GoodsResponseDto;
 import wanted.challenge.goods.dto.response.GoodsResponseDto.GoodsDetail;
@@ -14,7 +13,8 @@ import wanted.challenge.mypage.entity.Orders;
 import java.util.ArrayList;
 import java.util.List;
 
-import static wanted.challenge.goods.dto.response.GoodsResponseDto.*;
+import static wanted.challenge.goods.dto.response.GoodsResponseDto.GoodsListItem;
+import static wanted.challenge.goods.dto.response.GoodsResponseDto.UpdateGoods;
 import static wanted.challenge.mypage.mapper.MyPageMapper.toOrderStatusResponse;
 import static wanted.challenge.mypage.mapper.MyPageMapper.toOrderStatusTime;
 
@@ -26,15 +26,16 @@ public class GoodsMapper {
      */
     public Goods toGoods(GoodsRequestDto.CreateGoods createGoods) {
         Goods goods = new Goods();
-        goods.setGoodsName(createGoods.getName());
-        goods.setGoodsPrice(createGoods.getPrice());
-        goods.setQuantity(createGoods.getQuantity());
+        goods.setGoodsName(createGoods.name());
+        goods.setGoodsPrice(createGoods.price());
+        goods.setQuantity(createGoods.quantity());
         return goods;
     }
 
     /**
      * 응답 mapper
      */
+
     public List<GoodsListItem> toGoodsList(List<Goods> goodsList) {
         List<GoodsListItem> list = new ArrayList<>();
         for (Goods goods : goodsList) {
