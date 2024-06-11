@@ -1,7 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { TransactionStatus } from '@prisma/client';
 import { PrismaService } from 'prisma/prisma.service';
-import { TransactionRepositoryInterface } from 'src/transactions/interfaces/transaction.repository.interface';
+import { GetTransactionsDTO } from 'src/transactions/dto/get-transactions.dto';
+import {
+  TransactionIncludeProduct,
+  TransactionRepositoryInterface,
+} from 'src/transactions/interfaces/transaction.repository.interface';
 
 @Injectable()
 export class TransactionRepository implements TransactionRepositoryInterface {
@@ -47,5 +51,28 @@ export class TransactionRepository implements TransactionRepositoryInterface {
     return await this.prisma.transaction.create({
       data: createTransactionInfo,
     });
+  }
+
+  async findBuyList(
+    query: GetTransactionsDTO,
+    userId: number,
+  ): Promise<{ productList: TransactionIncludeProduct[]; count: number }> {
+    const productList = await this.prisma.transaction.findMany({
+      where: {
+        ...query,
+        buyerId: userId,
+      },
+      include: {
+        product: true,
+      },
+    });
+
+    const count = await this.prisma.transaction.count({
+      where: {
+        buyerId: userId,
+      },
+    });
+
+    return { productList, count };
   }
 }

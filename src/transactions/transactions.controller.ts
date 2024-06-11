@@ -8,12 +8,15 @@ import {
   Inject,
   ParseIntPipe,
   Patch,
+  Get,
+  Query,
 } from '@nestjs/common';
 import { CreateTransactionDto } from './dto/create-transaction.dto';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { TransactionServiceInterface } from './interfaces/transaction.service.interface';
 import { ProductServiceInterface } from 'src/products/interfaces/product.service.interface';
 import { ConfirmTransactionDto } from './dto/confirm-transaction.dto';
+import { GetTransactionsDTO } from './dto/get-transactions.dto';
 
 @Controller('transactions')
 export class TransactionsController {
@@ -77,4 +80,19 @@ export class TransactionsController {
 
     await this.transactionsService.confirm(transactionId);
   }
+
+  /**
+   * @description 구매한 용품 조회하기
+   */
+  @UseGuards(JwtAuthGuard)
+  @Get('/')
+  async findBuyList(@Query() query: GetTransactionsDTO, @Req() req: any) {
+    const userId = req.user.userId;
+
+    return await this.transactionsService.findBuyList(query, userId);
+  }
+
+  /**
+   * @description 예약중인 용품 조회하기
+   */
 }

@@ -1,4 +1,11 @@
-import { Transaction } from '@prisma/client';
+import { Prisma, Transaction } from '@prisma/client';
+import { GetTransactionsDTO } from '../dto/get-transactions.dto';
+
+export type TransactionIncludeProduct = Prisma.TransactionGetPayload<{
+  include: {
+    product: true;
+  };
+}>;
 
 export interface TransactionRepositoryInterface {
   confirm(transactionId: number): Promise<void>;
@@ -12,4 +19,8 @@ export interface TransactionRepositoryInterface {
     buyerId: number,
     sellerId: number,
   ): Promise<Transaction | null>;
+  findBuyList(
+    query: GetTransactionsDTO,
+    userId: number,
+  ): Promise<{ productList: TransactionIncludeProduct[]; count: number }>;
 }
