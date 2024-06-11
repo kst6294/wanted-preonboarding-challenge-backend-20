@@ -21,17 +21,18 @@ public class SecurityConfig {
 
     private final CustomerSessionFilter sessionFilter;
 
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
        http
                .csrf(CsrfConfigurer::disable)
                .httpBasic(HttpBasicConfigurer::disable)
                .authorizeHttpRequests(requests -> requests
-                       .requestMatchers("/user/login", "/user/join", "/user/email").permitAll()
-                       .requestMatchers(HttpMethod.GET, "/product/purchase", "/product/reservation").authenticated()
-                       .requestMatchers(HttpMethod.GET, "/product/**").permitAll()
-                       .requestMatchers("/product/**").authenticated()
-                       .requestMatchers(HttpMethod.POST, "/purchase", "/purchase/accept", "/purchase/confirm").authenticated()
+                       .requestMatchers("/api/v1/user/login", "/api/v1/user/join", "/api/v1/user/email").permitAll()
+                       .requestMatchers(HttpMethod.GET, "/api/v1/product/purchase", "/api/v1/product/reservation").authenticated()
+                       .requestMatchers(HttpMethod.GET, "/api/v1/product/**").permitAll()
+                       .requestMatchers("/api/v1/product/**").authenticated()
+                       .requestMatchers(HttpMethod.POST, "/api/v1/purchase", "/api/v1/purchase/accept", "/api/v1/purchase/confirm").authenticated()
                        .anyRequest().denyAll()
                )
                .addFilterBefore(sessionFilter, UsernamePasswordAuthenticationFilter.class)

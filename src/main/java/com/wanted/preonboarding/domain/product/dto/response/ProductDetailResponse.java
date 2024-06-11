@@ -26,7 +26,7 @@ public class ProductDetailResponse<T> {
     public static ProductDetailResponse of(Product product, Purchase purchase) {
         return ProductDetailResponse.builder()
                 .product(ProductResponse.of(product))
-                .purchase(PurchaseResponse.of(purchase))
+                .purchase(purchase != null ? PurchaseResponse.of(purchase) : null)
                 .build();
     }
 

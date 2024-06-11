@@ -51,7 +51,6 @@ public class PurchaseServiceImpl implements PurchaseService{
         // 4. 상품 상태 확인
         if (product.getQuantity() == 0) product.updateState(ProductState.RESERVATION);
 
-        productRepository.save(product);
     }
 
     @Override
@@ -67,7 +66,6 @@ public class PurchaseServiceImpl implements PurchaseService{
 
         // 3. 상태 변경
         purchase.updateState(PurchaseState.ACCEPT_SALE);
-        purchaseRepository.save(purchase);
     }
 
     @Override
@@ -83,13 +81,11 @@ public class PurchaseServiceImpl implements PurchaseService{
 
         // 3. 상태 변경
         purchase.updateState(PurchaseState.CONFIRM_PURCHASE);
-        purchaseRepository.save(purchase);
 
         // 4. 상품 상태 변경
         // 현재 예약 상태이면서 모든 상품의 상태가 판매승인이라면
         if (purchase.getProduct().getState().equals(ProductState.RESERVATION) && !purchaseRepository.existsByProductAndStateNot(purchase.getProduct(), PurchaseState.CONFIRM_PURCHASE)) {
             purchase.getProduct().updateState(ProductState.COMPLETE);
-            productRepository.save(purchase.getProduct());
         }
     }
 }

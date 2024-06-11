@@ -16,6 +16,7 @@ import com.wanted.preonboarding.domain.user.repository.UserRepository;
 import com.wanted.preonboarding.global.exception.entity.RestApiException;
 import com.wanted.preonboarding.global.exception.errorCode.ProductErrorCode;
 import com.wanted.preonboarding.global.exception.errorCode.UserErrorCode;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -42,9 +43,8 @@ public class ProductServiceImpl implements ProductService {
     @Transactional(readOnly = true)
     public List<ProductResponse> getProducts() {
         List<Product> productList = productRepository.findAll();
-        List<ProductResponse> productResponseList = new ArrayList<>();
-        for(Product product : productList) productResponseList.add(ProductResponse.of(product));
-        return productResponseList;
+
+        return productList.stream().map(ProductResponse::of).collect(Collectors.toList());
     }
 
     @Override
@@ -69,9 +69,8 @@ public class ProductServiceImpl implements ProductService {
     public List<PurchaseProductResponse> getPurchasedProducts(Long userId) {
         User user = userRepository.findById(userId).orElseThrow(() -> new RestApiException(UserErrorCode.USER_NOT_FOUND, "유저를 찾을 수 없습니다. 아이디: "+userId));
         List<Purchase> purchaseList = purchaseRepository.findAllByUser(user);
-        List<PurchaseProductResponse> productResponseList = new ArrayList<>();
-        for(Purchase purchase : purchaseList) productResponseList.add(PurchaseProductResponse.of(purchase));
-        return productResponseList;
+
+        return purchaseList.stream().map(PurchaseProductResponse::of).collect(Collectors.toList());
     }
 
     @Override
