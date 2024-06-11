@@ -17,6 +17,7 @@ import { TransactionServiceInterface } from './interfaces/transaction.service.in
 import { ProductServiceInterface } from 'src/products/interfaces/product.service.interface';
 import { ConfirmTransactionDto } from './dto/confirm-transaction.dto';
 import { GetTransactionsDTO } from './dto/get-transactions.dto';
+import { TransactionIncludeProduct } from './interfaces/transaction.repository.interface';
 
 @Controller('transactions')
 export class TransactionsController {
@@ -86,7 +87,10 @@ export class TransactionsController {
    */
   @UseGuards(JwtAuthGuard)
   @Get('/')
-  async findBuyList(@Query() query: GetTransactionsDTO, @Req() req: any) {
+  async findBuyList(
+    @Query() query: GetTransactionsDTO,
+    @Req() req: any,
+  ): Promise<{ productList: TransactionIncludeProduct[]; count: number }> {
     const userId = req.user.userId;
 
     return await this.transactionsService.findBuyList(query, userId);
@@ -95,4 +99,14 @@ export class TransactionsController {
   /**
    * @description 예약중인 용품 조회하기
    */
+  @UseGuards(JwtAuthGuard)
+  @Get('/reservations')
+  async findReservationList(
+    @Query() query: GetTransactionsDTO,
+    @Req() req: any,
+  ): Promise<{ productList: TransactionIncludeProduct[]; count: number }> {
+    const userId = req.user.userId;
+
+    return await this.transactionsService.findReservationList(query, userId);
+  }
 }

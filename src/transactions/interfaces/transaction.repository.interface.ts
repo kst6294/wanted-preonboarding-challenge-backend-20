@@ -23,4 +23,8 @@ export interface TransactionRepositoryInterface {
     query: GetTransactionsDTO,
     userId: number,
   ): Promise<{ productList: TransactionIncludeProduct[]; count: number }>;
+  findReservationList(
+    query: GetTransactionsDTO,
+    userId: number,
+  ): Promise<{ productList: TransactionIncludeProduct[]; count: number }>;
 }

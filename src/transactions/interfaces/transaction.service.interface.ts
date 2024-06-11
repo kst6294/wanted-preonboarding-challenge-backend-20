@@ -1,4 +1,5 @@
 import { GetTransactionsDTO } from '../dto/get-transactions.dto';
+import { TransactionIncludeProduct } from './transaction.repository.interface';
 
 export interface TransactionServiceInterface {
   confirm(transactionId: number): Promise<void>;
@@ -12,5 +13,9 @@ export interface TransactionServiceInterface {
   findBuyList(
     query: GetTransactionsDTO,
     userId: number,
-  ): Promise<{ productList: any[]; count: number }>;
+  ): Promise<{ productList: TransactionIncludeProduct[]; count: number }>;
+  findReservationList(
+    query: GetTransactionsDTO,
+    userId: number,
+  ): Promise<{ productList: TransactionIncludeProduct[]; count: number }>;
 }

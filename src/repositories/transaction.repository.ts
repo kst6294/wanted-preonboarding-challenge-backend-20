@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { TransactionStatus } from '@prisma/client';
+import { ProductStatus, TransactionStatus } from '@prisma/client';
 import { PrismaService } from 'prisma/prisma.service';
 import { GetTransactionsDTO } from 'src/transactions/dto/get-transactions.dto';
 import {
@@ -57,19 +57,63 @@ export class TransactionRepository implements TransactionRepositoryInterface {
     query: GetTransactionsDTO,
     userId: number,
   ): Promise<{ productList: TransactionIncludeProduct[]; count: number }> {
+    const { limit, page } = query;
+
     const productList = await this.prisma.transaction.findMany({
       where: {
-        ...query,
         buyerId: userId,
+        product: {
+          is: {
+            status: ProductStatus.SOLD,
+          },
+        },
       },
       include: {
         product: true,
       },
+      skip: (page - 1) * limit,
+      take: limit,
     });
 
     const count = await this.prisma.transaction.count({
       where: {
         buyerId: userId,
+      },
+    });
+
+    return { productList, count };
+  }
+
+  async findReservationList(
+    query: GetTransactionsDTO,
+    userId: number,
+  ): Promise<{ productList: TransactionIncludeProduct[]; count: number }> {
+    const { limit, page } = query;
+
+    const productList = await this.prisma.transaction.findMany({
+      where: {
+        OR: [{ sellerId: userId }, { buyerId: userId }],
+        product: {
+          is: {
+            status: ProductStatus.RESERVED,
+          },
+        },
+      },
+      include: {
+        product: true,
+      },
+      skip: (page - 1) * limit,
+      take: Number(limit),
+    });
+
+    const count = await this.prisma.transaction.count({
+      where: {
+        OR: [{ sellerId: userId }, { buyerId: userId }],
+        product: {
+          is: {
+            status: ProductStatus.RESERVED,
+          },
+        },
       },
     });
 

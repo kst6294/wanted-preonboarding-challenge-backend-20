@@ -1,5 +1,8 @@
 import { ConflictException, Inject, Injectable } from '@nestjs/common';
-import { TransactionRepositoryInterface } from './interfaces/transaction.repository.interface';
+import {
+  TransactionIncludeProduct,
+  TransactionRepositoryInterface,
+} from './interfaces/transaction.repository.interface';
 import { TransactionServiceInterface } from './interfaces/transaction.service.interface';
 import { TransactionStatus } from '@prisma/client';
 import { GetTransactionsDTO } from './dto/get-transactions.dto';
@@ -58,12 +61,14 @@ export class TransactionsService implements TransactionServiceInterface {
   async findBuyList(
     query: GetTransactionsDTO,
     userId: number,
-  ): Promise<{ productList: any[]; count: number }> {
-    const { productList, count } = await this.transactionRepository.findBuyList(
-      query,
-      userId,
-    );
+  ): Promise<{ productList: TransactionIncludeProduct[]; count: number }> {
+    return await this.transactionRepository.findBuyList(query, userId);
+  }
 
-    return { productList, count };
+  async findReservationList(
+    query: GetTransactionsDTO,
+    userId: number,
+  ): Promise<{ productList: TransactionIncludeProduct[]; count: number }> {
+    return await this.transactionRepository.findReservationList(query, userId);
   }
 }
