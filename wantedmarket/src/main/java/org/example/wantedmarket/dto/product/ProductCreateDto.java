@@ -16,6 +16,8 @@ public class ProductCreateDto {
         private String name;
         @NotNull
         private Integer price;
+        @NotNull
+        private Integer quantity;
 
     }
 
@@ -29,12 +31,14 @@ public class ProductCreateDto {
         private Long productId;
         private String name;
         private Integer price;
+        private Integer quantity;
 
         public static ProductCreateDto.Response from(Product product) {
             return Response.builder()
                     .productId(product.getId())
                     .name(product.getName())
                     .price(product.getPrice())
+                    .quantity(product.getQuantity())
                     .build();
         }
 

@@ -22,6 +22,8 @@ public class Product {
 
     private Integer price;
 
+    private Integer quantity;
+
     @Enumerated(EnumType.STRING)
     private ProductStatus status;
 
@@ -30,9 +32,10 @@ public class Product {
     private User seller;
 
     @Builder
-    public Product(String name, Integer price, ProductStatus status, User seller) {
+    public Product(String name, Integer price, Integer quantity, ProductStatus status, User seller) {
         this.name = name;
         this.price = price;
+        this.quantity = quantity;
         this.status = status;
         this.seller = seller;
     }

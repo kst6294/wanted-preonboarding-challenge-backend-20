@@ -17,6 +17,7 @@ public class ProductDetailDto {
     private Long productId;
     private String name;
     private Integer price;
+    private Integer quantity;
     private ProductStatus status;
     private Long sellerId;
     private List<OrderInfoDto> transactionList = new ArrayList<>();

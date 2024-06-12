@@ -51,7 +51,7 @@ public class OrderService {
                 .product(product)
                 .buyer(buyer)
                 .seller(seller)
-                .status(OrderStatus.IN_PROGRESS)
+                .status(OrderStatus.IN_RESERVATION)
                 .build());
 
         // 상품 예약중
@@ -67,7 +67,7 @@ public class OrderService {
 
         Product product = order.getProduct();
 
-        if (order.getStatus() == OrderStatus.COMPLETED) {
+        if (order.getStatus() == OrderStatus.APPROVE) {
             throw new CustomException(ErrorCode.ORDER_COMPLETED);
         }
 
@@ -76,7 +76,7 @@ public class OrderService {
         }
 
         // 주문과 제품 상태 변경
-        order.modifyStatus(OrderStatus.COMPLETED);
+        order.modifyStatus(OrderStatus.APPROVE);
         product.modifyStatus(ProductStatus.COMPLETED);
 
         return new OrderInfoDto(orderId, order.getProduct().getId(), order.getSeller().getId(), order.getBuyer().getId(), order.getStatus());

@@ -94,7 +94,7 @@ public class ProductService {
                     )).collect(Collectors.toList());
         }
 
-        List<Order> orders = orderRepository.findAllByBuyerId(userId);
+        List<Order> orders = orderRepository.findAllByProductId(findProduct.getId());
         for (Order order : orders) {
             if (order.getBuyer().getId() == userId) {
                 transactionList.add(new OrderInfoDto(
@@ -120,7 +120,7 @@ public class ProductService {
     /* 구매한 제품 목록 조회 */
     @Transactional(readOnly = true)
     public List<ProductInfoDto> findOrderedProductList(Long userId) {
-        List<Order> orders = orderRepository.findAllByBuyerIdAndStatus(userId, OrderStatus.COMPLETED);
+        List<Order> orders = orderRepository.findAllByBuyerIdAndStatus(userId, OrderStatus.APPROVE);
 
         List<ProductInfoDto> orderedProductList = new ArrayList<>();
 
@@ -142,8 +142,8 @@ public class ProductService {
     /* 예약중인 제품 목록 조회 */
     @Transactional(readOnly = true)
     public List<ProductInfoDto> findReservedProductList(Long userId) {
-        List<Order> orders = orderRepository.findAllByBuyerIdAndStatus(userId, OrderStatus.IN_PROGRESS);
-        orders.addAll(orderRepository.findAllBySellerIdAndStatus(userId, OrderStatus.IN_PROGRESS));
+        List<Order> orders = orderRepository.findAllByBuyerIdAndStatus(userId, OrderStatus.IN_RESERVATION);
+        orders.addAll(orderRepository.findAllBySellerIdAndStatus(userId, OrderStatus.IN_RESERVATION));
         orders.stream().distinct().collect(Collectors.toList());
 
         List<ProductInfoDto> reservedProductList = new ArrayList<>();

@@ -14,5 +14,6 @@ public class ProductInfoDto {
     private Long productId;
     private String name;
     private Integer price;
+    private Integer quantity;
     private ProductStatus status;
 }
