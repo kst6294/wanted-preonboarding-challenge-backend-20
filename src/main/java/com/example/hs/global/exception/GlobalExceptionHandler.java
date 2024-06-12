@@ -19,8 +19,8 @@ public class GlobalExceptionHandler {
   @ExceptionHandler(CustomException.class)
   public ResponseEntity<ErrorResponse> handleCustomException(CustomException e) {
     log.error("{} is occurred.", e.getErrorMessage());
-    return new ResponseEntity<>(new ErrorResponse(e.getErrorCode(), e.getErrorMessage()),
-        HttpStatus.valueOf(e.getErrorCode()));
+    return new ResponseEntity<>(new ErrorResponse(e.getHttpCode(), e.getErrorMessage()),
+        HttpStatus.valueOf(e.getHttpCode()));
   }
 
   @ExceptionHandler(RedisConnectionFailureException.class)

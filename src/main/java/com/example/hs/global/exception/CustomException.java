@@ -8,11 +8,13 @@ import lombok.Getter;
 @Builder
 @AllArgsConstructor
 public class CustomException extends RuntimeException{
-  private int errorCode;
+  private int httpCode;
   private String errorMessage;
+  private ErrorCode errorCode;
 
   public CustomException(ErrorCode errorCode) {
-    this.errorCode = errorCode.getHttpCode();
+    this.httpCode = errorCode.getHttpCode();
     this.errorMessage = errorCode.getDescription();
+    this.errorCode = errorCode;
   }
 }

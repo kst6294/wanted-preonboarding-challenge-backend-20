@@ -114,7 +114,7 @@ public class TokenProvider {
     return !claims.getExpiration().before(new Date());
   }
 
-  private Claims parseClaims(String token) {
+  public Claims parseClaims(String token) {
     try {
       return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody();
     } catch (ExpiredJwtException e) {
