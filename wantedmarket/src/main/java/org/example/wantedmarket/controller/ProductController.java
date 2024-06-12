@@ -57,6 +57,7 @@ public class ProductController {
         if (customUserDetails != null) {
             String username = customUserDetails.getUsername();
             Long userId = userRepository.findByUsername(username).getId();
+            System.out.println("customDetail - userId: " + userId);
             return productService.findDetailProductWithTransaction(userId, productId);
         }
 
@@ -65,11 +66,10 @@ public class ProductController {
 
     /* 구매한 제품 목록 조회 */
     @GetMapping("/completed")
-    public List<ProductInfoDto> getOrderedProductList() {
+    public List<ProductInfoDto> getOrderedProductList(@AuthenticationPrincipal CustomUserDetails customUserDetails) {
         log.info("구매한 제품 목록 조회 api");
 
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String username = authentication.getName();
+        String username = customUserDetails.getUsername();
         Long userId = userRepository.findByUsername(username).getId();
 
         return productService.findOrderedProductList(userId);
@@ -77,11 +77,10 @@ public class ProductController {
 
     /* 예약중인 제품 목록 조회 */
     @GetMapping("/reserved")
-    public List<ProductInfoDto> getReservedProductList() {
+    public List<ProductInfoDto> getReservedProductList(@AuthenticationPrincipal CustomUserDetails customUserDetails) {
         log.info("예약중인 제품 목록 조회 api");
 
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String username = authentication.getName();
+        String username = customUserDetails.getUsername();
         Long userId = userRepository.findByUsername(username).getId();
 
         return productService.findReservedProductList(userId);

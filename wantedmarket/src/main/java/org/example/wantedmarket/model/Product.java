@@ -26,7 +26,7 @@ public class Product {
     private ProductStatus status;
 
     @ManyToOne
-    @JoinColumn(name="user_id")
+    @JoinColumn(name="seller_id")
     private User seller;
 
     @Builder

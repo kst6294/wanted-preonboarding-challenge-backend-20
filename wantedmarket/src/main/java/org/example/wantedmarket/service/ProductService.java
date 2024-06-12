@@ -22,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Slf4j
 @Service
@@ -93,6 +94,19 @@ public class ProductService {
                     )).collect(Collectors.toList());
         }
 
+        List<Order> orders = orderRepository.findAllByBuyerId(userId);
+        for (Order order : orders) {
+            if (order.getBuyer().getId() == userId) {
+                transactionList.add(new OrderInfoDto(
+                        order.getId(),
+                        order.getProduct().getId(),
+                        order.getSeller().getId(),
+                        order.getBuyer().getId(),
+                        order.getStatus()
+                ));
+            }
+        }
+
         return ProductDetailDto.builder()
                 .productId(findProduct.getId())
                 .name(findProduct.getName())
@@ -107,36 +121,46 @@ public class ProductService {
     @Transactional(readOnly = true)
     public List<ProductInfoDto> findOrderedProductList(Long userId) {
         List<Order> orders = orderRepository.findAllByBuyerIdAndStatus(userId, OrderStatus.COMPLETED);
-        List<ProductInfoDto> productInfoDtoList = new ArrayList<>();
+
+        List<ProductInfoDto> orderedProductList = new ArrayList<>();
 
         for (Order order : orders) {
+            log.info("order : " + order.getProduct().getName() + ", " + order.getStatus() + ", seller - " + order.getSeller().getId() + ", buyer - " + order.getBuyer().getId());
+
             ProductInfoDto productInfoDto = new ProductInfoDto();
             productInfoDto.setProductId(order.getProduct().getId());
             productInfoDto.setName(order.getProduct().getName());
             productInfoDto.setPrice(order.getProduct().getPrice());
             productInfoDto.setStatus(order.getProduct().getStatus());
 
-            productInfoDtoList.add(productInfoDto);
+            orderedProductList.add(productInfoDto);
+            log.info("productInfoDto : " + productInfoDto.getName() + ", " + productInfoDto.getStatus());
         }
-        return productInfoDtoList;
+        return orderedProductList;
     }
 
     /* 예약중인 제품 목록 조회 */
     @Transactional(readOnly = true)
     public List<ProductInfoDto> findReservedProductList(Long userId) {
-        List<Order> orders = orderRepository.findAllByBuyerIdOrSellerIdAndStatus(userId, userId, OrderStatus.IN_PROGRESS);
-        List<ProductInfoDto> productInfoDtoList = new ArrayList<>();
+        List<Order> orders = orderRepository.findAllByBuyerIdAndStatus(userId, OrderStatus.IN_PROGRESS);
+        orders.addAll(orderRepository.findAllBySellerIdAndStatus(userId, OrderStatus.IN_PROGRESS));
+        orders.stream().distinct().collect(Collectors.toList());
+
+        List<ProductInfoDto> reservedProductList = new ArrayList<>();
 
         for (Order order : orders) {
+            log.info("order : " + order.getProduct().getName() + ", " + order.getStatus() + ", seller - " + order.getSeller().getId() + ", buyer - " + order.getBuyer().getId());
+
             ProductInfoDto productInfoDto = new ProductInfoDto();
             productInfoDto.setProductId(order.getProduct().getId());
             productInfoDto.setName(order.getProduct().getName());
             productInfoDto.setPrice(order.getProduct().getPrice());
             productInfoDto.setStatus(order.getProduct().getStatus());
 
-            productInfoDtoList.add(productInfoDto);
+            reservedProductList.add(productInfoDto);
+            log.info("productInfoDto : " + productInfoDto.getName() + ", " + productInfoDto.getStatus());
         }
-        return productInfoDtoList;
+        return reservedProductList;
     }
 
 }

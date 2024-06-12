@@ -38,7 +38,7 @@ public class OrderService {
         User seller = userRepository.findById(product.getSeller().getId()).orElseThrow(
                 () ->  new CustomException(ErrorCode.USER_NOT_FOUND));
 
-        if (product.getStatus() == ProductStatus.COMPLETED) {
+        if (product.getStatus() == ProductStatus.COMPLETED || product.getStatus() == ProductStatus.IN_RESERVATION) {
             throw new CustomException(ErrorCode.PRODUCT_SOLD_OUT);
         }
 

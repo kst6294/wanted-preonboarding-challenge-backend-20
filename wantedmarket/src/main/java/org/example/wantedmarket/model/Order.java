@@ -30,6 +30,7 @@ public class Order {
     @JoinColumn(name = "buyer_id")
     private User buyer;
 
+    @Enumerated(EnumType.STRING)
     private OrderStatus status;
 
     @Builder
