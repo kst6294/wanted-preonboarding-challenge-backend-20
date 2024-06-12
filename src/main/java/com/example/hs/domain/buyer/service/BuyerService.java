@@ -9,7 +9,6 @@ import com.example.hs.domain.transaction.entity.Transaction;
 import com.example.hs.domain.transaction.repository.TransactionRepository;
 import com.example.hs.domain.transaction.type.TransactionStatus;
 import com.example.hs.global.exception.CustomException;
-import com.example.hs.global.exception.ErrorCode;
 import com.example.hs.global.security.userdetails.CustomUserDetails;
 import java.util.List;
 import java.util.stream.Collectors;

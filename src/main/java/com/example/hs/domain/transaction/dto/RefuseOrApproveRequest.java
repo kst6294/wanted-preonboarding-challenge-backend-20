@@ -1,6 +1,5 @@
 package com.example.hs.domain.transaction.dto;
 
-import com.example.hs.domain.goods.type.GoodsStatusDeserializer;
 import com.example.hs.domain.transaction.type.TransactionStatus;
 import com.example.hs.domain.transaction.type.TransactionStatusDeserializer;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;

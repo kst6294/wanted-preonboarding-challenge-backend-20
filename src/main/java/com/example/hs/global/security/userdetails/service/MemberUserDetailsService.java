@@ -1,12 +1,10 @@
 package com.example.hs.global.security.userdetails.service;
 
 
-import static com.example.hs.global.exception.ErrorCode.NOT_AUTHENTICATE_EMAIL;
 import static com.example.hs.global.exception.ErrorCode.NOT_FOUND_MEMBER_LOGIN_ID;
 
 import com.example.hs.domain.auth.entity.Member;
 import com.example.hs.domain.auth.repository.MemberRepository;
-import com.example.hs.domain.auth.type.Authority;
 import com.example.hs.global.exception.CustomException;
 import com.example.hs.global.security.userdetails.CustomUserDetails;
 import com.example.hs.global.security.userdetails.MemberUserDetailsDomain;

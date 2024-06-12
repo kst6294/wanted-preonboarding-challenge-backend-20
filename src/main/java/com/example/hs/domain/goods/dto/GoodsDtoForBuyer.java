@@ -3,7 +3,6 @@ package com.example.hs.domain.goods.dto;
 import com.example.hs.domain.goods.entity.Goods;
 import com.example.hs.domain.transaction.dto.TransactionDto;
 import com.example.hs.domain.transaction.entity.Transaction;
-import com.example.hs.domain.transaction.type.TransactionStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

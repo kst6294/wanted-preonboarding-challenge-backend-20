@@ -8,7 +8,6 @@ import com.example.hs.domain.auth.entity.Member;
 import com.example.hs.domain.auth.repository.MemberRepository;
 import com.example.hs.domain.auth.type.Authority;
 import com.example.hs.global.exception.CustomException;
-import com.example.hs.global.exception.ErrorCode;
 import com.example.hs.global.redis.auth.CertifiedNumberAuthRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
