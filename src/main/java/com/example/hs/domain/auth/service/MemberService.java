@@ -125,20 +125,21 @@ public class MemberService {
 
     Authentication authentication = tokenProvider.getAuthentication(oldRefreshToken);
     String loginId = authentication.getName();
-    if (!tokenProvider.getUsername(oldRefreshToken).equals(loginId)) {
+    String username = tokenProvider.getUsername(oldRefreshToken);
+    if (!username.equals(loginId)) {
       throw new CustomException(NOT_MATCH_TOKEN_USER);
     }
 
-    if (oldRefreshToken == null) {
-      new CustomException(ALREADY_LOGOUT);
+    if (tokenRepository.getRefreshToken(username) == null) {
+      throw new CustomException(ALREADY_LOGOUT);
     }
 
-    tokenRepository.saveInValidAccessToken(authentication.getName(), oldAccessToken);
+    tokenRepository.saveInValidAccessToken(loginId, oldAccessToken);
 
-    String accessToken = tokenProvider.generateAccessToken(authentication.getName(), authentication);
-    String refreshToken = tokenProvider.generateRefreshToken(authentication.getName(), authentication);
+    String accessToken = tokenProvider.generateAccessToken(loginId, authentication);
+    String refreshToken = tokenProvider.generateRefreshToken(loginId, authentication);
 
-    tokenRepository.saveRefreshToken(authentication.getName(), refreshToken);
+    tokenRepository.saveRefreshToken(loginId, refreshToken);
 
     return TokenDto.tokenDtoBuild(accessToken, refreshToken);
   }
