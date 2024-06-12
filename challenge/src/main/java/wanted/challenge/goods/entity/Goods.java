@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import wanted.challenge.mypage.entity.Member;
-import wanted.challenge.mypage.entity.Orders;
+import wanted.challenge.order.entity.Orders;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;

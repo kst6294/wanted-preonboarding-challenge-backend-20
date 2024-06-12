@@ -1,10 +1,9 @@
-package wanted.challenge.mypage.repository;
+package wanted.challenge.order.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import wanted.challenge.mypage.entity.Orders;
+import wanted.challenge.order.entity.Orders;
 
-import javax.swing.text.html.Option;
 import java.util.List;
 
 @Repository

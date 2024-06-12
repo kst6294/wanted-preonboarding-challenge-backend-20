@@ -8,7 +8,7 @@ import wanted.challenge.goods.dto.response.GoodsResponseDto.GoodsDetail;
 import wanted.challenge.goods.entity.Goods;
 import wanted.challenge.goods.entity.GoodsStatus;
 import wanted.challenge.mypage.dto.response.MyPageResponseDto;
-import wanted.challenge.mypage.entity.Orders;
+import wanted.challenge.order.entity.Orders;
 
 import java.util.ArrayList;
 import java.util.List;

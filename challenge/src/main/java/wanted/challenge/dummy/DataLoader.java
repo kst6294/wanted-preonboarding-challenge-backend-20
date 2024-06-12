@@ -7,10 +7,10 @@ import wanted.challenge.goods.entity.Goods;
 import wanted.challenge.goods.entity.GoodsStatus;
 import wanted.challenge.goods.repository.GoodsRepository;
 import wanted.challenge.mypage.entity.Member;
-import wanted.challenge.mypage.entity.OrderStatus;
-import wanted.challenge.mypage.entity.Orders;
+import wanted.challenge.order.entity.OrderStatus;
+import wanted.challenge.order.entity.Orders;
 import wanted.challenge.mypage.repository.MemberRepository;
-import wanted.challenge.mypage.repository.OrderRepository;
+import wanted.challenge.order.repository.OrderRepository;
 
 import java.time.LocalDateTime;
 

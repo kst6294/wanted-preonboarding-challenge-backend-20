@@ -7,7 +7,7 @@ import wanted.challenge.goods.dto.response.GoodsResponseDto;
 import wanted.challenge.goods.entity.Goods;
 import wanted.challenge.goods.service.GoodsServiceTest;
 import wanted.challenge.mypage.entity.Member;
-import wanted.challenge.mypage.entity.Orders;
+import wanted.challenge.order.entity.Orders;
 
 import java.util.List;
 import java.util.Optional;
@@ -37,7 +37,7 @@ public class GetGoodsServiceTest extends GoodsServiceTest {
         GoodsResponseDto.GoodsDetail testGoodsDetail = mapper.toGoodsDetail(goods, testTradeList);
         // mocking
         given(goodsRepository.findById(anyLong())).willReturn(Optional.of(goods));
-        given(orderRepository.findByBuyer_MemberIdAndGoods_Seller_MemberId(anyLong(), anyLong())).willReturn(testTradeList);
+        given(orderService.getOrderList(anyLong(), anyLong())).willReturn(testTradeList);
         // when
         GoodsResponseDto.GoodsDetail goodsDetail = goodsService.getGoodsDetail(goodsId, buyerId);
         // then
@@ -47,8 +47,7 @@ public class GetGoodsServiceTest extends GoodsServiceTest {
         assertEquals(goods.getQuantity(), goodsDetail.quantity());
         assertEquals(testTradeList.size(), goodsDetail.tradeList().size());
         verify(goodsRepository, times(1)).findById(anyLong());
-        verify(orderRepository, times(1)).findByBuyer_MemberIdAndGoods_Seller_MemberId(anyLong(), anyLong());
-
+        verify(orderService, times(1)).getOrderList(anyLong(), anyLong());
     }
 
     @Test

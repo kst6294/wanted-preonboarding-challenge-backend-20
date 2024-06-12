@@ -9,9 +9,9 @@ import wanted.challenge.goods.entity.GoodsStatus;
 import wanted.challenge.goods.mapper.GoodsMapper;
 import wanted.challenge.goods.repository.GoodsRepository;
 import wanted.challenge.mypage.entity.Member;
-import wanted.challenge.mypage.entity.Orders;
 import wanted.challenge.mypage.repository.MemberRepository;
-import wanted.challenge.mypage.repository.OrderRepository;
+import wanted.challenge.order.entity.Orders;
+import wanted.challenge.order.service.OrderService;
 
 import java.util.List;
 
@@ -27,14 +27,14 @@ public class GoodsServiceTest {
     protected GoodsRepository goodsRepository;
 
     @Mock
-    protected OrderRepository orderRepository;
+    protected OrderService orderService;
 
     protected GoodsService goodsService;
 
 
     @BeforeEach
     void setUp() {
-        goodsService = new GoodsService(memberRepository, goodsRepository, orderRepository, mapper); // 수동으로 주입
+        goodsService = new GoodsService(memberRepository, goodsRepository, orderService, mapper); // 수동으로 주입
     }
 
     protected Member createTestSeller(Long sellerId) {

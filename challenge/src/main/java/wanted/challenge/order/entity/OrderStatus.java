@@ -1,4 +1,4 @@
-package wanted.challenge.mypage.entity;
+package wanted.challenge.order.entity;
 
 public enum OrderStatus {
     ORDER, CONFIRM, FINISH

@@ -1,14 +1,15 @@
-package wanted.challenge.mypage.service;
+package wanted.challenge.order.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import wanted.challenge.goods.entity.Goods;
 import wanted.challenge.mypage.dto.response.MyPageResponseDto;
 import wanted.challenge.mypage.entity.Member;
-import wanted.challenge.mypage.entity.OrderStatus;
-import wanted.challenge.mypage.entity.Orders;
 import wanted.challenge.mypage.mapper.MyPageMapper;
 import wanted.challenge.mypage.repository.MemberRepository;
-import wanted.challenge.mypage.repository.OrderRepository;
+import wanted.challenge.order.entity.OrderStatus;
+import wanted.challenge.order.entity.Orders;
+import wanted.challenge.order.repository.OrderRepository;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -16,11 +17,27 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class MyPageService {
+public class OrderService {
 
     private final MemberRepository memberRepository;
     private final OrderRepository orderRepository;
     private final MyPageMapper mapper;
+
+    //주문 생성
+    public Orders createdOrder(Goods goods, Member buyer, int quantity){
+        Orders order = new Orders();
+        order.setGoodsName(goods.getGoodsName()); // 퍼포먼스
+        order.setOrderPrice(goods.getGoodsPrice() * quantity);
+        order.setQuantity(quantity);
+        order.setBuyer(buyer);
+        order.setGoods(goods);
+        return orderRepository.save(order);
+    }
+
+    // 판매자-구매자 주문 리스트 조회
+    public List<Orders> getOrderList(Long sellerId, Long buyerId) {
+        return orderRepository.findByBuyer_MemberIdAndGoods_Seller_MemberId(buyerId, sellerId);
+    }
 
     // 주문 리스트
     public List<Orders> getSellOrderList(Long memberId) {
