@@ -113,18 +113,5 @@ class GoodsOrderControllerTest extends GoodsControllerTest {
     }
 
 
-    /**
-     * service에서 테스트 해야될 것 같음
-     */
-    @Test
-    @DisplayName("상품 수량 부족 주문 실패")
-    //db에 접근하여 파악필요
-    void orderGoods_Fail_NotEnoughGoods() {
-    }
 
-    @Test
-    @DisplayName("상품 상태 변경 실패")
-        // db에 접근하여 파악필요
-    void orderGoods_Fail_InvalidGoodsStatus() {
-    }
 }
