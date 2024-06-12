@@ -4,6 +4,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import wanted.challenge.exception.custom.GoodsNotFoundException;
 import wanted.challenge.goods.dto.response.GoodsResponseDto;
 import wanted.challenge.goods.entity.Goods;
 import wanted.challenge.goods.entity.GoodsStatus;
@@ -36,7 +37,7 @@ public class GoodsService {
     }
 
     public GoodsResponseDto.GoodsDetail getGoodsDetail(Long goodsId, Long buyerId) {
-        Goods goods = goodsRepository.findById(goodsId).orElseThrow(() -> new IllegalArgumentException("해당 상품이 존재하지 않습니다."));
+        Goods goods = goodsRepository.findById(goodsId).orElseThrow(() -> new GoodsNotFoundException("해당 상품이 존재하지 않습니다."));
         // 거래내역이 있는지 확인
         List<Orders> tradeList = getTrades(buyerId, goods);
 
