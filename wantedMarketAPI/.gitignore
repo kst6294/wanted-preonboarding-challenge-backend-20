@@ -5,6 +5,10 @@ build/
 !**/src/main/**/build/
 !**/src/test/**/build/
 
+*.properties
+*.yaml
+*.yml
+
 ### STS ###
 .apt_generated
 .classpath
