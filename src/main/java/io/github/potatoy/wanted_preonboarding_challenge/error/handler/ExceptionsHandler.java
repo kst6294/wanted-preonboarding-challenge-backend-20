@@ -40,10 +40,10 @@ public class ExceptionsHandler {
     return new ErrorResponse(HttpStatus.CONFLICT.value(), exception.getMessage());
   }
 
-  @ExceptionHandler(Exception.class)
-  @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR) // status: 500, 이외의 예상치 못한 모든 예외
-  public ErrorResponse handleException(Exception exception) {
-    log.error(exception.toString());
-    return new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR.value(), "INTERNAL_SERVER_ERROR");
-  }
+  //  @ExceptionHandler(Exception.class)
+  //  @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR) // status: 500, 이외의 예상치 못한 모든 예외
+  //  public ErrorResponse handleException(Exception exception) {
+  //    log.error(exception.toString());
+  //    return new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR.value(), "INTERNAL_SERVER_ERROR");
+  //  }
 }

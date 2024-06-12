@@ -29,15 +29,13 @@ public class MarketService {
   private final ProductUtil productUtil;
 
   public List<Product> getAllProducts() {
-    User user = securityUtil.getCurrentUser();
-    log.info("getProduct: View all products. userId={}", user.getId());
+    log.info("getProduct: View all products.");
 
     return productRepository.findAll();
   }
 
   public Product getProduct(Long productId) {
-    User user = securityUtil.getCurrentUser();
-    log.info("getProduct: Product inquiry. userId={}, productId={}", user.getId(), productId);
+    log.info("getProduct: Product inquiry. productId={}", productId);
 
     return productUtil.findById(productId);
   }
