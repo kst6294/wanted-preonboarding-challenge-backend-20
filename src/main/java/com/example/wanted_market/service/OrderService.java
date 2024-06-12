@@ -4,6 +4,8 @@ import com.example.wanted_market.domain.Order;
 import com.example.wanted_market.domain.Product;
 import com.example.wanted_market.domain.User;
 import com.example.wanted_market.dto.response.UserTransactionResponseDto;
+import com.example.wanted_market.exception.CommonException;
+import com.example.wanted_market.exception.ErrorCode;
 import com.example.wanted_market.repository.OrderRepository;
 import com.example.wanted_market.repository.ProductRepository;
 import com.example.wanted_market.repository.UserRepository;
@@ -28,7 +30,7 @@ public class OrderService {
     @Transactional(readOnly = true)
     public Order getOrderById(Long userId) {
         return orderRepository.findById(userId)
-                .orElseThrow(() -> { throw new IllegalArgumentException("해당 주문이 존재하지 않습니다."); });
+                .orElseThrow(() -> { throw new CommonException(ErrorCode.ORDER_NOT_FOUND); });
     }
 
     // 구매
@@ -38,12 +40,12 @@ public class OrderService {
         User user = productService.getUserById(userId);
 
         if(product.getSeller().getId().equals(user.getId()))
-            throw new IllegalArgumentException("본인이 등록한 제품은 구매할 수 없습니다.");
+            throw new CommonException(ErrorCode.PRODUCT_OWNER_CANNOT_PURCHASE);
 
         if(product.getStatus().equals(EProductStatus.IN_RESERVATION))
-            throw new IllegalArgumentException("해당 제품은 현재 예약 중입니다.");
+            throw new CommonException(ErrorCode.PRODUCT_ALREADY_RESERVED);
         if(product.getStatus().equals(EProductStatus.COMPLETED))
-            throw new IllegalArgumentException("해당 제품은 이미 판매 완료되었습니다.");
+            throw new CommonException(ErrorCode.PRODUCT_ALREADY_SOLD);
 
         orderRepository.save(Order.builder()
                 .product(product)
@@ -62,9 +64,9 @@ public class OrderService {
         Product product = productService.getProductById(order.getProduct().getId());
 
         if(order.getStatus().equals(EOrderStatus.COMPLETED))
-            throw new IllegalArgumentException("이미 완료된 주문입니다.");
+            throw new CommonException(ErrorCode.ORDER_ALREADY_COMPLETED);
         if(!product.getSeller().getId().equals(user.getId()))
-            throw new IllegalArgumentException("판매자만 판매 승인할 수 있습니다.");
+            throw new CommonException(ErrorCode.ONLY_SELLER_CAN_APPROVE);
 
         product.setStatus(EProductStatus.COMPLETED);
         order.setStatus(EOrderStatus.COMPLETED);

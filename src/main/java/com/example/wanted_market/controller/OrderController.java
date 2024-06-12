@@ -1,17 +1,17 @@
 package com.example.wanted_market.controller;
 
+import com.example.wanted_market.dto.ResponseDto;
 import com.example.wanted_market.dto.response.UserTransactionResponseDto;
+import com.example.wanted_market.exception.CommonException;
+import com.example.wanted_market.exception.ErrorCode;
 import com.example.wanted_market.service.OrderService;
 import jakarta.servlet.http.HttpSession;
-import jakarta.transaction.UserTransaction;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller
+@RestController
 @RequiredArgsConstructor
 @RequestMapping("/order")
 public class OrderController {
@@ -20,46 +20,34 @@ public class OrderController {
 
     /** 구매 **/
     @PostMapping("/purchase/{productId}")
-    public ResponseEntity<?> purchase(@PathVariable Long productId, HttpSession session) {
-        try{
-            Long userId = (Long)session.getAttribute("loginUser");
-            if(userId == null)
-                throw new IllegalArgumentException("로그인이 필요합니다.");
+    public ResponseDto<?> purchase(@PathVariable Long productId, HttpSession session) {
+        Long userId = (Long)session.getAttribute("loginUser");
+        if(userId == null)
+            throw new CommonException(ErrorCode.LOGIN_REQUIRED);
 
-            orderService.purchase(productId, userId);
-            return ResponseEntity.ok("Purchase success");
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body("Purchase failed: "+e.getMessage());
-        }
+        orderService.purchase(productId, userId);
+        return ResponseDto.ok("Purchase success");
     }
 
     /** 판매 승인 **/
     @PatchMapping("/approval/{orderId}")
-    public ResponseEntity<?> approval(@PathVariable Long orderId, HttpSession session) {
-        try{
-            Long userId = (Long)session.getAttribute("loginUser");
-            if(userId == null)
-                throw new IllegalArgumentException("로그인이 필요합니다.");
+    public ResponseDto<?> approval(@PathVariable Long orderId, HttpSession session) {
+        Long userId = (Long)session.getAttribute("loginUser");
+        if(userId == null)
+            throw new CommonException(ErrorCode.LOGIN_REQUIRED);
 
-            orderService.approval(orderId, userId);
-            return ResponseEntity.ok("Sale Approval success");
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body("Sale Approval failed: "+e.getMessage());
-        }
+        orderService.approval(orderId, userId);
+        return ResponseDto.ok("Sale Approval success");
     }
 
     /** 사용자 거래 목록 조회 **/
     @GetMapping("/my-transactions")
-    public ResponseEntity<?> getMyTransaction(HttpSession session) {
-        try{
-            Long userId = (Long)session.getAttribute("loginUser");
-            if(userId == null)
-                throw new IllegalArgumentException("로그인이 필요합니다.");
+    public ResponseDto<?> getMyTransaction(HttpSession session) {
+        Long userId = (Long)session.getAttribute("loginUser");
+        if(userId == null)
+            throw new CommonException(ErrorCode.LOGIN_REQUIRED);
 
-            List<UserTransactionResponseDto> transactions = orderService.getMyTransaction(userId);
-            return ResponseEntity.ok().body(transactions);
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body("Get My Transactions failed: "+e.getMessage());
-        }
+        List<UserTransactionResponseDto> transactions = orderService.getMyTransaction(userId);
+        return ResponseDto.ok(transactions);
     }
 }

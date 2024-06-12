@@ -7,6 +7,8 @@ import com.example.wanted_market.dto.response.ProductDetailResponseDto;
 import com.example.wanted_market.dto.response.ProductDetailResponseDto.ProductDetailDto;
 import com.example.wanted_market.dto.response.ProductDetailResponseDto.TransactionDto;
 import com.example.wanted_market.dto.response.ProductResponseDto;
+import com.example.wanted_market.exception.CommonException;
+import com.example.wanted_market.exception.ErrorCode;
 import com.example.wanted_market.repository.OrderRepository;
 import com.example.wanted_market.repository.ProductRepository;
 import com.example.wanted_market.repository.UserRepository;
@@ -30,13 +32,13 @@ public class ProductService {
     @Transactional(readOnly = true)
     public User getUserById(Long userId) {
         return userRepository.findById(userId)
-                .orElseThrow(() -> { throw new IllegalArgumentException("해당 사용자가 존재하지 않습니다."); });
+                .orElseThrow(() -> { throw new CommonException(ErrorCode.USER_NOT_FOUND); });
     }
 
     @Transactional(readOnly = true)
     public Product getProductById(Long productId) {
         return productRepository.findProductById(productId)
-                .orElseThrow(() -> { throw new IllegalArgumentException("해당 제품이 존재하지 않습니다."); });
+                .orElseThrow(() -> { throw new CommonException(ErrorCode.PRODUCT_NOT_FOUND); });
     }
 
     // 제품 등록
