@@ -5,10 +5,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import market.market.domain.transaction.presentation.dto.response.QueryTransactionDetailResponse;
 import market.market.domain.transaction.presentation.dto.response.QueryTransactionListResponse;
-import market.market.domain.transaction.service.CreateTransactionService;
-import market.market.domain.transaction.service.QueryProductTransactionDetailService;
-import market.market.domain.transaction.service.QueryTransactionListService;
-import market.market.domain.transaction.service.QueryTransactionReListService;
+import market.market.domain.transaction.service.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,6 +20,7 @@ public class TransactionController {
     private final QueryTransactionListService queryTransactionListService;
     private final QueryTransactionReListService queryTransactionReListService;
     private final QueryProductTransactionDetailService queryProductTransactionDetailService;
+    private final UpdateTransactionService updateTransactionService;
 
     @Operation(summary = "거래 등록", description = "거래를 등록합니다.")
     @ResponseStatus(HttpStatus.CREATED)
@@ -50,4 +48,9 @@ public class TransactionController {
         return queryProductTransactionDetailService.execute(id);
     }
 
+    @Operation(summary = "판매 확정", description = "용품을 판매자가 판매 확정을 할 수 있습니다.")
+    @PatchMapping("/Confirmation/{product_id}")
+    public void confirm(@PathVariable(name = "product_id") Long id) {
+        updateTransactionService.execute(id);
+    }
 }
