@@ -12,6 +12,7 @@ import org.example.wantedmarket.status.OrderStatus;
 @AllArgsConstructor
 public class OrderInfoDto {
     private Long orderId;
+    private Integer confirmedPrice;
     private Long productId;
     private Long sellerId;
     private Long buyerId;

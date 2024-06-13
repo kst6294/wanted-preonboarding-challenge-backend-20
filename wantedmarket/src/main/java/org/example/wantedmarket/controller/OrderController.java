@@ -22,6 +22,7 @@ public class OrderController {
     private final UserRepository userRepository;
 
     /* 제품 주문 */
+
     @PostMapping
     public OrderCreateDto.Response orderProduct(@AuthenticationPrincipal CustomUserDetails customUserDetails, @RequestBody OrderCreateDto.Request request) {
         log.info("제품 주문 api");
@@ -33,7 +34,7 @@ public class OrderController {
     }
 
     /* 판매 승인 */
-    @PatchMapping("/{orderId}/approval")
+    @PatchMapping("/{orderId}/approve")
     public OrderInfoDto approveProductOrder(@AuthenticationPrincipal CustomUserDetails customUserDetails, @PathVariable Long orderId) {
         log.info("판매 승인 api");
 
@@ -41,6 +42,17 @@ public class OrderController {
         Long userId = userRepository.findByUsername(username).getId();
 
         return orderService.approveProductOrder(userId, orderId);
+    }
+
+    /* 구매 확정 */
+    @PatchMapping("/{orderId}/confirm")
+    public OrderInfoDto confirmProductOrder(@AuthenticationPrincipal CustomUserDetails customUserDetails, @PathVariable Long orderId) {
+        log.info("구매 확정 api");
+
+        String username = customUserDetails.getUsername();
+        Long userId = userRepository.findByUsername(username).getId();
+
+        return orderService.confirmProductOrder(userId, orderId);
     }
 
 }

@@ -18,6 +18,8 @@ public class OrderCreateDto {
     public static class Request {
         @NotNull
         private Long productId;
+        @NotNull
+        private Integer quantity;
     }
 
     @Getter

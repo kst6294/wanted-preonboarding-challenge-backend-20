@@ -44,4 +44,8 @@ public class Product {
         this.status = status;
     }
 
+    public void modifyQuantity(Integer quantity) {
+        this.quantity -= quantity;
+    }
+
 }

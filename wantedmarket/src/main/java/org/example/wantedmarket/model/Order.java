@@ -18,6 +18,8 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private Integer confirmedPrice;
+
     @ManyToOne
     @JoinColumn(name = "product_id")
     private Product product;
@@ -34,7 +36,8 @@ public class Order {
     private OrderStatus status;
 
     @Builder
-    public Order(Product product, User seller, User buyer, OrderStatus status) {
+    public Order(Integer confirmedPrice, Product product, User seller, User buyer, OrderStatus status) {
+        this.confirmedPrice = confirmedPrice;
         this.product = product;
         this.seller = seller;
         this.buyer = buyer;
@@ -45,4 +48,19 @@ public class Order {
         this.status = status;
     }
 
+    public void modifyConfirmedPrice(Integer confirmedPrice) {
+        this.confirmedPrice = confirmedPrice;
+    }
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "id=" + id +
+                ", confirmedPrice=" + confirmedPrice +
+                ", product=" + product +
+                ", seller=" + seller +
+                ", buyer=" + buyer +
+                ", status=" + status +
+                '}';
+    }
 }
