@@ -41,22 +41,22 @@ public class GoodsService {
   }
 
   @Transactional
-  public GoodsDto getGoodsDetail(long goodsId, CustomUserDetails member) {
+  public GoodsDto getGoodsDetail(long goodsId, CustomUserDetails memberDetail) {
     Goods goods = goodsRepository.findByIdWithLock(goodsId)
         .orElseThrow(() -> new CustomException(NOT_FOUND_GOODS));
 
-    if (member == null) {
+    if (memberDetail == null || memberDetail.getId() == null) {
       return GoodsDto.fromEntity(goods);
     }
+
+    Member member = memberRepository.findById(memberDetail.getId())
+        .orElseThrow(() -> new CustomException(NOT_FOUND_MEMBER));
 
     if (member.getId() == goods.getSeller().getId()) {
       List<Transaction> transactions = transactionRepository.findAllByGoods(goods);
       return GoodsDtoForSeller.fromEntity(goods, transactions);
     } else {
-      Member buyer = memberRepository.findById(member.getId())
-          .orElseThrow(() -> new CustomException(NOT_FOUND_MEMBER));
-
-      Optional<Transaction> transactionOpt = transactionRepository.findByGoodsAndBuyer(goods, buyer);
+      Optional<Transaction> transactionOpt = transactionRepository.findByGoodsAndBuyer(goods, member);
       if (transactionOpt.isPresent()) {
         return GoodsDtoForBuyer.fromEntity(goods, transactionOpt.get());
       } else {
@@ -66,7 +66,7 @@ public class GoodsService {
   }
 
   @Transactional
-  public GoodsDto postGoods(GoodsRequest goodsRequest, CustomUserDetails member) {
+  public GoodsDto postGoods(GoodsRequest goodsRequest, CustomUserDetails memberDetail) {
     if (goodsRequest.getAvailableQuantity() == 0) {
       throw new CustomException(INVALID_MIN_QUANTITY_AT_FIRST);
     }
@@ -75,7 +75,11 @@ public class GoodsService {
       throw new CustomException(INVALID_GOODS_STATUS_AT_FIRST);
     }
 
-    Member seller = memberRepository.findById(member.getId())
+    if (goodsRequest.getPrice() == 0) {
+      throw new CustomException(CHECK_GOODS_PRICE_ZERO);
+    }
+
+    Member seller = memberRepository.findById(memberDetail.getId())
         .orElseThrow(() -> new CustomException(NOT_FOUND_MEMBER));
 
     Goods goods = goodsRepository.save(Goods.builder()
@@ -92,13 +96,9 @@ public class GoodsService {
 
   @Transactional
   public GoodsDto updateGoods(long goodsId,
-      GoodsEditRequest goodsEditRequest, CustomUserDetails member) {
+    GoodsEditRequest goodsEditRequest, CustomUserDetails memberDetail) {
     Goods goods = goodsRepository.findByIdWithLock(goodsId)
         .orElseThrow(() -> new CustomException(NOT_FOUND_GOODS));
-
-    if (member.getId() != goods.getSeller().getId()) {
-      throw new CustomException(NOT_MATCH_SELLER);
-    }
 
     if ((goodsEditRequest.getAvailableQuantity() == 0 && goodsEditRequest.getGoodsStatus() == SALE)) {
       throw new CustomException(CHECK_IF_SOLD_OUT_GOODS);
@@ -108,15 +108,25 @@ public class GoodsService {
       throw new CustomException(CHECK_GOODS_PRICE_ZERO);
     }
 
+    Member member = memberRepository.findById(memberDetail.getId())
+        .orElseThrow(() -> new CustomException(NOT_FOUND_MEMBER));
+
+    if (member.getId() != goods.getSeller().getId()) {
+      throw new CustomException(NOT_MATCH_SELLER);
+    }
+
     goods.updateGoods(goodsEditRequest);
 
     return GoodsDto.fromEntity(goods);
   }
 
   @Transactional
-  public String deleteGoods(long goodsId, CustomUserDetails member) {
+  public String deleteGoods(long goodsId, CustomUserDetails memberDetail) {
     Goods goods = goodsRepository.findById(goodsId)
         .orElseThrow(() -> new CustomException(NOT_FOUND_GOODS));
+
+    Member member = memberRepository.findById(memberDetail.getId())
+        .orElseThrow(() -> new CustomException(NOT_FOUND_MEMBER));
 
     if (member.getId() != goods.getSeller().getId()) {
       throw new CustomException(NOT_MATCH_SELLER);
