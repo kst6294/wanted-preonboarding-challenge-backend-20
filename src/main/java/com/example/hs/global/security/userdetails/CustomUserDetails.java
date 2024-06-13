@@ -49,7 +49,10 @@ public class CustomUserDetails implements UserDetails {
     return true;
   }
 
-  public long getId() {
+  public Long getId() {
+    if (memberUserDetailsDomain == null) {
+      return null;
+    }
     return memberUserDetailsDomain.id();
   }
 }
