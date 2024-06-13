@@ -1,4 +1,9 @@
-import { ConflictException, Inject, Injectable } from '@nestjs/common';
+import {
+  ConflictException,
+  Inject,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import {
   TransactionIncludeProduct,
   TransactionRepositoryInterface,
@@ -25,6 +30,9 @@ export class TransactionsService implements TransactionServiceInterface {
         buyerId,
       );
 
+    if (!transaction) {
+      throw new NotFoundException('현재 거래내역이 존재하지 않습니다.');
+    }
     if (transaction.status === TransactionStatus.APPROVED) {
       throw new ConflictException('이미 판매승인된 상품입니다.');
     }
@@ -41,14 +49,23 @@ export class TransactionsService implements TransactionServiceInterface {
     buyerId: number,
     sellerId: number,
   ) {
-    const product = await this.transactionRepository.findByBuyerIdAndSellerId(
-      productId,
-      buyerId,
-      sellerId,
-    );
+    const transaction =
+      await this.transactionRepository.findByBuyerIdAndSellerId(
+        productId,
+        buyerId,
+        sellerId,
+      );
 
-    if (product) {
-      throw new ConflictException('이미 구매한 상품입니다.');
+    if (!transaction) {
+      return true;
+    }
+
+    if (transaction && transaction.status === TransactionStatus.PENDING) {
+      throw new ConflictException('이미 구매 대기중인 상품입니다.');
+    }
+
+    if (transaction && transaction.status === TransactionStatus.APPROVED) {
+      throw new ConflictException('이미 구매 완료된 상품입니다.');
     }
 
     return true;

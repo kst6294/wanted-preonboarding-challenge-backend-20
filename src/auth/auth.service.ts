@@ -1,5 +1,5 @@
 import * as bcrypt from 'bcrypt';
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { User } from '@prisma/client';
 import { UsersServiceInterface } from 'src/users/interfaces/users.service.interface';
@@ -14,6 +14,10 @@ export class AuthService {
 
   async validateUser(email: string, password: string): Promise<any> {
     const user = await this.usersService.findOne(email);
+
+    if (!user) {
+      throw new NotFoundException('존재하지 않는 유저입니다.');
+    }
     const isCorrectPassword = await bcrypt.compare(password, user.password);
 
     if (user && isCorrectPassword) {

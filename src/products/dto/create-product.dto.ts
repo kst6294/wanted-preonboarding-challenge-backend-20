@@ -8,4 +8,8 @@ export class CreateProductDto {
   @IsNumber()
   @Type(() => Number)
   price: number;
+
+  @IsNumber()
+  @Type(() => Number)
+  quantity: number;
 }

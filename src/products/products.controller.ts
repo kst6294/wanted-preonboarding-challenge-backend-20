@@ -42,7 +42,7 @@ export class ProductsController {
    *
    * @param req
    * @body createProductDto
-   * @description 상품 등록
+   * @description 상품 등록 w.수량추가
    */
   @Post()
   @UseGuards(JwtAuthGuard)
@@ -50,6 +50,6 @@ export class ProductsController {
     @Req() req: any,
     @Body() createProductDto: CreateProductDto,
   ): Promise<void> {
-    return this.productsService.create(createProductDto, 2);
+    return this.productsService.create(createProductDto, req.user.userId);
   }
 }

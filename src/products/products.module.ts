@@ -3,6 +3,7 @@ import { ProductsService } from './products.service';
 import { ProductsController } from './products.controller';
 import { PrismaService } from 'prisma/prisma.service';
 import { ProductRepository } from 'src/repositories/product.repository';
+import { ProductQuantityRepository } from 'src/repositories/product-quantity.repository';
 
 @Module({
   controllers: [ProductsController],
@@ -14,6 +15,10 @@ import { ProductRepository } from 'src/repositories/product.repository';
     {
       provide: 'PRODUCT_REPOSITORY_INTERFACE',
       useClass: ProductRepository,
+    },
+    {
+      provide: 'PRODUCT_QUANTITY_REPOSITORY_INTERFACE',
+      useClass: ProductQuantityRepository,
     },
     PrismaService,
   ],
