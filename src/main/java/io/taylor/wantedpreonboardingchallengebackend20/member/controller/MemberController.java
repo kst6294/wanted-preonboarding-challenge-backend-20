@@ -1,9 +1,9 @@
 package io.taylor.wantedpreonboardingchallengebackend20.member.controller;
 
-import io.taylor.wantedpreonboardingchallengebackend20.common.model.CommonResponse;
 import io.taylor.wantedpreonboardingchallengebackend20.member.entity.Member;
 import io.taylor.wantedpreonboardingchallengebackend20.member.model.request.JoinReqeust;
 import io.taylor.wantedpreonboardingchallengebackend20.member.model.request.LoginReqeust;
+import io.taylor.wantedpreonboardingchallengebackend20.member.model.response.MemberLoginResponse;
 import io.taylor.wantedpreonboardingchallengebackend20.member.service.MemberService;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -20,26 +20,23 @@ public class MemberController {
     }
 
     @PostMapping("/join")
-    public ResponseEntity<CommonResponse<Object>> joinMember(@RequestBody JoinReqeust request) {
-        CommonResponse<Object> response;
-        response = memberService.joinMember(new Member(request));
+    public ResponseEntity<Object> join(@RequestBody JoinReqeust request) {
+        Object response = memberService.joinMember(new Member(request));
         if (response != null) {
-            response = CommonResponse.builder().result(true).build();
-        } else {
-            response = CommonResponse.builder().result(false).build();
+            return ResponseEntity.status(HttpStatus.OK).body(response);
         }
-        return ResponseEntity.status(HttpStatus.OK).body(response);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
 
     @PostMapping("/login")
-    public ResponseEntity<CommonResponse<Object>> loginMember(@RequestBody LoginReqeust request) {
-        CommonResponse<Object> response = memberService.loginMember(new Member(request.getEmail(), request.getPassword()));
+    public ResponseEntity<Object> login(@RequestBody LoginReqeust request) {
+        MemberLoginResponse response = memberService.loginMember(new Member(request.getEmail(), request.getPassword()));
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
     @PostMapping("/logout")
-    public ResponseEntity<CommonResponse<Object>> logoutMember(@RequestHeader HttpHeaders header, String str) {
-        CommonResponse<Object> response = memberService.logoutMember(header, str);
+    public ResponseEntity<Object> logout(@RequestHeader HttpHeaders header, String str) {
+        Object response = memberService.logoutMember(header, str);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 }
