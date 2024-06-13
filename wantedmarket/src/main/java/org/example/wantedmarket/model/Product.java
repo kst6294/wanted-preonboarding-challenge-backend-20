@@ -48,4 +48,8 @@ public class Product {
         this.quantity -= quantity;
     }
 
+    public void modifyPrice(Integer price) {
+        this.price = price;
+    }
+
 }

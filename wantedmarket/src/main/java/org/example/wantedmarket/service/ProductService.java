@@ -6,6 +6,7 @@ import org.example.wantedmarket.dto.order.OrderInfoDto;
 import org.example.wantedmarket.dto.product.ProductCreateDto;
 import org.example.wantedmarket.dto.product.ProductDetailDto;
 import org.example.wantedmarket.dto.product.ProductInfoDto;
+import org.example.wantedmarket.dto.product.ProductUpdateDto;
 import org.example.wantedmarket.error.CustomException;
 import org.example.wantedmarket.error.ErrorCode;
 import org.example.wantedmarket.model.Order;
@@ -99,6 +100,7 @@ public class ProductService {
                     .map(order -> new OrderInfoDto(
                             order.getId(),
                             order.getConfirmedPrice(),
+                            order.getQuantity(),
                             order.getProduct().getId(),
                             order.getSeller().getId(),
                             order.getBuyer().getId(),
@@ -114,6 +116,7 @@ public class ProductService {
                 transactionList.add(new OrderInfoDto(
                         order.getId(),
                         order.getConfirmedPrice(),
+                        order.getQuantity(),
                         order.getProduct().getId(),
                         order.getSeller().getId(),
                         order.getBuyer().getId(),
@@ -147,8 +150,8 @@ public class ProductService {
             ProductInfoDto productInfoDto = ProductInfoDto.builder()
                     .productId(orderdProduct.getId())
                     .name(orderdProduct.getName())
-                    .price(orderdProduct.getPrice())
-                    .quantity(orderdProduct.getQuantity())
+                    .price(order.getConfirmedPrice())
+                    .quantity(order.getQuantity())
                     .status(orderdProduct.getStatus())
                     .build();
 
@@ -167,6 +170,8 @@ public class ProductService {
     public List<ProductInfoDto> findReservedProductList(Long userId) {
         List<Order> orders = new ArrayList<>();
         orders.addAll(orderRepository.findAllByBuyerIdAndStatus(userId, OrderStatus.PENDING));
+        orders.addAll(orderRepository.findAllByBuyerIdAndStatus(userId, OrderStatus.APPROVED));
+        orders.addAll(orderRepository.findAllBySellerIdAndStatus(userId, OrderStatus.PENDING));
         orders.addAll(orderRepository.findAllBySellerIdAndStatus(userId, OrderStatus.APPROVED));
         orders.stream().distinct().collect(Collectors.toList());
 
@@ -179,8 +184,8 @@ public class ProductService {
             ProductInfoDto productInfoDto = ProductInfoDto.builder()
                     .productId(reservedProduct.getId())
                     .name(reservedProduct.getName())
-                    .price(reservedProduct.getPrice())
-                    .quantity(reservedProduct.getQuantity())
+                    .price(order.getConfirmedPrice())
+                    .quantity(order.getQuantity())
                     .status(reservedProduct.getStatus())
                     .build();
 
@@ -188,6 +193,21 @@ public class ProductService {
             log.info(productInfoDto.toString());
         }
         return reservedProductList;
+    }
+
+    /* 제품 가격 수정 */
+    @Transactional
+    public ProductUpdateDto.Response modifyProductPrice(Long userId, ProductUpdateDto.Request request) {
+        Product product = productRepository.findById(request.getProductId()).orElseThrow(
+                () -> new CustomException(ErrorCode.PRODUCT_NOT_FOUND));
+
+        if (!product.getSeller().getId().equals(userId)) {
+            throw  new CustomException(ErrorCode.USER_NOT_SELLER);
+        }
+
+        product.modifyPrice(request.getPrice());
+
+        return ProductUpdateDto.Response.from(product);
     }
 
 }

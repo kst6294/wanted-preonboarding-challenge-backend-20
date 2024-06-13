@@ -12,6 +12,8 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Slf4j
 @RestController
 @RequestMapping("/api/order")
@@ -31,6 +33,17 @@ public class OrderController {
         Long userId = userRepository.findByUsername(username).getId();
 
         return orderService.orderProduct(userId, request);
+    }
+
+    /* 내 거래내역 보기 */
+    @GetMapping("/me")
+    public List<OrderInfoDto> getMyTransactionList(@AuthenticationPrincipal CustomUserDetails customUserDetails) {
+        log.info("내 거래내역 보기 api");
+
+        String username = customUserDetails.getUsername();
+        Long userId = userRepository.findByUsername(username).getId();
+
+        return orderService.findMyTransactionList(userId);
     }
 
     /* 판매 승인 */

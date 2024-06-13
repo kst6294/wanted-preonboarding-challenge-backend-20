@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.example.wantedmarket.dto.product.ProductCreateDto;
 import org.example.wantedmarket.dto.product.ProductDetailDto;
 import org.example.wantedmarket.dto.product.ProductInfoDto;
+import org.example.wantedmarket.dto.product.ProductUpdateDto;
 import org.example.wantedmarket.dto.user.CustomUserDetails;
 import org.example.wantedmarket.model.User;
 import org.example.wantedmarket.repository.UserRepository;
@@ -84,6 +85,19 @@ public class ProductController {
         Long userId = userRepository.findByUsername(username).getId();
 
         return productService.findReservedProductList(userId);
+    }
+
+    /* 제품 가격 수정 */
+    @PatchMapping("/price")
+    public ProductUpdateDto.Response updateProductPrice(@AuthenticationPrincipal CustomUserDetails customUserDetails, @RequestBody ProductUpdateDto.Request request) {
+        log.info("제품 가격 수정 api");
+
+        String username = customUserDetails.getUsername();
+        Long userId = userRepository.findByUsername(username).getId();
+
+        log.info("productId : " + request.getProductId() + ", price : " + request.getPrice());
+
+        return productService.modifyProductPrice(userId, request);
     }
 
 }

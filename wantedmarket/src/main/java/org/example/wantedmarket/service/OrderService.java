@@ -17,6 +17,9 @@ import org.example.wantedmarket.status.ProductStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -56,7 +59,7 @@ public class OrderService {
 
         // 재고가 주문수량보다 부족할 때
         if (product.getQuantity() < request.getQuantity()) {
-            throw new CustomException(ErrorCode.PRODUCT_NOT_FOUND);
+            throw new CustomException(ErrorCode.PRODUCT_NOT_ENOUGH);
         }
 
         // 추가 판매 가능한 수량이 없을 경우
@@ -68,6 +71,7 @@ public class OrderService {
         product.modifyQuantity(request.getQuantity());
 
         Order newOrder = orderRepository.save(Order.builder()
+                .quantity(request.getQuantity())
                 .product(product)
                 .buyer(buyer)
                 .seller(seller)
@@ -100,7 +104,14 @@ public class OrderService {
         // 판매 승인
         order.modifyStatus(OrderStatus.APPROVED);
 
-        return new OrderInfoDto(orderId, order.getConfirmedPrice(), order.getProduct().getId(), order.getSeller().getId(), order.getBuyer().getId(), order.getStatus());
+        return new OrderInfoDto(
+                order.getId(),
+                order.getConfirmedPrice(),
+                order.getQuantity(),
+                order.getProduct().getId(),
+                order.getSeller().getId(),
+                order.getBuyer().getId(),
+                order.getStatus());
     }
 
     /* 구매 확정
@@ -111,7 +122,7 @@ public class OrderService {
     @Transactional
     public OrderInfoDto confirmProductOrder(Long userId, Long orderId) {
         Order order = orderRepository.findById(orderId).orElseThrow(
-                () ->  new CustomException(ErrorCode.ORDER_NOT_FOUND));
+                () -> new CustomException(ErrorCode.ORDER_NOT_FOUND));
 
         Product product = order.getProduct();
 
@@ -133,7 +144,29 @@ public class OrderService {
         order.modifyStatus(OrderStatus.CONFIRMED); // 구매 확정
         order.modifyConfirmedPrice(product.getPrice()); // 주문 당시의 제품 가격 저장
 
-        return new OrderInfoDto(orderId, order.getConfirmedPrice(), order.getProduct().getId(), order.getSeller().getId(), order.getBuyer().getId(), order.getStatus());
+        return new OrderInfoDto(
+                order.getId(),
+                order.getConfirmedPrice(),
+                order.getQuantity(),
+                order.getProduct().getId(),
+                order.getSeller().getId(),
+                order.getBuyer().getId(),
+                order.getStatus());
+    }
+
+    /* 내 거래내역 조회 */
+    @Transactional(readOnly = true)
+    public List<OrderInfoDto> findMyTransactionList(Long userId) {
+        return orderRepository.findAllBySellerIdOrBuyerId(userId, userId).stream()
+                .map(order -> new OrderInfoDto(
+                        order.getId(),
+                        order.getConfirmedPrice(),
+                        order.getQuantity(),
+                        order.getProduct().getId(),
+                        order.getSeller().getId(),
+                        order.getBuyer().getId(),
+                        order.getStatus()
+                )).collect(Collectors.toList());
     }
 
 }

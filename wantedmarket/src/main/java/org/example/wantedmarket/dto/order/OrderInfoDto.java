@@ -13,6 +13,7 @@ import org.example.wantedmarket.status.OrderStatus;
 public class OrderInfoDto {
     private Long orderId;
     private Integer confirmedPrice;
+    private Integer quantity;
     private Long productId;
     private Long sellerId;
     private Long buyerId;
