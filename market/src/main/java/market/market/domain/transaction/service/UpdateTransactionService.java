@@ -28,7 +28,7 @@ public class UpdateTransactionService {
 
         if (Objects.equals(user.getId(), transaction.getSeller_id())) {
             Product product = transaction.getProduct();
-            if(product.getStatus() == Status.Completion) {
+            if(product.getStatus() == Status.Completion) { 
                 throw new CustomException(ErrorCode.TRANSACTION_ALREADY_EXISTS);
             }
             product.updateStatus(Status.Completion);
