@@ -1,6 +1,5 @@
 package io.taylor.wantedpreonboardingchallengebackend20.product.controller;
 
-import io.taylor.wantedpreonboardingchallengebackend20.common.model.CommonResponse;
 import io.taylor.wantedpreonboardingchallengebackend20.product.entity.Product;
 import io.taylor.wantedpreonboardingchallengebackend20.product.model.request.ProductRequest;
 import io.taylor.wantedpreonboardingchallengebackend20.product.service.ProductService;
@@ -21,39 +20,31 @@ public class ProductController {
     }
 
     @GetMapping("")
-    public ResponseEntity<CommonResponse<Object>> getProductList() {
+    public ResponseEntity<Object> getProductList() {
         List<Product> products = productService.getProducts();
-        CommonResponse<Object> response;
         if (products != null) {
-            response = CommonResponse.builder().result(true).data(products).build();
-        } else {
-            response = CommonResponse.builder().result(false).build();
+            return ResponseEntity.status(HttpStatus.OK).body(products);
         }
-        return ResponseEntity.status(HttpStatus.OK).body(response);
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 
     @PostMapping("")
-    public ResponseEntity<CommonResponse<Object>> postProduct(@RequestHeader HttpHeaders header, @RequestBody ProductRequest request) {
+    public ResponseEntity<Object> postProduct(@RequestHeader HttpHeaders header, @RequestBody ProductRequest request) {
         Product product = productService.postProduct(new Product(request.getName(), request.getPrice()));
-        CommonResponse<Object> response = CommonResponse.builder().result(true).data(product).build();
-        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+        return ResponseEntity.status(HttpStatus.CREATED).body(product);
     }
 
     @GetMapping("/{productId}")
-    public ResponseEntity<CommonResponse<Object>> getProduct(@PathVariable String productId) {
+    public ResponseEntity<Object> getProduct(@PathVariable String productId) {
         Product product = productService.getProductById(Long.parseLong(productId));
-        CommonResponse<Object> response;
         if (product != null) {
-            response = CommonResponse.builder().result(true).data(product).build();
-        } else {
-            response = CommonResponse.builder().result(false).build();
+            return ResponseEntity.status(HttpStatus.CREATED).body(product);
         }
-        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 
     @PatchMapping("/{productId}/approve")
-    public ResponseEntity<CommonResponse<Object>> approveProduct(@RequestHeader HttpHeaders header, String productId) {
-        CommonResponse<Object> response = CommonResponse.builder().result(true).build();
-        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    public ResponseEntity<Object> approveProduct(@RequestHeader HttpHeaders header, String productId) {
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 }

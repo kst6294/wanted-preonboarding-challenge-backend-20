@@ -1,7 +1,6 @@
 package io.taylor.wantedpreonboardingchallengebackend20.member.service;
 
 import lombok.extern.slf4j.Slf4j;
-import io.taylor.wantedpreonboardingchallengebackend20.common.model.CommonResponse;
 import io.taylor.wantedpreonboardingchallengebackend20.common.util.JwtTokenUtil;
 import io.taylor.wantedpreonboardingchallengebackend20.common.util.PasswordUtil;
 import io.taylor.wantedpreonboardingchallengebackend20.member.entity.Member;
@@ -24,30 +23,25 @@ public class MemberService {
         this.jwtTokenUtil = jwtTokenUtil;
     }
 
-    public CommonResponse<Object> joinMember(Member member) {
+    public Object joinMember(Member member) {
         member.setPassword(passwordUtil.encodePassword(member.getPassword()));
-        Member result = memberRepository.save(member);
-        if (result != null) {
-            System.out.println(result);
-            return CommonResponse.builder().result(true).data(new MemberJoinResponse(result)).build();
-        }
-        return CommonResponse.builder().result(false).build();
+        return memberRepository.save(member);
     }
 
-    public CommonResponse<Object> loginMember(Member member) {
+    public MemberLoginResponse loginMember(Member member) {
         Member result = memberRepository.findMemberByEmail(member.getEmail());
+        MemberLoginResponse response = null;
         if (result != null && passwordUtil.matchPassword(member.getPassword(), result.getPassword())) {
-            MemberLoginResponse response = new MemberLoginResponse(result, jwtTokenUtil.generateToken(member.getEmail()));
-            return CommonResponse.builder().result(true).data(response).build();
+            response = new MemberLoginResponse(result, jwtTokenUtil.generateToken(member.getEmail()));
         }
-        return CommonResponse.builder().result(false).build();
+        return response;
     }
 
     public Member getMemberByEmail(String email) {
         return memberRepository.findMemberByEmail(email);
     }
 
-    public CommonResponse<Object> logoutMember(HttpHeaders headers, String str) {
-        return CommonResponse.builder().result(true).build();
+    public Object logoutMember(HttpHeaders headers, String str) {
+        return true;
     }
 }
