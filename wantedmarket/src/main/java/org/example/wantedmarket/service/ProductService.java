@@ -7,8 +7,8 @@ import org.example.wantedmarket.dto.product.ProductCreateDto;
 import org.example.wantedmarket.dto.product.ProductDetailDto;
 import org.example.wantedmarket.dto.product.ProductInfoDto;
 import org.example.wantedmarket.dto.product.ProductUpdateDto;
-import org.example.wantedmarket.error.CustomException;
-import org.example.wantedmarket.error.ErrorCode;
+import org.example.wantedmarket.exception.CustomException;
+import org.example.wantedmarket.exception.ErrorCode;
 import org.example.wantedmarket.model.Order;
 import org.example.wantedmarket.model.Product;
 import org.example.wantedmarket.model.User;
@@ -21,10 +21,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Slf4j
 @Service
@@ -162,6 +160,19 @@ public class ProductService {
         return orderedProductList;
     }
 
+    /* 내가 등록한 제품 조회 */
+    public List<ProductInfoDto> findMyProductList(Long userId) {
+        return productRepository.findAllBySellerId(userId).stream()
+                .map(product -> ProductInfoDto.builder()
+                        .productId(product.getId())
+                        .name(product.getName())
+                        .price(product.getPrice())
+                        .quantity(product.getQuantity())
+                        .status(product.getStatus())
+                        .build()
+                ).collect(Collectors.toList());
+    }
+
     /* 예약중인 제품 목록 조회
     *
     *  조회하는 사람이 판매자이든 구매자이든 상관없이 예약중인 제품이면 확인 가능
@@ -202,7 +213,11 @@ public class ProductService {
                 () -> new CustomException(ErrorCode.PRODUCT_NOT_FOUND));
 
         if (!product.getSeller().getId().equals(userId)) {
-            throw  new CustomException(ErrorCode.USER_NOT_SELLER);
+            throw new CustomException(ErrorCode.USER_NOT_SELLER);
+        }
+
+        if (product.getPrice().equals(request.getPrice())) {
+            throw new CustomException(ErrorCode.SAME_AS_PREVIOUS_PRICE);
         }
 
         product.modifyPrice(request.getPrice());

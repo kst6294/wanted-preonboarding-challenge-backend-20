@@ -1,4 +1,4 @@
-package org.example.wantedmarket.error;
+package org.example.wantedmarket.exception;
 
 import lombok.*;
 @Getter

@@ -1,4 +1,4 @@
-package org.example.wantedmarket.error;
+package org.example.wantedmarket.exception;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -16,6 +16,7 @@ public enum ErrorCode {
     PRODUCT_IN_RESERVATION("예약중인 제품은 주문할 수 없습니다."),
     PRODUCT_SOLD_OUT("해당 제품은 판매 완료되었습니다."),
     PRODUCT_NOT_ENOUGH("해당 제품의 재고가 부족합니다."),
+    SAME_AS_PREVIOUS_PRICE("기존의 제품의 가격과 동일한 가격입니다."),
 
     ORDER_NOT_FOUND("등록된 주문이 없습니다."),
     ORDER_NOT_PENDING("주문 상태인 제품이 아닙니다."),
