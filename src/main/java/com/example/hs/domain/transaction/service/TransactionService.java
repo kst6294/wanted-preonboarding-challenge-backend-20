@@ -5,7 +5,6 @@ import static com.example.hs.domain.transaction.type.TransactionStatus.CANCEL_PU
 import static com.example.hs.domain.transaction.type.TransactionStatus.CONFIRM_PURCHASE;
 import static com.example.hs.domain.transaction.type.TransactionStatus.REFUSAL_OF_SALE;
 import static com.example.hs.domain.transaction.type.TransactionStatus.RESERVATION;
-import static com.example.hs.global.exception.ErrorCode.ALREADY_CONFIRM_PURCHASE;
 import static com.example.hs.global.exception.ErrorCode.ALREADY_PURCHASED;
 import static com.example.hs.global.exception.ErrorCode.CAN_NOT_BUY_IF_SELLER;
 import static com.example.hs.global.exception.ErrorCode.CAN_NOT_CONFIRM;
@@ -46,15 +45,12 @@ public class TransactionService {
   private final MemberRepository memberRepository;
 
   @Transactional
-  public TransactionDto reserveTransactions(TransactionRequest request, CustomUserDetails member) {
+  public TransactionDto reserveTransactions(TransactionRequest request,
+      CustomUserDetails memberDetail) {
     Goods goods = goodsRepository.findByIdWithLock(request.getGoodsId())
         .orElseThrow(() -> new CustomException(NOT_FOUND_GOODS));
-    if (goods.getSeller().getId() == member.getId()) {
-      throw new CustomException(CAN_NOT_BUY_IF_SELLER);
-    }
-
     if (goods.getGoodsStatus() != GoodsStatus.SALE
-        || goods.getTotalTransactionQuantity() == 0) {
+        || goods.getAvailableQuantity() == 0) {
       throw new CustomException(NOT_SALES);
     }
 
@@ -62,14 +58,19 @@ public class TransactionService {
       throw new CustomException(NOT_MATCH_PRICE);
     }
 
-    int remainGoods = goods.getTotalTransactionQuantity()
+    int remainGoods = goods.getAvailableQuantity()
         - (goods.getReservedQuantity() + request.getQuantity());
     if (remainGoods < 0) {
       throw new CustomException(SOLD_OUT_ERROR);
     }
 
-    Member buyer = memberRepository.findById(member.getId())
+    Member buyer = memberRepository.findById(memberDetail.getId())
         .orElseThrow(() -> new CustomException(NOT_FOUND_MEMBER));
+
+    if (goods.getSeller().getId() == buyer.getId()) {
+      throw new CustomException(CAN_NOT_BUY_IF_SELLER);
+    }
+
     if (transactionRepository.existsByGoodsAndBuyer(goods, buyer)) {
       throw new CustomException(ALREADY_PURCHASED);
     }
@@ -89,19 +90,19 @@ public class TransactionService {
   }
 
   @Transactional
-  public TransactionDto refuseOrApproveTransactions(RefuseOrApproveRequest request, CustomUserDetails member) {
+  public TransactionDto refuseOrApproveTransactions(RefuseOrApproveRequest request,
+      CustomUserDetails memberDetail) {
     Transaction transaction = transactionRepository.findById(request.getTransactionId())
         .orElseThrow(() -> new CustomException(NOT_FOUND_TRANSACTION));
 
-    if (transaction.getGoods().getSeller().getId() != member.getId()) {
-      throw new CustomException(NOT_MATCH_SELLER);
-    }
     if (transaction.getTransactionStatus() != RESERVATION) {
       throw new CustomException(NOT_CORRECT_TRANSACTION_STATUS);
     }
 
-    if (transaction.getTransactionStatus() == CONFIRM_PURCHASE) {
-      throw new CustomException(ALREADY_CONFIRM_PURCHASE);
+    Member member = memberRepository.findById(memberDetail.getId())
+        .orElseThrow(() -> new CustomException(NOT_FOUND_MEMBER));
+    if (transaction.getGoods().getSeller().getId() != member.getId()) {
+      throw new CustomException(NOT_MATCH_SELLER);
     }
 
     Goods goods = transaction.getGoods();
@@ -118,21 +119,19 @@ public class TransactionService {
   }
 
   @Transactional
-  public TransactionDto confirmPurchaseTransactions(ConfirmPurchaseRequest request, CustomUserDetails member) {
+  public TransactionDto confirmPurchaseTransactions(ConfirmPurchaseRequest request,
+      CustomUserDetails memberDetail) {
     Transaction transaction = transactionRepository.findById(request.getTransactionId())
         .orElseThrow(() -> new CustomException(NOT_FOUND_TRANSACTION));
-
-    if (transaction.getBuyer().getId() != member.getId()) {
-      throw new CustomException(NOT_MATCH_BUYER);
-    }
 
     if (transaction.getTransactionStatus() != APPROVAL_OF_SALE) {
       throw new CustomException(CAN_NOT_CONFIRM);
     }
 
-    if (transaction.getTransactionStatus() == CONFIRM_PURCHASE
-        || transaction.getTransactionStatus() == CANCEL_PURCHASE) {
-      throw new CustomException(ALREADY_CONFIRM_PURCHASE);
+    Member member = memberRepository.findById(memberDetail.getId())
+        .orElseThrow(() -> new CustomException(NOT_FOUND_MEMBER));
+    if (transaction.getBuyer().getId() != member.getId()) {
+      throw new CustomException(NOT_MATCH_BUYER);
     }
 
     Goods goods = transaction.getGoods();

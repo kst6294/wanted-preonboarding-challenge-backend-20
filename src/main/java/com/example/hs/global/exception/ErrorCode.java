@@ -64,8 +64,7 @@ public enum ErrorCode {
   NOT_FOUND_TRANSACTION(400, "거래를 찾지 못했습니다"),
   NOT_CORRECT_TRANSACTION_STATUS(400, "올바른 거래 상태가 아닙니다."),
   NOT_MATCH_BUYER(400, "상품의 구매자가 아닙니다"),
-  CAN_NOT_CONFIRM(400, "판매자가 승인한 거래가 아니므로 확정지을 수 없습니다."),
-  ALREADY_CONFIRM_PURCHASE(400, "이미 거래가 완료된 거래입니다.");
+  CAN_NOT_CONFIRM(400, "판매자가 승인한 거래가 아니므로 확정 지을 수 없습니다.");
 
   private int httpCode;
   private String description;
