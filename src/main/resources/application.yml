@@ -1,3 +1,21 @@
+server:
+  tomcat:
+    mbeanregistry:
+      enabled: true
+management:
+  info:
+    java:
+      enabled: true
+    os:
+      enabled: true
+    env:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+#  server:
+#    port: 8888
 spring:
   application:
     name: market

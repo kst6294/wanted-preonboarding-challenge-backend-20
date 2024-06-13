@@ -38,3 +38,4 @@ out/
 
 ### docker mount ###
 mnt/**
+!mnt/prometheus/config/prometheus.yml
