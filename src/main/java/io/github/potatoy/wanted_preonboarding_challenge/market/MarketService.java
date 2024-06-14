@@ -91,13 +91,19 @@ public class MarketService {
     Product product = productUtil.findById(dto.getProductId());
 
     if (product.getBuyerUser() == null) { // 예약자 정보가 없는 경우 예외 발생
-      log.warn("getSellerBuyerRecord: Reservation information does not exist.");
+      log.warn(
+          "getSellerBuyerRecord: Reservation information does not exist. userId={}, productId={}",
+          user.getId(),
+          dto.getProductId());
       throw new ProductNotBuyerException();
     }
 
     // 양쪽 모두 해당되지 않는다면 예외 처리
     if (!product.isSellerEquals(user) && !product.isBuyerEquals(user)) {
-      log.warn("getSellerBuyerRecord: Product information is not accessible.");
+      log.warn(
+          "getSellerBuyerRecord: Product information is not accessible. userId={}, productId={}",
+          user.getId(),
+          dto.getProductId());
       throw new ProductForbiddenException();
     }
 
