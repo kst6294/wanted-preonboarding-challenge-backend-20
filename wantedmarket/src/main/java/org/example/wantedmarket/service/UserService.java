@@ -2,7 +2,8 @@ package org.example.wantedmarket.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.example.wantedmarket.dto.user.JoinDto;
+import org.example.wantedmarket.dto.user.UserJoinRequest;
+import org.example.wantedmarket.dto.user.UserResponse;
 import org.example.wantedmarket.exception.CustomException;
 import org.example.wantedmarket.exception.ErrorCode;
 import org.example.wantedmarket.model.User;
@@ -21,7 +22,7 @@ public class UserService {
 
 
     @Transactional
-    public void joinUser(JoinDto joinDto) {
+    public UserResponse joinUser(UserJoinRequest joinDto) {
         String username = joinDto.getUsername();
         String password = joinDto.getPassword();
 
@@ -30,9 +31,11 @@ public class UserService {
         User newUser = new User();
         newUser.setUsername(username);
         newUser.setPassword(bCryptPasswordEncoder.encode(password));
-        newUser.setRole("ROLE_ADMIN");
+        newUser.setRole("ROLE_USER");
 
         userRepository.save(newUser);
+
+        return UserResponse.from(newUser);
     }
 
     private void validateUsername(String username) {

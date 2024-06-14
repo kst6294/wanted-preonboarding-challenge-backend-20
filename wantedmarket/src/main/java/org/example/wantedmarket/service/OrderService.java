@@ -2,8 +2,8 @@ package org.example.wantedmarket.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.example.wantedmarket.dto.order.OrderCreateDto;
-import org.example.wantedmarket.dto.order.OrderInfoDto;
+import org.example.wantedmarket.dto.order.OrderCreateRequest;
+import org.example.wantedmarket.dto.order.OrderResponse;
 import org.example.wantedmarket.exception.CustomException;
 import org.example.wantedmarket.exception.ErrorCode;
 import org.example.wantedmarket.model.Order;
@@ -20,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -35,7 +36,7 @@ public class OrderService {
     * 추가 판매 가능한 수량이 없을 경우 : 제품(판매중 -> 예약중), 주문(대기중)
     */
     @Transactional
-    public OrderCreateDto.Response orderProduct(Long userId, OrderCreateDto.Request request) {
+    public OrderResponse orderProduct(Long userId, OrderCreateRequest request) {
         User buyer = userRepository.findById(userId).orElseThrow(
                 () ->  new CustomException(ErrorCode.USER_NOT_FOUND));
 
@@ -78,7 +79,7 @@ public class OrderService {
                 .status(OrderStatus.PENDING)
                 .build());
 
-        return OrderCreateDto.Response.from(newOrder);
+        return OrderResponse.from(newOrder);
     }
 
     /* 주문 승인
@@ -87,7 +88,7 @@ public class OrderService {
      * 추가 판매 가능한 수량이 없을 경우 : 제품(판매중 -> 예약중), 주문(판매 승인)
      */
     @Transactional
-    public OrderInfoDto approveProductOrder(Long userId, Long orderId) {
+    public OrderResponse approveProductOrder(Long userId, Long orderId) {
         Order order = orderRepository.findById(orderId).orElseThrow(
                 () ->  new CustomException(ErrorCode.ORDER_NOT_FOUND));
 
@@ -104,14 +105,7 @@ public class OrderService {
         // 판매 승인
         order.modifyStatus(OrderStatus.APPROVED);
 
-        return new OrderInfoDto(
-                order.getId(),
-                order.getConfirmedPrice(),
-                order.getQuantity(),
-                order.getProduct().getId(),
-                order.getSeller().getId(),
-                order.getBuyer().getId(),
-                order.getStatus());
+        return OrderResponse.from(order);
     }
 
     /* 구매 확정
@@ -120,7 +114,7 @@ public class OrderService {
      * 추가 판매 가능한 수량이 없을 경우 : 제품(예약중 -> 판매 완료), 주문(판매 승인 -> 구매 확정)
      */
     @Transactional
-    public OrderInfoDto confirmProductOrder(Long userId, Long orderId) {
+    public OrderResponse confirmProductOrder(Long userId, Long orderId) {
         Order order = orderRepository.findById(orderId).orElseThrow(
                 () -> new CustomException(ErrorCode.ORDER_NOT_FOUND));
 
@@ -144,29 +138,16 @@ public class OrderService {
         order.modifyStatus(OrderStatus.CONFIRMED); // 구매 확정
         order.modifyConfirmedPrice(product.getPrice()); // 주문 당시의 제품 가격 저장
 
-        return new OrderInfoDto(
-                order.getId(),
-                order.getConfirmedPrice(),
-                order.getQuantity(),
-                order.getProduct().getId(),
-                order.getSeller().getId(),
-                order.getBuyer().getId(),
-                order.getStatus());
+        return OrderResponse.from(order);
     }
 
     /* 내 거래내역 조회 */
     @Transactional(readOnly = true)
-    public List<OrderInfoDto> findMyTransactionList(Long userId) {
-        return orderRepository.findAllBySellerIdOrBuyerId(userId, userId).stream()
-                .map(order -> new OrderInfoDto(
-                        order.getId(),
-                        order.getConfirmedPrice(),
-                        order.getQuantity(),
-                        order.getProduct().getId(),
-                        order.getSeller().getId(),
-                        order.getBuyer().getId(),
-                        order.getStatus()
-                )).collect(Collectors.toList());
+    public List<OrderResponse> findMyTransactionList(Long userId) {
+        return orderRepository.findAllBySellerIdOrBuyerId(userId, userId)
+                .stream()
+                .map(OrderResponse::from)
+                .collect(Collectors.toList());
     }
 
 }
