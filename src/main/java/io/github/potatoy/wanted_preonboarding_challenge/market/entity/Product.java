@@ -24,7 +24,6 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @Entity
 @EntityListeners(AuditingEntityListener.class)
 public class Product {
-  // 제품명, 가격, 예약 상태
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
