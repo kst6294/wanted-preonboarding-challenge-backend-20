@@ -29,11 +29,11 @@ public class JwtTokenUtil {
         key = Keys.hmacShaKeyFor(secretKey.getBytes());
     }
 
-    public String generateToken(String userId) {
+    public String generateToken(String email) {
         Date now = new Date();
         Date expiration = new Date(now.getTime() + this.expiration);
         return Jwts.builder()
-                .claim("userId", userId)
+                .claim("email", email)
                 .issuedAt(now)
                 .expiration(expiration)
                 .signWith(key, SignatureAlgorithm.HS256)
@@ -43,7 +43,7 @@ public class JwtTokenUtil {
     public String getUserIdFromToken(String token) {
         Claims claims = getClaimsFromToken(token);
         if (claims.getExpiration().before(new Date())) throw new ResponseStatusException(HttpStatus.FORBIDDEN, "유효하지 않은 토큰입니다.");
-        return claims.get("userId", String.class);
+        return claims.get("email", String.class);
     }
 
     public Claims getClaimsFromToken(String token) {
