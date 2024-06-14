@@ -25,7 +25,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class MemberIntegrationTest {
+class MemberIntegrationTest {
     @Autowired
     MockMvc mockMvc;
 
@@ -38,9 +38,9 @@ public class MemberIntegrationTest {
         );
     }
 
-    @DisplayName("[Success] 회원가입 테스트")
-    @ParameterizedTest
     @Order(1)
+    @ParameterizedTest
+    @DisplayName("[Success] 회원가입 테스트")
     @MethodSource("joinRequestStream")
     public void signupTest(JoinRequest request) throws Exception {
         mockMvc.perform(post("/api/members/join")
@@ -56,9 +56,9 @@ public class MemberIntegrationTest {
         );
     }
 
-    @DisplayName("[Success] 로그인 테스트")
-    @ParameterizedTest
     @Order(2)
+    @ParameterizedTest
+    @DisplayName("[Success] 로그인 테스트")
     @MethodSource("loginRequestStream")
     void loginTest(LoginRequest request) throws Exception {
         MvcResult mvcResult = mockMvc.perform(post("/api/members/login")

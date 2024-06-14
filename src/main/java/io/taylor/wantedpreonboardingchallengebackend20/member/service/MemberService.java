@@ -1,6 +1,7 @@
 package io.taylor.wantedpreonboardingchallengebackend20.member.service;
 
 import io.taylor.wantedpreonboardingchallengebackend20.member.model.request.JoinRequest;
+import io.taylor.wantedpreonboardingchallengebackend20.member.model.request.LoginRequest;
 import io.taylor.wantedpreonboardingchallengebackend20.member.model.response.JoinResponse;
 import io.taylor.wantedpreonboardingchallengebackend20.member.model.response.LoginResponse;
 import lombok.extern.slf4j.Slf4j;
@@ -34,12 +35,12 @@ public class MemberService {
         return new JoinResponse();
     }
 
-    public LoginResponse login(Member member) {
-        Member result = memberRepository.findMemberByEmail(member.getEmail());
-        if (result == null) throw new ResponseStatusException(HttpStatus.NOT_FOUND, "회원 정보가 존재하지 않습니다.");
-        if (!passwordUtil.matchPassword(member.getPassword(), result.getPassword())) throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "올바르지 않은 비밀번호 입니다.");
+    public LoginResponse login(LoginRequest request) {
+        Member member = memberRepository.findMemberByEmail(request.getEmail());
+        if (member == null) throw new ResponseStatusException(HttpStatus.NOT_FOUND, "회원 정보가 존재하지 않습니다.");
+        if (!passwordUtil.matchPassword(request.getPassword(), member.getPassword())) throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "올바르지 않은 비밀번호 입니다.");
 
-        return new LoginResponse(result, jwtTokenUtil.generateToken(member.getEmail()));
+        return new LoginResponse(member, jwtTokenUtil.generateToken(request.getEmail()));
     }
 
     public Member getMemberByEmail(String email) {
