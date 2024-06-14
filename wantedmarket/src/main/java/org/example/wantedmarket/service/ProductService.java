@@ -3,6 +3,7 @@ package org.example.wantedmarket.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.example.wantedmarket.dto.order.OrderResponse;
+import org.example.wantedmarket.dto.order.TransactionResponse;
 import org.example.wantedmarket.dto.product.*;
 import org.example.wantedmarket.exception.CustomException;
 import org.example.wantedmarket.exception.ErrorCode;
@@ -76,21 +77,12 @@ public class ProductService {
         Product findProduct = productRepository.findById(productId).orElseThrow(
                 () ->   new CustomException(ErrorCode.PRODUCT_NOT_FOUND));
 
-        List<OrderResponse> transactionList = new ArrayList<>();
+        List<TransactionResponse> transactionList = new ArrayList<>();
 
-        // 조회하는 사람이 제품의 판매자일 때
-        if (findProduct.getSeller().getId().equals(userId)) {
-            transactionList = orderRepository.findAllBySellerId(userId).stream()
-                    .map(OrderResponse::from)
-                    .collect(Collectors.toList());
-        }
-
-        List<Order> orders = orderRepository.findAllByProductId(findProduct.getId());
-
-        for (Order order : orders) {
-            // 조회하는 사람이 제품의 구매자일 때
-            if (order.getBuyer().getId().equals(userId)) {
-                transactionList.add(OrderResponse.from(order));
+        List<Order> orders = orderRepository.findAllByProductId(productId);
+        for(Order order : orders) {
+            if (order.getSeller().getId().equals(userId) || order.getBuyer().getId().equals(userId)) {
+                transactionList.add(TransactionResponse.from(order));
             }
         }
 

@@ -71,8 +71,11 @@ public class OrderService {
         // 주문 수량을 뺀 만큼 제품 재고 수량 변경
         product.modifyQuantity(request.getQuantity());
 
-        Order newOrder = orderRepository.save(Order.builder()
+
+        Order newOrder = orderRepository.save(
+                Order.builder()
                 .quantity(request.getQuantity())
+                .confirmedPrice(product.getPrice()) // 제품 주문을 한 순간, 구매 가격 확정
                 .product(product)
                 .buyer(buyer)
                 .seller(seller)
@@ -136,7 +139,6 @@ public class OrderService {
         }
 
         order.modifyStatus(OrderStatus.CONFIRMED); // 구매 확정
-        order.modifyConfirmedPrice(product.getPrice()); // 주문 당시의 제품 가격 저장
 
         return OrderResponse.from(order);
     }
