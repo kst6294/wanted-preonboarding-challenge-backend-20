@@ -1,8 +1,8 @@
 package io.taylor.wantedpreonboardingchallengebackend20.member.controller;
 
 import io.taylor.wantedpreonboardingchallengebackend20.member.entity.Member;
-import io.taylor.wantedpreonboardingchallengebackend20.member.model.request.JoinReqeust;
-import io.taylor.wantedpreonboardingchallengebackend20.member.model.request.LoginReqeust;
+import io.taylor.wantedpreonboardingchallengebackend20.member.model.request.JoinRequest;
+import io.taylor.wantedpreonboardingchallengebackend20.member.model.request.LoginRequest;
 import io.taylor.wantedpreonboardingchallengebackend20.member.model.response.JoinResponse;
 import io.taylor.wantedpreonboardingchallengebackend20.member.model.response.LoginResponse;
 import io.taylor.wantedpreonboardingchallengebackend20.member.service.MemberService;
@@ -21,13 +21,13 @@ public class MemberController {
     }
 
     @PostMapping("/join")
-    public ResponseEntity<JoinResponse> join(@RequestBody JoinReqeust request) {
+    public ResponseEntity<JoinResponse> join(@RequestBody JoinRequest request) {
         JoinResponse response = memberService.join(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @PostMapping("/login")
-    public ResponseEntity<Object> login(@RequestBody LoginReqeust request) {
+    public ResponseEntity<Object> login(@RequestBody LoginRequest request) {
         LoginResponse response = memberService.login(new Member(request.getEmail(), request.getPassword()));
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }

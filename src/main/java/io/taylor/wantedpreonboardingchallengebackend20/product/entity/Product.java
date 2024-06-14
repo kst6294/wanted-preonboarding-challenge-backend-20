@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import io.taylor.wantedpreonboardingchallengebackend20.product.model.ProductStatus;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
@@ -23,10 +25,11 @@ public class Product {
     private long price;
     @Column
     private int status;
-    @LastModifiedDate
-    private Timestamp updatedAt;
-    @CreatedDate
+    @CreationTimestamp
+    @Column(updatable = false)
     private Timestamp createdAt;
+    @UpdateTimestamp
+    private Timestamp updatedAt;
 
     public Product(String name, long price) {
         this.name = name;

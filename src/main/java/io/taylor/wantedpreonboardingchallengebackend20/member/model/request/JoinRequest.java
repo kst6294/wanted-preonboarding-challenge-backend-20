@@ -1,14 +1,15 @@
 package io.taylor.wantedpreonboardingchallengebackend20.member.model.request;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class JoinReqeust{
+@AllArgsConstructor
+public class JoinRequest {
     private String name;
     private String nickName;
     private String email;
     private String password;
-    private String checkPassword;
 }

@@ -9,11 +9,11 @@ import io.taylor.wantedpreonboardingchallengebackend20.member.entity.Member;
 public class LoginResponse {
     private String name;
     private String nickName;
-    private String token;
+    private String accessToken;
 
-    public LoginResponse(Member member, String token) {
+    public LoginResponse(Member member, String accessToken) {
         this.name = member.getName();
         this.nickName = member.getNickName();
-        this.token = token;
+        this.accessToken = accessToken;
     }
 }
