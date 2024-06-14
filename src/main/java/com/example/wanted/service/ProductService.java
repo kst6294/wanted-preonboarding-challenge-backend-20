@@ -18,7 +18,7 @@ public class ProductService {
     @Transactional
     public void insert(Product product, User user) {
         product.setUser(user);
-        product.setState(State.ONSALE);
+        product.setP_state(State.ONSALE);
         productRepository.save(product);
     }
 
@@ -41,11 +41,9 @@ public class ProductService {
     public void update(Product product) {
         Product newProduct = productRepository.findById(product.getP_id()).get();
 
-        if (product.getState().equals(State.ONSALE)) {
-            newProduct.setState(State.RESERVED);
+        if (product.getStock()==0){
+            newProduct.setP_state(State.SOLDOUT);
 
-        } else if (product.getState().equals(State.RESERVED)) {
-            newProduct.setState(State.SOLDOUT);
         }
     }
 }

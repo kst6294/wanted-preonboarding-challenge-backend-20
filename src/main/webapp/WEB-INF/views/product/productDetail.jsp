@@ -21,7 +21,7 @@
             </div>
             <div class="input-field">
             <label>상태</label>
-            <input type="text" id="state" name="state" value="${product.state }" readonly="readonly">
+            <input type="text" id="p_state" name="p_state" value="${product.p_state }" readonly="readonly">
             </div>
             <div class="input-field">
             <label>가격</label>
@@ -39,48 +39,46 @@
         </div>
     <div class="details ID">
     <span></span>
-    <c:if test="${principal.user.name != product.seller and product.state eq 'ONSALE'}">
+    <c:if test="${principal.user.name != product.seller and product.p_state eq 'ONSALE'}">
             <input type="hidden" id="u_id" value="${product.user.u_id}" >
             <button type="button" class="btn btn-danger btn-sm" id="btnOrder">구매하기</button>
     </c:if>
     <div>
-            <c:if test="${principal.user.u_id eq buyer and product.state != 'ONSALE'}" >
-                <h3> 구매 진행 상황 </h3>
+    <c:forEach var ="tr" items="${sell}" varStatus="status">
+        <c:if test ="${principal.user.u_id eq tr.user.u_id}">
+                        <p>${tr.user.name}님 거래현황</p>
+                        <p>${tr.t_state}</p>
+        </c:if>
+    </c:forEach>
+    <c:if test="${principal.user.name == product.seller}">
+        <c:forEach var ="tr" items="${sell}" varStatus="status">
 
-                <label>상태:</label>
-                <c:if test="${product.state eq 'RESERVED'}" >
-                    <input type="text" class="form-control"id="state" name="state" value="판매자 승인 대기" readonly="readonly">
-                </c:if>
-                <c:if test="${product.state == 'SOLDOUT'}" >
-                <input type="text" class="form-control"id="state" name="state" value="거래 완료" readonly="readonly">
-                </c:if>
+            <c:if test="${tr.t_state eq 'RESERVED'}">
+                        <tr>
+                            <td> ${tr.user.name}  </td><br/>
+                            <button type="button" class="btnAccept"  id="transaction${tr.t_id}">거래 승인</button>
+                            <input type="text" value="${tr.t_id}" name="transacta sdion2" id="transaction2">
+                        </tr>
             </c:if>
+        </c:forEach>
+    </c:if>
+
         </div>
     <div>
-        <c:if test="${principal.user.name eq product.seller}" >
-            <h3> 판매 진행 상황 </h3>
-            <label for="content">상태:</label>
-            <input type="text" class="form-control"id="state" name="state" value="${product.state }" readonly="readonly">
-            <c:if test="${product.state eq 'RESERVED'}" >
-                <button type="button" class="btn btn-secondary btn-sm" id="btnComplete">거래 승인</button>
-            </c:if>
-        </c:if>
     </div>
     </div>
 </section>
 </div>
 </body>
 
-
-
-
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script>
-    //판매자 거래 승인
-    $("#btnComplete").click(function() {
+    //판매자 거래 승인 var dd = $(this).next().val();
+    $('.btnAccept').click(function() {
         data = {
-            "p_id" : $("#p_id").val(),
-            "state" : $("#state").val()   			}
+            product : { "p_id" : $("#p_id").val() },
+            transaction : { "t_id" : $(this).next().val() }}
+        console.log(data);
         $.ajax({
             type : "put",
             url : "/product/update",
@@ -93,10 +91,10 @@
                 }
             },
             error : function(e) {
-                alert("거래실패 : " + e);
+                alert("거래 승인 실패 : " + e);
             }
             })
-        })//ajax
+        })//btnComplete
         </script>
 <script>
         $("#btnOrder").click(function() {
@@ -113,10 +111,10 @@
                 data : {u_id:num},
 
             }).done(function() {
-                alert("거래성공");
-                location.href = "/product/productList";
+               alert("예약 성공");
+               location.href = "/product/productList";
             }).fail(function() {
-                alert("거래 실패")
+                alert("예약 실패")
             })
-    })//btnfunction
+    })//btnOrder
 </script>

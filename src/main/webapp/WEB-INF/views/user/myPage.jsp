@@ -10,11 +10,15 @@
     		<tr>
     			<td>상품명</td>
     			<td>거래상태</td>
+    			<td>구매자</td>
+    			<td>가격</td>
     		</tr>
 			<c:forEach var ="tr" items="${sell}" varStatus="status">
                 <tr>
                     <td> ${tr.product.name}  </td>
-                    <td> ${tr.product.state}  </td>
+                    <td> ${tr.t_state}  </td>
+                    <td> ${tr.user.name}  </td>
+                    <td> ${tr.product.price} </td>
                 </tr>
 			</c:forEach>
     </table>
@@ -23,11 +27,15 @@
     		<tr>
     			<td>상품명</td>
     			<td>거래상태</td>
+    			<td>판매자</td>
+    			<td>가격</td>
     		</tr>
 			<c:forEach var ="tr" items="${buy}" varStatus="status">
                 <tr>
                     <td> ${tr.product.name}  </td>
-                    <td> ${tr.product.state}  </td>
+                    <td> ${tr.t_state}  </td>
+                    <td> ${tr.product.seller}</td>
+                    <td> ${tr.product.price} </td>
                 </tr>
 			</c:forEach>
     </table>

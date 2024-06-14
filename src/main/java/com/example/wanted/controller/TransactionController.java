@@ -32,16 +32,20 @@ public class TransactionController {
 
     @PostMapping("insert/{id}")
     @Tag(name = "Transaction Register", description = "Transaction Register API")
-    @Operation(summary = "거래 등록", description = "거래 등록 시 사용하는 API")
+    @Operation(summary = "거래 등록", description = "거래 등록 API")
     public ResponseEntity<String> orderInsert(@PathVariable Long id,
                                               Transaction transaction,
                                               @AuthenticationPrincipal PrincipalDetails principal) {
         System.out.println("principal.order.insert : " + principal);
         Product product = productRepository.findById(id).get();
-        product.setState(State.RESERVED);
+
+        product.setStock(product.getStock()-1);
+        if(product.getStock()==0){
+            product.setP_state(State.RESERVED);
+        }
         transaction.setProduct(product);
         transaction.setUser(principal.getUser());//user
-
+        transaction.setT_state(State.RESERVED);
         transactionService.insert(transaction);
         System.out.println("추가성공" + product);
         return new ResponseEntity<String>("success", HttpStatus.OK);

@@ -42,7 +42,7 @@
                 		<c:forEach items="${lists.content}" var="product">
                 			<tr>
                 				<td>${product.p_id}</td>
-                				<td><a href="/product/productDetail/${product.p_id}">${product.state}</td>
+                				<td><a href="/product/productDetail/${product.p_id}">${product.p_state}</td>
                 				<td>${product.seller}</td>
                 				<td>${product.name}</td>
                 				<td>${product.description}</td>

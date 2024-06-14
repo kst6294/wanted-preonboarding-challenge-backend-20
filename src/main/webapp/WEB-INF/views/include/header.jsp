@@ -12,6 +12,7 @@
             <ul>
                 <li><a href=" /register">회원가입</a></li>
                 <li><a href="/login">로그인</a></li>
+                <li><a href=" /product/productList">상품목록</a></li>
             </ul>
         </nav>
     </sec:authorize>
@@ -19,11 +20,12 @@
         <sec:authentication property="principal" var="principal"/>
             <nav class="navbar">
                         <c:if test="${principal.role == 'ROLE_USER'}" >
-                          <li><a href="/product/productInsert">판매등록</a></li>
+                          <li><a href=" /product/productList">상품목록</a></li>
                         </c:if>
                         <ul>
-                            <li><a href="/user/myPage/${principal.user.u_id }">${principal.user.name}님 거래목록</a></li>
-                            <li><a href="/logout"> 로그아웃 </a></li>
+                          <li><a href="/product/productInsert">판매등록</a></li>
+                          <li><a href="/user/myPage/${principal.user.u_id }">${principal.user.name}님 거래목록</a></li>
+                          <li><a href="/logout"> 로그아웃 </a></li>
                         </ul>
             </nav>
     </sec:authorize>

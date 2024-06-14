@@ -34,7 +34,7 @@ public class HomeController {
     //로그인 폼
     @GetMapping("/login")
     @Tag(name = "User Login", description = "User Login API")
-    @Operation(summary = "로그인", description = "로그인 시 사용하는 API")
+    @Operation(summary = "로그인", description = "로그인 API")
     public String login() {
         return "/user/login";
     }
@@ -53,7 +53,7 @@ public class HomeController {
 
     @ResponseBody
     @Tag(name = "User Register", description = "User Register API")
-    @Operation(summary = "회원 가입", description = "회원 가입 시 사용하는 API")
+    @Operation(summary = "회원 가입", description = "회원 가입 API")
     @PostMapping("/register")
     @Parameters({
             @Parameter(name = "u_id", description = "회원번호", example = "1"),
@@ -63,7 +63,7 @@ public class HomeController {
             @Parameter(name = "role", description = "권한", example = "ROLE_USER"),
     })
     public String register(@RequestBody User user) {
-        if (userRepository.findByEmail(user.getEmail()) != null) {
+        if (userService.findByEmail(user.getEmail()) != null) {
             return "fail";
         }
         userService.register(user);

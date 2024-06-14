@@ -19,7 +19,7 @@ public class Product {
     private String description;
     private int price;
     @Enumerated(EnumType.STRING)
-    private State state;
+    private State p_state;
     private String seller;
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
     @JsonIgnoreProperties("product")
@@ -27,13 +27,14 @@ public class Product {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "u_id")
     private User user;
+    private int stock;
 
     @Builder
     public Product(Long p_id, String name, String description, int price, State state, String seller, List<Transaction> transactions, User user) {
         this.name = name;
         this.description = description;
         this.price = price;
-        this.state = state;
+        this.p_state = state;
         this.seller = seller;
         this.transactions = transactions;
         this.user = user;

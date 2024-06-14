@@ -1,5 +1,7 @@
 package com.example.wanted.service;
 
+import com.example.wanted.model.Product;
+import com.example.wanted.model.State;
 import com.example.wanted.model.Transaction;
 import com.example.wanted.repository.TransactionRepository;
 import jakarta.transaction.Transactional;
@@ -22,9 +24,9 @@ public class TransactionService {
 //        return orderRepository.findByProductId(id);
 //    }
 
-    public Long findByBuyerId(Long id) {
-        return transactionRepository.findByBuyerId(id);
-    }
+//    public List<Transaction> findByBuyersId(Long id) {
+//        return transactionRepository.findByBuyerId(id);
+//    }
 
     public List<Transaction> purchaseList(Long id) {
         return transactionRepository.findByBuyId(id);
@@ -37,4 +39,12 @@ public class TransactionService {
 //    public List<Transaction> allTransactions(Long id) {
 //        return orderRepository.findAllByUserId(id);
 //    }
+    @Transactional
+    public void update(Transaction transaction) {
+        Transaction newTransaction = transactionRepository.findById(transaction.getT_id()).get();
+
+      if (newTransaction.getT_state().equals(State.RESERVED)) {
+          newTransaction.setT_state(State.SOLDOUT);
+        }
+    }
 }
