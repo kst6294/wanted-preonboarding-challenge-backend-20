@@ -40,16 +40,16 @@ public class JwtTokenUtil {
                 .compact();
     }
 
-    public String getUserIdFromToken(String token) {
-        Claims claims = getClaimsFromToken(token);
+    public String getUserIdFromToken(String accessToken) {
+        Claims claims = getClaimsFromToken(accessToken);
         if (claims.getExpiration().before(new Date())) throw new ResponseStatusException(HttpStatus.FORBIDDEN, "유효하지 않은 토큰입니다.");
         return claims.get("email", String.class);
     }
 
-    public Claims getClaimsFromToken(String token) {
+    public Claims getClaimsFromToken(String accessToken) {
         return Jwts.parser()
                 .verifyWith((SecretKey) key)
-                .build().parseSignedClaims(token)
+                .build().parseSignedClaims(accessToken)
                 .getPayload();
     }
 }

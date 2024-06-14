@@ -1,10 +1,13 @@
 package io.taylor.wantedpreonboardingchallengebackend20.member.entity;
 
-import io.taylor.wantedpreonboardingchallengebackend20.member.model.request.JoinReqeust;
+import io.taylor.wantedpreonboardingchallengebackend20.member.model.request.JoinRequest;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -28,9 +31,10 @@ public class Member {
     private String email;
     @Column
     private String password;
-    @LastModifiedDate
+    @UpdateTimestamp
     private Timestamp updatedAt;
-    @CreatedDate
+    @CreationTimestamp
+    @Column(updatable = false)
     private Timestamp createdAt;
 
     public Member(String email, String password) {
@@ -38,7 +42,7 @@ public class Member {
         this.password = password;
     }
 
-    public Member(JoinReqeust request) {
+    public Member(JoinRequest request) {
         this.name = request.getName();
         this.nickName = request.getNickName();
         this.email = request.getEmail();
