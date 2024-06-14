@@ -18,6 +18,7 @@ import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
 @Service
@@ -28,12 +29,14 @@ public class MarketService {
   private final SecurityUtil securityUtil;
   private final ProductUtil productUtil;
 
+  @Transactional(readOnly = true)
   public List<Product> getAllProducts() {
     log.info("getProduct: View all products.");
 
     return productRepository.findAll();
   }
 
+  @Transactional(readOnly = true)
   public Product getProduct(Long productId) {
     log.info("getProduct: Product inquiry. productId={}", productId);
 
