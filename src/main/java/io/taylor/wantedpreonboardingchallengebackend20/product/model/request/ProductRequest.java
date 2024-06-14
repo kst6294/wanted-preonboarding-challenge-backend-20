@@ -1,9 +1,4 @@
 package io.taylor.wantedpreonboardingchallengebackend20.product.model.request;
 
-import lombok.Data;
-
-@Data
-public class ProductRequest {
-    private String name;
-    private long price;
+public record ProductRequest (String name, long price) {
 }

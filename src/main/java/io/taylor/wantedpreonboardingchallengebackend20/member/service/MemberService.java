@@ -1,14 +1,17 @@
 package io.taylor.wantedpreonboardingchallengebackend20.member.service;
 
+import io.taylor.wantedpreonboardingchallengebackend20.member.model.request.JoinReqeust;
+import io.taylor.wantedpreonboardingchallengebackend20.member.model.response.JoinResponse;
+import io.taylor.wantedpreonboardingchallengebackend20.member.model.response.LoginResponse;
 import lombok.extern.slf4j.Slf4j;
 import io.taylor.wantedpreonboardingchallengebackend20.common.util.JwtTokenUtil;
 import io.taylor.wantedpreonboardingchallengebackend20.common.util.PasswordUtil;
 import io.taylor.wantedpreonboardingchallengebackend20.member.entity.Member;
-import io.taylor.wantedpreonboardingchallengebackend20.member.model.response.MemberJoinResponse;
-import io.taylor.wantedpreonboardingchallengebackend20.member.model.response.MemberLoginResponse;
 import io.taylor.wantedpreonboardingchallengebackend20.member.repository.MemberRepository;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 @Slf4j
 @Service
@@ -23,25 +26,27 @@ public class MemberService {
         this.jwtTokenUtil = jwtTokenUtil;
     }
 
-    public Object joinMember(Member member) {
-        member.setPassword(passwordUtil.encodePassword(member.getPassword()));
-        return memberRepository.save(member);
+    public JoinResponse join(JoinReqeust request) {
+        request.setPassword(passwordUtil.encodePassword(request.getPassword()));
+        Member member = memberRepository.save(new Member(request));
+        if (member == null) throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "회원가입에 실패하였습니다.");
+
+        return new JoinResponse();
     }
 
-    public MemberLoginResponse loginMember(Member member) {
+    public LoginResponse login(Member member) {
         Member result = memberRepository.findMemberByEmail(member.getEmail());
-        MemberLoginResponse response = null;
-        if (result != null && passwordUtil.matchPassword(member.getPassword(), result.getPassword())) {
-            response = new MemberLoginResponse(result, jwtTokenUtil.generateToken(member.getEmail()));
-        }
-        return response;
+        if (result == null) throw new ResponseStatusException(HttpStatus.NOT_FOUND, "회원 정보가 존재하지 않습니다.");
+        if (passwordUtil.matchPassword(member.getPassword(), result.getPassword())) throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "올바르지 않은 비밀번호 입니다.");
+
+        return new LoginResponse(result, jwtTokenUtil.generateToken(member.getEmail()));
     }
 
     public Member getMemberByEmail(String email) {
         return memberRepository.findMemberByEmail(email);
     }
 
-    public Object logoutMember(HttpHeaders headers, String str) {
+    public Object logout(HttpHeaders headers, String str) {
         return true;
     }
 }

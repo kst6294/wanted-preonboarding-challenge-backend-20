@@ -2,6 +2,7 @@ package io.taylor.wantedpreonboardingchallengebackend20.product.controller;
 
 import io.taylor.wantedpreonboardingchallengebackend20.product.entity.Product;
 import io.taylor.wantedpreonboardingchallengebackend20.product.model.request.ProductRequest;
+import io.taylor.wantedpreonboardingchallengebackend20.product.model.response.ProductResponse;
 import io.taylor.wantedpreonboardingchallengebackend20.product.service.ProductService;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -20,27 +21,18 @@ public class ProductController {
     }
 
     @GetMapping("")
-    public ResponseEntity<Object> getProductList() {
-        List<Product> products = productService.getProducts();
-        if (products != null) {
-            return ResponseEntity.status(HttpStatus.OK).body(products);
-        }
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    public ResponseEntity<List<Product>> getProductList() {
+        return ResponseEntity.status(HttpStatus.OK).body(productService.getProducts());
     }
 
     @PostMapping("")
-    public ResponseEntity<Object> postProduct(@RequestHeader HttpHeaders header, @RequestBody ProductRequest request) {
-        Product product = productService.postProduct(new Product(request.getName(), request.getPrice()));
-        return ResponseEntity.status(HttpStatus.CREATED).body(product);
+    public ResponseEntity<ProductResponse> postProduct(@RequestHeader("Authorization") String authorization, @RequestBody ProductRequest request) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(productService.postProduct(authorization, request));
     }
 
     @GetMapping("/{productId}")
-    public ResponseEntity<Object> getProduct(@PathVariable String productId) {
-        Product product = productService.getProductById(Long.parseLong(productId));
-        if (product != null) {
-            return ResponseEntity.status(HttpStatus.CREATED).body(product);
-        }
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    public ResponseEntity<ProductResponse> getProduct(@PathVariable String productId) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(productService.getProductById(Long.parseLong(productId)));
     }
 
     @PatchMapping("/{productId}/approve")
