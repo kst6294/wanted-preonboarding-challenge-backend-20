@@ -14,6 +14,9 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder(toBuilder = true)
 public class Product extends BaseEntity {
 
+    @Version
+    private Long version;
+
     @Column(name = "name")
     private String name;
 
