@@ -3,7 +3,8 @@ package io.taylor.wantedpreonboardingchallengebackend20.member.controller;
 import io.taylor.wantedpreonboardingchallengebackend20.member.entity.Member;
 import io.taylor.wantedpreonboardingchallengebackend20.member.model.request.JoinReqeust;
 import io.taylor.wantedpreonboardingchallengebackend20.member.model.request.LoginReqeust;
-import io.taylor.wantedpreonboardingchallengebackend20.member.model.response.MemberLoginResponse;
+import io.taylor.wantedpreonboardingchallengebackend20.member.model.response.JoinResponse;
+import io.taylor.wantedpreonboardingchallengebackend20.member.model.response.LoginResponse;
 import io.taylor.wantedpreonboardingchallengebackend20.member.service.MemberService;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -20,23 +21,20 @@ public class MemberController {
     }
 
     @PostMapping("/join")
-    public ResponseEntity<Object> join(@RequestBody JoinReqeust request) {
-        Object response = memberService.joinMember(new Member(request));
-        if (response != null) {
-            return ResponseEntity.status(HttpStatus.OK).body(response);
-        }
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+    public ResponseEntity<JoinResponse> join(@RequestBody JoinReqeust request) {
+        JoinResponse response = memberService.join(request);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @PostMapping("/login")
     public ResponseEntity<Object> login(@RequestBody LoginReqeust request) {
-        MemberLoginResponse response = memberService.loginMember(new Member(request.getEmail(), request.getPassword()));
+        LoginResponse response = memberService.login(new Member(request.getEmail(), request.getPassword()));
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
     @PostMapping("/logout")
     public ResponseEntity<Object> logout(@RequestHeader HttpHeaders header, String str) {
-        Object response = memberService.logoutMember(header, str);
+        Object response = memberService.logout(header, str);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 }

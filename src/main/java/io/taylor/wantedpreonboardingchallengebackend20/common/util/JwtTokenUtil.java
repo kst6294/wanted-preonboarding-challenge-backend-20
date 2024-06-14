@@ -1,11 +1,14 @@
 package io.taylor.wantedpreonboardingchallengebackend20.common.util;
+
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.crypto.SecretKey;
 import java.security.Key;
@@ -26,37 +29,27 @@ public class JwtTokenUtil {
         key = Keys.hmacShaKeyFor(secretKey.getBytes());
     }
 
-    public String generateToken(String email) {
+    public String generateToken(String userId) {
         Date now = new Date();
         Date expiration = new Date(now.getTime() + this.expiration);
         return Jwts.builder()
-                .subject(email)
+                .claim("userId", userId)
                 .issuedAt(now)
                 .expiration(expiration)
                 .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
     }
 
-    // 토큰에서 사용자 이름 추출
-    public String getUsernameFromToken(String token) {
-        return getClaimsFromToken(token).getSubject();
+    public String getUserIdFromToken(String token) {
+        Claims claims = getClaimsFromToken(token);
+        if (claims.getExpiration().before(new Date())) throw new ResponseStatusException(HttpStatus.FORBIDDEN, "유효하지 않은 토큰입니다.");
+        return claims.get("userId", String.class);
     }
 
-    // 토큰 유효성 검증
-    public boolean validateToken(String token) {
-        return !isTokenExpired(token);
-    }
-
-    // 토큰에서 클레임 추출
-    private Claims getClaimsFromToken(String token) {
+    public Claims getClaimsFromToken(String token) {
         return Jwts.parser()
                 .verifyWith((SecretKey) key)
                 .build().parseSignedClaims(token)
                 .getPayload();
-    }
-
-    // 토큰 만료 확인
-    private boolean isTokenExpired(String token) {
-        return getClaimsFromToken(token).getExpiration().before(new Date());
     }
 }
