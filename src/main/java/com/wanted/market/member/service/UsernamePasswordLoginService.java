@@ -8,12 +8,16 @@ import com.wanted.market.member.domain.MemberRepository;
 import com.wanted.market.member.domain.PasswordEncoder;
 import com.wanted.market.member.domain.vo.MemberInfo;
 import com.wanted.market.member.exception.AuthenticationException;
+import io.micrometer.core.annotation.Timed;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional(readOnly = true)
 public class UsernamePasswordLoginService implements LoginService<UsernamePasswordLoginService.UsernamePasswordLoginCommand> {
+    private final Logger logger = LoggerFactory.getLogger(getClass());
     private final MemberRepository repository;
     private final PasswordEncoder passwordEncoder;
 
@@ -28,7 +32,9 @@ public class UsernamePasswordLoginService implements LoginService<UsernamePasswo
     }
 
     @Override
+    @Timed("UsernamePasswordLoginService.login")
     public LoginMember login(UsernamePasswordLoginCommand cmd) {
+        logger.info("try username-password login: {}", cmd.username());
         String username = cmd.username();
         String password = cmd.password();
         MemberInfo info;
@@ -36,9 +42,11 @@ public class UsernamePasswordLoginService implements LoginService<UsernamePasswo
             Member findMember = repository.findByUsernameOrThrow(username);
             info = findMember.login(password, passwordEncoder);
             if (info == null) {
+                logger.info("login failed: password mismatch");
                 throw new AuthenticationException("bad credential");
             }
         } catch (NotFoundException e) {
+            logger.info("login failed: no such member");
             throw new AuthenticationException("no such user", e);
         }
         return SessionLoginMember.authenticated(info.getId(), info.getUsername());

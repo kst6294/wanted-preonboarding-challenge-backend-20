@@ -90,4 +90,8 @@ public class Order {
     public Long getProductId() {
         return productId;
     }
+
+    public Status getStatus() {
+        return status;
+    }
 }

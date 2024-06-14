@@ -7,6 +7,9 @@ import com.wanted.market.order.domain.Order;
 import com.wanted.market.order.domain.OrderRepository;
 import com.wanted.market.order.domain.StockRequester;
 import com.wanted.market.order.exception.OutOfStockException;
+import io.micrometer.core.annotation.Timed;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,6 +18,7 @@ import java.util.Objects;
 @Service
 @Transactional
 public class ConfirmOrderService {
+    private final Logger logger = LoggerFactory.getLogger(getClass());
     private final OrderRepository orderRepository;
     private final StockRequester stockRequester;
 
@@ -33,9 +37,13 @@ public class ConfirmOrderService {
      * @throws UnauthorizedRequestException
      * @throws OutOfStockException
      */
+    @Timed("ConfirmOrderService.confirm")
     public void confirm(Command cmd) throws NotFoundException, UnauthorizedRequestException, OutOfStockException, InvalidRequestException {
+        logger.info("start find order entity: {}", cmd);
         Order findOrder = orderRepository.findByIdOrThrow(cmd.id());
+        logger.info("current order status: {}", findOrder.getStatus());
         findOrder.confirm(cmd.userId(), (productId, sellerId) -> Objects.equals(orderRepository.findSellerIdByProductId(productId), sellerId), stockRequester);
+        logger.info("status changed to {}", findOrder.getStatus());
     }
 
     public record Command(
