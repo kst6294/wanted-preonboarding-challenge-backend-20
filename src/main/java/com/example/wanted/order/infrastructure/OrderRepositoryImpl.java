@@ -4,8 +4,10 @@ import com.example.wanted.order.domain.Order;
 import com.example.wanted.order.domain.OrderStatus;
 import com.example.wanted.order.service.port.OrderRepository;
 import com.example.wanted.product.domain.Product;
+import com.example.wanted.product.infrastructure.ProductEntity;
 import com.example.wanted.user.domain.User;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -13,6 +15,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Repository
+@Slf4j
 @RequiredArgsConstructor
 public class OrderRepositoryImpl implements OrderRepository {
     private final OrderJpaRepository orderJpaRepository;
@@ -39,7 +42,7 @@ public class OrderRepositoryImpl implements OrderRepository {
     @Override
     public List<Order> findByProductAndUser(Product product, User user) {
         return orderJpaRepository
-                .findByUserIdOrProductId(product.getId(), user.getId())
+                .findByUserIdOrProductId(user.getId(), product.getId())
                 .stream()
                 .map(OrderEntity::toModel)
                 .collect(Collectors.toList());
@@ -47,8 +50,10 @@ public class OrderRepositoryImpl implements OrderRepository {
 
     @Override
     public List<Order> findByProductAndOrderStatusIn(Product product, List<OrderStatus> status) {
+
+        log.error("test");
         return orderJpaRepository
-                .findByProductAndStatusIn(product, status)
+                .findByProductAndStatusIn(ProductEntity.fromModel(product), status)
                 .stream()
                 .map(OrderEntity::toModel)
                 .collect(Collectors.toList());

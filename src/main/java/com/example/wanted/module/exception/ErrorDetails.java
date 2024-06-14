@@ -1,5 +1,8 @@
 package com.example.wanted.module.exception;
 
+import lombok.Getter;
+
+@Getter
 public class ErrorDetails {
     private int statusCode;
     private String message;

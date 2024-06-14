@@ -2,6 +2,7 @@ package com.example.wanted.order.infrastructure;
 
 import com.example.wanted.order.domain.OrderStatus;
 import com.example.wanted.product.domain.Product;
+import com.example.wanted.product.infrastructure.ProductEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -15,6 +16,6 @@ public interface OrderJpaRepository extends JpaRepository<OrderEntity, Long> {
     @Query("SELECT o FROM OrderEntity o WHERE (o.seller.id = :userId OR o.buyer.id = :userId) AND (o.product.id = :productId)")
     List<OrderEntity> findByUserIdOrProductId(@Param("userId") Long userId, @Param("productId") Long productId);
 
-    List<OrderEntity> findByProductAndStatusIn(Product product, List<OrderStatus> status);
+    List<OrderEntity> findByProductAndStatusIn(ProductEntity product, List<OrderStatus> status);
 
 }

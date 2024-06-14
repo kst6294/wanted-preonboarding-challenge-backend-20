@@ -52,7 +52,9 @@ public class Product {
         } else if (this.quantity < 1) {
             throw new ProductNotAvailableException("차감할 재고 수량이 없습니다.");
         }
+
         this.quantity -=1;
+        log.info("product {}의 남은 재고 : {}개", this.id, this.quantity);
     }
 
     public boolean checkSeller(User user) {
@@ -64,6 +66,7 @@ public class Product {
             throw new ProductNotAvailableException("판매 완료가 가능한 생태가 아닙니다.");
         }
         sellingStatus = ProductSellingStatus.COMPLETE;
+        log.info("product {}의 판매 종료", this.id);
     }
 
 }

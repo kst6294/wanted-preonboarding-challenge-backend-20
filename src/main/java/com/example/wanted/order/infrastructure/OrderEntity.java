@@ -10,6 +10,7 @@ import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.aspectj.weaver.ast.Or;
 
 @Entity
 @Getter
@@ -40,7 +41,8 @@ public class OrderEntity {
     private OrderStatus status;
 
     @Builder
-    public OrderEntity(UserEntity seller, UserEntity buyer, ProductEntity product, int price, OrderStatus status) {
+    public OrderEntity(Long id,UserEntity seller, UserEntity buyer, ProductEntity product, int price, OrderStatus status) {
+        this.id = id;
         this.seller = seller;
         this.buyer = buyer;
         this.price = price;
@@ -50,6 +52,7 @@ public class OrderEntity {
 
     public static OrderEntity fromModel(Order order) {
         return OrderEntity.builder()
+                .id(order.getId())
                 .seller(UserEntity.fromModel(order.getSeller()))
                 .buyer(UserEntity.fromModel(order.getBuyer()))
                 .price(order.getPrice())
