@@ -34,7 +34,7 @@ public class OfferService {
     }
 
     public OfferResponse accept(Long memberId, Long offerId) {
-        Offer offer = offerRepository.findById(offerId).orElseThrow(() -> new ErrorCodeException(OfferErrorCode.OFFER_NOT_FOUND));
+        Offer offer = findById(offerId);
         if (!productService.checkSeller(offer.getProductId(), memberId)) {
             throw new ErrorCodeException(OfferErrorCode.NOT_OFFER_OFFEREE);
         }
@@ -45,7 +45,7 @@ public class OfferService {
     }
 
     public OfferResponse decline(Long memberId, Long offerId) {
-        Offer offer = offerRepository.findById(offerId).orElseThrow(() -> new ErrorCodeException(OfferErrorCode.OFFER_NOT_FOUND));
+        Offer offer = findById(offerId);
         if (!productService.checkSeller(offer.getProductId(), memberId)) {
             throw new ErrorCodeException(OfferErrorCode.NOT_OFFER_OFFEREE);
         }
@@ -55,7 +55,7 @@ public class OfferService {
     }
 
     public OfferResponse confirm(Long memberId, Long offerId) {
-        Offer offer = offerRepository.findById(offerId).orElseThrow(() -> new ErrorCodeException(OfferErrorCode.OFFER_NOT_FOUND));
+        Offer offer = findById(offerId);
         if (!memberId.equals(offer.getBuyerId())) {
             throw new ErrorCodeException(OfferErrorCode.NOT_OFFER_OFFEROR);
         }
@@ -73,5 +73,10 @@ public class OfferService {
     public List<OfferDetailResponse> getReceivedOffers(Long memberId) {
         List<Offer> offers = offerRepository.findReceivedOffers(memberId);
         return offers.stream().map(OfferDetailResponse::of).toList();
+    }
+
+    private Offer findById(Long offerId) {
+        return offerRepository
+                .findById(offerId).orElseThrow(() -> new ErrorCodeException(OfferErrorCode.OFFER_NOT_FOUND));
     }
 }
