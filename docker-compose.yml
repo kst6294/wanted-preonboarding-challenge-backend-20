@@ -1,7 +1,6 @@
 services:
   prometheus:
     image: prom/prometheus:latest
-    container_name: prometheus
     restart: always
     ports:
       - "9090:9090"
@@ -15,7 +14,6 @@ services:
       - network
   grafana:
     image: grafana/grafana:latest
-    container_name: grafana
     restart: always
     ports:
       - "3000:3000"
@@ -31,44 +29,43 @@ services:
       - network
   db-mysql:
     image: mysql:8.3.0
+    restart: always
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./mnt/db/mysql:/var/lib/mysql
+      - ./mnt/db/init:/docker-entrypoint-initdb.d
     environment:
       MYSQL_ROOT_PASSWORD: not_allowed_go_away
       MYSQL_USER: test_user
       MYSQL_PASSWORD: test_password
       MYSQL_DATABASE: test_db
-    ports:
-      - 3306:3306
-    restart: always
-    volumes:
-      - ./mnt/db/mysql:/var/lib/mysql
-      - ./mnt/db/init:/docker-entrypoint-initdb.d
     networks:
       - network
   db-redis:
     image: redis:7.2.4-alpine
-    environment:
-      REDIS_PASSWORD: test_password
-    ports:
-      - 6379:6379
     restart: always
+    ports:
+      - "6379:6379"
     command:
       - redis-server
       - --requirepass
       - ${REDIS_PASSWORD}
+    environment:
+      REDIS_PASSWORD: test_password
     networks:
       - network
-  market-service:
+  app:
     build:
-#      context: ./mnt/service
       dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
     environment:
       - SPRING_DATASOURCE_URL=jdbc:mysql://db-mysql:3306/test_db
       - SPRING_DATASOURCE_USERNAME=test_user
       - SPRING_DATASOURCE_PASSWORD=test_password
       - SPRING_DATA_REDIS_HOST=db-redis
       - SPRING_DATA_REDIS_PORT=6379
-    ports:
-      - 8080:8080
     depends_on:
       - db-mysql
       - db-redis
