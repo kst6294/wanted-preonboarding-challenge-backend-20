@@ -51,7 +51,7 @@ public class OfferController {
 
     @GetMapping("/received")
     public ResponseEntity<List<OfferDetailResponse>> receivedOffers(@AuthenticationPrincipal CustomUserDetails member){
-        List<OfferDetailResponse> response = offerService.getRecivedOffers(member.getId());
+        List<OfferDetailResponse> response = offerService.getReceivedOffers(member.getId());
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 }

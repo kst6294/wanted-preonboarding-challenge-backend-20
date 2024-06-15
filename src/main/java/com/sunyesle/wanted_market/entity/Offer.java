@@ -18,8 +18,6 @@ public class Offer {
 
     private Long productId;
 
-    private Long sellerId;
-
     private Long buyerId;
 
     private Integer price;
@@ -29,9 +27,8 @@ public class Offer {
     @Enumerated(EnumType.STRING)
     private OfferStatus status;
 
-    public Offer(Long productId, Long sellerId, Long buyerId, Integer price, Integer quantity) {
+    public Offer(Long productId, Long buyerId, Integer price, Integer quantity) {
         this.productId = productId;
-        this.sellerId = sellerId;
         this.buyerId = buyerId;
         this.price = price;
         this.quantity = quantity;
@@ -39,13 +36,11 @@ public class Offer {
     }
 
     public void accept(Long memberId) {
-        validateSeller(memberId);
         validateStatus(OfferStatus.OPEN);
         this.status = OfferStatus.ACCEPTED;
     }
 
     public void decline(Long memberId) {
-        validateSeller(memberId);
         validateStatus(OfferStatus.OPEN);
         this.status = OfferStatus.DECLINED;
     }
@@ -54,12 +49,6 @@ public class Offer {
         validateBuyer(memberId);
         validateStatus(OfferStatus.ACCEPTED);
         this.status = OfferStatus.CONFIRMED;
-    }
-
-    private void validateSeller(Long memberId) {
-        if (!memberId.equals(this.sellerId)) {
-            throw new ErrorCodeException(OfferErrorCode.NOT_OFFER_OFFEREE);
-        }
     }
 
     private void validateBuyer(Long memberId) {
