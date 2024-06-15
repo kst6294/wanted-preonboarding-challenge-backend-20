@@ -29,13 +29,29 @@ public class ProductService {
     }
 
     public Product findById(Long id) {
-        Product product = productRepository.findById(id)
+        return productRepository.findById(id)
                 .orElseThrow(() -> new ErrorCodeException(ProductErrorCode.PRODUCT_NOT_FOUND));
-        return product;
     }
 
     public List<ProductDetailResponse> getProducts() {
         List<Product> products = productRepository.findAll();
         return products.stream().map(ProductDetailResponse::of).toList();
+    }
+
+    public void makeReservation(Long productId, Integer quantity) {
+        // 예약
+        Product product = findById(productId);
+        product.reserve(quantity);
+    }
+
+    public void placeOrder(Long productId, Integer quantity) {
+        // 주문 확정
+        Product product = findById(productId);
+        product.purchase(quantity);
+    }
+
+    public boolean checkSeller(Long productId, Long memberId) {
+        Product product = findById(productId);
+        return memberId.equals(product.getMemberId());
     }
 }

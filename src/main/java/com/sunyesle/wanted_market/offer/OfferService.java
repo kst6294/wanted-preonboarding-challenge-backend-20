@@ -23,11 +23,11 @@ public class OfferService {
 
     public OfferResponse offer(Long memberId, CreateOfferRequest request) {
         Product product = productService.findById(request.getProductId());
-        if (offerRepository.existsByProductIdAndBuyerIdAndStatus(product.getId(), memberId, OfferStatus.OPEN)) {
+        if (offerRepository.existsByProductIdAndBuyerIdAndStatus(request.getProductId(), memberId, OfferStatus.OPEN)) {
             throw new ErrorCodeException(OfferErrorCode.DUPLICATE_OFFER);
         }
 
-        Offer offer = new Offer(product.getId(), memberId, product.getPrice(), request.getQuantity());
+        Offer offer = new Offer(request.getProductId(), memberId, product.getPrice(), request.getQuantity());
         offerRepository.save(offer);
 
         return new OfferResponse(offer.getId(), offer.getStatus());
@@ -35,22 +35,18 @@ public class OfferService {
 
     public OfferResponse accept(Long memberId, Long offerId) {
         Offer offer = offerRepository.findById(offerId).orElseThrow(() -> new ErrorCodeException(OfferErrorCode.OFFER_NOT_FOUND));
-        Product product = productService.findById(offer.getProductId());
-
-        if (!memberId.equals(product.getMemberId())) {
+        if (!productService.checkSeller(offer.getProductId(), memberId)) {
             throw new ErrorCodeException(OfferErrorCode.NOT_OFFER_OFFEREE);
         }
         offer.accept(memberId);
-        product.reserve(offer.getQuantity());
 
+        productService.makeReservation(offer.getProductId(), offer.getQuantity());
         return new OfferResponse(offer.getId(), offer.getStatus());
     }
 
     public OfferResponse decline(Long memberId, Long offerId) {
         Offer offer = offerRepository.findById(offerId).orElseThrow(() -> new ErrorCodeException(OfferErrorCode.OFFER_NOT_FOUND));
-        Product product = productService.findById(offer.getProductId());
-
-        if (!memberId.equals(product.getMemberId())) {
+        if (!productService.checkSeller(offer.getProductId(), memberId)) {
             throw new ErrorCodeException(OfferErrorCode.NOT_OFFER_OFFEREE);
         }
         offer.decline(memberId);
@@ -60,11 +56,9 @@ public class OfferService {
 
     public OfferResponse confirm(Long memberId, Long offerId) {
         Offer offer = offerRepository.findById(offerId).orElseThrow(() -> new ErrorCodeException(OfferErrorCode.OFFER_NOT_FOUND));
-        Product product = productService.findById(offer.getProductId());
-
         offer.confirm(memberId);
-        product.purchase(offer.getQuantity());
 
+        productService.placeOrder(offer.getProductId(), offer.getQuantity());
         return new OfferResponse(offer.getId(), offer.getStatus());
     }
 
