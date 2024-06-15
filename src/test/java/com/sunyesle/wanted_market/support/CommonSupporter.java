@@ -31,4 +31,8 @@ public class CommonSupporter {
     public static void 찾을_수_없는_정보로_인해_요청에_실패한다(ExtractableResponse<Response> response) {
         assertThat(response.statusCode()).isEqualTo(HttpStatus.NOT_FOUND.value());
     }
+
+    public static void 접근_금지로_인해_요청에_실패한다(ExtractableResponse<Response> response) {
+        assertThat(response.statusCode()).isEqualTo(HttpStatus.FORBIDDEN.value());
+    }
 }

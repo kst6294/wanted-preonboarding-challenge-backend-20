@@ -35,26 +35,19 @@ public class Offer {
         this.status = OfferStatus.OPEN;
     }
 
-    public void accept(Long memberId) {
+    public void accept() {
         validateStatus(OfferStatus.OPEN);
         this.status = OfferStatus.ACCEPTED;
     }
 
-    public void decline(Long memberId) {
+    public void decline() {
         validateStatus(OfferStatus.OPEN);
         this.status = OfferStatus.DECLINED;
     }
 
-    public void confirm(Long memberId) {
-        validateBuyer(memberId);
+    public void confirm() {
         validateStatus(OfferStatus.ACCEPTED);
         this.status = OfferStatus.CONFIRMED;
-    }
-
-    private void validateBuyer(Long memberId) {
-        if (!memberId.equals(this.buyerId)) {
-            throw new ErrorCodeException(OfferErrorCode.NOT_OFFER_OFFEROR);
-        }
     }
 
     private void validateStatus(OfferStatus offerStatus) {

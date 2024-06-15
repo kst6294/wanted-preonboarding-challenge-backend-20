@@ -2,14 +2,14 @@ package com.sunyesle.wanted_market;
 
 import com.sunyesle.wanted_market.global.enums.OfferStatus;
 import com.sunyesle.wanted_market.global.enums.ProductStatus;
+import com.sunyesle.wanted_market.member.MemberRepository;
 import com.sunyesle.wanted_market.member.dto.SigninRequest;
 import com.sunyesle.wanted_market.member.dto.SigninResponse;
 import com.sunyesle.wanted_market.member.dto.SignupRequest;
+import com.sunyesle.wanted_market.offer.OfferRepository;
 import com.sunyesle.wanted_market.offer.dto.CreateOfferRequest;
 import com.sunyesle.wanted_market.offer.dto.OfferDetailResponse;
 import com.sunyesle.wanted_market.offer.dto.OfferResponse;
-import com.sunyesle.wanted_market.member.MemberRepository;
-import com.sunyesle.wanted_market.offer.OfferRepository;
 import com.sunyesle.wanted_market.product.ProductRepository;
 import com.sunyesle.wanted_market.product.dto.ProductRequest;
 import com.sunyesle.wanted_market.product.dto.ProductResponse;
@@ -102,6 +102,16 @@ class OfferAcceptanceTest extends AcceptanceTest {
         제품_예약된_수량이_변경된다(제품_조회_결과, 2);
         제품_구매가능_수량이_변경된다(제품_조회_결과, 0);
         제품_상태가_변경된다(제품_조회_결과, ProductStatus.RESERVED);
+    }
+
+    @Test
+    void 본인이_받지않은_구매요청을_승인할_경우_실패한다() {
+        CreateOfferRequest createOfferRequest = new CreateOfferRequest(savedProductId, 2);
+        Long offerId = 구매_요청(createOfferRequest, buyerToken).as(OfferResponse.class).getId();
+
+        ExtractableResponse<Response> response = 구매_승인처리_요청(offerId, buyerToken);
+
+        접근_금지로_인해_요청에_실패한다(response);
     }
 
     @Test

@@ -38,7 +38,7 @@ public class OfferService {
         if (!productService.checkSeller(offer.getProductId(), memberId)) {
             throw new ErrorCodeException(OfferErrorCode.NOT_OFFER_OFFEREE);
         }
-        offer.accept(memberId);
+        offer.accept();
 
         productService.makeReservation(offer.getProductId(), offer.getQuantity());
         return new OfferResponse(offer.getId(), offer.getStatus());
@@ -49,14 +49,17 @@ public class OfferService {
         if (!productService.checkSeller(offer.getProductId(), memberId)) {
             throw new ErrorCodeException(OfferErrorCode.NOT_OFFER_OFFEREE);
         }
-        offer.decline(memberId);
+        offer.decline();
 
         return new OfferResponse(offer.getId(), offer.getStatus());
     }
 
     public OfferResponse confirm(Long memberId, Long offerId) {
         Offer offer = offerRepository.findById(offerId).orElseThrow(() -> new ErrorCodeException(OfferErrorCode.OFFER_NOT_FOUND));
-        offer.confirm(memberId);
+        if (!memberId.equals(offer.getBuyerId())) {
+            throw new ErrorCodeException(OfferErrorCode.NOT_OFFER_OFFEROR);
+        }
+        offer.confirm();
 
         productService.placeOrder(offer.getProductId(), offer.getQuantity());
         return new OfferResponse(offer.getId(), offer.getStatus());
