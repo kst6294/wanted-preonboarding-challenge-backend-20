@@ -1,10 +1,10 @@
 package com.sunyesle.wanted_market.product;
 
+import com.sunyesle.wanted_market.global.exception.ErrorCodeException;
+import com.sunyesle.wanted_market.global.exception.ProductErrorCode;
 import com.sunyesle.wanted_market.product.dto.ProductDetailResponse;
 import com.sunyesle.wanted_market.product.dto.ProductRequest;
 import com.sunyesle.wanted_market.product.dto.ProductResponse;
-import com.sunyesle.wanted_market.global.exception.ErrorCodeException;
-import com.sunyesle.wanted_market.global.exception.ProductErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,8 +24,14 @@ public class ProductService {
     }
 
     public ProductDetailResponse getProduct(Long id) {
-        Product product = productRepository.findById(id).orElseThrow(() -> new ErrorCodeException(ProductErrorCode.PRODUCT_NOT_FOUND));
+        Product product = findById(id);
         return ProductDetailResponse.of(product);
+    }
+
+    public Product findById(Long id) {
+        Product product = productRepository.findById(id)
+                .orElseThrow(() -> new ErrorCodeException(ProductErrorCode.PRODUCT_NOT_FOUND));
+        return product;
     }
 
     public List<ProductDetailResponse> getProducts() {
