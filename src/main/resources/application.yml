@@ -44,7 +44,7 @@ spring:
   sql:
     init:
       mode: always
-      data-locations: classpath:/db/init/**
+      data-locations: classpath*:db/init/*.sql
 mybatis:
   mapper-locations: classpath:mapper/**/*.xml
   type-aliases-package: classpath:main/java/com/wanted/market
