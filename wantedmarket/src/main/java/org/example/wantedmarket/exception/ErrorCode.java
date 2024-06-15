@@ -22,6 +22,7 @@ public enum ErrorCode {
     ORDER_NOT_PENDING("주문 상태인 제품이 아닙니다."),
     ORDER_NOT_APPROVED("주문 승인이 나지 않은 주문입니다."),
     ORDER_COMPLETED("이미 완료된 주문입니다."),
+    ALREADY_ORDERED("중복 주문할 수 없습니다."),
     ORDER_MY_PRODUCT_NOT_ALLOWED("본인이 등록한 제품은 주문할 수 없습니다.");
 
     private final String errorMessage;

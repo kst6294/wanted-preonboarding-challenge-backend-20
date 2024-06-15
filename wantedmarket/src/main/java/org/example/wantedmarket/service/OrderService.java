@@ -46,6 +46,10 @@ public class OrderService {
         User seller = userRepository.findById(product.getSeller().getId()).orElseThrow(
                 () ->  new CustomException(ErrorCode.USER_NOT_FOUND));
 
+        if (orderRepository.existsByBuyerId(buyer.getId())) {
+            throw new CustomException(ErrorCode.ALREADY_ORDERED);
+        }
+
         if (product.getStatus() == ProductStatus.IN_RESERVATION) {
             throw new CustomException(ErrorCode.PRODUCT_IN_RESERVATION);
         }
@@ -95,14 +99,14 @@ public class OrderService {
         Order order = orderRepository.findById(orderId).orElseThrow(
                 () ->  new CustomException(ErrorCode.ORDER_NOT_FOUND));
 
-        // 판매 승인 가능한 상태가 아님
-        if (order.getStatus() != OrderStatus.PENDING) {
-            throw new CustomException(ErrorCode.ORDER_NOT_PENDING);
-        }
-
         // 주문을 승인하는 사용자가 판매자가 맞는지 확인
         if (!order.getSeller().getId().equals(userId)) {
             throw new CustomException(ErrorCode.USER_NOT_SELLER);
+        }
+
+        // 판매 승인 가능한 상태가 아님
+        if (order.getStatus() != OrderStatus.PENDING) {
+            throw new CustomException(ErrorCode.ORDER_NOT_PENDING);
         }
 
         // 판매 승인
@@ -123,14 +127,14 @@ public class OrderService {
 
         Product product = order.getProduct();
 
-        // 구매 확정할 수 있는 상태가 아님
-        if (order.getStatus() != OrderStatus.APPROVED) {
-            throw new CustomException(ErrorCode.ORDER_NOT_APPROVED);
-        }
-
         // 구매 확정을 하는 사용자가 구매자가 맞는지 확인
         if (!order.getBuyer().getId().equals(userId)) {
             throw new CustomException(ErrorCode.USER_NOT_BUYER);
+        }
+
+        // 구매 확정할 수 있는 상태가 아님
+        if (order.getStatus() != OrderStatus.APPROVED) {
+            throw new CustomException(ErrorCode.ORDER_NOT_APPROVED);
         }
 
         // 추가 판매 가능한 수량이 없을 경우

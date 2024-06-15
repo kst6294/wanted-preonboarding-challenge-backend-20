@@ -62,7 +62,7 @@ public class ProductService {
                 .collect(Collectors.toList());
     }
 
-    /* 제품 상세 조회 */
+    /* 제품 상세 조회  without 거래내역 */
     @Transactional(readOnly = true)
     public ProductResponse findDetailProduct(Long productId) {
         Product findProduct = productRepository.findById(productId).orElseThrow(
