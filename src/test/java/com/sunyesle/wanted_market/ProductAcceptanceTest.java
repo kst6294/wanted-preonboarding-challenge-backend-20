@@ -1,8 +1,13 @@
 package com.sunyesle.wanted_market;
 
-import com.sunyesle.wanted_market.dto.*;
-import com.sunyesle.wanted_market.repository.MemberRepository;
-import com.sunyesle.wanted_market.repository.ProductRepository;
+import com.sunyesle.wanted_market.member.MemberRepository;
+import com.sunyesle.wanted_market.member.dto.SigninRequest;
+import com.sunyesle.wanted_market.member.dto.SigninResponse;
+import com.sunyesle.wanted_market.member.dto.SignupRequest;
+import com.sunyesle.wanted_market.product.ProductRepository;
+import com.sunyesle.wanted_market.product.dto.ProductDetailResponse;
+import com.sunyesle.wanted_market.product.dto.ProductRequest;
+import com.sunyesle.wanted_market.product.dto.ProductResponse;
 import com.sunyesle.wanted_market.support.AcceptanceTest;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;

@@ -1,6 +1,6 @@
 package com.sunyesle.wanted_market.temp;
 
-import com.sunyesle.wanted_market.security.JwtTokenProvider;
+import com.sunyesle.wanted_market.global.security.JwtTokenProvider;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;

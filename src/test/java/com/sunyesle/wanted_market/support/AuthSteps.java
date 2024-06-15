@@ -1,8 +1,8 @@
 package com.sunyesle.wanted_market.support;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sunyesle.wanted_market.dto.SigninRequest;
-import com.sunyesle.wanted_market.dto.SignupRequest;
+import com.sunyesle.wanted_market.member.dto.SigninRequest;
+import com.sunyesle.wanted_market.member.dto.SignupRequest;
 import io.restassured.http.ContentType;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;

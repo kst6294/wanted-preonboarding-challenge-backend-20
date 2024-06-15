@@ -1,9 +1,9 @@
 package com.sunyesle.wanted_market.support;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sunyesle.wanted_market.dto.ProductDetailResponse;
-import com.sunyesle.wanted_market.dto.ProductRequest;
-import com.sunyesle.wanted_market.enums.ProductStatus;
+import com.sunyesle.wanted_market.product.dto.ProductDetailResponse;
+import com.sunyesle.wanted_market.product.dto.ProductRequest;
+import com.sunyesle.wanted_market.global.enums.ProductStatus;
 import io.restassured.http.ContentType;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;

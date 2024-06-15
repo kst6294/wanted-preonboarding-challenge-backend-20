@@ -1,7 +1,7 @@
 package com.sunyesle.wanted_market.support;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sunyesle.wanted_market.dto.CreateOfferRequest;
+import com.sunyesle.wanted_market.offer.dto.CreateOfferRequest;
 import io.restassured.http.ContentType;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
