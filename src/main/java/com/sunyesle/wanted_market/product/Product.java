@@ -38,12 +38,6 @@ public class Product {
         this.status = ProductStatus.AVAILABLE;
     }
 
-    public void offer() {
-        if (this.status != ProductStatus.AVAILABLE) {
-            throw new ErrorCodeException(ProductErrorCode.INVALID_PRODUCT_STATUS);
-        }
-    }
-
     public void reserve(Integer quantity) {
         int tempReservedStock = this.reservedStock + quantity;
         if (this.stock < tempReservedStock) {
