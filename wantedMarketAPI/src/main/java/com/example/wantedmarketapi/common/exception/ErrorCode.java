@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public enum ErrorCode {
     // 400
-    BAD_REQUEST("입력값이 올바르지 않습니다. 다시 시도해주세요."),
+    INVALID_PARAMETER("입력값이 올바르지 않습니다. 다시 시도해주세요."),
 
     // 401
     UN_AUTHENTICATION("인증 되지 않은 사용자입니다."),
@@ -18,8 +18,8 @@ public enum ErrorCode {
 
     // 500
     SERVICE_UNAVAILABLE("일시적인 오류가 발생했습니다. 잠시 후 다시 시도해주세요.") // 장애 상황
-
     ;
+
 
     private final String errorMsg;
 

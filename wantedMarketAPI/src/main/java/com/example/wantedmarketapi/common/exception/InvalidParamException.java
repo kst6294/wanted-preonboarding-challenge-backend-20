@@ -3,7 +3,7 @@ package com.example.wantedmarketapi.common.exception;
 public class InvalidParamException extends WantedMarketApiException {
 
     public InvalidParamException() {
-        super(ErrorCode.BAD_REQUEST);
+        super(ErrorCode.INVALID_PARAMETER);
     }
 
     public InvalidParamException(ErrorCode errorCode) {
@@ -11,7 +11,7 @@ public class InvalidParamException extends WantedMarketApiException {
     }
 
     public InvalidParamException(String errorMsg) {
-        super(errorMsg, ErrorCode.BAD_REQUEST);
+        super(errorMsg, ErrorCode.INVALID_PARAMETER);
     }
 
     public InvalidParamException(String message, ErrorCode errorCode) {
