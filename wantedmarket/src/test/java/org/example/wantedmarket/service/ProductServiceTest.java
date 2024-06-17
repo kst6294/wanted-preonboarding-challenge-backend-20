@@ -17,6 +17,7 @@ import org.example.wantedmarket.status.OrderStatus;
 import org.example.wantedmarket.status.ProductStatus;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -72,6 +73,7 @@ class ProductServiceTest {
 
 
     @Test
+    @DisplayName("제품 등록 - 성공")
     @Transactional
     void saveProductTest_성공() {
         // given
@@ -94,6 +96,7 @@ class ProductServiceTest {
     }
 
     @Test
+    @DisplayName("제품 등록 - 수량을 1개 미만으로 등록한 경우")
     @Transactional
     void saveProductTest_수량을_1개_미만으로_등록한_경우() {
         // given
@@ -113,6 +116,7 @@ class ProductServiceTest {
     }
 
     @Test
+    @DisplayName("제품 전체 목록 조회 - 성공")
     @Transactional
     void findAllProductListTest_성공() {
         // given
@@ -137,6 +141,7 @@ class ProductServiceTest {
     }
 
     @Test
+    @DisplayName("제품 상세 조회 - 비회원 성공")
     @Transactional
     void findDetailProductTest_비회원_성공() {
         // when
@@ -151,6 +156,7 @@ class ProductServiceTest {
     }
 
     @Test
+    @DisplayName("제품 상세 조회 - 거래내역 포함할 경우 성공")
     @Transactional
     void findDetailProductTest_회원_거래내역_포함_성공() {
         // given
@@ -186,8 +192,9 @@ class ProductServiceTest {
     }
 
     @Test
+    @DisplayName("제품 상세 조회 - 거래내역 없을 경우 성공")
     @Transactional
-    void findDetailProductTest_회원_거래내역_미포함_성공() {
+    void findDetailProductTest_회원_거래내역_없을_경우_성공() {
         // when
         ProductDetailResponse findDetailProduct = productService.findDetailProductWithTransaction(seller1.getId(), product1.getId());
 
@@ -203,6 +210,7 @@ class ProductServiceTest {
     }
 
     @Test
+    @DisplayName("내가 등록한 제품 조회 - 성공")
     @Transactional
     void findMyProductListTest_성공() {
         // given
@@ -225,6 +233,7 @@ class ProductServiceTest {
     }
 
     @Test
+    @DisplayName("제품 가격 수정 - 성공")
     @Transactional
     void modifyProductPriceTest_성공() {
         // given
@@ -242,6 +251,7 @@ class ProductServiceTest {
     }
 
     @Test
+    @DisplayName("제품 가격 수정 - 판매자가 아닌 경우")
     @Transactional
     void modifyProductPriceTest_판매자가_아닌_경우() {
         // given
@@ -265,6 +275,7 @@ class ProductServiceTest {
     }
 
     @Test
+    @DisplayName("제품 가격 수정 - 똑같은 가격으로 수정을 시도했을 경우")
     @Transactional
     void modifyProductPriceTest_이전_가격과_똑같은_경우() {
         // given
@@ -282,6 +293,7 @@ class ProductServiceTest {
     }
 
     @Test
+    @DisplayName("제품 가격 수정 - 이미 판매완료된 제품일 경우")
     @Transactional
     void modifyProductPriceTest_판매완료된_제품일_경우() {
         // given
