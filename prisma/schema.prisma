@@ -48,7 +48,7 @@ model Product {
 
 model ProductQuantity {
   id        Int       @id @default(autoincrement())
-  productId Int
+  productId Int       @unique
   quantity  Int       @default(0)
   product   Product   @relation(fields: [productId], references: [id])
   createdAt DateTime  @default(now())
@@ -57,9 +57,11 @@ model ProductQuantity {
 }
 
 enum TransactionStatus {
-  PENDING // 거래대기 
+  PENDING // 거래대기
   APPROVED // 거래완료
   REJECTED // 거래거절
+  SOLD // 판매확정
+  PURCHASE_CONFIRMED // 구매확정
 }
 
 model Transaction {
@@ -71,6 +73,8 @@ model Transaction {
   sellerId  Int
   seller    User              @relation(name: "Seller", fields: [sellerId], references: [id])
   status    TransactionStatus @default(PENDING)
+  price     Int               @default(0)
+  quantity  Int               @default(1)
   createdAt DateTime          @default(now())
   updatedAt DateTime          @updatedAt
   deletedAt DateTime?

@@ -9,7 +9,11 @@ export type TransactionIncludeProduct = Prisma.TransactionGetPayload<{
 
 export interface TransactionRepositoryInterface {
   confirm(transactionId: number): Promise<void>;
-  create(createTransactionInfo: any): Promise<any>;
+  create(
+    createTransactionInfo: any,
+    price: number,
+    transaction: Prisma.TransactionClient,
+  ): Promise<any>;
   findByTransactionIdAndBuyerId(
     transactionId: number,
     buyerId: number,
@@ -27,4 +31,7 @@ export interface TransactionRepositoryInterface {
     query: GetTransactionsDTO,
     userId: number,
   ): Promise<{ productList: TransactionIncludeProduct[]; count: number }>;
+  findById(transactionId: number): Promise<Transaction | null>;
+  buyConfirm(transactionId: number): Promise<void>;
+  countByProductId(productId: number): Promise<number>;
 }

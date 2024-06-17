@@ -4,12 +4,16 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { ProductServiceInterface } from './interfaces/product.service.interface';
-import { ProductRepositoryInterface } from './interfaces/product.repository.interface';
-import { CreateProductDto } from './dto/create-product.dto';
+import { ProductServiceInterface } from '../interfaces/product.service.interface';
+import {
+  ProductIncludeTransaction,
+  ProductRepositoryInterface,
+} from '../interfaces/product.repository.interface';
+import { CreateProductDto } from '../dto/create-product.dto';
 import { ProductStatus } from '@prisma/client';
-import { ProductQuantityRepositoryInterface } from './interfaces/product.quantity.interface';
+import { ProductQuantityRepositoryInterface } from '../interfaces/product.quantity.repository.interface';
 import { PrismaService } from 'prisma/prisma.service';
+import { ProductQuantityServiceInterface } from '../interfaces/product.quantity.service.interface';
 
 @Injectable()
 export class ProductsService implements ProductServiceInterface {
@@ -17,11 +21,13 @@ export class ProductsService implements ProductServiceInterface {
     private readonly prisma: PrismaService,
     @Inject('PRODUCT_REPOSITORY_INTERFACE')
     private readonly productRepository: ProductRepositoryInterface,
-    @Inject('PRODUCT_QUANTITY_REPOSITORY_INTERFACE')
-    private readonly productQuantityRepository: ProductQuantityRepositoryInterface,
+    // @Inject('PRODUCT_QUANTITY_REPOSITORY_INTERFACE')
+    // private readonly productQuantityRepository: ProductQuantityRepositoryInterface,
+    @Inject('PRODUCT_QUANTITY_SERVICE_INTERFACE')
+    private readonly productQuantityService: ProductQuantityServiceInterface,
   ) {}
 
-  async findOne(productId: number) {
+  async findOne(productId: number): Promise<ProductIncludeTransaction> {
     const product = await this.productRepository.findById(productId);
 
     if (!product) {
@@ -38,7 +44,10 @@ export class ProductsService implements ProductServiceInterface {
       throw new NotFoundException('상품이 존재하지 않습니다.');
     }
 
-    const productQuantity = await this.productQuantityRepository.findById(
+    // const productQuantity = await this.productQuantityRepository.findById(
+    //   product.id,
+    // );
+    const productQuantity = await this.productQuantityService.findById(
       product.id,
     );
 
@@ -73,11 +82,18 @@ export class ProductsService implements ProductServiceInterface {
         userId,
         transaction,
       );
-      await this.productQuantityRepository.makeQuantity(
+      await this.productQuantityService.makeQuantity(
         createProductDto.quantity,
         product.id,
         transaction,
       );
     });
   }
+  async updateStatus(productId: number, status: ProductStatus): Promise<void> {
+    await this.productRepository.updateStatus(productId, status);
+  }
+
+  // async findQuantityById(productId: number) {
+  //   return await this.productQuantityRepository.findById(productId);
+  // }
 }
