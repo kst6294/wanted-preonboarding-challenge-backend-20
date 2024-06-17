@@ -1,9 +1,9 @@
 package io.taylor.wantedpreonboardingchallengebackend20.member.service;
 
-import io.taylor.wantedpreonboardingchallengebackend20.member.model.request.JoinRequest;
-import io.taylor.wantedpreonboardingchallengebackend20.member.model.request.LoginRequest;
-import io.taylor.wantedpreonboardingchallengebackend20.member.model.response.JoinResponse;
-import io.taylor.wantedpreonboardingchallengebackend20.member.model.response.LoginResponse;
+import io.taylor.wantedpreonboardingchallengebackend20.member.model.request.JoinRequestDto;
+import io.taylor.wantedpreonboardingchallengebackend20.member.model.request.LoginRequestDto;
+import io.taylor.wantedpreonboardingchallengebackend20.member.model.response.JoinResponseDto;
+import io.taylor.wantedpreonboardingchallengebackend20.member.model.response.LoginResponseDto;
 import lombok.extern.slf4j.Slf4j;
 import io.taylor.wantedpreonboardingchallengebackend20.common.util.JwtTokenUtil;
 import io.taylor.wantedpreonboardingchallengebackend20.common.util.PasswordUtil;
@@ -27,20 +27,20 @@ public class MemberService {
         this.jwtTokenUtil = jwtTokenUtil;
     }
 
-    public JoinResponse join(JoinRequest request) {
+    public JoinResponseDto join(JoinRequestDto request) {
         request.setPassword(passwordUtil.encodePassword(request.getPassword()));
         Member member = memberRepository.save(new Member(request));
         if (member == null) throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "회원가입에 실패하였습니다.");
 
-        return new JoinResponse(member);
+        return new JoinResponseDto(member);
     }
 
-    public LoginResponse login(LoginRequest request) {
+    public LoginResponseDto login(LoginRequestDto request) {
         Member member = memberRepository.findMemberByEmail(request.getEmail());
         if (member == null) throw new ResponseStatusException(HttpStatus.NOT_FOUND, "회원 정보가 존재하지 않습니다.");
         if (!passwordUtil.matchPassword(request.getPassword(), member.getPassword())) throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "올바르지 않은 비밀번호 입니다.");
 
-        return new LoginResponse(member, jwtTokenUtil.generateToken(request.getEmail()));
+        return new LoginResponseDto(member, jwtTokenUtil.generateToken(request.getEmail()));
     }
 
     public Member getMemberByEmail(String email) {

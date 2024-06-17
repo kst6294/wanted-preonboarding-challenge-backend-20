@@ -1,10 +1,9 @@
 package io.taylor.wantedpreonboardingchallengebackend20.member.controller;
 
-import io.taylor.wantedpreonboardingchallengebackend20.member.entity.Member;
-import io.taylor.wantedpreonboardingchallengebackend20.member.model.request.JoinRequest;
-import io.taylor.wantedpreonboardingchallengebackend20.member.model.request.LoginRequest;
-import io.taylor.wantedpreonboardingchallengebackend20.member.model.response.JoinResponse;
-import io.taylor.wantedpreonboardingchallengebackend20.member.model.response.LoginResponse;
+import io.taylor.wantedpreonboardingchallengebackend20.member.model.request.JoinRequestDto;
+import io.taylor.wantedpreonboardingchallengebackend20.member.model.request.LoginRequestDto;
+import io.taylor.wantedpreonboardingchallengebackend20.member.model.response.JoinResponseDto;
+import io.taylor.wantedpreonboardingchallengebackend20.member.model.response.LoginResponseDto;
 import io.taylor.wantedpreonboardingchallengebackend20.member.service.MemberService;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -21,14 +20,14 @@ public class MemberController {
     }
 
     @PostMapping("/join")
-    public ResponseEntity<JoinResponse> join(@RequestBody JoinRequest request) {
-        JoinResponse response = memberService.join(request);
+    public ResponseEntity<JoinResponseDto> join(@RequestBody JoinRequestDto request) {
+        JoinResponseDto response = memberService.join(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @PostMapping("/login")
-    public ResponseEntity<Object> login(@RequestBody LoginRequest request) {
-        LoginResponse response = memberService.login(request);
+    public ResponseEntity<Object> login(@RequestBody LoginRequestDto request) {
+        LoginResponseDto response = memberService.login(request);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 

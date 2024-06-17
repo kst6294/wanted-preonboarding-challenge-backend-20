@@ -1,8 +1,8 @@
 package io.taylor.wantedpreonboardingchallengebackend20.product.controller;
 
 import io.taylor.wantedpreonboardingchallengebackend20.product.entity.Product;
-import io.taylor.wantedpreonboardingchallengebackend20.product.model.request.ProductRequest;
-import io.taylor.wantedpreonboardingchallengebackend20.product.model.response.ProductResponse;
+import io.taylor.wantedpreonboardingchallengebackend20.product.model.request.ProductRequestDto;
+import io.taylor.wantedpreonboardingchallengebackend20.product.model.response.ProductResponseDto;
 import io.taylor.wantedpreonboardingchallengebackend20.product.service.ProductService;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -26,12 +26,12 @@ public class ProductController {
     }
 
     @PostMapping("")
-    public ResponseEntity<ProductResponse> postProduct(@RequestHeader("Authorization") String authorization, @RequestBody ProductRequest request) {
+    public ResponseEntity<ProductResponseDto> postProduct(@RequestHeader("Authorization") String authorization, @RequestBody ProductRequestDto request) {
         return ResponseEntity.status(HttpStatus.CREATED).body(productService.postProduct(authorization, request));
     }
 
     @GetMapping("/{productId}")
-    public ResponseEntity<ProductResponse> getProduct(@PathVariable String productId) {
+    public ResponseEntity<ProductResponseDto> getProduct(@PathVariable String productId) {
         return ResponseEntity.status(HttpStatus.CREATED).body(productService.getProductById(Long.parseLong(productId)));
     }
 

@@ -1,8 +1,8 @@
 package io.taylor.wantedpreonboardingchallengebackend20.product.service;
 
 import io.taylor.wantedpreonboardingchallengebackend20.common.util.JwtTokenUtil;
-import io.taylor.wantedpreonboardingchallengebackend20.product.model.request.ProductRequest;
-import io.taylor.wantedpreonboardingchallengebackend20.product.model.response.ProductResponse;
+import io.taylor.wantedpreonboardingchallengebackend20.product.model.request.ProductRequestDto;
+import io.taylor.wantedpreonboardingchallengebackend20.product.model.response.ProductResponseDto;
 import lombok.extern.slf4j.Slf4j;
 import io.taylor.wantedpreonboardingchallengebackend20.order.service.OrderService;
 import io.taylor.wantedpreonboardingchallengebackend20.product.entity.Product;
@@ -32,18 +32,18 @@ public class ProductService {
         return productList;
     }
 
-    public ProductResponse postProduct(String authorization, ProductRequest request) {
+    public ProductResponseDto postProduct(String authorization, ProductRequestDto request) {
         String userId = jwtTokenUtil.getUserIdFromToken(authorization);
         if (userId.isEmpty()) throw new ResponseStatusException(HttpStatus.FORBIDDEN, "존재하지 않는 회원입니다.");
 
         Product product = productRepository.save(new Product(request.name(), request.price()));
         if (product == null) throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "상품 등록에 실패했습니다.");
-        return new ProductResponse(product.getId(), product.getName(), product.getPrice(), product.getStatus(), product.getUpdatedAt(), product.getCreatedAt());
+        return new ProductResponseDto(product.getId(), product.getName(), product.getPrice(), product.getStatus(), product.getUpdatedAt(), product.getCreatedAt());
     }
 
-    public ProductResponse getProductById(long productId) {
+    public ProductResponseDto getProductById(long productId) {
         Product product = productRepository.findById(productId);
         if (product == null) throw new ResponseStatusException(HttpStatus.NOT_FOUND, "해당 상품이 존재하지 않습니다.");
-        return new ProductResponse(product.getId(), product.getName(), product.getPrice(), product.getStatus(), product.getUpdatedAt(), product.getCreatedAt());
+        return new ProductResponseDto(product.getId(), product.getName(), product.getPrice(), product.getStatus(), product.getUpdatedAt(), product.getCreatedAt());
     }
 }

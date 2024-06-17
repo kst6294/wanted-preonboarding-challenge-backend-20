@@ -1,8 +1,8 @@
 package io.taylor.wantedpreonboardingchallengebackend20.integration;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.taylor.wantedpreonboardingchallengebackend20.member.model.request.JoinRequest;
-import io.taylor.wantedpreonboardingchallengebackend20.member.model.request.LoginRequest;
+import io.taylor.wantedpreonboardingchallengebackend20.member.model.request.JoinRequestDto;
+import io.taylor.wantedpreonboardingchallengebackend20.member.model.request.LoginRequestDto;
 import org.json.JSONObject;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -32,9 +32,9 @@ class MemberIntegrationTest {
     @Autowired
     private ObjectMapper objectMapper;
 
-    private static Stream<JoinRequest> joinRequestStream() {
+    private static Stream<JoinRequestDto> joinRequestStream() {
         return Stream.of(
-                new JoinRequest("태경", "taylor", "115taegyeong@gmail.com", "123456789")
+                new JoinRequestDto("태경", "taylor", "115taegyeong@gmail.com", "123456789")
         );
     }
 
@@ -42,7 +42,7 @@ class MemberIntegrationTest {
     @ParameterizedTest
     @DisplayName("[Success] 회원가입 테스트")
     @MethodSource("joinRequestStream")
-    public void signupTest(JoinRequest request) throws Exception {
+    public void signupTest(JoinRequestDto request) throws Exception {
         mockMvc.perform(post("/api/members/join")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(request)))
@@ -50,9 +50,9 @@ class MemberIntegrationTest {
                 .andDo(print());
     }
 
-    private static Stream<LoginRequest> loginRequestStream() {
+    private static Stream<LoginRequestDto> loginRequestStream() {
         return Stream.of(
-                new LoginRequest("115taegyeong@gmail.com","123456789")
+                new LoginRequestDto("115taegyeong@gmail.com","123456789")
         );
     }
 
@@ -60,7 +60,7 @@ class MemberIntegrationTest {
     @ParameterizedTest
     @DisplayName("[Success] 로그인 테스트")
     @MethodSource("loginRequestStream")
-    void loginTest(LoginRequest request) throws Exception {
+    void loginTest(LoginRequestDto request) throws Exception {
         MvcResult mvcResult = mockMvc.perform(post("/api/members/login")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(request)))

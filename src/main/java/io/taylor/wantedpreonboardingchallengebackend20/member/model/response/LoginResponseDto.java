@@ -6,12 +6,12 @@ import io.taylor.wantedpreonboardingchallengebackend20.member.entity.Member;
 
 @Data
 @NoArgsConstructor
-public class LoginResponse {
+public class LoginResponseDto {
     private String name;
     private String nickName;
     private String accessToken;
 
-    public LoginResponse(Member member, String accessToken) {
+    public LoginResponseDto(Member member, String accessToken) {
         this.name = member.getName();
         this.nickName = member.getNickName();
         this.accessToken = accessToken;

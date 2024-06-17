@@ -1,4 +1,4 @@
 package io.taylor.wantedpreonboardingchallengebackend20.product.model.request;
 
-public record ProductRequest (String name, long price) {
+public record ProductRequestDto(String name, long price) {
 }
