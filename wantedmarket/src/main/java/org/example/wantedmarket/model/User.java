@@ -1,8 +1,10 @@
 package org.example.wantedmarket.model;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+import org.example.wantedmarket.status.ProductStatus;
 
 @Entity
 @Getter
