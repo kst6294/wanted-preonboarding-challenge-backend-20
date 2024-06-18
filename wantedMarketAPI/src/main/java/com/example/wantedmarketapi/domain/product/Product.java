@@ -1,6 +1,7 @@
 package com.example.wantedmarketapi.domain.product;
 
 import com.example.wantedmarketapi.common.exception.InvalidParamException;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -9,6 +10,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Index;
 import jakarta.persistence.Table;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -20,13 +22,17 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
-
+    @Column(name = "userId")
     private Long userId;
 
+    @Column(name = "name")
+    private String name;
+
+    @Column(name = "price")
     private Integer price;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "status")
     private Status status;
 
     @Getter
@@ -40,6 +46,7 @@ public class Product {
         private final String value;
     }
 
+    @Builder
     public Product(String name, Long userId, Integer price) {
         if (name == null || name.length() == 0) throw new InvalidParamException("empty product name");
         if (userId == null || userId <= 0) throw new InvalidParamException("invalid userId");
