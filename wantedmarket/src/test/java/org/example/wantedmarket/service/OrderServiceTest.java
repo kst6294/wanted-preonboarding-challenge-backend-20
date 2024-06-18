@@ -48,36 +48,39 @@ class OrderServiceTest {
 
     @BeforeEach
     void setUp() {
-        buyer1 = new User();
-        buyer1.setUsername("buyer1");
-        buyer1.setPassword(bCryptPasswordEncoder.encode("1234"));
-        buyer1.setRole("ROLE_USER");
-        userRepository.save(buyer1);
+        buyer1 = makeUser("buyer1", bCryptPasswordEncoder.encode("1234"), "ROLE_USER");
+        buyer2 = makeUser("buyer2", bCryptPasswordEncoder.encode("1234"), "ROLE_USER");
+        seller1 = makeUser("seller1", bCryptPasswordEncoder.encode("1234"), "ROLE_USER");
+        seller2 = makeUser("seller2", bCryptPasswordEncoder.encode("1234"), "ROLE_USER");
+        product1 = makeProduct("product1", 1000, 10, seller1, ProductStatus.FOR_SALE);
+    }
 
-        buyer2 = new User();
-        buyer2.setUsername("buyer2");
-        buyer2.setPassword(bCryptPasswordEncoder.encode("1234"));
-        buyer2.setRole("ROLE_USER");
-        userRepository.save(buyer2);
+    User makeUser(String username, String password, String role) {
+        User user = new User();
+        user.setUsername(username);
+        user.setPassword(bCryptPasswordEncoder.encode(password));
+        user.setRole(role);
+        return userRepository.save(user);
+    }
 
-        seller1 = new User();
-        seller1.setUsername("seller1");
-        seller1.setPassword(bCryptPasswordEncoder.encode("1234"));
-        seller1.setRole("ROLE_USER");
-        userRepository.save(seller1);
+    Product makeProduct(String name, Integer price, Integer quantity, User seller, ProductStatus status) {
+        return productRepository.save(Product.builder()
+                .name(name)
+                .price(price)
+                .quantity(quantity)
+                .seller(seller)
+                .status(status)
+                .build());
+    }
 
-        seller2 = new User();
-        seller2.setUsername("seller2");
-        seller2.setPassword(bCryptPasswordEncoder.encode("1234"));
-        seller2.setRole("ROLE_USER");
-        userRepository.save(seller2);
-
-        product1 = productRepository.save(Product.builder()
-                .name("product")
-                .price(1000)
-                .quantity(10)
-                .seller(seller1)
-                .status(ProductStatus.FOR_SALE)
+    Order makeOrder(Product product, User buyer, Integer quantity, OrderStatus status) {
+        return orderRepository.save(Order.builder()
+                .product(product)
+                .seller(product.getSeller())
+                .buyer(buyer)
+                .confirmedPrice(product.getPrice())
+                .quantity(quantity)
+                .status(status)
                 .build());
     }
 
@@ -216,15 +219,7 @@ class OrderServiceTest {
     @Transactional
     void approveProductOrderTest_추가_판매_가능() {
         // given
-        Order order = orderRepository.save(Order.builder()
-                        .quantity(5)
-                        .confirmedPrice(product1.getPrice())
-                        .product(product1)
-                        .seller(seller1)
-                        .buyer(buyer1)
-                        .status(OrderStatus.PENDING)
-                        .build());
-
+        Order order = makeOrder(product1, buyer1, 5, OrderStatus.PENDING);
         product1.modifyQuantity(5);
 
         // when
@@ -240,15 +235,7 @@ class OrderServiceTest {
     @Transactional
     void approveProductOrderTest_추가_판매_불가() {
         // given
-        Order order = orderRepository.save(Order.builder()
-                .quantity(10)
-                .confirmedPrice(product1.getPrice())
-                .product(product1)
-                .seller(seller1)
-                .buyer(buyer1)
-                .status(OrderStatus.PENDING)
-                .build());
-
+        Order order = makeOrder(product1, buyer1, 10, OrderStatus.PENDING);
         product1.modifyQuantity(10);
         product1.modifyStatus(ProductStatus.IN_RESERVATION);
 
@@ -265,15 +252,7 @@ class OrderServiceTest {
     @Transactional
     void approveProductOrderTest_판매자가_아닐_경우() {
         // given
-        Order order = orderRepository.save(Order.builder()
-                .quantity(10)
-                .confirmedPrice(product1.getPrice())
-                .product(product1)
-                .seller(seller1)
-                .buyer(buyer1)
-                .status(OrderStatus.PENDING)
-                .build());
-
+        Order order = makeOrder(product1, buyer1, 10, OrderStatus.PENDING);
         product1.modifyQuantity(10);
         product1.modifyStatus(ProductStatus.IN_RESERVATION);
 
@@ -291,15 +270,7 @@ class OrderServiceTest {
     @Transactional
     void approveProductOrderTest_판매승인_상태가_아닐_경우() {
         // given
-        Order order = orderRepository.save(Order.builder()
-                .quantity(10)
-                .confirmedPrice(product1.getPrice())
-                .product(product1)
-                .seller(seller1)
-                .buyer(buyer1)
-                .status(OrderStatus.APPROVED)
-                .build());
-
+        Order order = makeOrder(product1, buyer1, 10, OrderStatus.APPROVED);
         product1.modifyQuantity(10);
         product1.modifyStatus(ProductStatus.IN_RESERVATION);
 
@@ -317,15 +288,7 @@ class OrderServiceTest {
     @Transactional
     void confirmProductOrderTest_추가_판매_가능() {
          // given
-        Order order = orderRepository.save(Order.builder()
-                .quantity(5)
-                .confirmedPrice(product1.getPrice())
-                .product(product1)
-                .seller(seller1)
-                .buyer(buyer1)
-                .status(OrderStatus.APPROVED)
-                .build());
-
+        Order order = makeOrder(product1, buyer1, 5, OrderStatus.APPROVED);
         product1.modifyQuantity(5);
 
         // when
@@ -341,15 +304,7 @@ class OrderServiceTest {
     @Transactional
     void confirmProductOrderTest_추가_판매_불가() {
         // given
-        Order order = orderRepository.save(Order.builder()
-                .quantity(10)
-                .confirmedPrice(product1.getPrice())
-                .product(product1)
-                .seller(seller1)
-                .buyer(buyer1)
-                .status(OrderStatus.APPROVED)
-                .build());
-
+        Order order = makeOrder(product1, buyer1, 10, OrderStatus.APPROVED);
         product1.modifyQuantity(10);
 
         // when
@@ -365,15 +320,7 @@ class OrderServiceTest {
     @Transactional
     void confirmProductOrderTest_구매자가_아닐_경우() {
         // given
-        Order order = orderRepository.save(Order.builder()
-                .quantity(5)
-                .confirmedPrice(product1.getPrice())
-                .product(product1)
-                .seller(seller1)
-                .buyer(buyer1)
-                .status(OrderStatus.APPROVED)
-                .build());
-
+         Order order = makeOrder(product1, buyer1, 5, OrderStatus.APPROVED);
         product1.modifyQuantity(5);
 
         // when
@@ -390,15 +337,7 @@ class OrderServiceTest {
     @Transactional
     void confirmProductOrderTest_구매확정_가능한_상태가_아닐_경우() {
         // given
-        Order order = orderRepository.save(Order.builder()
-                .quantity(5)
-                .confirmedPrice(product1.getPrice())
-                .product(product1)
-                .seller(seller1)
-                .buyer(buyer1)
-                .status(OrderStatus.CONFIRMED)
-                .build());
-
+        Order order = makeOrder(product1, buyer1, 5, OrderStatus.CONFIRMED);
         product1.modifyQuantity(5);
 
         // when
@@ -415,15 +354,7 @@ class OrderServiceTest {
     @Transactional
     void findMyTransactionListTest() {
         // given
-        orderRepository.save(Order.builder()
-                .quantity(5)
-                .confirmedPrice(product1.getPrice())
-                .product(product1)
-                .seller(seller1)
-                .buyer(buyer1)
-                .status(OrderStatus.APPROVED)
-                .build());
-
+        makeOrder(product1, buyer1, 5, OrderStatus.APPROVED);
         product1.modifyQuantity(5);
 
 

@@ -52,47 +52,42 @@ class ProductServiceTest {
 
     @BeforeEach
     void setUp() {
-        buyer1 = new User();
-        buyer1.setUsername("buyer1");
-        buyer1.setPassword(bCryptPasswordEncoder.encode("1234"));
-        buyer1.setRole("ROLE_USER");
-        userRepository.save(buyer1);
+        buyer1 = makeUser("buyer1", bCryptPasswordEncoder.encode("1234"), "ROLE_USER");
+        buyer2 = makeUser("buyer2", bCryptPasswordEncoder.encode("1234"), "ROLE_USER");
+        seller1 = makeUser("seller1", bCryptPasswordEncoder.encode("1234"), "ROLE_USER");
+        seller2 = makeUser("seller2", bCryptPasswordEncoder.encode("1234"), "ROLE_USER");
+        product1 = makeProduct("product1", 1000, 10, seller1, ProductStatus.FOR_SALE);
+        product2 = makeProduct("product2", 1000, 10, seller2, ProductStatus.FOR_SALE);
+    }
 
-        buyer2 = new User();
-        buyer2.setUsername("buyer2");
-        buyer2.setPassword(bCryptPasswordEncoder.encode("1234"));
-        buyer2.setRole("ROLE_USER");
-        userRepository.save(buyer2);
+    User makeUser(String username, String password, String role) {
+        User user = new User();
+        user.setUsername(username);
+        user.setPassword(bCryptPasswordEncoder.encode(password));
+        user.setRole(role);
+        return userRepository.save(user);
+    }
 
-        seller1 = new User();
-        seller1.setUsername("seller1");
-        seller1.setPassword(bCryptPasswordEncoder.encode("1234"));
-        seller1.setRole("ROLE_USER");
-        userRepository.save(seller1);
-
-        seller2 = new User();
-        seller2.setUsername("seller2");
-        seller2.setPassword(bCryptPasswordEncoder.encode("1234"));
-        seller2.setRole("ROLE_USER");
-        userRepository.save(seller2);
-
-        product1 = productRepository.save(Product.builder()
-                .name("product1")
-                .price(1000)
-                .quantity(10)
-                .seller(seller1)
-                .status(ProductStatus.FOR_SALE)
-                .build());
-
-        product2 = productRepository.save(Product.builder()
-                .name("product2")
-                .price(1000)
-                .quantity(10)
-                .seller(seller2)
-                .status(ProductStatus.FOR_SALE)
+    Product makeProduct(String name, Integer price, Integer quantity, User seller, ProductStatus status) {
+        return productRepository.save(Product.builder()
+                .name(name)
+                .price(price)
+                .quantity(quantity)
+                .seller(seller)
+                .status(status)
                 .build());
     }
 
+    Order makeOrder(Product product, User buyer, Integer quantity, OrderStatus status) {
+        return orderRepository.save(Order.builder()
+                .product(product)
+                .seller(product.getSeller())
+                .buyer(buyer)
+                .confirmedPrice(product.getPrice())
+                .quantity(quantity)
+                .status(status)
+                .build());
+    }
 
     @Test
     @DisplayName("제품 등록 - 성공")
@@ -143,16 +138,8 @@ class ProductServiceTest {
     void findAllProductListTest_성공() {
         // given
         int previousSize = productService.findAllProductList().size();
-
         for (int i = 0; i < 5; i++) {
-            Product product = Product.builder()
-                    .name("product" + i)
-                    .price(1000)
-                    .quantity(10)
-                    .seller(seller1)
-                    .build();
-
-            productRepository.save(product);
+            makeProduct("product" + i, 1000, 10, seller1, ProductStatus.FOR_SALE);
         }
 
         // when
@@ -182,14 +169,7 @@ class ProductServiceTest {
     @Transactional
     void findDetailProductTest_회원_거래내역_포함_성공() {
         // given
-        Order order = orderRepository.save(Order.builder()
-                        .product(product1)
-                        .seller(product1.getSeller())
-                        .buyer(buyer1)
-                        .confirmedPrice(product1.getPrice())
-                        .quantity(9)
-                        .status(OrderStatus.PENDING)
-                        .build());
+        Order order = makeOrder(product1, buyer1, 9, OrderStatus.PENDING);
 
         // when
         ProductDetailResponse findProduct = productService.findDetailProductWithTransaction(seller1.getId(), product1.getId());
@@ -237,14 +217,7 @@ class ProductServiceTest {
     void findMyProductListTest_성공() {
         // given
         for (int i = 0; i < 5; i++) {
-            Product product = Product.builder()
-                    .name("product" + i)
-                    .price(1000)
-                    .quantity(10)
-                    .seller(seller1)
-                    .build();
-
-            productRepository.save(product);
+            makeProduct("product" + i, 1000, 10, seller1, ProductStatus.FOR_SALE);
         }
 
         // when
@@ -277,12 +250,6 @@ class ProductServiceTest {
     @Transactional
     void modifyProductPriceTest_판매자가_아닌_경우() {
         // given
-        User seller2 = new User();
-        seller2.setUsername("seller2");
-        seller2.setPassword(bCryptPasswordEncoder.encode("1234"));
-        seller2.setRole("ROLE_USER");
-        userRepository.save(seller2);
-
         ProductUpdateRequest request = new ProductUpdateRequest();
         request.setId(product1.getId());
         request.setPrice(2000);
@@ -338,11 +305,15 @@ class ProductServiceTest {
     @DisplayName("구매한 제품 목록 조회 - 성공")
     @Transactional
     void findOrderedProductListTest_성공() {
+        // given
+        makeOrder(product1, buyer1, 9, OrderStatus.CONFIRMED);
+        product1.modifyQuantity(9);
+
         // when
-        List<ProductResponse> confirmedProductList = productService.findOrderedProductList(buyer2.getId());
+        List<ProductResponse> confirmedProductList = productService.findOrderedProductList(buyer1.getId());
 
         // then
-        Assertions.assertEquals(confirmedProductList.size(), 1);
+        Assertions.assertEquals(1, confirmedProductList.size());
     }
 
     @Test
@@ -350,26 +321,10 @@ class ProductServiceTest {
     @Transactional
     void findReservedProductListTest_성공() {
         // given
-        orderRepository.save(Order.builder()
-                .quantity(5)
-                .confirmedPrice(product1.getPrice())
-                .product(product1)
-                .seller(seller1)
-                .buyer(buyer1)
-                .status(OrderStatus.PENDING)
-                .build());
-
+        makeOrder(product1, buyer1, 5, OrderStatus.PENDING);
         product1.modifyQuantity(5);
 
-        orderRepository.save(Order.builder()
-                .quantity(5)
-                .confirmedPrice(product2.getPrice())
-                .product(product2)
-                .seller(seller2)
-                .buyer(buyer1)
-                .status(OrderStatus.APPROVED)
-                .build());
-
+        makeOrder(product2, buyer1, 5, OrderStatus.APPROVED);
         product2.modifyQuantity(5);
 
         // when
