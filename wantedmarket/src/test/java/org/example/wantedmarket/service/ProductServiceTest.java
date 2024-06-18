@@ -44,8 +44,11 @@ class ProductServiceTest {
     ProductService productService;
 
     User buyer1;
+    User buyer2;
     User seller1;
+    User seller2;
     Product product1;
+    Product product2;
 
     @BeforeEach
     void setUp() {
@@ -55,20 +58,39 @@ class ProductServiceTest {
         buyer1.setRole("ROLE_USER");
         userRepository.save(buyer1);
 
+        buyer2 = new User();
+        buyer2.setUsername("buyer2");
+        buyer2.setPassword(bCryptPasswordEncoder.encode("1234"));
+        buyer2.setRole("ROLE_USER");
+        userRepository.save(buyer2);
+
         seller1 = new User();
         seller1.setUsername("seller1");
         seller1.setPassword(bCryptPasswordEncoder.encode("1234"));
         seller1.setRole("ROLE_USER");
         userRepository.save(seller1);
 
-        product1 = Product.builder()
-                .name("product")
+        seller2 = new User();
+        seller2.setUsername("seller2");
+        seller2.setPassword(bCryptPasswordEncoder.encode("1234"));
+        seller2.setRole("ROLE_USER");
+        userRepository.save(seller2);
+
+        product1 = productRepository.save(Product.builder()
+                .name("product1")
                 .price(1000)
                 .quantity(10)
                 .seller(seller1)
                 .status(ProductStatus.FOR_SALE)
-                .build();
-        productRepository.save(product1);
+                .build());
+
+        product2 = productRepository.save(Product.builder()
+                .name("product2")
+                .price(1000)
+                .quantity(10)
+                .seller(seller2)
+                .status(ProductStatus.FOR_SALE)
+                .build());
     }
 
 
@@ -310,6 +332,51 @@ class ProductServiceTest {
 
         // then
         Assertions.assertEquals(customException.getErrorCode(), ErrorCode.PRODUCT_SOLD_OUT);
+    }
+
+    @Test
+    @DisplayName("구매한 제품 목록 조회 - 성공")
+    @Transactional
+    void findOrderedProductListTest_성공() {
+        // when
+        List<ProductResponse> confirmedProductList = productService.findOrderedProductList(buyer2.getId());
+
+        // then
+        Assertions.assertEquals(confirmedProductList.size(), 1);
+    }
+
+    @Test
+    @DisplayName("예약중인 제품 목록 조회 - 성공")
+    @Transactional
+    void findReservedProductListTest_성공() {
+        // given
+        orderRepository.save(Order.builder()
+                .quantity(5)
+                .confirmedPrice(product1.getPrice())
+                .product(product1)
+                .seller(seller1)
+                .buyer(buyer1)
+                .status(OrderStatus.PENDING)
+                .build());
+
+        product1.modifyQuantity(5);
+
+        orderRepository.save(Order.builder()
+                .quantity(5)
+                .confirmedPrice(product2.getPrice())
+                .product(product2)
+                .seller(seller2)
+                .buyer(buyer1)
+                .status(OrderStatus.APPROVED)
+                .build());
+
+        product2.modifyQuantity(5);
+
+        // when
+        List<ProductResponse> reservedProductList = productService.findReservedProductList(buyer1.getId());
+
+        // then
+        Assertions.assertEquals(2, reservedProductList.size());
     }
 
 }

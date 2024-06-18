@@ -4,10 +4,12 @@ import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.example.wantedmarket.status.ProductStatus;
 
 @Entity
 @Getter
+@ToString
 @NoArgsConstructor
 @Table(name="products")
 public class Product {
