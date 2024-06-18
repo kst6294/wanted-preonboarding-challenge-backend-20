@@ -40,8 +40,7 @@ public class OrderService {
         User buyer = userRepository.findById(userId).orElseThrow(
                 () ->  new CustomException(ErrorCode.USER_NOT_FOUND));
 
-        Product product = productRepository.findById(request.getProductId()).orElseThrow(
-                () ->  new CustomException(ErrorCode.PRODUCT_NOT_FOUND));
+        Product product = productRepository.findByWithPessimisticLock(request.getProductId());
 
         User seller = userRepository.findById(product.getSeller().getId()).orElseThrow(
                 () ->  new CustomException(ErrorCode.USER_NOT_FOUND));
@@ -74,7 +73,6 @@ public class OrderService {
 
         // 주문 수량을 뺀 만큼 제품 재고 수량 변경
         product.modifyQuantity(request.getQuantity());
-
 
         Order newOrder = orderRepository.save(
                 Order.builder()
