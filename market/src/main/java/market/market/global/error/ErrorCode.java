@@ -10,8 +10,11 @@ public enum ErrorCode {
 
     USER_NOT_FOUND(404, "User Not Found"),
     USER_ALREADY_EXISTS(409, "User Already Exists"),
-    TRANSACTION_ALREADY_EXISTS(409, "Transaction Already Exists"),
+    TRANSACTION_STATUS_ALREADY_EXISTS(409, "Transaction Status Already Exists"),
+    TRANSACTION_STATUS_NOT_READY(409, "Transaction Status Not Ready"),
     USER_MISS_MATCHED(409, "User Miss Match"),
+    PRODUCT_ZERO_QUANTITY(409, "Product Zero Quantity"),
+    PRODUCT_COMPLETION_QUANTITY(409, "Product Completion Quantity"),
     ROLE_NOT_FOUND(404,"Role Not Found"),
     PRODUCT_NOT_FOUND(404, "Product Not Found"),
     TRANSACTION_NOT_FOUND(404, "Transaction Not Found"),
