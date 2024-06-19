@@ -21,6 +21,7 @@ public class TransactionController {
     private final QueryTransactionReListService queryTransactionReListService;
     private final QueryProductTransactionDetailService queryProductTransactionDetailService;
     private final UpdateTransactionService updateTransactionService;
+    private final ConfirmationTransactionService confirmationTransactionService;
 
     @Operation(summary = "거래 등록", description = "거래를 등록합니다.")
     @ResponseStatus(HttpStatus.CREATED)
@@ -35,7 +36,6 @@ public class TransactionController {
         return queryTransactionListService.execute();
     }
 
-
     @Operation(summary = "예약 리스트", description = "(판매자/구매자) 예약 용품을 볼 수 있습니다.")
     @GetMapping("/list/reservation")
     public List<QueryTransactionListResponse> listReservation() {
@@ -49,8 +49,13 @@ public class TransactionController {
     }
 
     @Operation(summary = "판매 확정", description = "용품을 판매자가 판매 확정을 할 수 있습니다.")
-    @PatchMapping("/Confirmation/{product_id}")
+    @PatchMapping("/Confirmation/sell/{product_id}")
     public void confirm(@PathVariable(name = "product_id") Long id) {
         updateTransactionService.execute(id);
     }
+
+    @Operation(summary = "구매 확정",description = "용품을 구매자가 구매 확정을 할 수 있습니다.")
+    @PatchMapping("/confirmation/buy/{product_id}")
+    public void buy(@PathVariable(name = "product_id") Long id) { confirmationTransactionService.execute(id); }
+
 }
