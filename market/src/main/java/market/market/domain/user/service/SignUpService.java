@@ -23,6 +23,7 @@ public class SignUpService {
     @Transactional
     public void execute(SignUpRequest request) {
 
+        userFacade.exitsByEmail(request.getEmail());
         userFacade.existsByAccountId(request.getAccountId());
 
         if (!request.getPassword().equals(request.getPasswordValid())) {
