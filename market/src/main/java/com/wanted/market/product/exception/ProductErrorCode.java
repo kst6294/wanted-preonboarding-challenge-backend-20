@@ -1,0 +1,21 @@
+package com.wanted.market.product.exception;
+
+import com.wanted.market.ErrorCode;
+import lombok.Getter;
+import org.springframework.http.HttpStatus;
+
+@Getter
+public enum ProductErrorCode implements ErrorCode {
+    STATUS_NOT_ON_SALE(HttpStatus.CONFLICT, "판매중인 상품이 아닙니다."),
+    NOT_FOUND(HttpStatus.NOT_FOUND, "상품을 찾을 수 없습니다.");
+
+
+    private HttpStatus httpStatus;
+    private String message;
+
+    ProductErrorCode(HttpStatus httpStatus, String message){
+        this.httpStatus = httpStatus;
+        this.message = message;
+    }
+
+}
