@@ -24,9 +24,16 @@ public class UserFacade {
                 .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
 
     }
+
     public User getUserByEmail(String email) {
         return userRepository.findUserByEmail(email)
                 .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
+    }
+
+    public void exitsByEmail(String email) {
+        if(userRepository.existsByEmail(email)){
+            throw new CustomException(ErrorCode.EXIST_EMAIL);
+        }
     }
 
     public void existsByAccountId(String accountId){
