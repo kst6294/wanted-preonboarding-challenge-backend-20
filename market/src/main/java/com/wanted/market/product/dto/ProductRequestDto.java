@@ -8,24 +8,21 @@ import lombok.*;
 
 @Getter
 @Builder
+@Setter
 public class ProductRequestDto {
 
-    private Integer id;
-
-    private String name;
-
+    private String productName;
     private Integer price;
-
     private Integer quantity;
+    private Member seller;
 
-
-    public Product toEntity() {
+    public Product toEntity(Member member) {
         return Product.builder()
-                .id(id)
-                .name(name)
+                .name(productName)
                 .price(price)
                 .quantity(quantity)
                 .status(ProductStatus.ON_SALE)
+                .seller(member)
                 .build();
     }
 

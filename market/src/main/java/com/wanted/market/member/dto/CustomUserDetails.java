@@ -1,6 +1,7 @@
 package com.wanted.market.member.dto;
 
 import com.wanted.market.member.domain.Member;
+import com.wanted.market.member.model.MemberRole;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -12,7 +13,7 @@ public class CustomUserDetails implements UserDetails {
     private Member member;
 
     public CustomUserDetails(Member member) {
-        this.member = member;
+         this.member = member;
     }
 
     // 특정 권한 가져오기
@@ -20,7 +21,6 @@ public class CustomUserDetails implements UserDetails {
     public Collection<? extends GrantedAuthority> getAuthorities() {
 
         Collection<GrantedAuthority> collection = new ArrayList<>();
-        
         collection.add(new GrantedAuthority() {
 
             @Override
@@ -31,6 +31,7 @@ public class CustomUserDetails implements UserDetails {
         });
         return collection;
     }
+
 
     @Override
     public String getPassword() {

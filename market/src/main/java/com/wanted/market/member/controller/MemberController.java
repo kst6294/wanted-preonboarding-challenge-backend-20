@@ -1,7 +1,7 @@
 package com.wanted.market.member.controller;
 
 import com.wanted.market.member.dto.MemberRequestDto;
-import com.wanted.market.member.dto.MemberResponseDto;
+import com.wanted.market.member.dto.MemberDetailResponseDto;
 import com.wanted.market.member.service.MemberService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,8 +20,8 @@ public class MemberController {
     }
 
     @PostMapping("/join")
-    public ResponseEntity<MemberResponseDto> join(@RequestBody MemberRequestDto memberRequestDto){
-        MemberResponseDto newMember = memberService.join(memberRequestDto);
+    public ResponseEntity<MemberDetailResponseDto> join(@RequestBody MemberRequestDto memberRequestDto){
+        MemberDetailResponseDto newMember = memberService.join(memberRequestDto);
         return ResponseEntity.ok(newMember);
     }
 }

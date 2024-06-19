@@ -6,6 +6,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Optional;
 
 @Entity
 @Getter
@@ -21,7 +22,7 @@ public class Member {
     @Column(nullable = false, unique = true)
     private String email;
 
-    @Column(nullable = false)
+    @Column(nullable = false, name = "member_name")
     private String name;
 
     @Column(nullable = false)
@@ -37,4 +38,5 @@ public class Member {
         this.password = password;
         this.role = role;
     }
+
 }

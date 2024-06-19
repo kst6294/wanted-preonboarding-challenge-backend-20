@@ -8,10 +8,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -27,23 +27,31 @@ public class Product {
     @Column(name = "product_id")
     private Integer id;
 
-    @Column(nullable = false)
+    @Column(name = "product_name", nullable = false)
     private String name;
 
-    @Column
     @Min(0)
+    @Column(nullable = false)
     private Integer price;
 
-    @Column
     @Min(0)
+    @Column(nullable = false)
     private Integer quantity;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private ProductStatus status;
 
-    @OneToMany
-    private List<Order> orders;
+    @JoinColumn(name = "seller")
+    @ManyToOne
+    private Member seller;
+
+    @JoinColumn(name = "buyer")
+    @ManyToOne
+    private Member buyer;
+
+    @OneToMany(mappedBy = "product")
+    private List<Order> orders = new ArrayList<>();
 
     public void order() {
         this.quantity--;

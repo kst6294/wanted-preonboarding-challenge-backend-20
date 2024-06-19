@@ -1,8 +1,8 @@
 package com.wanted.market.member.service;
 
 import com.wanted.market.member.dto.MemberRequestDto;
-import com.wanted.market.member.dto.MemberResponseDto;
+import com.wanted.market.member.dto.MemberDetailResponseDto;
 
 public interface MemberService {
-    MemberResponseDto join(MemberRequestDto memberRequestDto);
+    MemberDetailResponseDto join(MemberRequestDto memberRequestDto);
 }

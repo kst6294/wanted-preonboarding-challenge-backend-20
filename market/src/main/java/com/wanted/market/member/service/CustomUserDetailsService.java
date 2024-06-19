@@ -3,6 +3,8 @@ package com.wanted.market.member.service;
 import com.wanted.market.member.domain.Member;
 import com.wanted.market.member.dto.CustomUserDetails;
 import com.wanted.market.member.repository.MemberRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -20,10 +22,10 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         Member member = memberRepository.findByEmail(email);
-
-        if(member != null){
-            return new CustomUserDetails(member);
+        if(member == null){
+            throw new UsernameNotFoundException("user not found");
         }
-        return null;
+        return new CustomUserDetails(member);
     }
+
 }
