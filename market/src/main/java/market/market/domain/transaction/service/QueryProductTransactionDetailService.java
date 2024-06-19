@@ -12,6 +12,8 @@ import market.market.domain.user.facade.UserFacade;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Objects;
+
 @Service
 @RequiredArgsConstructor
 public class QueryProductTransactionDetailService {
@@ -24,20 +26,17 @@ public class QueryProductTransactionDetailService {
         Product product = productFacade.getProductById(productId);
         User user = userFacade.getCurrentUser();
 
-        if(product.getStatus() == Status.Reservation || product.getStatus() == Status.Completion) {
-            Transaction transaction = transactionFacade.getTransactionByProduct(product);
-            if(product.getUser() == user) {
-                return QueryTransactionDetailResponse.builder()
-                        .transactionId(transaction.getId())
-                        .buyerId(transaction.getBuyer_id())
-                        .buyerName(transaction.getBuyer_accountid())
-                        .sellerId(transaction.getSeller_id())
-                        .sellerName(transaction.getSeller_accountid())
-                        .status(product.getStatus().getTitle())
-                        .price(product.getPrice()).build();
-            }
-            else return null;
+        Transaction transaction = transactionFacade.getTransactionByProduct(product);
+        if(Objects.equals(transaction.getBuyer_id(), user.getId()) || Objects.equals(transaction.getSeller_id(), user.getId())) {
+            return QueryTransactionDetailResponse.builder()
+                    .transactionId(transaction.getId())
+                    .buyerId(transaction.getBuyer_id())
+                    .buyerName(transaction.getBuyer_accountid())
+                    .sellerId(transaction.getSeller_id())
+                    .sellerName(transaction.getSeller_accountid())
+                    .status(transaction.getStatus().name())
+                    .price(product.getPrice()).build();
         }
-        return null;
+        else return null;
     }
 }

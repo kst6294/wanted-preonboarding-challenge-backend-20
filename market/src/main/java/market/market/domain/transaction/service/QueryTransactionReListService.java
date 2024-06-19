@@ -3,6 +3,7 @@ package market.market.domain.transaction.service;
 import lombok.RequiredArgsConstructor;
 import market.market.domain.product.enums.Status;
 import market.market.domain.transaction.domain.Transaction;
+import market.market.domain.transaction.enums.TransactionStatus;
 import market.market.domain.transaction.facade.TransactionFacade;
 import market.market.domain.transaction.presentation.dto.response.QueryTransactionListResponse;
 import market.market.domain.user.domain.User;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -27,8 +29,9 @@ public class QueryTransactionReListService {
         List<Transaction> transactions = transactionFacade.getTransactionAllById(sort);
 
         return transactions.stream()
-                .filter(transaction -> transaction.getProduct().getUser() == user)
-                .filter(transaction -> transaction.getProduct().getStatus() == Status.Reservation)
+                .filter(transaction -> Objects.equals(transaction.getBuyer_id(), user.getId()) || Objects.equals(transaction.getSeller_id(), user.getId()))
+                .filter(transaction -> transaction.getStatus() == TransactionStatus.APPROVAL  ||
+                        transaction.getStatus() == TransactionStatus.UNDEFINED)
                 .map(transaction -> QueryTransactionListResponse.builder()
                         .transactionId(transaction.getId())
                         .productId(transaction.getProduct().getId())

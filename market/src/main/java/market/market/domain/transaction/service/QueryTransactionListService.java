@@ -3,6 +3,7 @@ package market.market.domain.transaction.service;
 import lombok.RequiredArgsConstructor;
 import market.market.domain.product.enums.Status;
 import market.market.domain.transaction.domain.Transaction;
+import market.market.domain.transaction.enums.TransactionStatus;
 import market.market.domain.transaction.facade.TransactionFacade;
 import market.market.domain.transaction.presentation.dto.response.QueryTransactionListResponse;
 import market.market.domain.user.domain.User;
@@ -29,7 +30,7 @@ public class QueryTransactionListService {
 
         return transactions.stream()
                 .filter(transaction -> Objects.equals(transaction.getBuyer_id(), user.getId()))
-                .filter(transaction -> transaction.getProduct().getStatus() == Status.Completion)
+                .filter(transaction -> transaction.getStatus() == TransactionStatus.CONFIRMED)
                 .map(transaction -> QueryTransactionListResponse.builder()
                         .transactionId(transaction.getId())
                         .productId(transaction.getProduct().getId())
