@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import market.market.domain.product.domain.Product;
 import market.market.domain.transaction.domain.Transaction;
 import market.market.domain.transaction.domain.repository.TransactionRepository;
+import market.market.domain.transaction.enums.TransactionStatus;
 import market.market.global.error.ErrorCode;
 import market.market.global.error.exeception.CustomException;
 import org.springframework.data.domain.Sort;
@@ -28,5 +29,13 @@ public class TransactionFacade {
 
     public List<Transaction> getTransactionAllById(Sort sort){
         return transactionRepository.findAll(sort);
+    }
+
+    public boolean existsTransactionByIdAndProduct(Long id, Product product) {
+        return transactionRepository.existsByBuyerIdAndProduct(id, product);
+    }
+
+    public boolean boolTransactionByUndefinedOrApproval(TransactionStatus status, TransactionStatus status2) {
+        return transactionRepository.existsByStatusIn(status, status2);
     }
 }
