@@ -20,12 +20,25 @@ public class CreateProductService {
     public void execute(CreateProduct createProduct) {
         User user = userFacade.getCurrentUser();
 
+        /*
         productRepository.save(
                 Product.builder()
                         .user(user)
                         .name(createProduct.getName())
                         .price(createProduct.getPrice())
                         .status(Status.Sale)
+                        .build()
+        );
+        */
+
+        // 2단계 물품 수량 추가
+        productRepository.save(
+                Product.builder()
+                        .user(user)
+                        .name(createProduct.getName())
+                        .price(createProduct.getPrice())
+                        .status(Status.Sale)
+                        .quantity(createProduct.getQuantity())
                         .build()
         );
     }

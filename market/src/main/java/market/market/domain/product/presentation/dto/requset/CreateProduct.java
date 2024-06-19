@@ -12,4 +12,8 @@ public class CreateProduct {
 
     @Schema(description = "제품 가격", nullable = false)
     private int price; // 가격
+
+    // 2단계 추가
+    @Schema(description = "제품 수량", nullable = false)
+    private int quantity; // 가격
 }

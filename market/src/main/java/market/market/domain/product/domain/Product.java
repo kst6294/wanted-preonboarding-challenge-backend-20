@@ -33,15 +33,23 @@ public class Product extends BaseEntity {
     @OneToMany(mappedBy = "product", cascade = CascadeType.REMOVE)
     private List<Transaction> transactions;
 
+    // 2단계
+    private int quantity; // 수량
+
     @Builder
-    public Product(String name, int price, Status status, User user) {
+    public Product(String name, int price, Status status, User user, int quantity) {
         this.name = name;
         this.price = price;
         this.status = status;
         this.user = user;
+        this.quantity = quantity;
     }
 
     public void updateStatus(Status status) {
         this.status = status;
+    }
+
+    public void updateQuantity() {
+        this.quantity -=1;
     }
 }
