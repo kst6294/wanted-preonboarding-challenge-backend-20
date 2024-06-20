@@ -1,6 +1,8 @@
 package com.wanted.market.order.dto;
 
+import com.wanted.market.member.dto.MemberResponseDto;
 import com.wanted.market.order.domain.Order;
+import com.wanted.market.order.model.OrderStatus;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -16,7 +18,8 @@ public class OrderResponseDto {
     private int productPrice;
     private int productQuantity;
     private String productStatus;
-    private String memberName;
+    private String orderStatus;
+    private MemberResponseDto buyer;
 
 
     public static OrderResponseDto createFromEntity(Order order){
@@ -26,8 +29,9 @@ public class OrderResponseDto {
                 .productName(order.getProduct().getName())
                 .productPrice(order.getProduct().getPrice())
                 .productQuantity(order.getProduct().getQuantity())
-                .productStatus(order.getProduct().getStatus().toString())
-                .memberName(order.getMember().getName())
+                .productStatus(order.getProduct().getProductStatus().toString())
+                .orderStatus(order.getOrderStatus().toString())
+                .buyer(MemberResponseDto.createFromEntity(order.getBuyer()))
                 .build();
     }
 

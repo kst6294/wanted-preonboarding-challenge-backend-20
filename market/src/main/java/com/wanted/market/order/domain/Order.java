@@ -1,6 +1,7 @@
 package com.wanted.market.order.domain;
 
 import com.wanted.market.member.domain.Member;
+import com.wanted.market.order.model.OrderStatus;
 import com.wanted.market.product.domain.Product;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -21,17 +22,30 @@ public class Order {
     @Column(name = "order_id")
     private Integer id;
 
+    @Enumerated(EnumType.STRING)
+    private OrderStatus orderStatus;
+
     @ManyToOne
     @JoinColumn(name = "product_id")
     private Product product;
 
     @ManyToOne
-    @JoinColumn(name = "member_id")
-    private Member member;
+    @JoinColumn(name = "seller_id")
+    private Member seller;
+
+    @ManyToOne
+    @JoinColumn(name = "buyer_id")
+    private Member buyer;
 
     @Builder
-    public Order(Member member, Product product) {
-        this.member = member;
+    public Order(Member seller, Member buyer, OrderStatus orderStatus, Product product) {
+        this.seller = seller;
+        this.buyer = buyer;
+        this.orderStatus = orderStatus;
         this.product = product;
+    }
+
+    public void modifyStatus(OrderStatus orderStatus) {
+        this.orderStatus = orderStatus;
     }
 }

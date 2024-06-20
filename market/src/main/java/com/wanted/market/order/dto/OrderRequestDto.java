@@ -8,6 +8,4 @@ public class OrderRequestDto {
 
     private Integer productId;
 
-    private Integer memberId;
-
 }

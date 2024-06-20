@@ -32,4 +32,11 @@ public class OrderController {
         List<OrderResponseDto> orderResponseDtos = orderService.getAll();
         return ResponseEntity.ok(orderResponseDtos);
     }
+
+    @PatchMapping("/{orderId}/approve")
+    @PreAuthorize("hasAnyAuthority('SELLER')")
+    public ResponseEntity<OrderResponseDto> approveOrder(@AuthenticationPrincipal CustomUserDetails customUserDetails, @PathVariable Integer orderId){
+        OrderResponseDto orderResponseDto = orderService.approveOrder(customUserDetails.getUsername(), orderId);
+        return ResponseEntity.ok(orderResponseDto);
+    }
 }

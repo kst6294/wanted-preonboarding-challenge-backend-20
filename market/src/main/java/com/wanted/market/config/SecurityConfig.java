@@ -63,7 +63,6 @@ public class SecurityConfig {
               .authorizeHttpRequests(auth -> auth
                       .antMatchers(HttpMethod.POST, "/products").hasAuthority("SELLER")
                       .antMatchers(HttpMethod.GET, "/products").permitAll()
-                      .antMatchers(HttpMethod.GET, "/products/*").permitAll()
                       .antMatchers(HttpMethod.POST, "/orders").hasAuthority("BUYER")
                       .anyRequest().permitAll()
               );
