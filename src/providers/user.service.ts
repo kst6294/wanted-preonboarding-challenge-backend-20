@@ -1,14 +1,12 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { UserCreateInput } from 'src/model/dto/user.create.Input';
+import UserCreateInput from 'src/model/dto/user.create.Input';
 import { User_Status } from 'src/model/enums/user.status.enum';
 import { User } from 'src/model/user.entity';
 import { Repository } from 'typeorm';
 
-
 @Injectable()
-export class UserService {
-
+export default class UserService {
   constructor(
     @InjectRepository(User)
     private readonly userRepo: Repository<User>
