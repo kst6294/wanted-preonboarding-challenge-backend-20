@@ -1,7 +1,7 @@
 package com.wanted.market.product.repository;
 
 import com.wanted.market.product.domain.Product;
-import com.wanted.market.product.dto.ProductResponseDto;
+import com.wanted.market.product.model.ProductStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;

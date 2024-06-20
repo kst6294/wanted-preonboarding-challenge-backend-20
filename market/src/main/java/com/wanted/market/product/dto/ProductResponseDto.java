@@ -26,7 +26,7 @@ public class ProductResponseDto {
                 .productName(product.getName())
                 .price(product.getPrice())
                 .quantity(product.getQuantity())
-                .status(product.getStatus().toString())
+                .status(product.getProductStatus().toString())
                 .seller(MemberResponseDto.createFromEntity(product.getSeller()))
                 .build();
     }

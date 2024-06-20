@@ -21,7 +21,7 @@ public class ProductRequestDto {
                 .name(productName)
                 .price(price)
                 .quantity(quantity)
-                .status(ProductStatus.ON_SALE)
+                .productStatus(ProductStatus.ON_SALE)
                 .seller(member)
                 .build();
     }

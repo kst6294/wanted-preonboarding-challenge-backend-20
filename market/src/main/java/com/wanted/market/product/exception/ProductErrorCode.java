@@ -7,8 +7,8 @@ import org.springframework.http.HttpStatus;
 @Getter
 public enum ProductErrorCode implements ErrorCode {
     STATUS_NOT_ON_SALE(HttpStatus.CONFLICT, "판매중인 상품이 아닙니다."),
-    NOT_FOUND(HttpStatus.NOT_FOUND, "상품을 찾을 수 없습니다.");
-
+    NOT_FOUND(HttpStatus.NOT_FOUND, "상품을 찾을 수 없습니다."),
+    NO_RESERVED_PRODUCT(HttpStatus.NOT_FOUND, "예약중인 상품이 없습니다.");
 
     private HttpStatus httpStatus;
     private String message;

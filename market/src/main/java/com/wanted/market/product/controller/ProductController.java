@@ -50,4 +50,18 @@ public class ProductController {
         List<ProductResponseDto> productResponseDtos = productService.findAll();
         return ResponseEntity.ok().body(productResponseDtos);
     }
+
+    /*내가 구매한 제품 조회*/
+    @GetMapping("/completed")
+    public ResponseEntity<List<ProductResponseDto>> getOrderedProductList(@AuthenticationPrincipal CustomUserDetails customUserDetails){
+        List<ProductResponseDto> productResponseDto = productService.findMyProductByMemberId(customUserDetails.getUsername());
+        return ResponseEntity.ok().body(productResponseDto);
+    }
+
+    /*예약중인 제품 조회*/
+    @GetMapping("/reserved")
+    public ResponseEntity<List<ProductResponseDto>> getReservedProductList(@AuthenticationPrincipal CustomUserDetails customUserDetails){
+        List<ProductResponseDto> productResponseDto = productService.findReservedProduct(customUserDetails.getUsername());
+        return ResponseEntity.ok().body(productResponseDto);
+    }
 }

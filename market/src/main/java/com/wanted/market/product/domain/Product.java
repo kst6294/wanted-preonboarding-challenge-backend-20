@@ -40,15 +40,11 @@ public class Product {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private ProductStatus status;
+    private ProductStatus productStatus;
 
     @JoinColumn(name = "seller")
     @ManyToOne
     private Member seller;
-
-    @JoinColumn(name = "buyer")
-    @ManyToOne
-    private Member buyer;
 
     @OneToMany(mappedBy = "product")
     private List<Order> orders = new ArrayList<>();
@@ -57,4 +53,7 @@ public class Product {
         this.quantity--;
     }
 
+    public void modifyStatus(ProductStatus productStatus) {
+        this.productStatus = productStatus;
+    }
 }
