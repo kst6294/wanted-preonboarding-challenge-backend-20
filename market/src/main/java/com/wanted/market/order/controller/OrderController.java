@@ -1,10 +1,12 @@
 package com.wanted.market.order.controller;
 
+import com.wanted.market.member.dto.CustomUserDetails;
 import com.wanted.market.order.dto.OrderRequestDto;
 import com.wanted.market.order.dto.OrderResponseDto;
 import com.wanted.market.order.service.OrderService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -22,8 +24,8 @@ public class OrderController {
 
     @PostMapping
     @PreAuthorize("hasAnyAuthority('buyer')")
-    public ResponseEntity<OrderResponseDto> order(@Valid @RequestBody OrderRequestDto orderRequestDto){
-        OrderResponseDto newOrder = orderService.order(orderRequestDto);
+    public ResponseEntity<OrderResponseDto> order(@AuthenticationPrincipal CustomUserDetails customUserDetails, @Valid @RequestBody OrderRequestDto orderRequestDto){
+        OrderResponseDto newOrder = orderService.order(customUserDetails.getUsername(), orderRequestDto);
         return ResponseEntity.ok(newOrder);
     }
 

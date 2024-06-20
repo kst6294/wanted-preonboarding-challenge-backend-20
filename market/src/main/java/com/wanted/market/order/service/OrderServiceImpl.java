@@ -18,6 +18,7 @@ import com.wanted.market.product.model.ProductStatus;
 import com.wanted.market.product.repository.ProductRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -36,12 +37,14 @@ public class OrderServiceImpl implements OrderService{
         this.memberRepository = memberRepository;
     }
 
+    /* 제품 주문 */
     @Override
+    @Transactional
     public OrderResponseDto order(String email, OrderRequestDto orderRequestDto) {
 
         // 주문자 확인
-        Member member = memberRepository.findByEmail(email);
-        memberRepository.findById(member.getId()).orElseThrow(() -> new MemberException(MemberErrorCode.NOT_FOUND));
+        Member member = memberRepository.findById(memberRepository.findByEmail(email).getId())
+                .orElseThrow(() -> new MemberException(MemberErrorCode.NOT_FOUND));
 
         // 주문하려는 상품 확인
         Product product = productRepository.findById(orderRequestDto.getProductId())
@@ -52,15 +55,29 @@ public class OrderServiceImpl implements OrderService{
             throw new ProductException(ProductErrorCode.STATUS_NOT_ON_SALE);
         }
 
+        // 상품 수량 차감
+        try {
+            product.order(orderRequestDto.getQuantity());
+        }catch(ProductException p){
+            log.error("재고가 부족합니다.");
+            if(product.getQuantity() < orderRequestDto.getQuantity()){
+                throw new ProductException(ProductErrorCode.OUT_OF_STOCK);
+            }
+        }
+
+        if(product.getQuantity() == 0){ // 추가 판매가 불가능하고 현재 구매확정을 대기하고 있는 경우 - 예약중
+            product.modifyStatus(ProductStatus.RESERVED);
+        } else {    //추가 판매가 가능한 수량이 남아있는 경우 - 판매중
+            product.modifyStatus(ProductStatus.ON_SALE);
+        }
+
         Order order = Order.builder()
                 .product(product)
                 .seller(product.getSeller())
+                .orderQuantity(orderRequestDto.getQuantity())
                 .buyer(member)
                 .orderStatus(OrderStatus.TRADING)
                 .build();
-
-        // 상품 수량 차감
-        product.order();
 
         return OrderResponseDto.createFromEntity(orderRepository.save(order));
     }
@@ -76,6 +93,7 @@ public class OrderServiceImpl implements OrderService{
 
     /* 판매자 판매 승인 */
     @Override
+    @Transactional
     public OrderResponseDto approveOrder(String email, Integer orderId){
         // 판매자
         Member member = memberRepository.findByEmail(email);
@@ -88,13 +106,19 @@ public class OrderServiceImpl implements OrderService{
 
         // 사용자가 seller 아니거나, 해당 상품 판매자가 아닐때
         if(!order.getSeller().getId().equals(member.getId())){
-            log.info("approveOrder : 해당 상품 판매자가 아님");
+            log.error("approveOrder : 해당 상품 판매자가 아님");
             throw new MemberException(MemberErrorCode.NOT_SELLER);
         }
 
-        // 주문 상태 승인, 제품 상태 판매완료
+        // 주문 상태(판매완료)
         order.modifyStatus(OrderStatus.TRADE_APPROVE);
-        order.getProduct().modifyStatus(ProductStatus.COMPLETED);
+
+        // 제품 상태
+        if(order.getProduct().getQuantity() == 0){ // 추가 판매가 불가능하고 구매확정 - 판매완료
+            order.getProduct().modifyStatus(ProductStatus.COMPLETED);
+        } else {    //추가 판매가 가능한 수량이 남아있는 경우 - 판매중
+            order.getProduct().modifyStatus(ProductStatus.ON_SALE);
+        }
 
         return OrderResponseDto.createFromEntity(order);
     }

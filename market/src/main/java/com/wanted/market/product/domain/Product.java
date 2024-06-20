@@ -49,8 +49,8 @@ public class Product {
     @OneToMany(mappedBy = "product")
     private List<Order> orders = new ArrayList<>();
 
-    public void order() {
-        this.quantity--;
+    public void order(Integer quantity) {
+        this.quantity -= quantity;
     }
 
     public void modifyStatus(ProductStatus productStatus) {
