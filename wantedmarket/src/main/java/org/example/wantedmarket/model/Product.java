@@ -22,30 +22,28 @@ public class Product {
 
     private Integer price;
 
-    private Integer quantity;
+    private Integer stock;
+
+    private Long owner;
 
     @Enumerated(EnumType.STRING)
-    private ProductStatus status;
-
-    @ManyToOne
-    @JoinColumn(name="seller_id")
-    private User seller;
+    private ProductStatus productStatus;
 
     @Builder
-    public Product(String name, Integer price, Integer quantity, ProductStatus status, User seller) {
+    public Product(String name, Integer price, Integer stock, ProductStatus productStatus, Long sellerId) {
         this.name = name;
         this.price = price;
-        this.quantity = quantity;
-        this.status = status;
-        this.seller = seller;
+        this.stock = stock;
+        this.productStatus = productStatus;
+        this.sellerId = sellerId;
     }
 
-    public void modifyStatus(ProductStatus status) {
-        this.status = status;
+    public void modifyProductStatus(ProductStatus productStatus) {
+        this.productStatus = productStatus;
     }
 
-    public void modifyQuantity(Integer quantity) {
-        this.quantity -= quantity;
+    public void decreaseStock(Integer quantity) {
+        this.stock -= quantity;
     }
 
     public void modifyPrice(Integer price) {

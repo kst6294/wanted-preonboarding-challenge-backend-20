@@ -20,7 +20,7 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
     properties:
       dialect: org.hibernate.dialect.MySQL8Dialect
       hibernate:

@@ -1,16 +1,14 @@
 package org.example.wantedmarket.model;
 
 import jakarta.persistence.*;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.example.wantedmarket.status.OrderStatus;
 import org.example.wantedmarket.status.ProductStatus;
 
 @Entity
 @Getter
 @NoArgsConstructor
+@ToString
 @Table(name="orders")
 public class Order {
 
@@ -20,51 +18,33 @@ public class Order {
 
     private Integer quantity;
 
-    private Integer confirmedPrice;
+    private Integer orderedPrice;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "product_id")
-    private Product product;
+    private Long productId;
 
-    @ManyToOne
-    @JoinColumn(name = "seller_id")
-    private User seller;
+    private Long sellerId;
 
-    @ManyToOne
-    @JoinColumn(name = "buyer_id")
-    private User buyer;
+    private Long buyerId;
 
     @Enumerated(EnumType.STRING)
-    private OrderStatus status;
+    private OrderStatus orderStatus;
 
     @Builder
-    public Order(Integer quantity, Integer confirmedPrice, Product product, User seller, User buyer, OrderStatus status) {
+    public Order(Integer quantity, Integer orderedPrice, Long productId, Long sellerId, Long buyerId, OrderStatus orderStatus) {
         this.quantity = quantity;
-        this.confirmedPrice = confirmedPrice;
-        this.product = product;
-        this.seller = seller;
-        this.buyer = buyer;
-        this.status = status;
+        this.orderedPrice = orderedPrice;
+        this.productId = productId;
+        this.sellerId = sellerId;
+        this.buyerId = buyerId;
+        this.orderStatus = orderStatus;
     }
 
-    public void modifyStatus(OrderStatus status) {
-        this.status = status;
+    public void modifyOrderStatus(OrderStatus orderStatus) {
+        this.orderStatus = orderStatus;
     }
 
-    public void modifyConfirmedPrice(Integer confirmedPrice) {
-        this.confirmedPrice = confirmedPrice;
+    public void determineOrderedPrice(Integer orderedPrice) {
+        this.orderedPrice = orderedPrice;
     }
 
-    @Override
-    public String toString() {
-        return "Order{" +
-                "id=" + id +
-                ", quantity= " + quantity +
-                ", confirmedPrice=" + confirmedPrice +
-                ", product=" + product +
-                ", seller=" + seller +
-                ", buyer=" + buyer +
-                ", status=" + status +
-                '}';
-    }
 }
