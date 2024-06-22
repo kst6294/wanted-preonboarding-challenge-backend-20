@@ -10,7 +10,7 @@ import org.example.wantedmarket.dto.product.ProductCreateRequest;
 import org.example.wantedmarket.dto.product.ProductUpdateRequest;
 import org.example.wantedmarket.dto.user.CustomUserDetails;
 import org.example.wantedmarket.exception.CustomException;
-import org.example.wantedmarket.repository.UserRepository;
+import org.example.wantedmarket.repository.jpa.UserJpaRepository;
 import org.example.wantedmarket.service.ProductService;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.*;
 public class ProductController {
 
     private final ProductService productService;
-    private final UserRepository userRepository;
+    private final UserJpaRepository userRepository;
 
     /* 제품 등록 */
     @PostMapping

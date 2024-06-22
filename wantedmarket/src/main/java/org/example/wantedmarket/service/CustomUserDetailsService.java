@@ -2,8 +2,8 @@ package org.example.wantedmarket.service;
 
 import lombok.RequiredArgsConstructor;
 import org.example.wantedmarket.dto.user.CustomUserDetails;
-import org.example.wantedmarket.model.User;
-import org.example.wantedmarket.repository.UserRepository;
+import org.example.wantedmarket.domain.User;
+import org.example.wantedmarket.repository.jpa.UserJpaRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class CustomUserDetailsService implements UserDetailsService {
 
-    private final UserRepository userRepository;
+    private final UserJpaRepository userRepository;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

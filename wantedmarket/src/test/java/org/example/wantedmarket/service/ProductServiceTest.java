@@ -7,12 +7,12 @@ import org.example.wantedmarket.dto.product.ProductResponse;
 import org.example.wantedmarket.dto.product.ProductUpdateRequest;
 import org.example.wantedmarket.exception.CustomException;
 import org.example.wantedmarket.exception.ErrorCode;
-import org.example.wantedmarket.model.Order;
-import org.example.wantedmarket.model.Product;
-import org.example.wantedmarket.model.User;
-import org.example.wantedmarket.repository.OrderRepository;
+import org.example.wantedmarket.domain.Order;
+import org.example.wantedmarket.domain.Product;
+import org.example.wantedmarket.domain.User;
+import org.example.wantedmarket.repository.jpa.OrderJpaRepository;
 import org.example.wantedmarket.repository.ProductRepository;
-import org.example.wantedmarket.repository.UserRepository;
+import org.example.wantedmarket.repository.jpa.UserJpaRepository;
 import org.example.wantedmarket.status.OrderStatus;
 import org.example.wantedmarket.status.ProductStatus;
 import org.junit.jupiter.api.Assertions;
@@ -24,10 +24,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class ProductServiceTest {
@@ -35,11 +32,11 @@ class ProductServiceTest {
     @Autowired
     BCryptPasswordEncoder bCryptPasswordEncoder;
     @Autowired
-    UserRepository userRepository;
+    UserJpaRepository userRepository;
     @Autowired
     ProductRepository productRepository;
     @Autowired
-    OrderRepository orderRepository;
+    OrderJpaRepository orderRepository;
     @Autowired
     ProductService productService;
 

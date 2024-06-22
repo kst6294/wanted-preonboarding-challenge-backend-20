@@ -1,4 +1,4 @@
-package org.example.wantedmarket.model;
+package org.example.wantedmarket.domain;
 
 import jakarta.persistence.*;
 import lombok.Builder;
@@ -24,18 +24,18 @@ public class Product {
 
     private Integer stock;
 
-    private Long owner;
+    private Long ownerId;
 
     @Enumerated(EnumType.STRING)
     private ProductStatus productStatus;
 
     @Builder
-    public Product(String name, Integer price, Integer stock, ProductStatus productStatus, Long sellerId) {
+    public Product(String name, Integer price, Integer stock, ProductStatus productStatus, Long ownerId) {
         this.name = name;
         this.price = price;
         this.stock = stock;
         this.productStatus = productStatus;
-        this.sellerId = sellerId;
+        this.ownerId = ownerId;
     }
 
     public void modifyProductStatus(ProductStatus productStatus) {

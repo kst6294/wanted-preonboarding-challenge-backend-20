@@ -1,13 +1,11 @@
 package org.example.wantedmarket.repository;
 
-import lombok.extern.slf4j.Slf4j;
-import org.example.wantedmarket.model.User;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
+import org.example.wantedmarket.domain.User;
 
-@Repository
-public interface UserRepository extends JpaRepository<User, Long> {
-    User findByUsername(String username);
+public interface UserRepository {
+
+    User getByUsername(String username);
 
     Boolean existsByUsername(String username);
+
 }

@@ -4,7 +4,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import org.example.wantedmarket.model.User;
+import org.example.wantedmarket.domain.User;
 
 @Getter
 @Setter

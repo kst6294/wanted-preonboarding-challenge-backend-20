@@ -9,7 +9,7 @@ import org.example.wantedmarket.dto.common.ApiResponse;
 import org.example.wantedmarket.dto.order.OrderCreateRequest;
 import org.example.wantedmarket.dto.user.CustomUserDetails;
 import org.example.wantedmarket.exception.CustomException;
-import org.example.wantedmarket.repository.UserRepository;
+import org.example.wantedmarket.repository.jpa.UserJpaRepository;
 import org.example.wantedmarket.service.OrderService;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.*;
 public class OrderController {
 
     private final OrderService orderService;
-    private final UserRepository userRepository;
+    private final UserJpaRepository userRepository;
 
     /* 제품 주문 */
 

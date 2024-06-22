@@ -6,12 +6,12 @@ import org.example.wantedmarket.dto.order.OrderCreateRequest;
 import org.example.wantedmarket.dto.order.OrderResponse;
 import org.example.wantedmarket.exception.CustomException;
 import org.example.wantedmarket.exception.ErrorCode;
-import org.example.wantedmarket.model.Order;
-import org.example.wantedmarket.model.Product;
-import org.example.wantedmarket.model.User;
-import org.example.wantedmarket.repository.OrderRepository;
+import org.example.wantedmarket.domain.Order;
+import org.example.wantedmarket.domain.Product;
+import org.example.wantedmarket.domain.User;
+import org.example.wantedmarket.repository.jpa.OrderJpaRepository;
 import org.example.wantedmarket.repository.ProductRepository;
-import org.example.wantedmarket.repository.UserRepository;
+import org.example.wantedmarket.repository.jpa.UserJpaRepository;
 import org.example.wantedmarket.status.OrderStatus;
 import org.example.wantedmarket.status.ProductStatus;
 import org.springframework.stereotype.Service;
@@ -26,8 +26,8 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class OrderService {
 
-    private final OrderRepository orderRepository;
-    private final UserRepository userRepository;
+    private final OrderJpaRepository orderRepository;
+    private final UserJpaRepository userRepository;
     private final ProductRepository productRepository;
 
     /* 제품 주문

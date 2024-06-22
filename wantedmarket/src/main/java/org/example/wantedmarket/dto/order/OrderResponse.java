@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.example.wantedmarket.dto.product.ProductResponse;
 import org.example.wantedmarket.dto.user.UserResponse;
-import org.example.wantedmarket.model.Order;
+import org.example.wantedmarket.domain.Order;
 import org.example.wantedmarket.status.OrderStatus;
 
 @Getter

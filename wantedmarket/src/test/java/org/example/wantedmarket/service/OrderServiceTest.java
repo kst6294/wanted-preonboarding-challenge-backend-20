@@ -4,12 +4,12 @@ import org.example.wantedmarket.dto.order.OrderCreateRequest;
 import org.example.wantedmarket.dto.order.OrderResponse;
 import org.example.wantedmarket.exception.CustomException;
 import org.example.wantedmarket.exception.ErrorCode;
-import org.example.wantedmarket.model.Order;
-import org.example.wantedmarket.model.Product;
-import org.example.wantedmarket.model.User;
-import org.example.wantedmarket.repository.OrderRepository;
+import org.example.wantedmarket.domain.Order;
+import org.example.wantedmarket.domain.Product;
+import org.example.wantedmarket.domain.User;
+import org.example.wantedmarket.repository.jpa.OrderJpaRepository;
 import org.example.wantedmarket.repository.ProductRepository;
-import org.example.wantedmarket.repository.UserRepository;
+import org.example.wantedmarket.repository.jpa.UserJpaRepository;
 import org.example.wantedmarket.status.OrderStatus;
 import org.example.wantedmarket.status.ProductStatus;
 import org.junit.jupiter.api.Assertions;
@@ -30,11 +30,11 @@ class OrderServiceTest {
     @Autowired
     BCryptPasswordEncoder bCryptPasswordEncoder;
     @Autowired
-    UserRepository userRepository;
+    UserJpaRepository userRepository;
     @Autowired
     ProductRepository productRepository;
     @Autowired
-    OrderRepository orderRepository;
+    OrderJpaRepository orderRepository;
     @Autowired
     ProductService productService;
     @Autowired
