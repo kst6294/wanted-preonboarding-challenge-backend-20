@@ -9,6 +9,10 @@ import org.example.wantedmarket.exception.ErrorCode;
 import org.example.wantedmarket.domain.Order;
 import org.example.wantedmarket.domain.Product;
 import org.example.wantedmarket.domain.User;
+import org.example.wantedmarket.repository.OrderRepository;
+import org.example.wantedmarket.repository.UserRepository;
+import org.example.wantedmarket.repository.impl.OrderRepositoryImpl;
+import org.example.wantedmarket.repository.impl.ProductRepositoryImpl;
 import org.example.wantedmarket.repository.jpa.OrderJpaRepository;
 import org.example.wantedmarket.repository.ProductRepository;
 import org.example.wantedmarket.repository.jpa.UserJpaRepository;
@@ -26,8 +30,8 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class OrderService {
 
-    private final OrderJpaRepository orderRepository;
-    private final UserJpaRepository userRepository;
+    private final OrderRepository orderRepository;
+    private final UserRepository userRepository;
     private final ProductRepository productRepository;
 
     /* 제품 주문
@@ -84,8 +88,6 @@ public class OrderService {
         newOrder.determineOrderedPrice(product.getPrice()); // 제품 주문을 한 순간, 구매 가격 확정
         orderRepository.save(newOrder);
 
-        log.info("newOrder: " + newOrder.getId());
-
         return OrderResponse.from(newOrder);
     }
 
@@ -135,7 +137,7 @@ public class OrderService {
         }
 
         // 추가 판매 불가
-        if (product.isEnoughStockForNextOrder()) {
+        if (!product.isEnoughStockForNextOrder()) {
             product.modifyProductStatus(ProductStatus.SOLD_OUT);
         }
 

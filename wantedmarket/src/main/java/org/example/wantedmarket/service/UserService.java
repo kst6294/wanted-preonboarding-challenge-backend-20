@@ -7,6 +7,7 @@ import org.example.wantedmarket.dto.user.UserResponse;
 import org.example.wantedmarket.exception.CustomException;
 import org.example.wantedmarket.exception.ErrorCode;
 import org.example.wantedmarket.domain.User;
+import org.example.wantedmarket.repository.UserRepository;
 import org.example.wantedmarket.repository.jpa.UserJpaRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -18,7 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserService {
 
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
-    private final UserJpaRepository userRepository;
+    private final UserRepository userRepository;
 
 
     @Transactional

@@ -9,6 +9,8 @@ import org.example.wantedmarket.exception.ErrorCode;
 import org.example.wantedmarket.domain.Order;
 import org.example.wantedmarket.domain.Product;
 import org.example.wantedmarket.domain.User;
+import org.example.wantedmarket.repository.impl.OrderRepositoryImpl;
+import org.example.wantedmarket.repository.impl.ProductRepositoryImpl;
 import org.example.wantedmarket.repository.jpa.OrderJpaRepository;
 import org.example.wantedmarket.repository.ProductRepository;
 import org.example.wantedmarket.repository.jpa.UserJpaRepository;
@@ -26,9 +28,8 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class ProductService {
 
-    private final ProductRepository productRepository;
-    private final UserJpaRepository userRepository;
-    private final OrderJpaRepository orderRepository;
+    private final ProductRepositoryImpl productRepository;
+    private final OrderRepositoryImpl orderRepository;
 
     /* 제품 등록 */
     @Transactional
@@ -59,7 +60,7 @@ public class ProductService {
     }
 
     /* 제품 상세 조회  without 거래내역 */
-    @Transactional(readOnly = true)
+    @Transactional
     public ProductResponse findDetailProduct(Long productId) {
         Product findProduct = productRepository.findById(productId).orElseThrow(
                 () ->  new CustomException(ErrorCode.PRODUCT_NOT_FOUND));
@@ -68,7 +69,7 @@ public class ProductService {
     }
 
     /* 제품 상세 조회 with 거래내역 */
-    @Transactional(readOnly = true)
+    @Transactional
     public ProductDetailResponse findDetailProductWithTransaction(Long userId, Long productId) {
         Product findProduct = productRepository.findById(productId).orElseThrow(
                 () ->   new CustomException(ErrorCode.PRODUCT_NOT_FOUND));
@@ -89,7 +90,7 @@ public class ProductService {
     }
 
     /* 구매한 제품 목록 조회 */
-    @Transactional(readOnly = true)
+    @Transactional
     public List<ProductResponse> findOrderedProductList(Long userId) {
         List<Order> orders = orderRepository.findAllByBuyerIdAndOrderStatus(userId, OrderStatus.CONFIRMED);
         List<ProductResponse> orderedProductList = new ArrayList<>();
@@ -115,7 +116,7 @@ public class ProductService {
     *
     *  조회하는 사람이 판매자이든 구매자이든 상관없이 예약중인 제품이면 확인 가능
     */
-    @Transactional(readOnly = true)
+    @Transactional
     public List<ProductResponse> findReservedProductList(Long userId) {
         List<Order> orders = new ArrayList<>();
         orders.addAll(orderRepository.findAllByBuyerIdAndOrderStatus(userId, OrderStatus.PENDING));
