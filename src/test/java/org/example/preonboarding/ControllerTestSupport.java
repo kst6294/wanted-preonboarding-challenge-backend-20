@@ -1,6 +1,7 @@
 package org.example.preonboarding;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.example.preonboarding.member.controller.MemberController;
 import org.example.preonboarding.member.service.MemberService;
 import org.example.preonboarding.member.util.MemberUtil;
 import org.example.preonboarding.order.controller.OrderController;
@@ -12,11 +13,14 @@ import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfi
 import org.springframework.boot.autoconfigure.security.servlet.UserDetailsServiceAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
+@ActiveProfiles("test")
 @WebMvcTest(controllers = {
         OrderController.class,
         ProductController.class,
+        MemberController.class,
 }, excludeAutoConfiguration = {
         UserDetailsServiceAutoConfiguration.class, SecurityAutoConfiguration.class
 }
