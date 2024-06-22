@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ProductJpaRepository extends JpaRepository<Product, Long> {
 
@@ -15,6 +16,6 @@ public interface ProductJpaRepository extends JpaRepository<Product, Long> {
 
     @Lock(value = LockModeType.PESSIMISTIC_WRITE)
     @Query("select p from Product p where p.id = :id")
-    Product findByIdWithPessimisticLock(final Long id);
+    Optional<Product> findByIdWithPessimisticLock(final Long id);
 
 }

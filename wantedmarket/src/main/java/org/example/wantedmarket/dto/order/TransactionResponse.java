@@ -14,17 +14,17 @@ public class TransactionResponse {
 
     private Long id;
     private Integer quantity;
-    private Integer confirmedPrice;
+    private Integer orderPrice;
     private OrderStatus orderStatus;
-    private UserResponse buyer;
+    private Long buyerId;
 
     public static TransactionResponse from(Order order) {
         return TransactionResponse.builder()
                 .id(order.getId())
                 .quantity(order.getQuantity())
-                .confirmedPrice(order.getConfirmedPrice())
-                .orderStatus(order.getStatus())
-                .buyer(UserResponse.from(order.getBuyer()))
+                .orderPrice(order.getOrderedPrice())
+                .orderStatus(order.getOrderStatus())
+                .buyerId(order.getBuyerId())
                 .build();
     }
 

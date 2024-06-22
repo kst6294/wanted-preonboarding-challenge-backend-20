@@ -32,24 +32,21 @@ public class ProductService {
 
     /* 제품 등록 */
     @Transactional
-    public ProductResponse saveProduct(Long userId, ProductCreateRequest request) {
-        User seller = userRepository.findById(userId).orElseThrow(
-                () -> new CustomException(ErrorCode.USER_NOT_FOUND));
-
+    public boolean saveProduct(Long userId, ProductCreateRequest request) {
         // 재고가 1개 이상일 때만 제품 등록을 할 수 있음
         if (request.getQuantity() < 1) {
             throw new CustomException(ErrorCode.PRODUCT_NOT_ENOUGH);
         }
 
-        Product newProduct = productRepository.save(Product.builder()
+        productRepository.save(Product.builder()
                 .name(request.getName())
                 .price(request.getPrice())
-                .status(ProductStatus.FOR_SALE)
-                .quantity(request.getQuantity())
-                .seller(seller)
+                .productStatus(ProductStatus.FOR_SALE)
+                .stock(request.getQuantity())
+                .ownerId(userId)
                 .build());
 
-        return ProductResponse.from(newProduct);
+        return true;
     }
 
     /* 제품 전체 목록 조회 */
@@ -80,7 +77,7 @@ public class ProductService {
 
         List<Order> orders = orderRepository.findAllByProductId(productId);
         for(Order order : orders) {
-            if (order.getSeller().getId().equals(userId) || order.getBuyer().getId().equals(userId)) {
+            if (order.isOrderSeller(userId) || order.isOrderBuyer(userId)) {
                 transactionList.add(TransactionResponse.from(order));
             }
         }
@@ -94,11 +91,12 @@ public class ProductService {
     /* 구매한 제품 목록 조회 */
     @Transactional(readOnly = true)
     public List<ProductResponse> findOrderedProductList(Long userId) {
-        List<Order> orders = orderRepository.findAllByBuyerIdAndStatus(userId, OrderStatus.CONFIRMED);
+        List<Order> orders = orderRepository.findAllByBuyerIdAndOrderStatus(userId, OrderStatus.CONFIRMED);
         List<ProductResponse> orderedProductList = new ArrayList<>();
 
         for (Order order : orders) {
-            Product orderdProduct = order.getProduct();
+            Product orderdProduct = productRepository.findById(order.getProductId()).orElseThrow(
+                    () -> new CustomException(ErrorCode.PRODUCT_NOT_FOUND));
             orderedProductList.add(ProductResponse.from(orderdProduct));
         }
 
@@ -107,7 +105,7 @@ public class ProductService {
 
     /* 내가 등록한 제품 조회 */
     public List<ProductResponse> findMyProductList(Long userId) {
-        return productRepository.findAllBySellerId(userId)
+        return productRepository.findAllByOwnerId(userId)
                 .stream()
                 .map(ProductResponse::from)
                 .collect(Collectors.toList());
@@ -120,16 +118,17 @@ public class ProductService {
     @Transactional(readOnly = true)
     public List<ProductResponse> findReservedProductList(Long userId) {
         List<Order> orders = new ArrayList<>();
-        orders.addAll(orderRepository.findAllByBuyerIdAndStatus(userId, OrderStatus.PENDING));
-        orders.addAll(orderRepository.findAllByBuyerIdAndStatus(userId, OrderStatus.APPROVED));
-        orders.addAll(orderRepository.findAllBySellerIdAndStatus(userId, OrderStatus.PENDING));
-        orders.addAll(orderRepository.findAllBySellerIdAndStatus(userId, OrderStatus.APPROVED));
+        orders.addAll(orderRepository.findAllByBuyerIdAndOrderStatus(userId, OrderStatus.PENDING));
+        orders.addAll(orderRepository.findAllByBuyerIdAndOrderStatus(userId, OrderStatus.APPROVED));
+        orders.addAll(orderRepository.findAllBySellerIdAndOrderStatus(userId, OrderStatus.PENDING));
+        orders.addAll(orderRepository.findAllBySellerIdAndOrderStatus(userId, OrderStatus.APPROVED));
         orders.stream().distinct().collect(Collectors.toList());
 
         List<ProductResponse> reservedProductList = new ArrayList<>();
 
         for (Order order : orders) {
-            Product reservedProduct = order.getProduct();
+            Product reservedProduct =  productRepository.findById(order.getProductId()).orElseThrow(
+                    () -> new CustomException(ErrorCode.PRODUCT_NOT_FOUND));
             reservedProductList.add(ProductResponse.from(reservedProduct));
         }
 
@@ -142,22 +141,25 @@ public class ProductService {
         Product product = productRepository.findById(request.getId()).orElseThrow(
                 () -> new CustomException(ErrorCode.PRODUCT_NOT_FOUND));
 
-        if (!product.getSeller().getId().equals(userId)) {
-            throw new CustomException(ErrorCode.USER_NOT_SELLER);
+        if (!product.isProductOwner(userId)) {
+            throw new CustomException(ErrorCode.USER_NOT_OWNER);
         }
 
-        if (product.getPrice().equals(request.getPrice())) {
+        if (product.isSameFromPreviousPrice(request.getPrice())) {
             throw new CustomException(ErrorCode.SAME_AS_PREVIOUS_PRICE);
         }
 
-        // SOLD_OUT 제품은 가격을 수정할 필요가 없음
-        if (product.getStatus().equals(ProductStatus.SOLD_OUT)) {
+        if (checkProductStatus(product, ProductStatus.SOLD_OUT)) {
             throw new CustomException(ErrorCode.PRODUCT_SOLD_OUT);
         }
 
         product.modifyPrice(request.getPrice());
 
         return ProductResponse.from(product);
+    }
+
+    private boolean checkProductStatus(Product product, ProductStatus productStatus) {
+        return product.getProductStatus().equals(productStatus);
     }
 
 }

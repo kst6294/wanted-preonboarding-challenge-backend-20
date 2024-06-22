@@ -50,4 +50,20 @@ public class Product {
         this.price = price;
     }
 
+    public boolean isProductOwner(Long userId) {
+        return this.ownerId.equals(userId);
+    }
+
+    public boolean isSameFromPreviousPrice(Integer updatedPrice) {
+        return this.price.equals(updatedPrice);
+    }
+
+    public boolean isEnoughStockForOrder(Integer quantity) {
+        return this.getStock() >= quantity;
+    }
+
+    public boolean isEnoughStockForNextOrder() {
+        return this.getStock() > 0;
+    }
+
 }

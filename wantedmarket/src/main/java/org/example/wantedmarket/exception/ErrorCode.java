@@ -9,6 +9,7 @@ public enum ErrorCode {
 
     USER_NOT_FOUND("등록된 사용자가 없습니다."),
     USER_NOT_SELLER("해당 제품의 판매자가 아닙니다."),
+    USER_NOT_OWNER("해당 제품의 소유자가 아닙니다."),
     USER_NOT_BUYER("해당 제품의 구매자가 아닙니다."),
     USERNAME_ALREADY_IN_USE("이미 사용중인 이름입니다."),
 

@@ -15,19 +15,19 @@ public class OrderResponse {
 
     private Long id;
     private Integer quantity;
-    private Integer confirmedPrice;
+    private Integer orderedPrice;
     private OrderStatus orderStatus;
-    private ProductResponse product;
-    private UserResponse buyer;
+    private Long productId;
+    private Long buyerId;
 
     public static OrderResponse from(Order order) {
         return OrderResponse.builder()
                 .id(order.getId())
                 .quantity(order.getQuantity())
-                .confirmedPrice(order.getConfirmedPrice())
-                .orderStatus(order.getStatus())
-                .product(ProductResponse.from(order.getProduct()))
-                .buyer(UserResponse.from(order.getBuyer()))
+                .orderedPrice(order.getOrderedPrice())
+                .orderStatus(order.getOrderStatus())
+                .productId(order.getProductId())
+                .buyerId(order.getBuyerId())
                 .build();
     }
 

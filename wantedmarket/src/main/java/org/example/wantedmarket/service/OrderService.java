@@ -40,49 +40,51 @@ public class OrderService {
         User buyer = userRepository.findById(userId).orElseThrow(
                 () ->  new CustomException(ErrorCode.USER_NOT_FOUND));
 
-        Product product = productRepository.findByWithPessimisticLock(request.getProductId());
+        Product product = productRepository.findById(request.getProductId()).orElseThrow(
+                () ->  new CustomException(ErrorCode.PRODUCT_NOT_FOUND));
 
-        User seller = userRepository.findById(product.getSeller().getId()).orElseThrow(
+        User seller = userRepository.findById(product.getOwnerId()).orElseThrow(
                 () ->  new CustomException(ErrorCode.USER_NOT_FOUND));
 
         if (orderRepository.existsByBuyerId(buyer.getId())) {
             throw new CustomException(ErrorCode.ALREADY_ORDERED);
         }
 
-        if (product.getStatus() == ProductStatus.IN_RESERVATION) {
+        if (checkProductStatus(product, ProductStatus.IN_RESERVATION)) {
             throw new CustomException(ErrorCode.PRODUCT_IN_RESERVATION);
         }
 
-        if (product.getStatus() == ProductStatus.SOLD_OUT) {
+        if (checkProductStatus(product, ProductStatus.SOLD_OUT)) {
             throw new CustomException(ErrorCode.PRODUCT_SOLD_OUT);
         }
 
-        if (product.getSeller().getId().equals(userId)) {
+        if (product.isProductOwner(userId)) {
             throw new CustomException(ErrorCode.ORDER_MY_PRODUCT_NOT_ALLOWED);
         }
 
-        // 재고가 주문수량보다 부족할 때
-        if (product.getQuantity() < request.getQuantity()) {
+        if (!product.isEnoughStockForOrder(request.getQuantity())) {
             throw new CustomException(ErrorCode.PRODUCT_NOT_ENOUGH);
         }
 
-        // 추가 판매 가능한 수량이 없을 경우
-        if (product.getQuantity().equals(request.getQuantity())) {
-            product.modifyStatus(ProductStatus.IN_RESERVATION);
+        // 추가 판매 불가한 경우
+        if (!product.isEnoughStockForNextOrder()) {
+            product.modifyProductStatus(ProductStatus.IN_RESERVATION);
         }
 
-        // 주문 수량을 뺀 만큼 제품 재고 수량 변경
-        product.modifyQuantity(request.getQuantity());
+        // 주문 수량 만큼 재고 차감
+        product.decreaseStock(request.getQuantity());
 
-        Order newOrder = orderRepository.save(
-                Order.builder()
+        Order newOrder = Order.builder()
                 .quantity(request.getQuantity())
-                .confirmedPrice(product.getPrice()) // 제품 주문을 한 순간, 구매 가격 확정
-                .product(product)
-                .buyer(buyer)
-                .seller(seller)
-                .status(OrderStatus.PENDING)
-                .build());
+                .productId(request.getProductId())
+                .buyerId(userId)
+                .sellerId(seller.getId())
+                .orderStatus(OrderStatus.PENDING)
+                .build();
+        newOrder.determineOrderedPrice(product.getPrice()); // 제품 주문을 한 순간, 구매 가격 확정
+        orderRepository.save(newOrder);
+
+        log.info("newOrder: " + newOrder.getId());
 
         return OrderResponse.from(newOrder);
     }
@@ -97,18 +99,16 @@ public class OrderService {
         Order order = orderRepository.findById(orderId).orElseThrow(
                 () ->  new CustomException(ErrorCode.ORDER_NOT_FOUND));
 
-        // 주문을 승인하는 사용자가 판매자가 맞는지 확인
-        if (!order.getSeller().getId().equals(userId)) {
+        if (!order.isOrderSeller(userId)) {
             throw new CustomException(ErrorCode.USER_NOT_SELLER);
         }
 
-        // 판매 승인 가능한 상태가 아님
-        if (order.getStatus() != OrderStatus.PENDING) {
+        if (!checkOrderStatus(order, OrderStatus.PENDING)) {
             throw new CustomException(ErrorCode.ORDER_NOT_PENDING);
         }
 
         // 판매 승인
-        order.modifyStatus(OrderStatus.APPROVED);
+        order.modifyOrderStatus(OrderStatus.APPROVED);
 
         return OrderResponse.from(order);
     }
@@ -123,24 +123,24 @@ public class OrderService {
         Order order = orderRepository.findById(orderId).orElseThrow(
                 () -> new CustomException(ErrorCode.ORDER_NOT_FOUND));
 
-        Product product = order.getProduct();
+        Product product = productRepository.findById(order.getProductId()).orElseThrow(
+                () -> new CustomException(ErrorCode.PRODUCT_NOT_FOUND));
 
-        // 구매 확정을 하는 사용자가 구매자가 맞는지 확인
-        if (!order.getBuyer().getId().equals(userId)) {
+        if (!order.isOrderBuyer(userId)) {
             throw new CustomException(ErrorCode.USER_NOT_BUYER);
         }
 
-        // 구매 확정할 수 있는 상태가 아님
-        if (order.getStatus() != OrderStatus.APPROVED) {
+        if (!checkOrderStatus(order, OrderStatus.APPROVED)) {
             throw new CustomException(ErrorCode.ORDER_NOT_APPROVED);
         }
 
-        // 추가 판매 가능한 수량이 없을 경우
-        if (product.getQuantity().equals(0)) {
-            product.modifyStatus(ProductStatus.SOLD_OUT);
+        // 추가 판매 불가
+        if (product.isEnoughStockForNextOrder()) {
+            product.modifyProductStatus(ProductStatus.SOLD_OUT);
         }
 
-        order.modifyStatus(OrderStatus.CONFIRMED); // 구매 확정
+        // 구매 확정
+        order.modifyOrderStatus(OrderStatus.CONFIRMED);
 
         return OrderResponse.from(order);
     }
@@ -152,6 +152,14 @@ public class OrderService {
                 .stream()
                 .map(OrderResponse::from)
                 .collect(Collectors.toList());
+    }
+
+    private boolean checkProductStatus(Product product, ProductStatus productStatus) {
+        return product.getProductStatus().equals(productStatus);
+    }
+
+    private boolean checkOrderStatus(Order order, OrderStatus orderStatus) {
+        return order.getOrderStatus().equals(orderStatus);
     }
 
 }

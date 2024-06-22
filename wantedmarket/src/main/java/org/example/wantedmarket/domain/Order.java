@@ -46,4 +46,12 @@ public class Order {
         this.orderedPrice = orderedPrice;
     }
 
+    public boolean isOrderSeller(Long userId) {
+        return this.sellerId.equals(userId);
+    }
+
+    public boolean isOrderBuyer(Long userId) {
+        return this.buyerId.equals(userId);
+    }
+
 }
