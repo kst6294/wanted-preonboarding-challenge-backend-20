@@ -1,7 +1,9 @@
-import { Column, Entity } from 'typeorm';
+import { Column, Entity, JoinColumn, OneToMany } from 'typeorm';
 import { BaseEntityWithId } from './base.entity.withid';
 import { User_Status } from './enums/user.status.enum';
 import { UnauthorizedException } from '@nestjs/common';
+import { Order } from './order.entity';
+import { Product } from './product.entity';
 
 @Entity()
 export class User extends BaseEntityWithId {
@@ -14,6 +16,12 @@ export class User extends BaseEntityWithId {
   password: string;
   @Column()
   status: User_Status;
+
+  @OneToMany(() => Order, (order: Order) => order.user)
+  orderList: Order[];
+
+  @OneToMany(() => Product, (product: Product) => product.user)
+  productList: Product[];
 
   constructor() {
     super();

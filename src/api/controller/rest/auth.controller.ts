@@ -1,6 +1,6 @@
 import { Body, Controller, Get, Global, Injectable, Param, Post, Query, UseGuards } from '@nestjs/common';
 import { Public } from 'src/baseinfra/decorator/public.api.decorator';
-import UserCreateInput from 'src/model/dto/user.create.Input';
+import UserCreateInput from 'src/model/dto/user.Input';
 import { AuthService } from 'src/providers/auth.service';
 import UserService from 'src/providers/user.service';
 
@@ -10,7 +10,6 @@ import UserService from 'src/providers/user.service';
 export class AuthController {
 
   constructor(
-    private readonly userSvc: UserService,
     private readonly authSvc: AuthService
   ) { }
 
@@ -29,6 +28,7 @@ export class AuthController {
   }
 
 
+  @Get("log-out")
   logOut() {
 
   }

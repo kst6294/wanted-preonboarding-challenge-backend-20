@@ -3,9 +3,9 @@ import { Injectable } from '@nestjs/common';
 
 import { User } from 'src/model/user.entity';
 import { JwtService } from '@nestjs/jwt';
-
-import UserCreateInput from 'src/model/dto/user.create.Input';
+;
 import UserService from './user.service';
+import UserCreateInput from 'src/model/dto/user.create.Input';
 
 @Injectable()
 export class AuthService {
@@ -21,7 +21,7 @@ export class AuthService {
   async signIn(id: string, password: string) {
     const find = await this.userSvc.findOneByEmail(id);
     find.validatePassword(password);
-    const payload = { sub: find.getId(), username: find.email };
+    const payload = { id: find.getId(), username: find.email };
     return { access_token: await this.jwtSvc.signAsync(payload) };
   }
 }
