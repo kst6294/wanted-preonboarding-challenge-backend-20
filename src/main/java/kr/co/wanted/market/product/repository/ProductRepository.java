@@ -21,7 +21,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     /**
      * 차감 후 재고가 0개라면 상품의 상태를 '예약중' 으로 변경하면서
-     * 재고가 0개 이하로 변경되지 않도록 한다.
+     * 재고가 0개 미만으로 변경되지 않도록 한다.
      *
      * @param id       상품 ID
      * @param quantity 차감할 재고 수
