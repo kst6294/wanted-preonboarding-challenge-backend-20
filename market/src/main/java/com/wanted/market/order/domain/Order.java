@@ -1,5 +1,6 @@
 package com.wanted.market.order.domain;
 
+import com.wanted.market.BaseEntity;
 import com.wanted.market.member.domain.Member;
 import com.wanted.market.order.dto.OrderRequestDto;
 import com.wanted.market.order.model.OrderStatus;
@@ -16,12 +17,13 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Table(name="orders")
 @NoArgsConstructor
-public class Order {
+@AttributeOverride(name = "id", column = @Column(name = "order_id"))
+public class Order extends BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "order_id")
-    private Integer id;
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @Column(name = "order_id")
+//    private Integer id;
 
     @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus;

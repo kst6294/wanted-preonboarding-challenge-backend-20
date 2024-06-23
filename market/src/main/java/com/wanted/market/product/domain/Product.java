@@ -1,6 +1,7 @@
 package com.wanted.market.product.domain;
 
 
+import com.wanted.market.BaseEntity;
 import com.wanted.market.member.domain.Member;
 import com.wanted.market.order.domain.Order;
 import com.wanted.market.product.model.ProductStatus;
@@ -20,12 +21,13 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Product {
+@AttributeOverride(name = "id", column = @Column(name = "product_id"))
+public class Product extends BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "product_id")
-    private Integer id;
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @Column(name = "product_id")
+//    private Integer id;
 
     @Column(name = "product_name", nullable = false)
     private String name;
