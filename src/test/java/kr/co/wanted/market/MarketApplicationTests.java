@@ -1,4 +1,4 @@
-package kr.co.wanted.market.market;
+package kr.co.wanted.market;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

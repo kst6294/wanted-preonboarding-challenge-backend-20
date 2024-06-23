@@ -1,5 +1,34 @@
-## 원티드 프리온보딩 챌린지 백엔드 20 사전과제
+# 원티드 프리온보딩 챌린지 백엔드 20 사전과제
 
+## 구현내용
+
+### ERD
+![ERD](./img/market.png)
+
+### 설명
+- Swagger UI : http://localhost:8080/swagger-ui/index.html
+- H2 Console : http://localhost:8080/h2-console
+  - Driver Class : org.h2.Driver
+  - JDBC URL : jdbc:h2:mem:test;MODE=MySQL
+  - User Name : sa
+- 제품의 재고는 거래 시작(구매요청)시 바로 차감
+  - 동시 요청에 대해 재고가 0개 미만으로 깎이지 않도록 하였습니다.
+- 거래 상태는 REQUEST - BOOKING - CONFIRMATION 순서입니다.
+  - REQUEST : 구매자가 최초 거래 시작시 구매요청 상태
+  - BOOKING : 판매자가 REQUEST 상태의 거래를 승인한 상태
+  - CONFIRMATION : 구매자가 BOOKING 상태의 거래를 구매확정한 상태
+  - 상태 CANCEL 요청시
+    - 구매자 - REQUEST 상태에서만 가능합니다. REQUEST -> CANCEL
+      - 상품의 재고와 상태를 복구시킵니다.
+    - 판매자 - BOOKING 상태에서만 가능합니다. BOOKING -> REQUEST
+- 상품 상태는 SALE - BOOKING - COMPLETION 순서입니다.
+  - SALE : 재고가 남아있는 상태
+  - BOOKING : 재고가 남아있지 않으나 미완료 거래(REQUEST, BOOKING)가 남아있는 경우
+  - COMPLETION : 재고가 남아있지 않고, 완료 거래(CONFIRMATION, CANCEL)만 존재하는 경우
+- 테스트 코드는 Service 계층만 작성했습니다.
+  - 트랜잭션 처리 확인을 위해 통합테스트로 작성했습니다.
+
+## 사전과제 내용
 
 ### 설명
 사용자간 거래가 가능한 Wanted Market API를 생성해야합니다. 요구사항에 맞춰 진행해주세요. 

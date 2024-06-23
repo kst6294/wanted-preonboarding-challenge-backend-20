@@ -1,0 +1,12 @@
+spring:
+#  application.yml 과 다른 폴더에 있다면 인식할 수 있도록 작성
+#  config:
+#    import:
+#      - classpath:/yaml/application-prod.yml
+#      - classpath:/yaml/application-dev.yml
+#      - classpath:/yaml/application-local.yml
+  profiles:
+    active: local
+
+  jpa:
+    open-in-view: false
