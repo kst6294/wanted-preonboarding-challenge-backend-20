@@ -51,24 +51,8 @@
 <br>
 
 ### 제출방법
-
-1. 이 repository 를 clone 해주세요.
+1. 이 repository 를 fork 해주세요.
 2. feature/{name} 으로 브랜치를 생성해주세요. 예: feature/suntae-kim
 3. 과제를 진행해주세요.
-4. 소스코드를 Push 하고 PR을 올려주세요.
+4. 소스코드를 Push 하고 PR을 올려주세요. 
 5. 요구사항에 대해서 궁금한 점이나 이해가 안되는 부분이 있다면 이슈를 남겨주시거나, 편하게 연락주세요 - kst6294@gmail.com
-
-### History
-
-Start Implement
-
-### 미비한 점
-
-1. API Response 랩핑 못한 부분
-2. Static Context 로 User를 유지하지 못한 부분.
-3. Custom Repository를 사용하면서 동적 쿼리 interface를 만들어보지 못한 부분
-4. filter 입력 객체를 가지고 동적 쿼리를 만들지 못한부분
-5. 적절한 Logging 체계를 구현하지 못한부분
-6. 적절한 에러 체계 및 반환형을 정하지 못한부분
-7. 테스트 케이스를 작성하지 못한부분
-8. Api문서화를 작성하지 못한부분...
