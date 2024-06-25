@@ -1,5 +1,6 @@
 package com.sunyesle.wanted_market.product;
 
+import com.sunyesle.wanted_market.global.enums.ProductStatus;
 import com.sunyesle.wanted_market.global.exception.ErrorCodeException;
 import com.sunyesle.wanted_market.global.exception.ProductErrorCode;
 import com.sunyesle.wanted_market.product.dto.ProductDetailResponse;
@@ -53,5 +54,10 @@ public class ProductService {
     public boolean checkSeller(Long productId, Long memberId) {
         Product product = findById(productId);
         return memberId.equals(product.getMemberId());
+    }
+
+    public boolean checkAvailability(Long id) {
+        Product product = findById(id);
+        return product.getStatus() == ProductStatus.AVAILABLE;
     }
 }

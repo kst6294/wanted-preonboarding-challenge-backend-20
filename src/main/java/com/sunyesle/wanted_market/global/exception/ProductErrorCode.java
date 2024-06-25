@@ -9,6 +9,7 @@ public enum ProductErrorCode implements ErrorCode {
     OUT_OF_STOCK(HttpStatus.BAD_REQUEST, "제품의 재고가 부족합니다."),
     NOT_PRODUCT_OWNER(HttpStatus.FORBIDDEN, "상품 접근 권한이 없습니다."),
     INVALID_PRODUCT_STATUS(HttpStatus.BAD_REQUEST, "제품의 상태가 유효하지 않습니다."),
+    PRODUCT_NOT_AVAILABLE(HttpStatus.BAD_REQUEST, "제품을 구매할 수 없습니다."),
     ;
 
     private final HttpStatus httpStatus;

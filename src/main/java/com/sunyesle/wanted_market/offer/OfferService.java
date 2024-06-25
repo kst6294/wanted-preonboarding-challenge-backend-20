@@ -3,6 +3,7 @@ package com.sunyesle.wanted_market.offer;
 import com.sunyesle.wanted_market.global.enums.OfferStatus;
 import com.sunyesle.wanted_market.global.exception.ErrorCodeException;
 import com.sunyesle.wanted_market.global.exception.OfferErrorCode;
+import com.sunyesle.wanted_market.global.exception.ProductErrorCode;
 import com.sunyesle.wanted_market.offer.dto.CreateOfferRequest;
 import com.sunyesle.wanted_market.offer.dto.OfferDetailResponse;
 import com.sunyesle.wanted_market.offer.dto.OfferResponse;
@@ -23,6 +24,9 @@ public class OfferService {
 
     public OfferResponse offer(Long memberId, CreateOfferRequest request) {
         Product product = productService.findById(request.getProductId());
+        if (!productService.checkAvailability(request.getProductId())) {
+            throw new ErrorCodeException(ProductErrorCode.PRODUCT_NOT_AVAILABLE);
+        }
         if (offerRepository.existsByProductIdAndBuyerIdAndStatus(request.getProductId(), memberId, OfferStatus.OPEN)) {
             throw new ErrorCodeException(OfferErrorCode.DUPLICATE_OFFER);
         }
