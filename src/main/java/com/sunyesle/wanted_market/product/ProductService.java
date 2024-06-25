@@ -40,13 +40,13 @@ public class ProductService {
 
     public void makeReservation(Long productId, Integer quantity) {
         // 예약
-        Product product = findById(productId);
+        Product product = productRepository.findByIdWithPessimisticLock(productId);
         product.reserve(quantity);
     }
 
     public void placeOrder(Long productId, Integer quantity) {
         // 주문 확정
-        Product product = findById(productId);
+        Product product = productRepository.findByIdWithPessimisticLock(productId);
         product.purchase(quantity);
     }
 
