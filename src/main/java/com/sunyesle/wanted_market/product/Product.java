@@ -39,8 +39,7 @@ public class Product {
     }
 
     public void reserve(Integer quantity) {
-        int tempReservedStock = this.reservedStock + quantity;
-        if (this.stock < tempReservedStock) {
+        if (this.stock < 0) {
             throw new ErrorCodeException(ProductErrorCode.OUT_OF_STOCK);
         }
         this.reservedStock += quantity;

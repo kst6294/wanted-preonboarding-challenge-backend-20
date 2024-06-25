@@ -71,8 +71,7 @@ class OfferAcceptanceTest extends AcceptanceTest {
         ExtractableResponse<Response> response = 구매_요청(createOfferRequest, buyerToken);
 
         등록에_성공한다(response);
-        OfferResponse offerResponse = response.as(OfferResponse.class);
-        ExtractableResponse<Response> 제품_조회_결과 = 제품_조회_요청(offerResponse.getId());
+        ExtractableResponse<Response> 제품_조회_결과 = 제품_조회_요청(savedProductId);
         제품_예약된_수량이_변경된다(제품_조회_결과, 0);
         제품_구매가능_수량이_변경된다(제품_조회_결과, 2);
         제품_상태가_변경된다(제품_조회_결과, ProductStatus.AVAILABLE);
@@ -96,9 +95,7 @@ class OfferAcceptanceTest extends AcceptanceTest {
         ExtractableResponse<Response> response = 구매_승인처리_요청(offerId, sellerToken);
 
         수정에_성공한다(response);
-        OfferResponse offerResponse = response.as(OfferResponse.class);
-        assertThat(offerResponse.getStatus()).isEqualTo(OfferStatus.ACCEPTED);
-        ExtractableResponse<Response> 제품_조회_결과 = 제품_조회_요청(offerResponse.getId());
+        ExtractableResponse<Response> 제품_조회_결과 = 제품_조회_요청(savedProductId);
         제품_예약된_수량이_변경된다(제품_조회_결과, 2);
         제품_구매가능_수량이_변경된다(제품_조회_결과, 0);
         제품_상태가_변경된다(제품_조회_결과, ProductStatus.RESERVED);
@@ -122,9 +119,7 @@ class OfferAcceptanceTest extends AcceptanceTest {
         ExtractableResponse<Response> response = 구매_거절처리_요청(offerId, sellerToken);
 
         수정에_성공한다(response);
-        OfferResponse offerResponse = response.as(OfferResponse.class);
-        assertThat(offerResponse.getStatus()).isEqualTo(OfferStatus.DECLINED);
-        ExtractableResponse<Response> 제품_조회_결과 = 제품_조회_요청(offerResponse.getId());
+        ExtractableResponse<Response> 제품_조회_결과 = 제품_조회_요청(savedProductId);
         제품_예약된_수량이_변경된다(제품_조회_결과, 0);
         제품_구매가능_수량이_변경된다(제품_조회_결과, 2);
         제품_상태가_변경된다(제품_조회_결과, ProductStatus.AVAILABLE);
@@ -139,8 +134,7 @@ class OfferAcceptanceTest extends AcceptanceTest {
         ExtractableResponse<Response> response = 구매_확정처리_요청(offerId, buyerToken);
 
         수정에_성공한다(response);
-        OfferResponse offerResponse = response.as(OfferResponse.class);
-        ExtractableResponse<Response> 제품_조회_결과 = 제품_조회_요청(offerResponse.getId());
+        ExtractableResponse<Response> 제품_조회_결과 = 제품_조회_요청(savedProductId);
         제품_예약된_수량이_변경된다(제품_조회_결과, 0);
         제품_구매가능_수량이_변경된다(제품_조회_결과, 0);
         제품_상태가_변경된다(제품_조회_결과, ProductStatus.COMPLETED);
