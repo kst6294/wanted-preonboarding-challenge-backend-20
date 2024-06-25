@@ -43,28 +43,33 @@ public class OrderServiceImpl implements OrderService{
     public OrderResponseDto order(String email, OrderRequestDto orderRequestDto) {
 
         // 주문자 확인
-        Member member = memberRepository.findById(memberRepository.findByEmail(email).getId())
-                .orElseThrow(() -> new MemberException(MemberErrorCode.NOT_FOUND));
+        Member member = memberRepository.findByEmail(email);
+        if (member == null) {
+            log.error("order(), 제품 주문시 주문자 찾을 수 없음.");
+            throw new MemberException(MemberErrorCode.NOT_FOUND);
+        }
 
         // 주문하려는 상품 확인
-        Product product = productRepository.findById(orderRequestDto.getProductId())
+        Integer productId = orderRequestDto.getProductId();
+        Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new ProductException(ProductErrorCode.NOT_FOUND));
+
 
         // 상품 판매중 인지 확인
         if(product.getProductStatus() != ProductStatus.ON_SALE){
+            log.error("order(), 제품 주문시 제품 상태가 판매중이 아님.");
             throw new ProductException(ProductErrorCode.STATUS_NOT_ON_SALE);
         }
 
         // 상품 수량 차감
-        try {
-            product.order(orderRequestDto.getQuantity());
-        }catch(ProductException p){
-            log.error("재고가 부족합니다.");
-            if(product.getQuantity() < orderRequestDto.getQuantity()){
-                throw new ProductException(ProductErrorCode.OUT_OF_STOCK);
-            }
+        int requestedQuantity = orderRequestDto.getQuantity();
+        if (product.getQuantity() < requestedQuantity) {
+            log.error("order(), 제품 주문시 재고가 없음.");
+            throw new ProductException(ProductErrorCode.OUT_OF_STOCK);
         }
+        product.order(requestedQuantity);
 
+        // 재고에 따른 상품 상태 변경
         if(product.getQuantity() == 0){ // 추가 판매가 불가능하고 현재 구매확정을 대기하고 있는 경우 - 예약중
             product.modifyStatus(ProductStatus.RESERVED);
         } else {    //추가 판매가 가능한 수량이 남아있는 경우 - 판매중
@@ -74,7 +79,7 @@ public class OrderServiceImpl implements OrderService{
         Order order = Order.builder()
                 .product(product)
                 .seller(product.getSeller())
-                .orderQuantity(orderRequestDto.getQuantity())
+                .orderQuantity(requestedQuantity)
                 .buyer(member)
                 .orderStatus(OrderStatus.TRADING)
                 .build();
@@ -106,7 +111,7 @@ public class OrderServiceImpl implements OrderService{
 
         // 사용자가 seller 아니거나, 해당 상품 판매자가 아닐때
         if(!order.getSeller().getId().equals(member.getId())){
-            log.error("approveOrder : 해당 상품 판매자가 아님");
+            log.error("approveOrder(), 판매 승인시 판매자가 아님");
             throw new MemberException(MemberErrorCode.NOT_SELLER);
         }
 

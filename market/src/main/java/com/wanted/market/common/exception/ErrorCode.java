@@ -1,4 +1,4 @@
-package com.wanted.market;
+package com.wanted.market.common.exception;
 
 import org.springframework.http.HttpStatus;
 

@@ -1,4 +1,4 @@
-package com.wanted.market;
+package com.wanted.market.common.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;

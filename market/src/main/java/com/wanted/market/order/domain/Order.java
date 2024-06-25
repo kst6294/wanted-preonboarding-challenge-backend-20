@@ -1,8 +1,7 @@
 package com.wanted.market.order.domain;
 
-import com.wanted.market.BaseEntity;
+import com.wanted.market.common.entity.BaseEntity;
 import com.wanted.market.member.domain.Member;
-import com.wanted.market.order.dto.OrderRequestDto;
 import com.wanted.market.order.model.OrderStatus;
 import com.wanted.market.product.domain.Product;
 import lombok.AllArgsConstructor;

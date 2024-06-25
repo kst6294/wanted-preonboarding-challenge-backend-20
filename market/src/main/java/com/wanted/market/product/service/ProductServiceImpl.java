@@ -41,9 +41,19 @@ public class ProductServiceImpl implements ProductService{
 
     // 제품 등록
     @Override
+    @Transactional
     public ProductResponseDto registerProduct(String username, ProductRequestDto productRequestDto) {
         // 판매자 정보 조회
         Member seller = memberRepository.findByEmail(username);
+
+        // 판매자, 사용자가 아니면 예외처리
+        if(!seller.getRole().toString().equals("SELLER")){
+            log.error("Member '{}' 상품 등록을 시도했으나 판매자가 아님. Role: {}", username, seller.getRole());
+            throw new MemberException(MemberErrorCode.NOT_SELLER);
+        }else if (username == null){
+            log.error("Member '{}' 상품 등록을 시도했으나 회원이 아님.");
+            throw new MemberException(MemberErrorCode.NOT_EXIST_MEMBER);
+        }
         
         // 판매자 정보와 제품 등록
         Product savedProduct = productRepository.save(productRequestDto.toEntity(seller));
@@ -61,18 +71,13 @@ public class ProductServiceImpl implements ProductService{
         return ProductResponseDto.createFromEntity(findProduct);
     }
 
-    // 제품 아이디로 상세 조회, 거래내역 포함
+    // 제품 상세 조회, 거래내역 포함
     @Override
     @Transactional
     public ProductDetailResponseDto findDetailProductById(String email, Integer id) {
         // 존재하는 상품인지 확인
         Product findProduct = productRepository.findById(id)
-                .orElseThrow(() -> new ProductException(ProductErrorCode.NOT_FOUND));
-
-        // 구매자 확인
-        Member member = memberRepository.findByEmail(email);
-        Member buyer = memberRepository.findById(member.getId())
-                .orElseThrow(() -> new ProductException(ProductErrorCode.NOT_FOUND));
+            .orElseThrow(() -> new ProductException(ProductErrorCode.NOT_FOUND));
 
         // 구매 내역 담을 리스트 생성
         List<OrderDetailResponseDto> orderDetailList = new ArrayList<>();
@@ -81,6 +86,7 @@ public class ProductServiceImpl implements ProductService{
         List<Order> orders = orderRepository.findAllByProductId(id);
 
         // 사용자 아이디 비교하여 사용자가 구매한 구매내역만 조회
+        Member buyer = memberRepository.findByEmail(email);
         for(Order order : orders) {
             if (order.getBuyer().getId() == buyer.getId()) {
                 orderDetailList.add(OrderDetailResponseDto.createFromEntity(order));
@@ -91,6 +97,7 @@ public class ProductServiceImpl implements ProductService{
                 .product(ProductResponseDto.createFromEntity(findProduct))
                 .orderDetailList(orderDetailList)
                 .build();
+
     }
 
     /* 제품 목록 조회 */
@@ -105,10 +112,16 @@ public class ProductServiceImpl implements ProductService{
 
     /* 내가 구매한 제품 조회 */
     @Override
+    @Transactional
     public List<ProductResponseDto> findMyProductByMemberId(String email) {
         // 접속한 구매자 확인
         Member buyer = memberRepository.findByEmail(email);
         Integer memberId = buyer.getId();
+
+        if(buyer.getRole().toString() != "BUYER"){
+            log.error("member '{}' 내가 구매한 조회 시 구매자가 아님., role '{}'", email, buyer.getRole());
+            throw new MemberException(MemberErrorCode.NOT_BUYER);
+        }
 
         // 사용자의 제품리스트 담을 리스트 생성
         List<ProductResponseDto> myProductList = new ArrayList<>();
@@ -129,12 +142,13 @@ public class ProductServiceImpl implements ProductService{
     *   구매자, 판매자 가능
     * */
     @Override
+    @Transactional
     public List<ProductResponseDto> findReservedProduct(String email) throws ProductException{
 
         // 이메일로 사용자 조회
         Integer memberId = memberRepository.findByEmail(email).getId();
-        Member member = memberRepository.findById(memberId)
-                .orElseThrow(() -> new MemberException(MemberErrorCode.NOT_FOUND));
+        memberRepository.findById(memberId)
+            .orElseThrow(() -> new MemberException(MemberErrorCode.NOT_FOUND));
 
         // 판매자, 구매자 주문 내역 담을 리스트 생성
         List<Order> orders = new ArrayList<>();
@@ -159,7 +173,7 @@ public class ProductServiceImpl implements ProductService{
 
         // 예약중인 상품이 없는 경우
         if (reservedProductList.isEmpty()) {
-            log.info("findReservedProduct(): 예약중인 상품이 없습니다.");
+            log.error("findReservedProduct(): 예약중인 상품이 없습니다.");
             throw new ProductException(ProductErrorCode.NO_RESERVED_PRODUCT);
         }
 

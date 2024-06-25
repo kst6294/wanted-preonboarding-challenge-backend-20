@@ -1,12 +1,12 @@
 package com.wanted.market.product.controller;
 
+import com.wanted.market.common.dto.ApiResponse;
 import com.wanted.market.member.dto.CustomUserDetails;
 import com.wanted.market.product.dto.ProductDetailResponseDto;
 import com.wanted.market.product.dto.ProductRequestDto;
 import com.wanted.market.product.dto.ProductResponseDto;
 import com.wanted.market.product.service.ProductService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,42 +26,42 @@ public class ProductController {
 
     /* 제품 등록 */
     @PostMapping
-    public ResponseEntity<ProductResponseDto> registerProduct(@AuthenticationPrincipal CustomUserDetails customUserDetails, @Valid @RequestBody ProductRequestDto productRequestDto) {
+    public ApiResponse<ProductResponseDto> registerProduct(@AuthenticationPrincipal CustomUserDetails customUserDetails, @Valid @RequestBody ProductRequestDto productRequestDto) {
         ProductResponseDto productResponseDto = productService.registerProduct(customUserDetails.getUsername(), productRequestDto);
-        return ResponseEntity.ok(productResponseDto);
+        return ApiResponse.success(productResponseDto);
     }
 
     /* 제품 상세 조회*/
     @GetMapping("/{id}")
-    public ResponseEntity<?> getProduct(@AuthenticationPrincipal CustomUserDetails customUserDetails, @PathVariable Integer id) {
+    public ApiResponse<?> getProduct(@AuthenticationPrincipal CustomUserDetails customUserDetails, @PathVariable Integer id) {
         // 회원, with 구매내역
         if(customUserDetails != null){
             ProductDetailResponseDto productDetailResponseDto = productService.findDetailProductById(customUserDetails.getUsername(), id);
-            return ResponseEntity.ok().body(productDetailResponseDto);
+            return ApiResponse.success(productDetailResponseDto);
         }
         // 비회원
         ProductResponseDto productResponseDto = productService.findById(customUserDetails.getUsername(), id);
-        return ResponseEntity.ok().body(productResponseDto);
+        return ApiResponse.success(productResponseDto);
     }
 
     /* 제품 목록 조회 */
     @GetMapping
-    public ResponseEntity<List<ProductResponseDto>> getProductList() {
+    public ApiResponse<List<ProductResponseDto>> getProductList() {
         List<ProductResponseDto> productResponseDtos = productService.findAll();
-        return ResponseEntity.ok().body(productResponseDtos);
+        return ApiResponse.success(productResponseDtos);
     }
 
     /*내가 구매한 제품 조회*/
     @GetMapping("/completed")
-    public ResponseEntity<List<ProductResponseDto>> getOrderedProductList(@AuthenticationPrincipal CustomUserDetails customUserDetails){
+    public ApiResponse<List<ProductResponseDto>> getOrderedProductList(@AuthenticationPrincipal CustomUserDetails customUserDetails){
         List<ProductResponseDto> productResponseDto = productService.findMyProductByMemberId(customUserDetails.getUsername());
-        return ResponseEntity.ok().body(productResponseDto);
+        return ApiResponse.success(productResponseDto);
     }
 
     /*예약중인 제품 조회*/
     @GetMapping("/reserved")
-    public ResponseEntity<List<ProductResponseDto>> getReservedProductList(@AuthenticationPrincipal CustomUserDetails customUserDetails){
+    public ApiResponse<List<ProductResponseDto>> getReservedProductList(@AuthenticationPrincipal CustomUserDetails customUserDetails){
         List<ProductResponseDto> productResponseDto = productService.findReservedProduct(customUserDetails.getUsername());
-        return ResponseEntity.ok().body(productResponseDto);
+        return ApiResponse.success(productResponseDto);
     }
 }

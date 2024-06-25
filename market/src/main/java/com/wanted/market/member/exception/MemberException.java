@@ -5,7 +5,7 @@ import lombok.Getter;
 @Getter
 public class MemberException extends RuntimeException {
 
-    private MemberErrorCode memberErrorCode;
+    private final MemberErrorCode memberErrorCode;
 
     public MemberException(MemberErrorCode memberErrorCode) {
         super(memberErrorCode.getMessage());

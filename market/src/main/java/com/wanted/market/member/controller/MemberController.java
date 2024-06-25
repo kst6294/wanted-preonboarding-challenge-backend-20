@@ -1,9 +1,9 @@
 package com.wanted.market.member.controller;
 
+import com.wanted.market.common.dto.ApiResponse;
 import com.wanted.market.member.dto.MemberRequestDto;
 import com.wanted.market.member.dto.MemberDetailResponseDto;
 import com.wanted.market.member.service.MemberService;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,8 +20,8 @@ public class MemberController {
     }
 
     @PostMapping("/join")
-    public ResponseEntity<MemberDetailResponseDto> join(@RequestBody MemberRequestDto memberRequestDto){
+    public ApiResponse<MemberDetailResponseDto> join(@RequestBody MemberRequestDto memberRequestDto){
         MemberDetailResponseDto newMember = memberService.join(memberRequestDto);
-        return ResponseEntity.ok(newMember);
+        return ApiResponse.success(newMember);
     }
 }

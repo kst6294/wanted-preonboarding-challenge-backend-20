@@ -3,6 +3,8 @@ package com.wanted.market.member.service;
 import com.wanted.market.member.domain.Member;
 import com.wanted.market.member.dto.MemberRequestDto;
 import com.wanted.market.member.dto.MemberDetailResponseDto;
+import com.wanted.market.member.exception.MemberErrorCode;
+import com.wanted.market.member.exception.MemberException;
 import com.wanted.market.member.repository.MemberRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -23,17 +25,19 @@ public class MemberServiceImpl implements MemberService{
 
     @Override
     public MemberDetailResponseDto join(MemberRequestDto memberRequestDto) {
-        // 1. 중복 이메일 확인
+        // 중복 이메일 확인
         if(memberRepository.existsByEmail(memberRequestDto.getEmail())){
-            throw new RuntimeException("이미 가입되어있는 이메일입니다.");
+            log.error("email '{}' 회원가입시 이미 가입되어 있는 이메일 입력", memberRequestDto.getEmail());
+            throw new MemberException(MemberErrorCode.EXISTS_MEMBER);
         }
 
-        // 2. 비밀번호 암호화
+        // 비밀번호 암호화
         String encodedPassword = passwordEncoder.encode(memberRequestDto.getPassword());
 
-        // 3. 저장
+        // 저장
         Member savedMember = memberRepository.save(memberRequestDto.toEntity(encodedPassword));
 
         return MemberDetailResponseDto.createFromEntity(savedMember);
     }
+
 }

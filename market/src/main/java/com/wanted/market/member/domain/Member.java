@@ -1,6 +1,6 @@
 package com.wanted.market.member.domain;
 
-import com.wanted.market.BaseEntity;
+import com.wanted.market.common.entity.BaseEntity;
 import com.wanted.market.member.model.MemberRole;
 import lombok.*;
 

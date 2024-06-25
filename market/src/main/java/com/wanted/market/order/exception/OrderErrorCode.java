@@ -1,6 +1,6 @@
 package com.wanted.market.order.exception;
 
-import com.wanted.market.ErrorCode;
+import com.wanted.market.common.exception.ErrorCode;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
