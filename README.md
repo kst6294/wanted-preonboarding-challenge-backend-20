@@ -3,6 +3,9 @@
 ### ✔사용 기술
 Java(1.8), Spring Boot 2.7.1, Spring Security 2.7.1, Spring Data JPA, MySQL(8.0)
 
+### ✔진행 기간
+2024.06.08 ~2024.06.22(2주)
+
 ### ✔API 명세서
 [https://documenter.getpostman.com/view/24847016/2sA3XY7yD1](https://documenter.getpostman.com/view/24847016/2sA3XY7yD1)
 
