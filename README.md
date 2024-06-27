@@ -1,4 +1,4 @@
-## 원티드 프리온보딩 챌린지 백엔드 20 사전과제<Watned Market>
+## 원티드 프리온보딩 챌린지 백엔드 20 사전과제<Watned Market API>
 
 ### ✔사용 기술
 Java(1.8), Spring Boot 2.7.1, Spring Security 2.7.1, Spring Data JPA, MySQL(8.0)
@@ -15,10 +15,11 @@ Java(1.8), Spring Boot 2.7.1, Spring Security 2.7.1, Spring Data JPA, MySQL(8.0)
 <br>
 
 ### ✔구현 내용
+- 회원등록시 비밀번호 암호화 적용
 - Spring Security, JWT를 활용한 로그인 구현
-- 커스텀 예외 클래스 생성, 예외 핸들러 클래스 구현하여 예외 상황 이해하기 쉽게 구현
+- 각 도메인별 커스텀 예외 클래스 생성, 예외 핸들러 클래스 구현하여 예외 상황 이해하기 쉽게 구현
 - 도메인별 응답 DTO를 구현하고, 공통 응답 DTO인 ApiResponse로 반환하여 클라이언트에게 일관된 구조의 응답 반환
-- log.error 메시지를 통해 정확한 오류 발생 위치와 원인을 기록하여 문제 발생 위치 쉽게 파악 가능
+- log 메시지를 통해 정확한 오류 발생 위치와 원인을 기록하여 문제 발생 위치 쉽게 파악 가능
 - 상품 상태 : ON_SALE(판매 중), RESERVED(예약 중) COMPLETED(판매 완료)
   * 추가 판매가 가능한 수량이 남아있는 경우 : **ON_SALE**
   * 추가 판매가 불가능하고 현재 구매확정을 대기하고 있는 경우 : **RESERVED(예약 중)**
