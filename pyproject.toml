@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "delivery-tracker"
+version = "0.1.0"
+description = ""
+authors = ["kst6294 <kst6294@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+requests = "^2.32.3"
+beautifulsoup4 = "^4.12.3"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
