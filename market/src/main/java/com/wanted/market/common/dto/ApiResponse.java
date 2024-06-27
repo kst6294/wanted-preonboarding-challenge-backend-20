@@ -25,6 +25,14 @@ public class ApiResponse<T> {
                 .build();
     }
 
+    public static <T> ApiResponse<T> deleteSuccess() {
+        return ApiResponse.<T>builder()
+                .status(200)
+                .message("DeleteSuccess")
+                .timestamp(LocalDateTime.now())
+                .build();
+    }
+
     public static <T> ApiResponse<T> error(int status, String message) {
         return ApiResponse.<T>builder()
                 .status(status)

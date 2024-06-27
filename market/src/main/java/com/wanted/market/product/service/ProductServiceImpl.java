@@ -3,15 +3,17 @@ package com.wanted.market.product.service;
 import com.wanted.market.member.domain.Member;
 import com.wanted.market.member.exception.MemberErrorCode;
 import com.wanted.market.member.exception.MemberException;
+import com.wanted.market.member.model.MemberRole;
 import com.wanted.market.member.repository.MemberRepository;
 import com.wanted.market.order.domain.Order;
-import com.wanted.market.order.dto.OrderDetailResponseDto;
+import com.wanted.market.order.dto.OrderResponseDto;
 import com.wanted.market.order.model.OrderStatus;
 import com.wanted.market.order.repository.OrderRepository;
 import com.wanted.market.product.domain.Product;
 import com.wanted.market.product.dto.ProductDetailResponseDto;
 import com.wanted.market.product.dto.ProductRequestDto;
 import com.wanted.market.product.dto.ProductResponseDto;
+import com.wanted.market.product.dto.ProductUpdateRequestDto;
 import com.wanted.market.product.exception.ProductErrorCode;
 import com.wanted.market.product.exception.ProductException;
 import com.wanted.market.product.model.ProductStatus;
@@ -22,6 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 
@@ -80,7 +83,7 @@ public class ProductServiceImpl implements ProductService{
             .orElseThrow(() -> new ProductException(ProductErrorCode.NOT_FOUND));
 
         // 구매 내역 담을 리스트 생성
-        List<OrderDetailResponseDto> orderDetailList = new ArrayList<>();
+        List<OrderResponseDto> orderDetailList = new ArrayList<>();
 
         // 상품 아이디로 주문 목록 조회
         List<Order> orders = orderRepository.findAllByProductId(id);
@@ -89,7 +92,7 @@ public class ProductServiceImpl implements ProductService{
         Member buyer = memberRepository.findByEmail(email);
         for(Order order : orders) {
             if (order.getBuyer().getId() == buyer.getId()) {
-                orderDetailList.add(OrderDetailResponseDto.createFromEntity(order));
+                orderDetailList.add(OrderResponseDto.createFromEntity(order));
             }
         }
 
@@ -180,4 +183,44 @@ public class ProductServiceImpl implements ProductService{
         return reservedProductList;
     }
 
+    @Override
+    public void deleteById(String email, Integer productId) {
+        // 존재하는 상품인지 확인
+        Product product = productRepository.findById(productId).orElseThrow(()
+                -> new ProductException(ProductErrorCode.NOT_FOUND));
+
+        // 해당 상품의 판매자인지 확인
+        System.out.println(product.getSeller().getEmail());
+        System.out.println(email);
+
+        if(!product.getSeller().getEmail().equals(email)){
+            log.error("updateProduct '{}':해당 상품의 판매자가 아닙니다.");
+            throw new MemberException(MemberErrorCode.NOT_SELLER_OF_PRODUCT);
+        }
+        productRepository.deleteById(productId);
+    }
+
+    @Override
+    public ProductResponseDto updateProduct(String email, Integer productId, ProductUpdateRequestDto productRequestDto) {
+        // 존재하는 상품인지 확인
+        Product product = productRepository.findById(productId).orElseThrow(()
+                -> new ProductException(ProductErrorCode.NOT_FOUND));
+
+        System.out.println(product.getSeller().getEmail());
+        System.out.println(email);
+
+        // 해당 상품의 판매자인지 확인
+        if(!product.getSeller().getEmail().equals(email)){
+            log.error("updateProduct '{}':해당 상품의 판매자가 아닙니다.");
+            throw new MemberException(MemberErrorCode.NOT_SELLER_OF_PRODUCT);
+        }
+
+        // Product 객체 업데이트
+        productRequestDto.updateProduct(product);
+
+        // 변경된 Product 객체 저장
+        Product updatedProduct = productRepository.save(product);
+
+        return ProductResponseDto.createFromEntity(updatedProduct);
+    }
 }

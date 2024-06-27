@@ -12,7 +12,8 @@ public enum MemberErrorCode implements ErrorCode {
     EXISTS_MEMBER(HttpStatus.CONFLICT, "이미 가입되어 있는 이메일입니다."),
     NOT_MATCH_PASSWORD(HttpStatus.UNAUTHORIZED, "비밀번호가 일치하지 않습니다."),
     NOT_BUYER(HttpStatus.FORBIDDEN, "구매자만 접근 가능합니다."),
-    NOT_EXIST_MEMBER(HttpStatus.FORBIDDEN, "사용자가 아닙니다.");
+    NOT_EXIST_MEMBER(HttpStatus.FORBIDDEN, "사용자가 아닙니다."),
+    NOT_SELLER_OF_PRODUCT(HttpStatus.CONFLICT, "해당 상품의 판매자가 아닙니다.");
 
     private HttpStatus httpStatus;
     private String message;

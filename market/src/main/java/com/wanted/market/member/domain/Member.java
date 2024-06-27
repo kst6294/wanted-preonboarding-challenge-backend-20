@@ -14,11 +14,6 @@ import javax.persistence.*;
 @AttributeOverride(name = "id", column = @Column(name = "member_id"))
 public class Member extends BaseEntity {
 
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    @Column(name = "member_id")
-//    private Integer id;
-
     @Column(nullable = false, unique = true)
     private String email;
 

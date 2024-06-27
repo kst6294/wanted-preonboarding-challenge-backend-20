@@ -5,6 +5,7 @@ import com.wanted.market.member.dto.CustomUserDetails;
 import com.wanted.market.product.dto.ProductDetailResponseDto;
 import com.wanted.market.product.dto.ProductRequestDto;
 import com.wanted.market.product.dto.ProductResponseDto;
+import com.wanted.market.product.dto.ProductUpdateRequestDto;
 import com.wanted.market.product.service.ProductService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -28,6 +29,21 @@ public class ProductController {
     @PostMapping
     public ApiResponse<ProductResponseDto> registerProduct(@AuthenticationPrincipal CustomUserDetails customUserDetails, @Valid @RequestBody ProductRequestDto productRequestDto) {
         ProductResponseDto productResponseDto = productService.registerProduct(customUserDetails.getUsername(), productRequestDto);
+        return ApiResponse.success(productResponseDto);
+    }
+
+
+    /* 제품 삭제 */
+    @DeleteMapping("/{productId}")
+    public ApiResponse deleteProduct(@AuthenticationPrincipal CustomUserDetails customUserDetails, @PathVariable Integer productId){
+        productService.deleteById(customUserDetails.getUsername(), productId);
+        return ApiResponse.deleteSuccess();
+    }
+
+    /* 제품 수정 */
+    @PutMapping("/{productId}")
+    public ApiResponse<ProductResponseDto> updateProduct(@AuthenticationPrincipal CustomUserDetails customUserDetails, @PathVariable Integer productId, @Valid @RequestBody ProductUpdateRequestDto productRequestDto){
+        ProductResponseDto productResponseDto = productService.updateProduct(customUserDetails.getUsername(), productId, productRequestDto);
         return ApiResponse.success(productResponseDto);
     }
 
@@ -64,4 +80,5 @@ public class ProductController {
         List<ProductResponseDto> productResponseDto = productService.findReservedProduct(customUserDetails.getUsername());
         return ApiResponse.success(productResponseDto);
     }
+
 }

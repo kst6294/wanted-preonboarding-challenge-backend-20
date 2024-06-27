@@ -18,6 +18,7 @@ public class ProductResponseDto {
     private Integer price;
     private Integer quantity;
     private String status;
+    private String createdDate;
     private MemberResponseDto seller;
 
     public static ProductResponseDto createFromEntity(Product product) {
@@ -27,6 +28,7 @@ public class ProductResponseDto {
                 .price(product.getPrice())
                 .quantity(product.getQuantity())
                 .status(product.getProductStatus().toString())
+                .createdDate(product.getCreatedDate().toString())
                 .seller(MemberResponseDto.createFromEntity(product.getSeller()))
                 .build();
     }

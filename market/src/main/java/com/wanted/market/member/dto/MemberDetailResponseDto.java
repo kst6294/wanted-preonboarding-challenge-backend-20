@@ -12,14 +12,11 @@ import lombok.*;
 public class MemberDetailResponseDto {
 
     private Integer id;
-
     private String email;
-
     private String name;
-
     private String password;
-
     private String role;
+    private String createdDate;
 
     public static MemberDetailResponseDto createFromEntity(Member member) {
         return MemberDetailResponseDto.builder()
@@ -27,6 +24,7 @@ public class MemberDetailResponseDto {
                 .name(member.getName())
                 .password(member.getPassword())
                 .role(member.getRole().toString())
+                .createdDate(member.getCreatedDate().toString())
                 .build();
     }
 }

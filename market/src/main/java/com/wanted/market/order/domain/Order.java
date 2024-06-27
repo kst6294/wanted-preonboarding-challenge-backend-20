@@ -19,11 +19,6 @@ import javax.persistence.*;
 @AttributeOverride(name = "id", column = @Column(name = "order_id"))
 public class Order extends BaseEntity {
 
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    @Column(name = "order_id")
-//    private Integer id;
-
     @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus;
 

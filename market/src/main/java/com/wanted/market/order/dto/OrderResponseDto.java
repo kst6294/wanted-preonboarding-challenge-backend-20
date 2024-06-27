@@ -17,8 +17,8 @@ public class OrderResponseDto {
     private int orderQuantity;
     private int price;
     private String orderStatus;
+    private String createdDate;
     private MemberResponseDto buyer;
-
 
     public static OrderResponseDto createFromEntity(Order order){
         return OrderResponseDto.builder()
@@ -27,6 +27,7 @@ public class OrderResponseDto {
                 .orderQuantity(order.getOrderQuantity())
                 .price(order.getPrice())
                 .orderStatus(order.getOrderStatus().toString())
+                .createdDate(order.getCreatedDate().toString())
                 .buyer(MemberResponseDto.createFromEntity(order.getBuyer()))
                 .build();
     }

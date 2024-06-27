@@ -5,10 +5,7 @@ import com.wanted.market.common.entity.BaseEntity;
 import com.wanted.market.member.domain.Member;
 import com.wanted.market.order.domain.Order;
 import com.wanted.market.product.model.ProductStatus;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;
@@ -23,11 +20,6 @@ import java.util.List;
 @NoArgsConstructor
 @AttributeOverride(name = "id", column = @Column(name = "product_id"))
 public class Product extends BaseEntity {
-
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    @Column(name = "product_id")
-//    private Integer id;
 
     @Column(name = "product_name", nullable = false)
     private String name;
@@ -57,5 +49,18 @@ public class Product extends BaseEntity {
 
     public void modifyStatus(ProductStatus productStatus) {
         this.productStatus = productStatus;
+    }
+
+    // 필드 업데이트 메서드
+    public void updateName(String name) {
+        this.name = name;
+    }
+
+    public void updatePrice(Integer price) {
+        this.price = price;
+    }
+
+    public void updateQuantity(Integer quantity) {
+        this.quantity = quantity;
     }
 }
