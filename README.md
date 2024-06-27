@@ -1,4 +1,5 @@
-## 원티드 프리온보딩 챌린지 백엔드 20 사전과제<Watned Market API>
+## Wanted Market API
+market이라는 주제로 원티드에서 진행한 백엔드 챌린지 입니다.
 
 ### ✔사용 기술
 Java(1.8), Spring Boot 2.7.1, Spring Security 2.7.1, Spring Data JPA, MySQL(8.0)
